@@ -2,7 +2,7 @@
 #include "debug_print.h"
 #define KILL_RING_S 5
 
-#define EMPTY_STRING g_strdup("-");
+#define EMPTY_STRING g_strdup("-")
 #define CHK_NULL(str) str ? g_strdup(str) : EMPTY_STRING;
 gchar *kill_ring[KILL_RING_S] = {NULL, };
 
@@ -168,13 +168,19 @@ const gchar *get_data(struct xml_weather *data, enum datas type)
 {
         gchar *str;
         gchar *p;
-        
-        switch (type & 0xFF00)
+
+        if (!data)
+                str = EMPTY_STRING;
+        else 
         {
-                case DATAS_CC: str = get_data_cc(data->cc, type); break;
-                case DATAS_LOC: str = get_data_loc(data->loc, type); break;
-                //case DATAS_DAYF: str = get_data_dayf(data->dayf, type, arg);
-                default: str = EMPTY_STRING;
+        
+                switch (type & 0xFF00)
+                {
+                        case DATAS_CC: str = get_data_cc(data->cc, type); break;
+                        case DATAS_LOC: str = get_data_loc(data->loc, type); break;
+                                        //case DATAS_DAYF: str = get_data_dayf(data->dayf, type, arg);
+                        default: str = EMPTY_STRING;
+                }
         }
 
         p = copy_buffer(str);
@@ -188,6 +194,9 @@ gchar *get_data_part(struct xml_part *data, enum forecast type)
         gchar *str;
 
        DEBUG_PRINT("now here %s\n", data->ppcp);
+
+       if (!data)
+               return EMPTY_STRING;
 
         switch (type & 0x000F)
         {
@@ -203,19 +212,23 @@ gchar *get_data_part(struct xml_part *data, enum forecast type)
 
 const gchar *get_data_f(struct xml_dayf *data, enum forecast type)
 {
-        gchar *p, *str;
-        switch (type & 0x0F00)
+        gchar *p, *str = NULL;
+
+        if (data)
         {
-                case ITEMS:
-                        switch(type)
-                        {
-                                case WDAY: str = data->day; break;
-                                case TEMP_MIN: str = data->low; break;
-                                case TEMP_MAX: str = data->hi; break;
-                        }
-                        break;
-                case NPART: str = get_data_part(data->part[1], type); break;
-                case DPART: str = get_data_part(data->part[0], type); break; 
+                switch (type & 0x0F00)
+                {
+                        case ITEMS:
+                                switch(type)
+                                {
+                                        case WDAY: str = data->day; break;
+                                        case TEMP_MIN: str = data->low; break;
+                                        case TEMP_MAX: str = data->hi; break;
+                                }
+                                break;
+                        case NPART: str = get_data_part(data->part[1], type); break;
+                        case DPART: str = get_data_part(data->part[0], type); break; 
+                }
         }
 
         if (!str)

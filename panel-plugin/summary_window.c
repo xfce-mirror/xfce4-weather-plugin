@@ -224,22 +224,25 @@ GtkWidget *create_forecast_tab (struct xml_weather *data, enum units unit)
 
         gtk_container_set_border_width(GTK_CONTAINER(widg), 6);
 
-        for (i = 0; i < XML_WEATHER_DAYF_N - 1; i++)
+        if (data && data->dayf)
         {
-                if (!data->dayf[i])
-                        break;
+                for (i = 0; i < XML_WEATHER_DAYF_N - 1; i++)
+                {
+                        if (!data->dayf[i])
+                                break;
 
-               DEBUG_PRINT("%s\n", data->dayf[i]->day);
-                
-                gtk_box_pack_start(GTK_BOX(widg), 
-                                make_forecast(data->dayf[i], unit), FALSE, FALSE, 0);
-                gtk_box_pack_start(GTK_BOX(widg),
-                                gtk_vseparator_new(), TRUE, TRUE, 0);
+                        DEBUG_PRINT("%s\n", data->dayf[i]->day);
+
+                        gtk_box_pack_start(GTK_BOX(widg), 
+                                        make_forecast(data->dayf[i], unit), FALSE, FALSE, 0);
+                        gtk_box_pack_start(GTK_BOX(widg),
+                                        gtk_vseparator_new(), TRUE, TRUE, 0);
+                }
+
+                if (data->dayf[i])
+                        gtk_box_pack_start(GTK_BOX(widg), 
+                                        make_forecast(data->dayf[i], unit), FALSE, FALSE, 0);
         }
-
-        if (data->dayf[i])
-                gtk_box_pack_start(GTK_BOX(widg), 
-                                make_forecast(data->dayf[i], unit), FALSE, FALSE, 0);
         
         return widg;
 }
@@ -265,6 +268,7 @@ GtkWidget *create_summary_window (struct xml_weather *data, enum units unit)
                         create_summary_tab(data, unit), gtk_label_new("Summary"));
         gtk_notebook_append_page(GTK_NOTEBOOK(notebook), 
                         create_forecast_tab(data, unit), gtk_label_new("Forecast"));
+
         gtk_box_pack_start(GTK_BOX(vbox), notebook, TRUE, TRUE, 0);
 
         g_signal_connect(window, "response",
