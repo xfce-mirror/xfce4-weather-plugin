@@ -10,7 +10,24 @@ libweather_la_LDFLAGS =							\
 	
 
 libweather_la_SOURCES =							\
-	weather.c
+				config_dialog.c							\
+				config_dialog.h							\
+				get_data.c									\
+				get_data.h 									\
+				http_client.c								\
+				http_client.h								\
+				parsers.c										\
+				parsers.h										\
+				plugin.c										\
+				plugin.h										\
+				scrollbox.c									\
+				scrollbox.h									\
+				summary_window.c						\
+				summary_window.h						\
+				icon.c											\
+				icon.h											\
+				search_dialog.c							\
+				search_dialog.h
 
 libweather_la_CFLAGS =							\
 	@XFCE4_PANEL_CFLAGS@ 							\

@@ -152,7 +152,24 @@ libweather_la_LDFLAGS = \
 
 
 libweather_la_SOURCES = \
-	weather.c
+				config_dialog.c							\
+				config_dialog.h							\
+				get_data.c									\
+				get_data.h 									\
+				http_client.c								\
+				http_client.h								\
+				parsers.c										\
+				parsers.h										\
+				plugin.c										\
+				plugin.h										\
+				scrollbox.c									\
+				scrollbox.h									\
+				summary_window.c						\
+				summary_window.h						\
+				icon.c											\
+				icon.h											\
+				search_dialog.c							\
+				search_dialog.h
 
 
 libweather_la_CFLAGS = \
@@ -172,13 +189,25 @@ CONFIG_CLEAN_FILES =
 LTLIBRARIES = $(plugin_LTLIBRARIES)
 
 libweather_la_DEPENDENCIES =
-am_libweather_la_OBJECTS = libweather_la-weather.lo
+am_libweather_la_OBJECTS = libweather_la-config_dialog.lo \
+	libweather_la-get_data.lo libweather_la-http_client.lo \
+	libweather_la-parsers.lo libweather_la-plugin.lo \
+	libweather_la-scrollbox.lo libweather_la-summary_window.lo \
+	libweather_la-icon.lo libweather_la-search_dialog.lo
 libweather_la_OBJECTS = $(am_libweather_la_OBJECTS)
 
 DEFAULT_INCLUDES =  -I. -I$(srcdir) -I$(top_builddir)
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__depfiles_maybe = depfiles
-@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/libweather_la-weather.Plo
+@AMDEP_TRUE@DEP_FILES = ./$(DEPDIR)/libweather_la-config_dialog.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/libweather_la-get_data.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/libweather_la-http_client.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/libweather_la-icon.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/libweather_la-parsers.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/libweather_la-plugin.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/libweather_la-scrollbox.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/libweather_la-search_dialog.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/libweather_la-summary_window.Plo
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) \
@@ -196,7 +225,7 @@ all: all-am
 .SUFFIXES: .c .lo .o .obj
 $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am  $(top_srcdir)/configure.ac $(ACLOCAL_M4)
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --foreign  panel-plugin/Makefile
+	  $(AUTOMAKE) --gnu  panel-plugin/Makefile
 Makefile: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $(subdir)/$@ $(am__depfiles_maybe)
 pluginLTLIBRARIES_INSTALL = $(INSTALL)
@@ -236,7 +265,15 @@ mostlyclean-compile:
 distclean-compile:
 	-rm -f *.tab.c
 
-@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libweather_la-weather.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libweather_la-config_dialog.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libweather_la-get_data.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libweather_la-http_client.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libweather_la-icon.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libweather_la-parsers.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libweather_la-plugin.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libweather_la-scrollbox.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libweather_la-search_dialog.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libweather_la-summary_window.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	if $(COMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" \
@@ -271,38 +308,302 @@ distclean-compile:
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LTCOMPILE) -c -o $@ `test -f '$<' || echo '$(srcdir)/'`$<
 
-libweather_la-weather.o: weather.c
-@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-weather.o -MD -MP -MF "$(DEPDIR)/libweather_la-weather.Tpo" \
-@am__fastdepCC_TRUE@	  -c -o libweather_la-weather.o `test -f 'weather.c' || echo '$(srcdir)/'`weather.c; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-weather.Tpo" "$(DEPDIR)/libweather_la-weather.Po"; \
-@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-weather.Tpo"; exit 1; \
+libweather_la-config_dialog.o: config_dialog.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-config_dialog.o -MD -MP -MF "$(DEPDIR)/libweather_la-config_dialog.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-config_dialog.o `test -f 'config_dialog.c' || echo '$(srcdir)/'`config_dialog.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-config_dialog.Tpo" "$(DEPDIR)/libweather_la-config_dialog.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-config_dialog.Tpo"; exit 1; \
 @am__fastdepCC_TRUE@	fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='weather.c' object='libweather_la-weather.o' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-weather.Po' tmpdepfile='$(DEPDIR)/libweather_la-weather.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='config_dialog.c' object='libweather_la-config_dialog.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-config_dialog.Po' tmpdepfile='$(DEPDIR)/libweather_la-config_dialog.TPo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-weather.o `test -f 'weather.c' || echo '$(srcdir)/'`weather.c
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-config_dialog.o `test -f 'config_dialog.c' || echo '$(srcdir)/'`config_dialog.c
 
-libweather_la-weather.obj: weather.c
-@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-weather.obj -MD -MP -MF "$(DEPDIR)/libweather_la-weather.Tpo" \
-@am__fastdepCC_TRUE@	  -c -o libweather_la-weather.obj `if test -f 'weather.c'; then $(CYGPATH_W) 'weather.c'; else $(CYGPATH_W) '$(srcdir)/weather.c'; fi`; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-weather.Tpo" "$(DEPDIR)/libweather_la-weather.Po"; \
-@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-weather.Tpo"; exit 1; \
+libweather_la-config_dialog.obj: config_dialog.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-config_dialog.obj -MD -MP -MF "$(DEPDIR)/libweather_la-config_dialog.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-config_dialog.obj `if test -f 'config_dialog.c'; then $(CYGPATH_W) 'config_dialog.c'; else $(CYGPATH_W) '$(srcdir)/config_dialog.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-config_dialog.Tpo" "$(DEPDIR)/libweather_la-config_dialog.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-config_dialog.Tpo"; exit 1; \
 @am__fastdepCC_TRUE@	fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='weather.c' object='libweather_la-weather.obj' libtool=no @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-weather.Po' tmpdepfile='$(DEPDIR)/libweather_la-weather.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='config_dialog.c' object='libweather_la-config_dialog.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-config_dialog.Po' tmpdepfile='$(DEPDIR)/libweather_la-config_dialog.TPo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-weather.obj `if test -f 'weather.c'; then $(CYGPATH_W) 'weather.c'; else $(CYGPATH_W) '$(srcdir)/weather.c'; fi`
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-config_dialog.obj `if test -f 'config_dialog.c'; then $(CYGPATH_W) 'config_dialog.c'; else $(CYGPATH_W) '$(srcdir)/config_dialog.c'; fi`
 
-libweather_la-weather.lo: weather.c
-@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-weather.lo -MD -MP -MF "$(DEPDIR)/libweather_la-weather.Tpo" \
-@am__fastdepCC_TRUE@	  -c -o libweather_la-weather.lo `test -f 'weather.c' || echo '$(srcdir)/'`weather.c; \
-@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-weather.Tpo" "$(DEPDIR)/libweather_la-weather.Plo"; \
-@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-weather.Tpo"; exit 1; \
+libweather_la-config_dialog.lo: config_dialog.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-config_dialog.lo -MD -MP -MF "$(DEPDIR)/libweather_la-config_dialog.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-config_dialog.lo `test -f 'config_dialog.c' || echo '$(srcdir)/'`config_dialog.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-config_dialog.Tpo" "$(DEPDIR)/libweather_la-config_dialog.Plo"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-config_dialog.Tpo"; exit 1; \
 @am__fastdepCC_TRUE@	fi
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='weather.c' object='libweather_la-weather.lo' libtool=yes @AMDEPBACKSLASH@
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-weather.Plo' tmpdepfile='$(DEPDIR)/libweather_la-weather.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='config_dialog.c' object='libweather_la-config_dialog.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-config_dialog.Plo' tmpdepfile='$(DEPDIR)/libweather_la-config_dialog.TPlo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-weather.lo `test -f 'weather.c' || echo '$(srcdir)/'`weather.c
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-config_dialog.lo `test -f 'config_dialog.c' || echo '$(srcdir)/'`config_dialog.c
+
+libweather_la-get_data.o: get_data.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-get_data.o -MD -MP -MF "$(DEPDIR)/libweather_la-get_data.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-get_data.o `test -f 'get_data.c' || echo '$(srcdir)/'`get_data.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-get_data.Tpo" "$(DEPDIR)/libweather_la-get_data.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-get_data.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='get_data.c' object='libweather_la-get_data.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-get_data.Po' tmpdepfile='$(DEPDIR)/libweather_la-get_data.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-get_data.o `test -f 'get_data.c' || echo '$(srcdir)/'`get_data.c
+
+libweather_la-get_data.obj: get_data.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-get_data.obj -MD -MP -MF "$(DEPDIR)/libweather_la-get_data.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-get_data.obj `if test -f 'get_data.c'; then $(CYGPATH_W) 'get_data.c'; else $(CYGPATH_W) '$(srcdir)/get_data.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-get_data.Tpo" "$(DEPDIR)/libweather_la-get_data.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-get_data.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='get_data.c' object='libweather_la-get_data.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-get_data.Po' tmpdepfile='$(DEPDIR)/libweather_la-get_data.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-get_data.obj `if test -f 'get_data.c'; then $(CYGPATH_W) 'get_data.c'; else $(CYGPATH_W) '$(srcdir)/get_data.c'; fi`
+
+libweather_la-get_data.lo: get_data.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-get_data.lo -MD -MP -MF "$(DEPDIR)/libweather_la-get_data.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-get_data.lo `test -f 'get_data.c' || echo '$(srcdir)/'`get_data.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-get_data.Tpo" "$(DEPDIR)/libweather_la-get_data.Plo"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-get_data.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='get_data.c' object='libweather_la-get_data.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-get_data.Plo' tmpdepfile='$(DEPDIR)/libweather_la-get_data.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-get_data.lo `test -f 'get_data.c' || echo '$(srcdir)/'`get_data.c
+
+libweather_la-http_client.o: http_client.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-http_client.o -MD -MP -MF "$(DEPDIR)/libweather_la-http_client.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-http_client.o `test -f 'http_client.c' || echo '$(srcdir)/'`http_client.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-http_client.Tpo" "$(DEPDIR)/libweather_la-http_client.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-http_client.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='http_client.c' object='libweather_la-http_client.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-http_client.Po' tmpdepfile='$(DEPDIR)/libweather_la-http_client.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-http_client.o `test -f 'http_client.c' || echo '$(srcdir)/'`http_client.c
+
+libweather_la-http_client.obj: http_client.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-http_client.obj -MD -MP -MF "$(DEPDIR)/libweather_la-http_client.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-http_client.obj `if test -f 'http_client.c'; then $(CYGPATH_W) 'http_client.c'; else $(CYGPATH_W) '$(srcdir)/http_client.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-http_client.Tpo" "$(DEPDIR)/libweather_la-http_client.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-http_client.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='http_client.c' object='libweather_la-http_client.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-http_client.Po' tmpdepfile='$(DEPDIR)/libweather_la-http_client.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-http_client.obj `if test -f 'http_client.c'; then $(CYGPATH_W) 'http_client.c'; else $(CYGPATH_W) '$(srcdir)/http_client.c'; fi`
+
+libweather_la-http_client.lo: http_client.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-http_client.lo -MD -MP -MF "$(DEPDIR)/libweather_la-http_client.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-http_client.lo `test -f 'http_client.c' || echo '$(srcdir)/'`http_client.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-http_client.Tpo" "$(DEPDIR)/libweather_la-http_client.Plo"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-http_client.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='http_client.c' object='libweather_la-http_client.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-http_client.Plo' tmpdepfile='$(DEPDIR)/libweather_la-http_client.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-http_client.lo `test -f 'http_client.c' || echo '$(srcdir)/'`http_client.c
+
+libweather_la-parsers.o: parsers.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-parsers.o -MD -MP -MF "$(DEPDIR)/libweather_la-parsers.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-parsers.o `test -f 'parsers.c' || echo '$(srcdir)/'`parsers.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-parsers.Tpo" "$(DEPDIR)/libweather_la-parsers.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-parsers.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='parsers.c' object='libweather_la-parsers.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-parsers.Po' tmpdepfile='$(DEPDIR)/libweather_la-parsers.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-parsers.o `test -f 'parsers.c' || echo '$(srcdir)/'`parsers.c
+
+libweather_la-parsers.obj: parsers.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-parsers.obj -MD -MP -MF "$(DEPDIR)/libweather_la-parsers.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-parsers.obj `if test -f 'parsers.c'; then $(CYGPATH_W) 'parsers.c'; else $(CYGPATH_W) '$(srcdir)/parsers.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-parsers.Tpo" "$(DEPDIR)/libweather_la-parsers.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-parsers.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='parsers.c' object='libweather_la-parsers.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-parsers.Po' tmpdepfile='$(DEPDIR)/libweather_la-parsers.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-parsers.obj `if test -f 'parsers.c'; then $(CYGPATH_W) 'parsers.c'; else $(CYGPATH_W) '$(srcdir)/parsers.c'; fi`
+
+libweather_la-parsers.lo: parsers.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-parsers.lo -MD -MP -MF "$(DEPDIR)/libweather_la-parsers.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-parsers.lo `test -f 'parsers.c' || echo '$(srcdir)/'`parsers.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-parsers.Tpo" "$(DEPDIR)/libweather_la-parsers.Plo"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-parsers.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='parsers.c' object='libweather_la-parsers.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-parsers.Plo' tmpdepfile='$(DEPDIR)/libweather_la-parsers.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-parsers.lo `test -f 'parsers.c' || echo '$(srcdir)/'`parsers.c
+
+libweather_la-plugin.o: plugin.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-plugin.o -MD -MP -MF "$(DEPDIR)/libweather_la-plugin.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-plugin.o `test -f 'plugin.c' || echo '$(srcdir)/'`plugin.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-plugin.Tpo" "$(DEPDIR)/libweather_la-plugin.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-plugin.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='plugin.c' object='libweather_la-plugin.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-plugin.Po' tmpdepfile='$(DEPDIR)/libweather_la-plugin.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-plugin.o `test -f 'plugin.c' || echo '$(srcdir)/'`plugin.c
+
+libweather_la-plugin.obj: plugin.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-plugin.obj -MD -MP -MF "$(DEPDIR)/libweather_la-plugin.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-plugin.obj `if test -f 'plugin.c'; then $(CYGPATH_W) 'plugin.c'; else $(CYGPATH_W) '$(srcdir)/plugin.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-plugin.Tpo" "$(DEPDIR)/libweather_la-plugin.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-plugin.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='plugin.c' object='libweather_la-plugin.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-plugin.Po' tmpdepfile='$(DEPDIR)/libweather_la-plugin.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-plugin.obj `if test -f 'plugin.c'; then $(CYGPATH_W) 'plugin.c'; else $(CYGPATH_W) '$(srcdir)/plugin.c'; fi`
+
+libweather_la-plugin.lo: plugin.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-plugin.lo -MD -MP -MF "$(DEPDIR)/libweather_la-plugin.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-plugin.lo `test -f 'plugin.c' || echo '$(srcdir)/'`plugin.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-plugin.Tpo" "$(DEPDIR)/libweather_la-plugin.Plo"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-plugin.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='plugin.c' object='libweather_la-plugin.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-plugin.Plo' tmpdepfile='$(DEPDIR)/libweather_la-plugin.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-plugin.lo `test -f 'plugin.c' || echo '$(srcdir)/'`plugin.c
+
+libweather_la-scrollbox.o: scrollbox.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-scrollbox.o -MD -MP -MF "$(DEPDIR)/libweather_la-scrollbox.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-scrollbox.o `test -f 'scrollbox.c' || echo '$(srcdir)/'`scrollbox.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-scrollbox.Tpo" "$(DEPDIR)/libweather_la-scrollbox.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-scrollbox.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='scrollbox.c' object='libweather_la-scrollbox.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-scrollbox.Po' tmpdepfile='$(DEPDIR)/libweather_la-scrollbox.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-scrollbox.o `test -f 'scrollbox.c' || echo '$(srcdir)/'`scrollbox.c
+
+libweather_la-scrollbox.obj: scrollbox.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-scrollbox.obj -MD -MP -MF "$(DEPDIR)/libweather_la-scrollbox.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-scrollbox.obj `if test -f 'scrollbox.c'; then $(CYGPATH_W) 'scrollbox.c'; else $(CYGPATH_W) '$(srcdir)/scrollbox.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-scrollbox.Tpo" "$(DEPDIR)/libweather_la-scrollbox.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-scrollbox.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='scrollbox.c' object='libweather_la-scrollbox.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-scrollbox.Po' tmpdepfile='$(DEPDIR)/libweather_la-scrollbox.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-scrollbox.obj `if test -f 'scrollbox.c'; then $(CYGPATH_W) 'scrollbox.c'; else $(CYGPATH_W) '$(srcdir)/scrollbox.c'; fi`
+
+libweather_la-scrollbox.lo: scrollbox.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-scrollbox.lo -MD -MP -MF "$(DEPDIR)/libweather_la-scrollbox.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-scrollbox.lo `test -f 'scrollbox.c' || echo '$(srcdir)/'`scrollbox.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-scrollbox.Tpo" "$(DEPDIR)/libweather_la-scrollbox.Plo"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-scrollbox.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='scrollbox.c' object='libweather_la-scrollbox.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-scrollbox.Plo' tmpdepfile='$(DEPDIR)/libweather_la-scrollbox.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-scrollbox.lo `test -f 'scrollbox.c' || echo '$(srcdir)/'`scrollbox.c
+
+libweather_la-summary_window.o: summary_window.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-summary_window.o -MD -MP -MF "$(DEPDIR)/libweather_la-summary_window.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-summary_window.o `test -f 'summary_window.c' || echo '$(srcdir)/'`summary_window.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-summary_window.Tpo" "$(DEPDIR)/libweather_la-summary_window.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-summary_window.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='summary_window.c' object='libweather_la-summary_window.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-summary_window.Po' tmpdepfile='$(DEPDIR)/libweather_la-summary_window.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-summary_window.o `test -f 'summary_window.c' || echo '$(srcdir)/'`summary_window.c
+
+libweather_la-summary_window.obj: summary_window.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-summary_window.obj -MD -MP -MF "$(DEPDIR)/libweather_la-summary_window.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-summary_window.obj `if test -f 'summary_window.c'; then $(CYGPATH_W) 'summary_window.c'; else $(CYGPATH_W) '$(srcdir)/summary_window.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-summary_window.Tpo" "$(DEPDIR)/libweather_la-summary_window.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-summary_window.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='summary_window.c' object='libweather_la-summary_window.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-summary_window.Po' tmpdepfile='$(DEPDIR)/libweather_la-summary_window.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-summary_window.obj `if test -f 'summary_window.c'; then $(CYGPATH_W) 'summary_window.c'; else $(CYGPATH_W) '$(srcdir)/summary_window.c'; fi`
+
+libweather_la-summary_window.lo: summary_window.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-summary_window.lo -MD -MP -MF "$(DEPDIR)/libweather_la-summary_window.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-summary_window.lo `test -f 'summary_window.c' || echo '$(srcdir)/'`summary_window.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-summary_window.Tpo" "$(DEPDIR)/libweather_la-summary_window.Plo"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-summary_window.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='summary_window.c' object='libweather_la-summary_window.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-summary_window.Plo' tmpdepfile='$(DEPDIR)/libweather_la-summary_window.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-summary_window.lo `test -f 'summary_window.c' || echo '$(srcdir)/'`summary_window.c
+
+libweather_la-icon.o: icon.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-icon.o -MD -MP -MF "$(DEPDIR)/libweather_la-icon.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-icon.o `test -f 'icon.c' || echo '$(srcdir)/'`icon.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-icon.Tpo" "$(DEPDIR)/libweather_la-icon.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-icon.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='icon.c' object='libweather_la-icon.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-icon.Po' tmpdepfile='$(DEPDIR)/libweather_la-icon.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-icon.o `test -f 'icon.c' || echo '$(srcdir)/'`icon.c
+
+libweather_la-icon.obj: icon.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-icon.obj -MD -MP -MF "$(DEPDIR)/libweather_la-icon.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-icon.obj `if test -f 'icon.c'; then $(CYGPATH_W) 'icon.c'; else $(CYGPATH_W) '$(srcdir)/icon.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-icon.Tpo" "$(DEPDIR)/libweather_la-icon.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-icon.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='icon.c' object='libweather_la-icon.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-icon.Po' tmpdepfile='$(DEPDIR)/libweather_la-icon.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-icon.obj `if test -f 'icon.c'; then $(CYGPATH_W) 'icon.c'; else $(CYGPATH_W) '$(srcdir)/icon.c'; fi`
+
+libweather_la-icon.lo: icon.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-icon.lo -MD -MP -MF "$(DEPDIR)/libweather_la-icon.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-icon.lo `test -f 'icon.c' || echo '$(srcdir)/'`icon.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-icon.Tpo" "$(DEPDIR)/libweather_la-icon.Plo"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-icon.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='icon.c' object='libweather_la-icon.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-icon.Plo' tmpdepfile='$(DEPDIR)/libweather_la-icon.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-icon.lo `test -f 'icon.c' || echo '$(srcdir)/'`icon.c
+
+libweather_la-search_dialog.o: search_dialog.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-search_dialog.o -MD -MP -MF "$(DEPDIR)/libweather_la-search_dialog.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-search_dialog.o `test -f 'search_dialog.c' || echo '$(srcdir)/'`search_dialog.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-search_dialog.Tpo" "$(DEPDIR)/libweather_la-search_dialog.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-search_dialog.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='search_dialog.c' object='libweather_la-search_dialog.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-search_dialog.Po' tmpdepfile='$(DEPDIR)/libweather_la-search_dialog.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-search_dialog.o `test -f 'search_dialog.c' || echo '$(srcdir)/'`search_dialog.c
+
+libweather_la-search_dialog.obj: search_dialog.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-search_dialog.obj -MD -MP -MF "$(DEPDIR)/libweather_la-search_dialog.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-search_dialog.obj `if test -f 'search_dialog.c'; then $(CYGPATH_W) 'search_dialog.c'; else $(CYGPATH_W) '$(srcdir)/search_dialog.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-search_dialog.Tpo" "$(DEPDIR)/libweather_la-search_dialog.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-search_dialog.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='search_dialog.c' object='libweather_la-search_dialog.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-search_dialog.Po' tmpdepfile='$(DEPDIR)/libweather_la-search_dialog.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-search_dialog.obj `if test -f 'search_dialog.c'; then $(CYGPATH_W) 'search_dialog.c'; else $(CYGPATH_W) '$(srcdir)/search_dialog.c'; fi`
+
+libweather_la-search_dialog.lo: search_dialog.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-search_dialog.lo -MD -MP -MF "$(DEPDIR)/libweather_la-search_dialog.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-search_dialog.lo `test -f 'search_dialog.c' || echo '$(srcdir)/'`search_dialog.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-search_dialog.Tpo" "$(DEPDIR)/libweather_la-search_dialog.Plo"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-search_dialog.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='search_dialog.c' object='libweather_la-search_dialog.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-search_dialog.Plo' tmpdepfile='$(DEPDIR)/libweather_la-search_dialog.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-search_dialog.lo `test -f 'search_dialog.c' || echo '$(srcdir)/'`search_dialog.c
 
 mostlyclean-libtool:
 	-rm -f *.lo

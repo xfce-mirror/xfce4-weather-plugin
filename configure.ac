@@ -5,11 +5,11 @@ dnl
 dnl 2003 Benedikt Meurer <benedikt.meurer@unix-ag.uni-siegen.de>
 dnl
 
-AC_INIT([panel-plugin/weather.c])
+AC_INIT([configure])
 
 AM_CONFIG_HEADER([config.h])
 
-AM_INIT_AUTOMAKE([xfce4-weather-plugin], [0.3.0])
+AM_INIT_AUTOMAKE([xfce4-weather-plugin], [0.3.9])
 
 AM_MAINTAINER_MODE
 
