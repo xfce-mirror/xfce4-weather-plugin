@@ -37,7 +37,7 @@ gchar *make_label(struct xml_weather *weatherdata, enum datas opt, enum units un
 
         return str;
 }
-// -1 error 0 no update needed 1 success
+/* -1 error 0 no update needed 1 success */
 gint update_weatherdata(struct xfceweather_data *data, gboolean force)
 {
         xmlNode *cur_node = NULL;
@@ -234,8 +234,8 @@ void xfceweather_read_config (Control *control, xmlNodePtr node)
                 if (node->type != XML_ELEMENT_NODE)
                         continue;
 
-                if (NODE_IS_TYPE(node, "label_")) { // label_ because the values of the
-                                                    // previous plugin are invalid in this version
+                if (NODE_IS_TYPE(node, "label_")) { /* label_ because the values of the
+                                                     previous plugin are invalid in this version * */
                         value = DATA(node);
                         if (value) {
                                 gint val = atoi(value); 

@@ -58,7 +58,7 @@ gboolean http_send_req(int fd, gchar *url, gchar *hostname)
        
 int http_recv(int fd, gchar **buffer)
 {
-        int n = 0; // 1 = good, 0 = conn terminated, -1 = error
+        int n = 0; /* 1 = good, 0 = conn terminated, -1 = error */
         gchar thisbuffer[1024]; 
         
         n = recv(fd, thisbuffer, 1023, 0);
@@ -110,7 +110,7 @@ gboolean http_get_header(int fd, gchar **buffer)
 
                 if (found)
                 {
-                        //TODO check if at end
+                        /*TODO check if at end*/
                         *buffer = g_strdup(where);
                 }
                 else
@@ -137,6 +137,7 @@ gboolean http_get(gchar *url, gchar *hostname, gboolean savefile, gchar **fname_
                 return FALSE;
 
         if (http_send_req(fd, url, hostname) == -1) {
+                close(fd);
                 return FALSE;
         }
 
@@ -147,13 +148,17 @@ gboolean http_get(gchar *url, gchar *hostname, gboolean savefile, gchar **fname_
                 if (!file)
                 {
                        DEBUG_PRINT("Error opening file %s\n", *fname_buff);
+                       close(fd);
                         return FALSE;
                 }
         }
 
 
         if (http_get_header(fd, &buffer) == FALSE)
+        {
+                close(fd);
                 return FALSE;
+        }
 
 
         if (buffer)
@@ -196,7 +201,8 @@ gboolean http_get(gchar *url, gchar *hostname, gboolean savefile, gchar **fname_
 
         if (error == -1)
         {
-                fclose(file); //TODO unlink
+                fclose(file); /*TODO unlink*/
+                close(fd);
                 g_free(retstr);
                 return FALSE;
         }
@@ -205,6 +211,8 @@ gboolean http_get(gchar *url, gchar *hostname, gboolean savefile, gchar **fname_
                 fclose(file);
         else
                 *fname_buff = retstr;
+
+        close(fd);
 
         return TRUE;
 }

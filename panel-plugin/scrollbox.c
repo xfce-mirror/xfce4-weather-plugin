@@ -302,7 +302,7 @@ gtk_scrollbox_instance_init (GTypeInstance *instance, gpointer g_class)
 {
           GtkScrollbox *self = (GtkScrollbox *)instance;
 
-//          GTK_WIDGET_SET_FLAGS (GTK_WIDGET(self), GTK_NO_WINDOW);
+/*          GTK_WIDGET_SET_FLAGS (GTK_WIDGET(self), GTK_NO_WINDOW);*/
 
           self->draw_timeout = 0;
           self->labels = g_ptr_array_new();

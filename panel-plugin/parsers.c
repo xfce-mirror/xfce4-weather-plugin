@@ -294,6 +294,37 @@ void xml_loc_free(struct xml_loc *data)
         CHK_FREE(data->suns);
 }
 
+void xml_part_free(struct xml_part *data)
+{
+        if (!data)
+                return;
+
+        CHK_FREE(data->icon);
+        CHK_FREE(data->t);
+        CHK_FREE(data->ppcp);
+        CHK_FREE(data->hmid);
+
+        if (data->wind)
+                xml_wind_free(data->wind);
+}
+
+void xml_dayf_free(struct xml_dayf *data)
+{
+        if (!data)
+                return;
+
+        CHK_FREE(data->day);
+        CHK_FREE(data->date);
+        CHK_FREE(data->hi);
+        CHK_FREE(data->low);
+
+        if (data->part[0])
+                xml_part_free(data->part[0]);
+
+        if (data->part[1])
+                xml_part_free(data->part[1]);
+}
+
 void xml_weather_free(struct xml_weather *data)
 {
         if (data->cc)
@@ -302,5 +333,18 @@ void xml_weather_free(struct xml_weather *data)
         if (data->loc)
                 xml_loc_free(data->loc);
 
-        // xml_dayf
+        if (data->dayf)
+        {
+                int i;
+                for (i = 0; i < XML_WEATHER_DAYF_N; i++)
+                {
+                        if (!data->dayf[i])
+                                break;
+
+                        xml_dayf_free(data->dayf[i]);
+                }
+
+        }
+
+	free(data);
 }

@@ -108,7 +108,7 @@ gchar *get_data_wind(struct xml_wind *data, enum datas_wind type)
         return CHK_NULL(str);
 }
 
-// -- This is not the same as the previous functions
+/* -- This is not the same as the previous functions */
 gchar *get_data_cc(struct xml_cc *data, enum datas type)
 { 
         gchar *str;
@@ -178,7 +178,6 @@ const gchar *get_data(struct xml_weather *data, enum datas type)
                 {
                         case DATAS_CC: str = get_data_cc(data->cc, type); break;
                         case DATAS_LOC: str = get_data_loc(data->loc, type); break;
-                                        //case DATAS_DAYF: str = get_data_dayf(data->dayf, type, arg);
                         default: str = EMPTY_STRING;
                 }
         }

@@ -27,7 +27,8 @@ libweather_la_SOURCES =							\
 				icon.c											\
 				icon.h											\
 				search_dialog.c							\
-				search_dialog.h
+				search_dialog.h							\
+				debug_print.h
 
 libweather_la_CFLAGS =							\
 	@XFCE4_PANEL_CFLAGS@ 							\

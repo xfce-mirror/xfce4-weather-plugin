@@ -16,7 +16,7 @@ void register_icons(gchar *path)
         if (cfactory)
                 return;
 
-       DEBUG_PRINT("fuck %s\n", path);
+       DEBUG_PRINT("*** %s\n", path);
         
 
         cfactory = gtk_icon_factory_new();
@@ -49,7 +49,7 @@ void unregister_icons(void)
 {
         /* If there are more weather plugin's loaded, then they can't access
          * the icon's anymore */
-//        gtk_icon_factory_remove_default(cfactory);
+/*        gtk_icon_factory_remove_default(cfactory);*/
 }
 
 

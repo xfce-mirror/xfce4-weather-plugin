@@ -260,8 +260,8 @@ struct xfceweather_dialog *create_config_dialog(struct xfceweather_data *data,
         g_signal_connect_swapped (done, "clicked",
                         G_CALLBACK (apply_options), dialog);
 
-//        g_signal_connect_swapped (dialog->dialog, "destroy",
-//                        G_CALLBACK (gtk_widget_destroy), dialog);
+/*        g_signal_connect_swapped (dialog->dialog, "destroy",
+                        G_CALLBACK (gtk_widget_destroy), dialog);*/
         
         gtk_widget_show_all(vbox);
 
