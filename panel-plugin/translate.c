@@ -86,6 +86,8 @@ const gchar *desc_strings[] = {
         N_("Showers Late"),
         N_("PM Showers"),
         N_("Light Rain / Wind"),
+        N_("Scattered Showers"),
+        N_("PM Light Rain"),
         NULL
 };
 
