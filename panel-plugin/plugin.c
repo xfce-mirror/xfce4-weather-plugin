@@ -14,6 +14,43 @@
 #include "icon.h"
 #include "scrollbox.h"
 
+gboolean check_envproxy(gchar **proxy_host, gint *proxy_port)
+{
+        char *env_proxy = getenv("HTTP_PROXY"), *tmp, **split;
+
+        if (!env_proxy)
+                return FALSE;
+
+        tmp = strstr(env_proxy, "://");
+
+        if (!tmp || strlen(tmp) < 3)
+                return FALSE; 
+
+        env_proxy = tmp + 3;
+
+        /* we don't support username:password so return */
+        tmp = strchr(env_proxy, '@');
+        if (tmp)
+                return FALSE;
+
+        split = g_strsplit(env_proxy, ":", 2);
+
+        if (!split[0])
+                return FALSE;
+        else if (!split[1])
+        {
+                g_strfreev(split);
+                return FALSE;
+        }
+
+        *proxy_host = g_strdup(split[0]);
+        *proxy_port = atoi(split[1]);
+
+        g_strfreev(split);
+
+        return TRUE;
+}
+
 gint IconSizeSmall = 0;
 
 gchar *make_label(struct xml_weather *weatherdata, enum datas opt, enum units unit, gint size)
@@ -245,11 +282,17 @@ void xfceweather_read_config (Control *control, xmlNodePtr node)
                 data->proxy_host = NULL;
         }
 
+        if (data->saved_proxy_host)
+        {
+                g_free(data->saved_proxy_host);
+                data->saved_proxy_host = NULL;
+        }
+
         value = xmlGetProp (node, (const xmlChar *) "proxy_host");
 
         if (value)
         {
-                data->proxy_host = g_strdup(value);
+                data->saved_proxy_host = g_strdup(value);
                 g_free(value);
         }
 
@@ -257,8 +300,22 @@ void xfceweather_read_config (Control *control, xmlNodePtr node)
 
         if (value)
         {
-                data->proxy_port = atoi(value);
+                data->saved_proxy_port = atoi(value);
                 g_free(value);
+        }
+
+        value = xmlGetProp(node, (const xmlChar *) "proxy_fromenv");
+
+        if (value && atoi(value))
+        {
+        
+                data->proxy_fromenv = TRUE;
+                check_envproxy(&data->proxy_host, &data->proxy_port); 
+        }
+        else
+        {
+                data->proxy_host = g_strdup(data->saved_proxy_host);
+                data->proxy_port = data->saved_proxy_port;
         }
 
 
@@ -302,7 +359,9 @@ void xfceweather_write_config (Control *control,
         if (data->location_code)
                 xmlSetProp (root, "loc_code", data->location_code);
 
-        if (data->proxy_host)
+        if (data->proxy_fromenv)
+                xmlSetProp(root, "proxy_fromenv", "1");
+        else if (data->proxy_host)
         {
                 xmlSetProp(root, "proxy_host", data->proxy_host);
 
@@ -345,7 +404,7 @@ void real_update_config(struct xfceweather_data *data, gboolean force)
 
 void update_config(struct xfceweather_data *data)
 {
-        real_update_config(data, FALSE);
+        real_update_config(data, TRUE); /* force because units could have changed */
 }
 
 void close_summary(GtkWidget *widget, gpointer *user_data)

@@ -33,6 +33,13 @@ struct xfceweather_data {
 
         gchar *proxy_host;
         gint proxy_port;
+
+        gboolean proxy_fromenv;
+        /* used for storing the configured 
+         * but not active proxy setttings */
+        gchar *saved_proxy_host;
+        gint saved_proxy_port;
 }; 
+gboolean check_envproxy(gchar **, gint *);
 
 #endif

@@ -3,9 +3,11 @@
 
 #ifdef DEBUG
   #include <stdio.h>
-  #define DEBUG_PRINT(s, i) fprintf(stderr, s, i);
+  #define DEBUG_PRINT(s, i) fprintf(stderr, s, i)
+  #define DEBUG_PUTS(s) puts(s)
 #else
-  #define DEBUG_PRINT(s, i) do {} while(0);
+  #define DEBUG_PRINT(s, i) do {} while(0)
+  #define DEBUG_PUTS(s) do {} while(0)
 #endif
 
 #endif

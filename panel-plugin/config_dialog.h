@@ -20,6 +20,8 @@ struct xfceweather_dialog {
         GtkWidget *txt_loc_code;
         GtkWidget *txt_proxy_host;
         GtkWidget *txt_proxy_port;
+        GtkWidget *chk_proxy_use;
+        GtkWidget *chk_proxy_fromenv;
 
         GtkWidget *tooltip_yes;
         GtkWidget *tooltip_no;

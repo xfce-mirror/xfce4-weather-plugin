@@ -59,6 +59,26 @@ gboolean cb_deloption (GtkWidget *widget, gpointer data)
         return FALSE;
 }
 
+gboolean cb_toggle(GtkWidget *widget, gpointer data)
+{
+        GtkWidget *target = (GtkWidget *)data;
+
+        gtk_widget_set_sensitive(target,
+                        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget)));
+
+        return FALSE;
+}
+
+gboolean cb_not_toggle(GtkWidget *widget, gpointer data)
+{
+        GtkWidget *target = (GtkWidget *)data;
+
+        gtk_widget_set_sensitive(target,
+                        !gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(widget)));
+
+        return FALSE;
+}                       
+
 static GtkWidget *make_label(void)
 {
         int i;
@@ -121,18 +141,40 @@ void apply_options (struct xfceweather_dialog *dialog)
         }
         
         if (data->proxy_host)
+        {
                 g_free(data->proxy_host);
-
-        value = (gchar *)gtk_entry_get_text(GTK_ENTRY(dialog->txt_proxy_host));
-        if (strlen(value) > 0)
-        { 
-                data->proxy_host = g_strdup(value);
-
-                data->proxy_port = gtk_spin_button_get_value(GTK_SPIN_BUTTON(dialog->txt_proxy_port)); 
+                data->proxy_host = NULL; 
         }
-        else
-                data->proxy_host = NULL;
+        
+        if (!gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(dialog->chk_proxy_use)))
+                data->proxy_fromenv = FALSE;
+        else if (gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(dialog->chk_proxy_fromenv)))
+        {
+                data->proxy_fromenv = TRUE;
+                check_envproxy(&data->proxy_host, &data->proxy_port);
+        }
+        else /* use provided proxy settings */
+        {
+                data->proxy_fromenv = FALSE;
+                value = (gchar *)gtk_entry_get_text(GTK_ENTRY(dialog->txt_proxy_host));
+
+                if (strlen(value) == 0)
+                {
+                        xfce_err(_("Please enter proxy settings"));
+                        gtk_widget_grab_focus(dialog->txt_proxy_host);
+                        return;
+                }
+
+                data->proxy_host = g_strdup(value);
+                data->proxy_port = gtk_spin_button_get_value(
+                                GTK_SPIN_BUTTON(dialog->txt_proxy_port));
+
+                if (data->saved_proxy_host)
+                        g_free(data->saved_proxy_host);
                 
+                data->saved_proxy_host = g_strdup(value);
+                data->saved_proxy_port = data->proxy_port;
+        }       
 
         if (cb)
                 cb(data);
@@ -170,7 +212,7 @@ struct xfceweather_dialog *create_config_dialog(struct xfceweather_data *data,
                 GtkContainer *container, GtkWidget *done)
 {
         struct xfceweather_dialog *dialog;
-        GtkWidget *vbox, *vbox2, *hbox, *label, 
+        GtkWidget *vbox, *vbox2, *vbox3, *hbox, *hbox2, *label, 
               *menu, *button_add, 
               *button_del, *image, *button, *scroll;
         GtkSizeGroup *sg = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
@@ -232,28 +274,69 @@ struct xfceweather_dialog *create_config_dialog(struct xfceweather_data *data,
         /* proxy */
         label = gtk_label_new(_("Proxy server:"));
         dialog->txt_proxy_host = gtk_entry_new();
+        dialog->chk_proxy_use = gtk_check_button_new_with_label(_("Use proxy server"));
+        dialog->chk_proxy_fromenv = 
+                gtk_check_button_new_with_label(_("Auto-detect from environment"));
+        dialog->txt_proxy_port = gtk_spin_button_new_with_range(0, 65536, 1);
 
-        gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+        gtk_misc_set_alignment(GTK_MISC(label), 0, 0);
 
         gtk_size_group_add_widget(sg, label);
 
-        hbox = gtk_hbox_new(FALSE, BORDER);
-        gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
-        gtk_box_pack_start(GTK_BOX(hbox), dialog->txt_proxy_host, TRUE, TRUE, 0);
-        
-        dialog->txt_proxy_port = gtk_spin_button_new_with_range(0, 65536, 1);
- 
-        gtk_box_pack_start(GTK_BOX(hbox), dialog->txt_proxy_port, FALSE, FALSE, 0);
-        gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+        vbox3 = gtk_vbox_new(FALSE, BORDER);
+        gtk_box_pack_start(GTK_BOX(vbox3), dialog->chk_proxy_use, FALSE, FALSE, 0);
+        gtk_box_pack_start(GTK_BOX(vbox3), dialog->chk_proxy_fromenv, FALSE, FALSE, 0);
 
-        if (dialog->wd->proxy_host != NULL)
+        hbox = gtk_hbox_new(FALSE, BORDER);
+        gtk_box_pack_start(GTK_BOX(hbox), dialog->txt_proxy_host, TRUE, TRUE, 0);
+        gtk_box_pack_start(GTK_BOX(hbox), dialog->txt_proxy_port, FALSE, FALSE, 0);
+        gtk_box_pack_start(GTK_BOX(vbox3), hbox, FALSE, FALSE, 0);
+        
+
+        hbox2 = gtk_hbox_new(FALSE, BORDER);
+        gtk_box_pack_start(GTK_BOX(hbox2), label, FALSE, FALSE, 0);
+        gtk_box_pack_start(GTK_BOX(hbox2), vbox3, TRUE, TRUE, 0);
+
+        gtk_box_pack_start(GTK_BOX(vbox), hbox2, FALSE, FALSE, 0);
+
+        g_signal_connect(dialog->chk_proxy_use, "toggled", G_CALLBACK(cb_toggle),
+                        (gpointer)dialog->txt_proxy_host);
+        g_signal_connect(dialog->chk_proxy_use, "toggled", G_CALLBACK(cb_toggle),
+                        (gpointer)dialog->txt_proxy_port);
+        g_signal_connect(dialog->chk_proxy_use, "toggled", G_CALLBACK(cb_toggle),
+                        (gpointer)dialog->chk_proxy_fromenv);
+
+        g_signal_connect(dialog->chk_proxy_fromenv, "toggled", G_CALLBACK(cb_not_toggle),
+                        (gpointer)dialog->txt_proxy_host);
+        g_signal_connect(dialog->chk_proxy_fromenv, "toggled", G_CALLBACK(cb_not_toggle),
+                        (gpointer)dialog->txt_proxy_port);
+
+        if (dialog->wd->saved_proxy_host != NULL)
         {
                 gtk_entry_set_text(GTK_ENTRY(dialog->txt_proxy_host), 
-                                dialog->wd->proxy_host); 
- 
+                                dialog->wd->saved_proxy_host); 
+
                 gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->txt_proxy_port), 
-                                dialog->wd->proxy_port);
-        }        
+                                dialog->wd->saved_proxy_port);
+        }
+
+        if (dialog->wd->proxy_host || dialog->wd->proxy_fromenv)
+        { 
+                gtk_toggle_button_set_active(
+                                GTK_TOGGLE_BUTTON(dialog->chk_proxy_use), TRUE);
+                
+                if (dialog->wd->proxy_fromenv)
+                        gtk_toggle_button_set_active(
+                                        GTK_TOGGLE_BUTTON(dialog->chk_proxy_fromenv), TRUE);
+        }
+        else
+        { 
+                gtk_toggle_button_set_active(
+                                GTK_TOGGLE_BUTTON(dialog->chk_proxy_use), TRUE);
+                gtk_toggle_button_set_active(
+                                GTK_TOGGLE_BUTTON(dialog->chk_proxy_use), FALSE);
+        }
+
 
         /* labels */
          

@@ -65,7 +65,7 @@ const gchar *desc_strings[] = {
         N_("Rain or Snow"),
         N_("Rain Showers"),
         N_("Rain to Snow"),
-        N_("Rain/Snow Showers"),
+        N_("Rain / Snow Showers"),
         N_("Showers"),
         N_("Sleet"),
         N_("Sleet and Snow"),
@@ -88,6 +88,17 @@ const gchar *desc_strings[] = {
         N_("Light Rain / Wind"),
         N_("Scattered Showers"),
         N_("PM Light Rain"),
+        N_("AM Showers"),
+        N_("AM Light Rain"),
+        N_("Partly Cloudy and Windy"),
+        N_("Few Showers"),
+        N_("Light Drizzle"),
+        N_("Clouds Early / Clearing Late"),
+        N_("Mostly Cloudy and Windy"),
+        N_("Rain / Snow"),
+        N_("Rain and Sleet"),
+        N_("Snow Showers Late"),
+        N_("Light Drizzle and Windy"),
         NULL
 };
 
@@ -243,7 +254,7 @@ gchar *translate_day(const gchar *day)
         }
 }
 
-/* NNW */
+/* NNW  VAR */
 gchar *translate_wind_direction(const gchar *wdir)
 {
         int i, j, wdir_len;

@@ -110,9 +110,15 @@ gboolean http_get(gchar *url, gchar *hostname, gboolean savefile, gchar **fname_
         gchar *request = NULL;
 
         if (proxy_host)
+        {
+                DEBUG_PRINT("using proxy %s\n", proxy_host);
                 fd = http_connect(proxy_host, proxy_port);
+        }
         else
+        {
+                DEBUG_PUTS("Not USING PROXY\n");
                 fd = http_connect(hostname, 80);
+        }
         
         if (fd == -1)
                 return FALSE;
