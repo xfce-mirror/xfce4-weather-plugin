@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-weather-plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-20 22:26+0100\n"
+"POT-Creation-Date: 2005-03-03 15:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,48 +16,73 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: panel-plugin/plugin.c:62
+#: panel-plugin/get_data.c:255
+msgid "km/h"
+msgstr ""
+
+#: panel-plugin/get_data.c:255
+msgid "mph"
+msgstr ""
+
+#: panel-plugin/get_data.c:256
+msgid "hPa"
+msgstr ""
+
+#: panel-plugin/get_data.c:256
+#, fuzzy
+msgid "in"
+msgstr "Regen"
+
+#: panel-plugin/get_data.c:257
+msgid "km"
+msgstr ""
+
+#: panel-plugin/get_data.c:257
+msgid "mi"
+msgstr ""
+
+#: panel-plugin/plugin.c:63
 msgid "V"
 msgstr "Z"
 
-#: panel-plugin/plugin.c:63
+#: panel-plugin/plugin.c:64
 msgid "U"
 msgstr ""
 
-#: panel-plugin/plugin.c:64
+#: panel-plugin/plugin.c:65
 msgid "WD"
 msgstr "WR"
 
-#: panel-plugin/plugin.c:65 panel-plugin/plugin.c:66
+#: panel-plugin/plugin.c:66 panel-plugin/plugin.c:67
 msgid "P"
 msgstr "D"
 
-#: panel-plugin/plugin.c:67
+#: panel-plugin/plugin.c:68
 msgid "F"
 msgstr "G"
 
-#: panel-plugin/plugin.c:68
+#: panel-plugin/plugin.c:69
 msgid "T"
 msgstr "T"
 
-#: panel-plugin/plugin.c:69
+#: panel-plugin/plugin.c:70
 msgid "D"
 msgstr "D"
 
-#: panel-plugin/plugin.c:70
+#: panel-plugin/plugin.c:71
 msgid "H"
 msgstr "V"
 
-#: panel-plugin/plugin.c:71
+#: panel-plugin/plugin.c:72
 msgid "WS"
 msgstr "WS"
 
-#: panel-plugin/plugin.c:72
+#: panel-plugin/plugin.c:73
 msgid "WG"
 msgstr "WT"
 
-#: panel-plugin/plugin.c:567 panel-plugin/summary_window.c:302
-#: panel-plugin/summary_window.c:309
+#: panel-plugin/plugin.c:589 panel-plugin/summary_window.c:317
+#: panel-plugin/summary_window.c:324
 msgid "Weather update"
 msgstr "Weerupdate"
 
@@ -111,19 +136,19 @@ msgstr ""
 "\n"
 "Wind\n"
 
-#: panel-plugin/summary_window.c:75
+#: panel-plugin/summary_window.c:76
 msgid "Speed"
 msgstr "Snelheid"
 
-#: panel-plugin/summary_window.c:79
+#: panel-plugin/summary_window.c:83
 msgid "Direction"
 msgstr "Richting"
 
-#: panel-plugin/summary_window.c:85
+#: panel-plugin/summary_window.c:90
 msgid "Gusts"
 msgstr "Windstoten"
 
-#: panel-plugin/summary_window.c:87
+#: panel-plugin/summary_window.c:95
 msgid ""
 "\n"
 "UV\n"
@@ -131,15 +156,15 @@ msgstr ""
 "\n"
 "UV\n"
 
-#: panel-plugin/summary_window.c:88
+#: panel-plugin/summary_window.c:96
 msgid "Index"
 msgstr "Index"
 
-#: panel-plugin/summary_window.c:89
+#: panel-plugin/summary_window.c:98
 msgid "Risk"
 msgstr "Risico"
 
-#: panel-plugin/summary_window.c:91
+#: panel-plugin/summary_window.c:102
 msgid ""
 "\n"
 "Atmospheric pressure\n"
@@ -147,15 +172,15 @@ msgstr ""
 "\n"
 "Luchtdruk\n"
 
-#: panel-plugin/summary_window.c:92
+#: panel-plugin/summary_window.c:103
 msgid "Pressure"
 msgstr "Luchtdruk"
 
-#: panel-plugin/summary_window.c:95
+#: panel-plugin/summary_window.c:106
 msgid "State"
 msgstr "Tendens"
 
-#: panel-plugin/summary_window.c:99
+#: panel-plugin/summary_window.c:110
 msgid ""
 "\n"
 "Sun\n"
@@ -163,15 +188,15 @@ msgstr ""
 "\n"
 "Zon\n"
 
-#: panel-plugin/summary_window.c:103
+#: panel-plugin/summary_window.c:114
 msgid "Rise"
 msgstr "Op"
 
-#: panel-plugin/summary_window.c:111
+#: panel-plugin/summary_window.c:122
 msgid "Set"
 msgstr "Onder"
 
-#: panel-plugin/summary_window.c:117
+#: panel-plugin/summary_window.c:128
 msgid ""
 "\n"
 "Other\n"
@@ -179,41 +204,41 @@ msgstr ""
 "\n"
 "Overige\n"
 
-#: panel-plugin/summary_window.c:118
+#: panel-plugin/summary_window.c:129
 msgid "Humidity"
 msgstr "Luchtvochtigheid"
 
-#: panel-plugin/summary_window.c:119
+#: panel-plugin/summary_window.c:131
 msgid "Visibility"
 msgstr "Zicht"
 
-#: panel-plugin/summary_window.c:160
+#: panel-plugin/summary_window.c:175
 #, c-format
 msgid "Day: %s"
 msgstr "Overdag: %s"
 
-#: panel-plugin/summary_window.c:163
+#: panel-plugin/summary_window.c:178
 #, c-format
 msgid "Night: %s"
 msgstr "Nacht: %s"
 
-#: panel-plugin/summary_window.c:173
+#: panel-plugin/summary_window.c:188
 msgid "<b>Precipitation</b>"
 msgstr "<b>Kans op neerslag</b>"
 
-#: panel-plugin/summary_window.c:194
+#: panel-plugin/summary_window.c:209
 msgid "<b>Temperature</b>"
 msgstr "<b>Temperatuur</b>"
 
-#: panel-plugin/summary_window.c:218
+#: panel-plugin/summary_window.c:233
 msgid "<b>Wind</b>"
 msgstr "<b>Wind</b>"
 
-#: panel-plugin/summary_window.c:315
+#: panel-plugin/summary_window.c:330
 msgid "Summary"
 msgstr "Samenvatting"
 
-#: panel-plugin/summary_window.c:317
+#: panel-plugin/summary_window.c:332
 msgid "Forecast"
 msgstr "Verwachting"
 
@@ -486,7 +511,7 @@ msgstr "Voornamelijk Bewolkt"
 msgid "Mostly Sunny"
 msgstr "Voornamelijk Zonnig"
 
-#: panel-plugin/translate.c:56
+#: panel-plugin/translate.c:56 panel-plugin/translate.c:334
 msgid "N/A"
 msgstr "N/B"
 
@@ -683,38 +708,17 @@ msgstr "Sneeuwbuien Vroeg"
 msgid "Few Snow Showers"
 msgstr "Mogelijk Sneeuwbuien"
 
-#: panel-plugin/translate.c:106
+#: panel-plugin/translate.c:109
 msgid "rising"
 msgstr "stijgende"
 
-#: panel-plugin/translate.c:107
+#: panel-plugin/translate.c:110
 msgid "steady"
 msgstr "stabiel"
 
-#: panel-plugin/translate.c:108
+#: panel-plugin/translate.c:111
 msgid "falling"
 msgstr "dalende"
-
-#: panel-plugin/translate.c:113
-msgid "S"
-msgstr "Z"
-
-#: panel-plugin/translate.c:114
-msgid "W"
-msgstr "W"
-
-#: panel-plugin/translate.c:115
-msgid "E"
-msgstr "O"
-
-#: panel-plugin/translate.c:116
-msgid "N"
-msgstr "N"
-
-#: panel-plugin/translate.c:217
-#, c-format
-msgid "%x at %X Local Time"
-msgstr "%x om %X Lokale Tijd"
 
 #: panel-plugin/translate.c:116
 msgid "Low"
@@ -735,6 +739,80 @@ msgstr "Zeer Hoog"
 #: panel-plugin/translate.c:120
 msgid "Extreme"
 msgstr "Extreem"
+
+#: panel-plugin/translate.c:125
+msgid "S"
+msgstr "Z"
+
+#: panel-plugin/translate.c:126
+msgid "SSW"
+msgstr ""
+
+#: panel-plugin/translate.c:127
+#, fuzzy
+msgid "SW"
+msgstr "W"
+
+#: panel-plugin/translate.c:128
+#, fuzzy
+msgid "WSW"
+msgstr "WS"
+
+#: panel-plugin/translate.c:129
+msgid "W"
+msgstr "W"
+
+#: panel-plugin/translate.c:130
+msgid "WNW"
+msgstr ""
+
+#: panel-plugin/translate.c:131
+#, fuzzy
+msgid "NW"
+msgstr "N"
+
+#: panel-plugin/translate.c:132
+msgid "NNW"
+msgstr ""
+
+#: panel-plugin/translate.c:133
+msgid "N"
+msgstr "N"
+
+#: panel-plugin/translate.c:134
+msgid "NNE"
+msgstr ""
+
+#: panel-plugin/translate.c:135
+#, fuzzy
+msgid "NE"
+msgstr "N"
+
+#: panel-plugin/translate.c:136
+msgid "ENE"
+msgstr ""
+
+#: panel-plugin/translate.c:137
+msgid "E"
+msgstr "O"
+
+#: panel-plugin/translate.c:138
+msgid "ESE"
+msgstr ""
+
+#: panel-plugin/translate.c:139
+#, fuzzy
+msgid "SE"
+msgstr "O"
+
+#: panel-plugin/translate.c:140
+msgid "SSE"
+msgstr ""
+
+#: panel-plugin/translate.c:246
+#, c-format
+msgid "%x at %X Local Time"
+msgstr "%x om %X Lokale Tijd"
 
 #: panel-plugin/translate.c:332
 msgid "calm"
