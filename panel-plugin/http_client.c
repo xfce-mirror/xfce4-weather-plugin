@@ -1,3 +1,5 @@
+#include <config.h>
+
 #include "http_client.h"
 #include "debug_print.h"
 

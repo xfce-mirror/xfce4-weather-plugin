@@ -187,7 +187,9 @@ libweather_la_SOURCES = \
 				icon.h											\
 				search_dialog.c							\
 				search_dialog.h							\
-				debug_print.h
+				debug_print.h								\
+				translate.c									\
+				translate.h									
 
 
 libweather_la_CFLAGS = \
@@ -212,7 +214,8 @@ am_libweather_la_OBJECTS = libweather_la-config_dialog.lo \
 	libweather_la-get_data.lo libweather_la-http_client.lo \
 	libweather_la-parsers.lo libweather_la-plugin.lo \
 	libweather_la-scrollbox.lo libweather_la-summary_window.lo \
-	libweather_la-icon.lo libweather_la-search_dialog.lo
+	libweather_la-icon.lo libweather_la-search_dialog.lo \
+	libweather_la-translate.lo
 libweather_la_OBJECTS = $(am_libweather_la_OBJECTS)
 
 DEFAULT_INCLUDES =  -I. -I$(srcdir) -I$(top_builddir)
@@ -226,7 +229,8 @@ am__depfiles_maybe = depfiles
 @AMDEP_TRUE@	./$(DEPDIR)/libweather_la-plugin.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/libweather_la-scrollbox.Plo \
 @AMDEP_TRUE@	./$(DEPDIR)/libweather_la-search_dialog.Plo \
-@AMDEP_TRUE@	./$(DEPDIR)/libweather_la-summary_window.Plo
+@AMDEP_TRUE@	./$(DEPDIR)/libweather_la-summary_window.Plo \
+@AMDEP_TRUE@	./$(DEPDIR)/libweather_la-translate.Plo
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
 LTCOMPILE = $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) \
@@ -293,6 +297,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libweather_la-scrollbox.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libweather_la-search_dialog.Plo@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libweather_la-summary_window.Plo@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/libweather_la-translate.Plo@am__quote@
 
 .c.o:
 @am__fastdepCC_TRUE@	if $(COMPILE) -MT $@ -MD -MP -MF "$(DEPDIR)/$*.Tpo" \
@@ -623,6 +628,39 @@ libweather_la-search_dialog.lo: search_dialog.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-search_dialog.Plo' tmpdepfile='$(DEPDIR)/libweather_la-search_dialog.TPlo' @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-search_dialog.lo `test -f 'search_dialog.c' || echo '$(srcdir)/'`search_dialog.c
+
+libweather_la-translate.o: translate.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-translate.o -MD -MP -MF "$(DEPDIR)/libweather_la-translate.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-translate.o `test -f 'translate.c' || echo '$(srcdir)/'`translate.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-translate.Tpo" "$(DEPDIR)/libweather_la-translate.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-translate.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='translate.c' object='libweather_la-translate.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-translate.Po' tmpdepfile='$(DEPDIR)/libweather_la-translate.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-translate.o `test -f 'translate.c' || echo '$(srcdir)/'`translate.c
+
+libweather_la-translate.obj: translate.c
+@am__fastdepCC_TRUE@	if $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-translate.obj -MD -MP -MF "$(DEPDIR)/libweather_la-translate.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-translate.obj `if test -f 'translate.c'; then $(CYGPATH_W) 'translate.c'; else $(CYGPATH_W) '$(srcdir)/translate.c'; fi`; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-translate.Tpo" "$(DEPDIR)/libweather_la-translate.Po"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-translate.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='translate.c' object='libweather_la-translate.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-translate.Po' tmpdepfile='$(DEPDIR)/libweather_la-translate.TPo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-translate.obj `if test -f 'translate.c'; then $(CYGPATH_W) 'translate.c'; else $(CYGPATH_W) '$(srcdir)/translate.c'; fi`
+
+libweather_la-translate.lo: translate.c
+@am__fastdepCC_TRUE@	if $(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -MT libweather_la-translate.lo -MD -MP -MF "$(DEPDIR)/libweather_la-translate.Tpo" \
+@am__fastdepCC_TRUE@	  -c -o libweather_la-translate.lo `test -f 'translate.c' || echo '$(srcdir)/'`translate.c; \
+@am__fastdepCC_TRUE@	then mv -f "$(DEPDIR)/libweather_la-translate.Tpo" "$(DEPDIR)/libweather_la-translate.Plo"; \
+@am__fastdepCC_TRUE@	else rm -f "$(DEPDIR)/libweather_la-translate.Tpo"; exit 1; \
+@am__fastdepCC_TRUE@	fi
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	source='translate.c' object='libweather_la-translate.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	depfile='$(DEPDIR)/libweather_la-translate.Plo' tmpdepfile='$(DEPDIR)/libweather_la-translate.TPlo' @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(LIBTOOL) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libweather_la_CFLAGS) $(CFLAGS) -c -o libweather_la-translate.lo `test -f 'translate.c' || echo '$(srcdir)/'`translate.c
 
 mostlyclean-libtool:
 	-rm -f *.lo

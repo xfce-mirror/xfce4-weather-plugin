@@ -1,3 +1,5 @@
+#include <config.h>
+
 #define BORDER 6
 #include "parsers.h"
 #include "search_dialog.h"

@@ -1,3 +1,5 @@
+#include <config.h>
+
 #include "get_data.h"
 #include "debug_print.h"
 #define KILL_RING_S 5

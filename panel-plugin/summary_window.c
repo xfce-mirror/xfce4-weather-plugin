@@ -1,8 +1,12 @@
+#include <config.h>
+
 #include "summary_window.h"
-#include "libxfcegui4/dialogs.h"
 #include "debug_print.h"
+#include "translate.h"
+
 #include <libxfce4util/i18n.h>
 #include <panel/xfce_support.h>
+#include <libxfcegui4/dialogs.h>
 
 #define APPEND_BTEXT(text) gtk_text_buffer_insert_with_tags(GTK_TEXT_BUFFER(buffer),\
                 &iter, text, -1, btag, NULL);
@@ -54,7 +58,13 @@ GtkWidget *create_summary_tab (struct xml_weather *data, enum units unit)
         APPEND_BTEXT(_("\nTemperature\n"));
         APPEND_TEXT_ITEM(_("Temperature"), TEMP);
         APPEND_TEXT_ITEM(_("Windchill"), FLIK);
-        APPEND_TEXT_ITEM(_("Description"), TRANS);
+        
+        /* special case for TRANS because of translate_desc */
+        value = g_strdup_printf("\t%s: %s\n",
+                _("Description"), translate_desc(get_data(data, TRANS)));
+        APPEND_TEXT_ITEM_REAL(value); 
+        g_free(value);
+
         APPEND_TEXT_ITEM(_("Dew point"), DEWP);
 
         APPEND_BTEXT(_("\nWind\n"));
@@ -112,10 +122,10 @@ GtkWidget *make_forecast(struct xml_dayf *weatherdata, enum units unit)
         box_n = gtk_event_box_new();
         gtk_container_add(GTK_CONTAINER(box_n), icon_n);
 
-        str = g_strdup_printf(_("Day: %s"), get_data_f(weatherdata, TRANS_D));
+        str = g_strdup_printf(_("Day: %s"), translate_desc(get_data_f(weatherdata, TRANS_D)));
         add_tooltip(box_d, str);
         g_free(str);
-        str = g_strdup_printf(_("Night: %s"), get_data_f(weatherdata, TRANS_N));
+        str = g_strdup_printf(_("Night: %s"), translate_desc(get_data_f(weatherdata, TRANS_N)));
         add_tooltip(box_n, str);
         g_free(str);
 

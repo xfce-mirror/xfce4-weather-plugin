@@ -1,3 +1,5 @@
+#include <config.h>
+
 #include "parsers.h"
 #include "debug_print.h"
 

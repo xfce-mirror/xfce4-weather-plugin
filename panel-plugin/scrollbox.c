@@ -1,3 +1,5 @@
+#include <config.h>
+
 #include "scrollbox.h"
 #define LABEL_REFRESH 3000
 #define LABEL_SPEED 25

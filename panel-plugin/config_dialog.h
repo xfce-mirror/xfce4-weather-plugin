@@ -1,11 +1,11 @@
 #ifndef CONFIG_DIALOG_H
 #define CONFIG_DIALOG_H
 
-#include "search_dialog.h"
-#include "plugin.h"
+
 #include <gtk/gtk.h>
 
-#include <config.h>
+#include "search_dialog.h"
+#include "plugin.h"
 
 #define OPTIONS_N 11
 

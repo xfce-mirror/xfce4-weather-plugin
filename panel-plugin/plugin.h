@@ -1,19 +1,11 @@
 #ifndef PLUGIN_H
 #define PLUGIN_H
 
-#include "scrollbox.h"
-#include "parsers.h"
-#include "get_data.h"
-#include "http_client.h"
-#include "summary_window.h"
-#include "config_dialog.h"
-#include "icon.h"
-
 #include <panel/plugins.h>
 #include <gdk/gdk.h>
 
-
-#include <config.h>
+#include "parsers.h"
+#include "get_data.h"
 
 #define XFCEWEATHER_ROOT "weather"
 #define DEFAULT_W_THEME "liquid"

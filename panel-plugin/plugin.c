@@ -1,10 +1,18 @@
-#include "plugin.h"
+#include <config.h>
+
 #include <sys/stat.h>
-#include "debug_print.h"
-#include <libxfce4util/i18n.h>
 #include <libxfce4util/util.h>
+#include <libxfce4util/i18n.h>
 #include <time.h>
 
+#include "debug_print.h"
+#include "translate.h"
+#include "plugin.h"
+#include "http_client.h"
+#include "summary_window.h"
+#include "config_dialog.h"
+#include "icon.h"
+#include "scrollbox.h"
 
 gint IconSizeSmall = 0;
 
@@ -177,7 +185,7 @@ void update_plugin (struct xfceweather_data *data, gboolean force)
        
         gtk_image_set_from_pixbuf(GTK_IMAGE(data->iconimage), icon);
        
-        add_tooltip(data->tooltipbox, get_data(data->weatherdata, TRANS));
+        add_tooltip(data->tooltipbox, translate_desc(get_data(data->weatherdata, TRANS)));
 }
 
 GArray *labels_clear (GArray *array)
@@ -436,7 +444,9 @@ gboolean xfceweather_create_control(Control *control)
 
         control->data = data;
         control->with_popup = FALSE;
-
+        
+        /* FIXME Without this the first label looks odd, because 
+         * the gc isn't created yet */
         gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox), -1, "1");
         gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
 

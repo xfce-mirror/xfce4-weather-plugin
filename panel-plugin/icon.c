@@ -1,3 +1,5 @@
+#include <config.h>
+
 #include "icon.h"
 #include "debug_print.h"
 

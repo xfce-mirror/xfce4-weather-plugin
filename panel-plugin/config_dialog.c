@@ -1,7 +1,15 @@
+#include <config.h>
+
 #include "config_dialog.h"
 #include "debug_print.h"
+#include "parsers.h"
+#include "get_data.h"
+
 #include <libxfce4util/i18n.h>
-struct labeloption labeloptions[11] = { 
+
+#define BORDER 6
+
+struct labeloption labeloptions[OPTIONS_N] = { 
                 {N_("Windchill (F)"), FLIK},
                 {N_("Temperature (T)"), TEMP},
                 {N_("Atmosphere pressure (P)"), BAR_R},

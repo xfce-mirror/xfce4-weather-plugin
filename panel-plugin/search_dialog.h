@@ -1,7 +1,5 @@
 #include "http_client.h"
 
-#include <config.h>
-
 #include <libxml/parser.h>
 #include <gtk/gtk.h>
 #include <libxfcegui4/dialogs.h>
