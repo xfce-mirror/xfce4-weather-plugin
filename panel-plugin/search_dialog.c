@@ -3,6 +3,8 @@
 #include "search_dialog.h"
 #include "debug_print.h"
 
+#include <libxfce4util/i18n.h>
+
 void append_result(GtkListStore *mdl, gchar *id, gchar *city)
 {
          GtkTreeIter iter;
@@ -141,7 +143,7 @@ struct search_dialog *create_search_dialog(GtkWindow *parent)
         if (!dialog)
                 return NULL;
 
-        dialog->dialog = gtk_dialog_new_with_buttons ("Search weather location code",
+        dialog->dialog = gtk_dialog_new_with_buttons (_("Search weather location code"),
                         parent,
                         GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
                         GTK_STOCK_OK,
@@ -152,7 +154,7 @@ struct search_dialog *create_search_dialog(GtkWindow *parent)
         
         vbox = gtk_vbox_new(FALSE, BORDER);
 
-        label = gtk_label_new("Enter a city name or zip code:");
+        label = gtk_label_new(_("Enter a city name or zip code:"));
         gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
         gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
         
@@ -169,7 +171,7 @@ struct search_dialog *create_search_dialog(GtkWindow *parent)
 
        
 
-        column = gtk_tree_view_column_new_with_attributes("Results", renderer, 
+        column = gtk_tree_view_column_new_with_attributes(_("Results"), renderer, 
                         "text", 0, NULL);
         gtk_tree_view_append_column(GTK_TREE_VIEW(dialog->result_list), column);
 

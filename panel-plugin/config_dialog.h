@@ -5,6 +5,8 @@
 #include "plugin.h"
 #include <gtk/gtk.h>
 
+#include <config.h>
+
 #define OPTIONS_N 11
 
 struct labeloption {

@@ -1,8 +1,10 @@
 @SET_MAKE@
 
-SUBDIRS = panel-plugin icons
+SUBDIRS = panel-plugin po icons
 
 EXTRA_DIST =								\
+	INSTALL								\
+	NEWS								\
 	README
 
 distclean-local:

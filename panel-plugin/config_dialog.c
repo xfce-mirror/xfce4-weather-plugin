@@ -1,17 +1,18 @@
 #include "config_dialog.h"
 #include "debug_print.h"
+#include <libxfce4util/i18n.h>
 struct labeloption labeloptions[11] = { 
-                {"Windchill (F)", FLIK},
-                {"Temperature (T)", TEMP},
-                {"Atmosphere pressure (P)", BAR_R},
-                {"Atmosphere state (P)", BAR_D},
-                {"Wind speed (WS)", WIND_SPEED},
-                {"Wind gust (WG)", WIND_GUST},
-                {"Wind direction (WD)", WIND_DIRECTION},
-                {"Humidity (H)", HMID},
-                {"Visibility (V)", VIS},
-                {"UV Index (UV)", UV_INDEX},
-                {"Dewpoint (DP)", DEWP}
+                {N_("Windchill (F)"), FLIK},
+                {N_("Temperature (T)"), TEMP},
+                {N_("Atmosphere pressure (P)"), BAR_R},
+                {N_("Atmosphere state (P)"), BAR_D},
+                {N_("Wind speed (WS)"), WIND_SPEED},
+                {N_("Wind gust (WG)"), WIND_GUST},
+                {N_("Wind direction (WD)"), WIND_DIRECTION},
+                {N_("Humidity (H)"), HMID},
+                {N_("Visibility (V)"), VIS},
+                {N_("UV Index (UV)"), UV_INDEX},
+                {N_("Dewpoint (DP)"), DEWP}
 };
 
 typedef void(*cb_function)(struct xfceweather_data *);
@@ -23,7 +24,7 @@ void add_mdl_option(GtkListStore *mdl, int opt)
         
         gtk_list_store_append(mdl, &iter);
         gtk_list_store_set(mdl, &iter,
-                        0, labeloptions[opt].name,
+                        0, _(labeloptions[opt].name),
                         1, labeloptions[opt].number,
                         -1);
 }
@@ -65,7 +66,7 @@ static GtkWidget *make_label(void)
                 struct labeloption opt = labeloptions[i];
 
                 gtk_menu_shell_append(GTK_MENU_SHELL(menu),
-                                gtk_menu_item_new_with_label(opt.name));
+                                gtk_menu_item_new_with_label(_(opt.name)));
         }
         
         gtk_option_menu_set_menu(GTK_OPTION_MENU(widget), menu);
@@ -163,15 +164,15 @@ struct xfceweather_dialog *create_config_dialog(struct xfceweather_data *data,
 
         vbox = gtk_vbox_new(FALSE, BORDER);
 
-        label = gtk_label_new("Measurement unit:");
+        label = gtk_label_new(_("Measurement unit:"));
         gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
         menu = gtk_menu_new();
         dialog->opt_unit = gtk_option_menu_new();
        
         gtk_menu_shell_append  ((GtkMenuShell *)(GTK_MENU(menu)),
-                                (gtk_menu_item_new_with_label("Imperial")));
+                                (gtk_menu_item_new_with_label(_("Imperial"))));
         gtk_menu_shell_append  ((GtkMenuShell *)(GTK_MENU(menu)),
-                                (gtk_menu_item_new_with_label("Metric")));
+                                (gtk_menu_item_new_with_label(_("Metric"))));
         gtk_option_menu_set_menu(GTK_OPTION_MENU(dialog->opt_unit), menu);
 
         if (dialog->wd->unit == IMPERIAL)
@@ -186,7 +187,7 @@ struct xfceweather_dialog *create_config_dialog(struct xfceweather_data *data,
         gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
 
 
-        label = gtk_label_new("Location code:");
+        label = gtk_label_new(_("Location code:"));
         dialog->txt_loc_code = gtk_entry_new();
 
         gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
@@ -213,7 +214,7 @@ struct xfceweather_dialog *create_config_dialog(struct xfceweather_data *data,
         dialog->lst_xmloption = gtk_tree_view_new_with_model(GTK_TREE_MODEL(dialog->mdl_xmloption));
 
         renderer = gtk_cell_renderer_text_new();
-        column = gtk_tree_view_column_new_with_attributes("Labels to display", renderer,
+        column = gtk_tree_view_column_new_with_attributes(_("Labels to display"), renderer,
                         "text", 0, NULL);
         gtk_tree_view_append_column(GTK_TREE_VIEW(dialog->lst_xmloption), column);
 

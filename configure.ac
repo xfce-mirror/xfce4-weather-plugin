@@ -1,6 +1,6 @@
 dnl configure.ac
 dnl
-dnl xfce4-sample-plugin - Sample plugin for xfce4-panel
+dnl xfce4-fsguard-plugin - <Plugin for xfce4-panel>
 dnl
 dnl 2003 Benedikt Meurer <benedikt.meurer@unix-ag.uni-siegen.de>
 dnl
@@ -26,13 +26,16 @@ AC_PROG_LIBTOOL
 dnl Check for standard header files
 AC_HEADER_STDC
 
-dnl configure the panel plugin
-XFCE_PANEL_PLUGIN([XFCE4_PANEL], [0.10.1])
-
+dnl check for xml
 PKG_CHECK_MODULES(XML_LIBS, libxml-2.0 >= 0,,exit)
 AC_SUBST(XML_LIBS_LIBS)
 AC_SUBST(XML_LIBS_CFLAGS)
 
+dnl check for i18n support
+BM_I18N([xfce4-weather], [nl])
+
+dnl configure the panel plugin
+XFCE_PANEL_PLUGIN([XFCE4_PANEL], [4.0.0])
 
 dnl Check for debugging support
 BM_DEBUG_SUPPORT
@@ -40,6 +43,7 @@ BM_DEBUG_SUPPORT
 AC_OUTPUT([
 Makefile
 panel-plugin/Makefile
+po/Makefile.in
 icons/Makefile
 icons/liquid/Makefile
 ])

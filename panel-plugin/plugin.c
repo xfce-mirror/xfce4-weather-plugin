@@ -1,6 +1,8 @@
 #include "plugin.h"
 #include <sys/stat.h>
 #include "debug_print.h"
+#include <libxfce4util/i18n.h>
+
 
 gint IconSizeSmall = 0;
 
@@ -10,17 +12,17 @@ gchar *make_label(struct xml_weather *weatherdata, enum datas opt, enum units un
 
         switch (opt)
         {
-                case VIS:       lbl = "V"; break;
-                case UV_INDEX:  lbl = "U"; break;
-                case WIND_DIRECTION: lbl = "WD"; break;
-                case BAR_D:     lbl = "P"; break;
-                case BAR_R:     lbl = "P"; break;
-                case FLIK:      lbl = "F"; break;
-                case TEMP:      lbl = "T"; break;
-                case DEWP:      lbl = "D"; break;
-                case HMID:      lbl = "H"; break;
-                case WIND_SPEED:lbl = "WS"; break;
-                case WIND_GUST: lbl = "WG"; break;
+                case VIS:       lbl = _("V"); break;
+                case UV_INDEX:  lbl = _("U"); break;
+                case WIND_DIRECTION: lbl = _("WD"); break;
+                case BAR_D:     lbl = _("P"); break;
+                case BAR_R:     lbl = _("P"); break;
+                case FLIK:      lbl = _("F"); break;
+                case TEMP:      lbl = _("T"); break;
+                case DEWP:      lbl = _("D"); break;
+                case HMID:      lbl = _("H"); break;
+                case WIND_SPEED:lbl = _("WS"); break;
+                case WIND_GUST: lbl = _("WG"); break;
         }
 
         switch (size)
@@ -386,7 +388,7 @@ gboolean xfceweather_create_control(Control *control)
         gtk_box_pack_start(GTK_BOX(vbox2), data->tooltipbox, FALSE, FALSE, 0);
 
         gtk_container_add(GTK_CONTAINER(control->base), vbox2);
-        g_signal_connect(data->tooltipbox, "button-press-event", G_CALLBACK(cb_click), (gpointer *)data);
+        g_signal_connect(data->tooltipbox, "button-press-event", G_CALLBACK(cb_click), (gpointer)data);
         
         gtk_widget_show_all(vbox2);
 
@@ -456,8 +458,10 @@ void xfceweather_set_size(Control *control, gint size)
 G_MODULE_EXPORT void
 xfce_control_class_init (ControlClass * cc)
 {
+        xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
+
         cc->name = "weather";
-        cc->caption = "Weather Update";
+        cc->caption = _("Weather update");
 
         cc->create_control = (CreateControlFunc) xfceweather_create_control;
         cc->attach_callback = xfceweather_attach_callback;

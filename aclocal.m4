@@ -928,7 +928,7 @@ AC_DEFUN([AC_ISC_POSIX],
 # libtool.m4 - Configure libtool for the host system. -*-Autoconf-*-
 
 # serial 47 AC_PROG_LIBTOOL
-# Debian $Rev: 149 $
+# Debian $Rev: 203 $
 
 
 # AC_PROVIDE_IFELSE(MACRO-NAME, IF-PROVIDED, IF-NOT-PROVIDED)
@@ -1547,7 +1547,7 @@ AC_DEFUN([AC_LIBTOOL_SYS_MAX_CMD_LEN],
 AC_MSG_CHECKING([the maximum length of command line arguments])
 AC_CACHE_VAL([lt_cv_sys_max_cmd_len], [dnl
   i=0
-  testring="ABCD"
+  teststring="ABCD"
 
   case $build_os in
   msdosdjgpp*)
@@ -1586,16 +1586,16 @@ AC_CACHE_VAL([lt_cv_sys_max_cmd_len], [dnl
     # If test is not a shell built-in, we'll probably end up computing a
     # maximum length that is only half of the actual maximum length, but
     # we can't tell.
-    while (test "X"`$CONFIG_SHELL [$]0 --fallback-echo "X$testring" 2>/dev/null` \
-	       = "XX$testring") >/dev/null 2>&1 &&
-	    new_result=`expr "X$testring" : ".*" 2>&1` &&
+    while (test "X"`$CONFIG_SHELL [$]0 --fallback-echo "X$teststring" 2>/dev/null` \
+	       = "XX$teststring") >/dev/null 2>&1 &&
+	    new_result=`expr "X$teststring" : ".*" 2>&1` &&
 	    lt_cv_sys_max_cmd_len=$new_result &&
 	    test $i != 17 # 1/2 MB should be enough
     do
       i=`expr $i + 1`
-      testring=$testring$testring
+      teststring=$teststring$teststring
     done
-    testring=
+    teststring=
     # Add a significant safety factor because C++ compilers can tack on massive
     # amounts of additional arguments before passing them to the linker.
     # It appears as though 1/2 is a usable value.
@@ -1834,13 +1834,6 @@ AC_CACHE_CHECK([if $compiler supports -c -o file.$ac_objext],
    mkdir out
    printf "$lt_simple_compile_test_code" > conftest.$ac_ext
 
-   # According to Tom Tromey, Ian Lance Taylor reported there are C compilers
-   # that will create temporary files in the current directory regardless of
-   # the output directory.  Thus, making CWD read-only will cause this test
-   # to fail, enabling locking or at least warning the user not to do parallel
-   # builds.
-   chmod -w .
-
    lt_compiler_flag="-o out/conftest2.$ac_objext"
    # Insert the option either (1) after the last *FLAGS variable, or
    # (2) before a word containing "conftest.", or (3) at the end.
@@ -1998,7 +1991,7 @@ AC_DEFUN([AC_LIBTOOL_SYS_DYNAMIC_LINKER],
 library_names_spec=
 libname_spec='lib$name'
 soname_spec=
-shrext=".so"
+shrext_cmds=".so"
 postinstall_cmds=
 postuninstall_cmds=
 finish_cmds=
@@ -2111,7 +2104,7 @@ bsdi4*)
 
 cygwin* | mingw* | pw32*)
   version_type=windows
-  shrext=".dll"
+  shrext_cmds=".dll"
   need_version=no
   need_lib_prefix=no
 
@@ -2176,7 +2169,7 @@ darwin* | rhapsody*)
   soname_spec='${libname}${release}${major}$shared_ext'
   shlibpath_overrides_runpath=yes
   shlibpath_var=DYLD_LIBRARY_PATH
-  shrext='$(test .$module = .yes && echo .so || echo .dylib)'
+  shrext_cmds='$(test .$module = .yes && echo .so || echo .dylib)'
   # Apple's gcc prints 'gcc -print-search-dirs' doesn't operate the same.
   if test "$GCC" = yes; then
     sys_lib_search_path_spec=`$CC -print-search-dirs | tr "\n" "$PATH_SEPARATOR" | sed -e 's/libraries:/@libraries:/' | tr "@" "\n" | grep "^libraries:" | sed -e "s/^libraries://" -e "s,=/,/,g" -e "s,$PATH_SEPARATOR, ,g" -e "s,.*,& /lib /usr/lib /usr/local/lib,g"`
@@ -2259,7 +2252,7 @@ hpux9* | hpux10* | hpux11*)
   need_version=no
   case "$host_cpu" in
   ia64*)
-    shrext='.so'
+    shrext_cmds='.so'
     hardcode_into_libs=yes
     dynamic_linker="$host_os dld.so"
     shlibpath_var=LD_LIBRARY_PATH
@@ -2274,7 +2267,7 @@ hpux9* | hpux10* | hpux11*)
     sys_lib_dlsearch_path_spec=$sys_lib_search_path_spec
     ;;
    hppa*64*)
-     shrext='.sl'
+     shrext_cmds='.sl'
      hardcode_into_libs=yes
      dynamic_linker="$host_os dld.sl"
      shlibpath_var=LD_LIBRARY_PATH # How should we handle SHLIB_PATH
@@ -2285,7 +2278,7 @@ hpux9* | hpux10* | hpux11*)
      sys_lib_dlsearch_path_spec=$sys_lib_search_path_spec
      ;;
    *)
-    shrext='.sl'
+    shrext_cmds='.sl'
     dynamic_linker="$host_os dld.sl"
     shlibpath_var=SHLIB_PATH
     shlibpath_overrides_runpath=no # +s is required to enable SHLIB_PATH
@@ -2356,8 +2349,8 @@ linux*)
 
   # Append ld.so.conf contents to the search path
   if test -f /etc/ld.so.conf; then
-    ld_extra=`$SED -e 's/[:,\t]/ /g;s/=[^=]*$//;s/=[^= ]* / /g' /etc/ld.so.conf`
-    sys_lib_dlsearch_path_spec="/lib /usr/lib $ld_extra"
+    lt_ld_extra=`$SED -e 's/[:,\t]/ /g;s/=[^=]*$//;s/=[^= ]* / /g' /etc/ld.so.conf | tr '\n' ' '`
+    sys_lib_dlsearch_path_spec="/lib /usr/lib $lt_ld_extra"
   fi
 
   # We used to test for /lib/ld.so.1 and disable shared libraries on
@@ -2390,7 +2383,7 @@ netbsd*)
     finish_cmds='PATH="\$PATH:/sbin" ldconfig -m $libdir'
     dynamic_linker='NetBSD (a.out) ld.so'
   else
-    library_names_spec='${libname}${release}${shared_ext}$versuffix ${libname}${release}${shared_ext}$major ${libname}${release}${shared_ext} ${libname}${shared_ext}'
+    library_names_spec='${libname}${release}${shared_ext}$versuffix ${libname}${release}${shared_ext}$major ${libname}${shared_ext}'
     soname_spec='${libname}${release}${shared_ext}$major'
     dynamic_linker='NetBSD ld.elf_so'
   fi
@@ -2439,7 +2432,7 @@ openbsd*)
 
 os2*)
   libname_spec='$name'
-  shrext=".dll"
+  shrext_cmds=".dll"
   need_lib_prefix=no
   library_names_spec='$libname${shared_ext} $libname.a'
   dynamic_linker='OS/2 ld.exe'
@@ -3030,14 +3023,14 @@ bsdi4*)
   ;;
 
 cygwin*)
-  # win32_libid is a shell function defined in ltmain.sh
+  # func_win32_libid is a shell function defined in ltmain.sh
   lt_cv_deplibs_check_method='file_magic ^x86 archive import|^x86 DLL'
-  lt_cv_file_magic_cmd='win32_libid'
+  lt_cv_file_magic_cmd='func_win32_libid'
   ;;
 
 mingw* | pw32*)
   # Base MSYS/MinGW do not provide the 'file' command needed by
-  # win32_libid shell function, so use a weaker test based on 'objdump'.
+  # func_win32_libid shell function, so use a weaker test based on 'objdump'.
   lt_cv_deplibs_check_method='file_magic file format pei*-i386(.*architecture: i386)?'
   lt_cv_file_magic_cmd='$OBJDUMP -f'
   ;;
@@ -3099,7 +3092,7 @@ linux*)
   lt_cv_deplibs_check_method=pass_all
   ;;
 
-netbsd*)
+netbsd* | knetbsd*-gnu)
   if echo __ELF__ | $CC -E - | grep __ELF__ > /dev/null; then
     lt_cv_deplibs_check_method='match_pattern /lib[[^/]]+(\.so\.[[0-9]]+\.[[0-9]]+|_pic\.a)$'
   else
@@ -3448,7 +3441,7 @@ aix3*)
   fi
   ;;
 
-aix4*)
+aix4* | aix5*)
   if test "$host_cpu" != ia64 && test "$aix_use_runtimelinking" = no ; then
     test "$enable_shared" = yes && enable_static=no
   fi
@@ -3896,7 +3889,7 @@ case $host_os in
       # explicitly linking system object files so we need to strip them
       # from the output so that they don't get included in the library
       # dependencies.
-      output_verbose_link_cmd='templist=`($CC -b $CFLAGS -v conftest.$objext 2>&1) | egrep "\-L"`; list=""; for z in $templist; do case $z in conftest.$objext) list="$list $z";; *.$objext);; *) list="$list $z";;esac; done; echo $list'
+      output_verbose_link_cmd='templist=`($CC -b $CFLAGS -v conftest.$objext 2>&1) | grep "[-]L"`; list=""; for z in $templist; do case $z in conftest.$objext) list="$list $z";; *.$objext);; *) list="$list $z";;esac; done; echo $list'
       ;;
     *)
       if test "$GXX" = yes; then
@@ -4093,7 +4086,7 @@ case $host_os in
 	;;
     esac
     ;;
-  netbsd*)
+  netbsd* | knetbsd*-gnu)
     if echo __ELF__ | $CC -E - | grep __ELF__ >/dev/null; then
       _LT_AC_TAGVAR(archive_cmds, $1)='$LD -Bshareable  -o $lib $predep_objects $libobjs $deplibs $postdep_objects $linker_flags'
       wlarc=
@@ -4599,7 +4592,7 @@ aix3*)
     postinstall_cmds='$RANLIB $lib'
   fi
   ;;
-aix4*)
+aix4* | aix5*)
   test "$enable_shared" = yes && enable_static=no
   ;;
 esac
@@ -4954,7 +4947,7 @@ objext="$ac_objext"
 libext="$libext"
 
 # Shared library suffix (normally ".so").
-shrext='$shrext'
+shrext_cmds='$shrext_cmds'
 
 # Executable file suffix (normally "").
 exeext="$exeext"
@@ -5583,7 +5576,7 @@ AC_MSG_CHECKING([for $compiler option to produce PIC])
 	    ;;
 	esac
 	;;
-      netbsd*)
+      netbsd* | knetbsd*-gnu)
 	;;
       osf3* | osf4* | osf5*)
 	case $cc_basename in
@@ -5894,6 +5887,9 @@ ifelse([$1],[CXX],[
   cygwin* | mingw*)
     _LT_AC_TAGVAR(export_symbols_cmds, $1)='$NM $libobjs $convenience | $global_symbol_pipe | $SED -e '\''/^[[BCDGS]] /s/.* \([[^ ]]*\)/\1 DATA/'\'' | $SED -e '\''/^[[AITW]] /s/.* //'\'' | sort | uniq > $export_symbols'
   ;;
+  linux*)
+    _LT_AC_TAGVAR(link_all_deplibs, $1)=no
+  ;;
   *)
     _LT_AC_TAGVAR(export_symbols_cmds, $1)='$NM $libobjs $convenience | $global_symbol_pipe | $SED '\''s/.* //'\'' | sort | uniq > $export_symbols'
   ;;
@@ -6023,7 +6019,7 @@ EOF
       fi
       ;;
 
-    netbsd*)
+    netbsd* | knetbsd*-gnu)
       if echo __ELF__ | $CC -E - | grep __ELF__ >/dev/null; then
 	_LT_AC_TAGVAR(archive_cmds, $1)='$LD -Bshareable $libobjs $deplibs $linker_flags -o $lib'
 	wlarc=
@@ -6062,7 +6058,7 @@ EOF
       ;;
 
   linux*)
-    if $LD --help 2>&1 | egrep ': supported targets:.* elf' > /dev/null; then
+    if $LD --help 2>&1 | grep ': supported targets:.* elf' > /dev/null; then
         tmp_archive_cmds='$CC -shared $libobjs $deplibs $compiler_flags ${wl}-soname $wl$soname -o $lib'
 	_LT_AC_TAGVAR(archive_cmds, $1)="$tmp_archive_cmds"
       supports_anon_versioning=no
@@ -6081,6 +6077,7 @@ $echo "local: *; };" >> $output_objdir/$libname.ver~
       else
         _LT_AC_TAGVAR(archive_expsym_cmds, $1)="$tmp_archive_cmds"
       fi
+      _LT_AC_TAGVAR(link_all_deplibs, $1)=no
     else
       _LT_AC_TAGVAR(ld_shlibs, $1)=no
     fi
@@ -6262,7 +6259,7 @@ $echo "local: *; };" >> $output_objdir/$libname.ver~
       # Tell ltmain to make .lib files, not .a files.
       libext=lib
       # Tell ltmain to make .dll files, not .so files.
-      shrext=".dll"
+      shrext_cmds=".dll"
       # FIXME: Setting linknames here is a bad hack.
       _LT_AC_TAGVAR(archive_cmds, $1)='$CC -o $lib $libobjs $compiler_flags `echo "$deplibs" | $SED -e '\''s/ -lc$//'\''` -link -dll~linknames='
       # The linker will automatically build a .lib file if we build a DLL.
@@ -6440,7 +6437,7 @@ $echo "local: *; };" >> $output_objdir/$libname.ver~
       _LT_AC_TAGVAR(link_all_deplibs, $1)=yes
       ;;
 
-    netbsd*)
+    netbsd* | knetbsd*-gnu)
       if echo __ELF__ | $CC -E - | grep __ELF__ >/dev/null; then
 	_LT_AC_TAGVAR(archive_cmds, $1)='$LD -Bshareable -o $lib $libobjs $deplibs $linker_flags'  # a.out
       else
@@ -6832,55 +6829,6 @@ SED=$lt_cv_path_SED
 AC_MSG_RESULT([$SED])
 ])
 
-dnl From Benedikt Meurer (benedikt.meurer@unix-ag.uni-siegen.de)
-dnl
-dnl
-
-AC_DEFUN([BM_DEPEND],
-[
-  PKG_CHECK_MODULES([$1], [$2 >= $3])
-  $1_REQUIRED_VERSION=$3
-  AC_SUBST($1_REQUIRED_VERSION)
-])
-
-dnl
-dnl BM_DEPEND_CHECK(var, pkg, version, name, helpstring, default)
-dnl
-AC_DEFUN([BM_DEPEND_CHECK],
-[
-  AC_ARG_ENABLE([$4],
-AC_HELP_STRING([--enable-$4], [Enable checking for $5 (default=$6)])
-AC_HELP_STRING([--disable-$4], [Disable checking for $5]),
-    [ac_cv_$1_check=$enableval], [ac_cv_$1_check=$6])
-
-  if test x"$ac_cv_$1_check" = x"yes"; then
-    AC_MSG_CHECKING([for $2 >= $3])
-    if $PKG_CONFIG --atleast-version=$3 $2 2> /dev/null; then
-      AC_MSG_RESULT([yes])
-      BM_DEPEND([$1], [$2], [$3])
-      AC_DEFINE([HAVE_$1], [1], [Define if you have $2 >= $3])
-    else
-      AC_MSG_RESULT([no])
-    fi
-  fi
-])
-
-dnl
-dnl XFCE_PANEL_PLUGIN(var, version)
-dnl
-dnl Sets $var_CFLAGS, $var_LIBS and $var_PLUGINSDIR
-dnl
-AC_DEFUN([XFCE_PANEL_PLUGIN],
-[
-  BM_DEPEND([$1], [xfce4-panel-1.0], [$2])
-
-  dnl Check where to put the plugins to
-  AC_MSG_CHECKING([where to install panel plugins])
-  $1_PLUGINSDIR=`$PKG_CONFIG --variable=pluginsdir xfce4-panel-1.0`
-  AC_SUBST([$1_PLUGINSDIR])
-  AC_MSG_RESULT([$$1_PLUGINSDIR])
-])
-
 
 dnl PKG_CHECK_MODULES(GSTUFF, gtk+-2.0 >= 1.3 glib = 1.3.4, action-if, action-not)
 dnl defines GSTUFF_LIBS, GSTUFF_CFLAGS, see pkg-config man page
@@ -6938,6 +6886,464 @@ AC_DEFUN(PKG_CHECK_MODULES, [
 ])
 
 
+
+dnl I18n support
+dnl
+dnl Copyright (c) 2003  Benedikt Meurer <benedikt.meurer@unix-ag.uni-siegen.de>
+dnl
+
+dnl BM_I18N(pkgname, languages)
+AC_DEFUN([BM_I18N],
+[
+  GETTEXT_PACKAGE=$1
+  AC_SUBST([GETTEXT_PACKAGE])
+  AC_DEFINE([GETTEXT_PACKAGE], ["$1"], [Name of default gettext domain])
+
+  ALL_LINGUAS="$2"
+
+  AM_GLIB_GNU_GETTEXT
+
+  dnl This is required on some linux systems
+  AC_CHECK_FUNC([bind_textdomain_codeset])
+
+  AC_MSG_CHECKING([for locales directory])
+  AC_ARG_WITH([locales-dir],
+    AC_HELP_STRING([--with-locales-dir=DIR], [Install locales into DIR]),
+    [localedir=$withval],
+    [localedir=$datadir/locale])
+  AC_MSG_RESULT([$localedir])
+  AC_SUBST([localedir])
+])
+
+# Copyright (C) 1995-2002 Free Software Foundation, Inc.
+# Copyright (C) 2001-2003 Red Hat, Inc.
+#
+# This file is free software, distributed under the terms of the GNU
+# General Public License.  As a special exception to the GNU General
+# Public License, this file may be distributed as part of a program
+# that contains a configuration script generated by Autoconf, under
+# the same distribution terms as the rest of that program.
+#
+# This file can be copied and used freely without restrictions.  It can
+# be used in projects which are not available under the GNU Public License
+# but which still want to provide support for the GNU gettext functionality.
+#
+# Macro to add for using GNU gettext.
+# Ulrich Drepper <drepper@cygnus.com>, 1995, 1996
+#
+# Modified to never use included libintl. 
+# Owen Taylor <otaylor@redhat.com>, 12/15/1998
+#
+# Major rework to remove unused code
+# Owen Taylor <otaylor@redhat.com>, 12/11/2002
+#
+# Added better handling of ALL_LINGUAS from GNU gettext version 
+# written by Bruno Haible, Owen Taylor <otaylor.redhat.com> 5/30/3002
+
+#
+# We need this here as well, since someone might use autoconf-2.5x
+# to configure GLib then an older version to configure a package
+# using AM_GLIB_GNU_GETTEXT
+AC_PREREQ(2.53)
+
+dnl
+dnl We go to great lengths to make sure that aclocal won't 
+dnl try to pull in the installed version of these macros
+dnl when running aclocal in the glib directory.
+dnl
+m4_copy([AC_DEFUN],[glib_DEFUN])
+m4_copy([AC_REQUIRE],[glib_REQUIRE])
+dnl
+dnl At the end, if we're not within glib, we'll define the public
+dnl definitions in terms of our private definitions.
+dnl
+
+# GLIB_LC_MESSAGES
+#--------------------
+glib_DEFUN([GLIB_LC_MESSAGES],
+  [AC_CHECK_HEADERS([locale.h])
+    if test $ac_cv_header_locale_h = yes; then
+    AC_CACHE_CHECK([for LC_MESSAGES], am_cv_val_LC_MESSAGES,
+      [AC_TRY_LINK([#include <locale.h>], [return LC_MESSAGES],
+       am_cv_val_LC_MESSAGES=yes, am_cv_val_LC_MESSAGES=no)])
+    if test $am_cv_val_LC_MESSAGES = yes; then
+      AC_DEFINE(HAVE_LC_MESSAGES, 1,
+        [Define if your <locale.h> file defines LC_MESSAGES.])
+    fi
+  fi])
+
+# GLIB_PATH_PROG_WITH_TEST
+#----------------------------
+dnl GLIB_PATH_PROG_WITH_TEST(VARIABLE, PROG-TO-CHECK-FOR,
+dnl   TEST-PERFORMED-ON-FOUND_PROGRAM [, VALUE-IF-NOT-FOUND [, PATH]])
+glib_DEFUN([GLIB_PATH_PROG_WITH_TEST],
+[# Extract the first word of "$2", so it can be a program name with args.
+set dummy $2; ac_word=[$]2
+AC_MSG_CHECKING([for $ac_word])
+AC_CACHE_VAL(ac_cv_path_$1,
+[case "[$]$1" in
+  /*)
+  ac_cv_path_$1="[$]$1" # Let the user override the test with a path.
+  ;;
+  *)
+  IFS="${IFS= 	}"; ac_save_ifs="$IFS"; IFS="${IFS}:"
+  for ac_dir in ifelse([$5], , $PATH, [$5]); do
+    test -z "$ac_dir" && ac_dir=.
+    if test -f $ac_dir/$ac_word; then
+      if [$3]; then
+	ac_cv_path_$1="$ac_dir/$ac_word"
+	break
+      fi
+    fi
+  done
+  IFS="$ac_save_ifs"
+dnl If no 4th arg is given, leave the cache variable unset,
+dnl so AC_PATH_PROGS will keep looking.
+ifelse([$4], , , [  test -z "[$]ac_cv_path_$1" && ac_cv_path_$1="$4"
+])dnl
+  ;;
+esac])dnl
+$1="$ac_cv_path_$1"
+if test ifelse([$4], , [-n "[$]$1"], ["[$]$1" != "$4"]); then
+  AC_MSG_RESULT([$]$1)
+else
+  AC_MSG_RESULT(no)
+fi
+AC_SUBST($1)dnl
+])
+
+# GLIB_WITH_NLS
+#-----------------
+glib_DEFUN([GLIB_WITH_NLS],
+  dnl NLS is obligatory
+  [USE_NLS=yes
+    AC_SUBST(USE_NLS)
+
+    gt_cv_have_gettext=no
+
+    CATOBJEXT=NONE
+    XGETTEXT=:
+    INTLLIBS=
+
+    AC_CHECK_HEADER(libintl.h,
+     [gt_cv_func_dgettext_libintl="no"
+      libintl_extra_libs=""
+
+      #
+      # First check in libc
+      #
+      AC_CACHE_CHECK([for dgettext in libc], gt_cv_func_dgettext_libc,
+        [AC_TRY_LINK([
+#include <libintl.h>
+],
+          [return (int) dgettext ("","")],
+	  gt_cv_func_dgettext_libc=yes,
+          gt_cv_func_dgettext_libc=no)
+        ])
+  
+      if test "$gt_cv_func_dgettext_libc" = "yes" ; then
+        AC_CHECK_FUNCS(bind_textdomain_codeset)
+      fi
+
+      #
+      # If we don't have everything we want, check in libintl
+      #
+      if test "$gt_cv_func_dgettext_libc" != "yes" \
+         || test "$ac_cv_func_bind_textdomain_codeset" != "yes" ; then
+        
+        AC_CHECK_LIB(intl, bindtextdomain,
+	    [AC_CHECK_LIB(intl, dgettext,
+		          gt_cv_func_dgettext_libintl=yes)])
+
+	if test "$gt_cv_func_dgettext_libintl" != "yes" ; then
+	  AC_MSG_CHECKING([if -liconv is needed to use gettext])
+	  AC_MSG_RESULT([])
+          AC_CHECK_LIB(intl, dcgettext,
+		       [gt_cv_func_dgettext_libintl=yes
+			libintl_extra_libs=-liconv],
+			:,-liconv)
+        fi
+
+        #
+        # If we found libintl, then check in it for bind_textdomain_codeset();
+        # we'll prefer libc if neither have bind_textdomain_codeset(),
+        # and both have dgettext
+        #
+        if test "$gt_cv_func_dgettext_libintl" = "yes" ; then
+          glib_save_LIBS="$LIBS"
+          LIBS="$LIBS -lintl $libintl_extra_libs"
+          unset ac_cv_func_bind_textdomain_codeset
+          AC_CHECK_FUNCS(bind_textdomain_codeset)
+          LIBS="$glib_save_LIBS"
+
+          if test "$ac_cv_func_bind_textdomain_codeset" = "yes" ; then
+            gt_cv_func_dgettext_libc=no
+          else
+            if test "$gt_cv_func_dgettext_libc" = "yes"; then
+              gt_cv_func_dgettext_libintl=no
+            fi
+          fi
+        fi
+      fi
+
+      if test "$gt_cv_func_dgettext_libc" = "yes" \
+	|| test "$gt_cv_func_dgettext_libintl" = "yes"; then
+        gt_cv_have_gettext=yes
+      fi
+  
+      if test "$gt_cv_func_dgettext_libintl" = "yes"; then
+        INTLLIBS="-lintl $libintl_extra_libs"
+      fi
+  
+      if test "$gt_cv_have_gettext" = "yes"; then
+	AC_DEFINE(HAVE_GETTEXT,1,
+	  [Define if the GNU gettext() function is already present or preinstalled.])
+	GLIB_PATH_PROG_WITH_TEST(MSGFMT, msgfmt,
+	  [test -z "`$ac_dir/$ac_word -h 2>&1 | grep 'dv '`"], no)dnl
+	if test "$MSGFMT" != "no"; then
+          glib_save_LIBS="$LIBS"
+          LIBS="$LIBS $INTLLIBS"
+	  AC_CHECK_FUNCS(dcgettext)
+	  AC_PATH_PROG(GMSGFMT, gmsgfmt, $MSGFMT)
+	  GLIB_PATH_PROG_WITH_TEST(XGETTEXT, xgettext,
+	    [test -z "`$ac_dir/$ac_word -h 2>&1 | grep '(HELP)'`"], :)
+	  AC_TRY_LINK(, [extern int _nl_msg_cat_cntr;
+			 return _nl_msg_cat_cntr],
+	    [CATOBJEXT=.gmo 
+             DATADIRNAME=share],
+	    [case $host in
+	    *-*-solaris*)
+	    dnl On Solaris, if bind_textdomain_codeset is in libc,
+	    dnl GNU format message catalog is always supported,
+            dnl since both are added to the libc all together.
+	    dnl Hence, we'd like to go with DATADIRNAME=share and
+	    dnl and CATOBJEXT=.gmo in this case.
+            AC_CHECK_FUNC(bind_textdomain_codeset,
+	      [CATOBJEXT=.gmo 
+               DATADIRNAME=share],
+	      [CATOBJEXT=.mo
+               DATADIRNAME=lib])
+	    ;;
+	    *)
+	    CATOBJEXT=.mo
+            DATADIRNAME=lib
+	    ;;
+	    esac])
+          LIBS="$glib_save_LIBS"
+	  INSTOBJEXT=.mo
+	else
+	  gt_cv_have_gettext=no
+	fi
+      fi
+    ])
+
+    if test "$gt_cv_have_gettext" = "yes" ; then
+      AC_DEFINE(ENABLE_NLS, 1,
+        [always defined to indicate that i18n is enabled])
+    fi
+
+    dnl Test whether we really found GNU xgettext.
+    if test "$XGETTEXT" != ":"; then
+      dnl If it is not GNU xgettext we define it as : so that the
+      dnl Makefiles still can work.
+      if $XGETTEXT --omit-header /dev/null 2> /dev/null; then
+        : ;
+      else
+        AC_MSG_RESULT(
+	  [found xgettext program is not GNU xgettext; ignore it])
+        XGETTEXT=":"
+      fi
+    fi
+
+    # We need to process the po/ directory.
+    POSUB=po
+
+    AC_OUTPUT_COMMANDS(
+      [case "$CONFIG_FILES" in *po/Makefile.in*)
+        sed -e "/POTFILES =/r po/POTFILES" po/Makefile.in > po/Makefile
+      esac])
+
+    dnl These rules are solely for the distribution goal.  While doing this
+    dnl we only have to keep exactly one list of the available catalogs
+    dnl in configure.in.
+    for lang in $ALL_LINGUAS; do
+      GMOFILES="$GMOFILES $lang.gmo"
+      POFILES="$POFILES $lang.po"
+    done
+
+    dnl Make all variables we use known to autoconf.
+    AC_SUBST(CATALOGS)
+    AC_SUBST(CATOBJEXT)
+    AC_SUBST(DATADIRNAME)
+    AC_SUBST(GMOFILES)
+    AC_SUBST(INSTOBJEXT)
+    AC_SUBST(INTLLIBS)
+    AC_SUBST(PO_IN_DATADIR_TRUE)
+    AC_SUBST(PO_IN_DATADIR_FALSE)
+    AC_SUBST(POFILES)
+    AC_SUBST(POSUB)
+  ])
+
+# AM_GLIB_GNU_GETTEXT
+# -------------------
+# Do checks necessary for use of gettext. If a suitable implementation 
+# of gettext is found in either in libintl or in the C library,
+# it will set INTLLIBS to the libraries needed for use of gettext
+# and AC_DEFINE() HAVE_GETTEXT and ENABLE_NLS. (The shell variable
+# gt_cv_have_gettext will be set to "yes".) It will also call AC_SUBST()
+# on various variables needed by the Makefile.in.in installed by 
+# glib-gettextize.
+dnl
+glib_DEFUN(GLIB_GNU_GETTEXT,
+  [AC_REQUIRE([AC_PROG_CC])dnl
+   AC_REQUIRE([AC_HEADER_STDC])dnl
+   
+   GLIB_LC_MESSAGES
+   GLIB_WITH_NLS
+
+   if test "$gt_cv_have_gettext" = "yes"; then
+     if test "x$ALL_LINGUAS" = "x"; then
+       LINGUAS=
+     else
+       AC_MSG_CHECKING(for catalogs to be installed)
+       NEW_LINGUAS=
+       for presentlang in $ALL_LINGUAS; do
+         useit=no
+         if test "%UNSET%" != "${LINGUAS-%UNSET%}"; then
+           desiredlanguages="$LINGUAS"
+         else
+           desiredlanguages="$ALL_LINGUAS"
+         fi
+         for desiredlang in $desiredlanguages; do
+ 	   # Use the presentlang catalog if desiredlang is
+           #   a. equal to presentlang, or
+           #   b. a variant of presentlang (because in this case,
+           #      presentlang can be used as a fallback for messages
+           #      which are not translated in the desiredlang catalog).
+           case "$desiredlang" in
+             "$presentlang"*) useit=yes;;
+           esac
+         done
+         if test $useit = yes; then
+           NEW_LINGUAS="$NEW_LINGUAS $presentlang"
+         fi
+       done
+       LINGUAS=$NEW_LINGUAS
+       AC_MSG_RESULT($LINGUAS)
+     fi
+
+     dnl Construct list of names of catalog files to be constructed.
+     if test -n "$LINGUAS"; then
+       for lang in $LINGUAS; do CATALOGS="$CATALOGS $lang$CATOBJEXT"; done
+     fi
+   fi
+
+   dnl If the AC_CONFIG_AUX_DIR macro for autoconf is used we possibly
+   dnl find the mkinstalldirs script in another subdir but ($top_srcdir).
+   dnl Try to locate is.
+   MKINSTALLDIRS=
+   if test -n "$ac_aux_dir"; then
+     MKINSTALLDIRS="$ac_aux_dir/mkinstalldirs"
+   fi
+   if test -z "$MKINSTALLDIRS"; then
+     MKINSTALLDIRS="\$(top_srcdir)/mkinstalldirs"
+   fi
+   AC_SUBST(MKINSTALLDIRS)
+
+   dnl Generate list of files to be processed by xgettext which will
+   dnl be included in po/Makefile.
+   test -d po || mkdir po
+   if test "x$srcdir" != "x."; then
+     if test "x`echo $srcdir | sed 's@/.*@@'`" = "x"; then
+       posrcprefix="$srcdir/"
+     else
+       posrcprefix="../$srcdir/"
+     fi
+   else
+     posrcprefix="../"
+   fi
+   rm -f po/POTFILES
+   sed -e "/^#/d" -e "/^\$/d" -e "s,.*,	$posrcprefix& \\\\," -e "\$s/\(.*\) \\\\/\1/" \
+	< $srcdir/po/POTFILES.in > po/POTFILES
+  ])
+
+# AM_GLIB_DEFINE_LOCALEDIR(VARIABLE)
+# -------------------------------
+# Define VARIABLE to the location where catalog files will
+# be installed by po/Makefile.
+glib_DEFUN(GLIB_DEFINE_LOCALEDIR,
+[glib_REQUIRE([GLIB_GNU_GETTEXT])dnl
+glib_save_prefix="$prefix"
+glib_save_exec_prefix="$exec_prefix"
+test "x$prefix" = xNONE && prefix=$ac_default_prefix
+test "x$exec_prefix" = xNONE && exec_prefix=$prefix
+if test "x$CATOBJEXT" = "x.mo" ; then
+  localedir=`eval echo "${libdir}/locale"`
+else
+  localedir=`eval echo "${datadir}/locale"`
+fi
+prefix="$glib_save_prefix"
+exec_prefix="$glib_save_exec_prefix"
+AC_DEFINE_UNQUOTED($1, "$localedir",
+  [Define the location where the catalogs will be installed])
+])
+
+dnl
+dnl Now the definitions that aclocal will find
+dnl
+ifdef(glib_configure_in,[],[
+AC_DEFUN(AM_GLIB_GNU_GETTEXT,[GLIB_GNU_GETTEXT($@)])
+AC_DEFUN(AM_GLIB_DEFINE_LOCALEDIR,[GLIB_DEFINE_LOCALEDIR($@)])
+])dnl
+
+dnl From Benedikt Meurer (benedikt.meurer@unix-ag.uni-siegen.de)
+dnl
+dnl
+
+AC_DEFUN([BM_DEPEND],
+[
+  PKG_CHECK_MODULES([$1], [$2 >= $3])
+  $1_REQUIRED_VERSION=$3
+  AC_SUBST($1_REQUIRED_VERSION)
+])
+
+dnl
+dnl BM_DEPEND_CHECK(var, pkg, version, name, helpstring, default)
+dnl
+AC_DEFUN([BM_DEPEND_CHECK],
+[
+  AC_ARG_ENABLE([$4],
+AC_HELP_STRING([--enable-$4], [Enable checking for $5 (default=$6)])
+AC_HELP_STRING([--disable-$4], [Disable checking for $5]),
+    [ac_cv_$1_check=$enableval], [ac_cv_$1_check=$6])
+
+  if test x"$ac_cv_$1_check" = x"yes"; then
+    AC_MSG_CHECKING([for $2 >= $3])
+    if $PKG_CONFIG --atleast-version=$3 $2 2> /dev/null; then
+      AC_MSG_RESULT([yes])
+      BM_DEPEND([$1], [$2], [$3])
+      AC_DEFINE([HAVE_$1], [1], [Define if you have $2 >= $3])
+    else
+      AC_MSG_RESULT([no])
+    fi
+  fi
+])
+
+dnl
+dnl XFCE_PANEL_PLUGIN(var, version)
+dnl
+dnl Sets $var_CFLAGS, $var_LIBS and $var_PLUGINSDIR
+dnl
+AC_DEFUN([XFCE_PANEL_PLUGIN],
+[
+  BM_DEPEND([$1], [xfce4-panel-1.0], [$2])
+
+  dnl Check where to put the plugins to
+  AC_MSG_CHECKING([where to install panel plugins])
+  $1_PLUGINSDIR=`$PKG_CONFIG --variable=pluginsdir xfce4-panel-1.0`
+  AC_SUBST([$1_PLUGINSDIR])
+  AC_MSG_RESULT([$$1_PLUGINSDIR])
+])
 
 dnl From Benedikt Meurer (benedikt.meurer@unix-ag.uni-siegen.de)
 dnl

@@ -32,7 +32,8 @@ libweather_la_SOURCES =							\
 
 libweather_la_CFLAGS =							\
 	@XFCE4_PANEL_CFLAGS@ 							\
-	-DTHEMESDIR=\"$(datadir)/xfce4/weather/icons\"
+	-DTHEMESDIR=\"$(datadir)/xfce4/weather/icons\" \
+	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"
 
 libweather_la_LIBADD = 							\
 	@XFCE4_PANEL_LIBS@								\

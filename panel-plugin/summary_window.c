@@ -1,7 +1,7 @@
 #include "summary_window.h"
 #include "libxfcegui4/dialogs.h"
 #include "debug_print.h"
-
+#include <libxfce4util/i18n.h>
 
 #define APPEND_BTEXT(text) gtk_text_buffer_insert_with_tags(GTK_TEXT_BUFFER(buffer),\
                 &iter, text, -1, btag, NULL);
@@ -42,42 +42,42 @@ GtkWidget *create_summary_tab (struct xml_weather *data, enum units unit)
         btag = gtk_text_buffer_create_tag(buffer, NULL, "weight", PANGO_WEIGHT_BOLD, NULL);
 
         
-        value = g_strdup_printf("Weather report for: %s.\n\n", get_data(data, DNAM));
+        value = g_strdup_printf(_("Weather report for: %s.\n\n"), get_data(data, DNAM));
         APPEND_BTEXT(value);
         g_free(value);
 
-        value = g_strdup_printf("Observation station located in %s\nlast updated at %s.\n",
+        value = g_strdup_printf(_("Observation station located in %s\nlast updated at %s.\n"),
                         get_data(data, OBST), get_data(data, LSUP));
         APPEND_TEXT_ITEM_REAL(value);
         g_free(value);
 
 
-        APPEND_BTEXT("\nTemperature\n");
-        APPEND_TEXT_ITEM("Temperature", TEMP);
-        APPEND_TEXT_ITEM("Windchill", FLIK);
-        APPEND_TEXT_ITEM("Description", TRANS);
-        APPEND_TEXT_ITEM("Dew point", DEWP);
+        APPEND_BTEXT(_("\nTemperature\n"));
+        APPEND_TEXT_ITEM(_("Temperature"), TEMP);
+        APPEND_TEXT_ITEM(_("Windchill"), FLIK);
+        APPEND_TEXT_ITEM(_("Description"), TRANS);
+        APPEND_TEXT_ITEM(_("Dew point"), DEWP);
 
-        APPEND_BTEXT("\nWind\n");
-        APPEND_TEXT_ITEM("Speed", WIND_SPEED);
-        APPEND_TEXT_ITEM("Direction", WIND_DIRECTION);
-        APPEND_TEXT_ITEM("Gusts", WIND_GUST);
+        APPEND_BTEXT(_("\nWind\n"));
+        APPEND_TEXT_ITEM(_("Speed"), WIND_SPEED);
+        APPEND_TEXT_ITEM(_("Direction"), WIND_DIRECTION);
+        APPEND_TEXT_ITEM(_("Gusts"), WIND_GUST);
 
-        APPEND_BTEXT("\nUV\n");
-        APPEND_TEXT_ITEM("Index", UV_INDEX);
-        APPEND_TEXT_ITEM("Risk", UV_TRANS);
+        APPEND_BTEXT(_("\nUV\n"));
+        APPEND_TEXT_ITEM(_("Index"), UV_INDEX);
+        APPEND_TEXT_ITEM(_("Risk"), UV_TRANS);
 
-        APPEND_BTEXT("\nAtmospheric pressure\n");
-        APPEND_TEXT_ITEM("Pressure", BAR_R);
-        APPEND_TEXT_ITEM("State", BAR_D);
+        APPEND_BTEXT(_("\nAtmospheric pressure\n"));
+        APPEND_TEXT_ITEM(_("Pressure"), BAR_R);
+        APPEND_TEXT_ITEM(_("State"), BAR_D);
 
-        APPEND_BTEXT("\nSun\n");
-        APPEND_TEXT_ITEM("Rise", SUNR);
-        APPEND_TEXT_ITEM("Set", SUNS);
+        APPEND_BTEXT(_("\nSun\n"));
+        APPEND_TEXT_ITEM(_("Rise"), SUNR);
+        APPEND_TEXT_ITEM(_("Set"), SUNS);
 
-        APPEND_BTEXT("\nOther\n");
-        APPEND_TEXT_ITEM("Humidity", HMID);
-        APPEND_TEXT_ITEM("Visibility", VIS);
+        APPEND_BTEXT(_("\nOther\n"));
+        APPEND_TEXT_ITEM(_("Humidity"), HMID);
+        APPEND_TEXT_ITEM(_("Visibility"), VIS);
         
         return frame;
 }
@@ -113,10 +113,10 @@ GtkWidget *make_forecast(struct xml_dayf *weatherdata, enum units unit)
         box_n = gtk_event_box_new();
         gtk_container_add(GTK_CONTAINER(box_n), icon_n);
 
-        str = g_strdup_printf("Day: %s", get_data_f(weatherdata, TRANS_D));
+        str = g_strdup_printf(_("Day: %s"), get_data_f(weatherdata, TRANS_D));
         add_tooltip(box_d, str);
         g_free(str);
-        str = g_strdup_printf("Night: %s", get_data_f(weatherdata, TRANS_N));
+        str = g_strdup_printf(_("Night: %s"), get_data_f(weatherdata, TRANS_N));
         add_tooltip(box_n, str);
         g_free(str);
 
@@ -126,7 +126,7 @@ GtkWidget *make_forecast(struct xml_dayf *weatherdata, enum units unit)
 
         label = gtk_label_new(NULL);
         gtk_misc_set_alignment(GTK_MISC(label), 0.5, 0.5);
-        gtk_label_set_markup(GTK_LABEL(label), "<b>Precipitation</b>");
+        gtk_label_set_markup(GTK_LABEL(label), _("<b>Precipitation</b>"));
         gtk_box_pack_start(GTK_BOX(item_vbox), label, FALSE, FALSE, 0);
         
         temp_hbox = gtk_hbox_new(FALSE, 0);
@@ -147,7 +147,7 @@ GtkWidget *make_forecast(struct xml_dayf *weatherdata, enum units unit)
 
         label = gtk_label_new(NULL);        
         gtk_misc_set_alignment(GTK_MISC(label), 0.5, 0.5);
-        gtk_label_set_markup(GTK_LABEL(label), "<b>Temperature</b>");
+        gtk_label_set_markup(GTK_LABEL(label), _("<b>Temperature</b>"));
         gtk_box_pack_start(GTK_BOX(item_vbox), label, FALSE, FALSE, 0);
 
 
@@ -171,7 +171,7 @@ GtkWidget *make_forecast(struct xml_dayf *weatherdata, enum units unit)
          
         label = gtk_label_new(NULL);
         gtk_misc_set_alignment(GTK_MISC(label), 0.5, 0.5);
-        gtk_label_set_markup(GTK_LABEL(label), "<b>Wind</b>");
+        gtk_label_set_markup(GTK_LABEL(label), _("<b>Wind</b>"));
         gtk_box_pack_start(GTK_BOX(item_vbox), label, FALSE, FALSE, 0);
 
         temp_hbox = gtk_hbox_new(FALSE, 0);
@@ -252,22 +252,22 @@ GtkWidget *create_summary_window (struct xml_weather *data, enum units unit)
         gchar *str;
 	GdkPixbuf *icon;
 
-        window = gtk_dialog_new_with_buttons("Weather update", NULL,
+        window = gtk_dialog_new_with_buttons(_("Weather update"), NULL,
                         0,
                         GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
         vbox = gtk_vbox_new(FALSE, 0);
         gtk_box_pack_start(GTK_BOX(GTK_DIALOG(window)->vbox), vbox, TRUE, TRUE, 0); 
         
        	icon = get_icon(window, get_data(data, WICON), GTK_ICON_SIZE_DIALOG);
-	header = create_header(icon, "Weather update"); 
+	header = create_header(icon, _("Weather update")); 
         gtk_box_pack_start(GTK_BOX(vbox), header, FALSE, FALSE, 0);
 
         notebook = gtk_notebook_new();
         gtk_container_set_border_width(GTK_CONTAINER(notebook), BORDER);
         gtk_notebook_append_page(GTK_NOTEBOOK(notebook), 
-                        create_summary_tab(data, unit), gtk_label_new("Summary"));
+                        create_summary_tab(data, unit), gtk_label_new(_("Summary")));
         gtk_notebook_append_page(GTK_NOTEBOOK(notebook), 
-                        create_forecast_tab(data, unit), gtk_label_new("Forecast"));
+                        create_forecast_tab(data, unit), gtk_label_new(_("Forecast")));
 
         gtk_box_pack_start(GTK_BOX(vbox), notebook, TRUE, TRUE, 0);
 

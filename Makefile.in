@@ -45,6 +45,8 @@ AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
+CATALOGS = @CATALOGS@
+CATOBJEXT = @CATOBJEXT@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 CFLAGS = @CFLAGS@
@@ -55,6 +57,7 @@ CXXCPP = @CXXCPP@
 CXXDEPMODE = @CXXDEPMODE@
 CXXFLAGS = @CXXFLAGS@
 CYGPATH_W = @CYGPATH_W@
+DATADIRNAME = @DATADIRNAME@
 DEFS = @DEFS@
 DEPDIR = @DEPDIR@
 ECHO = @ECHO@
@@ -65,10 +68,15 @@ EGREP = @EGREP@
 EXEEXT = @EXEEXT@
 F77 = @F77@
 FFLAGS = @FFLAGS@
+GETTEXT_PACKAGE = @GETTEXT_PACKAGE@
+GMOFILES = @GMOFILES@
+GMSGFMT = @GMSGFMT@
 INSTALL_DATA = @INSTALL_DATA@
 INSTALL_PROGRAM = @INSTALL_PROGRAM@
 INSTALL_SCRIPT = @INSTALL_SCRIPT@
 INSTALL_STRIP_PROGRAM = @INSTALL_STRIP_PROGRAM@
+INSTOBJEXT = @INSTOBJEXT@
+INTLLIBS = @INTLLIBS@
 LDFLAGS = @LDFLAGS@
 LIBOBJS = @LIBOBJS@
 LIBS = @LIBS@
@@ -79,6 +87,8 @@ MAINT = @MAINT@
 MAINTAINER_MODE_FALSE = @MAINTAINER_MODE_FALSE@
 MAINTAINER_MODE_TRUE = @MAINTAINER_MODE_TRUE@
 MAKEINFO = @MAKEINFO@
+MKINSTALLDIRS = @MKINSTALLDIRS@
+MSGFMT = @MSGFMT@
 OBJEXT = @OBJEXT@
 PACKAGE = @PACKAGE@
 PACKAGE_BUGREPORT = @PACKAGE_BUGREPORT@
@@ -88,15 +98,21 @@ PACKAGE_TARNAME = @PACKAGE_TARNAME@
 PACKAGE_VERSION = @PACKAGE_VERSION@
 PATH_SEPARATOR = @PATH_SEPARATOR@
 PKG_CONFIG = @PKG_CONFIG@
+POFILES = @POFILES@
+POSUB = @POSUB@
+PO_IN_DATADIR_FALSE = @PO_IN_DATADIR_FALSE@
+PO_IN_DATADIR_TRUE = @PO_IN_DATADIR_TRUE@
 RANLIB = @RANLIB@
 SET_MAKE = @SET_MAKE@
 SHELL = @SHELL@
 STRIP = @STRIP@
+USE_NLS = @USE_NLS@
 VERSION = @VERSION@
 XFCE4_PANEL_CFLAGS = @XFCE4_PANEL_CFLAGS@
 XFCE4_PANEL_LIBS = @XFCE4_PANEL_LIBS@
 XFCE4_PANEL_PLUGINSDIR = @XFCE4_PANEL_PLUGINSDIR@
 XFCE4_PANEL_REQUIRED_VERSION = @XFCE4_PANEL_REQUIRED_VERSION@
+XGETTEXT = @XGETTEXT@
 XML_LIBS_CFLAGS = @XML_LIBS_CFLAGS@
 XML_LIBS_LIBS = @XML_LIBS_LIBS@
 ac_ct_AR = @ac_ct_AR@
@@ -130,6 +146,7 @@ infodir = @infodir@
 install_sh = @install_sh@
 libdir = @libdir@
 libexecdir = @libexecdir@
+localedir = @localedir@
 localstatedir = @localstatedir@
 mandir = @mandir@
 oldincludedir = @oldincludedir@
@@ -140,9 +157,11 @@ sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
 
-SUBDIRS = panel-plugin icons
+SUBDIRS = panel-plugin po icons
 
 EXTRA_DIST = \
+	INSTALL								\
+	NEWS								\
 	README
 
 subdir = .
@@ -157,10 +176,11 @@ RECURSIVE_TARGETS = info-recursive dvi-recursive pdf-recursive \
 	all-recursive install-data-recursive install-exec-recursive \
 	installdirs-recursive install-recursive uninstall-recursive \
 	check-recursive installcheck-recursive
-DIST_COMMON = README $(srcdir)/Makefile.in $(srcdir)/configure AUTHORS \
-	COPYING ChangeLog INSTALL Makefile.am NEWS aclocal.m4 compile \
-	config.guess config.h.in config.sub configure configure.ac \
-	depcomp install-sh ltcf-c.sh ltmain.sh missing mkinstalldirs
+DIST_COMMON = README $(srcdir)/Makefile.in $(srcdir)/configure \
+	ABOUT-NLS AUTHORS COPYING ChangeLog INSTALL Makefile.am NEWS \
+	aclocal.m4 compile config.guess config.h.in config.rpath \
+	config.sub configure configure.ac depcomp install-sh ltcf-c.sh \
+	ltmain.sh missing mkinstalldirs
 DIST_SUBDIRS = $(SUBDIRS)
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
@@ -171,7 +191,7 @@ am__CONFIG_DISTCLEAN_FILES = config.status config.cache config.log \
  configure.lineno
 $(srcdir)/Makefile.in: @MAINTAINER_MODE_TRUE@ Makefile.am  $(top_srcdir)/configure.ac $(ACLOCAL_M4)
 	cd $(top_srcdir) && \
-	  $(AUTOMAKE) --gnu  Makefile
+	  $(AUTOMAKE) --foreign  Makefile
 Makefile: @MAINTAINER_MODE_TRUE@ $(srcdir)/Makefile.in  $(top_builddir)/config.status
 	cd $(top_builddir) && $(SHELL) ./config.status $@ $(am__depfiles_maybe)
 
@@ -350,6 +370,7 @@ distcleancheck_listfiles = find . -type f -print
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
+	$(mkinstalldirs) $(distdir)/po
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \

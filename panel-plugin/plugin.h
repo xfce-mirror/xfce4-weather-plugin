@@ -12,6 +12,9 @@
 #include <panel/plugins.h>
 #include <gdk/gdk.h>
 
+
+#include <config.h>
+
 #define XFCEWEATHER_ROOT "weather"
 #define DEFAULT_W_THEME "liquid"
 #define UPDATE_TIME 1800
