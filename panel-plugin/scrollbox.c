@@ -25,6 +25,8 @@ void free_label(struct label *lbl)
 
 gboolean start_draw_down (GtkScrollbox *);
 void start_draw_up (GtkScrollbox *);
+void stop_callback(GtkScrollbox *);
+GdkPixmap *make_pixmap(GtkScrollbox *, gchar *);
 
 gboolean draw_up (GtkScrollbox *self)
 {
@@ -83,15 +85,36 @@ void start_draw_up(GtkScrollbox *self)
         gint width, height;
         struct label *lbl;
         static int i = 0;
+        GtkWidget *widget = (GtkWidget *)self;
+
+        XFCE_PANEL_LOCK();
 
         if (self->labels->len == 0)
+	{
+                XFCE_PANEL_UNLOCK();
                 return;
+	}
 
         if (i >= self->labels->len)
                 i = 0;
 
         lbl = (struct label*)g_ptr_array_index(self->labels, i);
         self->pixmap = lbl->pixmap;
+
+	/* If we failed to create a proper pixmap, try again now */
+	if (!lbl->pixmap)
+	{
+                lbl->pixmap = make_pixmap(self, lbl->msg);
+		if (!lbl->pixmap)
+		{
+			/* Still no pixmap. We need to restart the timer */
+			if (self->draw_timeout)
+				stop_callback(self);
+        		self->draw_timeout = g_timeout_add(LABEL_SPEED, (GSourceFunc)start_draw_up, self);
+                	XFCE_PANEL_UNLOCK();
+			return;
+		}
+	}
 
         if (self->labels->len == 1) 
         {
@@ -102,6 +125,7 @@ void start_draw_up(GtkScrollbox *self)
                 self->draw_offset = 0;
                 
                 gtk_widget_draw(GTK_WIDGET(self), &update_rect);
+		XFCE_PANEL_UNLOCK();
                 return;
         }
         
@@ -112,6 +136,7 @@ void start_draw_up(GtkScrollbox *self)
 
         i++;
 
+	XFCE_PANEL_UNLOCK();
 }
 
 gboolean start_draw_down (GtkScrollbox *self)
@@ -154,6 +179,10 @@ GdkPixmap *make_pixmap(GtkScrollbox *self, gchar *value)
         GtkRequisition widgsize = {0, }; 
         GtkWidget *widget = (GtkWidget *)self;
         
+
+	/* If we can't draw yet, don't do anything to avoid screwing things */
+	if (!GDK_IS_GC(widget->style->bg_gc[0]))
+		return NULL;
 
         rootwin = gtk_widget_get_root_window(widget);
 
