@@ -9,7 +9,7 @@ AC_INIT([configure])
 
 AM_CONFIG_HEADER([config.h])
 
-AM_INIT_AUTOMAKE([xfce4-weather-plugin], [0.3.9.1])
+AM_INIT_AUTOMAKE([xfce4-weather-plugin], [0.4.0])
 
 AM_MAINTAINER_MODE
 
@@ -35,7 +35,7 @@ dnl check for i18n support
 BM_I18N([xfce4-weather], [nl de])
 
 dnl configure the panel plugin
-XFCE_PANEL_PLUGIN([XFCE4_PANEL], [4.0.0])
+XFCE_PANEL_PLUGIN([XFCE4_PANEL], [4.1.90])
 
 dnl Check for debugging support
 BM_DEBUG_SUPPORT

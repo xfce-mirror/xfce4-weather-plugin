@@ -459,17 +459,11 @@ void xfceweather_create_options(Control *control, GtkContainer *container,
 gboolean xfceweather_create_control(Control *control)
 {
         struct xfceweather_data *data = g_new0(struct xfceweather_data, 1);
-        gchar *path;
         GtkWidget *vbox, *vbox2;
         enum datas lbl;
 
         if (!IconSizeSmall)
                 IconSizeSmall = gtk_icon_size_register("iconsize_small", 20, 20);
-
-        path = g_strdup_printf("%s%s%s%s", THEMESDIR, G_DIR_SEPARATOR_S,
-                        DEFAULT_W_THEME, G_DIR_SEPARATOR_S);
-        register_icons(path);
-        g_free(path);
 
         data->scrollbox = gtk_scrollbox_new();
        
@@ -521,8 +515,12 @@ void xfceweather_free(Control *control)
         if (data->weatherdata)
                 xml_weather_free(data->weatherdata);
 
-        unregister_icons();
-
+        if (data->updatetimeout)
+        {
+                g_source_remove (data->updatetimeout);
+                data->updatetimeout = 0;
+        }
+        
         g_free(data->location_code);
 /*      XXX the buffer is shared amoung all instances of the plugin, 
  *      so it causes an segv when freeing it */
@@ -531,6 +529,8 @@ void xfceweather_free(Control *control)
         g_array_free(data->labels, TRUE);
 
         xmlCleanupParser();
+
+        g_free (data);
 }
 
 void xfceweather_attach_callback (Control *control, const gchar *signal, GCallback cb,
@@ -561,6 +561,8 @@ void xfceweather_set_size(Control *control, gint size)
 G_MODULE_EXPORT void
 xfce_control_class_init (ControlClass * cc)
 {
+        char *path;
+
         xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
 
         cc->name = "weather";
@@ -574,6 +576,15 @@ xfce_control_class_init (ControlClass * cc)
         cc->create_options = xfceweather_create_options;
         cc->free = xfceweather_free;
         cc->set_size = xfceweather_set_size;
+
+        /* prevent widgets from being installed twice */
+        control_class_set_unloadable (cc, FALSE);
+
+        path = g_strdup_printf("%s%s%s%s", THEMESDIR, G_DIR_SEPARATOR_S,
+                        DEFAULT_W_THEME, G_DIR_SEPARATOR_S);
+        register_icons(path);
+        g_free(path);
+
 }
 
 XFCE_PLUGIN_CHECK_INIT

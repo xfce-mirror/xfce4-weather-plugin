@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-weather-plugin VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2004-10-22 14:59+0200\n"
+"POT-Creation-Date: 2005-01-13 22:06+0100\n"
 "PO-Revision-Date: 2005-01-03 20:17+0100\n"
 "Last-Translator: Oliver Krieger <oliver@mc5sys.de>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,47 +16,47 @@ msgstr ""
 "Content-Type: text/plain; charset=de_DE.iso8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: panel-plugin/plugin.c:25
+#: panel-plugin/plugin.c:62
 msgid "V"
 msgstr "S"
 
-#: panel-plugin/plugin.c:26
+#: panel-plugin/plugin.c:63
 msgid "U"
 msgstr "U"
 
-#: panel-plugin/plugin.c:27
+#: panel-plugin/plugin.c:64
 msgid "WD"
 msgstr "WR"
 
-#: panel-plugin/plugin.c:28 panel-plugin/plugin.c:29
+#: panel-plugin/plugin.c:65 panel-plugin/plugin.c:66
 msgid "P"
 msgstr "P"
 
-#: panel-plugin/plugin.c:30
+#: panel-plugin/plugin.c:67
 msgid "F"
 msgstr "F"
 
-#: panel-plugin/plugin.c:31
+#: panel-plugin/plugin.c:68
 msgid "T"
 msgstr "T"
 
-#: panel-plugin/plugin.c:32
+#: panel-plugin/plugin.c:69
 msgid "D"
 msgstr "D"
 
-#: panel-plugin/plugin.c:33
+#: panel-plugin/plugin.c:70
 msgid "H"
 msgstr "LF"
 
-#: panel-plugin/plugin.c:34
+#: panel-plugin/plugin.c:71
 msgid "WS"
 msgstr "WG"
 
-#: panel-plugin/plugin.c:35
+#: panel-plugin/plugin.c:72
 msgid "WG"
 msgstr "WB"
 
-#: panel-plugin/plugin.c:508 panel-plugin/summary_window.c:302
+#: panel-plugin/plugin.c:569 panel-plugin/summary_window.c:302
 #: panel-plugin/summary_window.c:309
 msgid "Weather update"
 msgstr "Wetter update"
@@ -261,28 +261,41 @@ msgstr "UV Index (UV)"
 msgid "Dewpoint (DP)"
 msgstr "Taupunkt (TP)"
 
-#: panel-plugin/config_dialog.c:188
+#: panel-plugin/config_dialog.c:163
+msgid "Please enter proxy settings"
+msgstr ""
+
+#: panel-plugin/config_dialog.c:230
 msgid "Measurement unit:"
 msgstr "Maßeinheit:"
 
-#: panel-plugin/config_dialog.c:194
+#: panel-plugin/config_dialog.c:236
 msgid "Imperial"
 msgstr "Imperial"
 
-#: panel-plugin/config_dialog.c:196
+#: panel-plugin/config_dialog.c:238
 msgid "Metric"
 msgstr "Metrisch"
 
-#: panel-plugin/config_dialog.c:211
+#: panel-plugin/config_dialog.c:253
 msgid "Location code:"
 msgstr "Positionscode:"
 
 #. proxy
-#: panel-plugin/config_dialog.c:233
+#: panel-plugin/config_dialog.c:275
 msgid "Proxy server:"
 msgstr "Proxy Server:"
 
-#: panel-plugin/config_dialog.c:265
+#: panel-plugin/config_dialog.c:277
+#, fuzzy
+msgid "Use proxy server"
+msgstr "Proxy Server:"
+
+#: panel-plugin/config_dialog.c:279
+msgid "Auto-detect from environment"
+msgstr ""
+
+#: panel-plugin/config_dialog.c:348
 msgid "Labels to display"
 msgstr "Labels zum Anzeigen"
 
@@ -523,7 +536,8 @@ msgid "Rain to Snow"
 msgstr "Regen in Schnee übergehend"
 
 #: panel-plugin/translate.c:68
-msgid "Rain/Snow Showers"
+#, fuzzy
+msgid "Rain / Snow Showers"
 msgstr "Regen-/Schneeschauer"
 
 #: panel-plugin/translate.c:69
@@ -614,36 +628,89 @@ msgstr "Zerstreuter Regen"
 msgid "PM Light Rain"
 msgstr "Nachmittags leichter Regen"
 
+#: panel-plugin/translate.c:91
+#, fuzzy
+msgid "AM Showers"
+msgstr "Nachmittags Schauer"
+
+#: panel-plugin/translate.c:92
+#, fuzzy
+msgid "AM Light Rain"
+msgstr "Nachmittags leichter Regen"
+
+#: panel-plugin/translate.c:93
+#, fuzzy
+msgid "Partly Cloudy and Windy"
+msgstr "Teilweise bewölkt"
+
+#: panel-plugin/translate.c:94
+#, fuzzy
+msgid "Few Showers"
+msgstr "Schneeschauer"
+
 #: panel-plugin/translate.c:95
+#, fuzzy
+msgid "Light Drizzle"
+msgstr "Sprühregen"
+
+#: panel-plugin/translate.c:96
+msgid "Clouds Early / Clearing Late"
+msgstr ""
+
+#: panel-plugin/translate.c:97
+#, fuzzy
+msgid "Mostly Cloudy and Windy"
+msgstr "Überwiegend wolkig"
+
+#: panel-plugin/translate.c:98
+#, fuzzy
+msgid "Rain / Snow"
+msgstr "Regen oder Schnee"
+
+#: panel-plugin/translate.c:99
+#, fuzzy
+msgid "Rain and Sleet"
+msgstr "Regen und Schnee"
+
+#: panel-plugin/translate.c:100
+#, fuzzy
+msgid "Snow Showers Late"
+msgstr "Schneeschauer"
+
+#: panel-plugin/translate.c:101
+#, fuzzy
+msgid "Light Drizzle and Windy"
+msgstr "Leichter Regen und Wind"
+
+#: panel-plugin/translate.c:106
 msgid "rising"
 msgstr "steigend"
 
-#: panel-plugin/translate.c:96
+#: panel-plugin/translate.c:107
 msgid "steady"
 msgstr "unveränderlich"
 
-#: panel-plugin/translate.c:97
+#: panel-plugin/translate.c:108
 msgid "falling"
 msgstr "fallend"
 
-#: panel-plugin/translate.c:102
+#: panel-plugin/translate.c:113
 msgid "S"
 msgstr "S"
 
-#: panel-plugin/translate.c:103
+#: panel-plugin/translate.c:114
 msgid "W"
 msgstr "S"
 
-#: panel-plugin/translate.c:104
+#: panel-plugin/translate.c:115
 msgid "E"
 msgstr "O"
 
-#: panel-plugin/translate.c:105
+#: panel-plugin/translate.c:116
 msgid "N"
 msgstr "N"
 
-#: panel-plugin/translate.c:206
+#: panel-plugin/translate.c:217
 #, c-format
 msgid "%x at %X Local Time"
 msgstr "%x at %X Lokale Zeit"
-
