@@ -1,7 +1,7 @@
 #include <config.h>
 
 #include <sys/stat.h>
-#include <libxfce4util/util.h>
+#include <libxfce4util/libxfce4util.h>
 #include <libxfce4util/i18n.h>
 #include <time.h>
 
@@ -102,16 +102,14 @@ gint update_weatherdata(struct xfceweather_data *data, gboolean force)
         if (!data->location_code)
                 return -1;
 
-        filename = g_strdup_printf("weather_%s_%c.xml", 
+        filename = g_strdup_printf("xfce4/weather-plugin/weather_%s_%c.xml", 
                         data->location_code, data->unit == METRIC ? 'm' : 'i');
-
-        fullfilename = g_strdup_printf("%s" G_DIR_SEPARATOR_S "%s", xfce_get_userdir(), 
-                        filename);
+        fullfilename = xfce_resource_save_location(XFCE_RESOURCE_CACHE, filename, TRUE);
         g_free(filename);
 
         if (!fullfilename)
         {
-               
+                DEBUG_PUTS("can't get savedir?\n");
                 return -1;
         } 
 

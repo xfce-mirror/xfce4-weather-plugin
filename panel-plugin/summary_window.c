@@ -306,7 +306,7 @@ GtkWidget *create_summary_window (struct xml_weather *data, enum units unit)
         gtk_box_pack_start(GTK_BOX(GTK_DIALOG(window)->vbox), vbox, TRUE, TRUE, 0); 
         
        	icon = get_icon(window, get_data(data, WICON), GTK_ICON_SIZE_DIALOG);
-	header = create_header(icon, _("Weather update")); 
+	      header = xfce_create_header(icon, _("Weather update")); 
         gtk_box_pack_start(GTK_BOX(vbox), header, FALSE, FALSE, 0);
 
         notebook = gtk_notebook_new();
