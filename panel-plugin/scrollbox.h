@@ -21,7 +21,6 @@ struct _GtkScrollbox {
 
         GPtrArray *labels;
        
-        gint draw_callback;
         gint draw_offset;
         gint draw_maxoffset;
         gint draw_middle;
