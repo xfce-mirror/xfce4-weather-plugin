@@ -419,8 +419,9 @@ void xfceweather_free(Control *control)
         unregister_icons();
 
         g_free(data->location_code);
-
-        free_get_data_buffer();
+/*      XXX the buffer is shared amoung all instances of the plugin, 
+ *      so it causes an segv when freeing it */
+/*        free_get_data_buffer();  */
         
         g_array_free(data->labels, TRUE);
 

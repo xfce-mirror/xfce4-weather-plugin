@@ -214,7 +214,7 @@ struct xfceweather_dialog *create_config_dialog(struct xfceweather_data *data,
 
         renderer = gtk_cell_renderer_text_new();
         column = gtk_tree_view_column_new_with_attributes("Labels to display", renderer,
-                        "text", 0);
+                        "text", 0, NULL);
         gtk_tree_view_append_column(GTK_TREE_VIEW(dialog->lst_xmloption), column);
 
         button_add = gtk_button_new_from_stock(GTK_STOCK_ADD);

@@ -170,7 +170,7 @@ struct search_dialog *create_search_dialog(GtkWindow *parent)
        
 
         column = gtk_tree_view_column_new_with_attributes("Results", renderer, 
-                        "text", 0);
+                        "text", 0, NULL);
         gtk_tree_view_append_column(GTK_TREE_VIEW(dialog->result_list), column);
 
         scroll = gtk_scrolled_window_new(NULL, NULL);
