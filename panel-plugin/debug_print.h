@@ -1,6 +1,10 @@
 #ifndef DEBUG_PRINT_H
 #define DEBUG_PRINT_H
 
-#define DEBUG 0
-#define DEBUG_PRINT(s,i)  if (DEBUG) printf(s,i);
+#ifdef DEBUG
+  #define DEBUG_PRINT(s, i) fprintf(stderr, s, i);
+#else
+  #define DEBUG_PRINT(s, i) do {} while(0);
+#endif
+
 #endif

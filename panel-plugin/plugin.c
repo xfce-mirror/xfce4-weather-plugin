@@ -2,6 +2,8 @@
 #include <sys/stat.h>
 #include "debug_print.h"
 #include <libxfce4util/i18n.h>
+#include <libxfce4util/util.h>
+#include <time.h>
 
 
 gint IconSizeSmall = 0;
@@ -23,6 +25,7 @@ gchar *make_label(struct xml_weather *weatherdata, enum datas opt, enum units un
                 case HMID:      lbl = _("H"); break;
                 case WIND_SPEED:lbl = _("WS"); break;
                 case WIND_GUST: lbl = _("WG"); break;
+                default: lbl = "?"; break;
         }
 
         switch (size)
@@ -57,7 +60,7 @@ gint update_weatherdata(struct xfceweather_data *data, gboolean force)
         filename = g_strdup_printf("weather_%s_%c.xml", 
                         data->location_code, data->unit == METRIC ? 'm' : 'i');
 
-        fullfilename = g_strdup_printf("%s%s%s", xfce_get_userdir(), G_DIR_SEPARATOR_S,
+        fullfilename = g_strdup_printf("%s" G_DIR_SEPARATOR_S "%s", xfce_get_userdir(), 
                         filename);
         g_free(filename);
 
@@ -75,7 +78,8 @@ gint update_weatherdata(struct xfceweather_data *data, gboolean force)
                                 data->unit == METRIC ? 'm' : 'i');
                
 
-                ret = http_get_file(url, "xoap.weather.com", fullfilename);
+                ret = http_get_file(url, "xoap.weather.com", fullfilename, 
+                                data->proxy_host, data->proxy_port);
                 g_free(url);
 
                 if (!ret)
@@ -120,10 +124,7 @@ gint update_weatherdata(struct xfceweather_data *data, gboolean force)
 void update_plugin (struct xfceweather_data *data, gboolean force)
 {
         int i;
-        GdkPixbuf *icon = NULL;
-        GtkIconSize iconsize;
-       
-
+        GdkPixbuf *icon = NULL; 
        
         gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
         
@@ -229,6 +230,29 @@ void xfceweather_read_config (Control *control, xmlNodePtr node)
                         data->unit = METRIC;
                 g_free(value);
         }
+        
+        if (data->proxy_host)
+        {
+                g_free(data->proxy_host);
+                data->proxy_host = NULL;
+        }
+
+        value = xmlGetProp (node, (const xmlChar *) "proxy_host");
+
+        if (value)
+        {
+                data->proxy_host = g_strdup(value);
+                g_free(value);
+        }
+
+        value = xmlGetProp (node, (const xmlChar *) "proxy_port");
+
+        if (value)
+        {
+                data->proxy_port = atoi(value);
+                g_free(value);
+        }
+
 
         data->labels = labels_clear(data->labels); 
         
@@ -270,6 +294,15 @@ void xfceweather_write_config (Control *control,
         if (data->location_code)
                 xmlSetProp (root, "loc_code", data->location_code);
 
+        if (data->proxy_host)
+        {
+                xmlSetProp(root, "proxy_host", data->proxy_host);
+
+                value = g_strdup_printf("%d", data->proxy_port);
+                xmlSetProp(root, "proxy_port", value);
+                g_free(value);
+        }
+
         for (i = 0; i < data->labels->len; i++) 
         {
                 enum datas opt = g_array_index (data->labels, enum datas, i);
@@ -282,8 +315,12 @@ void xfceweather_write_config (Control *control,
 
 gboolean update_cb(struct xfceweather_data *data)
 {
+        XFCE_PANEL_LOCK();
+        
         update_plugin(data, FALSE);
-
+        
+        XFCE_PANEL_UNLOCK();
+        
         return TRUE;
 }
 
@@ -356,7 +393,7 @@ gboolean xfceweather_create_control(Control *control)
 {
         struct xfceweather_data *data = g_new0(struct xfceweather_data, 1);
         gchar *path;
-        GtkWidget *box, *vbox, *vbox2;
+        GtkWidget *vbox, *vbox2;
         enum datas lbl;
 
         if (!IconSizeSmall)
@@ -369,7 +406,7 @@ gboolean xfceweather_create_control(Control *control)
 
         data->scrollbox = gtk_scrollbox_new();
        
-        data->iconimage = gtk_image_new_from_pixbuf(get_icon(control->base, "25", IconSizeSmall));
+        data->iconimage = gtk_image_new_from_pixbuf(get_icon(control->base, "-", IconSizeSmall));
         gtk_misc_set_alignment(GTK_MISC(data->iconimage), 0.5, 1);
        
 
@@ -403,10 +440,7 @@ gboolean xfceweather_create_control(Control *control)
         gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox), -1, "1");
         gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
 
-        data->updatetimeout = gtk_timeout_add(UPDATE_TIME * 1000, (GSourceFunc)update_cb, data);
-
-
-       
+        data->updatetimeout = gtk_timeout_add(UPDATE_TIME * 1000, (GSourceFunc)update_cb, data);    
 
         return TRUE;
 }

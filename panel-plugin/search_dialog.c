@@ -20,7 +20,7 @@ gchar *sanitize_str(const gchar *str)
 
        
 
-        while(c = *str++)
+        while((c = *str++))
         {
                
                 
@@ -75,7 +75,7 @@ gboolean search_cb (GtkButton *button, gpointer user_data)
         
        
 
-        page = http_get_buffer(url, "xoap.weather.com");
+        page = http_get_buffer(url, "xoap.weather.com", dialog->proxy_host, dialog->proxy_port);
         g_free(url);
 
         if (!page)
@@ -130,7 +130,7 @@ gboolean search_cb (GtkButton *button, gpointer user_data)
         return FALSE;
 }
 
-struct search_dialog *create_search_dialog(GtkWindow *parent)
+struct search_dialog *create_search_dialog(GtkWindow *parent, gchar *proxy_host, gint proxy_port)
 {
         GtkWidget *vbox, *label, *button, *hbox, *scroll, *frame;
         GtkTreeViewColumn *column;
@@ -138,6 +138,9 @@ struct search_dialog *create_search_dialog(GtkWindow *parent)
         struct search_dialog *dialog;
 
         dialog = g_new0(struct search_dialog, 1);
+
+        dialog->proxy_host = proxy_host;
+        dialog->proxy_port = proxy_port;
        
 
         if (!dialog)

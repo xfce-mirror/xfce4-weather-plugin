@@ -32,9 +32,7 @@ void add_mdl_option(GtkListStore *mdl, int opt)
 gboolean cb_addoption (GtkWidget *widget, gpointer data)
 {
         struct xfceweather_dialog *dialog = (struct xfceweather_dialog *)data;
-        gint history = gtk_option_menu_get_history(GTK_OPTION_MENU(dialog->opt_xmloption));
-        enum datas opt;
-        int i;
+        gint history = gtk_option_menu_get_history(GTK_OPTION_MENU(dialog->opt_xmloption)); 
 
         add_mdl_option(dialog->mdl_xmloption, history);
 
@@ -79,6 +77,7 @@ void apply_options (struct xfceweather_dialog *dialog)
         int history = 0;
         gboolean hasiter = FALSE;
         GtkTreeIter iter;
+        gchar *value;
 
         struct xfceweather_data *data = (struct xfceweather_data *)dialog->wd;
         
@@ -112,6 +111,20 @@ void apply_options (struct xfceweather_dialog *dialog)
                 g_array_append_val(data->labels, option);
                 g_value_unset(&value);
         }
+        
+        if (data->proxy_host)
+                g_free(data->proxy_host);
+
+        value = (gchar *)gtk_entry_get_text(GTK_ENTRY(dialog->txt_proxy_host));
+        if (strlen(value) > 0)
+        { 
+                data->proxy_host = g_strdup(value);
+
+                data->proxy_port = gtk_spin_button_get_value(GTK_SPIN_BUTTON(dialog->txt_proxy_port)); 
+        }
+        else
+                data->proxy_host = NULL;
+                
 
         if (cb)
                 cb(data);
@@ -133,7 +146,8 @@ int option_i(enum datas opt)
 gboolean cb_findlocation(GtkButton *button, gpointer user_data)
 {
         struct xfceweather_dialog *dialog = (struct xfceweather_dialog *)user_data;
-        struct search_dialog *sdialog = create_search_dialog(NULL);
+        struct search_dialog *sdialog = create_search_dialog(NULL, 
+                        dialog->wd->proxy_host, dialog->wd->proxy_port);
 
         if (run_search_dialog(sdialog))
                 gtk_entry_set_text(GTK_ENTRY(dialog->txt_loc_code), sdialog->result);
@@ -149,13 +163,12 @@ struct xfceweather_dialog *create_config_dialog(struct xfceweather_data *data,
 {
         struct xfceweather_dialog *dialog;
         GtkWidget *vbox, *vbox2, *hbox, *label, 
-              *menu, *menu_item, *button_add, 
+              *menu, *button_add, 
               *button_del, *image, *button, *scroll;
         GtkSizeGroup *sg = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
         GtkSizeGroup *sg_buttons = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
         GtkTreeViewColumn *column;
-        GtkCellRenderer *renderer;
-        gint i;
+        GtkCellRenderer *renderer; 
         
         dialog = g_new0(struct xfceweather_dialog, 1);
  
@@ -202,12 +215,39 @@ struct xfceweather_dialog *create_config_dialog(struct xfceweather_data *data,
         gtk_container_add(GTK_CONTAINER(button), image);
         g_signal_connect(button, "clicked", G_CALLBACK(cb_findlocation), dialog);
 
-
         hbox = gtk_hbox_new(FALSE, BORDER);
         gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
         gtk_box_pack_start(GTK_BOX(hbox), dialog->txt_loc_code, TRUE, TRUE, 0);
         gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
         gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+
+        /* proxy */
+        label = gtk_label_new(_("Proxy server:"));
+        dialog->txt_proxy_host = gtk_entry_new();
+
+        gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+
+        gtk_size_group_add_widget(sg, label);
+
+        hbox = gtk_hbox_new(FALSE, BORDER);
+        gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+        gtk_box_pack_start(GTK_BOX(hbox), dialog->txt_proxy_host, TRUE, TRUE, 0);
+        
+        dialog->txt_proxy_port = gtk_spin_button_new_with_range(0, 65536, 1);
+ 
+        gtk_box_pack_start(GTK_BOX(hbox), dialog->txt_proxy_port, FALSE, FALSE, 0);
+        gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+
+        if (dialog->wd->proxy_host != NULL)
+        {
+                gtk_entry_set_text(GTK_ENTRY(dialog->txt_proxy_host), 
+                                dialog->wd->proxy_host); 
+ 
+                gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->txt_proxy_port), 
+                                dialog->wd->proxy_port);
+        }        
+
+        /* labels */
          
         dialog->opt_xmloption = make_label(); 
         dialog->mdl_xmloption = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_INT);

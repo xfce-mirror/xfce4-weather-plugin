@@ -42,9 +42,9 @@ void free_get_data_buffer(void)
         }
 }
 
-gchar *get_data_uv(struct xml_uv *data, enum datas type)
+gchar *get_data_uv(struct xml_uv *data, enum datas_uv type)
 {
-        gchar *str;
+        gchar *str = NULL;
 
         if (!data)
         {
@@ -64,7 +64,7 @@ gchar *get_data_uv(struct xml_uv *data, enum datas type)
 
 gchar *get_data_bar(struct xml_bar *data, enum datas_bar type)
 {
-        gchar *str;
+        gchar *str = NULL;
 
         if (!data)
         {
@@ -83,7 +83,7 @@ gchar *get_data_bar(struct xml_bar *data, enum datas_bar type)
 
 gchar *get_data_wind(struct xml_wind *data, enum datas_wind type)
 {
-        gchar *str;
+        gchar *str = NULL;
 
         if (!data)
         {
@@ -111,7 +111,7 @@ gchar *get_data_wind(struct xml_wind *data, enum datas_wind type)
 /* -- This is not the same as the previous functions */
 gchar *get_data_cc(struct xml_cc *data, enum datas type)
 { 
-        gchar *str;
+        gchar *str = NULL;
         
         if (!data)
         {
@@ -143,9 +143,9 @@ gchar *get_data_cc(struct xml_cc *data, enum datas type)
         return CHK_NULL(str);
 }
 
-gchar *get_data_loc(struct xml_loc *data, enum datas type)
+gchar *get_data_loc(struct xml_loc *data, enum datas_loc type)
 { 
-        gchar *str;
+        gchar *str = NULL;
         
         if (!data)
         {
@@ -166,7 +166,7 @@ gchar *get_data_loc(struct xml_loc *data, enum datas type)
 
 const gchar *get_data(struct xml_weather *data, enum datas type)
 {
-        gchar *str;
+        gchar *str = NULL;
         gchar *p;
 
         if (!data)
@@ -190,7 +190,7 @@ const gchar *get_data(struct xml_weather *data, enum datas type)
 
 gchar *get_data_part(struct xml_part *data, enum forecast type)
 {
-        gchar *str;
+        gchar *str = NULL;
 
        DEBUG_PRINT("now here %s\n", data->ppcp);
 
@@ -223,6 +223,7 @@ const gchar *get_data_f(struct xml_dayf *data, enum forecast type)
                                         case WDAY: str = data->day; break;
                                         case TEMP_MIN: str = data->low; break;
                                         case TEMP_MAX: str = data->hi; break;
+                                        default: str = g_strdup("-"); break;
                                 }
                                 break;
                         case NPART: str = get_data_part(data->part[1], type); break;
@@ -241,7 +242,7 @@ const gchar *get_data_f(struct xml_dayf *data, enum forecast type)
 
 const gchar *get_unit(enum units unit, enum datas type)
 {
-        gchar *str;
+        gchar *str = NULL;
         
         switch (type & 0x00F0)
         {

@@ -1,7 +1,7 @@
 #include "http_client.h"
 #include "debug_print.h"
 
-int http_connect(gchar *hostname)
+int http_connect(gchar *hostname, gint port)
 {
         struct sockaddr_in dest_host;
         struct hostent *host_address;
@@ -15,45 +15,18 @@ int http_connect(gchar *hostname)
        
         dest_host.sin_family = AF_INET;
         dest_host.sin_addr = *((struct in_addr *)host_address->h_addr);
-        dest_host.sin_port = htons(80);
+        dest_host.sin_port = htons(port);
         memset(&(dest_host.sin_zero), '\0', 8);
 
         if (connect(fd, (struct sockaddr *)&dest_host, sizeof(struct sockaddr)) == -1)
+        {
+                close(fd);
                 return -1;
+        }
        
         /* TODO fcntl(fd, F_SETFL, O_NONBLOCK); */
 
         return fd;
-}
-
-gboolean http_send_req(int fd, gchar *url, gchar *hostname)
-{
-        int len_request, n, bytes_sent = 0;
-        gchar *request;
-        gboolean error = FALSE;
-
-        request = g_strdup_printf("GET %s HTTP/1.0\r\n"
-                                  "Host: %s\r\n\r\n", url, hostname);
-
-        len_request = strlen(request);      
-
-
-         while(bytes_sent < len_request) {
-                 n = send(fd, request + bytes_sent, len_request - bytes_sent, 0);
-
-                 if (n == -1)
-                 {
-                        DEBUG_PRINT("Error while sending request\n", NULL);
-                         error = TRUE;
-                         break;
-                 }
-
-                 bytes_sent += n;
-         }
-
-         g_free(request);
-
-         return error;
 }
        
 int http_recv(int fd, gchar **buffer)
@@ -103,7 +76,7 @@ gboolean http_get_header(int fd, gchar **buffer)
                         found = TRUE;
                         
                 }
-                else if (p = strstr(thisbuffer, "\r\n\r\n")) {
+                else if ((p = strstr(thisbuffer, "\r\n\r\n"))) {
                         where = p + 4;
                         found = TRUE;
                 }
@@ -125,18 +98,41 @@ gboolean http_get_header(int fd, gchar **buffer)
         return FALSE;
 }
 
-gboolean http_get(gchar *url, gchar *hostname, gboolean savefile, gchar **fname_buff)
+gboolean http_get(gchar *url, gchar *hostname, gboolean savefile, gchar **fname_buff, 
+                gchar *proxy_host, gint proxy_port)
 {
         int fd, error;
-        FILE *file;
+        FILE *file = NULL;
         gchar *buffer = NULL;
         gchar *retstr = NULL;
+        gchar *request = NULL;
 
-
-        if ((fd = http_connect(hostname)) == -1)
+        if (proxy_host)
+                fd = http_connect(proxy_host, proxy_port);
+        else
+                fd = http_connect(hostname, 80);
+        
+        if (fd == -1)
                 return FALSE;
 
-        if (http_send_req(fd, url, hostname) == -1) {
+        if (proxy_host)
+                request = g_strdup_printf("GET http://%s%s HTTP/1.0\r\n\r\n",
+                                hostname, url);
+        else
+                request = g_strdup_printf("GET %s HTTP/1.0\r\n"
+                                "Host: %s\r\n\r\n", url, hostname);
+
+        if (request == NULL)
+        {
+                close(fd);
+                return FALSE;
+        }
+
+        error = send(fd, request, strlen(request), 0);
+        g_free(request);
+
+        if (error == -1)
+        { 
                 close(fd);
                 return FALSE;
         }
@@ -183,16 +179,15 @@ gboolean http_get(gchar *url, gchar *hostname, gboolean savefile, gchar **fname_
                 }
                 else
                 {
-                        gchar *str;
-
                         if (retstr) 
                         {
+                                gchar *str;
                                 str = g_strconcat(retstr, buffer, NULL);
                                 g_free(retstr);
                                 retstr = str;
                         }
                         else
-                                retstr = g_strdup(str);
+                                retstr = g_strdup(buffer);
                 }
                         
 
@@ -219,16 +214,17 @@ gboolean http_get(gchar *url, gchar *hostname, gboolean savefile, gchar **fname_
 
         
 
-gboolean http_get_file(gchar *url, gchar *hostname, gchar *filename)
+gboolean http_get_file(gchar *url, gchar *hostname, gchar *filename, 
+                gchar *proxy_host, gint proxy_port)
 {
-        return http_get(url, hostname, TRUE, &filename);
+        return http_get(url, hostname, TRUE, &filename, proxy_host, proxy_port);
 }
 
-gchar *http_get_buffer(gchar *url, gchar *hostname)
+gchar *http_get_buffer(gchar *url, gchar *hostname, gchar *proxy_host, gint proxy_port)
 {
         gchar *buffer = NULL;
         
-        http_get(url, hostname, FALSE, &buffer);
+        http_get(url, hostname, FALSE, &buffer, proxy_host, proxy_port);
 
         return buffer;
 }

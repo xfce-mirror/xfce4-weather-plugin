@@ -2,6 +2,7 @@
 #include "libxfcegui4/dialogs.h"
 #include "debug_print.h"
 #include <libxfce4util/i18n.h>
+#include <panel/xfce_support.h>
 
 #define APPEND_BTEXT(text) gtk_text_buffer_insert_with_tags(GTK_TEXT_BUFFER(buffer),\
                 &iter, text, -1, btag, NULL);
@@ -15,12 +16,10 @@
 GtkWidget *create_summary_tab (struct xml_weather *data, enum units unit)
 {
         GtkTextBuffer *buffer;
-        GtkTextIter iter;
-        PangoFontDescription *font_desc;
-        GdkColor color;
+        GtkTextIter iter;  
         GtkTextTag *btag;
         gchar *value;
-        GtkWidget *view, *frame, *vbox, *scrolled;
+        GtkWidget *view, *frame, *scrolled;
 
         view = gtk_text_view_new();
         gtk_text_view_set_editable(GTK_TEXT_VIEW(view), FALSE);
@@ -212,7 +211,7 @@ GtkWidget *make_forecast(struct xml_dayf *weatherdata, enum units unit)
         gtk_box_pack_start(GTK_BOX(temp_hbox), label, TRUE, TRUE, 0);
         gtk_box_pack_start(GTK_BOX(item_vbox), temp_hbox, FALSE, FALSE, 0);
 
-       DEBUG_PRINT("done\n", NULL);
+        DEBUG_PRINT("done %d\n", 1);
 
         return item_vbox;
 }
@@ -249,8 +248,8 @@ GtkWidget *create_forecast_tab (struct xml_weather *data, enum units unit)
 GtkWidget *create_summary_window (struct xml_weather *data, enum units unit)
 {
         GtkWidget *window, *notebook, *header, *vbox;
-        gchar *str;
-	GdkPixbuf *icon;
+        
+      	GdkPixbuf *icon;
 
         window = gtk_dialog_new_with_buttons(_("Weather update"), NULL,
                         0,

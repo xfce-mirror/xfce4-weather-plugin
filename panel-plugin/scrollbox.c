@@ -28,17 +28,25 @@ gboolean draw_up (GtkScrollbox *self)
 {
         GdkRectangle update_rect = {0,0, GTK_WIDGET(self)->allocation.width, 
                 GTK_WIDGET(self)->allocation.height};
+        
+        XFCE_PANEL_LOCK();
 
         if (self->draw_offset == 0) 
         {
                 self->draw_timeout = g_timeout_add(LABEL_REFRESH,
                                 (GSourceFunc)start_draw_down, self);
+                
+                XFCE_PANEL_UNLOCK();
+                
                 return FALSE;
         }
         else
                 self->draw_offset++; 
         
         gtk_widget_draw(GTK_WIDGET(self), &update_rect);
+
+        XFCE_PANEL_UNLOCK();
+        
         return TRUE;
 }
 
@@ -47,16 +55,23 @@ gboolean draw_down (GtkScrollbox *self)
         GdkRectangle update_rect = {0, 0, GTK_WIDGET(self)->allocation.width, 
                 GTK_WIDGET(self)->allocation.height};
 
+        XFCE_PANEL_LOCK();
+
         if (self->draw_offset == self->draw_maxoffset) 
         {
                 self->draw_timeout = 0;
                 start_draw_up(self);
+
+                XFCE_PANEL_UNLOCK();
+                
                 return FALSE;
         }
         else
                 self->draw_offset--;
         
         gtk_widget_draw(GTK_WIDGET(self), &update_rect);
+
+        XFCE_PANEL_UNLOCK();
         
         return TRUE;
 }
@@ -99,7 +114,12 @@ void start_draw_up(GtkScrollbox *self)
 
 gboolean start_draw_down (GtkScrollbox *self)
 {
+        XFCE_PANEL_LOCK();
+        
         self->draw_timeout = g_timeout_add(LABEL_SPEED, (GSourceFunc)draw_down, self);
+
+        XFCE_PANEL_UNLOCK();
+        
         return FALSE;
 }
 void stop_callback(GtkScrollbox *self)
@@ -192,14 +212,13 @@ void gtk_scrollbox_set_label(GtkScrollbox *self, gint n, gchar *value)
 
                 newlbl = lbl;
         }
-
-        newpixmap = make_pixmap(self, value);
-
-        if (append)
+        else
         {
                 newlbl = g_new0(struct label, 1);
                 g_ptr_array_add(self->labels, newlbl);
         }
+
+        newpixmap = make_pixmap(self, value);
 
         newlbl->pixmap = newpixmap;
         newlbl->msg = g_strdup(value);

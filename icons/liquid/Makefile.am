@@ -39,6 +39,9 @@ liquid_DATA = 1.png \
 							42.png \
 							43.png \
 							44.png \
+							46.png \
+							46.png \
+							47.png \
 							5.png \
 							6.png \
 							7.png \

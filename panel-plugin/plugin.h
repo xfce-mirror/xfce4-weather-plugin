@@ -38,6 +38,9 @@ struct xfceweather_data {
         enum units unit;
 
         struct xml_weather *weatherdata;
+
+        gchar *proxy_host;
+        gint proxy_port;
 }; 
 
 #endif

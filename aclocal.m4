@@ -928,7 +928,7 @@ AC_DEFUN([AC_ISC_POSIX],
 # libtool.m4 - Configure libtool for the host system. -*-Autoconf-*-
 
 # serial 47 AC_PROG_LIBTOOL
-# Debian $Rev: 203 $
+# Debian $Rev: 214 $
 
 
 # AC_PROVIDE_IFELSE(MACRO-NAME, IF-PROVIDED, IF-NOT-PROVIDED)
@@ -2362,6 +2362,18 @@ linux*)
   dynamic_linker='GNU/Linux ld.so'
   ;;
 
+netbsdelf*-gnu)
+  version_type=linux
+  need_lib_prefix=no
+  need_version=no
+  library_names_spec='${libname}${release}${shared_ext}$versuffix ${libname}${release}${shared_ext}$major ${libname}${shared_ext}'
+  soname_spec='${libname}${release}${shared_ext}$major'
+  shlibpath_var=LD_LIBRARY_PATH
+  shlibpath_overrides_runpath=no
+  hardcode_into_libs=yes
+  dynamic_linker='NetBSD ld.elf_so'
+  ;;
+
 knetbsd*-gnu)
   version_type=linux
   need_lib_prefix=no
@@ -3092,7 +3104,7 @@ linux*)
   lt_cv_deplibs_check_method=pass_all
   ;;
 
-netbsd* | knetbsd*-gnu)
+netbsd* | netbsdelf*-gnu | knetbsd*-gnu)
   if echo __ELF__ | $CC -E - | grep __ELF__ > /dev/null; then
     lt_cv_deplibs_check_method='match_pattern /lib[[^/]]+(\.so\.[[0-9]]+\.[[0-9]]+|_pic\.a)$'
   else
@@ -4086,7 +4098,7 @@ case $host_os in
 	;;
     esac
     ;;
-  netbsd* | knetbsd*-gnu)
+  netbsd* | netbsdelf*-gnu | knetbsd*-gnu)
     if echo __ELF__ | $CC -E - | grep __ELF__ >/dev/null; then
       _LT_AC_TAGVAR(archive_cmds, $1)='$LD -Bshareable  -o $lib $predep_objects $libobjs $deplibs $postdep_objects $linker_flags'
       wlarc=
@@ -5576,7 +5588,7 @@ AC_MSG_CHECKING([for $compiler option to produce PIC])
 	    ;;
 	esac
 	;;
-      netbsd* | knetbsd*-gnu)
+      netbsd* | netbsdelf*-gnu | knetbsd*-gnu)
 	;;
       osf3* | osf4* | osf5*)
 	case $cc_basename in
@@ -6019,7 +6031,7 @@ EOF
       fi
       ;;
 
-    netbsd* | knetbsd*-gnu)
+    netbsd* | netbsdelf*-gnu | knetbsd*-gnu)
       if echo __ELF__ | $CC -E - | grep __ELF__ >/dev/null; then
 	_LT_AC_TAGVAR(archive_cmds, $1)='$LD -Bshareable $libobjs $deplibs $linker_flags -o $lib'
 	wlarc=
@@ -6437,7 +6449,7 @@ $echo "local: *; };" >> $output_objdir/$libname.ver~
       _LT_AC_TAGVAR(link_all_deplibs, $1)=yes
       ;;
 
-    netbsd* | knetbsd*-gnu)
+    netbsd* | netbsdelf*-gnu | knetbsd*-gnu)
       if echo __ELF__ | $CC -E - | grep __ELF__ >/dev/null; then
 	_LT_AC_TAGVAR(archive_cmds, $1)='$LD -Bshareable -o $lib $libobjs $deplibs $linker_flags'  # a.out
       else
@@ -7194,7 +7206,7 @@ glib_DEFUN([GLIB_WITH_NLS],
 # on various variables needed by the Makefile.in.in installed by 
 # glib-gettextize.
 dnl
-glib_DEFUN(GLIB_GNU_GETTEXT,
+glib_DEFUN([GLIB_GNU_GETTEXT],
   [AC_REQUIRE([AC_PROG_CC])dnl
    AC_REQUIRE([AC_HEADER_STDC])dnl
    
@@ -7271,7 +7283,7 @@ glib_DEFUN(GLIB_GNU_GETTEXT,
 # -------------------------------
 # Define VARIABLE to the location where catalog files will
 # be installed by po/Makefile.
-glib_DEFUN(GLIB_DEFINE_LOCALEDIR,
+glib_DEFUN([GLIB_DEFINE_LOCALEDIR],
 [glib_REQUIRE([GLIB_GNU_GETTEXT])dnl
 glib_save_prefix="$prefix"
 glib_save_exec_prefix="$exec_prefix"
@@ -7292,8 +7304,8 @@ dnl
 dnl Now the definitions that aclocal will find
 dnl
 ifdef(glib_configure_in,[],[
-AC_DEFUN(AM_GLIB_GNU_GETTEXT,[GLIB_GNU_GETTEXT($@)])
-AC_DEFUN(AM_GLIB_DEFINE_LOCALEDIR,[GLIB_DEFINE_LOCALEDIR($@)])
+AC_DEFUN([AM_GLIB_GNU_GETTEXT],[GLIB_GNU_GETTEXT($@)])
+AC_DEFUN([AM_GLIB_DEFINE_LOCALEDIR],[GLIB_DEFINE_LOCALEDIR($@)])
 ])dnl
 
 dnl From Benedikt Meurer (benedikt.meurer@unix-ag.uni-siegen.de)
@@ -7323,6 +7335,7 @@ AC_HELP_STRING([--disable-$4], [Disable checking for $5]),
       AC_MSG_RESULT([yes])
       BM_DEPEND([$1], [$2], [$3])
       AC_DEFINE([HAVE_$1], [1], [Define if you have $2 >= $3])
+      $1_FOUND="yes"
     else
       AC_MSG_RESULT([no])
     fi
@@ -7338,9 +7351,40 @@ AC_DEFUN([XFCE_PANEL_PLUGIN],
 [
   BM_DEPEND([$1], [xfce4-panel-1.0], [$2])
 
+  dnl Check if the panel is threaded
+  ac_CFLAGS=$$1_CFLAGS
+  AC_MSG_CHECKING([whether the panel is threaded])
+  if $PKG_CONFIG --atleast-version=4.1.7 xfce4-panel-1.0; then
+    $1_CFLAGS="$ac_CFLAGS -DXFCE_PANEL_THREADED=1 -DXFCE_PANEL_LOCK\(\)=gdk_threads_enter\(\) -DXFCE_PANEL_UNLOCK\(\)=gdk_threads_leave\(\)"
+    AC_MSG_RESULT([yes])
+  else
+    $1_CFLAGS="$ac_CFLAGS -DXFCE_PANEL_LOCK\(\)=do{}while\(0\) -DXFCE_PANEL_UNLOCK\(\)=do{}while\(0\)"
+    AC_MSG_RESULT([no])
+  fi
+
   dnl Check where to put the plugins to
+  AC_ARG_WITH([pluginsdir],
+AC_HELP_STRING([--with-pluginsdir=DIR], [Install plugins dir DIR]),
+[$1_PLUGINSDIR=$withval],
+[$1_PLUGINSDIR=`$PKG_CONFIG --variable=pluginsdir xfce4-panel-1.0`])
+
   AC_MSG_CHECKING([where to install panel plugins])
-  $1_PLUGINSDIR=`$PKG_CONFIG --variable=pluginsdir xfce4-panel-1.0`
+  AC_SUBST([$1_PLUGINSDIR])
+  AC_MSG_RESULT([$$1_PLUGINSDIR])
+])
+
+dnl
+dnl XFCE_MCS_PLUGIN(var, version)
+dnl
+dnl sets $var_CFLAGS, $var_LIBS and $var_PLUGINSDIR
+dnl
+AC_DEFUN([XFCE_MCS_PLUGIN],
+[
+  BM_DEPEND([$1], [xfce-mcs-manager], [$2])
+
+  dnl Check where to put the plugins to
+  AC_MSG_CHECKING([where to install MCS plugins])
+  $1_PLUGINSDIR=`$PKG_CONFIG --variable=pluginsdir xfce-mcs-manager`
   AC_SUBST([$1_PLUGINSDIR])
   AC_MSG_RESULT([$$1_PLUGINSDIR])
 ])

@@ -7,24 +7,23 @@ void register_icons(gchar *path)
 {
         GtkIconSet *iconset;
         int i;
-        GdkPixbuf *pixbuf;
-        GtkIconFactory *factory;
+        GdkPixbuf *pixbuf; 
         gchar *filename, *name;
 
-       DEBUG_PRINT("going to register %p\n", cfactory);
+        DEBUG_PRINT("going to register %p\n", cfactory);
 
         if (cfactory)
                 return;
 
-       DEBUG_PRINT("*** %s\n", path);
+        DEBUG_PRINT("*** %s\n", path);
         
 
         cfactory = gtk_icon_factory_new();
 
-        for (i = 1; i <= 44; i++) 
+        for (i = 1; i <= 47; i++) 
         {
                 filename = g_strdup_printf("%s%d.png", path, i);
-                name = g_strdup_printf("%s%d", "xfceweather_", i);
+                name = g_strdup_printf("xfceweather_%d", i);
                 pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
 
                 if (!pixbuf) 
@@ -41,6 +40,15 @@ void register_icons(gchar *path)
                 g_free(filename);
                 g_free(name);
         }
+
+        /* and the default icon */
+        filename = g_strdup_printf("%s-.png", path);
+        pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
+        g_free(filename);
+        iconset = gtk_icon_set_new_from_pixbuf(pixbuf);
+
+        if (iconset)
+                gtk_icon_factory_add(cfactory, "xfceweather_-", iconset);
 
         gtk_icon_factory_add_default(cfactory);
 }

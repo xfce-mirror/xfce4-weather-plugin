@@ -48,10 +48,11 @@ enum datas {
         WIND_GUST       = 0x0141,
 
 
-        BAR_R           = 0x0150,
+        BAR_R           = 0x0150
+};
 
 
-        /* obst */
+enum datas_loc {
         DNAM            = 0x0201,
         SUNR            = 0x0202,
         SUNS            = 0x0203
