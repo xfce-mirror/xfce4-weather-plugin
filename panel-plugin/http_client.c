@@ -7,7 +7,7 @@ int http_connect(gchar *hostname, gint port)
 {
         struct sockaddr_in dest_host;
         struct hostent *host_address;
-        int fd;
+        int fd, i;
                
         if ((host_address = gethostbyname(hostname)) == NULL)
                 return -1;
@@ -16,19 +16,22 @@ int http_connect(gchar *hostname, gint port)
                 return -1;
        
         dest_host.sin_family = AF_INET;
-        dest_host.sin_addr = *((struct in_addr *)host_address->h_addr);
         dest_host.sin_port = htons(port);
         memset(&(dest_host.sin_zero), '\0', 8);
 
-        if (connect(fd, (struct sockaddr *)&dest_host, sizeof(struct sockaddr)) == -1)
+        for (i = 0; host_address->h_addr_list[i]; i++)
         {
-                close(fd);
-                return -1;
+                dest_host.sin_addr = *((struct in_addr *)host_address->h_addr_list[i]);
+
+                if (connect(fd, (struct sockaddr *)&dest_host, sizeof(struct sockaddr)) != -1)
+                        return fd;
         }
        
         /* TODO fcntl(fd, F_SETFL, O_NONBLOCK); */
+        /* no hosts found? */
+        close(fd);
 
-        return fd;
+        return -1;
 }
        
 int http_recv(int fd, gchar **buffer)
