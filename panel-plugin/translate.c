@@ -5,8 +5,7 @@
 #include <string.h> /* strlen() */
 #include <libxfce4util/i18n.h>
 
-#define SIZE_DESC_STRINGS 73
-const gchar *desc_strings[SIZE_DESC_STRINGS] = {
+const gchar *desc_strings[] = {
         N_("Snow to Rain"),
         N_("Becoming Cloudy"),
         N_("Blizzard"),
@@ -78,7 +77,8 @@ const gchar *desc_strings[SIZE_DESC_STRINGS] = {
         N_("Variable Cloudiness"),
         N_("Variable Clouds"),
         N_("Windy"),
-        N_("Wintry Mix")
+        N_("Wintry Mix"),
+        NULL
 };
 
 const gchar *translate_desc(const gchar *desc)
@@ -88,7 +88,7 @@ const gchar *translate_desc(const gchar *desc)
         if (desc == NULL)
                 return "?";
 
-        for (i = 0; i < SIZE_DESC_STRINGS; i++)
+        for (i = 0; desc_strings[i] != NULL; i++)
         {
                 if (desc[0] != desc_strings[i][0])
                         continue;
