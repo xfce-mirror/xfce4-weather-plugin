@@ -30,7 +30,6 @@ enum datas {
         LSUP            = 0x0101,
         OBST            = 0x0102,
         TRANS           = 0x0103,
-        VIS             = 0x0104,
         UV_INDEX        = 0x0105,
         UV_TRANS        = 0x0106,
         WIND_DIRECTION  = 0x0107,     
@@ -48,7 +47,9 @@ enum datas {
         WIND_GUST       = 0x0141,
 
 
-        BAR_R           = 0x0150
+        BAR_R           = 0x0150,
+
+        VIS             = 0x0160
 };
 
 

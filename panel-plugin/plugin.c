@@ -55,7 +55,8 @@ gint IconSizeSmall = 0;
 
 gchar *make_label(struct xml_weather *weatherdata, enum datas opt, enum units unit, gint size)
 {
-        gchar *str, *lbl, *txtsize;
+        gchar *str, *lbl, *txtsize, *value;
+        const gchar *rawvalue;
 
         switch (opt)
         {
@@ -80,10 +81,31 @@ gchar *make_label(struct xml_weather *weatherdata, enum datas opt, enum units un
                 default: txtsize="x-small"; break;
         }
 
+        rawvalue = get_data(weatherdata, opt);
+        value = NULL;
+
+        switch (opt)
+        {
+                case VIS:       value = translate_visibility(rawvalue, unit);
+                                break;
+                case WIND_DIRECTION: value = translate_wind_direction(rawvalue);
+                                     break;
+                case WIND_SPEED:
+                case WIND_GUST: value = translate_wind_speed(rawvalue, unit);
+                                break;
+        }
+
        
 
-        str = g_strdup_printf("<span size=\"%s\">%s: %s %s</span>", txtsize,
-                        lbl, get_data(weatherdata, opt), get_unit(unit, opt));
+        if (value != NULL)
+        {
+                str = g_strdup_printf("<span size=\"%s\">%s: %s</span>",
+                                txtsize, lbl, value);
+                g_free(value);
+        }
+        else
+                str = g_strdup_printf("<span size=\"%s\">%s: %s %s</span>",
+                                txtsize, lbl, rawvalue, get_unit(unit, opt));
 
         return str;
 }

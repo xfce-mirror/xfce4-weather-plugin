@@ -22,7 +22,7 @@ GtkWidget *create_summary_tab (struct xml_weather *data, enum units unit)
         GtkTextBuffer *buffer;
         GtkTextIter iter;  
         GtkTextTag *btag;
-        gchar *value, *date, *wind, *sun;
+        gchar *value, *date, *wind, *sun, *vis;
         GtkWidget *view, *frame, *scrolled;
 
         view = gtk_text_view_new();
@@ -72,7 +72,11 @@ GtkWidget *create_summary_tab (struct xml_weather *data, enum units unit)
         APPEND_TEXT_ITEM(_("Dew point"), DEWP);
 
         APPEND_BTEXT(_("\nWind\n"));
-        APPEND_TEXT_ITEM(_("Speed"), WIND_SPEED);
+        wind = translate_wind_speed(get_data(data, WIND_SPEED), unit);
+	value = g_strdup_printf("\t%s: %s\n", _("Speed"), wind);
+        APPEND_TEXT_ITEM_REAL(value);
+        g_free(wind);
+        g_free(value);
 
         wind = translate_wind_direction(get_data(data, WIND_DIRECTION));
         value = g_strdup_printf("\t%s: %s\n",
@@ -82,11 +86,18 @@ GtkWidget *create_summary_tab (struct xml_weather *data, enum units unit)
         APPEND_TEXT_ITEM_REAL(value);
         g_free(value);
         
-        APPEND_TEXT_ITEM(_("Gusts"), WIND_GUST);
+        wind = translate_wind_speed(get_data(data, WIND_GUST), unit);
+	value = g_strdup_printf("\t%s: %s\n", _("Gusts"), wind);
+        APPEND_TEXT_ITEM_REAL(value);
+        g_free(wind);
+        g_free(value);
 
         APPEND_BTEXT(_("\nUV\n"));
         APPEND_TEXT_ITEM(_("Index"), UV_INDEX);
-        APPEND_TEXT_ITEM(_("Risk"), UV_TRANS);
+        value = g_strdup_printf("\t%s: %s\n",
+                _("Risk"), translate_risk(get_data(data, UV_TRANS)));
+        APPEND_TEXT_ITEM_REAL(value); 
+	g_free(value);
 
         APPEND_BTEXT(_("\nAtmospheric pressure\n"));
         APPEND_TEXT_ITEM(_("Pressure"), BAR_R);
@@ -116,7 +127,11 @@ GtkWidget *create_summary_tab (struct xml_weather *data, enum units unit)
 
         APPEND_BTEXT(_("\nOther\n"));
         APPEND_TEXT_ITEM(_("Humidity"), HMID);
-        APPEND_TEXT_ITEM(_("Visibility"), VIS);
+	vis = translate_visibility(get_data(data, VIS), unit);
+	value = g_strdup_printf("\t%s: %s\n", _("Visibility"), vis);
+        APPEND_TEXT_ITEM_REAL(value);
+	g_free(vis);
+        g_free(value);
         
         return frame;
 }

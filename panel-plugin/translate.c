@@ -112,11 +112,32 @@ const gchar *bard_strings[] = {
         NULL
 };
 
+const gchar *risk_strings[] = {
+        N_("Low"), 
+        N_("Moderate"), 
+        N_("High"), 
+        N_("Very High"), 
+        N_("Extreme"), 
+        NULL
+};
+
 const gchar *wdirs[] = {
         N_("S"), 
+        N_("SSW"), 
+        N_("SW"), 
+        N_("WSW"), 
         N_("W"), 
-        N_("E"), 
+        N_("WNW"), 
+        N_("NW"), 
+        N_("NNW"), 
         N_("N"),
+        N_("NNE"),
+        N_("NE"),
+        N_("ENE"),
+        N_("E"), 
+        N_("ESE"), 
+        N_("SE"), 
+        N_("SSE"), 
         NULL
 };
 
@@ -154,6 +175,11 @@ static const gchar *translate_str(
 const gchar *translate_bard(const gchar *bard)
 {
         return translate_str(bard_strings, bard);
+}
+
+const gchar *translate_risk(const gchar *risk)
+{
+        return translate_str(risk_strings, risk);
 }
 
 const gchar *translate_desc(const gchar *desc)
@@ -269,20 +295,46 @@ gchar *translate_wind_direction(const gchar *wdir)
         if (strchr(wdir, '/')) /* N/A */
                 return NULL;
         
-        wdir_loc = g_malloc(sizeof(gchar) * (wdir_len + 1));
+	/*
+	 * If the direction code can be translated, then translated the
+	 * whole code so that it can be correctly translated in CJK (and
+	 * possibly Finnish).  If not, use the old behaviour where
+	 * individual direction codes are successively translated.
+	 */
+	if (g_ascii_strcasecmp(wdir, _(wdir)) != 0)
+		wdir_loc = g_strdup(_(wdir));
+	else
+	{
+		wdir_loc = g_strdup("");
+		for (i = 0; i < strlen(wdir); i++)
+			{
+				gchar wdir_i[2];
+				gchar *tmp;
 
-        for (i = 0; i < strlen(wdir); i++)
-                for (j = 0; wdirs[j] != NULL; j++)
-                        if (wdir[i] == wdirs[j][0])
-                        {
-                                gchar *tmp = _(wdirs[j]);
-                                
-                                wdir_loc[i] = tmp[0];
-                        }
-        
-        wdir_loc[wdir_len] = '\0';
-        
+				wdir_i[0] = wdir[i];
+				wdir_i[1] = '\0';
+
+				tmp = g_strdup_printf("%s%s", wdir_loc,
+						translate_str(wdirs, wdir_i));
+				g_free(wdir_loc);
+				wdir_loc = tmp;
+			}
+		
+	}
         return wdir_loc;
+}
+
+/* calm or a number */
+gchar *translate_wind_speed(const gchar *wspeed, enum units unit)
+{
+        gchar *wspeed_loc;
+	if (g_ascii_strcasecmp(wspeed, "calm") == 0)
+		wspeed_loc = g_strdup(_("calm"));
+	else if (g_ascii_strcasecmp(wspeed, "N/A") == 0)
+		wspeed_loc = g_strdup(_("N/A"));
+	else
+		wspeed_loc = g_strdup_printf("%s %s", wspeed, get_unit(unit, WIND_SPEED));
+        return wspeed_loc;
 }
 
 /* 8:13 AM */
@@ -312,4 +364,15 @@ gchar *translate_time (const gchar *time)
         strftime(time_loc, TIME_LOC_N, "%X", &time_tm);
 
         return time_loc;
+}
+
+/* Unlimited or a number */
+gchar *translate_visibility(const gchar *vis, enum units unit)
+{
+        gchar *vis_loc;
+	if (g_ascii_strcasecmp(vis, "Unlimited") == 0)
+		vis_loc = g_strdup(_("Unlimited"));
+	else
+		vis_loc = g_strdup_printf("%s %s", vis, get_unit(unit, VIS));
+        return vis_loc;
 }

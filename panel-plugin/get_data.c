@@ -1,5 +1,7 @@
 #include <config.h>
 
+#include <libxfce4util/i18n.h>
+
 #include "get_data.h"
 #include "debug_print.h"
 #define KILL_RING_S 5
@@ -250,8 +252,9 @@ const gchar *get_unit(enum units unit, enum datas type)
         {
                 case 0x0020: str = (unit == METRIC ? "\302\260C" : "\302\260F"); break;
                 case 0x0030: str = "%"; break;
-                case 0x0040: str = (unit == METRIC ? "km/h" : "mph"); break;
-                case 0x0050: str = (unit == METRIC ? "hPa" : "in"); break;
+                case 0x0040: str = (unit == METRIC ? _("km/h") : _("mph")); break;
+                case 0x0050: str = (unit == METRIC ? _("hPa") : _("in")); break;
+                case 0x0060: str = (unit == METRIC ? _("km") : _("mi")); break;
                 default: str = "";
         }
 
