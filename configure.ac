@@ -32,7 +32,7 @@ AC_SUBST(XML_LIBS_LIBS)
 AC_SUBST(XML_LIBS_CFLAGS)
 
 dnl check for i18n support
-BM_I18N([xfce4-weather], [nl de])
+BM_I18N([xfce4-weather], [nl de fr])
 
 dnl configure the panel plugin
 XFCE_PANEL_PLUGIN([XFCE4_PANEL], [4.1.90])
