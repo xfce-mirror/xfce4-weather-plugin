@@ -1,9 +1,9 @@
-#include "http_client.h"
-
 #include <libxml/parser.h>
 #include <gtk/gtk.h>
 #include <libxfcegui4/dialogs.h>
 #include <libxfcegui4/xfce_framebox.h>
+
+#include "http_client.h"
 
 struct search_dialog {
         GtkWidget *dialog;
@@ -15,6 +15,8 @@ struct search_dialog {
 
         gchar *proxy_host;
         gint proxy_port;
+
+        gchar *recv_buffer;
 };
 
 struct search_dialog *create_search_dialog(GtkWindow *, gchar *, gint);

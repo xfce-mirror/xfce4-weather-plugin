@@ -109,110 +109,38 @@ gchar *make_label(struct xml_weather *weatherdata, enum datas opt, enum units un
 
         return str;
 }
-/* -1 error 0 no update needed 1 success */
-gint update_weatherdata(struct xfceweather_data *data, gboolean force)
+
+gchar *get_filename(const struct xfceweather_data *data)
 {
-        xmlNode *cur_node = NULL;
-        xmlDoc *doc = NULL;
-        struct xml_weather *weather = NULL;
-        gboolean ret;
-        struct stat attrs; 
-        /*gchar *fullfilename = xfce_resource_save_location(XFCE_RESOURCE_CACHE, 
-                        filename, TRUE);*/
-        gchar *fullfilename, *filename;
-
-        if (!data->location_code)
-                return -1;
-
-        filename = g_strdup_printf("xfce4/weather-plugin/weather_%s_%c.xml", 
+        gchar *filename = g_strdup_printf("xfce4/weather-plugin/weather_%s_%c.xml", 
                         data->location_code, data->unit == METRIC ? 'm' : 'i');
-        fullfilename = xfce_resource_save_location(XFCE_RESOURCE_CACHE, filename, TRUE);
+        gchar *fullfilename = 
+                xfce_resource_save_location(XFCE_RESOURCE_CACHE, filename, TRUE);
         g_free(filename);
 
-        if (!fullfilename)
+        return fullfilename;
+}
+
+void set_icon_error(struct xfceweather_data *data)
+{
+        GdkPixbuf *icon = get_icon(data->iconimage, "25", data->iconsize);
+        gtk_image_set_from_pixbuf(GTK_IMAGE(data->iconimage), icon);
+
+        if (data->weatherdata)
         {
-                DEBUG_PUTS("can't get savedir?\n");
-                return -1;
-        } 
-
-        if (force || (stat(fullfilename, &attrs) == -1) || 
-                        ((time(NULL) - attrs.st_mtime) > (UPDATE_TIME)))
-        {
-                gchar *url = g_strdup_printf("/weather/local/%s?cc=*&dayf=%d&unit=%c",
-                                data->location_code, XML_WEATHER_DAYF_N,
-                                data->unit == METRIC ? 'm' : 'i');
-               
-
-                ret = http_get_file(url, "xoap.weather.com", fullfilename, 
-                                data->proxy_host, data->proxy_port);
-                g_free(url);
-
-                if (!ret)
-                {
-                        g_free(fullfilename);
-                       
-                        return -1;
-                }
+                xml_weather_free(data->weatherdata);
+                data->weatherdata = NULL;
         }
-        else if (data->weatherdata)
-                return 0;
-      
 
-        doc = xmlParseFile(fullfilename);
-        g_free(fullfilename);
+        add_tooltip(data->tooltipbox, "Cannot update weather data");
 
-        if (!doc)
-                return -1;
+        return;
+}
 
-       
-
-        cur_node = xmlDocGetRootElement(doc);
-
-        if (cur_node)
-                weather = parse_weather(cur_node);
-
-        xmlFreeDoc(doc);
-
-        if (weather)
-        {
-               
-                if (data->weatherdata)
-                        xml_weather_free(data->weatherdata);
-               
-                data->weatherdata = weather;
-                return 1;
-        }
-        else
-                return -1;
-}       
-
-void update_plugin (struct xfceweather_data *data, gboolean force)
+void set_icon_current(struct xfceweather_data *data)
 {
         int i;
-        GdkPixbuf *icon = NULL; 
-       
-        gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
-        
-        if (update_weatherdata(data, force) == -1)
-        {
-                GdkPixbuf *icon = get_icon(data->iconimage, "25", data->iconsize);
-                gtk_image_set_from_pixbuf(GTK_IMAGE(data->iconimage), icon);
-
-                if (data->weatherdata)
-                {
-                        xml_weather_free(data->weatherdata);
-                        data->weatherdata = NULL;
-                }
-
-                add_tooltip(data->tooltipbox, "Cannot update weather data");
-                
-                return;
-        }
-
-       
-
-       
-
+        GdkPixbuf *icon;
         for (i = 0; i < data->labels->len; i++)
         {
                 enum datas opt;
@@ -232,17 +160,116 @@ void update_plugin (struct xfceweather_data *data, gboolean force)
                
         }
 
-        
-
-        gtk_scrollbox_enablecb(GTK_SCROLLBOX(data->scrollbox), TRUE);
-
-       
+        gtk_scrollbox_enablecb(GTK_SCROLLBOX(data->scrollbox), TRUE);       
                 
         icon = get_icon(data->iconimage, get_data(data->weatherdata, WICON), data->iconsize);
        
         gtk_image_set_from_pixbuf(GTK_IMAGE(data->iconimage), icon);
        
         add_tooltip(data->tooltipbox, translate_desc(get_data(data->weatherdata, TRANS)));
+}
+
+void cb_update(gboolean status, gpointer user_data)
+{
+        struct xfceweather_data *data = (struct xfceweather_data *)user_data;
+        gchar *fullfilename = get_filename(data);
+        xmlDoc *doc;
+        xmlNode *cur_node;
+        struct xml_weather *weather;
+
+        if (!fullfilename)
+                return;
+        
+        doc = xmlParseFile(fullfilename);
+        g_free(fullfilename);
+
+        if (!doc)
+                return;
+
+        cur_node = xmlDocGetRootElement(doc);
+
+        if (cur_node)
+                weather = parse_weather(cur_node);
+
+        xmlFreeDoc(doc);
+
+        gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
+
+        if (weather)
+        {
+               
+                if (data->weatherdata)
+                        xml_weather_free(data->weatherdata);
+               
+                data->weatherdata = weather;
+                set_icon_current(data);
+        }
+        else
+        {
+                set_icon_error(data);
+                return;
+        }
+}
+
+/* -1 error 0 no update needed 1 updating */
+gint update_weatherdata(struct xfceweather_data *data, gboolean force)
+{
+        xmlNode *cur_node = NULL;
+        xmlDoc *doc = NULL;
+        struct xml_weather *weather = NULL;
+        gboolean ret;
+        struct stat attrs; 
+        /*gchar *fullfilename = xfce_resource_save_location(XFCE_RESOURCE_CACHE, 
+                        filename, TRUE);*/
+        gchar *fullfilename;
+
+        if (!data->location_code)
+                return -1;
+
+        fullfilename = get_filename(data);
+
+        if (!fullfilename)
+        {
+                DEBUG_PUTS("can't get savedir?\n");
+                return -1;
+        } 
+
+        if (force || (stat(fullfilename, &attrs) == -1) || 
+                        ((time(NULL) - attrs.st_mtime) > (UPDATE_TIME)))
+        {
+                gchar *url = g_strdup_printf("/weather/local/%s?cc=*&dayf=%d&unit=%c",
+                                data->location_code, XML_WEATHER_DAYF_N,
+                                data->unit == METRIC ? 'm' : 'i');
+               
+
+                gboolean status = http_get_file(url, "xoap.weather.com", fullfilename, 
+                                data->proxy_host, data->proxy_port, cb_update,
+                                (gpointer) data);
+                g_free(url);
+                g_free(fullfilename);
+
+                return status ? 1 : -1;
+        }
+        else if (data->weatherdata)
+                return 0;
+        else
+        {
+                cb_update(TRUE, data);
+                return 1;
+        }
+}
+
+void update_plugin (struct xfceweather_data *data, gboolean force)
+{
+        int i;
+        GdkPixbuf *icon = NULL; 
+        
+        if (update_weatherdata(data, force) == -1)
+        {
+                gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
+                set_icon_error(data);
+        }
+        /* else update will be called through the callback in http_get_file() */
 }
 
 GArray *labels_clear (GArray *array)
@@ -403,15 +430,20 @@ void xfceweather_write_config (Control *control,
 gboolean update_cb(struct xfceweather_data *data)
 {
         XFCE_PANEL_LOCK();
+
+        DEBUG_PUTS("update_cb(): callback called\n");
         
         update_plugin(data, FALSE);
+
+        DEBUG_PUTS("update_cb(): request added, returning\n");
+
         
         XFCE_PANEL_UNLOCK();
         
         return TRUE;
 }
 
-void real_update_config(struct xfceweather_data *data, gboolean force)
+void update_plugin_with_reset(struct xfceweather_data *data, gboolean force)
 {
         if (data->updatetimeout)
                 g_source_remove(data->updatetimeout);
@@ -424,7 +456,7 @@ void real_update_config(struct xfceweather_data *data, gboolean force)
 
 void update_config(struct xfceweather_data *data)
 {
-        real_update_config(data, TRUE); /* force because units could have changed */
+        update_plugin_with_reset(data, TRUE); /* force because units could have changed */
 }
 
 void close_summary(GtkWidget *widget, gpointer *user_data)
@@ -460,7 +492,7 @@ gboolean cb_click(GtkWidget *widget, GdkEventButton *event, gpointer user_data)
                 }
         }
         else if (event->button == 2)
-                real_update_config(data, TRUE);
+                update_plugin_with_reset(data, TRUE);
 
         return FALSE;
 }
@@ -487,7 +519,8 @@ gboolean xfceweather_create_control(Control *control)
 
         data->scrollbox = gtk_scrollbox_new();
        
-        data->iconimage = gtk_image_new_from_pixbuf(get_icon(control->base, "-", IconSizeSmall));
+        data->iconimage = gtk_image_new_from_pixbuf(
+                        get_icon(control->base, "-", IconSizeSmall));
         gtk_misc_set_alignment(GTK_MISC(data->iconimage), 0.5, 1);
        
 
@@ -506,10 +539,12 @@ gboolean xfceweather_create_control(Control *control)
         gtk_box_pack_start(GTK_BOX(vbox2), data->tooltipbox, FALSE, FALSE, 0);
 
         gtk_container_add(GTK_CONTAINER(control->base), vbox2);
-        g_signal_connect(data->tooltipbox, "button-press-event", G_CALLBACK(cb_click), (gpointer)data);
+        g_signal_connect(data->tooltipbox, "button-press-event", 
+                        G_CALLBACK(cb_click), (gpointer)data);
         
         gtk_widget_show_all(vbox2);
 
+        /* assign to tempval because g_array_append_val() is using & operator */
         lbl = FLIK;
         g_array_append_val(data->labels, lbl);
         lbl = TEMP;
@@ -523,7 +558,8 @@ gboolean xfceweather_create_control(Control *control)
         gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox), -1, "1");
         gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
 
-        data->updatetimeout = gtk_timeout_add(UPDATE_TIME * 1000, (GSourceFunc)update_cb, data);    
+        data->updatetimeout = 
+                gtk_timeout_add(UPDATE_TIME * 1000, (GSourceFunc)update_cb, data);    
 
         return TRUE;
 }

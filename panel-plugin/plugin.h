@@ -9,7 +9,7 @@
 
 #define XFCEWEATHER_ROOT "weather"
 #define DEFAULT_W_THEME "liquid"
-#define UPDATE_TIME 1800
+#define UPDATE_TIME 1600
 
 struct xfceweather_data {
         GtkWidget *scrollbox;

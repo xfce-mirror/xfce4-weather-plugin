@@ -1,6 +1,6 @@
 #ifndef DEBUG_PRINT_H
 #define DEBUG_PRINT_H
-
+#define DEBUG 1
 #ifdef DEBUG
   #include <stdio.h>
   #define DEBUG_PRINT(s, i) fprintf(stderr, s, i);

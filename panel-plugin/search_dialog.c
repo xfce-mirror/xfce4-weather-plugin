@@ -20,12 +20,8 @@ gchar *sanitize_str(const gchar *str)
         GString *retstr = g_string_sized_new(strlen(str));
         gchar *realstr, c = '\0';
 
-       
-
         while((c = *str++))
-        {
-               
-                
+        {                
                 if (g_ascii_isspace(c))
                         g_string_append(retstr, "%20");
                 else if (g_ascii_isalnum(c) == FALSE)
@@ -45,57 +41,22 @@ gchar *sanitize_str(const gchar *str)
 
         return realstr;
 }
-                
 
-gboolean search_cb (GtkButton *button, gpointer user_data)
+void cb_searchdone(gboolean result, gpointer user_data)
 {
         struct search_dialog *dialog = (struct search_dialog *)user_data;
-        gchar *sane_str, *url, *page;
-        const gchar *str;
-        xmlDocPtr doc;
-        xmlNodePtr cur_node;
-
-       
-
-        str = gtk_entry_get_text(GTK_ENTRY(dialog->search_entry));
-
-        if (strlen(str) == 0)
-                return FALSE;
-
-        gtk_list_store_clear(GTK_LIST_STORE(dialog->result_mdl));
-
-       
-
-        if ((sane_str = sanitize_str(str)) == NULL)
-        {
-               
-                return FALSE;
-        }
-
-        url = g_strdup_printf("/search/search?where=%s", sane_str);
-        g_free(sane_str);
+        xmlDoc *doc;
+        xmlNode *cur_node;
         
-       
+        if (!result || dialog->recv_buffer == NULL)
+                return;       
 
-        page = http_get_buffer(url, "xoap.weather.com", dialog->proxy_host, dialog->proxy_port);
-        g_free(url);
+        doc = xmlParseMemory(dialog->recv_buffer, strlen(dialog->recv_buffer));
+        g_free(dialog->recv_buffer);
+        dialog->recv_buffer = NULL;
 
-        if (!page)
-        {
-               
-                return FALSE;
-        }
-
-       
-
-        doc = xmlParseMemory(page, strlen(page));
-        g_free(page);
-
-        if (!doc)
-        {
-               
-                return FALSE;
-        }
+        if (!doc)               
+                return;
 
         cur_node = xmlDocGetRootElement(doc);
 
@@ -129,8 +90,46 @@ gboolean search_cb (GtkButton *button, gpointer user_data)
 
         xmlFreeDoc(doc);
 
-        return FALSE;
+        return;
 }
+
+
+gboolean search_cb (GtkButton *button, gpointer user_data)
+{
+        struct search_dialog *dialog = (struct search_dialog *)user_data;
+        gchar *sane_str, *url, *page;
+        const gchar *str;
+        xmlDocPtr doc;
+        xmlNodePtr cur_node;
+        gboolean result;
+
+       
+
+        str = gtk_entry_get_text(GTK_ENTRY(dialog->search_entry));
+
+        if (strlen(str) == 0)
+                return FALSE;
+
+        gtk_list_store_clear(GTK_LIST_STORE(dialog->result_mdl));
+
+       
+
+        if ((sane_str = sanitize_str(str)) == NULL)
+        {
+               
+                return FALSE;
+        }
+
+        url = g_strdup_printf("/search/search?where=%s", sane_str);
+        g_free(sane_str);
+        
+        result = http_get_buffer(url, "xoap.weather.com", dialog->proxy_host, dialog->proxy_port,
+                        &dialog->recv_buffer, cb_searchdone, (gpointer)dialog);        
+        g_free(url);
+
+        return result;
+}
+
 
 struct search_dialog *create_search_dialog(GtkWindow *parent, gchar *proxy_host, gint proxy_port)
 {
