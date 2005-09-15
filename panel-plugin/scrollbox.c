@@ -173,7 +173,6 @@ GdkPixmap *make_pixmap(GtkScrollbox *self, gchar *value)
 {
         GdkWindow *rootwin;
         PangoLayout *pl;
-        GdkGC *gc;
         gint width, height, middle;
         GdkPixmap *pixmap;
         GtkRequisition widgsize = {0, }; 
@@ -188,7 +187,6 @@ GdkPixmap *make_pixmap(GtkScrollbox *self, gchar *value)
 
         pl = gtk_widget_create_pango_layout(widget, NULL);
         pango_layout_set_markup(pl, value, -1);
-        gc = gdk_gc_new(GDK_DRAWABLE(rootwin));
 
         pango_layout_get_pixel_size(pl, &width, &height);
 
@@ -198,10 +196,9 @@ GdkPixmap *make_pixmap(GtkScrollbox *self, gchar *value)
                         widget->style->bg_gc[0],
                         TRUE, 0, 0, width, height);
 
-        gdk_draw_layout(GDK_DRAWABLE(pixmap), gc, 0, 0, pl);
+        gdk_draw_layout(GDK_DRAWABLE(pixmap), widget->style->fg_gc[0], 0, 0, pl);
 
         g_object_unref(pl);
-        g_object_unref(gc);
 
         gtk_widget_size_request(widget, &widgsize);
 
