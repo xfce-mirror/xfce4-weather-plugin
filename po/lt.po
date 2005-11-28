@@ -1,63 +1,87 @@
 # Lithuanian translation of xfce4-wheather-plugin.
-# Copyright (C) 2005 THE xfce4-wheather-plugin'S COPYRIGHT HOLDER
+# Copyright (C) 2004-2005 Bob Schlärmann.
 # This file is distributed under the same license as the xfce4-wheather-plugin package.
 # Rimas Kudelis <rq@akl.lt>, 2005.
-# 
-# 
+#
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-wheather-plugin\n"
+"Project-Id-Version: xfce4-weather-plugin 0.4.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-01-23 22:52+0100\n"
-"PO-Revision-Date: 2005-02-04 23:22+0200\n"
+"POT-Creation-Date: 2005-11-15 09:52+0100\n"
+"PO-Revision-Date: 2005-11-15 20:01+0900\n"
 "Last-Translator: Rimas Kudelis <rq@akl.lt>\n"
 "Language-Team: Lithuanian <komp_lt@konferencijos.lt>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit"
+"Content-Transfer-Encoding: 8bit\n"
 
-#: panel-plugin/plugin.c:62
+#: panel-plugin/get_data.c:255
+msgid "km/h"
+msgstr ""
+
+#: panel-plugin/get_data.c:255
+msgid "mph"
+msgstr ""
+
+#: panel-plugin/get_data.c:256
+msgid "hPa"
+msgstr ""
+
+#: panel-plugin/get_data.c:256
+#, fuzzy
+msgid "in"
+msgstr "Lietus"
+
+#: panel-plugin/get_data.c:257
+msgid "km"
+msgstr ""
+
+#: panel-plugin/get_data.c:257
+msgid "mi"
+msgstr ""
+
+#: panel-plugin/plugin.c:63
 msgid "V"
 msgstr "M"
 
-#: panel-plugin/plugin.c:63
+#: panel-plugin/plugin.c:64
 msgid "U"
 msgstr "UV"
 
-#: panel-plugin/plugin.c:64
+#: panel-plugin/plugin.c:65
 msgid "WD"
 msgstr "VK"
 
-#: panel-plugin/plugin.c:65 panel-plugin/plugin.c:66
+#: panel-plugin/plugin.c:66 panel-plugin/plugin.c:67
 msgid "P"
 msgstr "A"
 
-#: panel-plugin/plugin.c:67
+#: panel-plugin/plugin.c:68
 msgid "F"
 msgstr "P"
 
-#: panel-plugin/plugin.c:68
+#: panel-plugin/plugin.c:69
 msgid "T"
 msgstr "T"
 
-#: panel-plugin/plugin.c:69
+#: panel-plugin/plugin.c:70
 msgid "D"
 msgstr "RT"
 
-#: panel-plugin/plugin.c:70
+#: panel-plugin/plugin.c:71
 msgid "H"
 msgstr "D"
 
-#: panel-plugin/plugin.c:71
+#: panel-plugin/plugin.c:72
 msgid "WS"
 msgstr "V"
 
-#: panel-plugin/plugin.c:72
+#: panel-plugin/plugin.c:73
 msgid "WG"
 msgstr "VG"
 
-#: panel-plugin/plugin.c:567 panel-plugin/summary_window.c:302
-#: panel-plugin/summary_window.c:309
+#: panel-plugin/plugin.c:589 panel-plugin/summary_window.c:317
+#: panel-plugin/summary_window.c:324
 msgid "Weather update"
 msgstr "Orų tarnyba"
 
@@ -69,7 +93,6 @@ msgid ""
 msgstr ""
 "Orų ataskaita: %s.\n"
 "\n"
-""
 
 #: panel-plugin/summary_window.c:53
 #, c-format
@@ -111,21 +134,20 @@ msgid ""
 msgstr ""
 "\n"
 "Vėjas\n"
-""
 
-#: panel-plugin/summary_window.c:75
+#: panel-plugin/summary_window.c:76
 msgid "Speed"
 msgstr "Greitis"
 
-#: panel-plugin/summary_window.c:79
+#: panel-plugin/summary_window.c:83
 msgid "Direction"
 msgstr "Kryptis"
 
-#: panel-plugin/summary_window.c:85
+#: panel-plugin/summary_window.c:90
 msgid "Gusts"
 msgstr "Gūsiai"
 
-#: panel-plugin/summary_window.c:87
+#: panel-plugin/summary_window.c:95
 msgid ""
 "\n"
 "UV\n"
@@ -133,15 +155,15 @@ msgstr ""
 "\n"
 "UV\n"
 
-#: panel-plugin/summary_window.c:88
+#: panel-plugin/summary_window.c:96
 msgid "Index"
 msgstr "Indeksas"
 
-#: panel-plugin/summary_window.c:89
+#: panel-plugin/summary_window.c:98
 msgid "Risk"
 msgstr "Pavojus"
 
-#: panel-plugin/summary_window.c:91
+#: panel-plugin/summary_window.c:102
 msgid ""
 "\n"
 "Atmospheric pressure\n"
@@ -149,15 +171,15 @@ msgstr ""
 "\n"
 "Atmosferos slėgis\n"
 
-#: panel-plugin/summary_window.c:92
+#: panel-plugin/summary_window.c:103
 msgid "Pressure"
 msgstr "Slėgis"
 
-#: panel-plugin/summary_window.c:95
+#: panel-plugin/summary_window.c:106
 msgid "State"
 msgstr "Būklė"
 
-#: panel-plugin/summary_window.c:99
+#: panel-plugin/summary_window.c:110
 msgid ""
 "\n"
 "Sun\n"
@@ -165,15 +187,15 @@ msgstr ""
 "\n"
 "Saulė\n"
 
-#: panel-plugin/summary_window.c:103
+#: panel-plugin/summary_window.c:114
 msgid "Rise"
 msgstr "Kyla"
 
-#: panel-plugin/summary_window.c:111
+#: panel-plugin/summary_window.c:122
 msgid "Set"
 msgstr "Leidžiasi"
 
-#: panel-plugin/summary_window.c:117
+#: panel-plugin/summary_window.c:128
 msgid ""
 "\n"
 "Other\n"
@@ -181,41 +203,41 @@ msgstr ""
 "\n"
 "Kita\n"
 
-#: panel-plugin/summary_window.c:118
+#: panel-plugin/summary_window.c:129
 msgid "Humidity"
 msgstr "Drėgmė"
 
-#: panel-plugin/summary_window.c:119
+#: panel-plugin/summary_window.c:131
 msgid "Visibility"
 msgstr "Matomumas"
 
-#: panel-plugin/summary_window.c:160
+#: panel-plugin/summary_window.c:175
 #, c-format
 msgid "Day: %s"
 msgstr "Dieną: %s"
 
-#: panel-plugin/summary_window.c:163
+#: panel-plugin/summary_window.c:178
 #, c-format
 msgid "Night: %s"
 msgstr "Naktį: %s"
 
-#: panel-plugin/summary_window.c:173
+#: panel-plugin/summary_window.c:188
 msgid "<b>Precipitation</b>"
 msgstr "<b>Krituliai</b>"
 
-#: panel-plugin/summary_window.c:194
+#: panel-plugin/summary_window.c:209
 msgid "<b>Temperature</b>"
 msgstr "<b>Temperatūra</b>"
 
-#: panel-plugin/summary_window.c:218
+#: panel-plugin/summary_window.c:233
 msgid "<b>Wind</b>"
 msgstr "<b>Vėjas</b>"
 
-#: panel-plugin/summary_window.c:315
+#: panel-plugin/summary_window.c:330
 msgid "Summary"
 msgstr "Santrauka"
 
-#: panel-plugin/summary_window.c:317
+#: panel-plugin/summary_window.c:332
 msgid "Forecast"
 msgstr "Prognozė"
 
@@ -488,7 +510,7 @@ msgstr "Daugiausia debesuota"
 msgid "Mostly Sunny"
 msgstr "Daugiausia saulėta"
 
-#: panel-plugin/translate.c:56
+#: panel-plugin/translate.c:56 panel-plugin/translate.c:357
 msgid "N/A"
 msgstr "N/D"
 
@@ -541,179 +563,371 @@ msgid "Rain / Snow Showers"
 msgstr "Trumpalaikiai lietūs / sniegas"
 
 #: panel-plugin/translate.c:69
+#, fuzzy
+msgid "Rain / Snow Showers Early"
+msgstr "Trumpalaikiai lietūs / sniegas"
+
+#: panel-plugin/translate.c:70
+#, fuzzy
+msgid "Rain / Snow Showers Late"
+msgstr "Trumpalaikiai lietūs / sniegas"
+
+#: panel-plugin/translate.c:71
 msgid "Showers"
 msgstr "Krituliai"
 
-#: panel-plugin/translate.c:70
+#: panel-plugin/translate.c:72
 msgid "Sleet"
 msgstr "Šlapdriba"
 
-#: panel-plugin/translate.c:71
+#: panel-plugin/translate.c:73
 msgid "Sleet and Snow"
 msgstr "Šlapdriba ir sniegas"
 
-#: panel-plugin/translate.c:72
+#: panel-plugin/translate.c:74
 msgid "Smoke"
 msgstr "Dūmai"
 
-#: panel-plugin/translate.c:73
+#: panel-plugin/translate.c:75
 msgid "Snow"
 msgstr "Sniegas"
 
-#: panel-plugin/translate.c:74
+#: panel-plugin/translate.c:76
 msgid "Snow and Rain"
 msgstr "Sniegas ir lietus"
 
-#: panel-plugin/translate.c:75
+#: panel-plugin/translate.c:77
 msgid "Snow or Rain"
 msgstr "Sniegas arba lietus"
 
-#: panel-plugin/translate.c:76
+#: panel-plugin/translate.c:78
 msgid "Snow Showers"
 msgstr "Trumpalaikis sniegas"
 
-#: panel-plugin/translate.c:77
+#: panel-plugin/translate.c:79
 msgid "Sunny"
 msgstr "Saulėta"
 
-#: panel-plugin/translate.c:78
+#: panel-plugin/translate.c:80
 msgid "Thunder"
 msgstr "Griaustiniai"
 
-#: panel-plugin/translate.c:79
+#: panel-plugin/translate.c:81
 msgid "Thunder storms"
 msgstr "Audros"
 
-#: panel-plugin/translate.c:80
+#: panel-plugin/translate.c:82
 msgid "Variable Cloudiness"
 msgstr "Nepastovus debesuotumas"
 
-#: panel-plugin/translate.c:81
+#: panel-plugin/translate.c:83
 msgid "Variable Clouds"
 msgstr "Nepastovūs debesys"
 
-#: panel-plugin/translate.c:82
+#: panel-plugin/translate.c:84
 msgid "Windy"
 msgstr "Vėjuota"
 
-#: panel-plugin/translate.c:83
+#: panel-plugin/translate.c:85
 msgid "Wintry Mix"
 msgstr "Žiemos mišinys"
 
-#: panel-plugin/translate.c:84
+#: panel-plugin/translate.c:86
 msgid "Showers in the Vicinity"
 msgstr "Apylinkėje trumpalaikiai lietūs"
 
-#: panel-plugin/translate.c:85
-msgid "Light Rain Shower"
-msgstr "Lijundra"
-
-#: panel-plugin/translate.c:86
-msgid "Showers Late"
-msgstr "Vėlyvi trumpalaikiai lietūs"
-
 #: panel-plugin/translate.c:87
-msgid "PM Showers"
-msgstr "Trumpalaikiai lietūs popiet"
+msgid "AM Showers"
+msgstr "Trumpalaikiai lietūs priešpiet"
 
 #: panel-plugin/translate.c:88
-msgid "Light Rain / Wind"
-msgstr "Lengvas lietus / vėjas"
+msgid "PM Showers"
+msgstr "Trumpalaikiai lietūs popiet"
 
 #: panel-plugin/translate.c:89
 msgid "Scattered Showers"
 msgstr "Vietomis trumpalaikiai lietūs"
 
 #: panel-plugin/translate.c:90
+msgid "Light Rain Shower"
+msgstr "Lijundra"
+
+#: panel-plugin/translate.c:91
+#, fuzzy
+msgid "Showers Early"
+msgstr "Ankstyvas trumpalaikis sniegas"
+
+#: panel-plugin/translate.c:92
+msgid "Showers Late"
+msgstr "Vėlyvi trumpalaikiai lietūs"
+
+#: panel-plugin/translate.c:93
+#, fuzzy
+msgid "AM Light Rain / Wind"
+msgstr "Lengvas lietus / vėjas"
+
+#: panel-plugin/translate.c:94
+#, fuzzy
+msgid "PM Light Rain / Wind"
+msgstr "Lengvas lietus / vėjas"
+
+#: panel-plugin/translate.c:95
+msgid "Light Rain / Wind"
+msgstr "Lengvas lietus / vėjas"
+
+#: panel-plugin/translate.c:96
+#, fuzzy
+msgid "Light Rain with Thunder"
+msgstr "Lijundra"
+
+#: panel-plugin/translate.c:97
+#, fuzzy
+msgid "Light Rain and Windy"
+msgstr "Lengvas lietus / vėjas"
+
+#: panel-plugin/translate.c:98
 msgid "PM Light Rain"
 msgstr "Lengvas lietus popiet"
 
-#: panel-plugin/translate.c:91
-msgid "AM Showers"
-msgstr "Trumpalaikiai lietūs priešpiet"
-
-#: panel-plugin/translate.c:92
+#: panel-plugin/translate.c:99
 msgid "AM Light Rain"
 msgstr "Lengvas lietus priešpiet"
 
-#: panel-plugin/translate.c:93
+#: panel-plugin/translate.c:100
+#, fuzzy
+msgid "Light Rain Early"
+msgstr "Silpnai lyja"
+
+#: panel-plugin/translate.c:101
+#, fuzzy
+msgid "Light Rain Late"
+msgstr "Silpnai lyja"
+
+#: panel-plugin/translate.c:102
 msgid "Partly Cloudy and Windy"
 msgstr "Dalinai debesuota ir vėjuota"
 
-#: panel-plugin/translate.c:94
+#: panel-plugin/translate.c:103
 msgid "Few Showers"
 msgstr "Šiek tiek lietaus"
 
-#: panel-plugin/translate.c:95
+#: panel-plugin/translate.c:104
 msgid "Light Drizzle"
 msgstr "Lengva dulksna"
 
-#: panel-plugin/translate.c:96
+#: panel-plugin/translate.c:105
 msgid "Clouds Early / Clearing Late"
 msgstr "Anksti debesys, vėliau išsigiedrys"
 
-#: panel-plugin/translate.c:97
+#: panel-plugin/translate.c:106
 msgid "Mostly Cloudy and Windy"
 msgstr "Daugiausia debesuota ir vėjuota"
 
-#: panel-plugin/translate.c:98
+#: panel-plugin/translate.c:107
+#, fuzzy
+msgid "AM Rain"
+msgstr "Lietus"
+
+#: panel-plugin/translate.c:108
+#, fuzzy
+msgid "PM Rain"
+msgstr "Lietus"
+
+#: panel-plugin/translate.c:109
+msgid "Rain Early"
+msgstr ""
+
+#: panel-plugin/translate.c:110
+#, fuzzy
+msgid "Rain Late"
+msgstr "Lietus"
+
+#: panel-plugin/translate.c:111
 msgid "Rain / Snow"
 msgstr "Lietus / sniegas"
 
-#: panel-plugin/translate.c:99
+#: panel-plugin/translate.c:112
+#, fuzzy
+msgid "Rain / Wind"
+msgstr "Lengvas lietus / vėjas"
+
+#: panel-plugin/translate.c:113
 msgid "Rain and Sleet"
 msgstr "Lietus ir šlapdriba"
 
-#: panel-plugin/translate.c:100
-msgid "Snow Showers Late"
-msgstr "Vėlyvas trumpalaikis sniegas"
-
-#: panel-plugin/translate.c:101
+#: panel-plugin/translate.c:114
 msgid "Light Drizzle and Windy"
 msgstr "Lengva dulksna bei vėjas"
 
-#: panel-plugin/translate.c:102
+#: panel-plugin/translate.c:115
 msgid "Snow Shower"
 msgstr "Trumpalaikis sniegas"
 
-#: panel-plugin/translate.c:103
+#: panel-plugin/translate.c:116
 msgid "Snow Showers Early"
 msgstr "Ankstyvas trumpalaikis sniegas"
 
-#: panel-plugin/translate.c:104
+#: panel-plugin/translate.c:117
+msgid "Snow Showers Late"
+msgstr "Vėlyvas trumpalaikis sniegas"
+
+#: panel-plugin/translate.c:118
 msgid "Few Snow Showers"
 msgstr "Redkarčiais trumpalaikis sniegas"
 
-#: panel-plugin/translate.c:109
+#: panel-plugin/translate.c:119
+msgid "T-Storms"
+msgstr ""
+
+#: panel-plugin/translate.c:120
+#, fuzzy
+msgid "AM T-Storms"
+msgstr "Trumpalaikiai lietūs priešpiet"
+
+#: panel-plugin/translate.c:121
+#, fuzzy
+msgid "PM T-Storms"
+msgstr "Trumpalaikiai lietūs popiet"
+
+#: panel-plugin/translate.c:122
+#, fuzzy
+msgid "T-Storms Early"
+msgstr "Ankstyvas trumpalaikis sniegas"
+
+#: panel-plugin/translate.c:123
+#, fuzzy
+msgid "T-Storms Late"
+msgstr "Vėlyvi trumpalaikiai lietūs"
+
+#: panel-plugin/translate.c:124
+#, fuzzy
+msgid "Scattered T-Storms"
+msgstr "Vietomis trumpalaikiai lietūs"
+
+#: panel-plugin/translate.c:125
+#, fuzzy
+msgid "Isolated T-Storms"
+msgstr "Vietomis trumpi lietūs"
+
+#: panel-plugin/translate.c:126
+#, fuzzy
+msgid "Rain / Thunder"
+msgstr "Griaustiniai"
+
+#: panel-plugin/translate.c:127
+msgid "AM Clouds / PM Sun"
+msgstr ""
+
+#: panel-plugin/translate.c:132
 msgid "rising"
 msgstr "kyla"
 
-#: panel-plugin/translate.c:110
+#: panel-plugin/translate.c:133
 msgid "steady"
 msgstr "pastovus"
 
-#: panel-plugin/translate.c:111
+#: panel-plugin/translate.c:134
 msgid "falling"
 msgstr "krenta"
 
-#: panel-plugin/translate.c:116
+#: panel-plugin/translate.c:139
+msgid "Low"
+msgstr ""
+
+#: panel-plugin/translate.c:140
+msgid "Moderate"
+msgstr ""
+
+#: panel-plugin/translate.c:141
+msgid "High"
+msgstr ""
+
+#: panel-plugin/translate.c:142
+msgid "Very High"
+msgstr ""
+
+#: panel-plugin/translate.c:143
+msgid "Extreme"
+msgstr ""
+
+#: panel-plugin/translate.c:148
 msgid "S"
 msgstr "P"
 
-#: panel-plugin/translate.c:117
+#: panel-plugin/translate.c:149
+msgid "SSW"
+msgstr ""
+
+#: panel-plugin/translate.c:150
+#, fuzzy
+msgid "SW"
+msgstr "P"
+
+#: panel-plugin/translate.c:151
+#, fuzzy
+msgid "WSW"
+msgstr "V"
+
+#: panel-plugin/translate.c:152
 msgid "W"
 msgstr "V"
 
-#: panel-plugin/translate.c:118
-msgid "E"
-msgstr "R"
+#: panel-plugin/translate.c:153
+msgid "WNW"
+msgstr ""
 
-#: panel-plugin/translate.c:119
+#: panel-plugin/translate.c:154
+#, fuzzy
+msgid "NW"
+msgstr "V"
+
+#: panel-plugin/translate.c:155
+msgid "NNW"
+msgstr ""
+
+#: panel-plugin/translate.c:156
 msgid "N"
 msgstr "Š"
 
-#: panel-plugin/translate.c:220
+#: panel-plugin/translate.c:157
+msgid "NNE"
+msgstr ""
+
+#: panel-plugin/translate.c:158
+#, fuzzy
+msgid "NE"
+msgstr "R"
+
+#: panel-plugin/translate.c:159
+msgid "ENE"
+msgstr ""
+
+#: panel-plugin/translate.c:160
+msgid "E"
+msgstr "R"
+
+#: panel-plugin/translate.c:161
+msgid "ESE"
+msgstr ""
+
+#: panel-plugin/translate.c:162
+#, fuzzy
+msgid "SE"
+msgstr "P"
+
+#: panel-plugin/translate.c:163
+msgid "SSE"
+msgstr ""
+
+#: panel-plugin/translate.c:269
 #, c-format
 msgid "%x at %X Local Time"
 msgstr "%x·%X·vietos laiku"
 
+#: panel-plugin/translate.c:355
+msgid "calm"
+msgstr ""
+
+#: panel-plugin/translate.c:397
+msgid "Unlimited"
+msgstr ""
