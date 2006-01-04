@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-weather-plugin 0.4.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2005-11-15 09:52+0100\n"
+"POT-Creation-Date: 2006-01-01 13:59+0100\n"
 "PO-Revision-Date: 2005-11-15 20:03+0900\n"
 "Last-Translator: Juraj Brosz <juro@jurajbrosz.info>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -79,7 +79,7 @@ msgstr "WS"
 msgid "WG"
 msgstr "WG"
 
-#: panel-plugin/plugin.c:589 panel-plugin/summary_window.c:317
+#: panel-plugin/plugin.c:625 panel-plugin/summary_window.c:317
 #: panel-plugin/summary_window.c:324
 msgid "Weather update"
 msgstr "Aktuálny stav počasia"
@@ -321,15 +321,15 @@ msgstr "Autodetekcia z prostredia"
 msgid "Labels to display"
 msgstr "Zobraziť štítky"
 
-#: panel-plugin/search_dialog.c:151
+#: panel-plugin/search_dialog.c:150
 msgid "Search weather location code"
 msgstr "Vyhľadať kód miesta"
 
-#: panel-plugin/search_dialog.c:162
+#: panel-plugin/search_dialog.c:161
 msgid "Enter a city name or zip code:"
 msgstr "Zadajte názov mesta alebo PSČ:"
 
-#: panel-plugin/search_dialog.c:179
+#: panel-plugin/search_dialog.c:178
 msgid "Results"
 msgstr "Výsledky"
 
@@ -509,7 +509,7 @@ msgstr "Zväčša zamračené"
 msgid "Mostly Sunny"
 msgstr "Zväčša slnečno"
 
-#: panel-plugin/translate.c:56 panel-plugin/translate.c:357
+#: panel-plugin/translate.c:56 panel-plugin/translate.c:362
 msgid "N/A"
 msgstr "Nie je k dispozícii"
 
@@ -563,361 +563,386 @@ msgstr "Mrholenie dážď / sneh"
 
 #: panel-plugin/translate.c:69
 #, fuzzy
-msgid "Rain / Snow Showers Early"
+msgid "AM Rain / Snow Showers"
 msgstr "Mrholenie dážď / sneh"
 
 #: panel-plugin/translate.c:70
 #, fuzzy
-msgid "Rain / Snow Showers Late"
+msgid "PM Rain / Snow Showers"
 msgstr "Mrholenie dážď / sneh"
 
 #: panel-plugin/translate.c:71
+#, fuzzy
+msgid "Rain / Snow Showers Early"
+msgstr "Mrholenie dážď / sneh"
+
+#: panel-plugin/translate.c:72
+#, fuzzy
+msgid "Rain / Snow Showers Late"
+msgstr "Mrholenie dážď / sneh"
+
+#: panel-plugin/translate.c:73
 msgid "Showers"
 msgstr "Prehánky"
 
-#: panel-plugin/translate.c:72
-msgid "Sleet"
-msgstr "Krúpy"
-
-#: panel-plugin/translate.c:73
-msgid "Sleet and Snow"
-msgstr "Krúpy a sneh"
-
 #: panel-plugin/translate.c:74
-msgid "Smoke"
-msgstr ""
-
-#: panel-plugin/translate.c:75
-msgid "Snow"
-msgstr "Sneženie"
-
-#: panel-plugin/translate.c:76
-msgid "Snow and Rain"
-msgstr "Sneh a dážď"
-
-#: panel-plugin/translate.c:77
-msgid "Snow or Rain"
-msgstr "Sneh alebo dážď"
-
-#: panel-plugin/translate.c:78
-msgid "Snow Showers"
-msgstr ""
-
-#: panel-plugin/translate.c:79
-msgid "Sunny"
-msgstr "Slnečno"
-
-#: panel-plugin/translate.c:80
-msgid "Thunder"
-msgstr ""
-
-#: panel-plugin/translate.c:81
-msgid "Thunder storms"
-msgstr ""
-
-#: panel-plugin/translate.c:82
-msgid "Variable Cloudiness"
-msgstr "Premenlivá oblačnosť"
-
-#: panel-plugin/translate.c:83
-msgid "Variable Clouds"
-msgstr ""
-
-#: panel-plugin/translate.c:84
-msgid "Windy"
-msgstr "Veterno"
-
-#: panel-plugin/translate.c:85
-msgid "Wintry Mix"
-msgstr ""
-
-#: panel-plugin/translate.c:86
-msgid "Showers in the Vicinity"
-msgstr "Prehánky v blízkom okolí"
-
-#: panel-plugin/translate.c:87
 msgid "AM Showers"
 msgstr ""
 
-#: panel-plugin/translate.c:88
+#: panel-plugin/translate.c:75
 msgid "PM Showers"
 msgstr ""
 
-#: panel-plugin/translate.c:89
-msgid "Scattered Showers"
+#: panel-plugin/translate.c:76
+msgid "Sleet"
+msgstr "Krúpy"
+
+#: panel-plugin/translate.c:77
+msgid "Sleet and Snow"
+msgstr "Krúpy a sneh"
+
+#: panel-plugin/translate.c:78
+msgid "Smoke"
+msgstr ""
+
+#: panel-plugin/translate.c:79
+msgid "Snow"
+msgstr "Sneženie"
+
+#: panel-plugin/translate.c:80
+msgid "Snow and Rain"
+msgstr "Sneh a dážď"
+
+#: panel-plugin/translate.c:81
+msgid "Snow or Rain"
+msgstr "Sneh alebo dážď"
+
+#: panel-plugin/translate.c:82
+msgid "Snow Showers"
+msgstr ""
+
+#: panel-plugin/translate.c:83
+#, fuzzy
+msgid "AM Snow Showers"
+msgstr "Snehové prehánky"
+
+#: panel-plugin/translate.c:84
+#, fuzzy
+msgid "PM Snow Showers"
+msgstr "Snehové prehánky"
+
+#: panel-plugin/translate.c:85
+#, fuzzy
+msgid "Scattered Snow Showers"
 msgstr "Ojedinelé prehánky"
 
+#: panel-plugin/translate.c:86
+msgid "Sunny"
+msgstr "Slnečno"
+
+#: panel-plugin/translate.c:87
+msgid "Thunder"
+msgstr ""
+
+#: panel-plugin/translate.c:88
+msgid "Thunder storms"
+msgstr ""
+
+#: panel-plugin/translate.c:89
+msgid "Variable Cloudiness"
+msgstr "Premenlivá oblačnosť"
+
 #: panel-plugin/translate.c:90
-msgid "Light Rain Shower"
+msgid "Variable Clouds"
 msgstr ""
 
 #: panel-plugin/translate.c:91
+msgid "Windy"
+msgstr "Veterno"
+
+#: panel-plugin/translate.c:92
+msgid "Wintry Mix"
+msgstr ""
+
+#: panel-plugin/translate.c:93
+msgid "Showers in the Vicinity"
+msgstr "Prehánky v blízkom okolí"
+
+#: panel-plugin/translate.c:94
+msgid "Scattered Showers"
+msgstr "Ojedinelé prehánky"
+
+#: panel-plugin/translate.c:95
+msgid "Light Rain Shower"
+msgstr ""
+
+#: panel-plugin/translate.c:96
 #, fuzzy
 msgid "Showers Early"
 msgstr "Prehánky"
 
-#: panel-plugin/translate.c:92
+#: panel-plugin/translate.c:97
 msgid "Showers Late"
 msgstr ""
 
-#: panel-plugin/translate.c:93
+#: panel-plugin/translate.c:98
 #, fuzzy
 msgid "AM Light Rain / Wind"
 msgstr "Slabý dážď / vietor"
 
-#: panel-plugin/translate.c:94
+#: panel-plugin/translate.c:99
 #, fuzzy
 msgid "PM Light Rain / Wind"
 msgstr "Slabý dážď / vietor"
 
-#: panel-plugin/translate.c:95
+#: panel-plugin/translate.c:100
 msgid "Light Rain / Wind"
 msgstr "Slabý dážď / vietor"
 
-#: panel-plugin/translate.c:96
+#: panel-plugin/translate.c:101
 #, fuzzy
 msgid "Light Rain with Thunder"
 msgstr "Slabý dážď / vietor"
 
-#: panel-plugin/translate.c:97
+#: panel-plugin/translate.c:102
 #, fuzzy
 msgid "Light Rain and Windy"
 msgstr "Slabý dážď / vietor"
 
-#: panel-plugin/translate.c:98
+#: panel-plugin/translate.c:103
 msgid "PM Light Rain"
 msgstr ""
 
-#: panel-plugin/translate.c:99
+#: panel-plugin/translate.c:104
 msgid "AM Light Rain"
 msgstr ""
 
-#: panel-plugin/translate.c:100
+#: panel-plugin/translate.c:105
 #, fuzzy
 msgid "Light Rain Early"
 msgstr "Slabý dážď"
 
-#: panel-plugin/translate.c:101
+#: panel-plugin/translate.c:106
 #, fuzzy
 msgid "Light Rain Late"
 msgstr "Slabý dážď"
 
-#: panel-plugin/translate.c:102
+#: panel-plugin/translate.c:107
 msgid "Partly Cloudy and Windy"
 msgstr ""
 
-#: panel-plugin/translate.c:103
+#: panel-plugin/translate.c:108
 msgid "Few Showers"
 msgstr ""
 
-#: panel-plugin/translate.c:104
+#: panel-plugin/translate.c:109
 msgid "Light Drizzle"
 msgstr ""
 
-#: panel-plugin/translate.c:105
+#: panel-plugin/translate.c:110
 msgid "Clouds Early / Clearing Late"
 msgstr ""
 
-#: panel-plugin/translate.c:106
+#: panel-plugin/translate.c:111
 msgid "Mostly Cloudy and Windy"
 msgstr ""
 
-#: panel-plugin/translate.c:107
+#: panel-plugin/translate.c:112
 #, fuzzy
 msgid "AM Rain"
 msgstr "Dážď"
 
-#: panel-plugin/translate.c:108
+#: panel-plugin/translate.c:113
 #, fuzzy
 msgid "PM Rain"
 msgstr "Dážď"
 
-#: panel-plugin/translate.c:109
+#: panel-plugin/translate.c:114
 msgid "Rain Early"
 msgstr ""
 
-#: panel-plugin/translate.c:110
+#: panel-plugin/translate.c:115
 #, fuzzy
 msgid "Rain Late"
 msgstr "Dážď"
 
-#: panel-plugin/translate.c:111
+#: panel-plugin/translate.c:116
 msgid "Rain / Snow"
 msgstr "Dážď / Sneh"
 
-#: panel-plugin/translate.c:112
+#: panel-plugin/translate.c:117
 #, fuzzy
 msgid "Rain / Wind"
 msgstr "Slabý dážď / vietor"
 
-#: panel-plugin/translate.c:113
+#: panel-plugin/translate.c:118
 msgid "Rain and Sleet"
 msgstr "Dážď so snehom"
 
-#: panel-plugin/translate.c:114
+#: panel-plugin/translate.c:119
 msgid "Light Drizzle and Windy"
 msgstr "Slabé mrholenie a veterno"
 
-#: panel-plugin/translate.c:115
+#: panel-plugin/translate.c:120
 msgid "Snow Shower"
 msgstr "Snehové prehánky"
 
-#: panel-plugin/translate.c:116
+#: panel-plugin/translate.c:121
 msgid "Snow Showers Early"
 msgstr ""
 
-#: panel-plugin/translate.c:117
+#: panel-plugin/translate.c:122
 msgid "Snow Showers Late"
 msgstr ""
 
-#: panel-plugin/translate.c:118
+#: panel-plugin/translate.c:123
 msgid "Few Snow Showers"
 msgstr ""
 
-#: panel-plugin/translate.c:119
+#: panel-plugin/translate.c:124
 msgid "T-Storms"
 msgstr ""
 
-#: panel-plugin/translate.c:120
+#: panel-plugin/translate.c:125
 msgid "AM T-Storms"
 msgstr ""
 
-#: panel-plugin/translate.c:121
+#: panel-plugin/translate.c:126
 msgid "PM T-Storms"
 msgstr ""
 
-#: panel-plugin/translate.c:122
+#: panel-plugin/translate.c:127
 msgid "T-Storms Early"
 msgstr ""
 
-#: panel-plugin/translate.c:123
+#: panel-plugin/translate.c:128
 msgid "T-Storms Late"
 msgstr ""
 
-#: panel-plugin/translate.c:124
+#: panel-plugin/translate.c:129
 #, fuzzy
 msgid "Scattered T-Storms"
 msgstr "Ojedinelé prehánky"
 
-#: panel-plugin/translate.c:125
+#: panel-plugin/translate.c:130
 #, fuzzy
 msgid "Isolated T-Storms"
 msgstr "Ojedinelé prehánky"
 
-#: panel-plugin/translate.c:126
+#: panel-plugin/translate.c:131
 #, fuzzy
 msgid "Rain / Thunder"
 msgstr "Dážď / Sneh"
 
-#: panel-plugin/translate.c:127
+#: panel-plugin/translate.c:132
 msgid "AM Clouds / PM Sun"
 msgstr ""
 
-#: panel-plugin/translate.c:132
+#: panel-plugin/translate.c:137
 msgid "rising"
 msgstr "rastúci"
 
-#: panel-plugin/translate.c:133
+#: panel-plugin/translate.c:138
 msgid "steady"
 msgstr "stály"
 
-#: panel-plugin/translate.c:134
+#: panel-plugin/translate.c:139
 msgid "falling"
 msgstr "klesajúci"
 
-#: panel-plugin/translate.c:139
+#: panel-plugin/translate.c:144
 msgid "Low"
 msgstr "Nízky"
 
-#: panel-plugin/translate.c:140
+#: panel-plugin/translate.c:145
 msgid "Moderate"
 msgstr "Mierny"
 
-#: panel-plugin/translate.c:141
+#: panel-plugin/translate.c:146
 msgid "High"
 msgstr "Vysoký"
 
-#: panel-plugin/translate.c:142
+#: panel-plugin/translate.c:147
 msgid "Very High"
 msgstr "Veľmi vysoký"
 
-#: panel-plugin/translate.c:143
+#: panel-plugin/translate.c:148
 msgid "Extreme"
 msgstr "Extrémny"
 
-#: panel-plugin/translate.c:148
+#: panel-plugin/translate.c:153
 msgid "S"
 msgstr "J"
 
-#: panel-plugin/translate.c:149
+#: panel-plugin/translate.c:154
 msgid "SSW"
 msgstr "JJZ"
 
-#: panel-plugin/translate.c:150
+#: panel-plugin/translate.c:155
 msgid "SW"
 msgstr "JZ"
 
-#: panel-plugin/translate.c:151
+#: panel-plugin/translate.c:156
 msgid "WSW"
 msgstr "ZJZ"
 
-#: panel-plugin/translate.c:152
+#: panel-plugin/translate.c:157
 msgid "W"
 msgstr "Z"
 
-#: panel-plugin/translate.c:153
+#: panel-plugin/translate.c:158
 msgid "WNW"
 msgstr "ZSZ"
 
-#: panel-plugin/translate.c:154
+#: panel-plugin/translate.c:159
 msgid "NW"
 msgstr "SZ"
 
-#: panel-plugin/translate.c:155
+#: panel-plugin/translate.c:160
 msgid "NNW"
 msgstr "SSZ"
 
-#: panel-plugin/translate.c:156
+#: panel-plugin/translate.c:161
 msgid "N"
 msgstr "S"
 
-#: panel-plugin/translate.c:157
+#: panel-plugin/translate.c:162
 msgid "NNE"
 msgstr "SSV"
 
-#: panel-plugin/translate.c:158
+#: panel-plugin/translate.c:163
 msgid "NE"
 msgstr "SV"
 
-#: panel-plugin/translate.c:159
+#: panel-plugin/translate.c:164
 msgid "ENE"
 msgstr "VSV"
 
-#: panel-plugin/translate.c:160
+#: panel-plugin/translate.c:165
 msgid "E"
 msgstr "V"
 
-#: panel-plugin/translate.c:161
+#: panel-plugin/translate.c:166
 msgid "ESE"
 msgstr "VJV"
 
-#: panel-plugin/translate.c:162
+#: panel-plugin/translate.c:167
 msgid "SE"
 msgstr "JV"
 
-#: panel-plugin/translate.c:163
+#: panel-plugin/translate.c:168
 msgid "SSE"
 msgstr "JJV"
 
-#: panel-plugin/translate.c:269
+#: panel-plugin/translate.c:274
 #, c-format
 msgid "%x at %X Local Time"
 msgstr "%x o %X miestneho času"
 
-#: panel-plugin/translate.c:355
+#: panel-plugin/translate.c:360
 msgid "calm"
 msgstr "bezvetrie"
 
-#: panel-plugin/translate.c:397
+#: panel-plugin/translate.c:402
 msgid "Unlimited"
 msgstr "Neobmedzený"
