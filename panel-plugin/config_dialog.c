@@ -5,9 +5,7 @@
 #include "parsers.h"
 #include "get_data.h"
 
-#include <libxfce4util/i18n.h>
-
-#define BORDER 6
+#include <libxfce4util/libxfce4util.h>
 
 struct labeloption labeloptions[OPTIONS_N] = { 
                 {N_("Windchill (F)"), FLIK},
@@ -24,7 +22,7 @@ struct labeloption labeloptions[OPTIONS_N] = {
 };
 
 typedef void(*cb_function)(struct xfceweather_data *);
-cb_function cb;
+static cb_function cb = NULL;
 
 void add_mdl_option(GtkListStore *mdl, int opt)
 {
@@ -209,10 +207,10 @@ gboolean cb_findlocation(GtkButton *button, gpointer user_data)
         
 
 struct xfceweather_dialog *create_config_dialog(struct xfceweather_data *data,
-                GtkContainer *container, GtkWidget *done)
+                GtkWidget *vbox)
 {
         struct xfceweather_dialog *dialog;
-        GtkWidget *vbox, *vbox2, *vbox3, *hbox, *hbox2, *label, 
+        GtkWidget *vbox2, *vbox3, *hbox, *hbox2, *label, 
               *menu, *button_add, 
               *button_del, *image, *button, *scroll;
         GtkSizeGroup *sg = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
@@ -223,9 +221,7 @@ struct xfceweather_dialog *create_config_dialog(struct xfceweather_data *data,
         dialog = g_new0(struct xfceweather_dialog, 1);
  
         dialog->wd = (struct xfceweather_data *)data;
-        dialog->dialog = gtk_widget_get_toplevel(done);
-
-        vbox = gtk_vbox_new(FALSE, BORDER);
+        dialog->dialog = gtk_widget_get_toplevel(vbox);
 
         label = gtk_label_new(_("Measurement unit:"));
         gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
@@ -389,15 +385,7 @@ struct xfceweather_dialog *create_config_dialog(struct xfceweather_data *data,
         g_signal_connect(button_add, "clicked", G_CALLBACK(cb_addoption), dialog);
         g_signal_connect(button_del, "clicked", G_CALLBACK(cb_deloption), dialog);      
         
-        g_signal_connect_swapped (done, "clicked",
-                        G_CALLBACK (apply_options), dialog);
-
-/*        g_signal_connect_swapped (dialog->dialog, "destroy",
-                        G_CALLBACK (gtk_widget_destroy), dialog);*/
-        
         gtk_widget_show_all(vbox);
-
-        gtk_container_add (container, vbox);
 
         return dialog;
 }

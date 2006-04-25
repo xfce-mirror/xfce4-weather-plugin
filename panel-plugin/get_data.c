@@ -1,6 +1,6 @@
 #include <config.h>
 
-#include <libxfce4util/i18n.h>
+#include <libxfce4util/libxfce4util.h>
 
 #include "get_data.h"
 #include "debug_print.h"
@@ -95,7 +95,7 @@ gchar *get_data_wind(struct xml_wind *data, enum datas_wind type)
                 return EMPTY_STRING;
         }
 
-       DEBUG_PRINT("starting\n", NULL);
+       DEBUG_PUTS("starting\n");
 
         switch(type)
         {

@@ -33,14 +33,10 @@ gboolean draw_up (GtkScrollbox *self)
         GdkRectangle update_rect = {0,0, GTK_WIDGET(self)->allocation.width, 
                 GTK_WIDGET(self)->allocation.height};
         
-        XFCE_PANEL_LOCK();
-
         if (self->draw_offset == 0) 
         {
                 self->draw_timeout = g_timeout_add(LABEL_REFRESH,
                                 (GSourceFunc)start_draw_down, self);
-                
-                XFCE_PANEL_UNLOCK();
                 
                 return FALSE;
         }
@@ -49,8 +45,6 @@ gboolean draw_up (GtkScrollbox *self)
         
         gtk_widget_draw(GTK_WIDGET(self), &update_rect);
 
-        XFCE_PANEL_UNLOCK();
-        
         return TRUE;
 }
 
@@ -59,15 +53,11 @@ gboolean draw_down (GtkScrollbox *self)
         GdkRectangle update_rect = {0, 0, GTK_WIDGET(self)->allocation.width, 
                 GTK_WIDGET(self)->allocation.height};
 
-        XFCE_PANEL_LOCK();
-
         if (self->draw_offset == self->draw_maxoffset) 
         {
                 self->draw_timeout = 0;
                 start_draw_up(self);
 
-                XFCE_PANEL_UNLOCK();
-                
                 return FALSE;
         }
         else
@@ -75,8 +65,6 @@ gboolean draw_down (GtkScrollbox *self)
         
         gtk_widget_draw(GTK_WIDGET(self), &update_rect);
 
-        XFCE_PANEL_UNLOCK();
-        
         return TRUE;
 }
 
@@ -85,13 +73,9 @@ void start_draw_up(GtkScrollbox *self)
         gint width, height;
         struct label *lbl;
         static int i = 0;
-        GtkWidget *widget = (GtkWidget *)self;
-
-        XFCE_PANEL_LOCK();
 
         if (self->labels->len == 0)
 	{
-                XFCE_PANEL_UNLOCK();
                 return;
 	}
 
@@ -111,7 +95,6 @@ void start_draw_up(GtkScrollbox *self)
 			if (self->draw_timeout)
 				stop_callback(self);
         		self->draw_timeout = g_timeout_add(LABEL_SPEED, (GSourceFunc)start_draw_up, self);
-                	XFCE_PANEL_UNLOCK();
 			return;
 		}
 	}
@@ -125,7 +108,6 @@ void start_draw_up(GtkScrollbox *self)
                 self->draw_offset = 0;
                 
                 gtk_widget_draw(GTK_WIDGET(self), &update_rect);
-		XFCE_PANEL_UNLOCK();
                 return;
         }
         
@@ -135,18 +117,12 @@ void start_draw_up(GtkScrollbox *self)
         self->draw_timeout = g_timeout_add(LABEL_SPEED, (GSourceFunc)draw_up, self);
 
         i++;
-
-	XFCE_PANEL_UNLOCK();
 }
 
 gboolean start_draw_down (GtkScrollbox *self)
 {
-        XFCE_PANEL_LOCK();
-        
         self->draw_timeout = g_timeout_add(LABEL_SPEED, (GSourceFunc)draw_down, self);
 
-        XFCE_PANEL_UNLOCK();
-        
         return FALSE;
 }
 void stop_callback(GtkScrollbox *self)
@@ -154,7 +130,7 @@ void stop_callback(GtkScrollbox *self)
         if (self->draw_timeout == 0)
                 return;
 
-        DEBUG_PRINT("remove\n", NULL);
+        DEBUG_PUTS("remove\n");
 
         g_source_remove(self->draw_timeout);
         self->draw_timeout = 0;

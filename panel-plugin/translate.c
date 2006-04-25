@@ -4,7 +4,7 @@
 #include "debug_print.h"
 
 #include <string.h> /* strlen() */
-#include <libxfce4util/i18n.h>
+#include <libxfce4util/libxfce4util.h>
 #include <stdlib.h>
 #include <time.h>
 
@@ -66,13 +66,7 @@ const gchar *desc_strings[] = {
         N_("Rain Showers"),
         N_("Rain to Snow"),
         N_("Rain / Snow Showers"),
-        N_("AM Rain / Snow Showers"),
-        N_("PM Rain / Snow Showers"),
-        N_("Rain / Snow Showers Early"),
-        N_("Rain / Snow Showers Late"),
         N_("Showers"),
-        N_("AM Showers"),
-        N_("PM Showers"),
         N_("Sleet"),
         N_("Sleet and Snow"),
         N_("Smoke"),
@@ -80,9 +74,6 @@ const gchar *desc_strings[] = {
         N_("Snow and Rain"),
         N_("Snow or Rain"),
         N_("Snow Showers"),
-        N_("AM Snow Showers"),
-        N_("PM Snow Showers"),
-        N_("Scattered Snow Showers"),
         N_("Sunny"),
         N_("Thunder"),
         N_("Thunder storms"),
@@ -91,45 +82,26 @@ const gchar *desc_strings[] = {
         N_("Windy"),
         N_("Wintry Mix"),
         N_("Showers in the Vicinity"),
-        N_("Scattered Showers"),
         N_("Light Rain Shower"),
-        N_("Showers Early"),
         N_("Showers Late"),
-        N_("AM Light Rain / Wind"),
-        N_("PM Light Rain / Wind"),
+        N_("PM Showers"),
         N_("Light Rain / Wind"),
-        N_("Light Rain with Thunder"),
-        N_("Light Rain and Windy"),
+        N_("Scattered Showers"),
         N_("PM Light Rain"),
+        N_("AM Showers"),
         N_("AM Light Rain"),
-        N_("Light Rain Early"),
-        N_("Light Rain Late"),
         N_("Partly Cloudy and Windy"),
         N_("Few Showers"),
         N_("Light Drizzle"),
         N_("Clouds Early / Clearing Late"),
         N_("Mostly Cloudy and Windy"),
-        N_("AM Rain"),
-        N_("PM Rain"),
-        N_("Rain Early"),
-        N_("Rain Late"),
         N_("Rain / Snow"),
-        N_("Rain / Wind"),
         N_("Rain and Sleet"),
+        N_("Snow Showers Late"),
         N_("Light Drizzle and Windy"),
         N_("Snow Shower"),
         N_("Snow Showers Early"),
-        N_("Snow Showers Late"),
         N_("Few Snow Showers"),
-        N_("T-Storms"),
-        N_("AM T-Storms"),
-        N_("PM T-Storms"),
-        N_("T-Storms Early"),
-        N_("T-Storms Late"),
-        N_("Scattered T-Storms"),
-        N_("Isolated T-Storms"),
-        N_("Rain / Thunder"),
-        N_("AM Clouds / PM Sun"),
         NULL
 };
 
@@ -314,7 +286,7 @@ gchar *translate_day(const gchar *day)
 /* NNW  VAR */
 gchar *translate_wind_direction(const gchar *wdir)
 {
-        int i, j, wdir_len;
+        int i, wdir_len;
         gchar *wdir_loc;
 
         if (wdir == NULL || (wdir_len = strlen(wdir)) < 1)

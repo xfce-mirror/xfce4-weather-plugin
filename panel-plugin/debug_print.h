@@ -1,6 +1,6 @@
 #ifndef DEBUG_PRINT_H
 #define DEBUG_PRINT_H
-#define DEBUG 1
+#include <libxfce4util/libxfce4util.h>
 #ifdef DEBUG
   #include <stdio.h>
   #define DEBUG_PRINT(s, i) fprintf(stderr, s, i);

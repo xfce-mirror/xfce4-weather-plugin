@@ -4,8 +4,7 @@
 #include "debug_print.h"
 #include "translate.h"
 
-#include <libxfce4util/i18n.h>
-#include <panel/xfce_support.h>
+#include <libxfce4util/libxfce4util.h>
 #include <libxfcegui4/dialogs.h>
 
 #define APPEND_BTEXT(text) gtk_text_buffer_insert_with_tags(GTK_TEXT_BUFFER(buffer),\
@@ -16,6 +15,8 @@
 #define APPEND_TEXT_ITEM(text, item) value = g_strdup_printf("\t%s: %s %s\n",\
                 text, get_data(data, item), get_unit(unit, item));\
                 APPEND_TEXT_ITEM_REAL(value); g_free(value);
+
+static GtkTooltips *tooltips = NULL;
 
 GtkWidget *create_summary_tab (struct xml_weather *data, enum units unit)
 {
@@ -172,11 +173,14 @@ GtkWidget *make_forecast(struct xml_dayf *weatherdata, enum units unit)
         box_n = gtk_event_box_new();
         gtk_container_add(GTK_CONTAINER(box_n), icon_n);
 
+        if (G_UNLIKELY (!tooltips))
+            tooltips = gtk_tooltips_new ();
+        
         str = g_strdup_printf(_("Day: %s"), translate_desc(get_data_f(weatherdata, TRANS_D)));
-        add_tooltip(box_d, str);
+        gtk_tooltips_set_tip(tooltips, box_d, str, NULL);
         g_free(str);
         str = g_strdup_printf(_("Night: %s"), translate_desc(get_data_f(weatherdata, TRANS_N)));
-        add_tooltip(box_n, str);
+        gtk_tooltips_set_tip(tooltips, box_n, str, NULL);
         g_free(str);
 
         gtk_box_pack_start(GTK_BOX(icon_hbox), box_d, TRUE, TRUE, 0);
@@ -314,14 +318,14 @@ GtkWidget *create_summary_window (struct xml_weather *data, enum units unit)
         
       	GdkPixbuf *icon;
 
-        window = gtk_dialog_new_with_buttons(_("Weather update"), NULL,
+        window = gtk_dialog_new_with_buttons(_("Weather Update"), NULL,
                         0,
                         GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
         vbox = gtk_vbox_new(FALSE, 0);
         gtk_box_pack_start(GTK_BOX(GTK_DIALOG(window)->vbox), vbox, TRUE, TRUE, 0); 
         
        	icon = get_icon(window, get_data(data, WICON), GTK_ICON_SIZE_DIALOG);
-	      header = xfce_create_header(icon, _("Weather update")); 
+	      header = xfce_create_header(icon, _("Weather Update")); 
         gtk_box_pack_start(GTK_BOX(vbox), header, FALSE, FALSE, 0);
 
         notebook = gtk_notebook_new();

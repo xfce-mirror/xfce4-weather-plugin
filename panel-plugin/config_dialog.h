@@ -34,9 +34,11 @@ struct xfceweather_dialog {
 };
 
 struct xfceweather_dialog *create_config_dialog(struct xfceweather_data *data,
-                GtkContainer *container, 
-                GtkWidget *done);
+    						GtkWidget *vbox);
 
 void set_callback_config_dialog(struct xfceweather_dialog *dialog, 
                 void(cb)(struct xfceweather_data *));
+
+void apply_options (struct xfceweather_dialog *dialog);
+
 #endif

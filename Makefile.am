@@ -2,14 +2,23 @@
 
 SUBDIRS = panel-plugin po icons
 
-EXTRA_DIST =								\
-	INSTALL								\
-	NEWS								\
-	README
-
 distclean-local:
 	rm -rf *.cache *~
 
-rpm: dist
-	rpmbuild -ta $(PACKAGE)-$(VERSION).tar.gz
-	@rm -f $(PACKAGE)-$(VERSION).tar.gz
+dist-bz2: dist
+	zcat $(PACKAGE)-$(VERSION).tar.gz | bzip2 --best -c > $(PACKAGE)-$(VERSION).tar.bz2
+
+distcheck-bz2: distcheck
+	zcat $(PACKAGE)-$(VERSION).tar.gz | bzip2 --best -c > $(PACKAGE)-$(VERSION).tar.bz2
+
+EXTRA_DIST = 								\
+	README								\
+	intltool-extract.in						\
+	intltool-merge.in						\
+	intltool-update.in
+
+DISTCLEANFILES =							\
+	intltool-extract						\
+	intltool-merge							\
+	intltool-update
+

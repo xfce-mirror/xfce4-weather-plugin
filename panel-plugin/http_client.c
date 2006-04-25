@@ -58,10 +58,10 @@ int http_connect(gchar *hostname, gint port)
 void request_free(struct request_data *request)
 {
         if (request->request_buffer)
-                free(request->request_buffer);
+                g_free(request->request_buffer);
 
         if (request->save_filename)
-                free(request->save_filename);
+                g_free(request->save_filename);
 
         if (request->save_fp)
                 fclose(request->save_fp);
@@ -69,7 +69,7 @@ void request_free(struct request_data *request)
         if (request->fd)
                 close(request->fd);
 
-        free(request);
+        g_free(request);
 }
 
 void request_save(struct request_data *request, const gchar *buffer)
@@ -89,7 +89,7 @@ void request_save(struct request_data *request, const gchar *buffer)
                 {
                         gchar *newbuff = g_strconcat(*request->save_buffer,
                                         buffer);
-                        free(*request->save_buffer);
+                        g_free(*request->save_buffer);
                         *request->save_buffer = newbuff;
                 }
                 else
@@ -126,12 +126,10 @@ gboolean keep_sending(gpointer data)
         }
         else if (errno != EAGAIN) /* some other error happened */
         {
-                if (DEBUG) {
-                        perror("keep_sending()");
-                        DEBUG_PRINT("file desc: %d\n", request->fd);
-                }
-                
-                
+#if DEBUG
+                perror("keep_sending()");
+                DEBUG_PRINT("file desc: %d\n", request->fd);
+#endif              
                 request_free(request);
                 return FALSE;
         }
@@ -167,7 +165,7 @@ gboolean keep_receiving(gpointer data)
                                 str = g_strconcat(request->last_chars, 
                                                 recvbuffer, NULL);
                         
-                        if (p = strstr(str, "\r\n\r\n"))
+                        if ((p = strstr(str, "\r\n\r\n")))
                         {
                                 request_save(request, p + 4);
                                 request->has_header = TRUE;
@@ -181,7 +179,7 @@ gboolean keep_receiving(gpointer data)
                                                 sizeof(char) * 3);
                         }
 
-                        free(str);
+                        g_free(str);
                 }
                 else
                         request_save(request, recvbuffer);
@@ -213,12 +211,12 @@ gboolean http_get(gchar *url, gchar *hostname, gboolean savefile, gchar **fname_
                 gchar *proxy_host, gint proxy_port, CB_TYPE callback, gpointer data)
 {
         struct request_data *request = g_new0(struct request_data, 1);
-        int ret;
 
         if (!request)
         {
-                if (DEBUG)
-                        perror("http_get(): empty request");
+#if DEBUG
+                perror("http_get(): empty request");
+#endif
                 return FALSE;
         }
         
@@ -254,10 +252,11 @@ gboolean http_get(gchar *url, gchar *hostname, gboolean savefile, gchar **fname_
 
         if (request->request_buffer == NULL)
         {
-                if (DEBUG)
-                        perror("http_get(): empty request buffer\n");
+#if DEBUG
+                perror("http_get(): empty request buffer\n");
+#endif
                 close(request->fd);
-                free(request);
+                g_free(request);
                 return FALSE;
         }
 

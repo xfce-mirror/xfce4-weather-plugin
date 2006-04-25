@@ -36,6 +36,7 @@ void register_icons(gchar *path)
                DEBUG_PRINT("nog een pixbuf %s\n", name);
 
                 iconset = gtk_icon_set_new_from_pixbuf(pixbuf);
+                g_object_unref (pixbuf);
 
                 gtk_icon_factory_add(cfactory, name, iconset);
 
@@ -48,6 +49,7 @@ void register_icons(gchar *path)
         pixbuf = gdk_pixbuf_new_from_file(filename, NULL);
         g_free(filename);
         iconset = gtk_icon_set_new_from_pixbuf(pixbuf);
+        g_object_unref (pixbuf);
 
         if (iconset)
                 gtk_icon_factory_add(cfactory, "xfceweather_-", iconset);
@@ -73,5 +75,8 @@ GdkPixbuf *get_icon(GtkWidget *widget, const gchar *number, GtkIconSize size)
        DEBUG_PRINT("image %s\n", str);
         g_free(str);
 
+        if (!image)
+            g_warning ("weather plugin: No image found");
+        
         return image;
 }

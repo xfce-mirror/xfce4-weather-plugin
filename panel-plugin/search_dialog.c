@@ -5,7 +5,7 @@
 #include "search_dialog.h"
 #include "debug_print.h"
 
-#include <libxfce4util/i18n.h>
+#include <libxfce4util/libxfce4util.h>
 
 void append_result(GtkListStore *mdl, gchar *id, gchar *city)
 {
@@ -97,10 +97,8 @@ void cb_searchdone(gboolean result, gpointer user_data)
 gboolean search_cb (GtkButton *button, gpointer user_data)
 {
         struct search_dialog *dialog = (struct search_dialog *)user_data;
-        gchar *sane_str, *url, *page;
+        gchar *sane_str, *url;
         const gchar *str;
-        xmlDocPtr doc;
-        xmlNodePtr cur_node;
         gboolean result;
 
        
