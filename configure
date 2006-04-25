@@ -720,13 +720,13 @@ echo X"$0" |
   	  /^X\(\/\).*/{ s//\1/; q; }
   	  s/.*/./; q'`
   srcdir=$ac_confdir
-  if test ! -r $srcdir/$ac_unique_file; then
+  if test ! -r "$srcdir/$ac_unique_file"; then
     srcdir=..
   fi
 else
   ac_srcdir_defaulted=no
 fi
-if test ! -r $srcdir/$ac_unique_file; then
+if test ! -r "$srcdir/$ac_unique_file"; then
   if test "$ac_srcdir_defaulted" = yes; then
     { echo "$as_me: error: cannot find sources ($ac_unique_file) in $ac_confdir or .." >&2
    { (exit 1); exit 1; }; }
@@ -735,7 +735,7 @@ if test ! -r $srcdir/$ac_unique_file; then
    { (exit 1); exit 1; }; }
   fi
 fi
-(cd $srcdir && test -r ./$ac_unique_file) 2>/dev/null ||
+(cd $srcdir && test -r "./$ac_unique_file") 2>/dev/null ||
   { echo "$as_me: error: sources are in $srcdir, but \`cd $srcdir' does not work" >&2
    { (exit 1); exit 1; }; }
 srcdir=`echo "$srcdir" | sed 's%\([^\\/]\)[\\/]*$%\1%'`
@@ -4914,32 +4914,6 @@ fi
 
 
 
-if mkdir -p --version . >/dev/null 2>&1 && test ! -d ./--version; then
-  # Keeping the `.' argument allows $(mkdir_p) to be used without
-  # argument.  Indeed, we sometimes output rules like
-  #   $(mkdir_p) $(somedir)
-  # where $(somedir) is conditionally defined.
-  # (`test -n '$(somedir)' && $(mkdir_p) $(somedir)' is a more
-  # expensive solution, as it forces Make to start a sub-shell.)
-  mkdir_p='mkdir -p -- .'
-else
-  # On NextStep and OpenStep, the `mkdir' command does not
-  # recognize any option.  It will interpret all options as
-  # directories to create, and then abort because `.' already
-  # exists.
-  for d in ./-p ./--version;
-  do
-    test -d $d && rmdir $d
-  done
-  # $(mkinstalldirs) is defined by Automake if mkinstalldirs exists.
-  if test -f "$ac_aux_dir/mkinstalldirs"; then
-    mkdir_p='$(mkinstalldirs)'
-  else
-    mkdir_p='$(install_sh) -d'
-  fi
-fi
-
-
 
 # Manually sed perl in so people don't have to put the intltool scripts in AC_OUTPUT.
 
@@ -5225,7 +5199,7 @@ echo "${ECHO_T}$LIBXML_LIBS" >&6
 
 
   elif $PKG_CONFIG --exists "libxml-2.0" >/dev/null 2>&1; then
-    xdg_cv_version=`$PKG_CONFIG --modversion "libxml-2.0"`
+    xdt_cv_version=`$PKG_CONFIG --modversion "libxml-2.0"`
     echo "$as_me:$LINENO: result: found, but $xdt_cv_version" >&5
 echo "${ECHO_T}found, but $xdt_cv_version" >&6
 
@@ -5363,7 +5337,7 @@ echo "${ECHO_T}$LIBXFCE4PANEL_LIBS" >&6
 
 
   elif $PKG_CONFIG --exists "libxfce4panel-1.0" >/dev/null 2>&1; then
-    xdg_cv_version=`$PKG_CONFIG --modversion "libxfce4panel-1.0"`
+    xdt_cv_version=`$PKG_CONFIG --modversion "libxfce4panel-1.0"`
     echo "$as_me:$LINENO: result: found, but $xdt_cv_version" >&5
 echo "${ECHO_T}found, but $xdt_cv_version" >&6
 
@@ -7113,7 +7087,6 @@ _ACEOF
 
 
     xdt_cv_additional_CFLAGS="-Wall"
-    xdt_cv_additional_CFLAGS="$xdt_cv_additional_CFLAGS -DG_DISABLE_DEPRECATED"
     xdt_cv_additional_CFLAGS="$xdt_cv_additional_CFLAGS -DXFCE_DISABLE_DEPRECATED"
 
     if test x"$enable_debug" = x"full"; then
@@ -7260,11 +7233,9 @@ Usually this means the macro was only invoked conditionally." >&2;}
    { (exit 1); exit 1; }; }
 fi
 
-
-        mv -f po/POTFILES po/POTFILES.tmp
-        sed -e '/\[encoding.*\]/d' -e 's/\[.*\] *//' < po/POTFILES.tmp > po/POTFILES
+       mv -f po/POTFILES po/POTFILES.tmp
+        sed -e '/[[]encoding.*]/d' -e 's/[[].*] *//' < po/POTFILES.tmp > po/POTFILES
         rm -f po/POTFILES.tmp
-
 
 
 : ${CONFIG_STATUS=./config.status}
