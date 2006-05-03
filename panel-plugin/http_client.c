@@ -142,6 +142,7 @@ gboolean keep_receiving(gpointer data)
         struct request_data *request = (struct request_data *)data;
         char recvbuffer[1024];
         int n;
+        gchar *p;
         
         if (!request)
         {
@@ -153,7 +154,6 @@ gboolean keep_receiving(gpointer data)
                                         sizeof(char), 0)) > 0)
         {
                 recvbuffer[n] = '\0';
-                gchar *p;
 
                 DEBUG_PRINT("keep_receiving(): bytes recv: %d\n", n);
                 
