@@ -22,7 +22,7 @@ pkglibdir = $(libdir)/xfce4-weather-plugin
 pkgincludedir = $(includedir)/xfce4-weather-plugin
 top_builddir = ../..
 am__cd = CDPATH="$${ZSH_VERSION+.}$(PATH_SEPARATOR)" && cd
-INSTALL = /usr/bin/install -c
+INSTALL = /bin/install -c
 install_sh_DATA = $(install_sh) -c -m 644
 install_sh_PROGRAM = $(install_sh) -c
 install_sh_SCRIPT = $(install_sh) -c
@@ -55,19 +55,19 @@ am__installdirs = "$(DESTDIR)$(liquiddir)"
 liquidDATA_INSTALL = $(INSTALL_DATA)
 DATA = $(liquid_DATA)
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
-ACLOCAL = ${SHELL} /home/nic/nic/Projects/XFCE-Goodies/dev/xfce4-weather-plugin/trunk/missing --run aclocal-1.9
+ACLOCAL = ${SHELL} /home/xfce-goodies/xfce4-weather-plugin/missing --run aclocal-1.9
 AMDEP_FALSE = #
 AMDEP_TRUE = 
-AMTAR = ${SHELL} /home/nic/nic/Projects/XFCE-Goodies/dev/xfce4-weather-plugin/trunk/missing --run tar
-AUTOCONF = ${SHELL} /home/nic/nic/Projects/XFCE-Goodies/dev/xfce4-weather-plugin/trunk/missing --run autoconf
-AUTOHEADER = ${SHELL} /home/nic/nic/Projects/XFCE-Goodies/dev/xfce4-weather-plugin/trunk/missing --run autoheader
-AUTOMAKE = ${SHELL} /home/nic/nic/Projects/XFCE-Goodies/dev/xfce4-weather-plugin/trunk/missing --run automake-1.9
+AMTAR = ${SHELL} /home/xfce-goodies/xfce4-weather-plugin/missing --run tar
+AUTOCONF = ${SHELL} /home/xfce-goodies/xfce4-weather-plugin/missing --run autoconf
+AUTOHEADER = ${SHELL} /home/xfce-goodies/xfce4-weather-plugin/missing --run autoheader
+AUTOMAKE = ${SHELL} /home/xfce-goodies/xfce4-weather-plugin/missing --run automake-1.9
 AWK = gawk
 CATALOGS =  de.gmo fr.gmo lt.gmo nl.gmo sk.gmo zh_TW.gmo
 CATOBJEXT = .gmo
 CC = gcc
 CCDEPMODE = depmode=gcc3
-CFLAGS = -g -O2
+CFLAGS = -g -O2 -g3 -Werror -Wall -DXFCE_DISABLE_DEPRECATED
 CPP = gcc -E
 CPPFLAGS = 
 CYGPATH_W = echo
@@ -81,7 +81,7 @@ EGREP = grep -E
 EXEEXT = 
 GETTEXT_PACKAGE = xfce4-weather-plugin
 GMOFILES =  de.gmo fr.gmo lt.gmo nl.gmo sk.gmo zh_TW.gmo
-GMSGFMT = /usr/bin/gmsgfmt
+GMSGFMT = /usr/bin/msgfmt
 INSTALL_DATA = ${INSTALL} -m 644
 INSTALL_PROGRAM = ${INSTALL}
 INSTALL_SCRIPT = ${INSTALL}
@@ -116,19 +116,19 @@ INTLTOOL_XML_RULE = %.xml:       %.xml.in       $(INTLTOOL_MERGE) $(wildcard $(t
 LDFLAGS = 
 LIBOBJS = 
 LIBS = 
-LIBXFCE4PANEL_CFLAGS = -I/usr/include/xfce4/ -I/usr/include/xfce4 -I/usr/include/gtk-2.0 -I/usr/lib/gtk-2.0/include -I/usr/include/pango-1.0 -I/usr/include/cairo -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/atk-1.0  
-LIBXFCE4PANEL_LIBS = -lxfce4panel -lxfcegui4 -lgtk-x11-2.0 -lxfce4util -lgdk-x11-2.0 -latk-1.0 -lgdk_pixbuf-2.0 -lm -lpangocairo-1.0 -lpango-1.0 -lcairo -lgobject-2.0 -lgmodule-2.0 -ldl -lglib-2.0  
+LIBXFCE4PANEL_CFLAGS = -I/opt/xfce4/include/xfce4/ -I/opt/xfce4/include/xfce4 -I/usr/include/gtk-2.0 -I/usr/lib/gtk-2.0/include -I/usr/include/pango-1.0 -I/usr/include/cairo -I/usr/include/glib-2.0 -I/usr/lib/glib-2.0/include -I/usr/include/atk-1.0  
+LIBXFCE4PANEL_LIBS = -L/opt/xfce4/lib -lxfce4panel -lxfcegui4 -lgtk-x11-2.0 -lxfce4util -lgdk-x11-2.0 -latk-1.0 -lgdk_pixbuf-2.0 -lm -lpangocairo-1.0 -lpango-1.0 -lcairo -lgobject-2.0 -lgmodule-2.0 -ldl -lglib-2.0  
 LIBXFCE4PANEL_REQUIRED_VERSION = 4.3.22
-LIBXFCE4PANEL_VERSION = 4.3.90.1
+LIBXFCE4PANEL_VERSION = 4.3.90.2
 LIBXML_CFLAGS = -I/usr/include/libxml2  
 LIBXML_LIBS = -lxml2 -lz -lm  
 LIBXML_REQUIRED_VERSION = 2.4.0
-LIBXML_VERSION = 2.6.22
+LIBXML_VERSION = 2.6.23
 LTLIBOBJS = 
-MAINT = 
-MAINTAINER_MODE_FALSE = #
-MAINTAINER_MODE_TRUE = 
-MAKEINFO = ${SHELL} /home/nic/nic/Projects/XFCE-Goodies/dev/xfce4-weather-plugin/trunk/missing --run makeinfo
+MAINT = #
+MAINTAINER_MODE_FALSE = 
+MAINTAINER_MODE_TRUE = #
+MAKEINFO = ${SHELL} /home/xfce-goodies/xfce4-weather-plugin/missing --run makeinfo
 MKINSTALLDIRS = ./mkinstalldirs
 MSGFMT = /usr/bin/msgfmt
 OBJEXT = o
@@ -167,7 +167,7 @@ exec_prefix = ${prefix}
 host_alias = 
 includedir = ${prefix}/include
 infodir = ${prefix}/info
-install_sh = /home/nic/nic/Projects/XFCE-Goodies/dev/xfce4-weather-plugin/trunk/install-sh
+install_sh = /home/xfce-goodies/xfce4-weather-plugin/install-sh
 libdir = ${exec_prefix}/lib
 libexecdir = ${exec_prefix}/libexec
 localedir = ${prefix}/share/locale
@@ -175,7 +175,7 @@ localstatedir = ${prefix}/var
 mandir = ${prefix}/man
 mkdir_p = mkdir -p --
 oldincludedir = /usr/include
-prefix = /usr
+prefix = /opt/xfce4
 program_transform_name = s,x,x,
 sbindir = ${exec_prefix}/sbin
 sharedstatedir = ${prefix}/com
@@ -235,7 +235,7 @@ EXTRA_DIST = $(liquid_DATA)
 all: all-am
 
 .SUFFIXES:
-$(srcdir)/Makefile.in:  $(srcdir)/Makefile.am  $(am__configure_deps)
+$(srcdir)/Makefile.in: # $(srcdir)/Makefile.am  $(am__configure_deps)
 	@for dep in $?; do \
 	  case '$(am__configure_deps)' in \
 	    *$$dep*) \
@@ -260,9 +260,9 @@ Makefile: $(srcdir)/Makefile.in $(top_builddir)/config.status
 $(top_builddir)/config.status: $(top_srcdir)/configure $(CONFIG_STATUS_DEPENDENCIES)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 
-$(top_srcdir)/configure:  $(am__configure_deps)
+$(top_srcdir)/configure: # $(am__configure_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
-$(ACLOCAL_M4):  $(am__aclocal_m4_deps)
+$(ACLOCAL_M4): # $(am__aclocal_m4_deps)
 	cd $(top_builddir) && $(MAKE) $(AM_MAKEFLAGS) am--refresh
 uninstall-info-am:
 install-liquidDATA: $(liquid_DATA)

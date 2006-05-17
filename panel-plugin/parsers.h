@@ -4,7 +4,7 @@
 #include <glib.h>
 #include <libxml/parser.h>
 
-#define DATA(node) xmlNodeListGetString(node->doc, node->children, 1)
+#define DATA(node) (gchar *) xmlNodeListGetString(node->doc, node->children, 1)
 #define NODE_IS_TYPE(node, type) xmlStrEqual (node->name, (const xmlChar *) type)
 
 

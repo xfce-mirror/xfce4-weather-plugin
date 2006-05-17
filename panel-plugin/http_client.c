@@ -88,7 +88,7 @@ void request_save(struct request_data *request, const gchar *buffer)
                 if (*request->save_buffer)
                 {
                         gchar *newbuff = g_strconcat(*request->save_buffer,
-                                        buffer);
+                                        buffer, NULL);
                         g_free(*request->save_buffer);
                         *request->save_buffer = newbuff;
                 }
@@ -143,6 +143,7 @@ gboolean keep_receiving(gpointer data)
         char recvbuffer[1024];
         int n;
         gchar *p;
+        gchar *str = NULL;
         
         if (!request)
         {
@@ -159,8 +160,6 @@ gboolean keep_receiving(gpointer data)
                 
                 if (!request->has_header)
                 {
-                        gchar *str;
-
                         if (request->last_chars != '\0')
                                 str = g_strconcat(request->last_chars, 
                                                 recvbuffer, NULL);

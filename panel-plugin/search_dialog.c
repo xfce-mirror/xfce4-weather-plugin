@@ -68,7 +68,7 @@ void cb_searchdone(gboolean result, gpointer user_data)
                 {
                         if (NODE_IS_TYPE(cur_node, "loc"))
                         {
-                                gchar *id = xmlGetProp(cur_node, "id");
+                                gchar *id = (gchar *) xmlGetProp(cur_node, (const xmlChar *) "id");
                                 gchar *city;
 
                                 if (!id)

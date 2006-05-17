@@ -17,7 +17,7 @@ enum {
 void free_label(struct label *lbl)
 {
         if (lbl->pixmap)
-                g_free(lbl->pixmap);
+                g_object_unref (lbl->pixmap);
         if (lbl->msg)
                 g_free(lbl->msg);
 }
@@ -278,7 +278,7 @@ gtk_scrollbox_finalize(GObject *gobject)
                 {
                         struct label *lbl = (struct label*)g_ptr_array_index(self->labels, i); 
 
-                        g_free(lbl->pixmap);
+                        g_object_unref (lbl->pixmap);
                         g_free(lbl->msg);
                 }
                 g_ptr_array_free(self->labels, TRUE);
@@ -310,7 +310,7 @@ void redraw_labels (GtkWidget *widget, GtkStyle *previous_style)
                 newpixmap = make_pixmap(self, lbl->msg);
 
                 if (lbl->pixmap)
-                        g_free(lbl->pixmap);
+                        g_object_unref (lbl->pixmap);
 
                 lbl->pixmap = newpixmap;
         }
@@ -427,16 +427,13 @@ void gtk_scrollbox_clear (GtkScrollbox *self)
                 struct label *lbl = (struct label*)g_ptr_array_index(self->labels, 0);
                 free_label(lbl);
 
-
                 g_ptr_array_remove_index(self->labels, 0);
         }
-
+        
         DEBUG_PRINT("going out %d\n", self->labels->len);
 
         self->pixmap = NULL;
-
         gtk_widget_set_size_request(GTK_WIDGET(self), 0, 0);
         self->draw_middle = 0;
         self->draw_maxmiddle = 0;
-
 }

@@ -10,15 +10,15 @@ struct xml_weather *parse_weather(xmlNode *cur_node)
         if (!NODE_IS_TYPE(cur_node, "weather")) {
                 return NULL;
         }
-
+DBG ("...");
         if ((ret = g_new0(struct xml_weather, 1)) == NULL)
                 return NULL;
-
+DBG ("...");
         for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next) {
                 if (cur_node->type != XML_ELEMENT_NODE)
                         continue;
 
-
+DBG ("...");
 
                 if (NODE_IS_TYPE(cur_node, "cc"))
                         ret->cc = parse_cc(cur_node);
@@ -29,8 +29,6 @@ struct xml_weather *parse_weather(xmlNode *cur_node)
                         xmlNode *child_node;
                         int i = 0;
 
-
-
                         for (child_node = cur_node->children; child_node;
                                         child_node = child_node->next
                             )
@@ -38,7 +36,7 @@ struct xml_weather *parse_weather(xmlNode *cur_node)
                                 if (NODE_IS_TYPE(child_node, "day")) {
                                         if (i >= XML_WEATHER_DAYF_N)
                                                 break;
-                                        
+                                
                                         ret->dayf[i] = parse_dayf(child_node);
 
                                         i++;
@@ -213,10 +211,8 @@ struct xml_dayf *parse_dayf(xmlNode *cur_node)
         if ((ret = g_new0(struct xml_dayf, 1)) == NULL)
                 return NULL;
 
-       
-
-        ret->day = xmlGetProp (cur_node, (const xmlChar *) "t");
-        ret->date = xmlGetProp (cur_node, (const xmlChar *) "dt");
+        ret->day  = (gchar *) xmlGetProp (cur_node, (const xmlChar *) "t");
+        ret->date = (gchar *) xmlGetProp (cur_node, (const xmlChar *) "dt");
 
         for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next) {
                 if (cur_node->type != XML_ELEMENT_NODE)
@@ -224,17 +220,18 @@ struct xml_dayf *parse_dayf(xmlNode *cur_node)
 
                 if (NODE_IS_TYPE(cur_node, "hi")) {
                         ret->hi = DATA(cur_node); 
-                       DEBUG_PRINT("%p\n", ret->hi);
                         g_assert(ret->hi != NULL);
                 }
                 else if (NODE_IS_TYPE(cur_node, "low"))
+                {
                         ret->low = DATA(cur_node);
+                }
                 else if (NODE_IS_TYPE(cur_node, "part")) {
-                        value = xmlGetProp (cur_node, (const xmlChar *) "p");
+                        value = (gchar *)  xmlGetProp (cur_node, (const xmlChar *) "p");
                         
-                        if (xmlStrEqual ((const xmlChar *)value, "d"))
+                        if (xmlStrEqual ((const xmlChar *)value, (const xmlChar *)"d"))
                                 ret->part[0] = parse_part(cur_node);
-                        else if (xmlStrEqual ((const xmlChar *)value, "n"))
+                        else if (xmlStrEqual ((const xmlChar *)value, (const xmlChar *)"n"))
                                 ret->part[1] = parse_part(cur_node);
                         
                         g_free(value);
