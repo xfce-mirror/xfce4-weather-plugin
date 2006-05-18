@@ -3,7 +3,6 @@
 #include <libxfce4util/libxfce4util.h>
 
 #include "get_data.h"
-#include "debug_print.h"
 #define KILL_RING_S 5
 
 #define EMPTY_STRING g_strdup("-")
@@ -11,14 +10,15 @@
 gchar *kill_ring[KILL_RING_S] = {NULL, };
 
 #define debug_print printf
-gchar *copy_buffer(gchar *str)
+gchar *
+copy_buffer (gchar *str)
 {
         static int p = 0;
         gchar *s;
         
         if (!str)
         {
-                debug_print("copy_buffer: received NULL pointer\n");
+                DBG ("copy_buffer: received NULL pointer");
                 return EMPTY_STRING;
         }
 
@@ -35,7 +35,8 @@ gchar *copy_buffer(gchar *str)
         return s;
 }
 
-void free_get_data_buffer(void)
+void
+free_get_data_buffer (void)
 {
         int i;
 
@@ -46,13 +47,15 @@ void free_get_data_buffer(void)
         }
 }
 
-gchar *get_data_uv(struct xml_uv *data, enum datas_uv type)
+gchar *
+get_data_uv (struct xml_uv *data,
+             enum datas_uv  type)
 {
         gchar *str = NULL;
 
         if (!data)
         {
-                debug_print("get_data_bar: xml-uv not present\n");
+                DBG ("get_data_bar: xml-uv not present");
                 return EMPTY_STRING;
         }
 
@@ -66,13 +69,15 @@ gchar *get_data_uv(struct xml_uv *data, enum datas_uv type)
 }
  
 
-gchar *get_data_bar(struct xml_bar *data, enum datas_bar type)
+gchar *
+get_data_bar (struct xml_bar *data,
+              enum datas_bar  type)
 {
         gchar *str = NULL;
 
         if (!data)
         {
-                debug_print("get_data_bar: xml-wind not present\n");
+                DBG ("get_data_bar: xml-wind not present");
                 return EMPTY_STRING;
         }
 
@@ -85,17 +90,19 @@ gchar *get_data_bar(struct xml_bar *data, enum datas_bar type)
         return CHK_NULL(str);
 }
 
-gchar *get_data_wind(struct xml_wind *data, enum datas_wind type)
+gchar *
+get_data_wind (struct xml_wind *data,
+               enum datas_wind  type)
 {
         gchar *str = NULL;
 
         if (!data)
         {
-                debug_print("get_data_wind: xml-wind not present\n");
+                DBG ("get_data_wind: xml-wind not present");
                 return EMPTY_STRING;
         }
 
-       DEBUG_PUTS("starting\n");
+       DBG ("starting");
 
         switch(type)
         {
@@ -105,21 +112,23 @@ gchar *get_data_wind(struct xml_wind *data, enum datas_wind type)
                 case _WIND_TRANS: str = data->d; break;
         }
 
-       DEBUG_PRINT("print %p\n", data->d);
+       DBG ("print %p", data->d);
 
-       DEBUG_PRINT("%s\n", str);
+       DBG ("%s", str);
 
         return CHK_NULL(str);
 }
 
 /* -- This is not the same as the previous functions */
-gchar *get_data_cc(struct xml_cc *data, enum datas type)
+gchar *
+get_data_cc (struct xml_cc *data,
+             enum datas     type)
 { 
         gchar *str = NULL;
         
         if (!data)
         {
-                debug_print("get_data_cc: xml-cc not present\n");
+                DBG ("get_data_cc: xml-cc not present");
                 return EMPTY_STRING;
         }
 
@@ -147,13 +156,15 @@ gchar *get_data_cc(struct xml_cc *data, enum datas type)
         return CHK_NULL(str);
 }
 
-gchar *get_data_loc(struct xml_loc *data, enum datas_loc type)
+gchar *
+get_data_loc (struct xml_loc *data,
+              enum datas_loc  type)
 { 
         gchar *str = NULL;
         
         if (!data)
         {
-                debug_print("get_data_loc: xml-loc not present\n");
+                DBG ("get_data_loc: xml-loc not present");
                 return EMPTY_STRING;
         }
 
@@ -168,7 +179,9 @@ gchar *get_data_loc(struct xml_loc *data, enum datas_loc type)
 }
  
 
-const gchar *get_data(struct xml_weather *data, enum datas type)
+const gchar *
+get_data (struct xml_weather *data,
+          enum datas          type)
 {
         gchar *str = NULL;
         gchar *p;
@@ -192,11 +205,13 @@ const gchar *get_data(struct xml_weather *data, enum datas type)
         return p;
 }
 
-gchar *get_data_part(struct xml_part *data, enum forecast type)
+gchar *
+get_data_part (struct xml_part *data,
+               enum forecast    type)
 {
-        gchar *str = NULL;
+       gchar *str = NULL;
 
-       DEBUG_PRINT("now here %s\n", data->ppcp);
+       DBG ("now here %s", data->ppcp);
 
        if (!data)
                return EMPTY_STRING;
@@ -213,7 +228,9 @@ gchar *get_data_part(struct xml_part *data, enum forecast type)
         return str;
 }
 
-const gchar *get_data_f(struct xml_dayf *data, enum forecast type)
+const gchar *
+get_data_f (struct xml_dayf *data,
+            enum forecast    type)
 {
         gchar *p, *str = NULL;
 
@@ -230,8 +247,12 @@ const gchar *get_data_f(struct xml_dayf *data, enum forecast type)
                                         default: str = g_strdup("-"); break;
                                 }
                                 break;
-                        case NPART: str = get_data_part(data->part[1], type); break;
-                        case DPART: str = get_data_part(data->part[0], type); break; 
+                        case NPART:
+                                str = get_data_part(data->part[1], type);
+                                break;
+                        case DPART:
+                                str = get_data_part(data->part[0], type);
+                                break; 
                 }
         }
 
@@ -240,11 +261,13 @@ const gchar *get_data_f(struct xml_dayf *data, enum forecast type)
         
 
         p = copy_buffer(str);
-       DEBUG_PRINT("value: %s\n", p);
+       DBG ("value: %s", p);
         return p;
 }
 
-const gchar *get_unit(enum units unit, enum datas type)
+const gchar *
+get_unit (enum units unit,
+          enum datas type)
 {
         gchar *str = NULL;
         

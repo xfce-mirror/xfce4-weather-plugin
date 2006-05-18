@@ -3,11 +3,13 @@
 #define BORDER 6
 #include "parsers.h"
 #include "search_dialog.h"
-#include "debug_print.h"
 
 #include <libxfce4util/libxfce4util.h>
 
-void append_result(GtkListStore *mdl, gchar *id, gchar *city)
+void
+append_result (GtkListStore *mdl,
+               gchar        *id,
+               gchar        *city)
 {
          GtkTreeIter iter;
 
@@ -15,7 +17,8 @@ void append_result(GtkListStore *mdl, gchar *id, gchar *city)
          gtk_list_store_set(mdl, &iter, 0, city, 1, id, -1);
 }
 
-gchar *sanitize_str(const gchar *str)
+gchar *
+sanitize_str (const gchar *str)
 {
         GString *retstr = g_string_sized_new(strlen(str));
         gchar *realstr, c = '\0';
@@ -42,7 +45,9 @@ gchar *sanitize_str(const gchar *str)
         return realstr;
 }
 
-void cb_searchdone(gboolean result, gpointer user_data)
+void
+cb_searchdone (gboolean result,
+               gpointer user_data)
 {
         struct search_dialog *dialog = (struct search_dialog *)user_data;
         xmlDoc *doc;
@@ -94,14 +99,14 @@ void cb_searchdone(gboolean result, gpointer user_data)
 }
 
 
-gboolean search_cb (GtkButton *button, gpointer user_data)
+gboolean
+search_cb (GtkButton *button,
+           gpointer   user_data)
 {
         struct search_dialog *dialog = (struct search_dialog *)user_data;
         gchar *sane_str, *url;
         const gchar *str;
         gboolean result;
-
-       
 
         str = gtk_entry_get_text(GTK_ENTRY(dialog->search_entry));
 
@@ -110,13 +115,8 @@ gboolean search_cb (GtkButton *button, gpointer user_data)
 
         gtk_list_store_clear(GTK_LIST_STORE(dialog->result_mdl));
 
-       
-
         if ((sane_str = sanitize_str(str)) == NULL)
-        {
-               
                 return FALSE;
-        }
 
         url = g_strdup_printf("/search/search?where=%s", sane_str);
         g_free(sane_str);
@@ -129,7 +129,10 @@ gboolean search_cb (GtkButton *button, gpointer user_data)
 }
 
 
-struct search_dialog *create_search_dialog(GtkWindow *parent, gchar *proxy_host, gint proxy_port)
+struct search_dialog *
+create_search_dialog (GtkWindow *parent,
+                      gchar     *proxy_host,
+                      gint       proxy_port)
 {
         GtkWidget *vbox, *label, *button, *hbox, *scroll, *frame;
         GtkTreeViewColumn *column;
@@ -141,7 +144,6 @@ struct search_dialog *create_search_dialog(GtkWindow *parent, gchar *proxy_host,
         dialog->proxy_host = proxy_host;
         dialog->proxy_port = proxy_port;
        
-
         if (!dialog)
                 return NULL;
 
@@ -171,8 +173,6 @@ struct search_dialog *create_search_dialog(GtkWindow *parent, gchar *proxy_host,
         dialog->result_mdl = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_STRING);
         dialog->result_list = gtk_tree_view_new_with_model(GTK_TREE_MODEL(dialog->result_mdl));
 
-       
-
         column = gtk_tree_view_column_new_with_attributes(_("Results"), renderer, 
                         "text", 0, NULL);
         gtk_tree_view_append_column(GTK_TREE_VIEW(dialog->result_list), column);
@@ -198,7 +198,8 @@ struct search_dialog *create_search_dialog(GtkWindow *parent, gchar *proxy_host,
         return dialog;
 }
        
-gboolean run_search_dialog(struct search_dialog *dialog)
+gboolean
+run_search_dialog (struct search_dialog *dialog)
 {
         gtk_widget_show_all(dialog->dialog);
         if (gtk_dialog_run(GTK_DIALOG(dialog->dialog)) == GTK_RESPONSE_ACCEPT)
@@ -223,7 +224,8 @@ gboolean run_search_dialog(struct search_dialog *dialog)
         return FALSE;
 }
 
-void free_search_dialog(struct search_dialog *dialog)
+void
+free_search_dialog (struct search_dialog *dialog)
 {
         g_free(dialog->result);
         gtk_widget_destroy(dialog->dialog);

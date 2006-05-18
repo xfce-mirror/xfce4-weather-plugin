@@ -5,7 +5,6 @@
 #include <time.h>
 
 #include "plugin.h"
-#include "debug_print.h"
 #include "translate.h"
 #include "http_client.h"
 #include "summary_window.h"
@@ -13,7 +12,9 @@
 #include "icon.h"
 #include "scrollbox.h"
 
-gboolean check_envproxy(gchar **proxy_host, gint *proxy_port)
+gboolean
+check_envproxy (gchar **proxy_host,
+                gint   *proxy_port)
 {
 
         char *env_proxy = getenv("HTTP_PROXY"), *tmp, **split;
@@ -53,7 +54,11 @@ gboolean check_envproxy(gchar **proxy_host, gint *proxy_port)
 
 gint IconSizeSmall = 0;
 
-gchar *make_label(struct xml_weather *weatherdata, enum datas opt, enum units unit, gint size)
+gchar *
+make_label (struct xml_weather *weatherdata,
+            enum datas          opt,
+            enum units          unit,
+            gint                size)
 {
 
         gchar *str, *lbl, *txtsize, *value;
@@ -89,16 +94,19 @@ gchar *make_label(struct xml_weather *weatherdata, enum datas opt, enum units un
 
         switch (opt)
         {
-                case VIS:       value = translate_visibility(rawvalue, unit);
-                                break;
-                case WIND_DIRECTION: value = translate_wind_direction(rawvalue);
-                                     break;
+                case VIS:
+                        value = translate_visibility(rawvalue, unit);
+                        break;
+                case WIND_DIRECTION:
+                        value = translate_wind_direction(rawvalue);
+                        break;
                 case WIND_SPEED:
-                case WIND_GUST: value = translate_wind_speed(rawvalue, unit);
-                                break;
+                case WIND_GUST:
+                        value = translate_wind_speed(rawvalue, unit);
+                        break;
                 default:
-                                value = NULL;
-                                break;
+                        value = NULL;
+                        break;
         }
 
        
@@ -116,7 +124,8 @@ gchar *make_label(struct xml_weather *weatherdata, enum datas opt, enum units un
         return str;
 }
 
-gchar *get_filename(const struct xfceweather_data *data)
+gchar *
+get_filename (const struct xfceweather_data *data)
 {
 
         gchar *filename = 
@@ -131,7 +140,8 @@ gchar *get_filename(const struct xfceweather_data *data)
         return fullfilename;
 }
 
-void set_icon_error(struct xfceweather_data *data)
+void
+set_icon_error(struct xfceweather_data *data)
 {
 
         GdkPixbuf *icon = get_icon(data->iconimage, "25", data->iconsize);
@@ -150,7 +160,8 @@ void set_icon_error(struct xfceweather_data *data)
         return;
 }
 
-void set_icon_current(struct xfceweather_data *data)
+void
+set_icon_current (struct xfceweather_data *data)
 {
 
         int i;
@@ -182,7 +193,9 @@ void set_icon_current(struct xfceweather_data *data)
                 translate_desc(get_data(data->weatherdata, TRANS)), NULL);
 }
 
-void cb_update(gboolean status, gpointer user_data)
+void
+cb_update (gboolean status,
+           gpointer user_data)
 {
 
 
@@ -196,7 +209,7 @@ void cb_update(gboolean status, gpointer user_data)
                 return;
         
         doc = xmlParseFile(fullfilename);
-        g_free(fullfilename);
+        g_free (fullfilename);
 
         if (!doc)
                 return;
@@ -206,7 +219,7 @@ void cb_update(gboolean status, gpointer user_data)
         if (cur_node)
                 weather = parse_weather(cur_node);
 
-        xmlFreeDoc(doc);
+        xmlFreeDoc (doc);
 
         gtk_scrollbox_clear (GTK_SCROLLBOX(data->scrollbox));
 
@@ -227,7 +240,9 @@ void cb_update(gboolean status, gpointer user_data)
 }
 
 /* -1 error 0 no update needed 1 updating */
-gint update_weatherdata(struct xfceweather_data *data, gboolean force)
+gint
+update_weatherdata (struct xfceweather_data *data,
+                    gboolean                 force)
 {
 
         struct stat attrs; 
@@ -238,11 +253,11 @@ gint update_weatherdata(struct xfceweather_data *data, gboolean force)
         if (!data->location_code)
                 return -1;
 
-        fullfilename = get_filename(data);
+        fullfilename = get_filename (data);
 
         if (!fullfilename)
         {
-                DEBUG_PUTS("can't get savedir?\n");
+                DBG ("can't get savedir?");
                 return -1;
         } 
 
@@ -271,7 +286,9 @@ gint update_weatherdata(struct xfceweather_data *data, gboolean force)
         }
 }
 
-void update_plugin (struct xfceweather_data *data, gboolean force)
+void
+update_plugin (struct xfceweather_data *data,
+               gboolean force)
 {
 
         if (update_weatherdata(data, force) == -1)
@@ -282,7 +299,8 @@ void update_plugin (struct xfceweather_data *data, gboolean force)
         /* else update will be called through the callback in http_get_file() */
 }
 
-GArray *labels_clear (GArray *array)
+GArray *
+labels_clear (GArray *array)
 {       
 
         if (!array || array->len > 0)
@@ -296,7 +314,9 @@ GArray *labels_clear (GArray *array)
         return array;
 }
 
-void xfceweather_read_config (XfcePanelPlugin *plugin, struct xfceweather_data *data)
+void
+xfceweather_read_config (XfcePanelPlugin         *plugin,
+                         struct xfceweather_data *data)
 {
 
         char label[10];
@@ -380,8 +400,9 @@ void xfceweather_read_config (XfcePanelPlugin *plugin, struct xfceweather_data *
         xfce_rc_close (rc);
 }
 
-void xfceweather_write_config (XfcePanelPlugin *plugin, 
-                               struct xfceweather_data *data)
+void
+xfceweather_write_config (XfcePanelPlugin         *plugin, 
+                          struct xfceweather_data *data)
 {
 
         char label[10];
@@ -425,19 +446,22 @@ void xfceweather_write_config (XfcePanelPlugin *plugin,
         xfce_rc_close (rc);
 }
 
-gboolean update_cb(struct xfceweather_data *data)
+gboolean
+update_cb (struct xfceweather_data *data)
 {
 
-        DEBUG_PUTS("update_cb(): callback called\n");
+        DBG ("update_cb(): callback called");
         
         update_plugin(data, FALSE);
 
-        DEBUG_PUTS("update_cb(): request added, returning\n");
+        DBG ("update_cb(): request added, returning");
         
         return TRUE;
 }
 
-void update_plugin_with_reset(struct xfceweather_data *data, gboolean force)
+void
+update_plugin_with_reset (struct xfceweather_data *data,
+                          gboolean                 force)
 {
 
         if (data->updatetimeout)
@@ -449,13 +473,16 @@ void update_plugin_with_reset(struct xfceweather_data *data, gboolean force)
 }
 
 
-void update_config(struct xfceweather_data *data)
+void
+update_config (struct xfceweather_data *data)
 {
 
         update_plugin_with_reset(data, TRUE); /* force because units could have changed */
 }
 
-void close_summary(GtkWidget *widget, gpointer *user_data)
+void
+close_summary (GtkWidget *widget,
+               gpointer  *user_data)
 {
 
         struct xfceweather_data *data = (struct xfceweather_data *)user_data;
@@ -463,7 +490,10 @@ void close_summary(GtkWidget *widget, gpointer *user_data)
         data->summary_window = NULL;
 }
 
-gboolean cb_click(GtkWidget *widget, GdkEventButton *event, gpointer user_data)
+gboolean
+cb_click (GtkWidget      *widget,
+          GdkEventButton *event,
+          gpointer        user_data)
 {
 
         struct xfceweather_data *data = (struct xfceweather_data *)user_data;
@@ -492,9 +522,19 @@ gboolean cb_click(GtkWidget *widget, GdkEventButton *event, gpointer user_data)
         return FALSE;
 }
 
+static void
+mi_click (GtkWidget *widget,
+          gpointer   user_data)
+{
+        struct xfceweather_data *data = (struct xfceweather_data *)user_data;
 
-static void xfceweather_dialog_response (GtkWidget *dlg, int response, 
-                struct xfceweather_dialog *dialog)
+        update_plugin_with_reset(data, TRUE);
+}
+
+static void
+xfceweather_dialog_response (GtkWidget *dlg,
+                             int        response, 
+                             struct     xfceweather_dialog *dialog)
 {
 
         struct xfceweather_data *data = dialog->wd;
@@ -506,7 +546,9 @@ static void xfceweather_dialog_response (GtkWidget *dlg, int response,
         xfceweather_write_config (data->plugin, data);
 }
 
-void xfceweather_create_options(XfcePanelPlugin *plugin, struct xfceweather_data *data)
+void
+xfceweather_create_options (XfcePanelPlugin *plugin,
+                            struct           xfceweather_data *data)
 {
 
         GtkWidget *dlg, *header, *vbox;
@@ -547,11 +589,12 @@ void xfceweather_create_options(XfcePanelPlugin *plugin, struct xfceweather_data
 }
        
 
-struct xfceweather_data *xfceweather_create_control(XfcePanelPlugin *plugin)
+struct xfceweather_data *
+xfceweather_create_control (XfcePanelPlugin *plugin)
 {
 
         struct xfceweather_data *data = g_new0(struct xfceweather_data, 1);
-        GtkWidget *vbox;
+        GtkWidget *vbox, *refresh;
         enum datas lbl;
         GdkPixbuf *icon;
 
@@ -586,6 +629,15 @@ struct xfceweather_data *xfceweather_create_control(XfcePanelPlugin *plugin)
 
         g_signal_connect(data->tooltipbox, "button-press-event", 
                         G_CALLBACK(cb_click), (gpointer)data);
+                        
+        /* add refresh button to right click menu, for people who missed the middle mouse click feature */
+        refresh = gtk_image_menu_item_new_from_stock ("gtk-refresh", NULL);
+        gtk_widget_show (refresh);
+        
+        g_signal_connect(refresh, "activate", 
+                        G_CALLBACK(mi_click), (gpointer) data);
+        
+        xfce_panel_plugin_menu_insert_item (plugin, GTK_MENU_ITEM (refresh));
 
         /* assign to tempval because g_array_append_val() is using & operator */
         lbl = FLIK;
@@ -604,7 +656,9 @@ struct xfceweather_data *xfceweather_create_control(XfcePanelPlugin *plugin)
         return data;
 }
 
-void xfceweather_free(XfcePanelPlugin *plugin, struct xfceweather_data *data)
+void
+xfceweather_free (XfcePanelPlugin         *plugin,
+                  struct xfceweather_data *data)
 {
 
         if (data->weatherdata)
@@ -626,8 +680,10 @@ void xfceweather_free(XfcePanelPlugin *plugin, struct xfceweather_data *data)
         g_free (data);
 }
 
-gboolean xfceweather_set_size(XfcePanelPlugin *panel, int size, 
-                              struct xfceweather_data *data)
+gboolean
+xfceweather_set_size(XfcePanelPlugin         *panel,
+                     int                      size, 
+                     struct xfceweather_data *data)
 {
 
         data->size = size;

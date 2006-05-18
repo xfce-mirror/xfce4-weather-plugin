@@ -1,7 +1,6 @@
 #include <config.h>
 
 #include "config_dialog.h"
-#include "debug_print.h"
 #include "parsers.h"
 #include "get_data.h"
 
@@ -24,7 +23,9 @@ struct labeloption labeloptions[OPTIONS_N] = {
 typedef void(*cb_function)(struct xfceweather_data *);
 static cb_function cb = NULL;
 
-void add_mdl_option(GtkListStore *mdl, int opt)
+void
+add_mdl_option (GtkListStore *mdl,
+                int           opt)
 {
         GtkTreeIter iter;
         
@@ -35,7 +36,9 @@ void add_mdl_option(GtkListStore *mdl, int opt)
                         -1);
 }
 
-gboolean cb_addoption (GtkWidget *widget, gpointer data)
+gboolean
+cb_addoption (GtkWidget *widget,
+              gpointer   data)
 {
         struct xfceweather_dialog *dialog = (struct xfceweather_dialog *)data;
         gint history = gtk_option_menu_get_history(GTK_OPTION_MENU(dialog->opt_xmloption)); 
@@ -45,7 +48,9 @@ gboolean cb_addoption (GtkWidget *widget, gpointer data)
         return FALSE;
 }
 
-gboolean cb_deloption (GtkWidget *widget, gpointer data)
+gboolean
+cb_deloption (GtkWidget *widget,
+              gpointer   data)
 {
         struct xfceweather_dialog *dialog = (struct xfceweather_dialog *)data;
         GtkTreeIter iter;
@@ -57,7 +62,9 @@ gboolean cb_deloption (GtkWidget *widget, gpointer data)
         return FALSE;
 }
 
-gboolean cb_toggle(GtkWidget *widget, gpointer data)
+gboolean
+cb_toggle (GtkWidget *widget,
+           gpointer   data)
 {
         GtkWidget *target = (GtkWidget *)data;
 
@@ -67,7 +74,9 @@ gboolean cb_toggle(GtkWidget *widget, gpointer data)
         return FALSE;
 }
 
-gboolean cb_not_toggle(GtkWidget *widget, gpointer data)
+gboolean
+cb_not_toggle (GtkWidget *widget,
+               gpointer   data)
 {
         GtkWidget *target = (GtkWidget *)data;
 
@@ -77,7 +86,8 @@ gboolean cb_not_toggle(GtkWidget *widget, gpointer data)
         return FALSE;
 }                       
 
-static GtkWidget *make_label(void)
+static
+GtkWidget *make_label (void)
 {
         int i;
         GtkWidget *widget, *menu;
@@ -98,7 +108,8 @@ static GtkWidget *make_label(void)
         return widget;
 }
 
-void apply_options (struct xfceweather_dialog *dialog)
+void
+apply_options (struct xfceweather_dialog *dialog)
 {
         int history = 0;
         gboolean hasiter = FALSE;
@@ -178,7 +189,8 @@ void apply_options (struct xfceweather_dialog *dialog)
                 cb(data);
 }
 
-int option_i(enum datas opt)
+int
+option_i (enum datas opt)
 {
         int i;
 
@@ -191,7 +203,9 @@ int option_i(enum datas opt)
         return -1;
 }
 
-gboolean cb_findlocation(GtkButton *button, gpointer user_data)
+gboolean
+cb_findlocation (GtkButton *button,
+                 gpointer   user_data)
 {
         struct xfceweather_dialog *dialog = (struct xfceweather_dialog *)user_data;
         struct search_dialog *sdialog = create_search_dialog(NULL, 
@@ -206,8 +220,9 @@ gboolean cb_findlocation(GtkButton *button, gpointer user_data)
 }
         
 
-struct xfceweather_dialog *create_config_dialog(struct xfceweather_data *data,
-                GtkWidget *vbox)
+struct xfceweather_dialog *
+create_config_dialog (struct xfceweather_data *data,
+                      GtkWidget               *vbox)
 {
         struct xfceweather_dialog *dialog;
         GtkWidget *vbox2, *vbox3, *hbox, *hbox2, *label, 
@@ -390,8 +405,9 @@ struct xfceweather_dialog *create_config_dialog(struct xfceweather_data *data,
         return dialog;
 }
 
-void set_callback_config_dialog(struct xfceweather_dialog *dialog, 
-                cb_function cb_new)
+void
+set_callback_config_dialog (struct xfceweather_dialog *dialog, 
+                            cb_function                cb_new)
 {
         cb = cb_new;
 }

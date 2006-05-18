@@ -1,24 +1,22 @@
 #include <config.h>
 
 #include "parsers.h"
-#include "debug_print.h"
 
-struct xml_weather *parse_weather(xmlNode *cur_node)
+struct xml_weather *
+parse_weather (xmlNode *cur_node)
 {
         struct xml_weather *ret;
 
         if (!NODE_IS_TYPE(cur_node, "weather")) {
                 return NULL;
         }
-DBG ("...");
+
         if ((ret = g_new0(struct xml_weather, 1)) == NULL)
                 return NULL;
-DBG ("...");
+
         for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next) {
                 if (cur_node->type != XML_ELEMENT_NODE)
                         continue;
-
-DBG ("...");
 
                 if (NODE_IS_TYPE(cur_node, "cc"))
                         ret->cc = parse_cc(cur_node);
@@ -48,7 +46,8 @@ DBG ("...");
         return ret;
 }
 
-struct xml_loc *parse_loc(xmlNode *cur_node)
+struct xml_loc *
+parse_loc (xmlNode *cur_node)
 {
         struct xml_loc *ret;
         
@@ -71,7 +70,8 @@ struct xml_loc *parse_loc(xmlNode *cur_node)
         return ret;
 }
 
-struct xml_uv *parse_uv (xmlNode *cur_node)
+struct xml_uv *
+parse_uv (xmlNode *cur_node)
 {
         struct xml_uv *ret;
         
@@ -91,7 +91,8 @@ struct xml_uv *parse_uv (xmlNode *cur_node)
         return ret;
 }
 
-struct xml_bar *parse_bar (xmlNode *cur_node)
+struct xml_bar *
+parse_bar (xmlNode *cur_node)
 {
         struct xml_bar *ret;
         
@@ -111,7 +112,8 @@ struct xml_bar *parse_bar (xmlNode *cur_node)
         return ret;
 }
 
-struct xml_wind *parse_wind (xmlNode *cur_node)
+struct xml_wind *
+parse_wind (xmlNode *cur_node)
 {
         struct xml_wind *ret;
         
@@ -135,7 +137,8 @@ struct xml_wind *parse_wind (xmlNode *cur_node)
         return ret;
 }
 
-struct xml_cc *parse_cc(xmlNode *cur_node)
+struct xml_cc *
+parse_cc (xmlNode *cur_node)
 {
         struct xml_cc *ret;
         
@@ -175,7 +178,8 @@ struct xml_cc *parse_cc(xmlNode *cur_node)
         return ret;
 }
 
-struct xml_part *parse_part(xmlNode *cur_node)
+struct xml_part *
+parse_part (xmlNode *cur_node)
 {
         struct xml_part *ret;
         
@@ -203,7 +207,8 @@ struct xml_part *parse_part(xmlNode *cur_node)
 
 
 
-struct xml_dayf *parse_dayf(xmlNode *cur_node)
+struct xml_dayf *
+parse_dayf (xmlNode *cur_node)
 {
         struct xml_dayf *ret;  
         gchar *value;
@@ -244,13 +249,15 @@ struct xml_dayf *parse_dayf(xmlNode *cur_node)
 #define CHK_FREE(this) if (this)\
                           free(this);
 
-void xml_uv_free(struct xml_uv *data)
+void
+xml_uv_free (struct xml_uv *data)
 {
         CHK_FREE(data->i);
         CHK_FREE(data->t);
 }
 
-void xml_wind_free(struct xml_wind *data)
+void
+xml_wind_free (struct xml_wind *data)
 {
         CHK_FREE(data->s);
         CHK_FREE(data->gust);
@@ -258,13 +265,15 @@ void xml_wind_free(struct xml_wind *data)
         CHK_FREE(data->t);
 }
 
-void xml_bar_free(struct xml_bar *data)
+void
+xml_bar_free (struct xml_bar *data)
 {
         CHK_FREE(data->r);
         CHK_FREE(data->d);
 }
 
-void xml_cc_free(struct xml_cc *data)
+void
+xml_cc_free (struct xml_cc *data)
 {
         CHK_FREE(data->obst);
         CHK_FREE(data->lsup);
@@ -286,14 +295,16 @@ void xml_cc_free(struct xml_cc *data)
                 xml_bar_free(data->bar);
 }
 
-void xml_loc_free(struct xml_loc *data)
+void
+xml_loc_free (struct xml_loc *data)
 {
         CHK_FREE(data->dnam);
         CHK_FREE(data->sunr);
         CHK_FREE(data->suns);
 }
 
-void xml_part_free(struct xml_part *data)
+void
+xml_part_free (struct xml_part *data)
 {
         if (!data)
                 return;
@@ -307,7 +318,8 @@ void xml_part_free(struct xml_part *data)
                 xml_wind_free(data->wind);
 }
 
-void xml_dayf_free(struct xml_dayf *data)
+void
+xml_dayf_free (struct xml_dayf *data)
 {
         if (!data)
                 return;
@@ -324,7 +336,8 @@ void xml_dayf_free(struct xml_dayf *data)
                 xml_part_free(data->part[1]);
 }
 
-void xml_weather_free(struct xml_weather *data)
+void
+xml_weather_free (struct xml_weather *data)
 {
         if (data->cc)
                 xml_cc_free(data->cc);

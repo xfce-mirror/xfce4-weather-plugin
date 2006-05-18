@@ -1,23 +1,23 @@
 #include <config.h>
 
 #include "icon.h"
-#include "debug_print.h"
 
 GtkIconFactory *cfactory = NULL;
 
-void register_icons(gchar *path)
+void
+register_icons (gchar *path)
 {
         GtkIconSet *iconset;
         int i;
         GdkPixbuf *pixbuf; 
         gchar *filename, *name;
 
-        DEBUG_PRINT("going to register %p\n", cfactory);
+        //DBG ("going to register %p", cfactory);
 
         if (cfactory)
                 return;
 
-        DEBUG_PRINT("*** %s\n", path);
+        //DBG ("*** %s", path);
         
 
         cfactory = gtk_icon_factory_new();
@@ -30,10 +30,10 @@ void register_icons(gchar *path)
 
                 if (!pixbuf) 
                 {
-                       DEBUG_PRINT("Error loading %s\n", filename);
+                        //DBG ("Error loading %s", filename);
                         continue;
                 }
-               DEBUG_PRINT("nog een pixbuf %s\n", name);
+                //DBG ("Another pixbuf %s", name);
 
                 iconset = gtk_icon_set_new_from_pixbuf(pixbuf);
                 g_object_unref (pixbuf);
@@ -57,7 +57,8 @@ void register_icons(gchar *path)
         gtk_icon_factory_add_default(cfactory);
 }
 
-void unregister_icons(void)
+void
+unregister_icons (void)
 {
         /* If there are more weather plugin's loaded, then they can't access
          * the icon's anymore */
@@ -65,14 +66,17 @@ void unregister_icons(void)
 }
 
 
-GdkPixbuf *get_icon(GtkWidget *widget, const gchar *number, GtkIconSize size)
+GdkPixbuf
+*get_icon (GtkWidget   *widget,
+           const gchar *number,
+           GtkIconSize  size)
 {
         GdkPixbuf *image = NULL;
         gchar *str;
 
         str = g_strdup_printf("xfceweather_%s", number);
         image = gtk_widget_render_icon(widget, str, size, "none");
-       DEBUG_PRINT("image %s\n", str);
+        //DBG ("image %s", str);
         g_free(str);
 
         if (!image)

@@ -1,9 +1,9 @@
 #include <config.h>
+#include <libxfce4util/libxfce4util.h>
 
 #include "scrollbox.h"
 #define LABEL_REFRESH 3000
 #define LABEL_SPEED 25
-#include "debug_print.h"
 
 struct label {
         gchar *msg;
@@ -28,7 +28,8 @@ void start_draw_up (GtkScrollbox *);
 void stop_callback(GtkScrollbox *);
 GdkPixmap *make_pixmap(GtkScrollbox *, gchar *);
 
-gboolean draw_up (GtkScrollbox *self)
+gboolean
+draw_up (GtkScrollbox *self)
 {
         GdkRectangle update_rect = {0,0, GTK_WIDGET(self)->allocation.width, 
                 GTK_WIDGET(self)->allocation.height};
@@ -48,7 +49,8 @@ gboolean draw_up (GtkScrollbox *self)
         return TRUE;
 }
 
-gboolean draw_down (GtkScrollbox *self)
+gboolean
+draw_down (GtkScrollbox *self)
 {
         GdkRectangle update_rect = {0, 0, GTK_WIDGET(self)->allocation.width, 
                 GTK_WIDGET(self)->allocation.height};
@@ -68,7 +70,8 @@ gboolean draw_down (GtkScrollbox *self)
         return TRUE;
 }
 
-void start_draw_up(GtkScrollbox *self) 
+void
+start_draw_up (GtkScrollbox *self) 
 {
         gint width, height;
         struct label *lbl;
@@ -119,25 +122,29 @@ void start_draw_up(GtkScrollbox *self)
         i++;
 }
 
-gboolean start_draw_down (GtkScrollbox *self)
+gboolean
+start_draw_down (GtkScrollbox *self)
 {
         self->draw_timeout = g_timeout_add(LABEL_SPEED, (GSourceFunc)draw_down, self);
 
         return FALSE;
 }
-void stop_callback(GtkScrollbox *self)
+
+void
+stop_callback (GtkScrollbox *self)
 {
         if (self->draw_timeout == 0)
                 return;
 
-        DEBUG_PUTS("remove\n");
+        DBG ("remove");
 
         g_source_remove(self->draw_timeout);
         self->draw_timeout = 0;
 }
 
 
-void start_callback(GtkScrollbox *self)
+void
+start_callback (GtkScrollbox *self)
 {
         if (self->draw_timeout)
                 stop_callback(self);
@@ -145,7 +152,9 @@ void start_callback(GtkScrollbox *self)
         start_draw_up(self);
 }
 
-GdkPixmap *make_pixmap(GtkScrollbox *self, gchar *value)
+GdkPixmap *
+make_pixmap (GtkScrollbox *self,
+             gchar        *value)
 {
         GdkWindow *rootwin;
         PangoLayout *pl;
@@ -198,7 +207,10 @@ GdkPixmap *make_pixmap(GtkScrollbox *self, gchar *value)
 
 
 
-void gtk_scrollbox_set_label(GtkScrollbox *self, gint n, gchar *value)
+void
+gtk_scrollbox_set_label (GtkScrollbox *self,
+                         gint          n,
+                         gchar        *value)
 {
         gboolean append = TRUE;
         GdkPixmap *newpixmap;
@@ -229,8 +241,10 @@ void gtk_scrollbox_set_label(GtkScrollbox *self, gint n, gchar *value)
 }
 
 static void
-gtk_scrollbox_set_property (GObject *object, guint property_id, const GValue *value,
-                GParamSpec *pspec)
+gtk_scrollbox_set_property (GObject      *object,
+                            guint         property_id,
+                            const GValue *value,
+                            GParamSpec   *pspec)
 {
         GtkScrollbox *self = (GtkScrollbox *)object;
 
@@ -261,7 +275,7 @@ gtk_scrollbox_get_property (GObject      *object,
 }
 
 static void
-gtk_scrollbox_finalize(GObject *gobject)
+gtk_scrollbox_finalize (GObject *gobject)
 {
         GtkScrollbox *self = (GtkScrollbox *)gobject;
 
@@ -285,7 +299,9 @@ gtk_scrollbox_finalize(GObject *gobject)
         }
 }
 
-void redraw_labels (GtkWidget *widget, GtkStyle *previous_style)
+void
+redraw_labels (GtkWidget *widget,
+               GtkStyle  *previous_style)
 {
         GtkScrollbox *self = GTK_SCROLLBOX(widget);
         int i;
@@ -321,7 +337,8 @@ void redraw_labels (GtkWidget *widget, GtkStyle *previous_style)
                         
 
 static void
-gtk_scrollbox_instance_init (GTypeInstance *instance, gpointer g_class)
+gtk_scrollbox_instance_init (GTypeInstance *instance,
+                             gpointer       g_class)
 {
           GtkScrollbox *self = (GtkScrollbox *)instance;
 
@@ -335,7 +352,8 @@ gtk_scrollbox_instance_init (GTypeInstance *instance, gpointer g_class)
 }
 
 static gboolean
-gtk_scrollbox_expose(GtkWidget *widget, GdkEventExpose *event) 
+gtk_scrollbox_expose (GtkWidget      *widget,
+                      GdkEventExpose *event) 
 {
         GtkScrollbox *self = (GtkScrollbox *)widget;
 
@@ -350,7 +368,9 @@ gtk_scrollbox_expose(GtkWidget *widget, GdkEventExpose *event)
         return FALSE;
 }
 
-void gtk_scrollbox_enablecb (GtkScrollbox *self, gboolean enable)
+void
+gtk_scrollbox_enablecb (GtkScrollbox *self,
+                        gboolean      enable)
 {
         GValue val = {0,};
 
@@ -360,13 +380,15 @@ void gtk_scrollbox_enablecb (GtkScrollbox *self, gboolean enable)
         g_object_set_property(G_OBJECT(self), "enablecb", &val);
 }
 
-GtkWidget* gtk_scrollbox_new (void) 
+GtkWidget *
+gtk_scrollbox_new (void) 
 {
         return GTK_WIDGET(g_object_new (GTK_TYPE_SCROLLBOX, NULL));
 }
         
 static void
-gtk_scrollbox_class_init (gpointer g_class, gpointer g_class_data)
+gtk_scrollbox_class_init (gpointer g_class,
+                          gpointer g_class_data)
 {
   
   GObjectClass *gobject_class = G_OBJECT_CLASS(g_class);
@@ -391,7 +413,8 @@ gtk_scrollbox_class_init (gpointer g_class, gpointer g_class_data)
 }
 
 
-GType gtk_scrollbox_get_type (void)
+GType
+gtk_scrollbox_get_type (void)
 {
         static GType type = 0;
 
@@ -416,21 +439,22 @@ GType gtk_scrollbox_get_type (void)
         return type;
 }
 
-void gtk_scrollbox_clear (GtkScrollbox *self)
+void
+gtk_scrollbox_clear (GtkScrollbox *self)
 {
         stop_callback(self);
 
-        DEBUG_PRINT("coming in %d\n", self->labels->len);
+        DBG ("coming in %d\n", self->labels->len);
 
         while(self->labels->len > 0)
         { 
-                struct label *lbl = (struct label*)g_ptr_array_index(self->labels, 0);
+                struct label *lbl = (struct label*) g_ptr_array_index(self->labels, 0);
                 free_label(lbl);
 
-                g_ptr_array_remove_index(self->labels, 0);
+                g_ptr_array_remove_index (self->labels, 0);
         }
         
-        DEBUG_PRINT("going out %d\n", self->labels->len);
+        DBG ("going out %d\n", self->labels->len);
 
         self->pixmap = NULL;
         gtk_widget_set_size_request(GTK_WIDGET(self), 0, 0);

@@ -1,7 +1,6 @@
 #include <config.h>
 
 #include "translate.h"
-#include "debug_print.h"
 
 #include <string.h> /* strlen() */
 #include <libxfce4util/libxfce4util.h>
@@ -141,9 +140,9 @@ const gchar *wdirs[] = {
         NULL
 };
 
-static const gchar *translate_str(
-                const gchar **loc_strings, 
-                const gchar *str)
+static const gchar *
+translate_str(const gchar **loc_strings, 
+              const gchar  *str)
 {
         int i, loc_string_len, str_len;
 
@@ -172,26 +171,30 @@ static const gchar *translate_str(
         return str;
 }
 
-const gchar *translate_bard(const gchar *bard)
+const gchar *
+translate_bard (const gchar *bard)
 {
         return translate_str(bard_strings, bard);
 }
 
-const gchar *translate_risk(const gchar *risk)
+const gchar *
+translate_risk (const gchar *risk)
 {
         return translate_str(risk_strings, risk);
 }
 
-const gchar *translate_desc(const gchar *desc)
+const gchar *
+translate_desc (const gchar *desc)
 {
         return translate_str(desc_strings, desc);
 }
 
 /* used by translate_lsup and translate_time */
-static void _fill_time(struct tm *time, 
-                const gchar *hour, 
-                const gchar *minute,
-                const gchar *am)
+static void
+_fill_time(struct tm   *time, 
+           const gchar *hour, 
+           const gchar *minute,
+           const gchar *am)
 {
         time->tm_hour = atoi(hour);
 
@@ -206,7 +209,8 @@ static void _fill_time(struct tm *time,
 
 
 #define HDATE_N sizeof(gchar) * 100
-gchar *translate_lsup(const gchar *lsup)
+gchar *
+translate_lsup (const gchar *lsup)
 {
         char *hdate;
         struct tm time;
@@ -252,7 +256,8 @@ gchar *translate_lsup(const gchar *lsup)
 }
 
 #define DAY_LOC_N sizeof(gchar) * 20
-gchar *translate_day(const gchar *day)
+gchar *
+translate_day (const gchar *day)
 {
         int wday = -1, i;
         const gchar *days[] = {
@@ -284,7 +289,8 @@ gchar *translate_day(const gchar *day)
 }
 
 /* NNW  VAR */
-gchar *translate_wind_direction(const gchar *wdir)
+gchar *
+translate_wind_direction (const gchar *wdir)
 {
         int i, wdir_len;
         gchar *wdir_loc;
@@ -325,7 +331,9 @@ gchar *translate_wind_direction(const gchar *wdir)
 }
 
 /* calm or a number */
-gchar *translate_wind_speed(const gchar *wspeed, enum units unit)
+gchar *
+translate_wind_speed (const gchar *wspeed,
+                      enum units   unit)
 {
         gchar *wspeed_loc;
 	if (g_ascii_strcasecmp(wspeed, "calm") == 0)
@@ -339,7 +347,8 @@ gchar *translate_wind_speed(const gchar *wspeed, enum units unit)
 
 /* 8:13 AM */
 #define TIME_LOC_N sizeof(gchar) * 20
-gchar *translate_time (const gchar *time)
+gchar *
+translate_time (const gchar *time)
 {
         gchar **time_split, *time_loc;
         int i = 0, size = 0;
@@ -367,7 +376,9 @@ gchar *translate_time (const gchar *time)
 }
 
 /* Unlimited or a number */
-gchar *translate_visibility(const gchar *vis, enum units unit)
+gchar *
+translate_visibility (const gchar *vis,
+                      enum units   unit)
 {
         gchar *vis_loc;
 	if (g_ascii_strcasecmp(vis, "Unlimited") == 0)
