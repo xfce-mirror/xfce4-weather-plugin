@@ -1,8 +1,35 @@
+/* vim: set expandtab ts=8 sw=4: */
+
+/*  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Library General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#ifdef HAVE_CONFIG_H
 #include <config.h>
+#endif
 
-#include <libxfce4util/libxfce4util.h>
+#include <gtk/gtk.h>
+#include <libxfce4panel/xfce-panel-plugin.h>
+#include <libxml/parser.h>
 
+#include "parsers.h"
 #include "get_data.h"
+#include "plugin.h"
+
+#define DATAS_CC    0x0100
+#define DATAS_LOC   0x0200
+#define DATAS_DAYF  0x0300
 #define KILL_RING_S 5
 
 #define EMPTY_STRING g_strdup("-")
@@ -18,7 +45,7 @@ copy_buffer (gchar *str)
         
         if (!str)
         {
-                DBG ("copy_buffer: received NULL pointer");
+                //DBG ("copy_buffer: received NULL pointer");
                 return EMPTY_STRING;
         }
 
@@ -47,15 +74,15 @@ free_get_data_buffer (void)
         }
 }
 
-gchar *
-get_data_uv (struct xml_uv *data,
-             enum datas_uv  type)
+static gchar *
+get_data_uv (xml_uv   *data,
+             datas_uv  type)
 {
         gchar *str = NULL;
 
         if (!data)
         {
-                DBG ("get_data_bar: xml-uv not present");
+                //DBG ("get_data_bar: xml-uv not present");
                 return EMPTY_STRING;
         }
 
@@ -69,15 +96,15 @@ get_data_uv (struct xml_uv *data,
 }
  
 
-gchar *
-get_data_bar (struct xml_bar *data,
-              enum datas_bar  type)
+static gchar *
+get_data_bar (xml_bar   *data,
+              datas_bar  type)
 {
         gchar *str = NULL;
 
         if (!data)
         {
-                DBG ("get_data_bar: xml-wind not present");
+                //DBG ("get_data_bar: xml-wind not present");
                 return EMPTY_STRING;
         }
 
@@ -90,19 +117,19 @@ get_data_bar (struct xml_bar *data,
         return CHK_NULL(str);
 }
 
-gchar *
-get_data_wind (struct xml_wind *data,
-               enum datas_wind  type)
+static gchar *
+get_data_wind (xml_wind   *data,
+               datas_wind  type)
 {
         gchar *str = NULL;
 
         if (!data)
         {
-                DBG ("get_data_wind: xml-wind not present");
+                //DBG ("get_data_wind: xml-wind not present");
                 return EMPTY_STRING;
         }
 
-       DBG ("starting");
+       //DBG ("starting");
 
         switch(type)
         {
@@ -112,23 +139,23 @@ get_data_wind (struct xml_wind *data,
                 case _WIND_TRANS: str = data->d; break;
         }
 
-       DBG ("print %p", data->d);
+       //DBG ("print %p", data->d);
 
-       DBG ("%s", str);
+       //DBG ("%s", str);
 
         return CHK_NULL(str);
 }
 
 /* -- This is not the same as the previous functions */
-gchar *
-get_data_cc (struct xml_cc *data,
-             enum datas     type)
+static gchar *
+get_data_cc (xml_cc *data,
+             datas   type)
 { 
         gchar *str = NULL;
         
         if (!data)
         {
-                DBG ("get_data_cc: xml-cc not present");
+                //DBG ("get_data_cc: xml-cc not present");
                 return EMPTY_STRING;
         }
 
@@ -156,15 +183,15 @@ get_data_cc (struct xml_cc *data,
         return CHK_NULL(str);
 }
 
-gchar *
-get_data_loc (struct xml_loc *data,
-              enum datas_loc  type)
+static gchar *
+get_data_loc (xml_loc   *data,
+              datas_loc  type)
 { 
         gchar *str = NULL;
         
         if (!data)
         {
-                DBG ("get_data_loc: xml-loc not present");
+                //DBG ("get_data_loc: xml-loc not present");
                 return EMPTY_STRING;
         }
 
@@ -180,8 +207,8 @@ get_data_loc (struct xml_loc *data,
  
 
 const gchar *
-get_data (struct xml_weather *data,
-          enum datas          type)
+get_data (xml_weather *data,
+          datas        type)
 {
         gchar *str = NULL;
         gchar *p;
@@ -205,13 +232,13 @@ get_data (struct xml_weather *data,
         return p;
 }
 
-gchar *
-get_data_part (struct xml_part *data,
-               enum forecast    type)
+static gchar *
+get_data_part (xml_part *data,
+               forecast  type)
 {
        gchar *str = NULL;
 
-       DBG ("now here %s", data->ppcp);
+       //DBG ("now here %s", data->ppcp);
 
        if (!data)
                return EMPTY_STRING;
@@ -229,8 +256,8 @@ get_data_part (struct xml_part *data,
 }
 
 const gchar *
-get_data_f (struct xml_dayf *data,
-            enum forecast    type)
+get_data_f (xml_dayf *data,
+            forecast  type)
 {
         gchar *p, *str = NULL;
 
@@ -261,26 +288,37 @@ get_data_f (struct xml_dayf *data,
         
 
         p = copy_buffer(str);
-       DBG ("value: %s", p);
+       //DBG ("value: %s", p);
         return p;
 }
 
 const gchar *
-get_unit (enum units unit,
-          enum datas type)
+get_unit (units unit,
+          datas type)
 {
-        gchar *str = NULL;
+        gchar *str;
         
         switch (type & 0x00F0)
         {
-                case 0x0020: str = (unit == METRIC ? "\302\260C" : "\302\260F"); break;
-                case 0x0030: str = "%"; break;
-                case 0x0040: str = (unit == METRIC ? _("km/h") : _("mph")); break;
-                case 0x0050: str = (unit == METRIC ? _("hPa") : _("in")); break;
-                case 0x0060: str = (unit == METRIC ? _("km") : _("mi")); break;
-                default: str = "";
+                case 0x0020: 
+                        str = (unit == METRIC ? "\302\260C" : "\302\260F");
+                        break;
+                case 0x0030:
+                        str = "%";
+                        break;
+                case 0x0040:
+                        str = (unit == METRIC ? _("km/h") : _("mph"));
+                        break;
+                case 0x0050: 
+                        str = (unit == METRIC ? _("hPa") : _("in"));
+                        break;
+                case 0x0060:
+                        str = (unit == METRIC ? _("km") : _("mi"));
+                        break;
+                default:
+                        str = "";
         }
 
-        return copy_buffer(str);
+        return copy_buffer (str);
 }
 

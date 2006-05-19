@@ -1,12 +1,41 @@
-#include <config.h>
+/* vim: set expandtab ts=8 sw=4: */
 
-#include "config_dialog.h"
+/*  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Library General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#include <string.h>
+#include <gtk/gtk.h>
+#include <libxfcegui4/libxfcegui4.h>
+#include <libxfce4panel/xfce-panel-plugin.h>
+#include <libxml/parser.h>
+
 #include "parsers.h"
 #include "get_data.h"
+#include "plugin.h"
 
-#include <libxfce4util/libxfce4util.h>
+#include "config_dialog.h"
+#include "search_dialog.h"
 
-struct labeloption labeloptions[OPTIONS_N] = { 
+#define OPTIONS_N 11
+#define BORDER    8
+
+static labeloption labeloptions[OPTIONS_N] = { 
                 {N_("Windchill (F)"), FLIK},
                 {N_("Temperature (T)"), TEMP},
                 {N_("Atmosphere pressure (P)"), BAR_R},
@@ -20,10 +49,10 @@ struct labeloption labeloptions[OPTIONS_N] = {
                 {N_("Dewpoint (DP)"), DEWP}
 };
 
-typedef void(*cb_function)(struct xfceweather_data *);
+typedef void(*cb_function)(xfceweather_data *);
 static cb_function cb = NULL;
 
-void
+static void
 add_mdl_option (GtkListStore *mdl,
                 int           opt)
 {
@@ -36,11 +65,11 @@ add_mdl_option (GtkListStore *mdl,
                         -1);
 }
 
-gboolean
+static gboolean
 cb_addoption (GtkWidget *widget,
               gpointer   data)
 {
-        struct xfceweather_dialog *dialog = (struct xfceweather_dialog *)data;
+        xfceweather_dialog *dialog = (xfceweather_dialog *) data;
         gint history = gtk_option_menu_get_history(GTK_OPTION_MENU(dialog->opt_xmloption)); 
 
         add_mdl_option(dialog->mdl_xmloption, history);
@@ -48,11 +77,11 @@ cb_addoption (GtkWidget *widget,
         return FALSE;
 }
 
-gboolean
+static gboolean
 cb_deloption (GtkWidget *widget,
               gpointer   data)
 {
-        struct xfceweather_dialog *dialog = (struct xfceweather_dialog *)data;
+        xfceweather_dialog *dialog = (xfceweather_dialog *)data;
         GtkTreeIter iter;
         GtkTreeSelection *selection = gtk_tree_view_get_selection(GTK_TREE_VIEW(dialog->lst_xmloption));
         
@@ -62,7 +91,7 @@ cb_deloption (GtkWidget *widget,
         return FALSE;
 }
 
-gboolean
+static gboolean
 cb_toggle (GtkWidget *widget,
            gpointer   data)
 {
@@ -74,7 +103,7 @@ cb_toggle (GtkWidget *widget,
         return FALSE;
 }
 
-gboolean
+static gboolean
 cb_not_toggle (GtkWidget *widget,
                gpointer   data)
 {
@@ -97,7 +126,7 @@ GtkWidget *make_label (void)
 
         for (i = 0; i < 11; i++)
         {
-                struct labeloption opt = labeloptions[i];
+                labeloption opt = labeloptions[i];
 
                 gtk_menu_shell_append(GTK_MENU_SHELL(menu),
                                 gtk_menu_item_new_with_label(_(opt.name)));
@@ -109,14 +138,14 @@ GtkWidget *make_label (void)
 }
 
 void
-apply_options (struct xfceweather_dialog *dialog)
+apply_options (xfceweather_dialog *dialog)
 {
         int history = 0;
         gboolean hasiter = FALSE;
         GtkTreeIter iter;
         gchar *value;
 
-        struct xfceweather_data *data = (struct xfceweather_data *)dialog->wd;
+        xfceweather_data *data = (xfceweather_data *) dialog->wd;
         
         history = gtk_option_menu_get_history(GTK_OPTION_MENU(dialog->opt_unit));
 
@@ -134,7 +163,7 @@ apply_options (struct xfceweather_dialog *dialog)
         if (data->labels && data->labels->len > 0)
                 g_array_free(data->labels, TRUE);
 
-        data->labels = g_array_new(FALSE, TRUE, sizeof(enum datas));
+        data->labels = g_array_new(FALSE, TRUE, sizeof(datas));
 
         for (hasiter = gtk_tree_model_get_iter_first(GTK_TREE_MODEL(dialog->mdl_xmloption), &iter);
                         hasiter == TRUE; hasiter = gtk_tree_model_iter_next(
@@ -189,8 +218,8 @@ apply_options (struct xfceweather_dialog *dialog)
                 cb(data);
 }
 
-int
-option_i (enum datas opt)
+static int
+option_i (datas opt)
 {
         int i;
 
@@ -203,12 +232,12 @@ option_i (enum datas opt)
         return -1;
 }
 
-gboolean
+static gboolean
 cb_findlocation (GtkButton *button,
                  gpointer   user_data)
 {
-        struct xfceweather_dialog *dialog = (struct xfceweather_dialog *)user_data;
-        struct search_dialog *sdialog = create_search_dialog(NULL, 
+        xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+        search_dialog *sdialog     = create_search_dialog(NULL, 
                         dialog->wd->proxy_host, dialog->wd->proxy_port);
 
         if (run_search_dialog(sdialog))
@@ -220,11 +249,11 @@ cb_findlocation (GtkButton *button,
 }
         
 
-struct xfceweather_dialog *
-create_config_dialog (struct xfceweather_data *data,
-                      GtkWidget               *vbox)
+xfceweather_dialog *
+create_config_dialog (xfceweather_data *data,
+                      GtkWidget        *vbox)
 {
-        struct xfceweather_dialog *dialog;
+        xfceweather_dialog *dialog;
         GtkWidget *vbox2, *vbox3, *hbox, *hbox2, *label, 
               *menu, *button_add, 
               *button_del, *image, *button, *scroll;
@@ -233,9 +262,9 @@ create_config_dialog (struct xfceweather_data *data,
         GtkTreeViewColumn *column;
         GtkCellRenderer *renderer; 
         
-        dialog = g_new0(struct xfceweather_dialog, 1);
+        dialog = g_new0(xfceweather_dialog, 1);
  
-        dialog->wd = (struct xfceweather_data *)data;
+        dialog->wd = (xfceweather_data *)data;
         dialog->dialog = gtk_widget_get_toplevel(vbox);
 
         label = gtk_label_new(_("Measurement unit:"));
@@ -385,12 +414,12 @@ create_config_dialog (struct xfceweather_data *data,
 
         if (data->labels->len > 0) 
         {
-                enum datas opt;
+                datas opt;
                 gint i, n;
                 
                 for (i = 0; i < data->labels->len; i++) 
                 {
-                        opt = g_array_index (data->labels, enum datas, i);
+                        opt = g_array_index (data->labels, datas, i);
 
                         if ((n = option_i(opt)) != -1)
                                 add_mdl_option(dialog->mdl_xmloption, n);
@@ -406,8 +435,8 @@ create_config_dialog (struct xfceweather_data *data,
 }
 
 void
-set_callback_config_dialog (struct xfceweather_dialog *dialog, 
-                            cb_function                cb_new)
+set_callback_config_dialog (xfceweather_dialog *dialog, 
+                            cb_function         cb_new)
 {
         cb = cb_new;
 }

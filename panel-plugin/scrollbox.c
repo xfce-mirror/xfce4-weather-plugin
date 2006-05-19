@@ -1,4 +1,25 @@
+/* vim: set expandtab ts=8 sw=4: */
+
+/*  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Library General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#ifdef HAVE_CONFIG_H
 #include <config.h>
+#endif
+
+#include <gtk/gtk.h>
 #include <libxfce4util/libxfce4util.h>
 
 #include "scrollbox.h"
@@ -9,12 +30,25 @@ struct label {
         gchar *msg;
         GdkPixmap *pixmap;
 };
+
 enum {
         GTK_SCROLLBOX_ENABLECB = 1
 };
 
+static gboolean
+start_draw_down (GtkScrollbox *);
 
-void free_label(struct label *lbl)
+static void
+start_draw_up   (GtkScrollbox *);
+
+static void
+stop_callback   (GtkScrollbox *);
+
+static GdkPixmap *
+make_pixmap     (GtkScrollbox *, gchar *);
+
+static void
+free_label (struct label *lbl)
 {
         if (lbl->pixmap)
                 g_object_unref (lbl->pixmap);
@@ -22,13 +56,7 @@ void free_label(struct label *lbl)
                 g_free(lbl->msg);
 }
 
-
-gboolean start_draw_down (GtkScrollbox *);
-void start_draw_up (GtkScrollbox *);
-void stop_callback(GtkScrollbox *);
-GdkPixmap *make_pixmap(GtkScrollbox *, gchar *);
-
-gboolean
+static gboolean
 draw_up (GtkScrollbox *self)
 {
         GdkRectangle update_rect = {0,0, GTK_WIDGET(self)->allocation.width, 
@@ -49,7 +77,7 @@ draw_up (GtkScrollbox *self)
         return TRUE;
 }
 
-gboolean
+static gboolean
 draw_down (GtkScrollbox *self)
 {
         GdkRectangle update_rect = {0, 0, GTK_WIDGET(self)->allocation.width, 
@@ -70,7 +98,7 @@ draw_down (GtkScrollbox *self)
         return TRUE;
 }
 
-void
+static void
 start_draw_up (GtkScrollbox *self) 
 {
         gint width, height;
@@ -78,10 +106,8 @@ start_draw_up (GtkScrollbox *self)
         static int i = 0;
 
         if (self->labels->len == 0)
-	{
                 return;
-	}
-
+        
         if (i >= self->labels->len)
                 i = 0;
 
@@ -122,7 +148,7 @@ start_draw_up (GtkScrollbox *self)
         i++;
 }
 
-gboolean
+static gboolean
 start_draw_down (GtkScrollbox *self)
 {
         self->draw_timeout = g_timeout_add(LABEL_SPEED, (GSourceFunc)draw_down, self);
@@ -130,7 +156,7 @@ start_draw_down (GtkScrollbox *self)
         return FALSE;
 }
 
-void
+static void
 stop_callback (GtkScrollbox *self)
 {
         if (self->draw_timeout == 0)
@@ -143,7 +169,7 @@ stop_callback (GtkScrollbox *self)
 }
 
 
-void
+static void
 start_callback (GtkScrollbox *self)
 {
         if (self->draw_timeout)
@@ -152,7 +178,7 @@ start_callback (GtkScrollbox *self)
         start_draw_up(self);
 }
 
-GdkPixmap *
+static GdkPixmap *
 make_pixmap (GtkScrollbox *self,
              gchar        *value)
 {
@@ -299,7 +325,7 @@ gtk_scrollbox_finalize (GObject *gobject)
         }
 }
 
-void
+static void
 redraw_labels (GtkWidget *widget,
                GtkStyle  *previous_style)
 {

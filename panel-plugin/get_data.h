@@ -1,31 +1,44 @@
+/* vim: set expandtab ts=8 sw=4: */
+
+/*  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Library General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
 #ifndef GET_DATA_H
 #define GET_DATA_H
 
-#include <glib.h>
-#include "parsers.h"
-
-#define DATAS_CC    0x0100
-#define DATAS_LOC   0x0200
-#define DATAS_DAYF  0x0300
-
-enum datas_wind {
+typedef enum {
         _WIND_SPEED,
         _WIND_GUST,
         _WIND_DIRECTION,
         _WIND_TRANS
-};
+}
+datas_wind;
 
-enum datas_bar {
+typedef enum {
         _BAR_R,
         _BAR_D
-};
+}
+datas_bar;
 
-enum datas_uv {
+typedef enum {
         _UV_INDEX,
         _UV_TRANS
-};
+}
+datas_uv;
 
-enum datas {
+typedef enum {
         /* cc */
         LSUP            = 0x0101,
         OBST            = 0x0102,
@@ -50,16 +63,17 @@ enum datas {
         BAR_R           = 0x0150,
 
         VIS             = 0x0160
-};
+}
+datas;
 
-
-enum datas_loc {
+typedef enum {
         DNAM            = 0x0201,
         SUNR            = 0x0202,
         SUNS            = 0x0203
-};
+}
+datas_loc;
 
-enum forecast {
+typedef enum {
         ITEMS           = 0x0100,
         WDAY            = 0x0101,
         TEMP_MIN        = 0x0102,
@@ -84,16 +98,25 @@ enum forecast {
         W_DIRECTION_D   = 0x0303,
         W_SPEED_D       = 0x0304,
         TRANS_D         = 0x0305
-};
-                
+}
+forecast;
 
-enum units {
+typedef enum {
         METRIC,
         IMPERIAL
-};
+}
+units;
 
-const gchar *get_data(struct xml_weather *data, enum datas type);
-const gchar *get_data_f(struct xml_dayf * , enum forecast type);
-const gchar *get_unit(enum units unit, enum datas type);
-void free_get_data_buffer(void);
+const gchar *
+get_data             (xml_weather *data, datas type);
+
+const gchar *
+get_data_f           (xml_dayf * , forecast type);
+
+const gchar *
+get_unit             (units unit, datas type);
+
+void
+free_get_data_buffer (void);
+
 #endif

@@ -1,10 +1,38 @@
+/* vim: set expandtab ts=8 sw=4: */
+
+/*  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Library General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#ifdef HAVE_CONFIG_H
 #include <config.h>
+#endif
+
+#include <gtk/gtk.h>
+#include <libxfcegui4/libxfcegui4.h>
+#include <libxfce4panel/xfce-panel-plugin.h>
+#include <libxml/parser.h>
+
+#include "parsers.h"
+#include "get_data.h"
+#include "plugin.h"
 
 #include "summary_window.h"
 #include "translate.h"
+#include "icon.h"
 
-#include <libxfce4util/libxfce4util.h>
-#include <libxfcegui4/dialogs.h>
+#define BORDER 8
 
 #define APPEND_BTEXT(text) gtk_text_buffer_insert_with_tags(GTK_TEXT_BUFFER(buffer),\
                 &iter, text, -1, btag, NULL);
@@ -17,9 +45,9 @@
 
 static GtkTooltips *tooltips = NULL;
 
-GtkWidget *
-create_summary_tab (struct xml_weather *data,
-                    enum                units unit)
+static GtkWidget *
+create_summary_tab (xml_weather *data,
+                    units        unit)
 {
         GtkTextBuffer *buffer;
         GtkTextIter iter;  
@@ -138,9 +166,9 @@ create_summary_tab (struct xml_weather *data,
         return frame;
 }
 
-GtkWidget *
-make_forecast (struct xml_dayf *weatherdata,
-               enum units       unit)
+static GtkWidget *
+make_forecast (xml_dayf *weatherdata,
+               units     unit)
 {
         GtkWidget *item_vbox, *temp_hbox, *icon_hbox, *label, *icon_d, *icon_n, *box_d, *box_n;
         GdkPixbuf *icon;
@@ -288,9 +316,9 @@ make_forecast (struct xml_dayf *weatherdata,
         return item_vbox;
 }
 
-GtkWidget *
-create_forecast_tab (struct xml_weather *data,
-                     enum units          unit)
+static GtkWidget *
+create_forecast_tab (xml_weather *data,
+                     units        unit)
 {
         GtkWidget *widg = gtk_hbox_new(FALSE, 0);
         int i;
@@ -321,24 +349,46 @@ create_forecast_tab (struct xml_weather *data,
 }
 
 GtkWidget *
-create_summary_window (struct xml_weather *data,
-                       enum units          unit)
+create_summary_window (xml_weather *data,
+                       units        unit)
 {
-        GtkWidget *window, *notebook, *header, *vbox;
-        
+        GtkWidget *window, *notebook, *vbox;
+#ifdef USE_NEW_DIALOG
+        gchar *title;
+#else
+        GtkWidget *header;
+#endif
       	GdkPixbuf *icon;
 
+#ifdef USE_NEW_DIALOG
+        window = xfce_titled_dialog_new_with_buttons (_("Weather Update"),
+                                                  NULL,
+                                                  GTK_DIALOG_NO_SEPARATOR,
+                                                  GTK_STOCK_OK, GTK_RESPONSE_ACCEPT,
+                                                  NULL);
+        
+        title = g_strdup_printf(_("Weather report for: %s"), get_data(data, DNAM));
+
+        xfce_titled_dialog_set_subtitle (XFCE_TITLED_DIALOG (window),
+                                     title);
+        g_free (title);
+#else
         window = gtk_dialog_new_with_buttons(_("Weather Update"), NULL,
                         0,
                         GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
+#endif
         vbox = gtk_vbox_new(FALSE, 0);
         gtk_box_pack_start(GTK_BOX(GTK_DIALOG(window)->vbox), vbox, TRUE, TRUE, 0); 
-        
-       	icon = get_icon (window, get_data(data, WICON), GTK_ICON_SIZE_DIALOG);
-        header = xfce_create_header(icon, _("Weather Update")); 
-        g_object_unref (icon);
 
+        icon = get_icon (window, get_data(data, WICON), GTK_ICON_SIZE_DIALOG);
+#ifdef USE_NEW_DIALOG
+        gtk_window_set_icon (GTK_WINDOW (window), icon);
+#else
+        header = xfce_create_header(icon, _("Weather Update")); 
         gtk_box_pack_start(GTK_BOX(vbox), header, FALSE, FALSE, 0);
+#endif
+
+        g_object_unref (icon);
 
         notebook = gtk_notebook_new();
         gtk_container_set_border_width(GTK_CONTAINER(notebook), BORDER);

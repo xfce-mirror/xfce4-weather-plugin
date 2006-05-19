@@ -1,17 +1,40 @@
+/* vim: set expandtab ts=8 sw=4: */
+
+/*  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Library General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#ifdef HAVE_CONFIG_H
 #include <config.h>
+#endif
+
+#include <gtk/gtk.h>
+#include <glib.h>
+#include <libxml/parser.h>
 
 #include "parsers.h"
 
-struct xml_weather *
+xml_weather *
 parse_weather (xmlNode *cur_node)
 {
-        struct xml_weather *ret;
+        xml_weather *ret;
 
         if (!NODE_IS_TYPE(cur_node, "weather")) {
                 return NULL;
         }
 
-        if ((ret = g_new0(struct xml_weather, 1)) == NULL)
+        if ((ret = g_new0(xml_weather, 1)) == NULL)
                 return NULL;
 
         for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next) {
@@ -46,12 +69,12 @@ parse_weather (xmlNode *cur_node)
         return ret;
 }
 
-struct xml_loc *
+xml_loc *
 parse_loc (xmlNode *cur_node)
 {
-        struct xml_loc *ret;
+        xml_loc *ret;
         
-        if ((ret = g_new0(struct xml_loc, 1)) == NULL)
+        if ((ret = g_new0(xml_loc, 1)) == NULL)
                 return NULL;
 
 
@@ -70,12 +93,12 @@ parse_loc (xmlNode *cur_node)
         return ret;
 }
 
-struct xml_uv *
+static xml_uv *
 parse_uv (xmlNode *cur_node)
 {
-        struct xml_uv *ret;
+        xml_uv *ret;
         
-        if ((ret = g_new0(struct xml_uv, 1)) == NULL)
+        if ((ret = g_new0(xml_uv, 1)) == NULL)
                 return NULL;
 
         for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next) {
@@ -91,12 +114,12 @@ parse_uv (xmlNode *cur_node)
         return ret;
 }
 
-struct xml_bar *
+static xml_bar *
 parse_bar (xmlNode *cur_node)
 {
-        struct xml_bar *ret;
+        xml_bar *ret;
         
-        if ((ret = g_new0(struct xml_bar, 1)) == NULL)
+        if ((ret = g_new0(xml_bar, 1)) == NULL)
                 return NULL;
 
         for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next) {
@@ -112,12 +135,12 @@ parse_bar (xmlNode *cur_node)
         return ret;
 }
 
-struct xml_wind *
+static xml_wind *
 parse_wind (xmlNode *cur_node)
 {
-        struct xml_wind *ret;
+        xml_wind *ret;
         
-        if ((ret = g_new0(struct xml_wind, 1)) == NULL)
+        if ((ret = g_new0(xml_wind, 1)) == NULL)
                 return NULL;
         
         for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next) {
@@ -137,12 +160,12 @@ parse_wind (xmlNode *cur_node)
         return ret;
 }
 
-struct xml_cc *
+xml_cc *
 parse_cc (xmlNode *cur_node)
 {
-        struct xml_cc *ret;
+        xml_cc *ret;
         
-        if ((ret = g_new0(struct xml_cc, 1)) == NULL)
+        if ((ret = g_new0(xml_cc, 1)) == NULL)
                 return NULL;
         
         for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next) {
@@ -178,12 +201,12 @@ parse_cc (xmlNode *cur_node)
         return ret;
 }
 
-struct xml_part *
+static xml_part *
 parse_part (xmlNode *cur_node)
 {
-        struct xml_part *ret;
+        xml_part *ret;
         
-        if ((ret = g_new0(struct xml_part, 1)) == NULL)
+        if ((ret = g_new0(xml_part, 1)) == NULL)
                 return NULL;
         
         for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next) {
@@ -207,13 +230,13 @@ parse_part (xmlNode *cur_node)
 
 
 
-struct xml_dayf *
+xml_dayf *
 parse_dayf (xmlNode *cur_node)
 {
-        struct xml_dayf *ret;  
+        xml_dayf *ret;  
         gchar *value;
 
-        if ((ret = g_new0(struct xml_dayf, 1)) == NULL)
+        if ((ret = g_new0(xml_dayf, 1)) == NULL)
                 return NULL;
 
         ret->day  = (gchar *) xmlGetProp (cur_node, (const xmlChar *) "t");
@@ -249,15 +272,15 @@ parse_dayf (xmlNode *cur_node)
 #define CHK_FREE(this) if (this)\
                           free(this);
 
-void
-xml_uv_free (struct xml_uv *data)
+static void
+xml_uv_free (xml_uv *data)
 {
         CHK_FREE(data->i);
         CHK_FREE(data->t);
 }
 
-void
-xml_wind_free (struct xml_wind *data)
+static void
+xml_wind_free (xml_wind *data)
 {
         CHK_FREE(data->s);
         CHK_FREE(data->gust);
@@ -265,15 +288,15 @@ xml_wind_free (struct xml_wind *data)
         CHK_FREE(data->t);
 }
 
-void
-xml_bar_free (struct xml_bar *data)
+static void
+xml_bar_free (xml_bar *data)
 {
         CHK_FREE(data->r);
         CHK_FREE(data->d);
 }
 
-void
-xml_cc_free (struct xml_cc *data)
+static void
+xml_cc_free (xml_cc *data)
 {
         CHK_FREE(data->obst);
         CHK_FREE(data->lsup);
@@ -295,16 +318,16 @@ xml_cc_free (struct xml_cc *data)
                 xml_bar_free(data->bar);
 }
 
-void
-xml_loc_free (struct xml_loc *data)
+static void
+xml_loc_free (xml_loc *data)
 {
         CHK_FREE(data->dnam);
         CHK_FREE(data->sunr);
         CHK_FREE(data->suns);
 }
 
-void
-xml_part_free (struct xml_part *data)
+static void
+xml_part_free (xml_part *data)
 {
         if (!data)
                 return;
@@ -318,8 +341,8 @@ xml_part_free (struct xml_part *data)
                 xml_wind_free(data->wind);
 }
 
-void
-xml_dayf_free (struct xml_dayf *data)
+static void
+xml_dayf_free (xml_dayf *data)
 {
         if (!data)
                 return;
@@ -337,7 +360,7 @@ xml_dayf_free (struct xml_dayf *data)
 }
 
 void
-xml_weather_free (struct xml_weather *data)
+xml_weather_free (xml_weather *data)
 {
         if (data->cc)
                 xml_cc_free(data->cc);

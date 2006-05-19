@@ -1,12 +1,39 @@
-#include <config.h>
+/* vim: set expandtab ts=8 sw=4: */
 
-#define BORDER 6
+/*  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Library General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#ifdef HAVE_CONFIG_H
+#include <config.h>
+#endif
+
+#include <string.h>
+#include <gtk/gtk.h>
+#include <libxfce4panel/xfce-panel-plugin.h>
+#include <libxml/parser.h>
+
 #include "parsers.h"
+#include "get_data.h"
+#include "plugin.h"
+
+#include "http_client.h"
 #include "search_dialog.h"
 
-#include <libxfce4util/libxfce4util.h>
+#define BORDER 8
 
-void
+static void
 append_result (GtkListStore *mdl,
                gchar        *id,
                gchar        *city)
@@ -17,7 +44,7 @@ append_result (GtkListStore *mdl,
          gtk_list_store_set(mdl, &iter, 0, city, 1, id, -1);
 }
 
-gchar *
+static gchar *
 sanitize_str (const gchar *str)
 {
         GString *retstr = g_string_sized_new(strlen(str));
@@ -45,11 +72,11 @@ sanitize_str (const gchar *str)
         return realstr;
 }
 
-void
+static void
 cb_searchdone (gboolean result,
                gpointer user_data)
 {
-        struct search_dialog *dialog = (struct search_dialog *)user_data;
+        search_dialog *dialog = (search_dialog *) user_data;
         xmlDoc *doc;
         xmlNode *cur_node;
         
@@ -99,11 +126,11 @@ cb_searchdone (gboolean result,
 }
 
 
-gboolean
+static gboolean
 search_cb (GtkButton *button,
            gpointer   user_data)
 {
-        struct search_dialog *dialog = (struct search_dialog *)user_data;
+        search_dialog *dialog = (search_dialog *)user_data;
         gchar *sane_str, *url;
         const gchar *str;
         gboolean result;
@@ -129,7 +156,7 @@ search_cb (GtkButton *button,
 }
 
 
-struct search_dialog *
+search_dialog *
 create_search_dialog (GtkWindow *parent,
                       gchar     *proxy_host,
                       gint       proxy_port)
@@ -137,9 +164,9 @@ create_search_dialog (GtkWindow *parent,
         GtkWidget *vbox, *label, *button, *hbox, *scroll, *frame;
         GtkTreeViewColumn *column;
         GtkCellRenderer *renderer = gtk_cell_renderer_text_new();
-        struct search_dialog *dialog;
+        search_dialog *dialog;
 
-        dialog = g_new0(struct search_dialog, 1);
+        dialog = g_new0(search_dialog, 1);
 
         dialog->proxy_host = proxy_host;
         dialog->proxy_port = proxy_port;
@@ -150,13 +177,12 @@ create_search_dialog (GtkWindow *parent,
         dialog->dialog = gtk_dialog_new_with_buttons (_("Search weather location code"),
                         parent,
                         GTK_DIALOG_MODAL | GTK_DIALOG_DESTROY_WITH_PARENT,
-                        GTK_STOCK_OK,
-                        GTK_RESPONSE_ACCEPT,
-                        GTK_STOCK_CANCEL,
-                        GTK_RESPONSE_REJECT,
+                        GTK_STOCK_OK, GTK_RESPONSE_ACCEPT,
+                        GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT,
                         NULL);
         
         vbox = gtk_vbox_new(FALSE, BORDER);
+        gtk_window_set_icon_name  (GTK_WINDOW (dialog->dialog), GTK_STOCK_FIND);
 
         label = gtk_label_new(_("Enter a city name or zip code:"));
         gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
@@ -199,7 +225,7 @@ create_search_dialog (GtkWindow *parent,
 }
        
 gboolean
-run_search_dialog (struct search_dialog *dialog)
+run_search_dialog (search_dialog *dialog)
 {
         gtk_widget_show_all(dialog->dialog);
         if (gtk_dialog_run(GTK_DIALOG(dialog->dialog)) == GTK_RESPONSE_ACCEPT)
@@ -225,7 +251,7 @@ run_search_dialog (struct search_dialog *dialog)
 }
 
 void
-free_search_dialog (struct search_dialog *dialog)
+free_search_dialog (search_dialog *dialog)
 {
         g_free(dialog->result);
         gtk_widget_destroy(dialog->dialog);

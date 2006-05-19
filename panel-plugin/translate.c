@@ -1,13 +1,37 @@
+/* vim: set expandtab ts=8 sw=4: */
+
+/*  This program is free software; you can redistribute it and/or modify
+ *  it under the terms of the GNU General Public License as published by
+ *  the Free Software Foundation; either version 2 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Library General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program; if not, write to the Free Software
+ *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
+ */
+
+#ifdef HAVE_CONFIG_H
 #include <config.h>
+#endif
 
-#include "translate.h"
-
-#include <string.h> /* strlen() */
-#include <libxfce4util/libxfce4util.h>
-#include <stdlib.h>
+#include <string.h>
+#include <gtk/gtk.h>
+#include <libxfce4panel/xfce-panel-plugin.h>
+#include <libxml/parser.h>
 #include <time.h>
 
-const gchar *desc_strings[] = {
+#include "parsers.h"
+#include "get_data.h"
+#include "plugin.h"
+#include "translate.h"
+
+
+static const gchar *desc_strings[] = {
         N_("Snow to Rain"),
         N_("Becoming Cloudy"),
         N_("Blizzard"),
@@ -104,14 +128,14 @@ const gchar *desc_strings[] = {
         NULL
 };
 
-const gchar *bard_strings[] = {
+static const gchar *bard_strings[] = {
         N_("rising"), 
         N_("steady"), 
         N_("falling"), 
         NULL
 };
 
-const gchar *risk_strings[] = {
+static const gchar *risk_strings[] = {
         N_("Low"), 
         N_("Moderate"), 
         N_("High"), 
@@ -120,7 +144,7 @@ const gchar *risk_strings[] = {
         NULL
 };
 
-const gchar *wdirs[] = {
+static const gchar *wdirs[] = {
         N_("S"), 
         N_("SSW"), 
         N_("SW"), 
@@ -333,7 +357,7 @@ translate_wind_direction (const gchar *wdir)
 /* calm or a number */
 gchar *
 translate_wind_speed (const gchar *wspeed,
-                      enum units   unit)
+                      units        unit)
 {
         gchar *wspeed_loc;
 	if (g_ascii_strcasecmp(wspeed, "calm") == 0)
@@ -378,7 +402,7 @@ translate_time (const gchar *time)
 /* Unlimited or a number */
 gchar *
 translate_visibility (const gchar *vis,
-                      enum units   unit)
+                      units        unit)
 {
         gchar *vis_loc;
 	if (g_ascii_strcasecmp(vis, "Unlimited") == 0)
