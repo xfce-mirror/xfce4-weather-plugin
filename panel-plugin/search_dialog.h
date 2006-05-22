@@ -18,6 +18,8 @@
 #ifndef SEARCH_DIALOG_H
 #define SEARCH_DIALOG_H
 
+G_BEGIN_DECLS
+
 typedef struct
 {
         GtkWidget *dialog;
@@ -42,5 +44,7 @@ run_search_dialog    (search_dialog *dialog);
 
 void
 free_search_dialog   (search_dialog *dialog);
+
+G_END_DECLS
 
 #endif

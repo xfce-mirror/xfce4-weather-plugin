@@ -18,6 +18,8 @@
 #ifndef GET_DATA_H
 #define GET_DATA_H
 
+G_BEGIN_DECLS
+
 typedef enum {
         _WIND_SPEED,
         _WIND_GUST,
@@ -118,5 +120,7 @@ get_unit             (units unit, datas type);
 
 void
 free_get_data_buffer (void);
+
+G_END_DECLS
 
 #endif

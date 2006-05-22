@@ -18,6 +18,8 @@
 #ifndef CONFIG_DIALOG_H
 #define CONFIG_DIALOG_H
 
+G_BEGIN_DECLS
+
 typedef struct {
         gchar           *name;
         datas            number;
@@ -52,5 +54,7 @@ set_callback_config_dialog (xfceweather_dialog *dialog, void(cb)(xfceweather_dat
 
 void
 apply_options              (xfceweather_dialog *dialog);
+
+G_END_DECLS
 
 #endif

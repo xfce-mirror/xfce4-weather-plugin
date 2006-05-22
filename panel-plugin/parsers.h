@@ -18,6 +18,8 @@
 #ifndef PARSERS_H
 #define PARSERS_H
 
+G_BEGIN_DECLS
+
 #define DATA(node) (gchar *) xmlNodeListGetString(node->doc, node->children, 1)
 #define NODE_IS_TYPE(node, type) xmlStrEqual (node->name, (const xmlChar *) type)
 
@@ -120,4 +122,7 @@ parse_dayf       (xmlNode *cur_node);
 
 void
 xml_weather_free (xml_weather *data);
+
+G_END_DECLS
+
 #endif

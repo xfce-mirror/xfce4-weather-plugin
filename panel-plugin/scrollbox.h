@@ -18,6 +18,8 @@
 #ifndef SCROLLBOX_H
 #define SCROLLBOX_H
 
+G_BEGIN_DECLS
+
 GType gtk_scrollbox_get_type (void);
 
 #define GTK_TYPE_SCROLLBOX             (gtk_scrollbox_get_type())
@@ -59,4 +61,7 @@ gtk_scrollbox_enablecb  (GtkScrollbox *self, gboolean enable);
 
 void
 gtk_scrollbox_clear     (GtkScrollbox *self);
+
+G_END_DECLS
+
 #endif

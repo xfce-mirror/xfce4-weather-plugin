@@ -18,6 +18,8 @@
 #ifndef TRANSLATE_H
 #define TRANSLATE_H
 
+G_BEGIN_DECLS
+
 const gchar *
 translate_desc          (const gchar *);
 
@@ -45,5 +47,7 @@ translate_time           (const gchar *);
 
 gchar *
 translate_visibility     (const gchar *, units);
+
+G_END_DECLS
 
 #endif

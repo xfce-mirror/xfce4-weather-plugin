@@ -18,6 +18,8 @@
 #ifndef PLUGIN_H
 #define PLUGIN_H
 
+G_BEGIN_DECLS
+
 typedef struct
 {
         XfcePanelPlugin *plugin;
@@ -56,5 +58,7 @@ xfceweather_data;
 
 gboolean
 check_envproxy (gchar **proxy_host, gint *proxy_port);
+
+G_END_DECLS
 
 #endif
