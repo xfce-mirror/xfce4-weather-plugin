@@ -32,6 +32,7 @@
 #include <stdio.h>
 
 #include <glib.h>
+#include <gmodule.h>
 
 #include "http_client.h"
 

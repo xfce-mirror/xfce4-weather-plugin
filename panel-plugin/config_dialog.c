@@ -20,7 +20,10 @@
 #endif
 
 #include <string.h>
+#include <glib.h>
+#include <gmodule.h>
 #include <gtk/gtk.h>
+
 #include <libxfcegui4/libxfcegui4.h>
 #include <libxfce4panel/xfce-panel-plugin.h>
 #include <libxml/parser.h>
@@ -46,7 +49,7 @@ const static labeloption labeloptions[OPTIONS_N] = {
         {N_("Humidity (H)"), HMID},
         {N_("Visibility (V)"), VIS},
         {N_("UV Index (UV)"), UV_INDEX},
-        {N_("Dewpoint (DP)"), DEWP}
+        {N_("Dewpoint (DP)"), DEWP},
 };
 
 typedef void(*cb_function)(xfceweather_data *);

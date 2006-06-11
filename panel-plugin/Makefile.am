@@ -1,40 +1,46 @@
 plugindir = $(libexecdir)/xfce4/panel-plugins
 plugin_PROGRAMS = xfce4-weather-plugin
 
+xfce4_weather_plugin_SOURCES =					\
+	scrollbox.h						\
+	scrollbox.c						\
+	parsers.h						\
+	parsers.c						\
+	get_data.h						\
+	get_data.c 						\
+	http_client.c						\
+	http_client.h						\
+	plugin.h						\
+	plugin.c						\
+	config_dialog.h						\
+	config_dialog.c						\
+	summary_window.h					\
+	summary_window.c					\
+	icon.h							\
+	icon.c							\
+	search_dialog.h						\
+	search_dialog.c						\
+	translate.h						\
+	translate.c
+
 xfce4_weather_plugin_CFLAGS =					\
+        -I$(top_srcdir)                                         \
 	-DTHEMESDIR=\"$(datadir)/xfce4/weather/icons\" 		\
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"			\
 	@LIBXFCE4PANEL_CFLAGS@					\
         @LIBXFCE4UTIL_CFLAGS@                                   \
+	@GLIB_CFLAGS@                                           \
+        @GTK_CFLAGS@                                            \
 	@LIBXML_CFLAGS@
 
 xfce4_weather_plugin_LDFLAGS =					\
-	@LIBXFCE4PANEL_LIBS@					\
+        @LIBXFCE4PANEL_LIBS@					\
         @LIBXFCE4UTIL_LIBS@                                     \
+        @GLIB_LIBS@                                             \
+        @GMODULE_LIBS@                                          \
+        @GTK_LIBS@                                              \
 	@LIBXML_LIBS@
 	
-xfce4_weather_plugin_SOURCES =					\
-	config_dialog.c						\
-	config_dialog.h						\
-	get_data.c						\
-	get_data.h 						\
-	http_client.c						\
-	http_client.h						\
-	parsers.c						\
-	parsers.h						\
-	plugin.c						\
-	plugin.h						\
-	scrollbox.c						\
-	scrollbox.h						\
-	summary_window.c					\
-	summary_window.h					\
-	icon.c							\
-	icon.h							\
-	search_dialog.c						\
-	search_dialog.h						\
-	translate.c						\
-	translate.h
-
 # .desktop file
 #
 # Some automake trickery here. Because we cannot use $(libexecdir) in the

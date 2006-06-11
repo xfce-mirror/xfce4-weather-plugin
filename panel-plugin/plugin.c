@@ -19,13 +19,17 @@
 #include <config.h>
 #endif
 
+#include <string.h>
 #include <sys/stat.h>
+#include <glib.h>
+#include <gmodule.h>
+#include <gtk/gtk.h>
+
 #include <libxfce4util/libxfce4util.h>
 #include <libxfcegui4/libxfcegui4.h>
-#include <libxml/parser.h>
-#include <gtk/gtk.h>
-#include <string.h>
 #include <libxfce4panel/xfce-panel-plugin.h>
+
+#include <libxml/parser.h>
 
 #include "parsers.h"
 #include "get_data.h"
@@ -592,13 +596,11 @@ xfceweather_create_options (XfcePanelPlugin  *plugin,
 
     xfce_panel_plugin_block_menu (plugin);
 #ifdef USE_NEW_DIALOG
-    dlg = xfce_titled_dialog_new_with_buttons (_("Weather Plugin"),
-                          NULL,
-                          GTK_DIALOG_NO_SEPARATOR,
+    dlg = xfce_titled_dialog_new_with_buttons (_("Weather Update"),
+                          GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (plugin))),
+                          GTK_DIALOG_DESTROY_WITH_PARENT | GTK_DIALOG_NO_SEPARATOR,
                           GTK_STOCK_CLOSE, GTK_RESPONSE_OK,
                           NULL);
-    xfce_titled_dialog_set_subtitle (XFCE_TITLED_DIALOG (dlg),
-                     _("Configure the weather plugin"));
 #else
     dlg = gtk_dialog_new_with_buttons (_("Properties"), 
         GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (plugin))),
@@ -608,7 +610,7 @@ xfceweather_create_options (XfcePanelPlugin  *plugin,
         NULL);
 #endif
     gtk_container_set_border_width (GTK_CONTAINER (dlg), 2);
-    gtk_window_set_icon_name  (GTK_WINDOW (dlg), "gtk-properties");
+    gtk_window_set_icon_name  (GTK_WINDOW (dlg), "xfce4-settings");
 
 #ifndef USE_NEW_DIALOG
     header = xfce_create_header (NULL, _("Weather Update"));
@@ -716,12 +718,19 @@ xfceweather_free (XfcePanelPlugin  *plugin,
         data->updatetimeout = 0;
     }
     
-    g_free (data->location_code);
-    free_get_data_buffer ();  
-    
-    g_array_free (data->labels, TRUE);
-
+    free_get_data_buffer ();
     xmlCleanupParser ();
+    
+    /* Free Tooltip */
+    gtk_tooltips_set_tip (data->tooltips, data->tooltipbox, NULL, NULL);
+    g_object_unref (data->tooltips);
+    
+    /* Free chars */
+    g_free (data->location_code);
+    g_free (data->proxy_host);
+    
+    /* Free Array */
+    g_array_free (data->labels, TRUE);
 
     g_free (data);
 }

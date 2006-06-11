@@ -20,10 +20,12 @@
 #endif
 
 #include <string.h>
-#include <gtk/gtk.h>
-#include <libxfce4panel/xfce-panel-plugin.h>
-#include <libxml/parser.h>
 #include <time.h>
+
+#include <glib.h>
+#include <gtk/gtk.h>
+#include <libxml/parser.h>
+#include <libxfce4panel/xfce-panel-plugin.h>
 
 #include "parsers.h"
 #include "get_data.h"

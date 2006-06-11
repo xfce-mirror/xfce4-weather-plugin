@@ -19,8 +19,8 @@
 #include <config.h>
 #endif
 
-#include <gtk/gtk.h>
 #include <glib.h>
+#include <gmodule.h>
 #include <libxml/parser.h>
 
 #include "parsers.h"

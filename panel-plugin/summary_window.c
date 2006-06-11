@@ -19,10 +19,12 @@
 #include <config.h>
 #endif
 
+#include <glib.h>
+#include <gmodule.h>
 #include <gtk/gtk.h>
+#include <libxml/parser.h>
 #include <libxfcegui4/libxfcegui4.h>
 #include <libxfce4panel/xfce-panel-plugin.h>
-#include <libxml/parser.h>
 
 #include "parsers.h"
 #include "get_data.h"

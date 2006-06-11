@@ -19,6 +19,8 @@
 #include <config.h>
 #endif
 
+#include <glib.h>
+#include <gmodule.h>
 #include <gtk/gtk.h>
 
 #include "icon.h"

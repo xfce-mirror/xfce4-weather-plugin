@@ -28,6 +28,7 @@ AC_PROG_INTLTOOL
 
 dnl Check for standard header files
 AC_HEADER_STDC
+AC_CHECK_HEADERS([string.h fcntl.h errno.h sys/socket.h netdb.h netinet/in.h sys/types.h unistd.h stdio.h])
 
 dnl check for xml
 XDT_CHECK_PACKAGE([LIBXML], [libxml-2.0], [2.4.0])
@@ -38,6 +39,8 @@ XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.3.90])
 
 dnl check for gtk
 XDT_CHECK_PACKAGE([GTHREAD], [gthread-2.0], [2.6.0])
+XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [2.6.0])
+XDT_CHECK_PACKAGE([GMODULE], [gmodule-2.0], [2.6.0])
 XDT_CHECK_PACKAGE([GTK], [gtk+-2.0], [2.6.0])
 
 dnl check for i18n support
@@ -69,5 +72,6 @@ panel-plugin/Makefile
 po/Makefile.in
 icons/Makefile
 icons/liquid/Makefile
+icons/48x48/Makefile
 ])
 
