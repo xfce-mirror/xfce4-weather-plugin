@@ -139,7 +139,7 @@ parse_wind (xmlNode *cur_node)
 {
     xml_wind *ret;
     
-    if ((ret = g_new0(xml_wind, 1)) == NULL)
+    if ((ret = g_new (xml_wind, 1)) == NULL)
         return NULL;
     
     for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next)
@@ -275,7 +275,7 @@ parse_dayf (xmlNode *cur_node)
 }
 
 #define CHK_FREE(this) if (this)\
-              free(this);
+              g_free(this);
 
 static void
 xml_uv_free (xml_uv *data)

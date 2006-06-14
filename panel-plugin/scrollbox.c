@@ -51,9 +51,9 @@ static void
 free_label (struct label *lbl)
 {
     if (lbl->pixmap)
-        g_object_unref (lbl->pixmap);
+        g_object_unref (G_OBJECT (lbl->pixmap));
     if (lbl->msg)
-        g_free(lbl->msg);
+        g_free (lbl->msg);
 }
 
 static gboolean
@@ -207,7 +207,7 @@ make_pixmap (GtkScrollbox *self,
 
     gdk_draw_layout(GDK_DRAWABLE(pixmap), widget->style->fg_gc[0], 0, 0, pl);
 
-    g_object_unref(pl);
+    g_object_unref(G_OBJECT (pl));
 
     gtk_widget_size_request(widget, &widgsize);
 
@@ -319,7 +319,7 @@ gtk_scrollbox_finalize (GObject *gobject)
         {
             struct label *lbl = (struct label*)g_ptr_array_index(self->labels, i); 
 
-            g_object_unref (lbl->pixmap);
+            g_object_unref (G_OBJECT (lbl->pixmap));
             g_free(lbl->msg);
         }
         g_ptr_array_free(self->labels, TRUE);
@@ -353,7 +353,7 @@ redraw_labels (GtkWidget *widget,
         newpixmap = make_pixmap(self, lbl->msg);
 
         if (lbl->pixmap)
-            g_object_unref (lbl->pixmap);
+            g_object_unref (G_OBJECT (lbl->pixmap));
 
         lbl->pixmap = newpixmap;
     }

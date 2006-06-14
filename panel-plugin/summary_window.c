@@ -191,15 +191,15 @@ make_forecast (xml_dayf *weatherdata,
 
     icon_hbox = gtk_hbox_new(FALSE, 0);
     
-    icon = get_icon(item_vbox, get_data_f(weatherdata, ICON_D), GTK_ICON_SIZE_DIALOG);
+    icon = get_icon(get_data_f(weatherdata, ICON_D), GTK_ICON_SIZE_DIALOG);
     icon_d = gtk_image_new_from_pixbuf(icon);
-    g_object_unref (icon);
+    g_object_unref (G_OBJECT (icon));
     box_d = gtk_event_box_new();
     gtk_container_add(GTK_CONTAINER(box_d), icon_d);
     
-    icon = get_icon(item_vbox, get_data_f(weatherdata, ICON_N), GTK_ICON_SIZE_DIALOG);
+    icon = get_icon(get_data_f(weatherdata, ICON_N), GTK_ICON_SIZE_DIALOG);
     icon_n = gtk_image_new_from_pixbuf(icon);
-    g_object_unref (icon);
+    g_object_unref (G_OBJECT (icon));
     box_n = gtk_event_box_new();
     gtk_container_add(GTK_CONTAINER(box_n), icon_n);
 
@@ -368,9 +368,13 @@ create_summary_window (xml_weather *data,
     vbox = gtk_vbox_new(FALSE, 0);
     gtk_box_pack_start(GTK_BOX(GTK_DIALOG(window)->vbox), vbox, TRUE, TRUE, 0); 
 
-    icon = get_icon (window, get_data(data, WICON), GTK_ICON_SIZE_DIALOG);
+    icon = get_icon (get_data(data, WICON), GTK_ICON_SIZE_DIALOG);
+    
+    if (!icon)
+	icon = get_icon ("25", GTK_ICON_SIZE_DIALOG);
+    
     gtk_window_set_icon (GTK_WINDOW (window), icon);
-    g_object_unref (icon);
+    g_object_unref (G_OBJECT (icon));
 
     notebook = gtk_notebook_new();
     gtk_container_set_border_width(GTK_CONTAINER(notebook), BORDER);

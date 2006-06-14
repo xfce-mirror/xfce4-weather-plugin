@@ -20,11 +20,8 @@
 
 G_BEGIN_DECLS
 
-void
-register_icons   (gchar *path);
-
 GdkPixbuf *
-get_icon         (GtkWidget *widget, const gchar *icon, GtkIconSize size);
+get_icon         (const gchar *icon, GtkIconSize size);
 
 G_END_DECLS
 

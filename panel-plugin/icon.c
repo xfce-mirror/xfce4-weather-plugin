@@ -24,60 +24,31 @@
 
 #include "icon.h"
 
-GtkIconFactory *cfactory = NULL;
-
-void
-register_icons (gchar *path)
-{
-    GtkIconSet *iconset;
-    guint       i;
-    GdkPixbuf  *pixbuf; 
-    gchar      *filename, *name;
-
-    if (cfactory)
-        return;
-
-    cfactory = gtk_icon_factory_new ();
-
-    for (i = 0; i <= 47; i++) 
-    {
-        filename = g_strdup_printf ("%s%d.png", path, i);
-        name = g_strdup_printf ("xfceweather_%d", i);
-        pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
-
-        if (!pixbuf) 
-            continue;
-
-        iconset = gtk_icon_set_new_from_pixbuf (pixbuf);
-        g_object_unref (pixbuf);
-
-        gtk_icon_factory_add (cfactory, name, iconset);
-
-        g_free (filename);
-        g_free (name);
-    }
-
-    if (iconset)
-        gtk_icon_factory_add (cfactory, "xfceweather_-", iconset);
-
-    gtk_icon_factory_add_default (cfactory);
-}
+#define DEFAULT_W_THEME "liquid"
 
 GdkPixbuf *
-get_icon (GtkWidget   *widget,
-           const gchar *number,
-           GtkIconSize  size)
+get_icon (const gchar *number,
+          GtkIconSize  size)
 {
     GdkPixbuf *image = NULL;
-    gchar     *str;
-
-    str = g_strdup_printf ("xfceweather_%s", number);
-    image = gtk_widget_render_icon (widget, str, size, "none");
+    gchar     *filename;
+    gint       width, height;
     
-    g_free (str);
+    gtk_icon_size_lookup (size, &width, &height);
+    
+    filename = g_strdup_printf ("%s%s%s%s%s.png",
+            THEMESDIR, G_DIR_SEPARATOR_S,
+            DEFAULT_W_THEME, G_DIR_SEPARATOR_S,
+            number);
+    
+    image = gdk_pixbuf_new_from_file_at_scale (filename,
+	    width, height,
+            TRUE, NULL);
+    
+    g_free (filename);
 
     if (!image)
-        g_warning ("weather plugin: No image found");
+        g_warning ("Weather Plugin: No image found");
     
     return image;
 }

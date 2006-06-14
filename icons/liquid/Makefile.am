@@ -1,7 +1,6 @@
 liquiddir = $(datadir)/xfce4/weather/icons/liquid
 
-liquid_DATA =	0.png	\
-		1.png	\
+liquid_DATA =	1.png	\
 		2.png	\
 		3.png	\
 		4.png	\

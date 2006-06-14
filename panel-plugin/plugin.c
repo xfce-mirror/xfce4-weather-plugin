@@ -37,7 +37,6 @@
 #include "scrollbox.h"
 
 #define XFCEWEATHER_ROOT "weather"
-#define DEFAULT_W_THEME "liquid"
 #define UPDATE_TIME 1600
 #define BORDER 8
 
@@ -176,10 +175,9 @@ get_filename (const xfceweather_data *data)
 static void
 set_icon_error (xfceweather_data *data)
 {
-
-    GdkPixbuf *icon = get_icon (data->iconimage, "25", data->iconsize);
+    GdkPixbuf *icon = get_icon ("25", data->iconsize);
     gtk_image_set_from_pixbuf (GTK_IMAGE(data->iconimage), icon);
-    g_object_unref (icon);
+    g_object_unref (G_OBJECT (icon));
 
     if (data->weatherdata)
     {
@@ -196,9 +194,8 @@ set_icon_error (xfceweather_data *data)
 static void
 set_icon_current (xfceweather_data *data)
 {
-
     guint      i;
-    GdkPixbuf *icon;
+    GdkPixbuf *icon = NULL;
 
     for (i = 0; i < data->labels->len; i++)
     {
@@ -216,11 +213,11 @@ set_icon_current (xfceweather_data *data)
         g_free (str);
     }
 
-    gtk_scrollbox_enablecb(GTK_SCROLLBOX(data->scrollbox), TRUE);       
-        
-    icon = get_icon (data->iconimage, get_data(data->weatherdata, WICON), data->iconsize);
+    gtk_scrollbox_enablecb(GTK_SCROLLBOX(data->scrollbox), TRUE);
+    
+    icon = get_icon (get_data(data->weatherdata, WICON), data->iconsize);
     gtk_image_set_from_pixbuf (GTK_IMAGE(data->iconimage), icon);
-    g_object_unref (icon);
+    g_object_unref (G_OBJECT (icon));
        
     gtk_tooltips_set_tip (data->tooltips, data->tooltipbox, 
         translate_desc(get_data(data->weatherdata, TRANS)), NULL);
@@ -248,10 +245,10 @@ cb_update (gboolean status,
         return;
 
     cur_node = xmlDocGetRootElement (doc);
-
+    
     if (cur_node)
         weather = parse_weather (cur_node);
-
+    
     xmlFreeDoc (doc);
 
     gtk_scrollbox_clear (GTK_SCROLLBOX(data->scrollbox));
@@ -279,9 +276,8 @@ update_weatherdata (xfceweather_data *data,
 {
 
     struct stat attrs; 
-    /*gchar *fullfilename = xfce_resource_save_location (XFCE_RESOURCE_CACHE, 
-            filename, TRUE);*/
     gchar *fullfilename;
+    gchar *url;
 
     if (!data->location_code)
         return -1;
@@ -297,21 +293,23 @@ update_weatherdata (xfceweather_data *data,
     if (force || (stat (fullfilename, &attrs) == -1) || 
             ((time (NULL) - attrs.st_mtime) > (UPDATE_TIME)))
     {
-        gchar *url = g_strdup_printf ("/weather/local/%s?cc=*&dayf=%d&unit=%c",
+        url = g_strdup_printf ("/weather/local/%s?cc=*&dayf=%d&unit=%c",
                 data->location_code, XML_WEATHER_DAYF_N,
                 data->unit == METRIC ? 'm' : 'i');
-           
 
         gboolean status = http_get_file (url, "xoap.weather.com", fullfilename, 
                 data->proxy_host, data->proxy_port, cb_update,
                 (gpointer) data);
+	
         g_free (url);
         g_free (fullfilename);
 
         return status ? 1 : -1;
     }
     else if (data->weatherdata)
-        return 0;
+    {
+	return 0;
+    }
     else
     {
         cb_update (TRUE, data);
@@ -622,7 +620,7 @@ xfceweather_create_control (XfcePanelPlugin *plugin)
     xfceweather_data *data = g_new0 (xfceweather_data, 1);
     GtkWidget    *vbox, *refresh;
     datas         lbl;
-    GdkPixbuf    *icon;
+    GdkPixbuf    *icon = NULL;
 
     if (!GTK_ICON_SIZE_SMALL)
         GTK_ICON_SIZE_SMALL = gtk_icon_size_register ("iconsize_small", 16, 16);
@@ -634,11 +632,11 @@ xfceweather_create_control (XfcePanelPlugin *plugin)
     gtk_object_sink (GTK_OBJECT (data->tooltips));
 
     data->scrollbox = gtk_scrollbox_new ();
-       
-    icon = get_icon (GTK_WIDGET (plugin), "0", GTK_ICON_SIZE_SMALL);
+  
+    icon = get_icon ("25", GTK_ICON_SIZE_SMALL);
     data->iconimage = gtk_image_new_from_pixbuf (icon);
     gtk_misc_set_alignment (GTK_MISC(data->iconimage), 0.5, 1);
-    g_object_unref (icon);
+    g_object_unref (G_OBJECT (icon));
 
     data->labels = g_array_new (FALSE, TRUE, sizeof (datas));
        
@@ -703,7 +701,7 @@ xfceweather_free (XfcePanelPlugin  *plugin,
     
     /* Free Tooltip */
     gtk_tooltips_set_tip (data->tooltips, data->tooltipbox, NULL, NULL);
-    g_object_unref (data->tooltips);
+    g_object_unref (G_OBJECT (data->tooltips));
     
     /* Free chars */
     g_free (data->location_code);
@@ -733,7 +731,12 @@ xfceweather_set_size (XfcePanelPlugin  *panel,
     else
         data->iconsize = GTK_ICON_SIZE_DND;
 
-    update_plugin (data, FALSE);
+    gtk_scrollbox_clear (GTK_SCROLLBOX(data->scrollbox));
+    
+    if (data->weatherdata)
+        set_icon_current (data);
+    else
+	set_icon_error (data);
 
     return TRUE;
 }
@@ -741,16 +744,9 @@ xfceweather_set_size (XfcePanelPlugin  *panel,
 static void
 weather_construct (XfcePanelPlugin *plugin)
 {
-
-    gchar *path;
     xfceweather_data *data;
 
     xfce_textdomain (GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
-    
-    path = g_strdup_printf ("%s%s%s%s", THEMESDIR, G_DIR_SEPARATOR_S,
-            DEFAULT_W_THEME, G_DIR_SEPARATOR_S);
-    register_icons (path);
-    g_free (path);
 
     data = xfceweather_create_control (plugin);
     
@@ -773,7 +769,8 @@ weather_construct (XfcePanelPlugin *plugin)
     xfce_panel_plugin_menu_show_configure (plugin);
     g_signal_connect (plugin, "configure-plugin", 
               G_CALLBACK (xfceweather_create_options), data);
+	      
+    update_plugin (data, TRUE);
 }
 
 XFCE_PANEL_PLUGIN_REGISTER_EXTERNAL (weather_construct);
-
