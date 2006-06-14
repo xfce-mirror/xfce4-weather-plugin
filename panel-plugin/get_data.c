@@ -19,9 +19,7 @@
 #include <config.h>
 #endif
 
-#if DEBUG
 #include <libxfce4util/libxfce4util.h>
-#endif
 
 #include "parsers.h"
 #include "get_data.h"

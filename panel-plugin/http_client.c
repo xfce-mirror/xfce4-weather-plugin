@@ -30,9 +30,7 @@
 #include <unistd.h>
 #include <glib.h>
 
-#if DEBUG
 #include <libxfce4util/libxfce4util.h>
-#endif
 
 #include "http_client.h"
 
