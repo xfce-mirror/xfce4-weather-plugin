@@ -18,6 +18,10 @@
 #ifndef TRANSLATE_H
 #define TRANSLATE_H
 
+
+#include <glib.h>
+#include <gtk/gtk.h>
+
 G_BEGIN_DECLS
 
 const gchar *

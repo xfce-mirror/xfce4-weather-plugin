@@ -20,7 +20,6 @@
 #endif
 
 #include <glib.h>
-#include <gmodule.h>
 #include <gtk/gtk.h>
 
 #include "icon.h"
@@ -40,7 +39,7 @@ register_icons (gchar *path)
 
     cfactory = gtk_icon_factory_new ();
 
-    for (i = 1; i <= 47; i++) 
+    for (i = 0; i <= 47; i++) 
     {
         filename = g_strdup_printf ("%s%d.png", path, i);
         name = g_strdup_printf ("xfceweather_%d", i);
@@ -57,13 +56,6 @@ register_icons (gchar *path)
         g_free (filename);
         g_free (name);
     }
-
-    /* and the default icon */
-    filename = g_strdup_printf ("%s-.png", path);
-    pixbuf = gdk_pixbuf_new_from_file (filename, NULL);
-    g_free (filename);
-    iconset = gtk_icon_set_new_from_pixbuf (pixbuf);
-    g_object_unref (pixbuf);
 
     if (iconset)
         gtk_icon_factory_add (cfactory, "xfceweather_-", iconset);

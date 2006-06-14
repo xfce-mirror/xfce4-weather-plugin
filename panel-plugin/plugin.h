@@ -18,6 +18,8 @@
 #ifndef PLUGIN_H
 #define PLUGIN_H
 
+#include <libxfce4panel/xfce-panel-plugin.h>
+
 G_BEGIN_DECLS
 
 typedef struct

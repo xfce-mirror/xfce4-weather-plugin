@@ -21,15 +21,9 @@
 
 #include <string.h>
 #include <sys/stat.h>
-#include <glib.h>
-#include <gmodule.h>
-#include <gtk/gtk.h>
 
 #include <libxfce4util/libxfce4util.h>
 #include <libxfcegui4/libxfcegui4.h>
-#include <libxfce4panel/xfce-panel-plugin.h>
-
-#include <libxml/parser.h>
 
 #include "parsers.h"
 #include "get_data.h"
@@ -88,7 +82,7 @@ check_envproxy (gchar **proxy_host,
 }
 
 static gint
-IconSizeSmall = 0;
+GTK_ICON_SIZE_SMALL = 0;
 
 static gchar *
 make_label (xml_weather *weatherdata,
@@ -97,8 +91,8 @@ make_label (xml_weather *weatherdata,
             gint         size)
 {
 
-    gchar *str, *lbl, *txtsize, *value;
-    const gchar *rawvalue;
+    gchar *str, *value;
+    const gchar *rawvalue, *lbl, *txtsize;
 
     switch (opt)
     {
@@ -113,7 +107,7 @@ make_label (xml_weather *weatherdata,
         case HMID:      lbl = _("H"); break;
         case WIND_SPEED:lbl = _("WS"); break;
         case WIND_GUST: lbl = _("WG"); break;
-        default: lbl = "?"; break;
+        default:        lbl = "?"; break;
     }
 
     /* arbitrary, choose something that works */
@@ -124,7 +118,7 @@ make_label (xml_weather *weatherdata,
     else if (size > 24)     
         txtsize = "x-small";
     else
-        txtsize="xx-small";
+        txtsize = "xx-small";
 
     rawvalue = get_data(weatherdata, opt);
 
@@ -151,12 +145,15 @@ make_label (xml_weather *weatherdata,
     {
         str = g_strdup_printf ("<span size=\"%s\">%s: %s</span>",
                 txtsize, lbl, value);
+
         g_free (value);
     }
     else
+    {
         str = g_strdup_printf ("<span size=\"%s\">%s: %s %s</span>",
                 txtsize, lbl, rawvalue, get_unit (unit, opt));
-
+    }
+    
     return str;
 }
 
@@ -215,9 +212,8 @@ set_icon_current (xfceweather_data *data)
 
         gtk_scrollbox_set_label (GTK_SCROLLBOX(data->scrollbox), -1, 
                 str);
+	
         g_free (str);
-
-           
     }
 
     gtk_scrollbox_enablecb(GTK_SCROLLBOX(data->scrollbox), TRUE);       
@@ -590,36 +586,18 @@ xfceweather_create_options (XfcePanelPlugin  *plugin,
 
     GtkWidget          *dlg, *vbox;
     xfceweather_dialog *dialog;
-#ifndef USE_NEW_DIALOG
-    GtkWidget          *header;
-#endif
 
     xfce_panel_plugin_block_menu (plugin);
-#ifdef USE_NEW_DIALOG
+
     dlg = xfce_titled_dialog_new_with_buttons (_("Weather Update"),
                           GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (plugin))),
                           GTK_DIALOG_DESTROY_WITH_PARENT | GTK_DIALOG_NO_SEPARATOR,
                           GTK_STOCK_CLOSE, GTK_RESPONSE_OK,
                           NULL);
-#else
-    dlg = gtk_dialog_new_with_buttons (_("Properties"), 
-        GTK_WINDOW (gtk_widget_get_toplevel (GTK_WIDGET (plugin))),
-        GTK_DIALOG_DESTROY_WITH_PARENT
-        GTK_DIALOG_NO_SEPARATOR,
-        GTK_STOCK_CLOSE, GTK_RESPONSE_OK,
-        NULL);
-#endif
+
     gtk_container_set_border_width (GTK_CONTAINER (dlg), 2);
     gtk_window_set_icon_name  (GTK_WINDOW (dlg), "xfce4-settings");
 
-#ifndef USE_NEW_DIALOG
-    header = xfce_create_header (NULL, _("Weather Update"));
-    gtk_widget_set_size_request (GTK_BIN (header)->child, -1, 32);
-    gtk_container_set_border_width (GTK_CONTAINER (header), BORDER - 2);
-    gtk_widget_show (header);
-    gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), header,
-                FALSE, TRUE, 0);
-#endif
     vbox = gtk_vbox_new (FALSE, BORDER);
     gtk_container_set_border_width (GTK_CONTAINER (vbox), BORDER - 2);
     gtk_widget_show (vbox);
@@ -646,8 +624,8 @@ xfceweather_create_control (XfcePanelPlugin *plugin)
     datas         lbl;
     GdkPixbuf    *icon;
 
-    if (!IconSizeSmall)
-        IconSizeSmall = gtk_icon_size_register ("iconsize_small", 16, 16);
+    if (!GTK_ICON_SIZE_SMALL)
+        GTK_ICON_SIZE_SMALL = gtk_icon_size_register ("iconsize_small", 16, 16);
 
     data->plugin = plugin;
 
@@ -657,7 +635,7 @@ xfceweather_create_control (XfcePanelPlugin *plugin)
 
     data->scrollbox = gtk_scrollbox_new ();
        
-    icon = get_icon (GTK_WIDGET (plugin), "-", IconSizeSmall);
+    icon = get_icon (GTK_WIDGET (plugin), "0", GTK_ICON_SIZE_SMALL);
     data->iconimage = gtk_image_new_from_pixbuf (icon);
     gtk_misc_set_alignment (GTK_MISC(data->iconimage), 0.5, 1);
     g_object_unref (icon);
@@ -688,11 +666,13 @@ xfceweather_create_control (XfcePanelPlugin *plugin)
     xfce_panel_plugin_menu_insert_item (plugin, GTK_MENU_ITEM (refresh));
 
     /* assign to tempval because g_array_append_val () is using & operator */
-    lbl = FLIK;
-    g_array_append_val (data->labels, lbl);
     lbl = TEMP;
     g_array_append_val (data->labels, lbl);
-
+    lbl = WIND_DIRECTION;
+    g_array_append_val (data->labels, lbl);
+    lbl = WIND_SPEED;
+    g_array_append_val (data->labels, lbl);
+    
     /* FIXME Without this the first label looks odd, because 
      * the gc isn't created yet */
     gtk_scrollbox_set_label (GTK_SCROLLBOX(data->scrollbox), -1, "1");
@@ -745,7 +725,7 @@ xfceweather_set_size (XfcePanelPlugin  *panel,
 
     /* arbitrary, choose something that works */
     if (size <= 30)
-        data->iconsize = IconSizeSmall;
+        data->iconsize = GTK_ICON_SIZE_SMALL;
     else if (size <= 36)
         data->iconsize = GTK_ICON_SIZE_BUTTON;
     else if (size <= 48)

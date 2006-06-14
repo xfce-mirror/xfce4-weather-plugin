@@ -19,10 +19,6 @@
 #include <config.h>
 #endif
 
-#include <glib.h>
-#include <gmodule.h>
-#include <libxml/parser.h>
-
 #include "parsers.h"
 
 xml_weather *

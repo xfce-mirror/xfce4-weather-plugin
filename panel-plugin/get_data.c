@@ -19,12 +19,9 @@
 #include <config.h>
 #endif
 
-#include <glib.h>
-#include <gmodule.h>
-#include <gtk/gtk.h>
-#include <libxml/parser.h>
-
-#include <libxfce4panel/xfce-panel-plugin.h>
+#if DEBUG
+#include <libxfce4util/libxfce4util.h>
+#endif
 
 #include "parsers.h"
 #include "get_data.h"
@@ -48,7 +45,7 @@ copy_buffer (gchar *str)
     
     if (!str)
     {
-        //DBG ("copy_buffer: received NULL pointer");
+        DBG ("copy_buffer: received NULL pointer");
         return EMPTY_STRING;
     }
 
@@ -85,7 +82,7 @@ get_data_uv (xml_uv   *data,
 
     if (!data)
     {
-        //DBG ("get_data_bar: xml-uv not present");
+        DBG ("get_data_bar: xml-uv not present");
         return EMPTY_STRING;
     }
 
@@ -107,7 +104,7 @@ get_data_bar (xml_bar   *data,
 
     if (!data)
     {
-        //DBG ("get_data_bar: xml-wind not present");
+        DBG ("get_data_bar: xml-wind not present");
         return EMPTY_STRING;
     }
 
@@ -128,11 +125,11 @@ get_data_wind (xml_wind   *data,
 
     if (!data)
     {
-        //DBG ("get_data_wind: xml-wind not present");
+        DBG ("get_data_wind: xml-wind not present");
         return EMPTY_STRING;
     }
 
-       //DBG ("starting");
+       DBG ("starting");
 
     switch(type)
     {
@@ -142,9 +139,9 @@ get_data_wind (xml_wind   *data,
         case _WIND_TRANS: str = data->d; break;
     }
 
-       //DBG ("print %p", data->d);
+       DBG ("print %p", data->d);
 
-       //DBG ("%s", str);
+       DBG ("%s", str);
 
     return CHK_NULL(str);
 }
@@ -158,7 +155,7 @@ get_data_cc (xml_cc *data,
     
     if (!data)
     {
-        //DBG ("get_data_cc: xml-cc not present");
+        DBG ("get_data_cc: xml-cc not present");
         return EMPTY_STRING;
     }
 
@@ -194,7 +191,7 @@ get_data_loc (xml_loc   *data,
     
     if (!data)
     {
-        //DBG ("get_data_loc: xml-loc not present");
+        DBG ("get_data_loc: xml-loc not present");
         return EMPTY_STRING;
     }
 
@@ -241,7 +238,7 @@ get_data_part (xml_part *data,
 {
        gchar *str = NULL;
 
-       //DBG ("now here %s", data->ppcp);
+       DBG ("now here %s", data->ppcp);
 
        if (!data)
            return EMPTY_STRING;
@@ -291,7 +288,8 @@ get_data_f (xml_dayf *data,
     
 
     p = copy_buffer(str);
-       //DBG ("value: %s", p);
+    DBG ("value: %s", p);
+    
     return p;
 }
 

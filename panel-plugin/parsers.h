@@ -18,6 +18,10 @@
 #ifndef PARSERS_H
 #define PARSERS_H
 
+#include <glib.h>
+#include <gtk/gtk.h>
+#include <libxml/parser.h>
+
 G_BEGIN_DECLS
 
 #define DATA(node) (gchar *) xmlNodeListGetString(node->doc, node->children, 1)

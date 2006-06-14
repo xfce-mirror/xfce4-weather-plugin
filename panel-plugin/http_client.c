@@ -21,18 +21,18 @@
 
 #include <fcntl.h>
 #include <errno.h>
-
+#include <stdio.h>
 #include <sys/socket.h>
 #include <netdb.h>
 #include <netinet/in.h>
 #include <sys/types.h>
 #include <string.h>
 #include <unistd.h>
-
-#include <stdio.h>
-
 #include <glib.h>
-#include <gmodule.h>
+
+#if DEBUG
+#include <libxfce4util/libxfce4util.h>
+#endif
 
 #include "http_client.h"
 
@@ -112,7 +112,7 @@ static void
 request_save (struct request_data *request,
           const gchar     *buffer)
 {
-    //DBG ("Request Save");
+    DBG ("Request Save");
 
     if (request->save_filename)
         if (!request->save_fp && 
@@ -144,7 +144,7 @@ keep_sending (gpointer data)
 
     if (!request)
     {
-        //DBG ("keep_sending(): empty request data");
+        DBG ("keep_sending(): empty request data");
         return FALSE;
     }
     
@@ -154,12 +154,12 @@ keep_sending (gpointer data)
     {
         request->offset += n;
 
-        //DBG ("now at offset: %d", request->offset);
-        //DBG ("now at byte: %d", n);
+        DBG ("now at offset: %d", request->offset);
+        DBG ("now at byte: %d", n);
         
         if (request->offset == request->size)
         {
-            //DBG ("keep_sending(): ok data sent");
+            DBG ("keep_sending(): ok data sent");
             g_idle_add(keep_receiving, (gpointer) request);
             return FALSE;
         }
@@ -168,8 +168,10 @@ keep_sending (gpointer data)
     {
 #if DEBUG
         perror("keep_sending()");
-        //DBG ("file desc: %d", request->fd);
 #endif          
+	
+	DBG ("file desc: %d", request->fd);
+	
         request_free(request);
         return FALSE;
     }
@@ -188,7 +190,7 @@ keep_receiving (gpointer data)
     
     if (!request)
     {
-        //DBG ("keep_receiving(): empty request data ");
+        DBG ("keep_receiving(): empty request data ");
         return FALSE;
     }
 
@@ -197,7 +199,7 @@ keep_receiving (gpointer data)
     {
         recvbuffer[n] = '\0';
 
-        //DBG ("keep_receiving(): bytes recv: %d", n);
+        DBG ("keep_receiving(): bytes recv: %d", n);
         
         if (!request->has_header)
         {
@@ -209,12 +211,12 @@ keep_receiving (gpointer data)
             {
                 request_save(request, p + 4);
                 request->has_header = TRUE;
-                //DBG ("keep_receiving(): got header");
+                DBG ("keep_receiving(): got header");
             }
             else
             {
-                //DBG ("keep_receiving(): no header yet\n\n%s\n..\n",
-                //        recvbuffer);      
+                DBG ("keep_receiving(): no header yet\n\n%s\n..\n",
+                        recvbuffer);      
                 memcpy(request->last_chars, recvbuffer + (n - 4), 
                         sizeof(char) * 3);
             }
@@ -228,7 +230,7 @@ keep_receiving (gpointer data)
     {
         CB_TYPE callback = request->cb_function;
         gpointer data = request->cb_data;
-        //DBG ("keep_receiving(): ending with succes");
+        DBG ("keep_receiving(): ending with succes");
         request_free(request);
 
         callback(TRUE, data);
@@ -273,18 +275,18 @@ http_get (gchar     *url,
 
     if (proxy_host)
     {
-        //DBG ("using proxy %s", proxy_host);
+        DBG ("using proxy %s", proxy_host);
         request->fd = http_connect(proxy_host, proxy_port);
     }
     else
     {
-        //DBG ("Not USING PROXY");
+        DBG ("Not USING PROXY");
         request->fd = http_connect(hostname, 80);
     }
 
     if (request->fd == -1)
     {
-        //DBG ("http_get(): fd = -1 returned");
+        DBG ("http_get(): fd = -1 returned");
         request_free(request);
         return FALSE;
     }
@@ -314,11 +316,11 @@ http_get (gchar     *url,
     else
         request->save_buffer = fname_buff;
 
-    //DBG ("http_get(): adding idle function");
+    DBG ("http_get(): adding idle function");
     
     (void)g_idle_add ((GSourceFunc)keep_sending, (gpointer)request);
 
-    //DBG ("http_get(): request added");
+    DBG ("http_get(): request added");
 
     return TRUE;
 }    

@@ -19,12 +19,7 @@
 #include <config.h>
 #endif
 
-#include <glib.h>
-#include <gmodule.h>
-#include <gtk/gtk.h>
-#include <libxml/parser.h>
 #include <libxfcegui4/libxfcegui4.h>
-#include <libxfce4panel/xfce-panel-plugin.h>
 
 #include "parsers.h"
 #include "get_data.h"
@@ -355,14 +350,9 @@ create_summary_window (xml_weather *data,
                        units        unit)
 {
     GtkWidget *window, *notebook, *vbox;
-#ifdef USE_NEW_DIALOG
     gchar *title;
-#else
-    GtkWidget *header;
-#endif
-      	GdkPixbuf *icon;
+    GdkPixbuf *icon;
 
-#ifdef USE_NEW_DIALOG
     window = xfce_titled_dialog_new_with_buttons (_("Weather Update"),
                           NULL,
                           GTK_DIALOG_NO_SEPARATOR,
@@ -374,22 +364,12 @@ create_summary_window (xml_weather *data,
     xfce_titled_dialog_set_subtitle (XFCE_TITLED_DIALOG (window),
                      title);
     g_free (title);
-#else
-    window = gtk_dialog_new_with_buttons(_("Weather Update"), NULL,
-            0,
-            GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
-#endif
+
     vbox = gtk_vbox_new(FALSE, 0);
     gtk_box_pack_start(GTK_BOX(GTK_DIALOG(window)->vbox), vbox, TRUE, TRUE, 0); 
 
     icon = get_icon (window, get_data(data, WICON), GTK_ICON_SIZE_DIALOG);
-#ifdef USE_NEW_DIALOG
     gtk_window_set_icon (GTK_WINDOW (window), icon);
-#else
-    header = xfce_create_header(icon, _("Weather Update")); 
-    gtk_box_pack_start(GTK_BOX(vbox), header, FALSE, FALSE, 0);
-#endif
-
     g_object_unref (icon);
 
     notebook = gtk_notebook_new();

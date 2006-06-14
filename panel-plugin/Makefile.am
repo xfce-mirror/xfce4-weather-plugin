@@ -29,15 +29,12 @@ xfce4_weather_plugin_CFLAGS =					\
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"			\
 	@LIBXFCE4PANEL_CFLAGS@					\
         @LIBXFCE4UTIL_CFLAGS@                                   \
-	@GLIB_CFLAGS@                                           \
         @GTK_CFLAGS@                                            \
 	@LIBXML_CFLAGS@
 
 xfce4_weather_plugin_LDFLAGS =					\
         @LIBXFCE4PANEL_LIBS@					\
         @LIBXFCE4UTIL_LIBS@                                     \
-        @GLIB_LIBS@                                             \
-        @GMODULE_LIBS@                                          \
         @GTK_LIBS@                                              \
 	@LIBXML_LIBS@
 	
