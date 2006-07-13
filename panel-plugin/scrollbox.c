@@ -19,6 +19,8 @@
 #include <config.h>
 #endif
 
+#include <stddef.h>
+
 #include <glib.h>
 #include <gtk/gtk.h>
 
@@ -103,7 +105,7 @@ start_draw_up (GtkScrollbox *self)
 {
     gint          width, height;
     struct label *lbl;
-    static gint   i = 0;
+    static size_t i = 0;
 
     if (self->labels->len == 0)
         return;
@@ -299,7 +301,7 @@ gtk_scrollbox_get_property (GObject      *object,
                             GValue       *value,
                             GParamSpec   *pspec)
 {
-    g_assert(FALSE);
+    return;
 }
 
 static void
@@ -399,7 +401,7 @@ void
 gtk_scrollbox_enablecb (GtkScrollbox *self,
                         gboolean      enable)
 {
-    GValue val = {0,};
+    GValue val = {0, };
 
     g_value_init (&val, G_TYPE_BOOLEAN);
     g_value_set_boolean (&val, enable);
@@ -446,17 +448,18 @@ gtk_scrollbox_get_type (void)
     static GType type = 0;
 
     if (type == 0) {
-
-        static const GTypeInfo info = {
+	
+	static const GTypeInfo info = {
             sizeof (GtkScrollboxClass),
-            NULL,   /* base_init */
-            NULL,   /* base_finalize */
-            gtk_scrollbox_class_init,   /* class_init */
-            NULL,   /* class_finalize */
-            NULL,   /* class_data */
+            NULL,                          /* base_init      */
+            NULL,                          /* base_finalize  */
+            gtk_scrollbox_class_init,      /* class_init     */
+            NULL,                          /* class_finalize */
+            NULL,                          /* class_data     */
             sizeof (GtkScrollbox),
-            0,      /* n_preallocs */
-            gtk_scrollbox_instance_init    /* instance_init */
+            0,                             /* n_preallocs    */
+            gtk_scrollbox_instance_init,   /* instance_init  */
+	    NULL
         };
 
         type = g_type_register_static (GTK_TYPE_DRAWING_AREA,

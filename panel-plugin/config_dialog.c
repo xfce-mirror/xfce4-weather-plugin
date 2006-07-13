@@ -140,7 +140,7 @@ apply_options (xfceweather_dialog *dialog)
     gint         history = 0;
     gboolean     hasiter = FALSE;
     GtkTreeIter  iter;
-    gchar       *value;
+    gchar       *text;
 
     xfceweather_data *data = (xfceweather_data *) dialog->wd;
     
@@ -191,24 +191,26 @@ apply_options (xfceweather_dialog *dialog)
     else /* use provided proxy settings */
     {
         data->proxy_fromenv = FALSE;
-        value = (gchar *)gtk_entry_get_text (GTK_ENTRY(dialog->txt_proxy_host));
+        text = g_strdup (gtk_entry_get_text (GTK_ENTRY(dialog->txt_proxy_host)));
 
-        if (strlen (value) == 0)
+        if (strlen (text) == 0)
         {
             xfce_err(_("Please enter proxy settings"));
             gtk_widget_grab_focus (dialog->txt_proxy_host);
             return;
         }
 
-        data->proxy_host = g_strdup(value);
+        data->proxy_host = g_strdup(text);
         data->proxy_port = gtk_spin_button_get_value (
                 GTK_SPIN_BUTTON (dialog->txt_proxy_port));
 
         if (data->saved_proxy_host)
             g_free (data->saved_proxy_host);
         
-        data->saved_proxy_host = g_strdup(value);
+        data->saved_proxy_host = g_strdup(text);
         data->saved_proxy_port = data->proxy_port;
+	
+	g_free (text);
     }       
 
     if (cb)

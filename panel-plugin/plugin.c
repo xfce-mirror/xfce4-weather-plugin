@@ -345,7 +345,7 @@ labels_clear (GArray *array)
     return array;
 }
 
-void
+static void
 xfceweather_read_config (XfcePanelPlugin  *plugin,
                          xfceweather_data *data)
 {

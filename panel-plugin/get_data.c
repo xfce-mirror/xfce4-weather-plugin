@@ -35,7 +35,7 @@
 gchar *kill_ring[KILL_RING_S] = {NULL, };
 
 #define debug_print printf
-gchar *
+static gchar *
 copy_buffer (gchar *str)
 {
     static gint p = 0;
