@@ -49,7 +49,7 @@ create_summary_tab (xml_weather *data,
     GtkTextBuffer *buffer;
     GtkTextIter iter;  
     GtkTextTag *btag;
-    gchar *value, *date, *wind, *sun, *vis;
+    gchar *value, *date, *wind, *sun_val, *vis;
     GtkWidget *view, *frame, *scrolled;
 
     view = gtk_text_view_new();
@@ -136,19 +136,19 @@ create_summary_tab (xml_weather *data,
 
     APPEND_BTEXT (_("\nSun\n"));
 
-    sun = translate_time(get_data(data, SUNR));
+    sun_val = translate_time(get_data(data, SUNR));
     value = g_strdup_printf("\t%s: %s\n",
-            _("Rise"), sun ? sun : get_data(data, SUNR));
-    if (sun)
-        g_free(sun);
+            _("Rise"), sun_val ? sun_val : get_data(data, SUNR));
+    if (sun_val)
+        g_free(sun_val);
     APPEND_TEXT_ITEM_REAL(value);
     g_free(value);
 
-    sun = translate_time(get_data(data, SUNS));
+    sun_val = translate_time(get_data(data, SUNS));
     value = g_strdup_printf("\t%s: %s\n",
-            _("Set"), sun ? sun : get_data(data, SUNS));
-    if (sun)
-        g_free(sun);
+            _("Set"), sun_val ? sun_val : get_data(data, SUNS));
+    if (sun_val)
+        g_free(sun_val);
     APPEND_TEXT_ITEM_REAL(value);
     g_free(value);
 
