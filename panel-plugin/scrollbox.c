@@ -23,12 +23,15 @@
 
 #include <glib.h>
 #include <gtk/gtk.h>
+#include <libxfce4panel/xfce-panel-macros.h>
 
 #include "scrollbox.h"
 #define LABEL_REFRESH 3000
 #define LABEL_SPEED 25
 
-struct label {
+typedef struct _Label Label;
+    
+struct _Label {
     gchar *msg;
     GdkPixmap *pixmap;
 };
@@ -36,6 +39,8 @@ struct label {
 enum {
     GTK_SCROLLBOX_ENABLECB = 1
 };
+
+static GObjectClass *parent_class;
 
 static gboolean
 start_draw_down (GtkScrollbox *self);
@@ -50,12 +55,14 @@ static GdkPixmap *
 make_pixmap     (GtkScrollbox *, gchar *);
 
 static void
-free_label (struct label *lbl)
+free_label (Label *lbl)
 {
     if (lbl->pixmap)
         g_object_unref (G_OBJECT (lbl->pixmap));
     if (lbl->msg)
         g_free (lbl->msg);
+    
+    panel_slice_free (Label, lbl);
 }
 
 static gboolean
@@ -104,7 +111,7 @@ static void
 start_draw_up (GtkScrollbox *self) 
 {
     gint          width, height;
-    struct label *lbl;
+    Label *lbl;
     static size_t i = 0;
 
     if (self->labels->len == 0)
@@ -113,7 +120,7 @@ start_draw_up (GtkScrollbox *self)
     if (i >= self->labels->len)
         i = 0;
 
-    lbl = (struct label*)g_ptr_array_index(self->labels, i);
+    lbl = (Label *)g_ptr_array_index(self->labels, i);
     self->pixmap = lbl->pixmap;
 
 	/* If we failed to create a proper pixmap, try again now */
@@ -238,16 +245,16 @@ gtk_scrollbox_set_label (GtkScrollbox *self,
                          gint          n,
                          gchar        *value)
 {
-    gboolean      append = TRUE;
-    GdkPixmap    *newpixmap;
-    struct label *newlbl;
+    gboolean   append = TRUE;
+    GdkPixmap *newpixmap;
+    Label     *newlbl;
     
     if (n != -1)
         append = FALSE;
     
     if (!append)
     {
-        struct label *lbl = (struct label*)g_ptr_array_index(self->labels, n);
+        Label *lbl = (Label *)g_ptr_array_index(self->labels, n);
 
         if (lbl) 
             free_label(lbl);
@@ -256,7 +263,7 @@ gtk_scrollbox_set_label (GtkScrollbox *self,
     }
     else
     {
-        newlbl = g_new0(struct label, 1);
+        newlbl = panel_slice_new0 (Label);
         g_ptr_array_add(self->labels, newlbl);
     }
 
@@ -319,13 +326,15 @@ gtk_scrollbox_finalize (GObject *gobject)
     {
         for (i = 0; i < self->labels->len; i++)
         {
-            struct label *lbl = (struct label*)g_ptr_array_index(self->labels, i); 
+            Label *lbl = (Label*)g_ptr_array_index(self->labels, i); 
 
             g_object_unref (G_OBJECT (lbl->pixmap));
             g_free(lbl->msg);
         }
         g_ptr_array_free(self->labels, TRUE);
     }
+    
+    G_OBJECT_CLASS (parent_class)->finalize (gobject);
 }
 
 static void
@@ -347,7 +356,7 @@ redraw_labels (GtkWidget *widget,
     for (i = 0; i < self->labels->len; i++)
     {
         GdkPixmap *newpixmap;
-        struct label *lbl = (struct label*)g_ptr_array_index(self->labels, i);
+        Label *lbl = (Label *)g_ptr_array_index(self->labels, i);
 
         if (!lbl->msg)
             continue;
@@ -422,12 +431,14 @@ gtk_scrollbox_class_init (gpointer g_class,
   
   GObjectClass *gobject_class = G_OBJECT_CLASS(g_class);
   GtkWidgetClass *widget_class = GTK_WIDGET_CLASS(g_class);
+    
+  parent_class = g_type_class_peek_parent (g_class);
   
   GParamSpec *scrollbox_param_spec;
 
   gobject_class->set_property = gtk_scrollbox_set_property;
   gobject_class->get_property = gtk_scrollbox_get_property;
-  
+    
   scrollbox_param_spec = g_param_spec_boolean("enablecb",
           "Enable callback",
           "Enable or disable the callback",
@@ -476,7 +487,7 @@ gtk_scrollbox_clear (GtkScrollbox *self)
 
     while(self->labels->len > 0)
     { 
-        struct label *lbl = (struct label*) g_ptr_array_index(self->labels, 0);
+        Label *lbl = (Label *) g_ptr_array_index(self->labels, 0);
         free_label(lbl);
 
         g_ptr_array_remove_index (self->labels, 0);

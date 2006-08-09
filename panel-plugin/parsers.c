@@ -20,6 +20,7 @@
 #endif
 
 #include "parsers.h"
+#include <libxfce4panel/xfce-panel-macros.h>
 
 xml_weather *
 parse_weather (xmlNode *cur_node)
@@ -30,7 +31,7 @@ parse_weather (xmlNode *cur_node)
         return NULL;
     }
 
-    if ((ret = g_new0(xml_weather, 1)) == NULL)
+    if ((ret = panel_slice_new0 (xml_weather)) == NULL)
         return NULL;
 
     for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next)
@@ -70,7 +71,7 @@ parse_loc (xmlNode *cur_node)
 {
     xml_loc *ret;
     
-    if ((ret = g_new0(xml_loc, 1)) == NULL)
+    if ((ret = panel_slice_new0 (xml_loc)) == NULL)
         return NULL;
 
 
@@ -95,7 +96,7 @@ parse_uv (xmlNode *cur_node)
 {
     xml_uv *ret;
     
-    if ((ret = g_new0 (xml_uv, 1)) == NULL)
+    if ((ret = panel_slice_new0 (xml_uv)) == NULL)
         return NULL;
 
     for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next)
@@ -117,7 +118,7 @@ parse_bar (xmlNode *cur_node)
 {
     xml_bar *ret;
     
-    if ((ret = g_new0(xml_bar, 1)) == NULL)
+    if ((ret = panel_slice_new0 (xml_bar)) == NULL)
         return NULL;
 
     for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next)
@@ -139,7 +140,7 @@ parse_wind (xmlNode *cur_node)
 {
     xml_wind *ret;
     
-    if ((ret = g_new (xml_wind, 1)) == NULL)
+    if ((ret = panel_slice_new0 (xml_wind)) == NULL)
         return NULL;
     
     for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next)
@@ -165,7 +166,7 @@ parse_cc (xmlNode *cur_node)
 {
     xml_cc *ret;
     
-    if ((ret = g_new0(xml_cc, 1)) == NULL)
+    if ((ret = panel_slice_new0 (xml_cc)) == NULL)
         return NULL;
     
     for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next)
@@ -207,7 +208,7 @@ parse_part (xmlNode *cur_node)
 {
     xml_part *ret;
     
-    if ((ret = g_new0(xml_part, 1)) == NULL)
+    if ((ret = panel_slice_new0 (xml_part)) == NULL)
         return NULL;
     
     for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next)
@@ -238,7 +239,7 @@ parse_dayf (xmlNode *cur_node)
     xml_dayf *ret;  
     gchar *value;
 
-    if ((ret = g_new0(xml_dayf, 1)) == NULL)
+    if ((ret = panel_slice_new0 (xml_dayf)) == NULL)
         return NULL;
 
     ret->day  = (gchar *) xmlGetProp (cur_node, (const xmlChar *) "t");
@@ -282,6 +283,8 @@ xml_uv_free (xml_uv *data)
 {
     CHK_FREE (data->i);
     CHK_FREE (data->t);
+    
+    panel_slice_free (xml_uv, data);
 }
 
 static void
@@ -291,6 +294,8 @@ xml_wind_free (xml_wind *data)
     CHK_FREE (data->gust);
     CHK_FREE (data->d);
     CHK_FREE (data->t);
+    
+    panel_slice_free (xml_wind, data);
 }
 
 static void
@@ -298,6 +303,8 @@ xml_bar_free (xml_bar *data)
 {
     CHK_FREE (data->r);
     CHK_FREE (data->d);
+    
+    panel_slice_free (xml_bar, data);
 }
 
 static void
@@ -321,6 +328,8 @@ xml_cc_free (xml_cc *data)
 
     if (data->bar)
         xml_bar_free(data->bar);
+    
+    panel_slice_free (xml_cc, data);
 }
 
 static void
@@ -329,6 +338,8 @@ xml_loc_free (xml_loc *data)
     CHK_FREE (data->dnam);
     CHK_FREE (data->sunr);
     CHK_FREE (data->suns);
+    
+    panel_slice_free (xml_loc, data);
 }
 
 static void
@@ -344,6 +355,8 @@ xml_part_free (xml_part *data)
 
     if (data->wind)
         xml_wind_free(data->wind);
+    
+    panel_slice_free (xml_part, data);
 }
 
 static void
@@ -362,6 +375,8 @@ xml_dayf_free (xml_dayf *data)
 
     if (data->part[1])
         xml_part_free(data->part[1]);
+    
+    panel_slice_free (xml_dayf, data);
 }
 
 void
@@ -386,5 +401,5 @@ xml_weather_free (xml_weather *data)
 
     }
 
-	free(data);
+    panel_slice_free (xml_weather, data);
 }

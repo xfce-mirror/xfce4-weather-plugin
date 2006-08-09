@@ -163,7 +163,7 @@ create_search_dialog (GtkWindow *parent,
     GtkCellRenderer *renderer = gtk_cell_renderer_text_new();
     search_dialog *dialog;
 
-    dialog = g_new0(search_dialog, 1);
+    dialog = panel_slice_new0 (search_dialog);
 
     dialog->proxy_host = proxy_host;
     dialog->proxy_port = proxy_port;
@@ -252,4 +252,6 @@ free_search_dialog (search_dialog *dialog)
 {
     g_free(dialog->result);
     gtk_widget_destroy(dialog->dialog);
+    
+    panel_slice_free (search_dialog, dialog);
 }

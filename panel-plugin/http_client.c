@@ -31,6 +31,7 @@
 #include <glib.h>
 
 #include <libxfce4util/libxfce4util.h>
+#include <libxfce4panel/xfce-panel-macros.h>
 
 #include "http_client.h"
 
@@ -103,7 +104,7 @@ request_free (struct request_data *request)
     if (request->fd)
         close(request->fd);
 
-    g_free(request);
+    panel_slice_free (struct request_data, request);
 }
 
 static void
@@ -257,7 +258,7 @@ http_get (gchar     *url,
       CB_TYPE    callback,
       gpointer   data)
 {
-    struct request_data *request = g_new0(struct request_data, 1);
+    struct request_data *request = panel_slice_new0 (struct request_data);
 
     if (!request)
     {
@@ -303,7 +304,7 @@ http_get (gchar     *url,
         perror("http_get(): empty request buffer\n");
 #endif
         close(request->fd);
-        g_free(request);
+        panel_slice_free(struct request_data, request);
         return FALSE;
     }
 

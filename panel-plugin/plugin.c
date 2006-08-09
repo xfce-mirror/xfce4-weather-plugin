@@ -571,8 +571,11 @@ xfceweather_dialog_response (GtkWidget          *dlg,
     xfceweather_data *data = (xfceweather_data *) dialog->wd;
     
     apply_options (dialog);
-        
+    
     gtk_widget_destroy (dlg);
+    gtk_list_store_clear (dialog->mdl_xmloption);
+    panel_slice_free (xfceweather_dialog, dialog);
+    
     xfce_panel_plugin_unblock_menu (data->plugin);
     xfceweather_write_config (data->plugin, data);
 }
@@ -617,7 +620,7 @@ static xfceweather_data *
 xfceweather_create_control (XfcePanelPlugin *plugin)
 {
 
-    xfceweather_data *data = g_new0 (xfceweather_data, 1);
+    xfceweather_data *data = panel_slice_new0 (xfceweather_data);
     GtkWidget    *vbox, *refresh;
     datas         lbl;
     GdkPixbuf    *icon = NULL;
@@ -710,7 +713,7 @@ xfceweather_free (XfcePanelPlugin  *plugin,
     /* Free Array */
     g_array_free (data->labels, TRUE);
 
-    g_free (data);
+    panel_slice_free (xfceweather_data, data);
 }
 
 static gboolean

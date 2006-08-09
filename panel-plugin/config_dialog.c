@@ -261,7 +261,7 @@ create_config_dialog (xfceweather_data *data,
     GtkTreeViewColumn *column;
     GtkCellRenderer *renderer; 
     
-    dialog = g_new0(xfceweather_dialog, 1);
+    dialog = panel_slice_new0 (xfceweather_dialog);
  
     dialog->wd = (xfceweather_data *)data;
     dialog->dialog = gtk_widget_get_toplevel (vbox);

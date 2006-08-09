@@ -15,13 +15,9 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
  
- #include <glib.h>
+#include <glib.h>
 #include <gmodule.h>
 #include <gtk/gtk.h>
-
-
-
-
 
 #ifndef SEARCH_DIALOG_H
 #define SEARCH_DIALOG_H
