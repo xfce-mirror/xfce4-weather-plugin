@@ -28,6 +28,7 @@ xfce4_weather_plugin_CFLAGS =					\
 	-DTHEMESDIR=\"$(datadir)/xfce4/weather/icons\" 		\
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"			\
 	@LIBXFCE4PANEL_CFLAGS@					\
+	@LIBXFCEGUI4_CFLAGS@					\
         @LIBXFCE4UTIL_CFLAGS@                                   \
         @GTK_CFLAGS@                                            \
 	@LIBXML_CFLAGS@
@@ -35,6 +36,7 @@ xfce4_weather_plugin_CFLAGS =					\
 xfce4_weather_plugin_LDFLAGS =					\
         @LIBXFCE4PANEL_LIBS@					\
         @LIBXFCE4UTIL_LIBS@                                     \
+	@LIBXFCEGUI4_LIBS@					\
         @GTK_LIBS@                                              \
 	@LIBXML_LIBS@
 	
