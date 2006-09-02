@@ -1,109 +1,116 @@
+2006-09-02 21:42 nick
+
+	* Remove executables
+	* Update ChangeLog
+
 2006-08-08 23:14 nick
-  * Fix some memory leaks
-    * Clear dialog data and free the liststore
-    * Finalize scrollbox widget
-  * Use panel_slice_new0 and panel_slice_free
+
+	* Fix some memory leaks
+	* Clear dialog data and free the liststore
+	* Finalize scrollbox widget
+	* Use panel_slice_new0 and panel_slice_free
 
 2006-08-08 01:30 nick
-  * Changed version: 0.5.90.2
-  * Released 0.5.90.2
+
+	* Changed version: 0.5.90.2
+	* Released 0.5.90.2
 
 2006-07-14 10:00 nick
 
-  * Fixed problems with --as-needed
-  * Some small mem leaks
-  * Added LINGUAS support for translators
-  * Raised version to 0.6.0, because i think it's ready for 4.4
-  * You need libxfcegui4 from svn (or b2)
-  * Added debug code
-  * Some cleanups
+	* Fixed problems with --as-needed
+	* Some small mem leaks
+	* Added LINGUAS support for translators
+	* Raised version to 0.6.0, because i think it's ready for 4.4
+	* You need libxfcegui4 from svn (or b2)
+	* Added debug code
+	* Some cleanups
 
 2006-06-11 20:17 nick
 
-  * Reorder the includes a bit
-  * Changed titled dialog
-  * Added icon for the panel add items dialog
+	* Reorder the includes a bit
+	* Changed titled dialog
+	* Added icon for the panel add items dialog
 
 2006-05-27 18:44 daichi
 
-  * *.po: Updated.
-  * *.gmo: Removed.
+	* *.po: Updated.
+	* *.gmo: Removed.
 
 2006-05-22 21:13 nick
 
-  * Make array const
-  * Added G_{BEGIN,END}_DECLS
-  * Improve Layout
-  * Use guint where possible
+	* Make array const
+	* Added G_{BEGIN,END}_DECLS
+	* Improve Layout
+	* Use guint where possible
 
 2006-05-19 14:42 nick
 
-  * A lot if changed in the code to reduce exec. size
-  * Fix build
-  * Added new xfce dialog (if available)
+	* A lot if changed in the code to reduce exec. size
+	* Fix build
+	* Added new xfce dialog (if available)
 
 2006-05-18 23:44 nick
 
-  * Add refresh button to right click menu for the n00bs
-  * Cleanup code layout
-  * Free some extra pixbufs
-  * Replaced (most) of the debug messages
-  * Remove the build and intltool files, they don't belong
-    in a repo IMHO
+	* Add refresh button to right click menu for the n00bs
+	* Cleanup code layout
+	* Free some extra pixbufs
+	* Replaced (most) of the debug messages
+	* Remove the build and intltool files, they don't belong
+	  in a repo IMHO
 
 2006-05-18 00:10 nick
 
-  * Fix build errors
-  * Free a pixbuf with g_object_unref, not with g_free
-  * Typo in metric/imperial save
+	* Fix build errors
+	* Free a pixbuf with g_object_unref, not with g_free
+	* Typo in metric/imperial save
 
 2006-05-04 00:37 benny
 
-  * Apply patch from Oliver Lehmann to fix GCC 2.95 compilation.
-  Bug #1759
+	* Apply patch from Oliver Lehmann to fix GCC 2.95 compilation.
+	  Bug #1759
 
 2006-04-25 22:52 bountykiller
 
-  * update with version from Jasper - now compatible with Xfce-4.4
+	* update with version from Jasper - now compatible with Xfce-4.4
 
 2003-07-11 15:56 huysmans      
        
-  * panel-plugin/sample.c: Hmm, chinese translation updates that      
-  didn't get picked up by my previous commit. Should have been in      
-  rc1, sorry.      
+	* panel-plugin/sample.c: Hmm, chinese translation updates that      
+	  didn't get picked up by my previous commit. Should have been in      
+	  rc1, sorry.      
        
 2003-07-11 09:33 huysmans      
        
-  * ChangeLog: Update ChangeLog's for release      
+	* ChangeLog: Update ChangeLog's for release      
        
 2003-07-10 11:56 huysmans      
        
-  * ChangeLog: Update ChangeLog's for release      
+	* ChangeLog: Update ChangeLog's for release      
        
 2003-07-06 22:14 huysmans      
        
-  * ChangeLog: Update ChangeLogs      
+	* ChangeLog: Update ChangeLogs      
        
 2003-07-06 15:35 xfce      
        
-  * Makefile.in, aclocal.m4, config.h.in, configure, ltconfig,      
-  ltmain.sh, panel-plugin/Makefile.in: libtool update      
+	* Makefile.in, aclocal.m4, config.h.in, configure, ltconfig,      
+	  ltmain.sh, panel-plugin/Makefile.in: libtool update      
        
 2003-07-02 12:18 bmeurer      
        
-  * AUTHORS, COPYING, INSTALL, autogen.sh, config.guess, config.sub,      
-  ltconfig, ltcf-c.sh, ltmain.sh, Makefile.in, aclocal.m4, compile,      
-  config.h.in, depcomp, install-sh, missing, mkinstalldirs,      
-  Makefile.am, README, configure, configure.ac, m4/debug.m4,      
-  m4/depends.m4, m4/i18n.m4, panel-plugin/Makefile.am,      
-  panel-plugin/Makefile.in, panel-plugin/sample.c: Initial import of      
-  the sample panel plugin.      
+	* AUTHORS, COPYING, INSTALL, autogen.sh, config.guess, config.sub,      
+	  ltconfig, ltcf-c.sh, ltmain.sh, Makefile.in, aclocal.m4, compile,      
+	  config.h.in, depcomp, install-sh, missing, mkinstalldirs,      
+	  Makefile.am, README, configure, configure.ac, m4/debug.m4,      
+	  m4/depends.m4, m4/i18n.m4, panel-plugin/Makefile.am,      
+	  panel-plugin/Makefile.in, panel-plugin/sample.c: Initial import of      
+	  the sample panel plugin.      
        
 2003-07-02 12:18 bmeurer      
        
-  * AUTHORS, COPYING, INSTALL, autogen.sh, config.guess, config.sub,      
-  ltconfig, ltcf-c.sh, ltmain.sh, Makefile.in, aclocal.m4, compile,      
-  config.h.in, depcomp, install-sh, missing, mkinstalldirs,      
-  Makefile.am, README, configure, configure.ac, m4/debug.m4,      
-  m4/depends.m4, m4/i18n.m4, panel-plugin/Makefile.am,      
-  panel-plugin/Makefile.in, panel-plugin/sample.c: Initial revision
+	* AUTHORS, COPYING, INSTALL, autogen.sh, config.guess, config.sub,      
+	  ltconfig, ltcf-c.sh, ltmain.sh, Makefile.in, aclocal.m4, compile,      
+	  config.h.in, depcomp, install-sh, missing, mkinstalldirs,      
+	  Makefile.am, README, configure, configure.ac, m4/debug.m4,      
+	  m4/depends.m4, m4/i18n.m4, panel-plugin/Makefile.am,      
+	  panel-plugin/Makefile.in, panel-plugin/sample.c: Initial revision
