@@ -1,6 +1,6 @@
-/* vim: set expandtab ts=8 sw=4: */
-
-/*  This program is free software; you can redistribute it and/or modify
+/*  $Id$
+ *
+ *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
@@ -33,22 +33,22 @@ get_icon (const gchar *number,
     GdkPixbuf *image = NULL;
     gchar     *filename;
     gint       width, height;
-    
+
     gtk_icon_size_lookup (size, &width, &height);
-    
+
     filename = g_strdup_printf ("%s%s%s%s%s.png",
             THEMESDIR, G_DIR_SEPARATOR_S,
             DEFAULT_W_THEME, G_DIR_SEPARATOR_S,
             number);
-    
+
     image = gdk_pixbuf_new_from_file_at_scale (filename,
 	    width, height,
             TRUE, NULL);
-    
+
     g_free (filename);
 
     if (!image)
         g_warning ("Weather Plugin: No image found");
-    
+
     return image;
 }

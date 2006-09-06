@@ -1,6 +1,6 @@
-/* vim: set expandtab ts=8 sw=4: */
-
-/*  This program is free software; you can redistribute it and/or modify
+/*  $Id$
+ *
+ *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
@@ -35,10 +35,10 @@
 
 #include "http_client.h"
 
-struct request_data 
+struct request_data
 {
     int    fd;
-    
+
     FILE      *save_fp;
     gchar     *save_filename;
     gchar    **save_buffer;
@@ -65,19 +65,19 @@ http_connect (gchar *hostname,
     struct sockaddr_in dest_host;
     struct hostent *host_address;
     gint fd;
-           
+
     if ((host_address = gethostbyname(hostname)) == NULL)
         return -1;
 
     if ((fd = socket(AF_INET, SOCK_STREAM, IPPROTO_TCP)) == -1)
         return -1;
-       
+
     dest_host.sin_family = AF_INET;
     dest_host.sin_port = htons(port);
     dest_host.sin_addr = *((struct in_addr *)host_address->h_addr);
     memset(&(dest_host.sin_zero), '\0', 8);
     fcntl(fd, F_SETFL, O_NONBLOCK);
-    
+
     if ((connect(fd, (struct sockaddr *)&dest_host, sizeof(struct sockaddr)) == -1)
             && errno != EINPROGRESS)
     {
@@ -86,9 +86,9 @@ http_connect (gchar *hostname,
     }
     else
         return fd;
-    
+
 }
-       
+
 static void
 request_free (struct request_data *request)
 {
@@ -114,12 +114,12 @@ request_save (struct request_data *request,
     DBG ("Request Save");
 
     if (request->save_filename)
-        if (!request->save_fp && 
+        if (!request->save_fp &&
                 (request->save_fp = fopen(request->save_filename, "w"))
                 == NULL)
             return;
         else
-            fwrite(buffer, sizeof(char), strlen(buffer), 
+            fwrite(buffer, sizeof(char), strlen(buffer),
                     request->save_fp);
     else
     {
@@ -133,8 +133,8 @@ request_save (struct request_data *request,
         else
             *request->save_buffer = g_strdup(buffer);
     }
-}               
-        
+}
+
 static gboolean
 keep_sending (gpointer data)
 {
@@ -146,16 +146,16 @@ keep_sending (gpointer data)
         DBG ("keep_sending(): empty request data");
         return FALSE;
     }
-    
-    if ((n = send(request->fd, request->request_buffer + request->offset, 
-                    request->size - request->offset, 
+
+    if ((n = send(request->fd, request->request_buffer + request->offset,
+                    request->size - request->offset,
                     0)) != -1)
     {
         request->offset += n;
 
         DBG ("now at offset: %d", request->offset);
         DBG ("now at byte: %d", n);
-        
+
         if (request->offset == request->size)
         {
             DBG ("keep_sending(): ok data sent");
@@ -167,16 +167,16 @@ keep_sending (gpointer data)
     {
 #if DEBUG
         perror("keep_sending()");
-#endif          
-	
+#endif
+
 	DBG ("file desc: %d", request->fd);
-	
+
         request_free(request);
         return FALSE;
     }
 
     return TRUE;
-} 
+}
 
 static gboolean
 keep_receiving (gpointer data)
@@ -186,26 +186,26 @@ keep_receiving (gpointer data)
     gint n;
     gchar *p;
     gchar *str = NULL;
-    
+
     if (!request)
     {
         DBG ("keep_receiving(): empty request data ");
         return FALSE;
     }
 
-    if ((n = recv(request->fd, recvbuffer, sizeof(recvbuffer) - 
+    if ((n = recv(request->fd, recvbuffer, sizeof(recvbuffer) -
                     sizeof(char), 0)) > 0)
     {
         recvbuffer[n] = '\0';
 
         DBG ("keep_receiving(): bytes recv: %d", n);
-        
+
         if (!request->has_header)
         {
             if (request->last_chars != '\0')
-                str = g_strconcat(request->last_chars, 
+                str = g_strconcat(request->last_chars,
                         recvbuffer, NULL);
-            
+
             if ((p = strstr(str, "\r\n\r\n")))
             {
                 request_save(request, p + 4);
@@ -215,8 +215,8 @@ keep_receiving (gpointer data)
             else
             {
                 DBG ("keep_receiving(): no header yet\n\n%s\n..\n",
-                        recvbuffer);      
-                memcpy(request->last_chars, recvbuffer + (n - 4), 
+                        recvbuffer);
+                memcpy(request->last_chars, recvbuffer + (n - 4),
                         sizeof(char) * 3);
             }
 
@@ -245,14 +245,14 @@ keep_receiving (gpointer data)
 
     return TRUE;
 }
-                
-                
+
+
 
 static gboolean
 http_get (gchar     *url,
       gchar     *hostname,
       gboolean   savefile,
-      gchar    **fname_buff, 
+      gchar    **fname_buff,
       gchar     *proxy_host,
       gint       proxy_port,
       CB_TYPE    callback,
@@ -267,7 +267,7 @@ http_get (gchar     *url,
 #endif
         return FALSE;
     }
-    
+
     request->has_header = FALSE;
     request->cb_function = callback;
     request->cb_data = data;
@@ -289,7 +289,7 @@ http_get (gchar     *url,
         request_free(request);
         return FALSE;
     }
-    
+
     if (proxy_host)
         request->request_buffer = g_strdup_printf(
                 "GET http://%s%s HTTP/1.0\r\n\r\n",
@@ -316,36 +316,36 @@ http_get (gchar     *url,
         request->save_buffer = fname_buff;
 
     DBG ("http_get(): adding idle function");
-    
+
     (void)g_idle_add ((GSourceFunc)keep_sending, (gpointer)request);
 
     DBG ("http_get(): request added");
 
     return TRUE;
-}    
+}
 
 gboolean
 http_get_file (gchar   *url,
                gchar   *hostname,
-               gchar   *filename, 
+               gchar   *filename,
                gchar   *proxy_host,
                gint     proxy_port,
                CB_TYPE  callback,
                gpointer data)
 {
-    return http_get (url, hostname, TRUE, &filename, proxy_host, proxy_port, 
+    return http_get (url, hostname, TRUE, &filename, proxy_host, proxy_port,
             callback, data);
 }
 
 gboolean
 http_get_buffer (gchar    *url,
                  gchar    *hostname,
-                 gchar    *proxy_host, 
+                 gchar    *proxy_host,
                  gint      proxy_port,
                  gchar   **buffer,
                  CB_TYPE   callback,
                  gpointer  data)
-{  
-    return http_get (url, hostname, FALSE, buffer, proxy_host, proxy_port, 
+{
+    return http_get (url, hostname, FALSE, buffer, proxy_host, proxy_port,
             callback, data);
 }

@@ -1,6 +1,6 @@
-/* vim: set expandtab ts=8 sw=4: */
-
-/*  This program is free software; you can redistribute it and/or modify
+/*  $Id$
+ *
+ *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
@@ -54,7 +54,7 @@ parse_weather (xmlNode *cur_node)
                 {
                     if (i >= XML_WEATHER_DAYF_N)
                         break;
-                
+
                     ret->dayf[i] = parse_dayf(child_node);
 
                     i++;
@@ -70,7 +70,7 @@ xml_loc *
 parse_loc (xmlNode *cur_node)
 {
     xml_loc *ret;
-    
+
     if ((ret = panel_slice_new0 (xml_loc)) == NULL)
         return NULL;
 
@@ -95,7 +95,7 @@ static xml_uv *
 parse_uv (xmlNode *cur_node)
 {
     xml_uv *ret;
-    
+
     if ((ret = panel_slice_new0 (xml_uv)) == NULL)
         return NULL;
 
@@ -117,7 +117,7 @@ static xml_bar *
 parse_bar (xmlNode *cur_node)
 {
     xml_bar *ret;
-    
+
     if ((ret = panel_slice_new0 (xml_bar)) == NULL)
         return NULL;
 
@@ -125,7 +125,7 @@ parse_bar (xmlNode *cur_node)
     {
         if (cur_node->type != XML_ELEMENT_NODE)
             continue;
-        
+
         if (NODE_IS_TYPE (cur_node, "r"))
             ret->r = DATA(cur_node);
         else if (NODE_IS_TYPE (cur_node, "d"))
@@ -139,10 +139,10 @@ static xml_wind *
 parse_wind (xmlNode *cur_node)
 {
     xml_wind *ret;
-    
+
     if ((ret = panel_slice_new0 (xml_wind)) == NULL)
         return NULL;
-    
+
     for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next)
     {
         if (cur_node->type != XML_ELEMENT_NODE)
@@ -165,10 +165,10 @@ xml_cc *
 parse_cc (xmlNode *cur_node)
 {
     xml_cc *ret;
-    
+
     if ((ret = panel_slice_new0 (xml_cc)) == NULL)
         return NULL;
-    
+
     for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next)
     {
         if (cur_node->type != XML_ELEMENT_NODE)
@@ -207,10 +207,10 @@ static xml_part *
 parse_part (xmlNode *cur_node)
 {
     xml_part *ret;
-    
+
     if ((ret = panel_slice_new0 (xml_part)) == NULL)
         return NULL;
-    
+
     for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next)
     {
         if (cur_node->type != XML_ELEMENT_NODE)
@@ -236,7 +236,7 @@ parse_part (xmlNode *cur_node)
 xml_dayf *
 parse_dayf (xmlNode *cur_node)
 {
-    xml_dayf *ret;  
+    xml_dayf *ret;
     gchar *value;
 
     if ((ret = panel_slice_new0 (xml_dayf)) == NULL)
@@ -252,7 +252,7 @@ parse_dayf (xmlNode *cur_node)
 
         if (NODE_IS_TYPE (cur_node, "hi"))
         {
-            ret->hi = DATA(cur_node); 
+            ret->hi = DATA(cur_node);
             g_assert(ret->hi != NULL);
         }
         else if (NODE_IS_TYPE (cur_node, "low"))
@@ -262,12 +262,12 @@ parse_dayf (xmlNode *cur_node)
         else if (NODE_IS_TYPE (cur_node, "part"))
         {
             value = (gchar *)  xmlGetProp (cur_node, (const xmlChar *) "p");
-            
+
             if (xmlStrEqual ((const xmlChar *)value, (const xmlChar *)"d"))
                 ret->part[0] = parse_part(cur_node);
             else if (xmlStrEqual ((const xmlChar *)value, (const xmlChar *)"n"))
                 ret->part[1] = parse_part(cur_node);
-            
+
             g_free(value);
         }
     }
@@ -283,7 +283,7 @@ xml_uv_free (xml_uv *data)
 {
     CHK_FREE (data->i);
     CHK_FREE (data->t);
-    
+
     panel_slice_free (xml_uv, data);
 }
 
@@ -294,7 +294,7 @@ xml_wind_free (xml_wind *data)
     CHK_FREE (data->gust);
     CHK_FREE (data->d);
     CHK_FREE (data->t);
-    
+
     panel_slice_free (xml_wind, data);
 }
 
@@ -303,7 +303,7 @@ xml_bar_free (xml_bar *data)
 {
     CHK_FREE (data->r);
     CHK_FREE (data->d);
-    
+
     panel_slice_free (xml_bar, data);
 }
 
@@ -328,7 +328,7 @@ xml_cc_free (xml_cc *data)
 
     if (data->bar)
         xml_bar_free(data->bar);
-    
+
     panel_slice_free (xml_cc, data);
 }
 
@@ -338,7 +338,7 @@ xml_loc_free (xml_loc *data)
     CHK_FREE (data->dnam);
     CHK_FREE (data->sunr);
     CHK_FREE (data->suns);
-    
+
     panel_slice_free (xml_loc, data);
 }
 
@@ -355,7 +355,7 @@ xml_part_free (xml_part *data)
 
     if (data->wind)
         xml_wind_free(data->wind);
-    
+
     panel_slice_free (xml_part, data);
 }
 
@@ -375,7 +375,7 @@ xml_dayf_free (xml_dayf *data)
 
     if (data->part[1])
         xml_part_free(data->part[1]);
-    
+
     panel_slice_free (xml_dayf, data);
 }
 

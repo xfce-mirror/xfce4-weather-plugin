@@ -1,6 +1,6 @@
-/* vim: set expandtab ts=8 sw=4: */
-
-/*  This program is free software; you can redistribute it and/or modify
+/*  $Id$
+ *
+ *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
@@ -48,7 +48,7 @@ sanitize_str (const gchar *str)
     gchar *realstr, c = '\0';
 
     while((c = *str++))
-    {        
+    {
         if (g_ascii_isspace(c))
             g_string_append(retstr, "%20");
         else if (g_ascii_isalnum(c) == FALSE)
@@ -64,7 +64,7 @@ sanitize_str (const gchar *str)
 
     g_string_free(retstr, FALSE);
 
-       
+
 
     return realstr;
 }
@@ -76,23 +76,23 @@ cb_searchdone (gboolean result,
     search_dialog *dialog = (search_dialog *) user_data;
     xmlDoc *doc;
     xmlNode *cur_node;
-    
+
     if (!result || dialog->recv_buffer == NULL)
-        return;       
+        return;
 
     doc = xmlParseMemory(dialog->recv_buffer, strlen(dialog->recv_buffer));
     g_free(dialog->recv_buffer);
     dialog->recv_buffer = NULL;
 
-    if (!doc)           
+    if (!doc)
         return;
 
     cur_node = xmlDocGetRootElement(doc);
 
     if (cur_node)
     {
-        for (cur_node = cur_node->children; 
-                cur_node; 
+        for (cur_node = cur_node->children;
+                cur_node;
                 cur_node = cur_node->next)
         {
             if (NODE_IS_TYPE(cur_node, "loc"))
@@ -106,7 +106,7 @@ cb_searchdone (gboolean result,
                 city = DATA(cur_node);
 
                 if (!city)
-                { 
+                {
                     g_free(id);
                     continue;
                 }
@@ -144,9 +144,9 @@ search_cb (GtkButton *button,
 
     url = g_strdup_printf("/search/search?where=%s", sane_str);
     g_free(sane_str);
-    
+
     result = http_get_buffer(url, "xoap.weather.com", dialog->proxy_host, dialog->proxy_port,
-            &dialog->recv_buffer, cb_searchdone, (gpointer)dialog);    
+            &dialog->recv_buffer, cb_searchdone, (gpointer)dialog);
     g_free(url);
 
     return result;
@@ -167,7 +167,7 @@ create_search_dialog (GtkWindow *parent,
 
     dialog->proxy_host = proxy_host;
     dialog->proxy_port = proxy_port;
-       
+
     if (!dialog)
         return NULL;
 
@@ -177,38 +177,38 @@ create_search_dialog (GtkWindow *parent,
             GTK_STOCK_OK, GTK_RESPONSE_ACCEPT,
             GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT,
             NULL);
-    
+
     vbox = gtk_vbox_new(FALSE, BORDER);
     gtk_window_set_icon_name  (GTK_WINDOW (dialog->dialog), GTK_STOCK_FIND);
 
     label = gtk_label_new(_("Enter a city name or zip code:"));
     gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
     gtk_box_pack_start(GTK_BOX(vbox), label, FALSE, FALSE, 0);
-    
+
     dialog->search_entry = gtk_entry_new();
     button = gtk_button_new_from_stock(GTK_STOCK_FIND);
     hbox = gtk_hbox_new(FALSE, BORDER);
     gtk_box_pack_start(GTK_BOX(hbox), dialog->search_entry, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(hbox), button, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
-    
+
     /* list */
     dialog->result_mdl = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_STRING);
     dialog->result_list = gtk_tree_view_new_with_model(GTK_TREE_MODEL(dialog->result_mdl));
 
-    column = gtk_tree_view_column_new_with_attributes(_("Results"), renderer, 
+    column = gtk_tree_view_column_new_with_attributes(_("Results"), renderer,
             "text", 0, NULL);
     gtk_tree_view_append_column(GTK_TREE_VIEW(dialog->result_list), column);
 
     scroll = gtk_scrolled_window_new(NULL, NULL);
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll), 
+    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
             GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
     gtk_container_add(GTK_CONTAINER(scroll), dialog->result_list);
 
     frame = gtk_frame_new(NULL);
     gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_IN);
     gtk_container_add(GTK_CONTAINER(frame), scroll);
-    
+
     gtk_box_pack_start(GTK_BOX(vbox), frame, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dialog->dialog)->vbox), vbox, TRUE, TRUE, 0);
 
@@ -220,7 +220,7 @@ create_search_dialog (GtkWindow *parent,
 
     return dialog;
 }
-       
+
 gboolean
 run_search_dialog (search_dialog *dialog)
 {
@@ -228,13 +228,13 @@ run_search_dialog (search_dialog *dialog)
     if (gtk_dialog_run(GTK_DIALOG(dialog->dialog)) == GTK_RESPONSE_ACCEPT)
     {
         GtkTreeIter iter;
-        GtkTreeSelection *selection = 
+        GtkTreeSelection *selection =
             gtk_tree_view_get_selection(GTK_TREE_VIEW(dialog->result_list));
-    
+
         if (gtk_tree_selection_get_selected(selection, NULL, &iter))
         {
             GValue value = {0, };
-            
+
             gtk_tree_model_get_value(GTK_TREE_MODEL(dialog->result_mdl),
                     &iter, 1, &value);
             dialog->result = g_strdup(g_value_get_string(&value));
@@ -252,6 +252,6 @@ free_search_dialog (search_dialog *dialog)
 {
     g_free(dialog->result);
     gtk_widget_destroy(dialog->dialog);
-    
+
     panel_slice_free (search_dialog, dialog);
 }

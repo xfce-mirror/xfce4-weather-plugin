@@ -1,6 +1,6 @@
-/* vim: set expandtab ts=8 sw=4: */
-
-/*  This program is free software; you can redistribute it and/or modify
+/*  $Id$
+ *
+ *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
@@ -37,7 +37,7 @@ typedef struct
 }
 xml_loc;
 
-typedef struct 
+typedef struct
 {
         gchar *i;
         gchar *t;
@@ -68,10 +68,10 @@ typedef struct
         gchar    *t;
         gchar    *icon;
         gchar    *tmp;
-        
+
         gchar    *hmid;
         gchar    *vis;
-        
+
         xml_uv   *uv;
         xml_wind *wind;
         xml_bar  *bar;
@@ -91,7 +91,7 @@ typedef struct
 }
 xml_part;
 
-typedef struct 
+typedef struct
 {
         gchar    *day;
         gchar    *date;

@@ -1,6 +1,6 @@
-/* vim: set expandtab ts=8 sw=4: */
-
-/*  This program is free software; you can redistribute it and/or modify
+/*  $Id$
+ *
+ *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
@@ -32,7 +32,7 @@
 #define OPTIONS_N 11
 #define BORDER    8
 
-const static labeloption labeloptions[OPTIONS_N] = { 
+const static labeloption labeloptions[OPTIONS_N] = {
         {N_("Windchill (F)"), FLIK},
         {N_("Temperature (T)"), TEMP},
         {N_("Atmosphere pressure (P)"), BAR_R},
@@ -54,7 +54,7 @@ add_mdl_option (GtkListStore *mdl,
                 int           opt)
 {
     GtkTreeIter iter;
-    
+
     gtk_list_store_append (mdl, &iter);
     gtk_list_store_set (mdl, &iter,
             0, _(labeloptions[opt].name),
@@ -67,7 +67,7 @@ cb_addoption (GtkWidget *widget,
               gpointer   data)
 {
     xfceweather_dialog *dialog  = (xfceweather_dialog *) data;
-    gint                history = gtk_option_menu_get_history (GTK_OPTION_MENU (dialog->opt_xmloption)); 
+    gint                history = gtk_option_menu_get_history (GTK_OPTION_MENU (dialog->opt_xmloption));
 
     add_mdl_option (dialog->mdl_xmloption, history);
 
@@ -81,7 +81,7 @@ cb_deloption (GtkWidget *widget,
     xfceweather_dialog *dialog    = (xfceweather_dialog *)data;
     GtkTreeIter         iter;
     GtkTreeSelection   *selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->lst_xmloption));
-    
+
     if (gtk_tree_selection_get_selected (selection, NULL, &iter))
         gtk_list_store_remove (GTK_LIST_STORE (dialog->mdl_xmloption), &iter);
 
@@ -110,14 +110,14 @@ cb_not_toggle (GtkWidget *widget,
             !gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (widget)));
 
     return FALSE;
-}               
+}
 
 static
 GtkWidget *make_label (void)
 {
     guint      i;
     GtkWidget *widget, *menu;
-    
+
     menu = gtk_menu_new ();
     widget = gtk_option_menu_new ();
 
@@ -128,7 +128,7 @@ GtkWidget *make_label (void)
         gtk_menu_shell_append (GTK_MENU_SHELL (menu),
                 gtk_menu_item_new_with_label (_(opt.name)));
     }
-    
+
     gtk_option_menu_set_menu (GTK_OPTION_MENU (widget), menu);
 
     return widget;
@@ -143,18 +143,18 @@ apply_options (xfceweather_dialog *dialog)
     gchar       *text;
 
     xfceweather_data *data = (xfceweather_data *) dialog->wd;
-    
+
     history = gtk_option_menu_get_history (GTK_OPTION_MENU (dialog->opt_unit));
 
     if (history == 0)
         data->unit = IMPERIAL;
-    else 
+    else
         data->unit = METRIC;
 
     if (data->location_code)
         g_free (data->location_code);
 
-    data->location_code = g_strdup (gtk_entry_get_text (GTK_ENTRY (dialog->txt_loc_code))); 
+    data->location_code = g_strdup (gtk_entry_get_text (GTK_ENTRY (dialog->txt_loc_code)));
 
     /* call labels_clear() here */
     if (data->labels && data->labels->len > 0)
@@ -174,13 +174,13 @@ apply_options (xfceweather_dialog *dialog)
         g_array_append_val (data->labels, option);
         g_value_unset (&value);
     }
-    
+
     if (data->proxy_host)
     {
         g_free (data->proxy_host);
-        data->proxy_host = NULL; 
+        data->proxy_host = NULL;
     }
-    
+
     if (!gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->chk_proxy_use)))
         data->proxy_fromenv = FALSE;
     else if (gtk_toggle_button_get_active (GTK_TOGGLE_BUTTON (dialog->chk_proxy_fromenv)))
@@ -206,12 +206,12 @@ apply_options (xfceweather_dialog *dialog)
 
         if (data->saved_proxy_host)
             g_free (data->saved_proxy_host);
-        
+
         data->saved_proxy_host = g_strdup(text);
         data->saved_proxy_port = data->proxy_port;
-	
+
 	g_free (text);
-    }       
+    }
 
     if (cb)
         cb(data);
@@ -236,7 +236,7 @@ cb_findlocation (GtkButton *button,
                  gpointer   user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    search_dialog *sdialog     = create_search_dialog(NULL, 
+    search_dialog *sdialog     = create_search_dialog(NULL,
             dialog->wd->proxy_host, dialog->wd->proxy_port);
 
     if (run_search_dialog(sdialog))
@@ -246,23 +246,23 @@ cb_findlocation (GtkButton *button,
 
     return FALSE;
 }
-    
+
 
 xfceweather_dialog *
 create_config_dialog (xfceweather_data *data,
                       GtkWidget        *vbox)
 {
     xfceweather_dialog *dialog;
-    GtkWidget *vbox2, *vbox3, *hbox, *hbox2, *label, 
-          *menu, *button_add, 
+    GtkWidget *vbox2, *vbox3, *hbox, *hbox2, *label,
+          *menu, *button_add,
           *button_del, *image, *button, *scroll;
     GtkSizeGroup *sg = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
     GtkSizeGroup *sg_buttons = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
     GtkTreeViewColumn *column;
-    GtkCellRenderer *renderer; 
-    
+    GtkCellRenderer *renderer;
+
     dialog = panel_slice_new0 (xfceweather_dialog);
- 
+
     dialog->wd = (xfceweather_data *)data;
     dialog->dialog = gtk_widget_get_toplevel (vbox);
 
@@ -270,7 +270,7 @@ create_config_dialog (xfceweather_data *data,
     gtk_misc_set_alignment (GTK_MISC(label), 0, 0.5);
     menu = gtk_menu_new ();
     dialog->opt_unit = gtk_option_menu_new ();
-       
+
     gtk_menu_shell_append  ((GtkMenuShell *)(GTK_MENU(menu)),
                 (gtk_menu_item_new_with_label (_("Imperial"))));
     gtk_menu_shell_append  ((GtkMenuShell *)(GTK_MENU(menu)),
@@ -295,7 +295,7 @@ create_config_dialog (xfceweather_data *data,
     gtk_misc_set_alignment (GTK_MISC(label), 0, 0.5);
 
     if (dialog->wd->location_code != NULL)
-        gtk_entry_set_text (GTK_ENTRY(dialog->txt_loc_code), 
+        gtk_entry_set_text (GTK_ENTRY(dialog->txt_loc_code),
                 dialog->wd->location_code);
     gtk_size_group_add_widget (sg, label);
 
@@ -314,7 +314,7 @@ create_config_dialog (xfceweather_data *data,
     label = gtk_label_new (_("Proxy server:"));
     dialog->txt_proxy_host = gtk_entry_new ();
     dialog->chk_proxy_use = gtk_check_button_new_with_label (_("Use proxy server"));
-    dialog->chk_proxy_fromenv = 
+    dialog->chk_proxy_fromenv =
         gtk_check_button_new_with_label (_("Auto-detect from environment"));
     dialog->txt_proxy_port = gtk_spin_button_new_with_range (0, 65536, 1);
 
@@ -330,7 +330,7 @@ create_config_dialog (xfceweather_data *data,
     gtk_box_pack_start (GTK_BOX (hbox), dialog->txt_proxy_host, TRUE, TRUE, 0);
     gtk_box_pack_start (GTK_BOX (hbox), dialog->txt_proxy_port, FALSE, FALSE, 0);
     gtk_box_pack_start (GTK_BOX (vbox3), hbox, FALSE, FALSE, 0);
-    
+
 
     hbox2 = gtk_hbox_new (FALSE, BORDER);
     gtk_box_pack_start (GTK_BOX (hbox2), label, FALSE, FALSE, 0);
@@ -352,24 +352,24 @@ create_config_dialog (xfceweather_data *data,
 
     if (dialog->wd->saved_proxy_host != NULL)
     {
-        gtk_entry_set_text (GTK_ENTRY (dialog->txt_proxy_host), 
-                dialog->wd->saved_proxy_host); 
+        gtk_entry_set_text (GTK_ENTRY (dialog->txt_proxy_host),
+                dialog->wd->saved_proxy_host);
 
-        gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->txt_proxy_port), 
+        gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->txt_proxy_port),
                 dialog->wd->saved_proxy_port);
     }
 
     if (dialog->wd->proxy_host || dialog->wd->proxy_fromenv)
-    { 
+    {
         gtk_toggle_button_set_active (
                 GTK_TOGGLE_BUTTON (dialog->chk_proxy_use), TRUE);
-        
+
         if (dialog->wd->proxy_fromenv)
             gtk_toggle_button_set_active (
                     GTK_TOGGLE_BUTTON (dialog->chk_proxy_fromenv), TRUE);
     }
     else
-    { 
+    {
         gtk_toggle_button_set_active (
                 GTK_TOGGLE_BUTTON (dialog->chk_proxy_use), TRUE);
         gtk_toggle_button_set_active (
@@ -378,8 +378,8 @@ create_config_dialog (xfceweather_data *data,
 
 
     /* labels */
-     
-    dialog->opt_xmloption = make_label (); 
+
+    dialog->opt_xmloption = make_label ();
     dialog->mdl_xmloption = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
     dialog->lst_xmloption = gtk_tree_view_new_with_model (GTK_TREE_MODEL(dialog->mdl_xmloption));
 
@@ -403,7 +403,7 @@ create_config_dialog (xfceweather_data *data,
             GTK_POLICY_AUTOMATIC);
     gtk_container_add(GTK_CONTAINER(scroll), dialog->lst_xmloption);
     gtk_box_pack_start (GTK_BOX (hbox), scroll, TRUE, TRUE, 0);
-    
+
     vbox2 = gtk_vbox_new (FALSE, 0);
     gtk_box_pack_start (GTK_BOX (vbox2), button_del, FALSE, FALSE, 0);
     gtk_box_pack_start (GTK_BOX (hbox), vbox2, FALSE, FALSE, 0);
@@ -411,13 +411,13 @@ create_config_dialog (xfceweather_data *data,
     gtk_widget_set_size_request (dialog->lst_xmloption, -1, 120);
 
 
-    if (data->labels->len > 0) 
+    if (data->labels->len > 0)
     {
         datas opt;
         guint i;
         gint  n;
-        
-        for (i = 0; i < data->labels->len; i++) 
+
+        for (i = 0; i < data->labels->len; i++)
         {
             opt = g_array_index (data->labels, datas, i);
 
@@ -427,15 +427,15 @@ create_config_dialog (xfceweather_data *data,
     }
 
     g_signal_connect (button_add, "clicked", G_CALLBACK (cb_addoption), dialog);
-    g_signal_connect (button_del, "clicked", G_CALLBACK (cb_deloption), dialog);      
-    
+    g_signal_connect (button_del, "clicked", G_CALLBACK (cb_deloption), dialog);
+
     gtk_widget_show_all (vbox);
 
     return dialog;
 }
 
 void
-set_callback_config_dialog (xfceweather_dialog *dialog, 
+set_callback_config_dialog (xfceweather_dialog *dialog,
                             cb_function         cb_new)
 {
     cb = cb_new;

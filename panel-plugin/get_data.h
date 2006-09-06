@@ -1,6 +1,6 @@
-/* vim: set expandtab ts=8 sw=4: */
-
-/*  This program is free software; you can redistribute it and/or modify
+/*  $Id$
+ *
+ *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
@@ -47,17 +47,17 @@ typedef enum {
         TRANS           = 0x0103,
         UV_INDEX        = 0x0105,
         UV_TRANS        = 0x0106,
-        WIND_DIRECTION  = 0x0107,     
+        WIND_DIRECTION  = 0x0107,
         BAR_D           = 0x0108,
         WIND_TRANS      = 0x0109,
         WICON           = 0x0110,
-        
-        FLIK            = 0x0120, 
+
+        FLIK            = 0x0120,
         TEMP            = 0x0121,
         DEWP            = 0x0122,
-        
+
         HMID            = 0x0130,
-        
+
         WIND_SPEED      = 0x0140,
         WIND_GUST       = 0x0141,
 

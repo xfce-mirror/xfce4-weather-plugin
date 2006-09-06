@@ -1,6 +1,6 @@
-/* vim: set expandtab ts=8 sw=4: */
-
-/*  This program is free software; you can redistribute it and/or modify
+/*  $Id$
+ *
+ *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
@@ -23,12 +23,12 @@ G_BEGIN_DECLS
 typedef void(*CB_TYPE)(gboolean, gpointer);
 
 gboolean
-http_get_file  (gchar *url, gchar *hostname, 
-                gchar *filename, gchar *proxy_host, gint proxy_port, 
+http_get_file  (gchar *url, gchar *hostname,
+                gchar *filename, gchar *proxy_host, gint proxy_port,
                 CB_TYPE callback, gpointer data);
-              
+
 gboolean
-http_get_buffer (gchar *url, gchar *hostname, 
+http_get_buffer (gchar *url, gchar *hostname,
                  gchar *proxy_host, gint proxy_port, gchar **buffer,
                  CB_TYPE callback, gpointer data);
 

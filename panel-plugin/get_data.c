@@ -1,6 +1,6 @@
-/* vim: set expandtab ts=8 sw=4: */
-
-/*  This program is free software; you can redistribute it and/or modify
+/*  $Id$
+ *
+ *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
  *  (at your option) any later version.
@@ -40,7 +40,7 @@ copy_buffer (gchar *str)
 {
     static gint p = 0;
     gchar *s;
-    
+
     if (!str)
     {
         DBG ("copy_buffer: received NULL pointer");
@@ -92,7 +92,7 @@ get_data_uv (xml_uv   *data,
 
     return CHK_NULL(str);
 }
- 
+
 
 static gchar *
 get_data_bar (xml_bar   *data,
@@ -148,9 +148,9 @@ get_data_wind (xml_wind   *data,
 static gchar *
 get_data_cc (xml_cc *data,
              datas   type)
-{ 
+{
     gchar *str = NULL;
-    
+
     if (!data)
     {
         DBG ("get_data_cc: xml-cc not present");
@@ -184,9 +184,9 @@ get_data_cc (xml_cc *data,
 static gchar *
 get_data_loc (xml_loc   *data,
               datas_loc  type)
-{ 
+{
     gchar *str = NULL;
-    
+
     if (!data)
     {
         DBG ("get_data_loc: xml-loc not present");
@@ -202,7 +202,7 @@ get_data_loc (xml_loc   *data,
 
     return CHK_NULL(str);
 }
- 
+
 
 const gchar *
 get_data (xml_weather *data,
@@ -213,9 +213,9 @@ get_data (xml_weather *data,
 
     if (!data)
         str = EMPTY_STRING;
-    else 
+    else
     {
-    
+
         switch (type & 0xFF00)
         {
             case DATAS_CC: str = get_data_cc(data->cc, type); break;
@@ -277,17 +277,17 @@ get_data_f (xml_dayf *data,
                 break;
             case DPART:
                 str = get_data_part(data->part[0], type);
-                break; 
+                break;
         }
     }
 
     if (!str)
         str = "-";
-    
+
 
     p = copy_buffer(str);
     DBG ("value: %s", p);
-    
+
     return p;
 }
 
@@ -296,10 +296,10 @@ get_unit (units unit,
           datas type)
 {
     gchar *str;
-    
+
     switch (type & 0x00F0)
     {
-        case 0x0020: 
+        case 0x0020:
             str = (unit == METRIC ? "\302\260C" : "\302\260F");
             break;
         case 0x0030:
@@ -308,7 +308,7 @@ get_unit (units unit,
         case 0x0040:
             str = (unit == METRIC ? _("km/h") : _("mph"));
             break;
-        case 0x0050: 
+        case 0x0050:
             str = (unit == METRIC ? _("hPa") : _("in"));
             break;
         case 0x0060:

@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $Id: autogen.sh 20256 2006-03-06 15:43:06Z benny $
+# $Id$
 #
 # Copyright (c) 2002-2006
 #         The Thunar development team. All rights reserved.
@@ -35,5 +35,3 @@ sed -e "s/@LINGUAS@/${linguas}/g" \
     < "configure.in.in" > "configure.in"
 
 exec xdt-autogen $@
-
-# vi:set ts=2 sw=2 et ai:
