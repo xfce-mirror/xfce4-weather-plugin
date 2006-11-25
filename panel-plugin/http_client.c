@@ -109,24 +109,23 @@ request_free (struct request_data *request)
 
 static void
 request_save (struct request_data *request,
-          const gchar     *buffer)
+              const gchar     *buffer)
 {
     DBG ("Request Save");
 
     if (request->save_filename)
+    {
         if (!request->save_fp &&
-                (request->save_fp = fopen(request->save_filename, "w"))
-                == NULL)
-            return;
+            (request->save_fp = fopen(request->save_filename, "w")) == NULL)
+                return;
         else
-            fwrite(buffer, sizeof(char), strlen(buffer),
-                    request->save_fp);
+            if (fwrite (buffer, sizeof(gchar), strlen(buffer), request->save_fp) == 0);
+    }
     else
     {
         if (*request->save_buffer)
         {
-            gchar *newbuff = g_strconcat(*request->save_buffer,
-                    buffer, NULL);
+            gchar *newbuff = g_strconcat(*request->save_buffer, buffer, NULL);
             g_free(*request->save_buffer);
             *request->save_buffer = newbuff;
         }
