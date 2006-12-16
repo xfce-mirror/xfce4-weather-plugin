@@ -25,7 +25,7 @@
 #include <gtk/gtk.h>
 #include <libxfce4panel/xfce-panel-macros.h>
 
-#include "scrollbox.h"
+#include "weather-scrollbox.h"
 #define LABEL_REFRESH 3000
 #define LABEL_SPEED 25
 

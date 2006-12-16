@@ -19,7 +19,7 @@
 #include <config.h>
 #endif
 
-#include "parsers.h"
+#include "weather-parsers.h"
 #include <libxfce4panel/xfce-panel-macros.h>
 
 xml_weather *

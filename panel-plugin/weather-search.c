@@ -18,15 +18,15 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
-#include "search_dialog.h"
+#include "weather-search.h"
 
 #include <string.h>
 
-#include "parsers.h"
-#include "get_data.h"
-#include "plugin.h"
+#include "weather-parsers.h"
+#include "weather-data.h"
+#include "weather.h"
 
-#include "http_client.h"
+#include "weather-http.h"
 
 #define BORDER 8
 

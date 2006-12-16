@@ -21,9 +21,9 @@
 
 #include <libxfce4util/libxfce4util.h>
 
-#include "parsers.h"
-#include "get_data.h"
-#include "plugin.h"
+#include "weather-parsers.h"
+#include "weather-data.h"
+#include "weather.h"
 
 #define DATAS_CC    0x0100
 #define DATAS_LOC   0x0200

@@ -33,7 +33,7 @@
 #include <libxfce4util/libxfce4util.h>
 #include <libxfce4panel/xfce-panel-macros.h>
 
-#include "http_client.h"
+#include "weather-http.h"
 
 struct request_data
 {

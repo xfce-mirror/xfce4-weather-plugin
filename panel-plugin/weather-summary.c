@@ -21,13 +21,13 @@
 
 #include <libxfcegui4/libxfcegui4.h>
 
-#include "parsers.h"
-#include "get_data.h"
-#include "plugin.h"
+#include "weather-parsers.h"
+#include "weather-data.h"
+#include "weather.h"
 
-#include "summary_window.h"
-#include "translate.h"
-#include "icon.h"
+#include "weather-summary.h"
+#include "weather-translate.h"
+#include "weather-icon.h"
 
 #define BORDER 8
 

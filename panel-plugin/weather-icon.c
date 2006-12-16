@@ -22,7 +22,7 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-#include "icon.h"
+#include "weather-icon.h"
 
 #define DEFAULT_W_THEME "liquid"
 

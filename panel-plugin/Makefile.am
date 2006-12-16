@@ -4,26 +4,26 @@ plugindir = $(libexecdir)/xfce4/panel-plugins
 plugin_PROGRAMS = xfce4-weather-plugin
 
 xfce4_weather_plugin_SOURCES =						\
-	scrollbox.h							\
-	scrollbox.c							\
-	parsers.h							\
-	parsers.c							\
-	get_data.h							\
-	get_data.c 							\
-	http_client.c							\
-	http_client.h							\
-	plugin.h							\
-	plugin.c							\
-	config_dialog.h							\
-	config_dialog.c							\
-	summary_window.h						\
-	summary_window.c						\
-	icon.h								\
-	icon.c								\
-	search_dialog.h							\
-	search_dialog.c							\
-	translate.h							\
-	translate.c
+	weather.c							\
+	weather.h							\
+	weather-config.c						\
+	weather-config.h						\
+	weather-data.c							\
+	weather-data.h							\
+	weather-http.c							\
+	weather-http.h							\
+	weather-icon.c							\
+	weather-icon.h							\
+	weather-parsers.c						\
+	weather-parsers.h						\
+	weather-scrollbox.c						\
+	weather-scrollbox.h						\
+	weather-search.c						\
+	weather-search.h						\
+	weather-summary.c						\
+	weather-summary.h						\
+	weather-translate.c						\
+	weather-translate.h
 
 xfce4_weather_plugin_CFLAGS =						\
         -I$(top_srcdir)                                         	\

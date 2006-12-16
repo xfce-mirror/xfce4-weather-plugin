@@ -25,16 +25,16 @@
 #include <libxfce4util/libxfce4util.h>
 #include <libxfcegui4/libxfcegui4.h>
 
-#include "parsers.h"
-#include "get_data.h"
-#include "plugin.h"
+#include "weather-parsers.h"
+#include "weather-data.h"
+#include "weather.h"
 
-#include "translate.h"
-#include "http_client.h"
-#include "summary_window.h"
-#include "config_dialog.h"
-#include "icon.h"
-#include "scrollbox.h"
+#include "weather-translate.h"
+#include "weather-http.h"
+#include "weather-summary.h"
+#include "weather-config.h"
+#include "weather-icon.h"
+#include "weather-scrollbox.h"
 
 #define XFCEWEATHER_ROOT "weather"
 #define UPDATE_TIME 1600

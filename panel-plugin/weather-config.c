@@ -22,12 +22,12 @@
 #include <string.h>
 #include <libxfcegui4/libxfcegui4.h>
 
-#include "parsers.h"
-#include "get_data.h"
-#include "plugin.h"
+#include "weather-parsers.h"
+#include "weather-data.h"
+#include "weather.h"
 
-#include "config_dialog.h"
-#include "search_dialog.h"
+#include "weather-config.h"
+#include "weather-search.h"
 
 #define OPTIONS_N 11
 #define BORDER    8

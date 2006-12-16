@@ -22,10 +22,10 @@
 #include <string.h>
 #include <time.h>
 
-#include "parsers.h"
-#include "get_data.h"
-#include "plugin.h"
-#include "translate.h"
+#include "weather-parsers.h"
+#include "weather-data.h"
+#include "weather.h"
+#include "weather-translate.h"
 
 
 static const gchar *desc_strings[] = {
