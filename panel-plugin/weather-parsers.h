@@ -23,110 +23,101 @@
 #include <libxml/parser.h>
 
 G_BEGIN_DECLS
-
 #define DATA(node) (gchar *) xmlNodeListGetString(node->doc, node->children, 1)
 #define NODE_IS_TYPE(node, type) xmlStrEqual (node->name, (const xmlChar *) type)
-
 #define XML_WEATHER_DAYF_N 5
-
-typedef struct
+  typedef struct
 {
-        gchar *dnam;
-        gchar *sunr;
-        gchar *suns;
+  gchar *dnam;
+  gchar *sunr;
+  gchar *suns;
 }
 xml_loc;
 
 typedef struct
 {
-        gchar *i;
-        gchar *t;
+  gchar *i;
+  gchar *t;
 }
 xml_uv;
 
 typedef struct
 {
-        gchar *s;
-        gchar *gust;
-        gchar *d;
-        gchar *t;
+  gchar *s;
+  gchar *gust;
+  gchar *d;
+  gchar *t;
 }
 xml_wind;
 
 typedef struct
 {
-        gchar *r;
-        gchar *d;
+  gchar *r;
+  gchar *d;
 }
 xml_bar;
 
 typedef struct
 {
-        gchar    *lsup;
-        gchar    *obst;
-        gchar    *flik;
-        gchar    *t;
-        gchar    *icon;
-        gchar    *tmp;
+  gchar *lsup;
+  gchar *obst;
+  gchar *flik;
+  gchar *t;
+  gchar *icon;
+  gchar *tmp;
 
-        gchar    *hmid;
-        gchar    *vis;
+  gchar *hmid;
+  gchar *vis;
 
-        xml_uv   *uv;
-        xml_wind *wind;
-        xml_bar  *bar;
+  xml_uv *uv;
+  xml_wind *wind;
+  xml_bar *bar;
 
-        gchar    *dewp;
+  gchar *dewp;
 }
 xml_cc;
 
 typedef struct
 {
-        gchar    *icon;
-        gchar    *t;
-        gchar    *ppcp;
-        gchar    *hmid;
+  gchar *icon;
+  gchar *t;
+  gchar *ppcp;
+  gchar *hmid;
 
-        xml_wind *wind;
+  xml_wind *wind;
 }
 xml_part;
 
 typedef struct
 {
-        gchar    *day;
-        gchar    *date;
+  gchar *day;
+  gchar *date;
 
-        gchar    *hi;
-        gchar    *low;
+  gchar *hi;
+  gchar *low;
 
-        xml_part *part[2];
+  xml_part *part[2];
 }
 xml_dayf;
 
 typedef struct
 {
-        xml_loc  *loc;
-        xml_cc   *cc;
-        xml_dayf *dayf[XML_WEATHER_DAYF_N];
+  xml_loc *loc;
+  xml_cc *cc;
+  xml_dayf *dayf[XML_WEATHER_DAYF_N];
 }
 xml_weather;
 
 
-xml_weather *
-parse_weather    (xmlNode *cur_node);
+xml_weather *parse_weather (xmlNode * cur_node);
 
-xml_loc *
-parse_loc        (xmlNode *cur_node);
+xml_loc *parse_loc (xmlNode * cur_node);
 
-xml_cc *
-parse_cc         (xmlNode *cur_node);
+xml_cc *parse_cc (xmlNode * cur_node);
 
-xml_dayf *
-parse_dayf       (xmlNode *cur_node);
+xml_dayf *parse_dayf (xmlNode * cur_node);
 
-void
-xml_weather_free (xml_weather *data);
+void xml_weather_free (xml_weather * data);
 
 G_END_DECLS
-
 #endif

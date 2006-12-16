@@ -18,20 +18,17 @@
 #ifndef HTTP_CLIENT_H
 #define HTTP_CLIENT_H
 
-G_BEGIN_DECLS
-
-typedef void(*CB_TYPE)(gboolean, gpointer);
+G_BEGIN_DECLS typedef void (*CB_TYPE) (gboolean, gpointer);
 
 gboolean
-http_get_file  (gchar *url, gchar *hostname,
-                gchar *filename, gchar *proxy_host, gint proxy_port,
-                CB_TYPE callback, gpointer data);
+http_get_file (gchar * url, gchar * hostname,
+               gchar * filename, gchar * proxy_host, gint proxy_port,
+               CB_TYPE callback, gpointer data);
 
 gboolean
-http_get_buffer (gchar *url, gchar *hostname,
-                 gchar *proxy_host, gint proxy_port, gchar **buffer,
+http_get_buffer (gchar * url, gchar * hostname,
+                 gchar * proxy_host, gint proxy_port, gchar ** buffer,
                  CB_TYPE callback, gpointer data);
 
 G_END_DECLS
-
 #endif

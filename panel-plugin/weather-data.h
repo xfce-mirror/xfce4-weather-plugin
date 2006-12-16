@@ -18,109 +18,109 @@
 #ifndef GET_DATA_H
 #define GET_DATA_H
 
-G_BEGIN_DECLS
-
-typedef enum {
-        _WIND_SPEED,
-        _WIND_GUST,
-        _WIND_DIRECTION,
-        _WIND_TRANS
+G_BEGIN_DECLS typedef enum
+{
+  _WIND_SPEED,
+  _WIND_GUST,
+  _WIND_DIRECTION,
+  _WIND_TRANS
 }
 datas_wind;
 
-typedef enum {
-        _BAR_R,
-        _BAR_D
+typedef enum
+{
+  _BAR_R,
+  _BAR_D
 }
 datas_bar;
 
-typedef enum {
-        _UV_INDEX,
-        _UV_TRANS
+typedef enum
+{
+  _UV_INDEX,
+  _UV_TRANS
 }
 datas_uv;
 
-typedef enum {
-        /* cc */
-        LSUP            = 0x0101,
-        OBST            = 0x0102,
-        TRANS           = 0x0103,
-        UV_INDEX        = 0x0105,
-        UV_TRANS        = 0x0106,
-        WIND_DIRECTION  = 0x0107,
-        BAR_D           = 0x0108,
-        WIND_TRANS      = 0x0109,
-        WICON           = 0x0110,
+typedef enum
+{
+  /* cc */
+  LSUP = 0x0101,
+  OBST = 0x0102,
+  TRANS = 0x0103,
+  UV_INDEX = 0x0105,
+  UV_TRANS = 0x0106,
+  WIND_DIRECTION = 0x0107,
+  BAR_D = 0x0108,
+  WIND_TRANS = 0x0109,
+  WICON = 0x0110,
 
-        FLIK            = 0x0120,
-        TEMP            = 0x0121,
-        DEWP            = 0x0122,
+  FLIK = 0x0120,
+  TEMP = 0x0121,
+  DEWP = 0x0122,
 
-        HMID            = 0x0130,
+  HMID = 0x0130,
 
-        WIND_SPEED      = 0x0140,
-        WIND_GUST       = 0x0141,
+  WIND_SPEED = 0x0140,
+  WIND_GUST = 0x0141,
 
 
-        BAR_R           = 0x0150,
+  BAR_R = 0x0150,
 
-        VIS             = 0x0160
+  VIS = 0x0160
 }
 datas;
 
-typedef enum {
-        DNAM            = 0x0201,
-        SUNR            = 0x0202,
-        SUNS            = 0x0203
+typedef enum
+{
+  DNAM = 0x0201,
+  SUNR = 0x0202,
+  SUNS = 0x0203
 }
 datas_loc;
 
-typedef enum {
-        ITEMS           = 0x0100,
-        WDAY            = 0x0101,
-        TEMP_MIN        = 0x0102,
-        TEMP_MAX        = 0x0103,
+typedef enum
+{
+  ITEMS = 0x0100,
+  WDAY = 0x0101,
+  TEMP_MIN = 0x0102,
+  TEMP_MAX = 0x0103,
 
-        F_ICON          = 0x0001,
-        F_PPCP          = 0x0002,
-        F_W_DIRECTION   = 0x0003,
-        F_W_SPEED       = 0x0004,
-        F_TRANS         = 0x0005,
+  F_ICON = 0x0001,
+  F_PPCP = 0x0002,
+  F_W_DIRECTION = 0x0003,
+  F_W_SPEED = 0x0004,
+  F_TRANS = 0x0005,
 
-        NPART           = 0x0200,
-        ICON_N          = 0x0201,
-        PPCP_N          = 0x0202,
-        W_DIRECTION_N   = 0x0203,
-        W_SPEED_N       = 0x0204,
-        TRANS_N         = 0x0205,
+  NPART = 0x0200,
+  ICON_N = 0x0201,
+  PPCP_N = 0x0202,
+  W_DIRECTION_N = 0x0203,
+  W_SPEED_N = 0x0204,
+  TRANS_N = 0x0205,
 
-        DPART           = 0x0300,
-        ICON_D          = 0x0301,
-        PPCP_D          = 0x0302,
-        W_DIRECTION_D   = 0x0303,
-        W_SPEED_D       = 0x0304,
-        TRANS_D         = 0x0305
+  DPART = 0x0300,
+  ICON_D = 0x0301,
+  PPCP_D = 0x0302,
+  W_DIRECTION_D = 0x0303,
+  W_SPEED_D = 0x0304,
+  TRANS_D = 0x0305
 }
 forecast;
 
-typedef enum {
-        METRIC,
-        IMPERIAL
+typedef enum
+{
+  METRIC,
+  IMPERIAL
 }
 units;
 
-const gchar *
-get_data             (xml_weather *data, datas type);
+const gchar *get_data (xml_weather * data, datas type);
 
-const gchar *
-get_data_f           (xml_dayf * , forecast type);
+const gchar *get_data_f (xml_dayf *, forecast type);
 
-const gchar *
-get_unit             (units unit, datas type);
+const gchar *get_unit (units unit, datas type);
 
-void
-free_get_data_buffer (void);
+void free_get_data_buffer (void);
 
 G_END_DECLS
-
 #endif

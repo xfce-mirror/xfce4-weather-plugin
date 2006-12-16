@@ -18,11 +18,7 @@
 #ifndef ICON_H
 #define ICON_H
 
-G_BEGIN_DECLS
-
-GdkPixbuf *
-get_icon         (const gchar *icon, GtkIconSize size);
+G_BEGIN_DECLS GdkPixbuf *get_icon (const gchar * icon, GtkIconSize size);
 
 G_END_DECLS
-
 #endif

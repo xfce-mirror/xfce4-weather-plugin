@@ -18,9 +18,7 @@
 #ifndef SCROLLBOX_H
 #define SCROLLBOX_H
 
-G_BEGIN_DECLS
-
-GType gtk_scrollbox_get_type (void);
+G_BEGIN_DECLS GType gtk_scrollbox_get_type (void);
 
 #define GTK_TYPE_SCROLLBOX             (gtk_scrollbox_get_type())
 #define GTK_SCROLLBOX(obj)             (G_TYPE_CHECK_INSTANCE_CAST((obj), GTK_TYPE_SCROLLBOX, GtkScrollbox))
@@ -32,36 +30,33 @@ GType gtk_scrollbox_get_type (void);
 typedef struct _GtkScrollbox GtkScrollbox;
 typedef struct _GtkScrollboxClass GtkScrollboxClass;
 
-struct _GtkScrollbox {
-        GtkDrawingArea parent;
+struct _GtkScrollbox
+{
+  GtkDrawingArea parent;
 
-        GPtrArray *labels;
+  GPtrArray *labels;
 
-        gint draw_offset;
-        gint draw_maxoffset;
-        gint draw_middle;
-        gint draw_maxmiddle;
-        gint draw_timeout;
+  gint draw_offset;
+  gint draw_maxoffset;
+  gint draw_middle;
+  gint draw_maxmiddle;
+  gint draw_timeout;
 
-        GdkPixmap *pixmap;
+  GdkPixmap *pixmap;
 };
 
-struct _GtkScrollboxClass {
-        GtkDrawingAreaClass parent;
+struct _GtkScrollboxClass
+{
+  GtkDrawingAreaClass parent;
 };
 
-void
-gtk_scrollbox_set_label (GtkScrollbox *self, gint n, gchar *value);
+void gtk_scrollbox_set_label (GtkScrollbox * self, gint n, gchar * value);
 
-GtkWidget *
-gtk_scrollbox_new       (void);
+GtkWidget *gtk_scrollbox_new (void);
 
-void
-gtk_scrollbox_enablecb  (GtkScrollbox *self, gboolean enable);
+void gtk_scrollbox_enablecb (GtkScrollbox * self, gboolean enable);
 
-void
-gtk_scrollbox_clear     (GtkScrollbox *self);
+void gtk_scrollbox_clear (GtkScrollbox * self);
 
 G_END_DECLS
-
 #endif

@@ -22,33 +22,27 @@
 #ifndef SEARCH_DIALOG_H
 #define SEARCH_DIALOG_H
 
-G_BEGIN_DECLS
-
-typedef struct
+G_BEGIN_DECLS typedef struct
 {
-        GtkWidget *dialog;
-        GtkWidget *search_entry;
-        GtkWidget *result_list;
-        GtkListStore *result_mdl;
+  GtkWidget *dialog;
+  GtkWidget *search_entry;
+  GtkWidget *result_list;
+  GtkListStore *result_mdl;
 
-        gchar *result;
+  gchar *result;
 
-        gchar *proxy_host;
-        gint proxy_port;
+  gchar *proxy_host;
+  gint proxy_port;
 
-        gchar *recv_buffer;
+  gchar *recv_buffer;
 }
 search_dialog;
 
-search_dialog *
-create_search_dialog (GtkWindow *, gchar *, gint);
+search_dialog *create_search_dialog (GtkWindow *, gchar *, gint);
 
-gboolean
-run_search_dialog    (search_dialog *dialog);
+gboolean run_search_dialog (search_dialog * dialog);
 
-void
-free_search_dialog   (search_dialog *dialog);
+void free_search_dialog (search_dialog * dialog);
 
 G_END_DECLS
-
 #endif

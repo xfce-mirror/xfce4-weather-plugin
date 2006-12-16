@@ -27,28 +27,25 @@
 #define DEFAULT_W_THEME "liquid"
 
 GdkPixbuf *
-get_icon (const gchar *number,
-          GtkIconSize  size)
+get_icon (const gchar * number, GtkIconSize size)
 {
-    GdkPixbuf *image = NULL;
-    gchar     *filename;
-    gint       width, height;
+  GdkPixbuf *image = NULL;
+  gchar *filename;
+  gint width, height;
 
-    gtk_icon_size_lookup (size, &width, &height);
+  gtk_icon_size_lookup (size, &width, &height);
 
-    filename = g_strdup_printf ("%s%s%s%s%s.png",
-            THEMESDIR, G_DIR_SEPARATOR_S,
-            DEFAULT_W_THEME, G_DIR_SEPARATOR_S,
-            number);
+  filename = g_strdup_printf ("%s%s%s%s%s.png",
+                              THEMESDIR, G_DIR_SEPARATOR_S,
+                              DEFAULT_W_THEME, G_DIR_SEPARATOR_S, number);
 
-    image = gdk_pixbuf_new_from_file_at_scale (filename,
-	    width, height,
-            TRUE, NULL);
+  image = gdk_pixbuf_new_from_file_at_scale (filename,
+                                             width, height, TRUE, NULL);
 
-    g_free (filename);
+  g_free (filename);
 
-    if (!image)
-        g_warning ("Weather Plugin: No image found");
+  if (!image)
+    g_warning ("Weather Plugin: No image found");
 
-    return image;
+  return image;
 }

@@ -22,36 +22,24 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 
-G_BEGIN_DECLS
+G_BEGIN_DECLS const gchar *translate_desc (const gchar *);
 
-const gchar *
-translate_desc          (const gchar *);
+const gchar *translate_bard (const gchar *);
 
-const gchar *
-translate_bard          (const gchar *);
-
-const gchar *
-translate_risk          (const gchar *);
+const gchar *translate_risk (const gchar *);
 
 /* these return a newly alocted string, that should be freed */
-gchar *
-translate_lsup           (const gchar *);
+gchar *translate_lsup (const gchar *);
 
-gchar *
-translate_day            (const gchar *);
+gchar *translate_day (const gchar *);
 
-gchar *
-translate_wind_direction (const gchar *);
+gchar *translate_wind_direction (const gchar *);
 
-gchar *
-translate_wind_speed     (const gchar *, units);
+gchar *translate_wind_speed (const gchar *, units);
 
-gchar *
-translate_time           (const gchar *);
+gchar *translate_time (const gchar *);
 
-gchar *
-translate_visibility     (const gchar *, units);
+gchar *translate_visibility (const gchar *, units);
 
 G_END_DECLS
-
 #endif
