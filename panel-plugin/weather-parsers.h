@@ -15,8 +15,8 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef PARSERS_H
-#define PARSERS_H
+#ifndef __WEATHER_PARSERS_H__
+#define __WEATHER_PARSERS_H__
 
 #include <glib.h>
 #include <gtk/gtk.h>

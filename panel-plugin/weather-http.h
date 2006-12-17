@@ -15,10 +15,12 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef HTTP_CLIENT_H
-#define HTTP_CLIENT_H
+#ifndef __WEATHER_HTTP_H__
+#define __WEATHER_HTTP_H__
 
-G_BEGIN_DECLS typedef void (*CB_TYPE) (gboolean, gpointer);
+G_BEGIN_DECLS
+
+typedef void (*CB_TYPE) (gboolean, gpointer);
 
 gboolean
 http_get_file (gchar * url, gchar * hostname,
@@ -31,4 +33,5 @@ http_get_buffer (gchar * url, gchar * hostname,
                  CB_TYPE callback, gpointer data);
 
 G_END_DECLS
+
 #endif

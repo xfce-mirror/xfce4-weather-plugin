@@ -15,14 +15,15 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef TRANSLATE_H
-#define TRANSLATE_H
-
+#ifndef __WEATHER_TRANSLATE_H__
+#define __WEATHER_TRANSLATE_H__
 
 #include <glib.h>
 #include <gtk/gtk.h>
 
-G_BEGIN_DECLS const gchar *translate_desc (const gchar *);
+G_BEGIN_DECLS
+
+const gchar *translate_desc (const gchar *);
 
 const gchar *translate_bard (const gchar *);
 
@@ -42,4 +43,5 @@ gchar *translate_time (const gchar *);
 gchar *translate_visibility (const gchar *, units);
 
 G_END_DECLS
+
 #endif

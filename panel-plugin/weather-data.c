@@ -32,14 +32,18 @@
 
 #define EMPTY_STRING g_strdup("-")
 #define CHK_NULL(str) str ? g_strdup(str) : EMPTY_STRING;
+
+
+
 gchar *kill_ring[KILL_RING_S] = { NULL, };
 
-#define debug_print printf
+
+
 static gchar *
 copy_buffer (gchar *str)
 {
-  static gint p = 0;
-  gchar *s;
+  static gint  p = 0;
+  gchar       *s;
 
   if (!str)
     {
@@ -60,6 +64,8 @@ copy_buffer (gchar *str)
   return s;
 }
 
+
+
 void
 free_get_data_buffer (void)
 {
@@ -71,6 +77,8 @@ free_get_data_buffer (void)
         g_free (kill_ring[i]);
     }
 }
+
+
 
 static gchar *
 get_data_uv (xml_uv   *data,
@@ -98,6 +106,7 @@ get_data_uv (xml_uv   *data,
 }
 
 
+
 static gchar *
 get_data_bar (xml_bar   *data,
               datas_bar  type)
@@ -122,6 +131,8 @@ get_data_bar (xml_bar   *data,
 
   return CHK_NULL (str);
 }
+
+
 
 static gchar *
 get_data_wind (xml_wind   *data,
@@ -159,6 +170,8 @@ get_data_wind (xml_wind   *data,
 
   return CHK_NULL (str);
 }
+
+
 
 /* -- This is not the same as the previous functions */
 static gchar *
@@ -223,6 +236,8 @@ get_data_cc (xml_cc *data,
   return CHK_NULL (str);
 }
 
+
+
 static gchar *
 get_data_loc (xml_loc   *data,
               datas_loc  type)
@@ -250,6 +265,7 @@ get_data_loc (xml_loc   *data,
 
   return CHK_NULL (str);
 }
+
 
 
 const gchar *
@@ -283,6 +299,8 @@ get_data (xml_weather *data,
   return p;
 }
 
+
+
 static gchar *
 get_data_part (xml_part *data,
                forecast  type)
@@ -315,6 +333,8 @@ get_data_part (xml_part *data,
 
   return str;
 }
+
+
 
 const gchar *
 get_data_f (xml_dayf *data,
@@ -361,6 +381,8 @@ get_data_f (xml_dayf *data,
 
   return p;
 }
+
+
 
 const gchar *
 get_unit (units unit,

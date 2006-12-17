@@ -37,11 +37,18 @@
 #include "weather-scrollbox.h"
 
 #define XFCEWEATHER_ROOT "weather"
-#define UPDATE_TIME 1600
-#define BORDER 8
+#define UPDATE_TIME      1600
+#define BORDER           8
+
+
+
+static gint GTK_ICON_SIZE_SMALL = 0;
+
+
 
 gboolean
-check_envproxy (gchar ** proxy_host, gint * proxy_port)
+check_envproxy (gchar **proxy_host,
+                gint   *proxy_port)
 {
 
   gchar *env_proxy = getenv ("HTTP_PROXY"), *tmp, **split;
@@ -79,13 +86,16 @@ check_envproxy (gchar ** proxy_host, gint * proxy_port)
   return TRUE;
 }
 
-static gint GTK_ICON_SIZE_SMALL = 0;
+
 
 static gchar *
-make_label (xml_weather * weatherdata, datas opt, units unit, gint size)
+make_label (xml_weather *weatherdata,
+            datas        opt,
+            units        unit,
+            gint         size)
 {
 
-  gchar *str, *value;
+  gchar       *str, *value;
   const gchar *rawvalue, *lbl, *txtsize;
 
   switch (opt)
@@ -163,7 +173,6 @@ make_label (xml_weather * weatherdata, datas opt, units unit, gint size)
     {
       str = g_strdup_printf ("<span size=\"%s\">%s: %s</span>",
                              txtsize, lbl, value);
-
       g_free (value);
     }
   else
@@ -175,26 +184,31 @@ make_label (xml_weather * weatherdata, datas opt, units unit, gint size)
   return str;
 }
 
+
+
 static gchar *
-get_filename (const xfceweather_data * data)
+get_filename (const xfceweather_data *data)
 {
+  gchar *filename, *fullfilename;
 
-  gchar *filename = g_strdup_printf ("xfce4/weather-plugin/weather_%s_%c.xml",
-                                     data->location_code,
-                                     data->unit == METRIC ? 'm' : 'i');
+  filename = g_strdup_printf ("xfce4/weather-plugin/weather_%s_%c.xml",
+                              data->location_code,
+                              data->unit == METRIC ? 'm' : 'i');
 
-  gchar *fullfilename =
-    xfce_resource_save_location (XFCE_RESOURCE_CACHE, filename,
-                                 TRUE);
+  fullfilename = xfce_resource_save_location (XFCE_RESOURCE_CACHE, filename,
+                                              TRUE);
   g_free (filename);
 
   return fullfilename;
 }
 
+
+
 static void
-set_icon_error (xfceweather_data * data)
+set_icon_error (xfceweather_data *data)
 {
-  GdkPixbuf *icon = get_icon ("25", data->iconsize);
+  GdkPixbuf *icon = get_icon ("99", data->iconsize);
+
   gtk_image_set_from_pixbuf (GTK_IMAGE (data->iconimage), icon);
   g_object_unref (G_OBJECT (icon));
 
@@ -206,21 +220,20 @@ set_icon_error (xfceweather_data * data)
 
   gtk_tooltips_set_tip (data->tooltips, data->tooltipbox,
                         _("Cannot update weather data"), NULL);
-
-  return;
 }
 
+
+
 static void
-set_icon_current (xfceweather_data * data)
+set_icon_current (xfceweather_data *data)
 {
-  guint i;
+  guint      i;
   GdkPixbuf *icon = NULL;
+  datas      opt;
+  gchar     *str;
 
   for (i = 0; i < data->labels->len; i++)
     {
-      datas opt;
-      gchar *str;
-
       opt = g_array_index (data->labels, datas, i);
 
       str = make_label (data->weatherdata, opt, data->unit, data->size);
@@ -241,24 +254,27 @@ set_icon_current (xfceweather_data * data)
                         NULL);
 }
 
+
+
 static void
-cb_update (gboolean status, gpointer user_data)
+cb_update (gboolean status,
+           gpointer user_data)
 {
-
-
   xfceweather_data *data = (xfceweather_data *) user_data;
-  gchar *fullfilename = get_filename (data);
-  xmlDoc *doc;
-  xmlNode *cur_node;
-  xml_weather *weather = NULL;
+  gchar            *fullfilename;
+  xmlDoc           *doc;
+  xmlNode          *cur_node;
+  xml_weather      *weather = NULL;
 
-  if (!fullfilename)
+  fullfilename = get_filename (data);
+
+  if (G_UNLIKELY (fullfilename == NULL))
     return;
 
   doc = xmlParseFile (fullfilename);
   g_free (fullfilename);
 
-  if (!doc)
+  if (G_UNLIKELY (doc == NULL))
     return;
 
   cur_node = xmlDocGetRootElement (doc);
@@ -272,7 +288,6 @@ cb_update (gboolean status, gpointer user_data)
 
   if (weather)
     {
-
       if (data->weatherdata)
         xml_weather_free (data->weatherdata);
 
@@ -286,14 +301,17 @@ cb_update (gboolean status, gpointer user_data)
     }
 }
 
+
+
 /* -1 error 0 no update needed 1 updating */
 static gint
-update_weatherdata (xfceweather_data * data, gboolean force)
+update_weatherdata (xfceweather_data *data,
+                    gboolean          force)
 {
-
-  struct stat attrs;
-  gchar *fullfilename;
-  gchar *url;
+  struct stat  attrs;
+  gchar       *fullfilename;
+  gchar       *url;
+  gboolean     status;
 
   if (!data->location_code)
     return -1;
@@ -313,10 +331,10 @@ update_weatherdata (xfceweather_data * data, gboolean force)
                              data->location_code, XML_WEATHER_DAYF_N,
                              data->unit == METRIC ? 'm' : 'i');
 
-      gboolean status = http_get_file (url, "xoap.weather.com", fullfilename,
-                                       data->proxy_host, data->proxy_port,
-                                       cb_update,
-                                       (gpointer) data);
+      status = http_get_file (url, "xoap.weather.com", fullfilename,
+                              data->proxy_host, data->proxy_port,
+                              cb_update,
+                              (gpointer) data);
 
       g_free (url);
       g_free (fullfilename);
@@ -334,10 +352,12 @@ update_weatherdata (xfceweather_data * data, gboolean force)
     }
 }
 
-static void
-update_plugin (xfceweather_data * data, gboolean force)
-{
 
+
+static void
+update_plugin (xfceweather_data *data,
+               gboolean          force)
+{
   if (update_weatherdata (data, force) == -1)
     {
       gtk_scrollbox_clear (GTK_SCROLLBOX (data->scrollbox));
@@ -346,10 +366,11 @@ update_plugin (xfceweather_data * data, gboolean force)
   /* else update will be called through the callback in http_get_file () */
 }
 
-static GArray *
-labels_clear (GArray * array)
-{
 
+
+static GArray *
+labels_clear (GArray *array)
+{
   if (!array || array->len > 0)
     {
       if (array)
@@ -361,16 +382,18 @@ labels_clear (GArray * array)
   return array;
 }
 
-static void
-xfceweather_read_config (XfcePanelPlugin * plugin, xfceweather_data * data)
-{
 
-  gchar label[10];
-  guint i;
+
+static void
+xfceweather_read_config (XfcePanelPlugin  *plugin,
+                         xfceweather_data *data)
+{
+  gchar        label[10];
+  guint        i;
   const gchar *value;
-  gchar *file;
-  XfceRc *rc;
-  gint val;
+  gchar       *file;
+  XfceRc      *rc;
+  gint         val;
 
   if (!(file = xfce_panel_plugin_lookup_rc_file (plugin)))
     return;
@@ -446,14 +469,16 @@ xfceweather_read_config (XfcePanelPlugin * plugin, xfceweather_data * data)
   xfce_rc_close (rc);
 }
 
-static void
-xfceweather_write_config (XfcePanelPlugin * plugin, xfceweather_data * data)
-{
 
-  gchar label[10];
-  guint i;
+
+static void
+xfceweather_write_config (XfcePanelPlugin  *plugin,
+                          xfceweather_data *data)
+{
+  gchar   label[10];
+  guint   i;
   XfceRc *rc;
-  gchar *file;
+  gchar  *file;
 
   if (!(file = xfce_panel_plugin_save_location (plugin, TRUE)))
     return;
@@ -492,10 +517,11 @@ xfceweather_write_config (XfcePanelPlugin * plugin, xfceweather_data * data)
   xfce_rc_close (rc);
 }
 
-static gboolean
-update_cb (xfceweather_data * data)
-{
 
+
+static gboolean
+update_cb (xfceweather_data *data)
+{
   DBG ("update_cb(): callback called");
 
   update_plugin (data, FALSE);
@@ -505,10 +531,12 @@ update_cb (xfceweather_data * data)
   return TRUE;
 }
 
-static void
-update_plugin_with_reset (xfceweather_data * data, gboolean force)
-{
 
+
+static void
+update_plugin_with_reset (xfceweather_data *data,
+                          gboolean          force)
+{
   if (data->updatetimeout)
     g_source_remove (data->updatetimeout);
 
@@ -522,23 +550,27 @@ update_plugin_with_reset (xfceweather_data * data, gboolean force)
 static void
 update_config (xfceweather_data * data)
 {
-
   update_plugin_with_reset (data, TRUE);        /* force because units could have changed */
 }
 
-static void
-close_summary (GtkWidget * widget, gpointer * user_data)
-{
 
+
+static void
+close_summary (GtkWidget *widget,
+               gpointer  *user_data)
+{
   xfceweather_data *data = (xfceweather_data *) user_data;
 
   data->summary_window = NULL;
 }
 
-static gboolean
-cb_click (GtkWidget * widget, GdkEventButton * event, gpointer user_data)
-{
 
+
+static gboolean
+cb_click (GtkWidget      *widget,
+          GdkEventButton *event,
+          gpointer        user_data)
+{
   xfceweather_data *data = (xfceweather_data *) user_data;
 
   if (event->button == 1)
@@ -553,8 +585,8 @@ cb_click (GtkWidget * widget, GdkEventButton * event, gpointer user_data)
         {
           data->summary_window = create_summary_window (data->weatherdata,
                                                         data->unit);
-          g_signal_connect (data->summary_window, "destroy",
-                            G_CALLBACK (close_summary), (gpointer) data);
+          g_signal_connect (G_OBJECT (data->summary_window), "destroy",
+                            G_CALLBACK (close_summary), data);
 
           gtk_widget_show_all (data->summary_window);
         }
@@ -565,19 +597,24 @@ cb_click (GtkWidget * widget, GdkEventButton * event, gpointer user_data)
   return FALSE;
 }
 
+
+
 static void
-mi_click (GtkWidget * widget, gpointer user_data)
+mi_click (GtkWidget *widget,
+          gpointer   user_data)
 {
   xfceweather_data *data = (xfceweather_data *) user_data;
 
   update_plugin_with_reset (data, TRUE);
 }
 
-static void
-xfceweather_dialog_response (GtkWidget * dlg,
-                             gint response, xfceweather_dialog * dialog)
-{
 
+
+static void
+xfceweather_dialog_response (GtkWidget          *dlg,
+                             gint                response,
+                             xfceweather_dialog *dialog)
+{
   xfceweather_data *data = (xfceweather_data *) dialog->wd;
 
   apply_options (dialog);
@@ -590,11 +627,13 @@ xfceweather_dialog_response (GtkWidget * dlg,
   xfceweather_write_config (data->plugin, data);
 }
 
-static void
-xfceweather_create_options (XfcePanelPlugin * plugin, xfceweather_data * data)
-{
 
-  GtkWidget *dlg, *vbox;
+
+static void
+xfceweather_create_options (XfcePanelPlugin  *plugin,
+                            xfceweather_data *data)
+{
+  GtkWidget          *dlg, *vbox;
   xfceweather_dialog *dialog;
 
   xfce_panel_plugin_block_menu (plugin);
@@ -618,8 +657,8 @@ xfceweather_create_options (XfcePanelPlugin * plugin, xfceweather_data * data)
 
   dialog = create_config_dialog (data, vbox);
 
-  g_signal_connect (dlg, "response", G_CALLBACK (xfceweather_dialog_response),
-                    dialog);
+  g_signal_connect (G_OBJECT (dlg), "response",
+                    G_CALLBACK (xfceweather_dialog_response), dialog);
 
   set_callback_config_dialog (dialog, update_config);
 
@@ -627,14 +666,14 @@ xfceweather_create_options (XfcePanelPlugin * plugin, xfceweather_data * data)
 }
 
 
-static xfceweather_data *
-xfceweather_create_control (XfcePanelPlugin * plugin)
-{
 
+static xfceweather_data *
+xfceweather_create_control (XfcePanelPlugin *plugin)
+{
   xfceweather_data *data = panel_slice_new0 (xfceweather_data);
-  GtkWidget *vbox, *refresh;
-  datas lbl;
-  GdkPixbuf *icon = NULL;
+  GtkWidget        *vbox, *refresh;
+  datas             lbl;
+  GdkPixbuf        *icon = NULL;
 
   if (!GTK_ICON_SIZE_SMALL)
     GTK_ICON_SIZE_SMALL = gtk_icon_size_register ("iconsize_small", 16, 16);
@@ -647,7 +686,7 @@ xfceweather_create_control (XfcePanelPlugin * plugin)
 
   data->scrollbox = gtk_scrollbox_new ();
 
-  icon = get_icon ("25", GTK_ICON_SIZE_SMALL);
+  icon = get_icon ("99", GTK_ICON_SIZE_SMALL);
   data->iconimage = gtk_image_new_from_pixbuf (icon);
   gtk_misc_set_alignment (GTK_MISC (data->iconimage), 0.5, 1);
   g_object_unref (G_OBJECT (icon));
@@ -665,15 +704,15 @@ xfceweather_create_control (XfcePanelPlugin * plugin)
 
   xfce_panel_plugin_add_action_widget (plugin, data->tooltipbox);
 
-  g_signal_connect (data->tooltipbox, "button-press-event",
-                    G_CALLBACK (cb_click), (gpointer) data);
+  g_signal_connect (G_OBJECT (data->tooltipbox), "button-press-event",
+                    G_CALLBACK (cb_click), data);
 
   /* add refresh button to right click menu, for people who missed the middle mouse click feature */
   refresh = gtk_image_menu_item_new_from_stock ("gtk-refresh", NULL);
   gtk_widget_show (refresh);
 
-  g_signal_connect (refresh, "activate",
-                    G_CALLBACK (mi_click), (gpointer) data);
+  g_signal_connect (G_OBJECT (refresh), "activate",
+                    G_CALLBACK (mi_click), data);
 
   xfce_panel_plugin_menu_insert_item (plugin, GTK_MENU_ITEM (refresh));
 
@@ -696,10 +735,12 @@ xfceweather_create_control (XfcePanelPlugin * plugin)
   return data;
 }
 
-static void
-xfceweather_free (XfcePanelPlugin * plugin, xfceweather_data * data)
-{
 
+
+static void
+xfceweather_free (XfcePanelPlugin  *plugin,
+                  xfceweather_data *data)
+{
   if (data->weatherdata)
     xml_weather_free (data->weatherdata);
 
@@ -726,11 +767,13 @@ xfceweather_free (XfcePanelPlugin * plugin, xfceweather_data * data)
   panel_slice_free (xfceweather_data, data);
 }
 
-static gboolean
-xfceweather_set_size (XfcePanelPlugin * panel,
-                      int size, xfceweather_data * data)
-{
 
+
+static gboolean
+xfceweather_set_size (XfcePanelPlugin  *panel,
+                      gint              size,
+                      xfceweather_data *data)
+{
   data->size = size;
 
   /* arbitrary, choose something that works */
@@ -753,8 +796,10 @@ xfceweather_set_size (XfcePanelPlugin * panel,
   return TRUE;
 }
 
+
+
 static void
-weather_construct (XfcePanelPlugin * plugin)
+weather_construct (XfcePanelPlugin *plugin)
 {
   xfceweather_data *data;
 
@@ -768,16 +813,17 @@ weather_construct (XfcePanelPlugin * plugin)
 
   gtk_container_add (GTK_CONTAINER (plugin), data->tooltipbox);
 
-  g_signal_connect (plugin, "free-data", G_CALLBACK (xfceweather_free), data);
+  g_signal_connect (G_OBJECT (plugin), "free-data",
+                    G_CALLBACK (xfceweather_free), data);
 
-  g_signal_connect (plugin, "save",
+  g_signal_connect (G_OBJECT (plugin), "save",
                     G_CALLBACK (xfceweather_write_config), data);
 
-  g_signal_connect (plugin, "size-changed",
+  g_signal_connect (G_OBJECT (plugin), "size-changed",
                     G_CALLBACK (xfceweather_set_size), data);
 
   xfce_panel_plugin_menu_show_configure (plugin);
-  g_signal_connect (plugin, "configure-plugin",
+  g_signal_connect (G_OBJECT (plugin), "configure-plugin",
                     G_CALLBACK (xfceweather_create_options), data);
 
   update_plugin (data, TRUE);

@@ -15,10 +15,13 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef ICON_H
-#define ICON_H
+#ifndef __WEATHER_ICON_H__
+#define __WEATHER_ICON_H__
 
-G_BEGIN_DECLS GdkPixbuf *get_icon (const gchar * icon, GtkIconSize size);
+G_BEGIN_DECLS
+
+GdkPixbuf *get_icon (const gchar * icon, GtkIconSize size);
 
 G_END_DECLS
+
 #endif

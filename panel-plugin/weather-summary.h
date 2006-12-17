@@ -15,11 +15,12 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef SUMMARY_WINDOW_H
-#define SUMMARY_WINDOW_H
+#ifndef __WEATHER_SUMMARY_H__
+#define __WEATHER_SUMMARY_H__
 
 G_BEGIN_DECLS
-  GtkWidget * create_summary_window (xml_weather * data, units unit);
+
+GtkWidget * create_summary_window (xml_weather * data, units unit);
 
 G_END_DECLS
 #endif

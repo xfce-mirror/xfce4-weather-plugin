@@ -15,10 +15,12 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef SCROLLBOX_H
-#define SCROLLBOX_H
+#ifndef __WEATHER_SCROLLBOX_H__
+#define __WEATHER_SCROLLBOX_H__
 
-G_BEGIN_DECLS GType gtk_scrollbox_get_type (void);
+G_BEGIN_DECLS
+
+GType gtk_scrollbox_get_type (void);
 
 #define GTK_TYPE_SCROLLBOX             (gtk_scrollbox_get_type())
 #define GTK_SCROLLBOX(obj)             (G_TYPE_CHECK_INSTANCE_CAST((obj), GTK_TYPE_SCROLLBOX, GtkScrollbox))
@@ -32,17 +34,17 @@ typedef struct _GtkScrollboxClass GtkScrollboxClass;
 
 struct _GtkScrollbox
 {
-  GtkDrawingArea parent;
+  GtkDrawingArea  parent;
 
-  GPtrArray *labels;
+  GPtrArray      *labels;
 
-  gint draw_offset;
-  gint draw_maxoffset;
-  gint draw_middle;
-  gint draw_maxmiddle;
-  gint draw_timeout;
+  gint            draw_offset;
+  gint            draw_maxoffset;
+  gint            draw_middle;
+  gint            draw_maxmiddle;
+  gint            draw_timeout;
 
-  GdkPixmap *pixmap;
+  GdkPixmap      *pixmap;
 };
 
 struct _GtkScrollboxClass
@@ -59,4 +61,5 @@ void gtk_scrollbox_enablecb (GtkScrollbox * self, gboolean enable);
 void gtk_scrollbox_clear (GtkScrollbox * self);
 
 G_END_DECLS
+
 #endif

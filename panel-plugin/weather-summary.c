@@ -29,27 +29,35 @@
 #include "weather-translate.h"
 #include "weather-icon.h"
 
-#define BORDER 8
 
-#define APPEND_BTEXT(text) gtk_text_buffer_insert_with_tags(GTK_TEXT_BUFFER(buffer),\
-        &iter, text, -1, btag, NULL);
 
-#define APPEND_TEXT_ITEM_REAL(text) gtk_text_buffer_insert(GTK_TEXT_BUFFER(buffer), &iter, text, -1);
+#define BORDER                           8
+#define APPEND_BTEXT(text)               gtk_text_buffer_insert_with_tags(GTK_TEXT_BUFFER(buffer),\
+                                                                          &iter, text, -1, btag, NULL);
+#define APPEND_TEXT_ITEM_REAL(text)      gtk_text_buffer_insert(GTK_TEXT_BUFFER(buffer), \
+                                                                &iter, text, -1);\
+                                         g_free (value);
+#define APPEND_TEXT_ITEM(text, item)     value = g_strdup_printf("\t%s: %s %s\n",\
+                                                                 text,\
+                                                                 get_data(data, item),\
+                                                                 get_unit(unit, item));\
+                                         APPEND_TEXT_ITEM_REAL(value);
 
-#define APPEND_TEXT_ITEM(text, item) value = g_strdup_printf("\t%s: %s %s\n",\
-        text, get_data(data, item), get_unit(unit, item));\
-        APPEND_TEXT_ITEM_REAL(value); g_free(value);
+
 
 static GtkTooltips *tooltips = NULL;
 
+
+
 static GtkWidget *
-create_summary_tab (xml_weather * data, units unit)
+create_summary_tab (xml_weather *data,
+                    units        unit)
 {
   GtkTextBuffer *buffer;
-  GtkTextIter iter;
-  GtkTextTag *btag;
-  gchar *value, *date, *wind, *sun_val, *vis;
-  GtkWidget *view, *frame, *scrolled;
+  GtkTextIter    iter;
+  GtkTextTag    *btag;
+  gchar         *value, *date, *wind, *sun_val, *vis;
+  GtkWidget     *view, *frame, *scrolled;
 
   view = gtk_text_view_new ();
   gtk_text_view_set_editable (GTK_TEXT_VIEW (view), FALSE);
@@ -70,115 +78,96 @@ create_summary_tab (xml_weather * data, units unit)
     gtk_text_buffer_create_tag (buffer, NULL, "weight", PANGO_WEIGHT_BOLD,
                                 NULL);
 
-
-  value =
-    g_strdup_printf (_("Weather report for: %s.\n\n"), get_data (data, DNAM));
+  /* head */
+  value = g_strdup_printf (_("Weather report for: %s.\n\n"), get_data (data, DNAM));
   APPEND_BTEXT (value);
   g_free (value);
 
   date = translate_lsup (get_data (data, LSUP));
-  value =
-    g_strdup_printf (_
-                     ("Observation station located in %s\nLast update: %s.\n"),
-                     get_data (data, OBST), date ? date : get_data (data,
-                                                                    LSUP));
+  value = g_strdup_printf (_("Observation station located in %s\nLast update: %s.\n"),
+                           get_data (data, OBST), date ? date : get_data (data, LSUP));
+  g_free (date);
   APPEND_TEXT_ITEM_REAL (value);
 
-  if (date)
-    g_free (date);
-
-  g_free (value);
-
+  /* Temperature */
   APPEND_BTEXT (_("\nTemperature\n"));
   APPEND_TEXT_ITEM (_("Temperature"), TEMP);
   APPEND_TEXT_ITEM (_("Windchill"), FLIK);
 
   /* special case for TRANS because of translate_desc */
-  value = g_strdup_printf ("\t%s: %s\n",
-                           _("Description"),
+  value = g_strdup_printf ("\t%s: %s\n", _("Description"),
                            translate_desc (get_data (data, TRANS)));
   APPEND_TEXT_ITEM_REAL (value);
-  g_free (value);
-
   APPEND_TEXT_ITEM (_("Dew point"), DEWP);
 
+  /* Wind */
   APPEND_BTEXT (_("\nWind\n"));
   wind = translate_wind_speed (get_data (data, WIND_SPEED), unit);
   value = g_strdup_printf ("\t%s: %s\n", _("Speed"), wind);
-  APPEND_TEXT_ITEM_REAL (value);
   g_free (wind);
-  g_free (value);
+  APPEND_TEXT_ITEM_REAL (value);
 
   wind = translate_wind_direction (get_data (data, WIND_DIRECTION));
-  value = g_strdup_printf ("\t%s: %s\n",
-                           _("Direction"), wind ? wind : get_data (data,
-                                                                   WIND_DIRECTION));
-  if (wind)
-    g_free (wind);
+  value = g_strdup_printf ("\t%s: %s\n", _("Direction"),
+                           wind ? wind : get_data (data, WIND_DIRECTION));
+  g_free (wind);
   APPEND_TEXT_ITEM_REAL (value);
-  g_free (value);
 
   wind = translate_wind_speed (get_data (data, WIND_GUST), unit);
   value = g_strdup_printf ("\t%s: %s\n", _("Gusts"), wind);
-  APPEND_TEXT_ITEM_REAL (value);
   g_free (wind);
-  g_free (value);
+  APPEND_TEXT_ITEM_REAL (value);
 
+  /* UV */
   APPEND_BTEXT (_("\nUV\n"));
   APPEND_TEXT_ITEM (_("Index"), UV_INDEX);
-  value = g_strdup_printf ("\t%s: %s\n",
-                           _("Risk"),
+  value = g_strdup_printf ("\t%s: %s\n", _("Risk"),
                            translate_risk (get_data (data, UV_TRANS)));
   APPEND_TEXT_ITEM_REAL (value);
-  g_free (value);
 
+  /* Atmospheric pressure */
   APPEND_BTEXT (_("\nAtmospheric pressure\n"));
   APPEND_TEXT_ITEM (_("Pressure"), BAR_R);
 
-  value = g_strdup_printf ("\t%s: %s\n",
-                           _("State"),
+  value = g_strdup_printf ("\t%s: %s\n",  _("State"),
                            translate_bard (get_data (data, BAR_D)));
   APPEND_TEXT_ITEM_REAL (value);
-  g_free (value);
 
+  /* Sun */
   APPEND_BTEXT (_("\nSun\n"));
-
   sun_val = translate_time (get_data (data, SUNR));
   value = g_strdup_printf ("\t%s: %s\n",
-                           _("Rise"), sun_val ? sun_val : get_data (data,
-                                                                    SUNR));
-  if (sun_val)
-    g_free (sun_val);
+                           _("Rise"), sun_val ? sun_val : get_data (data, SUNR));
+  g_free (sun_val);
   APPEND_TEXT_ITEM_REAL (value);
-  g_free (value);
 
   sun_val = translate_time (get_data (data, SUNS));
   value = g_strdup_printf ("\t%s: %s\n",
-                           _("Set"), sun_val ? sun_val : get_data (data,
-                                                                   SUNS));
-  if (sun_val)
-    g_free (sun_val);
+                           _("Set"), sun_val ? sun_val : get_data (data, SUNS));
+  g_free (sun_val);
   APPEND_TEXT_ITEM_REAL (value);
-  g_free (value);
 
+  /* Other */
   APPEND_BTEXT (_("\nOther\n"));
   APPEND_TEXT_ITEM (_("Humidity"), HMID);
   vis = translate_visibility (get_data (data, VIS), unit);
   value = g_strdup_printf ("\t%s: %s\n", _("Visibility"), vis);
-  APPEND_TEXT_ITEM_REAL (value);
   g_free (vis);
-  g_free (value);
+  APPEND_TEXT_ITEM_REAL (value);
 
   return frame;
 }
 
+
+
 static GtkWidget *
-make_forecast (xml_dayf * weatherdata, units unit)
+make_forecast (xml_dayf *weatherdata,
+               units     unit)
 {
-  GtkWidget *item_vbox, *temp_hbox, *icon_hbox, *label, *icon_d, *icon_n,
-    *box_d, *box_n;
+  GtkWidget *item_vbox, *temp_hbox, *icon_hbox,
+            *label, *icon_d, *icon_n, *box_d, *box_n;
   GdkPixbuf *icon;
-  gchar *str, *day, *wind;
+  gchar     *str, *day, *wind;
 
   DBG ("this day %s", weatherdata->day);
 
@@ -190,13 +179,12 @@ make_forecast (xml_dayf * weatherdata, units unit)
   gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
 
   day = translate_day (get_data_f (weatherdata, WDAY));
+  str = g_strdup_printf ("<b>%s</b>", day ? day : get_data_f (weatherdata, WDAY));
+  g_free (day);
 
-  str =
-    g_strdup_printf ("<b>%s</b>", day ? day : get_data_f (weatherdata, WDAY));
-  if (day)
-    g_free (day);
   gtk_label_set_markup (GTK_LABEL (label), str);
   g_free (str);
+
   gtk_box_pack_start (GTK_BOX (item_vbox), label, FALSE, FALSE, 0);
 
   icon_hbox = gtk_hbox_new (FALSE, 0);
@@ -216,14 +204,13 @@ make_forecast (xml_dayf * weatherdata, units unit)
   if (G_UNLIKELY (!tooltips))
     tooltips = gtk_tooltips_new ();
 
-  str =
-    g_strdup_printf (_("Day: %s"),
-                     translate_desc (get_data_f (weatherdata, TRANS_D)));
+  str = g_strdup_printf (_("Day: %s"),
+                         translate_desc (get_data_f (weatherdata, TRANS_D)));
   gtk_tooltips_set_tip (tooltips, box_d, str, NULL);
   g_free (str);
-  str =
-    g_strdup_printf (_("Night: %s"),
-                     translate_desc (get_data_f (weatherdata, TRANS_N)));
+
+  str = g_strdup_printf (_("Night: %s"),
+                         translate_desc (get_data_f (weatherdata, TRANS_N)));
   gtk_tooltips_set_tip (tooltips, box_n, str, NULL);
   g_free (str);
 
@@ -243,20 +230,20 @@ make_forecast (xml_dayf * weatherdata, units unit)
   gtk_label_set_markup (GTK_LABEL (label), str);
   g_free (str);
   gtk_box_pack_start (GTK_BOX (temp_hbox), label, TRUE, TRUE, 0);
+
   label = gtk_label_new (NULL);
   gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
   str = g_strdup_printf ("%s %%", get_data_f (weatherdata, PPCP_N));
   gtk_label_set_markup (GTK_LABEL (label), str);
   g_free (str);
+
   gtk_box_pack_start (GTK_BOX (temp_hbox), label, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (item_vbox), temp_hbox, FALSE, FALSE, 0);
-
 
   label = gtk_label_new (NULL);
   gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
   gtk_label_set_markup (GTK_LABEL (label), _("<b>Temperature</b>"));
   gtk_box_pack_start (GTK_BOX (item_vbox), label, FALSE, FALSE, 0);
-
 
   temp_hbox = gtk_hbox_new (FALSE, 0);
   label = gtk_label_new (NULL);
@@ -277,7 +264,6 @@ make_forecast (xml_dayf * weatherdata, units unit)
   gtk_box_pack_start (GTK_BOX (temp_hbox), label, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (item_vbox), temp_hbox, FALSE, FALSE, 0);
 
-
   label = gtk_label_new (NULL);
   gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
   gtk_label_set_markup (GTK_LABEL (label), _("<b>Wind</b>"));
@@ -291,8 +277,7 @@ make_forecast (xml_dayf * weatherdata, units unit)
   gtk_label_set_markup (GTK_LABEL (label),
                         wind ? wind : get_data_f (weatherdata,
                                                   W_DIRECTION_D));
-  if (wind)
-    g_free (wind);
+  g_free (wind);
 
   gtk_box_pack_start (GTK_BOX (temp_hbox), label, TRUE, TRUE, 0);
 
@@ -303,13 +288,12 @@ make_forecast (xml_dayf * weatherdata, units unit)
   gtk_label_set_markup (GTK_LABEL (label),
                         wind ? wind : get_data_f (weatherdata,
                                                   W_DIRECTION_N));
-  if (wind)
-    g_free (wind);
+  g_free (wind);
+
   gtk_box_pack_start (GTK_BOX (temp_hbox), label, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (item_vbox), temp_hbox, FALSE, FALSE, 0);
 
   /* speed */
-
   temp_hbox = gtk_hbox_new (FALSE, 2);
   label = gtk_label_new (NULL);
   gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
@@ -333,11 +317,14 @@ make_forecast (xml_dayf * weatherdata, units unit)
   return item_vbox;
 }
 
+
+
 static GtkWidget *
-create_forecast_tab (xml_weather * data, units unit)
+create_forecast_tab (xml_weather *data,
+                     units        unit)
 {
   GtkWidget *widg = gtk_hbox_new (FALSE, 0);
-  guint i;
+  guint      i;
 
   gtk_container_set_border_width (GTK_CONTAINER (widg), 6);
 
@@ -366,11 +353,14 @@ create_forecast_tab (xml_weather * data, units unit)
   return widg;
 }
 
+
+
 GtkWidget *
-create_summary_window (xml_weather * data, units unit)
+create_summary_window (xml_weather *data,
+                       units        unit)
 {
   GtkWidget *window, *notebook, *vbox;
-  gchar *title;
+  gchar     *title;
   GdkPixbuf *icon;
 
   window = xfce_titled_dialog_new_with_buttons (_("Weather Update"),
@@ -379,8 +369,7 @@ create_summary_window (xml_weather * data, units unit)
                                                 GTK_STOCK_OK,
                                                 GTK_RESPONSE_ACCEPT, NULL);
 
-  title =
-    g_strdup_printf (_("Weather report for: %s"), get_data (data, DNAM));
+  title = g_strdup_printf (_("Weather report for: %s"), get_data (data, DNAM));
 
   xfce_titled_dialog_set_subtitle (XFCE_TITLED_DIALOG (window), title);
   g_free (title);
@@ -392,7 +381,7 @@ create_summary_window (xml_weather * data, units unit)
   icon = get_icon (get_data (data, WICON), GTK_ICON_SIZE_DIALOG);
 
   if (!icon)
-    icon = get_icon ("25", GTK_ICON_SIZE_DIALOG);
+    icon = get_icon ("99", GTK_ICON_SIZE_DIALOG);
 
   gtk_window_set_icon (GTK_WINDOW (window), icon);
   g_object_unref (G_OBJECT (icon));
@@ -408,7 +397,7 @@ create_summary_window (xml_weather * data, units unit)
 
   gtk_box_pack_start (GTK_BOX (vbox), notebook, TRUE, TRUE, 0);
 
-  g_signal_connect (window, "response",
+  g_signal_connect (G_OBJECT (window), "response",
                     G_CALLBACK (gtk_widget_destroy), window);
 
   gtk_window_set_default_size (GTK_WINDOW (window), 500, 400);

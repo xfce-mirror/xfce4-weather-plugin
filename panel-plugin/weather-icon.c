@@ -24,14 +24,19 @@
 
 #include "weather-icon.h"
 
+
+
 #define DEFAULT_W_THEME "liquid"
 
+
+
 GdkPixbuf *
-get_icon (const gchar * number, GtkIconSize size)
+get_icon (const gchar *number,
+          GtkIconSize  size)
 {
   GdkPixbuf *image = NULL;
-  gchar *filename;
-  gint width, height;
+  gchar     *filename;
+  gint       width, height;
 
   gtk_icon_size_lookup (size, &width, &height);
 

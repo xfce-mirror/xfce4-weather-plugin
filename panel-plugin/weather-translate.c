@@ -28,8 +28,24 @@
 #include "weather-translate.h"
 
 
+
+#define HDATE_N    (sizeof(gchar) * 100)
+#define DAY_LOC_N  (sizeof(gchar) * 20)
+#define TIME_LOC_N (sizeof(gchar) * 20)
+
+
+
 static const gchar *desc_strings[] = {
-  N_("Snow to Rain"),
+  N_("AM Clouds / PM Sun"),
+  N_("AM Light Rain"),
+  N_("AM Light Snow"),
+  N_("AM Rain / Snow Showers"),
+  N_("AM Rain / Wind"),
+  N_("AM Showers"),
+  N_("AM Showers / Wind"),
+  N_("AM Snow Showers"),
+  N_("AM Snow Showers / Wind"),
+  N_("AM T-Storms"),
   N_("Becoming Cloudy"),
   N_("Blizzard"),
   N_("Blizzard Conditions"),
@@ -43,87 +59,122 @@ static const gchar *desc_strings[] = {
   N_("Clear"),
   N_("Clearing"),
   N_("Clouds"),
+  N_("Clouds Early / Clearing Late"),
   N_("Cloudy"),
+  N_("Cloudy / Wind"),
   N_("Cloudy Periods"),
   N_("Continued Hot"),
   N_("Cumulonimbus Clouds Observed"),
   N_("Drifting Snow"),
+  N_("Drifting Snow and Windy"),
   N_("Drizzle"),
   N_("Dry"),
+  N_("Dust"),
   N_("Fair"),
-  N_("Flurries"),
+  N_("Few Showers"),
+  N_("Few Snow Showers"),
   N_("Fog"),
   N_("Freezing Drizzle"),
   N_("Freezing Rain"),
   N_("Freezing Rain/Snow"),
+  N_("Frigid"),
   N_("Frozen Precip"),
+  N_("Hail"),
+  N_("Haze"),
   N_("Hazy"),
   N_("Heavy Rain"),
   N_("Heavy Snow"),
   N_("Hot And Humid"),
+  N_("Hot!"),
   N_("Ice Crystals"),
   N_("Ice/Snow Mixture"),
   N_("Increasing Clouds"),
   N_("Isolated Showers"),
+  N_("Isolated T-Storms"),
+  N_("Light Drizzle"),
+  N_("Light Drizzle and Windy"),
   N_("Light Rain"),
+  N_("Light Rain / Wind"),
+  N_("Light rain late"),
+  N_("Light Rain Shower"),
   N_("Light Snow"),
   N_("Lightning Observed"),
-  N_("mild and breezy"),
+  N_("Mild and Breezy"),
   N_("Mist"),
   N_("Mostly Clear"),
   N_("Mostly Cloudy"),
+  N_("Mostly Cloudy / Wind"),
+  N_("Mostly Cloudy and Windy"),
   N_("Mostly Sunny"),
-  N_("N/A"),
+  N_("Mostly Sunny / Wind"),
+  N_("N/A Not Available"),
   N_("Occasional Sunshine"),
   N_("Overcast"),
   N_("Partial Clearing"),
+  N_("Partial Fog"),
   N_("Partial Sunshine"),
   N_("Partly Cloudy"),
+  N_("Partly Cloudy / Wind"),
+  N_("Partly Cloudy and Windy"),
   N_("Partly Sunny"),
+  N_("PM Light Rain"),
+  N_("PM Light Snow"),
+  N_("PM Rain / Wind"),
+  N_("PM Showers"),
+  N_("PM Snow Showers"),
+  N_("PM T-Storms"),
   N_("Rain"),
+  N_("Rain / Snow"),
+  N_("Rain / Snow / Wind"),
+  N_("Rain / Snow Late"),
+  N_("Rain / Snow Showers"),
+  N_("Rain / Thunder"),
+  N_("Rain / Wind"),
+  N_("Rain and Sleet"),
   N_("Rain and Snow"),
   N_("Rain or Snow"),
-  N_("Rain Showers"),
-  N_("Rain to Snow"),
-  N_("Rain / Snow Showers"),
+  N_("Rain Shower"),
+  N_("Rain Shower and Windy"),
+  N_("Rain to snow"),
+  N_("Rain/Lightning"),
+  N_("Scattered Showers"),
+  N_("Scattered Snow Showers"),
+  N_("Scattered Snow Showers / Wind"),
+  N_("Scattered T-Storms"),
   N_("Showers"),
-  N_("Sleet"),
+  N_("Showers / Wind"),
+  N_("Showers Early"),
+  N_("Showers in the Vicinity"),
+  N_("Showers in the Vincinity"),
+  N_("Showers Late"),
   N_("Sleet and Snow"),
   N_("Smoke"),
   N_("Snow"),
   N_("Snow and Rain"),
   N_("Snow or Rain"),
-  N_("Snow Showers"),
+  N_("Snow Shower"),
+  N_("Snow Shower / Wind"),
+  N_("Snow Showers Early"),
+  N_("Snow Showers early"),
+  N_("Snow Showers Late"),
+  N_("Snow to Rain"),
   N_("Sunny"),
+  N_("Sunny / Wind"),
+  N_("T-Showers"),
+  N_("T-Storm"),
+  N_("T-Storms / Wind"),
+  N_("T-Storms Early"),
   N_("Thunder"),
-  N_("Thunder storms"),
+  N_("Thunder in the Vincinity"),
   N_("Variable Cloudiness"),
   N_("Variable Clouds"),
-  N_("Windy"),
+  N_("Windy/Rain"),
+  N_("Windy/Snow"),
   N_("Wintry Mix"),
-  N_("Showers in the Vicinity"),
-  N_("Light Rain Shower"),
-  N_("Showers Late"),
-  N_("PM Showers"),
-  N_("Light Rain / Wind"),
-  N_("Scattered Showers"),
-  N_("PM Light Rain"),
-  N_("AM Showers"),
-  N_("AM Light Rain"),
-  N_("Partly Cloudy and Windy"),
-  N_("Few Showers"),
-  N_("Light Drizzle"),
-  N_("Clouds Early / Clearing Late"),
-  N_("Mostly Cloudy and Windy"),
-  N_("Rain / Snow"),
-  N_("Rain and Sleet"),
-  N_("Snow Showers Late"),
-  N_("Light Drizzle and Windy"),
-  N_("Snow Shower"),
-  N_("Snow Showers Early"),
-  N_("Few Snow Showers"),
   NULL
 };
+
+
 
 static const gchar *bard_strings[] = {
   N_("rising"),
@@ -131,6 +182,8 @@ static const gchar *bard_strings[] = {
   N_("falling"),
   NULL
 };
+
+
 
 static const gchar *risk_strings[] = {
   N_("Low"),
@@ -140,6 +193,8 @@ static const gchar *risk_strings[] = {
   N_("Extreme"),
   NULL
 };
+
+
 
 static const gchar *wdirs[] = {
   N_("S"),
@@ -161,10 +216,13 @@ static const gchar *wdirs[] = {
   NULL
 };
 
+
+
 static const gchar *
-translate_str (const gchar ** loc_strings, const gchar * str)
+translate_str (const gchar **loc_strings,
+               const gchar  *str)
 {
-  gint loc_string_len, str_len;
+  gint  loc_string_len, str_len;
   guint i;
 
   if (str == NULL)
@@ -192,28 +250,38 @@ translate_str (const gchar ** loc_strings, const gchar * str)
   return str;
 }
 
+
+
 const gchar *
-translate_bard (const gchar * bard)
+translate_bard (const gchar *bard)
 {
   return translate_str (bard_strings, bard);
 }
 
+
+
 const gchar *
-translate_risk (const gchar * risk)
+translate_risk (const gchar *risk)
 {
   return translate_str (risk_strings, risk);
 }
 
+
+
 const gchar *
-translate_desc (const gchar * desc)
+translate_desc (const gchar *desc)
 {
   return translate_str (desc_strings, desc);
 }
 
+
+
 /* used by translate_lsup and translate_time */
 static void
-_fill_time (struct tm *time,
-            const gchar * hour, const gchar * minute, const gchar * am)
+_fill_time (struct tm   *time,
+            const gchar *hour,
+            const gchar *minute,
+            const gchar *am)
 {
   time->tm_hour = atoi (hour);
 
@@ -227,16 +295,13 @@ _fill_time (struct tm *time,
 
 
 
-#define HDATE_N sizeof(gchar) * 100
 gchar *
-translate_lsup (const gchar * lsup)
+translate_lsup (const gchar *lsup)
 {
-  gchar *hdate;
-  struct tm time;
-  gint size = 0, i = 0;
-
-
-  gchar **lsup_split;
+  gchar      *hdate;
+  struct tm   time;
+  gint        size = 0, i = 0;
+ gchar      **lsup_split;
 
   if (lsup == NULL || strlen (lsup) == 0)
     return NULL;
@@ -274,16 +339,16 @@ translate_lsup (const gchar * lsup)
     return NULL;
 }
 
-#define DAY_LOC_N sizeof(gchar) * 20
+
+
 gchar *
-translate_day (const gchar * day)
+translate_day (const gchar *day)
 {
-  gint wday = -1;
-  guint i;
-  const gchar *days[] = {
-    "su", "mo", "tu", "we", "th", "fr", "sa", NULL
-  };
-  gchar *day_loc;
+  gint         wday = -1;
+  struct tm    time;
+  guint        i;
+  const gchar *days[] = {"su", "mo", "tu", "we", "th", "fr", "sa", NULL};
+  gchar       *day_loc;
 
   if (day == NULL || strlen (day) < 2)
     return NULL;
@@ -296,8 +361,6 @@ translate_day (const gchar * day)
     return NULL;
   else
     {
-      struct tm time;
-
       time.tm_wday = wday;
 
       day_loc = g_malloc (DAY_LOC_N);
@@ -308,13 +371,16 @@ translate_day (const gchar * day)
     }
 }
 
+
+
 /* NNW  VAR */
 gchar *
-translate_wind_direction (const gchar * wdir)
+translate_wind_direction (const gchar *wdir)
 {
-  gint wdir_len;
-  guint i;
-  gchar *wdir_loc;
+  gint   wdir_len;
+  guint  i;
+  gchar *wdir_loc, *tmp;
+  gchar  wdir_i[2];
 
   if (wdir == NULL || (wdir_len = strlen (wdir)) < 1)
     return NULL;
@@ -335,9 +401,6 @@ translate_wind_direction (const gchar * wdir)
       wdir_loc = g_strdup ("");
       for (i = 0; i < strlen (wdir); i++)
         {
-          gchar wdir_i[2];
-          gchar *tmp;
-
           wdir_i[0] = wdir[i];
           wdir_i[1] = '\0';
 
@@ -352,9 +415,12 @@ translate_wind_direction (const gchar * wdir)
   return wdir_loc;
 }
 
+
+
 /* calm or a number */
 gchar *
-translate_wind_speed (const gchar * wspeed, units unit)
+translate_wind_speed (const gchar *wspeed,
+                      units        unit)
 {
   gchar *wspeed_loc;
 
@@ -369,14 +435,14 @@ translate_wind_speed (const gchar * wspeed, units unit)
   return wspeed_loc;
 }
 
-/* 8:13 AM */
-#define TIME_LOC_N sizeof(gchar) * 20
+
+
 gchar *
-translate_time (const gchar * time)
+translate_time (const gchar *time)
 {
-  gchar **time_split, *time_loc;
-  int i = 0, size = 0;
-  struct tm time_tm;
+  gchar     **time_split, *time_loc;
+  gint        i = 0, size = 0;
+  struct tm   time_tm;
 
   if (strlen (time) == 0)
     return NULL;
@@ -399,9 +465,12 @@ translate_time (const gchar * time)
   return time_loc;
 }
 
+
+
 /* Unlimited or a number */
 gchar *
-translate_visibility (const gchar * vis, units unit)
+translate_visibility (const gchar *vis,
+                      units        unit)
 {
   gchar *vis_loc;
 

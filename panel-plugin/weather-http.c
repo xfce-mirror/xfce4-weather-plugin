@@ -37,32 +37,36 @@
 
 struct request_data
 {
-  int fd;
+  gint       fd;
 
-  FILE *save_fp;
-  gchar *save_filename;
-  gchar **save_buffer;
+  FILE      *save_fp;
+  gchar     *save_filename;
+  gchar    **save_buffer;
 
-  gboolean has_header;
-  gchar last_chars[4];
+  gboolean   has_header;
+  gchar      last_chars[4];
 
-  gchar *request_buffer;
-  gint offset;
-  gint size;
+  gchar     *request_buffer;
+  gint       offset;
+  gint       size;
 
-  CB_TYPE cb_function;
-  gpointer cb_data;
+  CB_TYPE    cb_function;
+  gpointer   cb_data;
 };
+
+
 
 static gboolean keep_receiving (gpointer data);
 
 
-static int
-http_connect (gchar * hostname, gint port)
+
+static gint
+http_connect (gchar *hostname,
+              gint   port)
 {
-  struct sockaddr_in dest_host;
-  struct hostent *host_address;
-  gint fd;
+  struct sockaddr_in  dest_host;
+  struct hostent     *host_address;
+  gint                fd;
 
   if ((host_address = gethostbyname (hostname)) == NULL)
     return -1;
@@ -87,14 +91,13 @@ http_connect (gchar * hostname, gint port)
 
 }
 
+
+
 static void
 request_free (struct request_data *request)
 {
-  if (request->request_buffer)
-    g_free (request->request_buffer);
-
-  if (request->save_filename)
-    g_free (request->save_filename);
+  g_free (request->request_buffer);
+  g_free (request->save_filename);
 
   if (request->save_fp)
     fclose (request->save_fp);
@@ -105,9 +108,14 @@ request_free (struct request_data *request)
   panel_slice_free (struct request_data, request);
 }
 
+
+
 static void
-request_save (struct request_data *request, const gchar * buffer)
+request_save (struct request_data *request,
+              const gchar         *buffer)
 {
+  gchar *newbuff;
+
   DBG ("Request Save");
 
   if (request->save_filename)
@@ -123,7 +131,7 @@ request_save (struct request_data *request, const gchar * buffer)
     {
       if (*request->save_buffer)
         {
-          gchar *newbuff = g_strconcat (*request->save_buffer, buffer, NULL);
+          newbuff = g_strconcat (*request->save_buffer, buffer, NULL);
           g_free (*request->save_buffer);
           *request->save_buffer = newbuff;
         }
@@ -132,11 +140,13 @@ request_save (struct request_data *request, const gchar * buffer)
     }
 }
 
+
+
 static gboolean
 keep_sending (gpointer data)
 {
   struct request_data *request = (struct request_data *) data;
-  gint n;
+  gint                 n;
 
   if (!request)
     {
@@ -161,9 +171,6 @@ keep_sending (gpointer data)
     }
   else if (errno != EAGAIN)        /* some other error happened */
     {
-#if DEBUG
-      perror ("keep_sending()");
-#endif
 
       DBG ("file desc: %d", request->fd);
 
@@ -174,14 +181,15 @@ keep_sending (gpointer data)
   return TRUE;
 }
 
+
+
 static gboolean
 keep_receiving (gpointer data)
 {
   struct request_data *request = (struct request_data *) data;
-  gchar recvbuffer[1024];
-  gint n;
-  gchar *p;
-  gchar *str = NULL;
+  gchar                recvbuffer[1024];
+  gint                 n;
+  gchar               *p, *str = NULL;
 
   if (!request)
     {
@@ -222,11 +230,11 @@ keep_receiving (gpointer data)
   else if (n == 0)
     {
       CB_TYPE callback = request->cb_function;
-      gpointer data = request->cb_data;
+
       DBG ("keep_receiving(): ending with succes");
       request_free (request);
 
-      callback (TRUE, data);
+      callback (TRUE, request->cb_data);
       return FALSE;
     }
   else if (errno != EAGAIN)
@@ -243,20 +251,21 @@ keep_receiving (gpointer data)
 
 
 static gboolean
-http_get (gchar * url,
-          gchar * hostname,
-          gboolean savefile,
-          gchar ** fname_buff,
-          gchar * proxy_host,
-          gint proxy_port, CB_TYPE callback, gpointer data)
+http_get (gchar     *url,
+          gchar     *hostname,
+          gboolean   savefile,
+          gchar    **fname_buff,
+          gchar     *proxy_host,
+          gint       proxy_port,
+          CB_TYPE    callback,
+          gpointer   data)
 {
   struct request_data *request = panel_slice_new0 (struct request_data);
 
   if (!request)
     {
-#if DEBUG
-      perror ("http_get(): empty request");
-#endif
+      DBG ("http_get(): empty request");
+
       return FALSE;
     }
 
@@ -292,9 +301,9 @@ http_get (gchar * url,
 
   if (request->request_buffer == NULL)
     {
-#if DEBUG
-      perror ("http_get(): empty request buffer\n");
-#endif
+
+      DBG ("http_get(): empty request buffer");
+
       close (request->fd);
       panel_slice_free (struct request_data, request);
       return FALSE;
@@ -316,23 +325,31 @@ http_get (gchar * url,
   return TRUE;
 }
 
+
+
 gboolean
-http_get_file (gchar * url,
-               gchar * hostname,
-               gchar * filename,
-               gchar * proxy_host,
-               gint proxy_port, CB_TYPE callback, gpointer data)
+http_get_file (gchar    *url,
+               gchar    *hostname,
+               gchar    *filename,
+               gchar    *proxy_host,
+               gint      proxy_port,
+               CB_TYPE   callback,
+               gpointer  data)
 {
   return http_get (url, hostname, TRUE, &filename, proxy_host, proxy_port,
                    callback, data);
 }
 
+
+
 gboolean
-http_get_buffer (gchar * url,
-                 gchar * hostname,
-                 gchar * proxy_host,
-                 gint proxy_port,
-                 gchar ** buffer, CB_TYPE callback, gpointer data)
+http_get_buffer (gchar     *url,
+                 gchar     *hostname,
+                 gchar     *proxy_host,
+                 gint       proxy_port,
+                 gchar    **buffer,
+                 CB_TYPE    callback,
+                 gpointer   data)
 {
   return http_get (url, hostname, FALSE, buffer, proxy_host, proxy_port,
                    callback, data);

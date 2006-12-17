@@ -15,49 +15,52 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef PLUGIN_H
-#define PLUGIN_H
+#ifndef __WEATHER_H__
+#define __WEATHER_H__
 
 #include <libxfce4panel/xfce-panel-plugin.h>
 #include <libxfce4util/libxfce4util.h>
 
-G_BEGIN_DECLS typedef struct
+G_BEGIN_DECLS
+
+typedef struct
 {
   XfcePanelPlugin *plugin;
 
-  GtkTooltips *tooltips;
+  GtkTooltips     *tooltips;
 
-  GtkWidget *scrollbox;
-  GtkWidget *iconimage;
-  GtkWidget *tooltipbox;
+  GtkWidget       *scrollbox;
+  GtkWidget       *iconimage;
+  GtkWidget       *tooltipbox;
 
-  GtkWidget *summary_window;
+  GtkWidget       *summary_window;
 
-  GArray *labels;
+  GArray          *labels;
 
-  GtkIconSize iconsize;
+  GtkIconSize      iconsize;
 
-  gint size;
-  gint updatetimeout;
+  gint             size;
+  gint             updatetimeout;
 
-  gchar *location_code;
+  gchar           *location_code;
 
-  units unit;
+  units            unit;
 
-  xml_weather *weatherdata;
+  xml_weather     *weatherdata;
 
-  gchar *proxy_host;
-  gint proxy_port;
+  gchar           *proxy_host;
+  gint             proxy_port;
 
-  gboolean proxy_fromenv;
+  gboolean         proxy_fromenv;
   /* used for storing the configured
    * but not active proxy setttings */
-  gchar *saved_proxy_host;
-  gint saved_proxy_port;
+  gchar           *saved_proxy_host;
+  gint             saved_proxy_port;
 }
 xfceweather_data;
 
 gboolean check_envproxy (gchar ** proxy_host, gint * proxy_port);
 
 G_END_DECLS
+
 #endif

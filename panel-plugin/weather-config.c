@@ -243,6 +243,8 @@ apply_options (xfceweather_dialog *dialog)
     cb (data);
 }
 
+
+
 static int
 option_i (datas opt)
 {
@@ -256,6 +258,8 @@ option_i (datas opt)
 
   return -1;
 }
+
+
 
 static gboolean
 cb_findlocation (GtkButton *button,
@@ -275,6 +279,7 @@ cb_findlocation (GtkButton *button,
 
   return FALSE;
 }
+
 
 
 xfceweather_dialog *
@@ -335,7 +340,8 @@ create_config_dialog (xfceweather_data *data,
   button = gtk_button_new ();
   image = gtk_image_new_from_stock (GTK_STOCK_FIND, GTK_ICON_SIZE_BUTTON);
   gtk_container_add (GTK_CONTAINER (button), image);
-  g_signal_connect (button, "clicked", G_CALLBACK (cb_findlocation), dialog);
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (cb_findlocation), dialog);
 
   hbox = gtk_hbox_new (FALSE, BORDER);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
@@ -375,19 +381,16 @@ create_config_dialog (xfceweather_data *data,
 
   gtk_box_pack_start (GTK_BOX (vbox), hbox2, FALSE, FALSE, 0);
 
-  g_signal_connect (dialog->chk_proxy_use, "toggled", G_CALLBACK (cb_toggle),
-                    (gpointer) dialog->txt_proxy_host);
-  g_signal_connect (dialog->chk_proxy_use, "toggled", G_CALLBACK (cb_toggle),
-                    (gpointer) dialog->txt_proxy_port);
-  g_signal_connect (dialog->chk_proxy_use, "toggled", G_CALLBACK (cb_toggle),
-                    (gpointer) dialog->chk_proxy_fromenv);
-
-  g_signal_connect (dialog->chk_proxy_fromenv, "toggled",
-                    G_CALLBACK (cb_not_toggle),
-                    (gpointer) dialog->txt_proxy_host);
-  g_signal_connect (dialog->chk_proxy_fromenv, "toggled",
-                    G_CALLBACK (cb_not_toggle),
-                    (gpointer) dialog->txt_proxy_port);
+  g_signal_connect (G_OBJECT (dialog->chk_proxy_use), "toggled",
+                    G_CALLBACK (cb_toggle), dialog->txt_proxy_host);
+  g_signal_connect (G_OBJECT (dialog->chk_proxy_use), "toggled",
+                    G_CALLBACK (cb_toggle), dialog->txt_proxy_port);
+  g_signal_connect (G_OBJECT (dialog->chk_proxy_use), "toggled",
+                    G_CALLBACK (cb_toggle), dialog->chk_proxy_fromenv);
+  g_signal_connect (G_OBJECT (dialog->chk_proxy_fromenv), "toggled",
+                    G_CALLBACK (cb_not_toggle), dialog->txt_proxy_host);
+  g_signal_connect (G_OBJECT (dialog->chk_proxy_fromenv), "toggled",
+                    G_CALLBACK (cb_not_toggle), dialog->txt_proxy_port);
 
   if (dialog->wd->saved_proxy_host != NULL)
     {
@@ -417,7 +420,6 @@ create_config_dialog (xfceweather_data *data,
 
 
   /* labels */
-
   dialog->opt_xmloption = make_label ();
   dialog->mdl_xmloption = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_INT);
   dialog->lst_xmloption =
@@ -466,13 +468,17 @@ create_config_dialog (xfceweather_data *data,
   g_object_unref (G_OBJECT (sg));
   g_object_unref (G_OBJECT (sg_buttons));
 
-  g_signal_connect (button_add, "clicked", G_CALLBACK (cb_addoption), dialog);
-  g_signal_connect (button_del, "clicked", G_CALLBACK (cb_deloption), dialog);
+  g_signal_connect (G_OBJECT (button_add), "clicked",
+                    G_CALLBACK (cb_addoption), dialog);
+  g_signal_connect (G_OBJECT (button_del), "clicked",
+                    G_CALLBACK (cb_deloption), dialog);
 
   gtk_widget_show_all (vbox);
 
   return dialog;
 }
+
+
 
 void
 set_callback_config_dialog (xfceweather_dialog *dialog,

@@ -15,10 +15,12 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#ifndef GET_DATA_H
-#define GET_DATA_H
+#ifndef __WEATHER_DATA_H__
+#define __WEATHER_DATA_H__
 
-G_BEGIN_DECLS typedef enum
+G_BEGIN_DECLS
+
+typedef enum
 {
   _WIND_SPEED,
   _WIND_GUST,
@@ -44,29 +46,23 @@ datas_uv;
 typedef enum
 {
   /* cc */
-  LSUP = 0x0101,
-  OBST = 0x0102,
-  TRANS = 0x0103,
-  UV_INDEX = 0x0105,
-  UV_TRANS = 0x0106,
+  LSUP           = 0x0101,
+  OBST           = 0x0102,
+  TRANS          = 0x0103,
+  UV_INDEX       = 0x0105,
+  UV_TRANS       = 0x0106,
   WIND_DIRECTION = 0x0107,
-  BAR_D = 0x0108,
-  WIND_TRANS = 0x0109,
-  WICON = 0x0110,
-
-  FLIK = 0x0120,
-  TEMP = 0x0121,
-  DEWP = 0x0122,
-
-  HMID = 0x0130,
-
-  WIND_SPEED = 0x0140,
-  WIND_GUST = 0x0141,
-
-
-  BAR_R = 0x0150,
-
-  VIS = 0x0160
+  BAR_D          = 0x0108,
+  WIND_TRANS     = 0x0109,
+  WICON          = 0x0110,
+  FLIK           = 0x0120,
+  TEMP           = 0x0121,
+  DEWP           = 0x0122,
+  HMID           = 0x0130,
+  WIND_SPEED     = 0x0140,
+  WIND_GUST      = 0x0141,
+  BAR_R          = 0x0150,
+  VIS            = 0x0160
 }
 datas;
 
@@ -80,30 +76,27 @@ datas_loc;
 
 typedef enum
 {
-  ITEMS = 0x0100,
-  WDAY = 0x0101,
-  TEMP_MIN = 0x0102,
-  TEMP_MAX = 0x0103,
-
-  F_ICON = 0x0001,
-  F_PPCP = 0x0002,
+  ITEMS         = 0x0100,
+  WDAY          = 0x0101,
+  TEMP_MIN      = 0x0102,
+  TEMP_MAX      = 0x0103,
+  F_ICON        = 0x0001,
+  F_PPCP        = 0x0002,
   F_W_DIRECTION = 0x0003,
-  F_W_SPEED = 0x0004,
-  F_TRANS = 0x0005,
-
-  NPART = 0x0200,
-  ICON_N = 0x0201,
-  PPCP_N = 0x0202,
+  F_W_SPEED     = 0x0004,
+  F_TRANS       = 0x0005,
+  NPART         = 0x0200,
+  ICON_N        = 0x0201,
+  PPCP_N        = 0x0202,
   W_DIRECTION_N = 0x0203,
-  W_SPEED_N = 0x0204,
-  TRANS_N = 0x0205,
-
-  DPART = 0x0300,
-  ICON_D = 0x0301,
-  PPCP_D = 0x0302,
+  W_SPEED_N     = 0x0204,
+  TRANS_N       = 0x0205,
+  DPART         = 0x0300,
+  ICON_D        = 0x0301,
+  PPCP_D        = 0x0302,
   W_DIRECTION_D = 0x0303,
-  W_SPEED_D = 0x0304,
-  TRANS_D = 0x0305
+  W_SPEED_D     = 0x0304,
+  TRANS_D       = 0x0305
 }
 forecast;
 
@@ -123,4 +116,5 @@ const gchar *get_unit (units unit, datas type);
 void free_get_data_buffer (void);
 
 G_END_DECLS
+
 #endif

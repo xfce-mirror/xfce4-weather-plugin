@@ -30,8 +30,12 @@
 
 #define BORDER 8
 
+
+
 static void
-append_result (GtkListStore * mdl, gchar * id, gchar * city)
+append_result (GtkListStore *mdl,
+               gchar        *id,
+               gchar        *city)
 {
   GtkTreeIter iter;
 
@@ -39,11 +43,13 @@ append_result (GtkListStore * mdl, gchar * id, gchar * city)
   gtk_list_store_set (mdl, &iter, 0, city, 1, id, -1);
 }
 
+
+
 static gchar *
-sanitize_str (const gchar * str)
+sanitize_str (const gchar *str)
 {
   GString *retstr = g_string_sized_new (strlen (str));
-  gchar *realstr, c = '\0';
+  gchar   *realstr, c = '\0';
 
   while ((c = *str++))
     {
@@ -62,17 +68,19 @@ sanitize_str (const gchar * str)
 
   g_string_free (retstr, FALSE);
 
-
-
   return realstr;
 }
 
+
+
 static void
-cb_searchdone (gboolean result, gpointer user_data)
+cb_searchdone (gboolean result,
+               gpointer user_data)
 {
   search_dialog *dialog = (search_dialog *) user_data;
-  xmlDoc *doc;
-  xmlNode *cur_node;
+  xmlDoc        *doc;
+  xmlNode       *cur_node;
+  gchar         *id, *city;
 
   if (!result || dialog->recv_buffer == NULL)
     return;
@@ -92,9 +100,7 @@ cb_searchdone (gboolean result, gpointer user_data)
         {
           if (NODE_IS_TYPE (cur_node, "loc"))
             {
-              gchar *id =
-                (gchar *) xmlGetProp (cur_node, (const xmlChar *) "id");
-              gchar *city;
+              id = (gchar *) xmlGetProp (cur_node, (const xmlChar *) "id");
 
               if (!id)
                 continue;
@@ -106,6 +112,7 @@ cb_searchdone (gboolean result, gpointer user_data)
                   g_free (id);
                   continue;
                 }
+
               append_result (dialog->result_mdl, id, city);
               g_free (id);
               g_free (city);
@@ -119,13 +126,15 @@ cb_searchdone (gboolean result, gpointer user_data)
 }
 
 
+
 static gboolean
-search_cb (GtkButton * button, gpointer user_data)
+search_cb (GtkButton *button,
+           gpointer   user_data)
 {
   search_dialog *dialog = (search_dialog *) user_data;
-  gchar *sane_str, *url;
-  const gchar *str;
-  gboolean result;
+  gchar         *sane_str, *url;
+  const gchar   *str;
+  gboolean       result;
 
   str = gtk_entry_get_text (GTK_ENTRY (dialog->search_entry));
 
@@ -150,13 +159,16 @@ search_cb (GtkButton * button, gpointer user_data)
 }
 
 
+
 search_dialog *
-create_search_dialog (GtkWindow * parent, gchar * proxy_host, gint proxy_port)
+create_search_dialog (GtkWindow *parent,
+                      gchar     *proxy_host,
+                      gint       proxy_port)
 {
-  GtkWidget *vbox, *label, *button, *hbox, *scroll, *frame;
+  GtkWidget         *vbox, *label, *button, *hbox, *scroll, *frame;
   GtkTreeViewColumn *column;
-  GtkCellRenderer *renderer = gtk_cell_renderer_text_new ();
-  search_dialog *dialog;
+  GtkCellRenderer   *renderer = gtk_cell_renderer_text_new ();
+  search_dialog     *dialog;
 
   dialog = panel_slice_new0 (search_dialog);
 
@@ -211,27 +223,31 @@ create_search_dialog (GtkWindow * parent, gchar * proxy_host, gint proxy_port)
 
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
 
-  g_signal_connect (button, "clicked", G_CALLBACK (search_cb), dialog);
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (search_cb), dialog);
 
   gtk_widget_set_size_request (dialog->dialog, 350, 250);
 
   return dialog;
 }
 
+
+
 gboolean
-run_search_dialog (search_dialog * dialog)
+run_search_dialog (search_dialog *dialog)
 {
+  GtkTreeIter       iter;
+  GtkTreeSelection *selection;
+  GValue            value = { 0, };
+
   gtk_widget_show_all (dialog->dialog);
+
   if (gtk_dialog_run (GTK_DIALOG (dialog->dialog)) == GTK_RESPONSE_ACCEPT)
     {
-      GtkTreeIter iter;
-      GtkTreeSelection *selection =
-        gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->result_list));
+      selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->result_list));
 
       if (gtk_tree_selection_get_selected (selection, NULL, &iter))
         {
-          GValue value = { 0, };
-
           gtk_tree_model_get_value (GTK_TREE_MODEL (dialog->result_mdl),
                                     &iter, 1, &value);
           dialog->result = g_strdup (g_value_get_string (&value));
@@ -244,10 +260,13 @@ run_search_dialog (search_dialog * dialog)
   return FALSE;
 }
 
+
+
 void
 free_search_dialog (search_dialog * dialog)
 {
   g_free (dialog->result);
+
   gtk_widget_destroy (dialog->dialog);
 
   panel_slice_free (search_dialog, dialog);

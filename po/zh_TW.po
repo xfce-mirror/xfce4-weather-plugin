@@ -34,7 +34,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-weather-plugin 0.4.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2006-09-10 21:29+0200\n"
+"POT-Creation-Date: 2006-12-17 16:10+0100\n"
 "PO-Revision-Date: 2006-09-06 18:51+0800\n"
 "Last-Translator: Ambrose Li <acli@ada.dhs.org>\n"
 "Language-Team: Chinese (Traditional) <zh-l10n@linux.org.tw>\n"
@@ -42,84 +42,183 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#  NOTE "公里/小時" is too long; SI symbols do not need translation
-#: ../panel-plugin/get_data.c:309
-msgid "km/h"
-msgstr "km/h"
-
-#  FIXME "哩/小時" is too long; but perhaps we could get by with just "哩"?
-#: ../panel-plugin/get_data.c:309
-msgid "mph"
-msgstr "mph"
-
-#  NOTE "百帕斯卡" (even 百帕) too long; SI symbols do not need translation
-#: ../panel-plugin/get_data.c:312
-msgid "hPa"
-msgstr "hPa"
-
-#: ../panel-plugin/get_data.c:312
-msgid "in"
-msgstr "吋"
-
-#  NOTE "公里" is too long; SI symbols do not need translation
-#: ../panel-plugin/get_data.c:315
-msgid "km"
-msgstr "km"
-
-#: ../panel-plugin/get_data.c:315
-msgid "mi"
-msgstr "哩"
-
-#: ../panel-plugin/plugin.c:98
+#: ../panel-plugin/weather.c:104
 msgid "V"
 msgstr "能見"
 
-#: ../panel-plugin/plugin.c:99
+#: ../panel-plugin/weather.c:107
 msgid "U"
 msgstr "UV"
 
-#: ../panel-plugin/plugin.c:100
+#: ../panel-plugin/weather.c:110
 msgid "WD"
 msgstr "風向"
 
-#: ../panel-plugin/plugin.c:101 ../panel-plugin/plugin.c:102
+#: ../panel-plugin/weather.c:113 ../panel-plugin/weather.c:116
 msgid "P"
 msgstr "氣壓"
 
-#: ../panel-plugin/plugin.c:103
+#: ../panel-plugin/weather.c:119
 msgid "F"
 msgstr "風凍"
 
-#: ../panel-plugin/plugin.c:104
+#: ../panel-plugin/weather.c:122
 msgid "T"
 msgstr "氣溫"
 
-#: ../panel-plugin/plugin.c:105
+#: ../panel-plugin/weather.c:125
 msgid "D"
 msgstr "露點"
 
-#: ../panel-plugin/plugin.c:106
+#: ../panel-plugin/weather.c:128
 msgid "H"
 msgstr "濕度"
 
-#: ../panel-plugin/plugin.c:107
+#: ../panel-plugin/weather.c:131
 msgid "WS"
 msgstr "風速"
 
-#: ../panel-plugin/plugin.c:108
+#: ../panel-plugin/weather.c:134
 msgid "WG"
 msgstr "陣風"
 
-#: ../panel-plugin/plugin.c:189
+#: ../panel-plugin/weather.c:222
 msgid "Cannot update weather data"
 msgstr "無法更新天氣資料"
 
-#: ../panel-plugin/plugin.c:593 ../panel-plugin/summary_window.c:356
+#: ../panel-plugin/weather.c:641 ../panel-plugin/weather-summary.c:366
 #: ../panel-plugin/weather.desktop.in.in.h:2
 msgid "Weather Update"
 msgstr "天氣報告"
 
-#: ../panel-plugin/summary_window.c:75
+#  NOTE weather.com.hk translation "風寒指數", but Canadian idiom is "風凍指數"
+#  NOTE The non-Canadian term is not used here even though it has been spotted in other hk/tw sites; it is just not familiar to people who would be affected by this weather condition
+#: ../panel-plugin/weather-config.c:36
+msgid "Windchill (F)"
+msgstr "風凍/酷熱指數（風凍）"
+
+#: ../panel-plugin/weather-config.c:37
+msgid "Temperature (T)"
+msgstr "氣溫"
+
+#: ../panel-plugin/weather-config.c:38
+msgid "Atmosphere pressure (P)"
+msgstr "氣壓"
+
+#  XXX Whether pressure is rising/steady/falling
+#: ../panel-plugin/weather-config.c:39
+msgid "Atmosphere state (P)"
+msgstr "氣壓狀況（氣壓）"
+
+#: ../panel-plugin/weather-config.c:40
+msgid "Wind speed (WS)"
+msgstr "風速"
+
+#: ../panel-plugin/weather-config.c:41
+msgid "Wind gust (WG)"
+msgstr "陣風"
+
+#: ../panel-plugin/weather-config.c:42
+msgid "Wind direction (WD)"
+msgstr "風向"
+
+#: ../panel-plugin/weather-config.c:43
+msgid "Humidity (H)"
+msgstr "相對濕度（濕度）"
+
+#: ../panel-plugin/weather-config.c:44
+msgid "Visibility (V)"
+msgstr "能見度（能見）"
+
+#: ../panel-plugin/weather-config.c:45
+msgid "UV Index (UV)"
+msgstr "紫外線指數 (UV)"
+
+#: ../panel-plugin/weather-config.c:46
+msgid "Dewpoint (DP)"
+msgstr "露點"
+
+#: ../panel-plugin/weather-config.c:224
+msgid "Please enter proxy settings"
+msgstr "請輸入代理伺服器選項"
+
+#: ../panel-plugin/weather-config.c:307
+msgid "Measurement unit:"
+msgstr "量度單位："
+
+#: ../panel-plugin/weather-config.c:313
+msgid "Imperial"
+msgstr "英制"
+
+#: ../panel-plugin/weather-config.c:315
+msgid "Metric"
+msgstr "公制"
+
+#: ../panel-plugin/weather-config.c:330
+msgid "Location code:"
+msgstr "地區編號："
+
+#. proxy
+#: ../panel-plugin/weather-config.c:353
+msgid "Proxy server:"
+msgstr "代理侍服器："
+
+#: ../panel-plugin/weather-config.c:356
+msgid "Use proxy server"
+msgstr "用代理侍服器"
+
+#: ../panel-plugin/weather-config.c:358
+msgid "Auto-detect from environment"
+msgstr "由環境變數自動取得"
+
+#: ../panel-plugin/weather-config.c:430
+msgid "Labels to display"
+msgstr "顯示資料"
+
+#  NOTE "公里/小時" is too long; SI symbols do not need translation
+#: ../panel-plugin/weather-data.c:402
+msgid "km/h"
+msgstr "km/h"
+
+#  FIXME "哩/小時" is too long; but perhaps we could get by with just "哩"?
+#: ../panel-plugin/weather-data.c:402
+msgid "mph"
+msgstr "mph"
+
+#  NOTE "百帕斯卡" (even 百帕) too long; SI symbols do not need translation
+#: ../panel-plugin/weather-data.c:405
+msgid "hPa"
+msgstr "hPa"
+
+#: ../panel-plugin/weather-data.c:405
+msgid "in"
+msgstr "吋"
+
+#  NOTE "公里" is too long; SI symbols do not need translation
+#: ../panel-plugin/weather-data.c:408
+msgid "km"
+msgstr "km"
+
+#: ../panel-plugin/weather-data.c:408
+msgid "mi"
+msgstr "哩"
+
+#: ../panel-plugin/weather-search.c:182
+msgid "Search weather location code"
+msgstr "搜尋地區編號"
+
+#: ../panel-plugin/weather-search.c:191
+msgid "Enter a city name or zip code:"
+msgstr ""
+"請輸入城市的英文名稱；\n"
+"美國境內各地區可直接輸入郵區編號："
+
+#: ../panel-plugin/weather-search.c:207
+msgid "Results"
+msgstr "搜尋結果"
+
+#. head
+#: ../panel-plugin/weather-summary.c:82
 #, c-format
 msgid ""
 "Weather report for: %s.\n"
@@ -128,7 +227,7 @@ msgstr ""
 "%s 之天氣報告：\n"
 "\n"
 
-#: ../panel-plugin/summary_window.c:80
+#: ../panel-plugin/weather-summary.c:87
 #, c-format
 msgid ""
 "Observation station located in %s\n"
@@ -137,7 +236,8 @@ msgstr ""
 "觀測站位於 %s\n"
 "最近更新：%s.\n"
 
-#: ../panel-plugin/summary_window.c:89
+#. Temperature
+#: ../panel-plugin/weather-summary.c:93
 msgid ""
 "\n"
 "Temperature\n"
@@ -145,25 +245,27 @@ msgstr ""
 "\n"
 "溫度\n"
 
-#: ../panel-plugin/summary_window.c:90
+#: ../panel-plugin/weather-summary.c:94
 msgid "Temperature"
 msgstr "氣溫"
 
 #  NOTE weather.com.hk translation "風寒", but Canadian idiom is "風凍"
-#: ../panel-plugin/summary_window.c:91
+#: ../panel-plugin/weather-summary.c:95
 msgid "Windchill"
 msgstr "風凍"
 
 #  XXX "Description"?
-#: ../panel-plugin/summary_window.c:95
+#. special case for TRANS because of translate_desc
+#: ../panel-plugin/weather-summary.c:98
 msgid "Description"
 msgstr "狀況"
 
-#: ../panel-plugin/summary_window.c:99
+#: ../panel-plugin/weather-summary.c:101
 msgid "Dew point"
 msgstr "露點"
 
-#: ../panel-plugin/summary_window.c:101
+#. Wind
+#: ../panel-plugin/weather-summary.c:104
 msgid ""
 "\n"
 "Wind\n"
@@ -171,19 +273,20 @@ msgstr ""
 "\n"
 "風勢\n"
 
-#: ../panel-plugin/summary_window.c:103
+#: ../panel-plugin/weather-summary.c:106
 msgid "Speed"
 msgstr "風速"
 
-#: ../panel-plugin/summary_window.c:110
+#: ../panel-plugin/weather-summary.c:111
 msgid "Direction"
 msgstr "風向"
 
-#: ../panel-plugin/summary_window.c:117
+#: ../panel-plugin/weather-summary.c:117
 msgid "Gusts"
 msgstr "陣風"
 
-#: ../panel-plugin/summary_window.c:122
+#. UV
+#: ../panel-plugin/weather-summary.c:122
 msgid ""
 "\n"
 "UV\n"
@@ -191,17 +294,18 @@ msgstr ""
 "\n"
 "紫外線\n"
 
-#: ../panel-plugin/summary_window.c:123
+#: ../panel-plugin/weather-summary.c:123
 msgid "Index"
 msgstr "指數"
 
 #  FIXME "Risk" is of course not "強度" (strength) but "風險";
 #  FIXME however, this is how the "risk" is actually labelled at hko.gov.hk
-#: ../panel-plugin/summary_window.c:125
+#: ../panel-plugin/weather-summary.c:124
 msgid "Risk"
 msgstr "強度"
 
-#: ../panel-plugin/summary_window.c:129
+#. Atmospheric pressure
+#: ../panel-plugin/weather-summary.c:129
 msgid ""
 "\n"
 "Atmospheric pressure\n"
@@ -209,15 +313,16 @@ msgstr ""
 "\n"
 "大氣壓力\n"
 
-#: ../panel-plugin/summary_window.c:130
+#: ../panel-plugin/weather-summary.c:130
 msgid "Pressure"
 msgstr "氣壓"
 
-#: ../panel-plugin/summary_window.c:133
+#: ../panel-plugin/weather-summary.c:132
 msgid "State"
 msgstr "狀況"
 
-#: ../panel-plugin/summary_window.c:137
+#. Sun
+#: ../panel-plugin/weather-summary.c:137
 msgid ""
 "\n"
 "Sun\n"
@@ -225,15 +330,16 @@ msgstr ""
 "\n"
 "日出及日落時間\n"
 
-#: ../panel-plugin/summary_window.c:141
+#: ../panel-plugin/weather-summary.c:140
 msgid "Rise"
 msgstr "日出"
 
-#: ../panel-plugin/summary_window.c:149
+#: ../panel-plugin/weather-summary.c:146
 msgid "Set"
 msgstr "日落"
 
-#: ../panel-plugin/summary_window.c:155
+#. Other
+#: ../panel-plugin/weather-summary.c:151
 msgid ""
 "\n"
 "Other\n"
@@ -241,385 +347,434 @@ msgstr ""
 "\n"
 "其他\n"
 
-#: ../panel-plugin/summary_window.c:156
+#: ../panel-plugin/weather-summary.c:152
 msgid "Humidity"
 msgstr "相對濕度"
 
-#: ../panel-plugin/summary_window.c:158
+#: ../panel-plugin/weather-summary.c:154
 msgid "Visibility"
 msgstr "能見度"
 
-#: ../panel-plugin/summary_window.c:209
+#: ../panel-plugin/weather-summary.c:207
 #, c-format
 msgid "Day: %s"
 msgstr "日間：%s"
 
-#: ../panel-plugin/summary_window.c:212
+#: ../panel-plugin/weather-summary.c:212
 #, c-format
 msgid "Night: %s"
 msgstr "晚間：%s"
 
 #  NOTE cwb.gov.tw translation; Japanese equivalent is "降水確率" which seems to be also possible but much rarer
-#: ../panel-plugin/summary_window.c:222
+#: ../panel-plugin/weather-summary.c:223
 msgid "<b>Precipitation</b>"
 msgstr "<b>降水機率</b>"
 
 #  NOTE forecasted temperature, refers to actual temperature only
-#: ../panel-plugin/summary_window.c:243
+#: ../panel-plugin/weather-summary.c:245
 msgid "<b>Temperature</b>"
 msgstr "<b>氣溫</b>"
 
 #  XXX
-#: ../panel-plugin/summary_window.c:267
+#: ../panel-plugin/weather-summary.c:269
 msgid "<b>Wind</b>"
 msgstr "<b>風勢</b>"
 
-#: ../panel-plugin/summary_window.c:362
+#: ../panel-plugin/weather-summary.c:372
 #, fuzzy, c-format
 msgid "Weather report for: %s"
 msgstr ""
 "%s 之天氣報告：\n"
 "\n"
 
-#: ../panel-plugin/summary_window.c:382
+#: ../panel-plugin/weather-summary.c:393
 msgid "Summary"
 msgstr "天氣概況"
 
-#: ../panel-plugin/summary_window.c:384
+#: ../panel-plugin/weather-summary.c:396
 msgid "Forecast"
 msgstr "天氣預報"
 
-#  NOTE weather.com.hk translation "風寒指數", but Canadian idiom is "風凍指數"
-#  NOTE The non-Canadian term is not used here even though it has been spotted in other hk/tw sites; it is just not familiar to people who would be affected by this weather condition
-#: ../panel-plugin/config_dialog.c:36
-msgid "Windchill (F)"
-msgstr "風凍/酷熱指數（風凍）"
-
-#: ../panel-plugin/config_dialog.c:37
-msgid "Temperature (T)"
-msgstr "氣溫"
-
-#: ../panel-plugin/config_dialog.c:38
-msgid "Atmosphere pressure (P)"
-msgstr "氣壓"
-
-#  XXX Whether pressure is rising/steady/falling
-#: ../panel-plugin/config_dialog.c:39
-msgid "Atmosphere state (P)"
-msgstr "氣壓狀況（氣壓）"
-
-#: ../panel-plugin/config_dialog.c:40
-msgid "Wind speed (WS)"
-msgstr "風速"
-
-#: ../panel-plugin/config_dialog.c:41
-msgid "Wind gust (WG)"
-msgstr "陣風"
-
-#: ../panel-plugin/config_dialog.c:42
-msgid "Wind direction (WD)"
-msgstr "風向"
-
-#: ../panel-plugin/config_dialog.c:43
-msgid "Humidity (H)"
-msgstr "相對濕度（濕度）"
-
-#: ../panel-plugin/config_dialog.c:44
-msgid "Visibility (V)"
-msgstr "能見度（能見）"
-
-#: ../panel-plugin/config_dialog.c:45
-msgid "UV Index (UV)"
-msgstr "紫外線指數 (UV)"
-
-#: ../panel-plugin/config_dialog.c:46
-msgid "Dewpoint (DP)"
-msgstr "露點"
-
-#: ../panel-plugin/config_dialog.c:198
-msgid "Please enter proxy settings"
-msgstr "請輸入代理伺服器選項"
-
-#: ../panel-plugin/config_dialog.c:269
-msgid "Measurement unit:"
-msgstr "量度單位："
-
-#: ../panel-plugin/config_dialog.c:275
-msgid "Imperial"
-msgstr "英制"
-
-#: ../panel-plugin/config_dialog.c:277
-msgid "Metric"
-msgstr "公制"
-
-#: ../panel-plugin/config_dialog.c:292
-msgid "Location code:"
-msgstr "地區編號："
-
-#. proxy
-#: ../panel-plugin/config_dialog.c:314
-msgid "Proxy server:"
-msgstr "代理侍服器："
-
-#: ../panel-plugin/config_dialog.c:316
-msgid "Use proxy server"
-msgstr "用代理侍服器"
-
-#: ../panel-plugin/config_dialog.c:318
-msgid "Auto-detect from environment"
-msgstr "由環境變數自動取得"
-
-#: ../panel-plugin/config_dialog.c:387
-msgid "Labels to display"
-msgstr "顯示資料"
-
-#: ../panel-plugin/search_dialog.c:174
-msgid "Search weather location code"
-msgstr "搜尋地區編號"
-
-#: ../panel-plugin/search_dialog.c:184
-msgid "Enter a city name or zip code:"
+#: ../panel-plugin/weather-translate.c:39
+msgid "AM Clouds / PM Sun"
 msgstr ""
-"請輸入城市的英文名稱；\n"
-"美國境內各地區可直接輸入郵區編號："
 
-#: ../panel-plugin/search_dialog.c:199
-msgid "Results"
-msgstr "搜尋結果"
+#: ../panel-plugin/weather-translate.c:40
+msgid "AM Light Rain"
+msgstr "早上有微雨"
 
-#: ../panel-plugin/translate.c:32
-msgid "Snow to Rain"
-msgstr "雪轉雨"
+#  XXX Cf http://photino.cwb.gov.tw/rdcweb/lib/h/h_000450.htm
+#: ../panel-plugin/weather-translate.c:41
+#, fuzzy
+msgid "AM Light Snow"
+msgstr "微雪"
 
 #  XXX
-#: ../panel-plugin/translate.c:33
+#: ../panel-plugin/weather-translate.c:42
+#, fuzzy
+msgid "AM Rain / Snow Showers"
+msgstr "驟雨或驟雪"
+
+#  XXX
+#: ../panel-plugin/weather-translate.c:43
+#, fuzzy
+msgid "AM Rain / Wind"
+msgstr "有微雨或風"
+
+#  XXX
+#: ../panel-plugin/weather-translate.c:44
+msgid "AM Showers"
+msgstr "早上有驟雨"
+
+#  XXX
+#: ../panel-plugin/weather-translate.c:45
+#, fuzzy
+msgid "AM Showers / Wind"
+msgstr "早上有驟雨"
+
+#  XXX never heard of "Snow Showers"
+#: ../panel-plugin/weather-translate.c:46
+#, fuzzy
+msgid "AM Snow Showers"
+msgstr "驟雪"
+
+#  XXX never heard of "Snow Showers"
+#: ../panel-plugin/weather-translate.c:47
+#, fuzzy
+msgid "AM Snow Showers / Wind"
+msgstr "驟雪"
+
+#  XXX
+#: ../panel-plugin/weather-translate.c:48
+#, fuzzy
+msgid "AM T-Storms"
+msgstr "早上有驟雨"
+
+#  XXX
+#: ../panel-plugin/weather-translate.c:49
 msgid "Becoming Cloudy"
 msgstr "轉趨多雲"
 
 #  XXX cwb.gov.tw translation is "雪暴風", which is unheard of in Canada
-#: ../panel-plugin/translate.c:34
+#: ../panel-plugin/weather-translate.c:50
 msgid "Blizzard"
 msgstr "雪暴"
 
 #  XXX
-#: ../panel-plugin/translate.c:35
+#: ../panel-plugin/weather-translate.c:51
 msgid "Blizzard Conditions"
 msgstr "雪暴狀況"
 
 #  NOTE cwb.gov.tw translation
-#: ../panel-plugin/translate.c:36
+#: ../panel-plugin/weather-translate.c:52
 msgid "Blowing Snow"
 msgstr "高吹雪"
 
 #  XXX
-#: ../panel-plugin/translate.c:37
+#: ../panel-plugin/weather-translate.c:53
 msgid "Chance of Rain"
 msgstr "可能有雨"
 
 #  XXX
-#: ../panel-plugin/translate.c:38
+#: ../panel-plugin/weather-translate.c:54
 msgid "Chance of Rain/Snow"
 msgstr "可能有雨或雪"
 
 #  XXX
-#: ../panel-plugin/translate.c:39
+#: ../panel-plugin/weather-translate.c:55
 msgid "Chance of Showers"
 msgstr "可能有驟雨"
 
 #  XXX
-#: ../panel-plugin/translate.c:40
+#: ../panel-plugin/weather-translate.c:56
 msgid "Chance of Snow"
 msgstr "可能有雪"
 
 #  XXX
-#: ../panel-plugin/translate.c:41
+#: ../panel-plugin/weather-translate.c:57
 msgid "Chance of Snow/Rain"
 msgstr "可能有雪或雨"
 
 #  XXX
-#: ../panel-plugin/translate.c:42
+#: ../panel-plugin/weather-translate.c:58
 msgid "Chance of T-Storm"
 msgstr "可能有雷暴"
 
 #  NOTE hko.gov.hk translation; spotted in a weather report for Canada
-#: ../panel-plugin/translate.c:43
+#: ../panel-plugin/weather-translate.c:59
 msgid "Clear"
 msgstr "明朗"
 
 #  XXX
-#: ../panel-plugin/translate.c:44
+#: ../panel-plugin/weather-translate.c:60
 msgid "Clearing"
 msgstr "轉趨明朗"
 
 #  XXX
-#: ../panel-plugin/translate.c:45
+#: ../panel-plugin/weather-translate.c:61
 msgid "Clouds"
 msgstr "有雲"
 
-#: ../panel-plugin/translate.c:46
+#  XXX
+#: ../panel-plugin/weather-translate.c:62
+msgid "Clouds Early / Clearing Late"
+msgstr "早上有雲，晚間轉趨明朗"
+
+#: ../panel-plugin/weather-translate.c:63
 msgid "Cloudy"
 msgstr "多雲"
 
-#: ../panel-plugin/translate.c:47
+#: ../panel-plugin/weather-translate.c:64
+#, fuzzy
+msgid "Cloudy / Wind"
+msgstr "間中多雲"
+
+#: ../panel-plugin/weather-translate.c:65
 msgid "Cloudy Periods"
 msgstr "間中多雲"
 
 #  XXX
-#: ../panel-plugin/translate.c:48
+#: ../panel-plugin/weather-translate.c:66
 msgid "Continued Hot"
 msgstr "持續炎熱"
 
 #  XXX
-#: ../panel-plugin/translate.c:49
+#: ../panel-plugin/weather-translate.c:67
 msgid "Cumulonimbus Clouds Observed"
 msgstr "觀測到有積雨雲"
 
 #  NOTE cwb.gov.tw translation
-#: ../panel-plugin/translate.c:50
+#: ../panel-plugin/weather-translate.c:68
 msgid "Drifting Snow"
 msgstr "低吹雪"
 
-#: ../panel-plugin/translate.c:51
+#  NOTE cwb.gov.tw translation
+#: ../panel-plugin/weather-translate.c:69
+#, fuzzy
+msgid "Drifting Snow and Windy"
+msgstr "低吹雪"
+
+#: ../panel-plugin/weather-translate.c:70
 msgid "Drizzle"
 msgstr "毛毛雨"
 
-#: ../panel-plugin/translate.c:52
+#: ../panel-plugin/weather-translate.c:71
 msgid "Dry"
 msgstr "乾燥"
 
-#: ../panel-plugin/translate.c:53
+#: ../panel-plugin/weather-translate.c:72
+#, fuzzy
+msgid "Dust"
+msgstr "陣風"
+
+#: ../panel-plugin/weather-translate.c:73
 msgid "Fair"
 msgstr "天氣良好"
 
-#  NOTE Canadian idiom
-#: ../panel-plugin/translate.c:54
-msgid "Flurries"
-msgstr "飄雪"
+#  XXX
+#: ../panel-plugin/weather-translate.c:74
+msgid "Few Showers"
+msgstr "有幾陣驟雨"
 
-#: ../panel-plugin/translate.c:55
+#  XXX never heard of "Snow Showers"
+#: ../panel-plugin/weather-translate.c:75
+msgid "Few Snow Showers"
+msgstr "有幾陣驟雪"
+
+#: ../panel-plugin/weather-translate.c:76
 msgid "Fog"
 msgstr "有霧"
 
 #  NOTE cwb.gov.tw translation; this might not be the most appropriate
-#: ../panel-plugin/translate.c:56
+#: ../panel-plugin/weather-translate.c:77
 msgid "Freezing Drizzle"
 msgstr "凍毛雨"
 
 #  XXX cwb.gov.tw translation "凍雨"; usual Canadian idiom is "冰雨"
-#: ../panel-plugin/translate.c:57
+#: ../panel-plugin/weather-translate.c:78
 msgid "Freezing Rain"
 msgstr "凍雨（冰雨）"
 
 #  XXX see note on "Freezing Rain"
-#: ../panel-plugin/translate.c:58
+#: ../panel-plugin/weather-translate.c:79
 msgid "Freezing Rain/Snow"
 msgstr "凍雨（冰雨）或雪"
 
+#: ../panel-plugin/weather-translate.c:80
+msgid "Frigid"
+msgstr ""
+
 #  NOTE cwb.gov.tw translation
-#: ../panel-plugin/translate.c:59
+#: ../panel-plugin/weather-translate.c:81
 msgid "Frozen Precip"
 msgstr "固態降水"
 
-#: ../panel-plugin/translate.c:60
+#: ../panel-plugin/weather-translate.c:82
+msgid "Hail"
+msgstr ""
+
+#: ../panel-plugin/weather-translate.c:83
+#, fuzzy
+msgid "Haze"
+msgstr "有煙霞"
+
+#: ../panel-plugin/weather-translate.c:84
 msgid "Hazy"
 msgstr "有煙霞"
 
 #  NOTE This might also be "豪雨"; impossile to disambiguate
-#: ../panel-plugin/translate.c:61
+#: ../panel-plugin/weather-translate.c:85
 msgid "Heavy Rain"
 msgstr "大雨"
 
 #  XXX
-#: ../panel-plugin/translate.c:62
+#: ../panel-plugin/weather-translate.c:86
 msgid "Heavy Snow"
 msgstr "大雪"
 
-#: ../panel-plugin/translate.c:63
+#: ../panel-plugin/weather-translate.c:87
 msgid "Hot And Humid"
 msgstr "炎熱及潮濕"
 
+#: ../panel-plugin/weather-translate.c:88
+msgid "Hot!"
+msgstr ""
+
 #  NOTE cwb.gov.tw translation
-#: ../panel-plugin/translate.c:64
+#: ../panel-plugin/weather-translate.c:89
 msgid "Ice Crystals"
 msgstr "飄落冰晶"
 
 #  XXX This might be zh-CN'ism, but unable to find proper translation
-#: ../panel-plugin/translate.c:65
+#: ../panel-plugin/weather-translate.c:90
 msgid "Ice/Snow Mixture"
 msgstr "冰夾雪"
 
-#: ../panel-plugin/translate.c:66
+#: ../panel-plugin/weather-translate.c:91
 msgid "Increasing Clouds"
 msgstr "逐漸多雲"
 
-#: ../panel-plugin/translate.c:67
+#: ../panel-plugin/weather-translate.c:92
 msgid "Isolated Showers"
 msgstr "局部地區性驟雨"
 
-#: ../panel-plugin/translate.c:68
+#: ../panel-plugin/weather-translate.c:93
+#, fuzzy
+msgid "Isolated T-Storms"
+msgstr "局部地區性驟雨"
+
+#  NOTE this is the expected translation, spotted actual use at hko.gov.hk
+#: ../panel-plugin/weather-translate.c:94
+msgid "Light Drizzle"
+msgstr "輕微毛毛雨"
+
+#  XXX see note for "Light Drizzle"
+#: ../panel-plugin/weather-translate.c:95
+msgid "Light Drizzle and Windy"
+msgstr "輕微毛毛雨及有風"
+
+#: ../panel-plugin/weather-translate.c:96
 msgid "Light Rain"
 msgstr "微雨"
 
+#  XXX
+#: ../panel-plugin/weather-translate.c:97
+msgid "Light Rain / Wind"
+msgstr "有微雨或風"
+
+#: ../panel-plugin/weather-translate.c:98
+#, fuzzy
+msgid "Light rain late"
+msgstr "微雨"
+
+#  XXX
+#: ../panel-plugin/weather-translate.c:99
+msgid "Light Rain Shower"
+msgstr "輕微驟雨"
+
 #  XXX Cf http://photino.cwb.gov.tw/rdcweb/lib/h/h_000450.htm
-#: ../panel-plugin/translate.c:69
+#: ../panel-plugin/weather-translate.c:100
 msgid "Light Snow"
 msgstr "微雪"
 
 #  XXX
-#: ../panel-plugin/translate.c:70
+#: ../panel-plugin/weather-translate.c:101
 msgid "Lightning Observed"
 msgstr "觀測到有閃電"
 
-#: ../panel-plugin/translate.c:71
-msgid "mild and breezy"
+#: ../panel-plugin/weather-translate.c:102
+#, fuzzy
+msgid "Mild and Breezy"
 msgstr "和暖及有微風"
 
-#: ../panel-plugin/translate.c:72
+#: ../panel-plugin/weather-translate.c:103
 msgid "Mist"
 msgstr "薄霧"
 
 #  NOTE according to wrh.noaa.gov, "Mostly Clear" = "Mostly Sunny" but at night
 #  NOTE 1/8–2/8 cloud cover (NOAA)
 #  XXX
-#: ../panel-plugin/translate.c:73
+#: ../panel-plugin/weather-translate.c:104
 msgid "Mostly Clear"
 msgstr "大致明朗"
 
 #  NOTE 6/8–7/8 cloud cover (NOAA)
 #  XXX
-#: ../panel-plugin/translate.c:74
+#: ../panel-plugin/weather-translate.c:105
 msgid "Mostly Cloudy"
 msgstr "大致多雲"
+
+#  XXX
+#: ../panel-plugin/weather-translate.c:106
+#, fuzzy
+msgid "Mostly Cloudy / Wind"
+msgstr "大致有雲及風"
+
+#  XXX
+#: ../panel-plugin/weather-translate.c:107
+msgid "Mostly Cloudy and Windy"
+msgstr "大致有雲及風"
 
 #  NOTE according to wrh.noaa.gov, "Mostly Sunny" = "Mostly Clear" but in daytime
 #  NOTE 1/8–2/8 cloud cover (NOAA)
 #  XXX
-#: ../panel-plugin/translate.c:75
+#: ../panel-plugin/weather-translate.c:108
 msgid "Mostly Sunny"
 msgstr "大致陽光普照"
 
-#  NOTE N/A in this plugin seems to mean "not applicable" (as opposed to "not available")
-#: ../panel-plugin/translate.c:76 ../panel-plugin/translate.c:368
-msgid "N/A"
-msgstr "不適用"
+#  NOTE according to wrh.noaa.gov, "Mostly Sunny" = "Mostly Clear" but in daytime
+#  NOTE 1/8–2/8 cloud cover (NOAA)
+#  XXX
+#: ../panel-plugin/weather-translate.c:109
+#, fuzzy
+msgid "Mostly Sunny / Wind"
+msgstr "大致陽光普照"
+
+#: ../panel-plugin/weather-translate.c:110
+msgid "N/A Not Available"
+msgstr ""
 
 #  XXX cf. "sunny interval" (but is this closer to "sunny periods"?)
-#: ../panel-plugin/translate.c:77
+#: ../panel-plugin/weather-translate.c:111
 msgid "Occasional Sunshine"
 msgstr "有時有陽光"
 
 #  NOTE 8/8 cloud cover (HKO)
-#: ../panel-plugin/translate.c:78
+#: ../panel-plugin/weather-translate.c:112
 msgid "Overcast"
 msgstr "天陰"
 
 #  NOTE Cf. http://www.maltaweather.com/glossary.shtml
 #  NOTE This seems to mean the same as "Clearing" but at a slower pace
-#: ../panel-plugin/translate.c:79
+#: ../panel-plugin/weather-translate.c:113
 msgid "Partial Clearing"
 msgstr ""
 
-#: ../panel-plugin/translate.c:80
+#: ../panel-plugin/weather-translate.c:114
+msgid "Partial Fog"
+msgstr ""
+
+#: ../panel-plugin/weather-translate.c:115
 msgid "Partial Sunshine"
 msgstr ""
 
@@ -628,328 +783,430 @@ msgstr ""
 #  NOTE This might actually be normal; hko.gov.hk defines "晴" even less conservatively (anything less than 6/8 cloud cover)
 #  NOTE 3/8–5/8 cloud cover (NOAA), "Partly Cloudy" = "Partly Sunny" but can be at night
 #  NOTE The only problem with translating this as "天晴" is that it feels a bit weird to speak of "天晴" at night...
-#: ../panel-plugin/translate.c:81
+#: ../panel-plugin/weather-translate.c:116
 msgid "Partly Cloudy"
 msgstr "疏雲"
 
+#  NOTE See note for "Partly Cloudy"
+#: ../panel-plugin/weather-translate.c:117
+#, fuzzy
+msgid "Partly Cloudy / Wind"
+msgstr "疏雲有風"
+
+#  NOTE See note for "Partly Cloudy"
+#: ../panel-plugin/weather-translate.c:118
+msgid "Partly Cloudy and Windy"
+msgstr "疏雲有風"
+
 #  NOTE cwb.gov.tw translation, crosschecked from fishery weather reports for 2005/02/27
 #  NOTE 3/8–5/8 cloud cover (NOAA), "Partly Sunny" = "Partly Cloudy" but must be in the day
-#: ../panel-plugin/translate.c:82
+#: ../panel-plugin/weather-translate.c:119
 msgid "Partly Sunny"
 msgstr "多雲時晴"
 
-#: ../panel-plugin/translate.c:83
+#  XXX
+#: ../panel-plugin/weather-translate.c:120
+msgid "PM Light Rain"
+msgstr "下午有微雨"
+
+#  XXX Cf http://photino.cwb.gov.tw/rdcweb/lib/h/h_000450.htm
+#: ../panel-plugin/weather-translate.c:121
+#, fuzzy
+msgid "PM Light Snow"
+msgstr "微雪"
+
+#  XXX
+#: ../panel-plugin/weather-translate.c:122
+#, fuzzy
+msgid "PM Rain / Wind"
+msgstr "有微雨或風"
+
+#  XXX
+#: ../panel-plugin/weather-translate.c:123
+msgid "PM Showers"
+msgstr "下午有驟雨"
+
+#  XXX never heard of "Snow Showers"
+#: ../panel-plugin/weather-translate.c:124
+#, fuzzy
+msgid "PM Snow Showers"
+msgstr "驟雪"
+
+#  XXX
+#: ../panel-plugin/weather-translate.c:125
+#, fuzzy
+msgid "PM T-Storms"
+msgstr "下午有驟雨"
+
+#: ../panel-plugin/weather-translate.c:126
 msgid "Rain"
 msgstr "有雨"
 
-#: ../panel-plugin/translate.c:84
+#: ../panel-plugin/weather-translate.c:127
+msgid "Rain / Snow"
+msgstr "有雨或雪"
+
+#: ../panel-plugin/weather-translate.c:128
+#, fuzzy
+msgid "Rain / Snow / Wind"
+msgstr "有雨或雪"
+
+#: ../panel-plugin/weather-translate.c:129
+#, fuzzy
+msgid "Rain / Snow Late"
+msgstr "有雨或雪"
+
+#  XXX
+#: ../panel-plugin/weather-translate.c:130
+msgid "Rain / Snow Showers"
+msgstr "驟雨或驟雪"
+
+#: ../panel-plugin/weather-translate.c:131
+#, fuzzy
+msgid "Rain / Thunder"
+msgstr "有雷"
+
+#  XXX
+#: ../panel-plugin/weather-translate.c:132
+#, fuzzy
+msgid "Rain / Wind"
+msgstr "有微雨或風"
+
+#  NOTE cwb.gov.tw translation
+#: ../panel-plugin/weather-translate.c:133
+msgid "Rain and Sleet"
+msgstr "有雨及霰"
+
+#: ../panel-plugin/weather-translate.c:134
 msgid "Rain and Snow"
 msgstr "有雨及雪"
 
-#: ../panel-plugin/translate.c:85
+#: ../panel-plugin/weather-translate.c:135
 msgid "Rain or Snow"
 msgstr "有雨或雪"
 
 #  XXX what is the difference between this and just "Showers"?
-#: ../panel-plugin/translate.c:86
-msgid "Rain Showers"
+#: ../panel-plugin/weather-translate.c:136
+#, fuzzy
+msgid "Rain Shower"
 msgstr "驟雨"
 
-#: ../panel-plugin/translate.c:87
-msgid "Rain to Snow"
+#  XXX what is the difference between this and just "Showers"?
+#: ../panel-plugin/weather-translate.c:137
+#, fuzzy
+msgid "Rain Shower and Windy"
+msgstr "驟雨"
+
+#: ../panel-plugin/weather-translate.c:138
+#, fuzzy
+msgid "Rain to snow"
 msgstr "雨轉雪"
 
-#  XXX
-#: ../panel-plugin/translate.c:88
-msgid "Rain / Snow Showers"
-msgstr "驟雨或驟雪"
+#: ../panel-plugin/weather-translate.c:139
+msgid "Rain/Lightning"
+msgstr ""
+
+#: ../panel-plugin/weather-translate.c:140
+msgid "Scattered Showers"
+msgstr "零散驟雨"
+
+#: ../panel-plugin/weather-translate.c:141
+#, fuzzy
+msgid "Scattered Snow Showers"
+msgstr "零散驟雨"
+
+#: ../panel-plugin/weather-translate.c:142
+#, fuzzy
+msgid "Scattered Snow Showers / Wind"
+msgstr "零散驟雨"
+
+#: ../panel-plugin/weather-translate.c:143
+#, fuzzy
+msgid "Scattered T-Storms"
+msgstr "零散驟雨"
 
 #  NOTE synonym: "陣雨"
-#: ../panel-plugin/translate.c:89
+#: ../panel-plugin/weather-translate.c:144
 msgid "Showers"
 msgstr "驟雨"
 
-#  NOTE cwb.gov.tw translation; according to glossary at cwb.gov.tw, this can mean either "ice pellets" or "wet snow"
-#: ../panel-plugin/translate.c:90
-msgid "Sleet"
-msgstr "霰"
+#  NOTE synonym: "陣雨"
+#: ../panel-plugin/weather-translate.c:145
+#, fuzzy
+msgid "Showers / Wind"
+msgstr "驟雨"
+
+#  XXX never heard of "Snow Showers"
+#: ../panel-plugin/weather-translate.c:146
+#, fuzzy
+msgid "Showers Early"
+msgstr "早上有驟雪"
+
+#  XXX
+#: ../panel-plugin/weather-translate.c:147
+msgid "Showers in the Vicinity"
+msgstr "附近地方有驟雨"
+
+#  XXX
+#: ../panel-plugin/weather-translate.c:148
+#, fuzzy
+msgid "Showers in the Vincinity"
+msgstr "附近地方有驟雨"
+
+#  XXX
+#: ../panel-plugin/weather-translate.c:149
+msgid "Showers Late"
+msgstr "晚間有驟雨"
 
 #  NOTE cwb.gov.tw translation
-#: ../panel-plugin/translate.c:91
+#: ../panel-plugin/weather-translate.c:150
 msgid "Sleet and Snow"
 msgstr "霰及雪"
 
-#: ../panel-plugin/translate.c:92
+#: ../panel-plugin/weather-translate.c:151
 msgid "Smoke"
 msgstr "煙"
 
-#: ../panel-plugin/translate.c:93
+#: ../panel-plugin/weather-translate.c:152
 msgid "Snow"
 msgstr "有雪"
 
-#: ../panel-plugin/translate.c:94
+#: ../panel-plugin/weather-translate.c:153
 msgid "Snow and Rain"
 msgstr "有雪及雨"
 
-#: ../panel-plugin/translate.c:95
+#: ../panel-plugin/weather-translate.c:154
 msgid "Snow or Rain"
 msgstr "有雪或雨"
 
 #  XXX never heard of "Snow Showers"
-#: ../panel-plugin/translate.c:96
-msgid "Snow Showers"
+#: ../panel-plugin/weather-translate.c:155
+msgid "Snow Shower"
 msgstr "驟雪"
 
-#: ../panel-plugin/translate.c:97
+#  XXX never heard of "Snow Showers"
+#: ../panel-plugin/weather-translate.c:156
+#, fuzzy
+msgid "Snow Shower / Wind"
+msgstr "驟雪"
+
+#  XXX never heard of "Snow Showers"
+#: ../panel-plugin/weather-translate.c:157
+msgid "Snow Showers Early"
+msgstr "早上有驟雪"
+
+#  XXX never heard of "Snow Showers"
+#: ../panel-plugin/weather-translate.c:158
+#, fuzzy
+msgid "Snow Showers early"
+msgstr "早上有驟雪"
+
+#  XXX
+#: ../panel-plugin/weather-translate.c:159
+msgid "Snow Showers Late"
+msgstr "晚間有驟雪"
+
+#: ../panel-plugin/weather-translate.c:160
+msgid "Snow to Rain"
+msgstr "雪轉雨"
+
+#: ../panel-plugin/weather-translate.c:161
 msgid "Sunny"
 msgstr "陽光普照"
 
-#: ../panel-plugin/translate.c:98
+#: ../panel-plugin/weather-translate.c:162
+msgid "Sunny / Wind"
+msgstr ""
+
+#  NOTE synonym: "陣雨"
+#: ../panel-plugin/weather-translate.c:163
+#, fuzzy
+msgid "T-Showers"
+msgstr "驟雨"
+
+#: ../panel-plugin/weather-translate.c:164
+msgid "T-Storm"
+msgstr ""
+
+#: ../panel-plugin/weather-translate.c:165
+msgid "T-Storms / Wind"
+msgstr ""
+
+#  XXX never heard of "Snow Showers"
+#: ../panel-plugin/weather-translate.c:166
+#, fuzzy
+msgid "T-Storms Early"
+msgstr "早上有驟雪"
+
+#: ../panel-plugin/weather-translate.c:167
 msgid "Thunder"
 msgstr "有雷"
 
-#: ../panel-plugin/translate.c:99
-msgid "Thunder storms"
-msgstr "雷暴"
+#  XXX
+#: ../panel-plugin/weather-translate.c:168
+#, fuzzy
+msgid "Thunder in the Vincinity"
+msgstr "附近地方有驟雨"
 
 #  NOTE According to wrh.noaa.gov, "Variable Cloudiness" = "Variable Clouds"
 #  NOTE According to http://members.tripod.com/~MitchellBrown/almanac/weather_glossary.html, this means 20%–80% cloud cover
 #  XXX
-#: ../panel-plugin/translate.c:100
+#: ../panel-plugin/weather-translate.c:169
 msgid "Variable Cloudiness"
 msgstr "雲量不定"
 
 #  NOTE According to wrh.noaa.gov, "Variable Cloudiness" = "Variable Clouds"
 #  XXX
-#: ../panel-plugin/translate.c:101
+#: ../panel-plugin/weather-translate.c:170
 msgid "Variable Clouds"
 msgstr "雲量不定"
 
 #  XXX
-#: ../panel-plugin/translate.c:102
-msgid "Windy"
+#: ../panel-plugin/weather-translate.c:171
+#, fuzzy
+msgid "Windy/Rain"
 msgstr "有風"
 
-#: ../panel-plugin/translate.c:103
+#  XXX
+#: ../panel-plugin/weather-translate.c:172
+#, fuzzy
+msgid "Windy/Snow"
+msgstr "有風"
+
+#: ../panel-plugin/weather-translate.c:173
 msgid "Wintry Mix"
 msgstr ""
 
-#  XXX
-#: ../panel-plugin/translate.c:104
-msgid "Showers in the Vicinity"
-msgstr "附近地方有驟雨"
-
-#  XXX
-#: ../panel-plugin/translate.c:105
-msgid "Light Rain Shower"
-msgstr "輕微驟雨"
-
-#  XXX
-#: ../panel-plugin/translate.c:106
-msgid "Showers Late"
-msgstr "晚間有驟雨"
-
-#  XXX
-#: ../panel-plugin/translate.c:107
-msgid "PM Showers"
-msgstr "下午有驟雨"
-
-#  XXX
-#: ../panel-plugin/translate.c:108
-msgid "Light Rain / Wind"
-msgstr "有微雨或風"
-
-#: ../panel-plugin/translate.c:109
-msgid "Scattered Showers"
-msgstr "零散驟雨"
-
-#  XXX
-#: ../panel-plugin/translate.c:110
-msgid "PM Light Rain"
-msgstr "下午有微雨"
-
-#  XXX
-#: ../panel-plugin/translate.c:111
-msgid "AM Showers"
-msgstr "早上有驟雨"
-
-#: ../panel-plugin/translate.c:112
-msgid "AM Light Rain"
-msgstr "早上有微雨"
-
-#  NOTE See note for "Partly Cloudy"
-#: ../panel-plugin/translate.c:113
-msgid "Partly Cloudy and Windy"
-msgstr "疏雲有風"
-
-#  XXX
-#: ../panel-plugin/translate.c:114
-msgid "Few Showers"
-msgstr "有幾陣驟雨"
-
-#  NOTE this is the expected translation, spotted actual use at hko.gov.hk
-#: ../panel-plugin/translate.c:115
-msgid "Light Drizzle"
-msgstr "輕微毛毛雨"
-
-#  XXX
-#: ../panel-plugin/translate.c:116
-msgid "Clouds Early / Clearing Late"
-msgstr "早上有雲，晚間轉趨明朗"
-
-#  XXX
-#: ../panel-plugin/translate.c:117
-msgid "Mostly Cloudy and Windy"
-msgstr "大致有雲及風"
-
-#: ../panel-plugin/translate.c:118
-msgid "Rain / Snow"
-msgstr "有雨或雪"
-
-#  NOTE cwb.gov.tw translation
-#: ../panel-plugin/translate.c:119
-msgid "Rain and Sleet"
-msgstr "有雨及霰"
-
-#  XXX
-#: ../panel-plugin/translate.c:120
-msgid "Snow Showers Late"
-msgstr "晚間有驟雪"
-
-#  XXX see note for "Light Drizzle"
-#: ../panel-plugin/translate.c:121
-msgid "Light Drizzle and Windy"
-msgstr "輕微毛毛雨及有風"
-
-#  XXX never heard of "Snow Showers"
-#: ../panel-plugin/translate.c:122
-msgid "Snow Shower"
-msgstr "驟雪"
-
-#  XXX never heard of "Snow Showers"
-#: ../panel-plugin/translate.c:123
-msgid "Snow Showers Early"
-msgstr "早上有驟雪"
-
-#  XXX never heard of "Snow Showers"
-#: ../panel-plugin/translate.c:124
-msgid "Few Snow Showers"
-msgstr "有幾陣驟雪"
-
-#: ../panel-plugin/translate.c:129
+#: ../panel-plugin/weather-translate.c:180
 msgid "rising"
 msgstr "上升中"
 
 #  XXX
-#: ../panel-plugin/translate.c:130
+#: ../panel-plugin/weather-translate.c:181
 msgid "steady"
 msgstr "穩定"
 
-#: ../panel-plugin/translate.c:131
+#: ../panel-plugin/weather-translate.c:182
 msgid "falling"
 msgstr "下降中"
 
 #  NOTE Cf: http://www.hko.gov.hk/wxinfo/uvindex/chinese/cuvtoday.htm
-#: ../panel-plugin/translate.c:136
+#: ../panel-plugin/weather-translate.c:189
 msgid "Low"
 msgstr "低"
 
-#: ../panel-plugin/translate.c:137
+#: ../panel-plugin/weather-translate.c:190
 msgid "Moderate"
 msgstr "中等"
 
-#: ../panel-plugin/translate.c:138
+#: ../panel-plugin/weather-translate.c:191
 msgid "High"
 msgstr "高"
 
-#: ../panel-plugin/translate.c:139
+#: ../panel-plugin/weather-translate.c:192
 msgid "Very High"
 msgstr "甚高"
 
-#: ../panel-plugin/translate.c:140
+#: ../panel-plugin/weather-translate.c:193
 msgid "Extreme"
 msgstr "極高"
 
-#: ../panel-plugin/translate.c:145
+#: ../panel-plugin/weather-translate.c:200
 msgid "S"
 msgstr "南"
 
 #  NOTE SSW = S + SW = 西南 (SW) 偏 南 (S)
 #  NOTE 西南偏南, while more natural, would be too long; ditto below
-#: ../panel-plugin/translate.c:146
+#: ../panel-plugin/weather-translate.c:201
 msgid "SSW"
 msgstr "西南南"
 
-#: ../panel-plugin/translate.c:147
+#: ../panel-plugin/weather-translate.c:202
 msgid "SW"
 msgstr "西南"
 
-#: ../panel-plugin/translate.c:148
+#: ../panel-plugin/weather-translate.c:203
 msgid "WSW"
 msgstr "西南西"
 
-#: ../panel-plugin/translate.c:149
+#: ../panel-plugin/weather-translate.c:204
 msgid "W"
 msgstr "西"
 
-#: ../panel-plugin/translate.c:150
+#: ../panel-plugin/weather-translate.c:205
 msgid "WNW"
 msgstr "西北西"
 
-#: ../panel-plugin/translate.c:151
+#: ../panel-plugin/weather-translate.c:206
 msgid "NW"
 msgstr "西北"
 
-#: ../panel-plugin/translate.c:152
+#: ../panel-plugin/weather-translate.c:207
 msgid "NNW"
 msgstr "西北北"
 
-#: ../panel-plugin/translate.c:153
+#: ../panel-plugin/weather-translate.c:208
 msgid "N"
 msgstr "北"
 
-#: ../panel-plugin/translate.c:154
+#: ../panel-plugin/weather-translate.c:209
 msgid "NNE"
 msgstr "東北北"
 
-#: ../panel-plugin/translate.c:155
+#: ../panel-plugin/weather-translate.c:210
 msgid "NE"
 msgstr "東北"
 
-#: ../panel-plugin/translate.c:156
+#: ../panel-plugin/weather-translate.c:211
 msgid "ENE"
 msgstr "東北東"
 
-#: ../panel-plugin/translate.c:157
+#: ../panel-plugin/weather-translate.c:212
 msgid "E"
 msgstr "東"
 
-#: ../panel-plugin/translate.c:158
+#: ../panel-plugin/weather-translate.c:213
 msgid "ESE"
 msgstr "東南東"
 
-#: ../panel-plugin/translate.c:159
+#: ../panel-plugin/weather-translate.c:214
 msgid "SE"
 msgstr "東南"
 
-#: ../panel-plugin/translate.c:160
+#: ../panel-plugin/weather-translate.c:215
 msgid "SSE"
 msgstr "東南南"
 
-#: ../panel-plugin/translate.c:272
+#: ../panel-plugin/weather-translate.c:334
 #, c-format
 msgid "%x at %X Local Time"
 msgstr "當地時間%x%X"
 
-#: ../panel-plugin/translate.c:366
+#: ../panel-plugin/weather-translate.c:428
 msgid "calm"
 msgstr "無風"
 
+#  NOTE N/A in this plugin seems to mean "not applicable" (as opposed to "not available")
+#: ../panel-plugin/weather-translate.c:430
+msgid "N/A"
+msgstr "不適用"
+
 #  NOTE cwb.gov.tw translation
-#: ../panel-plugin/translate.c:413
+#: ../panel-plugin/weather-translate.c:478
 msgid "Unlimited"
 msgstr "無限"
 
 #: ../panel-plugin/weather.desktop.in.in.h:1
 msgid "Show current weather conditions"
 msgstr "顯示目前天氣狀況"
+
+#  NOTE Canadian idiom
+#~ msgid "Flurries"
+#~ msgstr "飄雪"
+
+#  NOTE cwb.gov.tw translation; according to glossary at cwb.gov.tw, this can mean either "ice pellets" or "wet snow"
+#~ msgid "Sleet"
+#~ msgstr "霰"
+
+#~ msgid "Thunder storms"
+#~ msgstr "雷暴"
