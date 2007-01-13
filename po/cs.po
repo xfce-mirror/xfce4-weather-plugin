@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: xfce4-weather-plugin 0.5.90.2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2006-12-20 18:30+0100\n"
-"PO-Revision-Date: 2006-12-20 20:25+0100\n"
+"PO-Revision-Date: 2007-01-13 13:28+0100\n"
 "Last-Translator: Michal Várady <miko.vaji@gmail.com>\n"
 "Language-Team: Czech <translation-team-cs@lists.sourceforge.net>\n"
 "MIME-Version: 1.0\n"
@@ -26,9 +26,10 @@ msgstr "U"
 
 #: ../panel-plugin/weather.c:111
 msgid "WD"
-msgstr "WD"
+msgstr "SV"
 
-#: ../panel-plugin/weather.c:114 ../panel-plugin/weather.c:117
+#: ../panel-plugin/weather.c:114
+#: ../panel-plugin/weather.c:117
 msgid "P"
 msgstr "P"
 
@@ -46,15 +47,15 @@ msgstr "D"
 
 #: ../panel-plugin/weather.c:129
 msgid "H"
-msgstr "H"
+msgstr "V"
 
 #: ../panel-plugin/weather.c:132
 msgid "WS"
-msgstr "WS"
+msgstr "RV"
 
 #: ../panel-plugin/weather.c:135
 msgid "WG"
-msgstr "WG"
+msgstr "NV"
 
 #: ../panel-plugin/weather.c:223
 msgid "Cannot update weather data"
@@ -65,14 +66,15 @@ msgstr "Nelze aktualizovat informace o počasí"
 msgid "Unable to open the following url: %s"
 msgstr "Nelze otevřít následující adresu url: %s"
 
-#: ../panel-plugin/weather.c:654 ../panel-plugin/weather-summary.c:366
+#: ../panel-plugin/weather.c:654
+#: ../panel-plugin/weather-summary.c:366
 #: ../panel-plugin/weather.desktop.in.in.h:2
 msgid "Weather Update"
-msgstr "Aktualizace dat o počasí"
+msgstr "Počasí"
 
 #: ../panel-plugin/weather-config.c:36
 msgid "Windchill (F)"
-msgstr "Studený vítr (F)"
+msgstr "Teplota větru (F)"
 
 #: ../panel-plugin/weather-config.c:37
 msgid "Temperature (T)"
@@ -84,7 +86,7 @@ msgstr "Atmosférický tlak (P)"
 
 #: ../panel-plugin/weather-config.c:39
 msgid "Atmosphere state (P)"
-msgstr "Atmosférický stav (P)"
+msgstr "Tlaková tendence (P)"
 
 #: ../panel-plugin/weather-config.c:40
 msgid "Wind speed (WS)"
@@ -120,7 +122,7 @@ msgstr "Zadejte nastavení serveru proxy"
 
 #: ../panel-plugin/weather-config.c:307
 msgid "Measurement unit:"
-msgstr "Měřicí jednotka:"
+msgstr "Měrné jednotky:"
 
 #: ../panel-plugin/weather-config.c:313
 msgid "Imperial"
@@ -141,15 +143,15 @@ msgstr "Server proxy:"
 
 #: ../panel-plugin/weather-config.c:356
 msgid "Use proxy server"
-msgstr "Použít server proxy"
+msgstr "Používat server proxy"
 
 #: ../panel-plugin/weather-config.c:358
 msgid "Auto-detect from environment"
-msgstr "Automaticky zjistit z prostředí"
+msgstr "Automaticky zjišťovat z proměnných prostředí"
 
 #: ../panel-plugin/weather-config.c:430
 msgid "Labels to display"
-msgstr "Popisky pro zobrazení"
+msgstr "Zobrazované údaje"
 
 #: ../panel-plugin/weather-data.c:402
 msgid "km/h"
@@ -165,7 +167,7 @@ msgstr "hPa"
 
 #: ../panel-plugin/weather-data.c:405
 msgid "in"
-msgstr "v"
+msgstr "palců"
 
 #: ../panel-plugin/weather-data.c:408
 msgid "km"
@@ -177,11 +179,11 @@ msgstr "mi"
 
 #: ../panel-plugin/weather-search.c:182
 msgid "Search weather location code"
-msgstr "Vyhledat kód pro pozici pozorovací stanice"
+msgstr "Vyhledat kód pozorovací stanice"
 
 #: ../panel-plugin/weather-search.c:191
 msgid "Enter a city name or zip code:"
-msgstr "Zadejte jméno města nebo PSČ:"
+msgstr "Zadejte název města nebo PSČ:"
 
 #: ../panel-plugin/weather-search.c:207
 msgid "Results"
@@ -194,7 +196,7 @@ msgid ""
 "Weather report for: %s.\n"
 "\n"
 msgstr ""
-"Hlášení počasí pro: %s.\n"
+"Informace o počasí: %s.\n"
 "\n"
 
 #: ../panel-plugin/weather-summary.c:87
@@ -203,7 +205,7 @@ msgid ""
 "Observation station located in %s\n"
 "Last update: %s.\n"
 msgstr ""
-"Pozorovací stanice v %s\n"
+"Pozorovací stanice: %s\n"
 "Poslední aktualizace: %s.\n"
 
 #. Temperature
@@ -213,7 +215,7 @@ msgid ""
 "Temperature\n"
 msgstr ""
 "\n"
-"Teplora\n"
+"Teplota\n"
 
 #: ../panel-plugin/weather-summary.c:94
 msgid "Temperature"
@@ -221,7 +223,7 @@ msgstr "Teplota"
 
 #: ../panel-plugin/weather-summary.c:95
 msgid "Windchill"
-msgstr "Studený vítr"
+msgstr "Teplota větru"
 
 #. special case for TRANS because of translate_desc
 #: ../panel-plugin/weather-summary.c:98
@@ -260,7 +262,7 @@ msgid ""
 "UV\n"
 msgstr ""
 "\n"
-"UV\n"
+"UV záření\n"
 
 #: ../panel-plugin/weather-summary.c:123
 msgid "Index"
@@ -285,7 +287,7 @@ msgstr "Tlak"
 
 #: ../panel-plugin/weather-summary.c:132
 msgid "State"
-msgstr "Stav"
+msgstr "Tendence"
 
 #. Sun
 #: ../panel-plugin/weather-summary.c:137
@@ -324,12 +326,12 @@ msgstr "Viditelnost"
 #: ../panel-plugin/weather-summary.c:207
 #, c-format
 msgid "Day: %s"
-msgstr "Den: %s"
+msgstr "Přes den: %s"
 
 #: ../panel-plugin/weather-summary.c:212
 #, c-format
 msgid "Night: %s"
-msgstr "Noc: %s"
+msgstr "V noci: %s"
 
 #: ../panel-plugin/weather-summary.c:223
 msgid "<b>Precipitation</b>"
@@ -346,15 +348,15 @@ msgstr "<b>Vítr</b>"
 #: ../panel-plugin/weather-summary.c:372
 #, c-format
 msgid "Weather report for: %s"
-msgstr "Hlášení počasí pro: %s"
+msgstr "Informace o počasí: %s"
 
 #: ../panel-plugin/weather-summary.c:393
 msgid "Summary"
-msgstr "Celkový stav"
+msgstr "Souhrn"
 
 #: ../panel-plugin/weather-summary.c:396
 msgid "Forecast"
-msgstr "Předpověď"
+msgstr "Předpověď počasí"
 
 #: ../panel-plugin/weather-translate.c:39
 msgid "AM Clouds / PM Sun"
@@ -362,11 +364,11 @@ msgstr "Dopoledne oblačno, odpoledne slunečno"
 
 #: ../panel-plugin/weather-translate.c:40
 msgid "AM Light Rain"
-msgstr "Mírné ranní přeháňky"
+msgstr "Ráno slabé přeháňky"
 
 #: ../panel-plugin/weather-translate.c:41
 msgid "AM Light Snow"
-msgstr "Ráno mírné sněžení"
+msgstr "Ráno slabé sněžení"
 
 #: ../panel-plugin/weather-translate.c:42
 msgid "AM Rain / Snow Showers"
@@ -378,7 +380,7 @@ msgstr "Ráno déšť, vítr"
 
 #: ../panel-plugin/weather-translate.c:44
 msgid "AM Showers"
-msgstr "Ranní přeháňky"
+msgstr "Ráno přeháňky"
 
 #: ../panel-plugin/weather-translate.c:45
 msgid "AM Showers / Wind"
@@ -438,11 +440,11 @@ msgstr "Bouřka"
 
 #: ../panel-plugin/weather-translate.c:59
 msgid "Clear"
-msgstr "Smazat"
+msgstr "Jasno"
 
 #: ../panel-plugin/weather-translate.c:60
 msgid "Clearing"
-msgstr "Mažu"
+msgstr "Vyjasňování"
 
 #: ../panel-plugin/weather-translate.c:61
 msgid "Clouds"
@@ -450,7 +452,7 @@ msgstr "Mraky"
 
 #: ../panel-plugin/weather-translate.c:62
 msgid "Clouds Early / Clearing Late"
-msgstr "Oblačno, později protrhávání oblačnosti"
+msgstr "Oblačno, později vyjasňování"
 
 #: ../panel-plugin/weather-translate.c:63
 msgid "Cloudy"
@@ -582,27 +584,27 @@ msgstr "Lehké mrholení"
 
 #: ../panel-plugin/weather-translate.c:95
 msgid "Light Drizzle and Windy"
-msgstr "Mírné mrholení s větrem"
+msgstr "Slabé mrholení s větrem"
 
 #: ../panel-plugin/weather-translate.c:96
 msgid "Light Rain"
-msgstr "Mírný déšť"
+msgstr "Slabý déšť"
 
 #: ../panel-plugin/weather-translate.c:97
 msgid "Light Rain / Wind"
-msgstr "Mírné přeháňky s přechodně zesilujícím větrem"
+msgstr "Slabé přeháňky s přechodně zesilujícím větrem"
 
 #: ../panel-plugin/weather-translate.c:98
 msgid "Light rain late"
-msgstr "Mírný déšť"
+msgstr "Slabý déšť"
 
 #: ../panel-plugin/weather-translate.c:99
 msgid "Light Rain Shower"
-msgstr "Mírné přeháňky"
+msgstr "Slabé přeháňky"
 
 #: ../panel-plugin/weather-translate.c:100
 msgid "Light Snow"
-msgstr "Mírné sněžení"
+msgstr "Slabé sněžení"
 
 #: ../panel-plugin/weather-translate.c:101
 msgid "Lightning Observed"
@@ -610,7 +612,7 @@ msgstr "Zpozorovány blesky"
 
 #: ../panel-plugin/weather-translate.c:102
 msgid "Mild and Breezy"
-msgstr "Bezvětří nebo mírný vánek"
+msgstr "Bezvětří nebo slabý vánek"
 
 #: ../panel-plugin/weather-translate.c:103
 msgid "Mist"
@@ -682,27 +684,27 @@ msgstr "Oblačno až polojasno"
 
 #: ../panel-plugin/weather-translate.c:120
 msgid "PM Light Rain"
-msgstr "Mírné odpolední přeháňky"
+msgstr "Odpoledne slabé přeháňky"
 
 #: ../panel-plugin/weather-translate.c:121
 msgid "PM Light Snow"
-msgstr "Odpolední mírné sněžení"
+msgstr "Odpoledne slabé sněžení"
 
 #: ../panel-plugin/weather-translate.c:122
 msgid "PM Rain / Wind"
-msgstr "Odpolední déšť, vítr"
+msgstr "Odpoledne déšť, vítr"
 
 #: ../panel-plugin/weather-translate.c:123
 msgid "PM Showers"
-msgstr "Odpolední přeháňky"
+msgstr "Odpoledne přeháňky"
 
 #: ../panel-plugin/weather-translate.c:124
 msgid "PM Snow Showers"
-msgstr "Odpolední sněhové přeháňky"
+msgstr "Odpoledne sněhové přeháňky"
 
 #: ../panel-plugin/weather-translate.c:125
 msgid "PM T-Storms"
-msgstr "Odpolední bouřky"
+msgstr "Odpoledne bouřky"
 
 #: ../panel-plugin/weather-translate.c:126
 msgid "Rain"
@@ -898,15 +900,15 @@ msgstr "Zimní počasí"
 
 #: ../panel-plugin/weather-translate.c:180
 msgid "rising"
-msgstr "zvyšující se"
+msgstr "vzestup"
 
 #: ../panel-plugin/weather-translate.c:181
 msgid "steady"
-msgstr "klidno"
+msgstr "setrvalý stav"
 
 #: ../panel-plugin/weather-translate.c:182
 msgid "falling"
-msgstr "klesající"
+msgstr "pokles"
 
 #: ../panel-plugin/weather-translate.c:189
 msgid "Low"
@@ -1015,9 +1017,8 @@ msgstr "Sleduje aktuální počasí a předpovědi"
 
 #~ msgid "Flurries"
 #~ msgstr "Nárazy větru"
-
 #~ msgid "Sleet"
 #~ msgstr "Plískanice"
-
 #~ msgid "Thunder storms"
 #~ msgstr "Bouřky"
+
