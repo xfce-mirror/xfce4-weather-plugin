@@ -18,7 +18,6 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
-#include "weather-search.h"
 
 #include <string.h>
 
@@ -26,6 +25,7 @@
 #include "weather-data.h"
 #include "weather.h"
 
+#include "weather-search.h"
 #include "weather-http.h"
 
 #define BORDER 8
@@ -128,7 +128,7 @@ cb_searchdone (gboolean result,
 
 
 static gboolean
-search_cb (GtkButton *button,
+search_cb (GtkWidget *widget,
            gpointer   user_data)
 {
   search_dialog *dialog = (search_dialog *) user_data;
@@ -160,6 +160,17 @@ search_cb (GtkButton *button,
 
 
 
+static void
+pass_search_results (GtkTreeView       *tree_view,
+                     GtkTreePath       *path,
+                     GtkTreeViewColumn *column,
+                     GtkDialog         *dialog)
+{
+  gtk_dialog_response (dialog, GTK_RESPONSE_ACCEPT);
+}
+
+
+
 search_dialog *
 create_search_dialog (GtkWindow *parent,
                       gchar     *proxy_host,
@@ -185,46 +196,46 @@ create_search_dialog (GtkWindow *parent,
                                  GTK_RESPONSE_ACCEPT, GTK_STOCK_CANCEL,
                                  GTK_RESPONSE_REJECT, NULL);
 
-  vbox = gtk_vbox_new (FALSE, BORDER);
   gtk_window_set_icon_name (GTK_WINDOW (dialog->dialog), GTK_STOCK_FIND);
+
+  vbox = gtk_vbox_new (FALSE, BORDER);
+  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
+  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog->dialog)->vbox), vbox,
+                      TRUE, TRUE, 0);
 
   label = gtk_label_new (_("Enter a city name or zip code:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
   gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
 
-  dialog->search_entry = gtk_entry_new ();
-  button = gtk_button_new_from_stock (GTK_STOCK_FIND);
   hbox = gtk_hbox_new (FALSE, BORDER);
-  gtk_box_pack_start (GTK_BOX (hbox), dialog->search_entry, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  /* list */
-  dialog->result_mdl = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
-  dialog->result_list =
-    gtk_tree_view_new_with_model (GTK_TREE_MODEL (dialog->result_mdl));
+  dialog->search_entry = gtk_entry_new ();
+  gtk_box_pack_start (GTK_BOX (hbox), dialog->search_entry, TRUE, TRUE, 0);
+  g_signal_connect (G_OBJECT (dialog->search_entry), "activate",
+                    G_CALLBACK (search_cb), dialog);
 
-  column = gtk_tree_view_column_new_with_attributes (_("Results"), renderer,
-                                                     "text", 0, NULL);
-  gtk_tree_view_append_column (GTK_TREE_VIEW (dialog->result_list), column);
-
-  scroll = gtk_scrolled_window_new (NULL, NULL);
-  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scroll),
-                                  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-  gtk_container_add (GTK_CONTAINER (scroll), dialog->result_list);
+  button = gtk_button_new_from_stock (GTK_STOCK_FIND);
+  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
+  g_signal_connect (G_OBJECT (button), "clicked",
+                    G_CALLBACK (search_cb), dialog);
 
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
+  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
+  
+  scroll = gtk_scrolled_window_new (NULL, NULL);
+  gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scroll),
+                                  GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_container_add (GTK_CONTAINER (frame), scroll);
 
-  gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog->dialog)->vbox), vbox, TRUE,
-                      TRUE, 0);
-
-  gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
-
-  g_signal_connect (G_OBJECT (button), "clicked",
-                    G_CALLBACK (search_cb), dialog);
+  dialog->result_mdl = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
+  dialog->result_list = gtk_tree_view_new_with_model (GTK_TREE_MODEL (dialog->result_mdl));
+  column = gtk_tree_view_column_new_with_attributes (_("Results"), renderer, "text", 0, NULL);
+  gtk_tree_view_append_column (GTK_TREE_VIEW (dialog->result_list), column);
+  g_signal_connect (G_OBJECT (dialog->result_list), "row-activated",
+                    G_CALLBACK (pass_search_results), dialog->dialog);
+  gtk_container_add (GTK_CONTAINER (scroll), dialog->result_list);
 
   gtk_widget_set_size_request (dialog->dialog, 350, 250);
 
@@ -253,6 +264,7 @@ run_search_dialog (search_dialog *dialog)
           dialog->result = g_strdup (g_value_get_string (&value));
 
           g_value_unset (&value);
+          
           return TRUE;
         }
     }

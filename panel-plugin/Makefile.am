@@ -1,7 +1,15 @@
 # $Id$
 
+INCLUDES =								\
+        -I$(top_srcdir)                                         	\
+	-DTHEMESDIR=\"$(datadir)/xfce4/weather/icons\" 			\
+	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"				\
+	-DG_LOG_DOMAIN=\"weather\"
+
 plugindir = $(libexecdir)/xfce4/panel-plugins
-plugin_PROGRAMS = xfce4-weather-plugin
+
+plugin_PROGRAMS =							\
+	xfce4-weather-plugin
 
 xfce4_weather_plugin_SOURCES =						\
 	weather.c							\
@@ -26,9 +34,6 @@ xfce4_weather_plugin_SOURCES =						\
 	weather-translate.h
 
 xfce4_weather_plugin_CFLAGS =						\
-        -I$(top_srcdir)                                         	\
-	-DTHEMESDIR=\"$(datadir)/xfce4/weather/icons\" 			\
-	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"				\
 	$(LIBXFCE4PANEL_CFLAGS)						\
 	$(LIBXFCEGUI4_CFLAGS)						\
         $(LIBXFCE4UTIL_CFLAGS)                                   	\
@@ -56,3 +61,5 @@ EXTRA_DIST =								\
 CLEANFILES =								\
 	$(desktop_in_files)						\
 	$(desktop_DATA)
+
+# vi:set ts=8 sw=8 noet ai nocindent syntax=automake:

@@ -1,3 +1,5 @@
+# $Id$
+
 SUBDIRS =								\
 	liquid								\
 	48x48
@@ -14,3 +16,5 @@ install-data-hook:
                 echo "***   $(gtk_update_icon_cache)";			\
 		echo "***";						\
         fi
+
+# vi:set ts=8 sw=8 noet ai nocindent syntax=automake:
