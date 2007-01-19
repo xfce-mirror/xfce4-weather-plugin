@@ -147,7 +147,6 @@ static const gchar *desc_strings[] = {
   N_("Showers / Wind"),
   N_("Showers Early"),
   N_("Showers in the Vicinity"),
-  N_("Showers in the Vincinity"),
   N_("Showers Late"),
   N_("Sleet and Snow"),
   N_("Smoke"),
