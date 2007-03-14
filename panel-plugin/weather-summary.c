@@ -1,7 +1,7 @@
 /*  $Id$
  *
  *  Copyright (c) 2003-2007 Xfce Development Team
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -193,15 +193,19 @@ make_forecast (xml_dayf *weatherdata,
 
   icon = get_icon (get_data_f (weatherdata, ICON_D), GTK_ICON_SIZE_DIALOG);
   icon_d = gtk_image_new_from_pixbuf (icon);
-  g_object_unref (G_OBJECT (icon));
   box_d = gtk_event_box_new ();
   gtk_container_add (GTK_CONTAINER (box_d), icon_d);
 
+  if (G_LIKELY (icon))
+    g_object_unref (G_OBJECT (icon));
+
   icon = get_icon (get_data_f (weatherdata, ICON_N), GTK_ICON_SIZE_DIALOG);
   icon_n = gtk_image_new_from_pixbuf (icon);
-  g_object_unref (G_OBJECT (icon));
   box_n = gtk_event_box_new ();
   gtk_container_add (GTK_CONTAINER (box_n), icon_n);
+
+  if (G_LIKELY (icon))
+    g_object_unref (G_OBJECT (icon));
 
   if (G_UNLIKELY (!tooltips))
     tooltips = gtk_tooltips_new ();
@@ -386,7 +390,9 @@ create_summary_window (xml_weather *data,
     icon = get_icon ("99", GTK_ICON_SIZE_DIALOG);
 
   gtk_window_set_icon (GTK_WINDOW (window), icon);
-  g_object_unref (G_OBJECT (icon));
+
+  if (G_LIKELY (icon))
+    g_object_unref (G_OBJECT (icon));
 
   notebook = gtk_notebook_new ();
   gtk_container_set_border_width (GTK_CONTAINER (notebook), BORDER);

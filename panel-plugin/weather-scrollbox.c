@@ -1,7 +1,7 @@
 /*  $Id$
  *
  *  Copyright (c) 2003-2007 Xfce Development Team
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -359,7 +359,9 @@ gtk_scrollbox_finalize (GObject *gobject)
         {
           lbl = (Label *) g_ptr_array_index (self->labels, i);
 
-          g_object_unref (G_OBJECT (lbl->pixmap));
+          if (lbl->pixmap)
+            g_object_unref (G_OBJECT (lbl->pixmap));
+
           g_free (lbl->msg);
         }
       g_ptr_array_free (self->labels, TRUE);
@@ -414,8 +416,6 @@ gtk_scrollbox_instance_init (GTypeInstance *instance,
                              gpointer       g_class)
 {
   GtkScrollbox *self = (GtkScrollbox *) instance;
-
-/*      GTK_WIDGET_SET_FLAGS (GTK_WIDGET(self), GTK_NO_WINDOW);*/
 
   self->draw_timeout = 0;
   self->labels = g_ptr_array_new ();

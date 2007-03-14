@@ -1,7 +1,7 @@
 /*  $Id$
  *
  *  Copyright (c) 2003-2007 Xfce Development Team
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -46,13 +46,12 @@ get_icon (const gchar *number,
                               THEMESDIR, G_DIR_SEPARATOR_S,
                               DEFAULT_W_THEME, G_DIR_SEPARATOR_S, number);
 
-  image = gdk_pixbuf_new_from_file_at_scale (filename,
-                                             width, height, TRUE, NULL);
+  image = gdk_pixbuf_new_from_file_at_scale (filename, width, height, TRUE, NULL);
+
+  if (G_UNLIKELY (!image))
+    g_warning ("Unable to open image: %s", filename);
 
   g_free (filename);
-
-  if (!image)
-    g_warning ("Weather Plugin: No image found");
 
   return image;
 }

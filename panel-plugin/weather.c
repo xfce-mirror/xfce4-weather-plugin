@@ -1,7 +1,7 @@
 /*  $Id$
  *
  *  Copyright (c) 2003-2007 Xfce Development Team
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -213,13 +213,18 @@ set_icon_error (xfceweather_data *data)
   GdkPixbuf *icon = get_icon ("99", data->iconsize);
 
   gtk_image_set_from_pixbuf (GTK_IMAGE (data->iconimage), icon);
-  g_object_unref (G_OBJECT (icon));
+
+  if (G_LIKELY (icon))
+    g_object_unref (G_OBJECT (icon));
 
   if (data->weatherdata)
     {
       xml_weather_free (data->weatherdata);
       data->weatherdata = NULL;
     }
+
+  gtk_scrollbox_set_label (GTK_SCROLLBOX (data->scrollbox), -1, "<span size=\"small\">No Data</span>");
+  gtk_scrollbox_enablecb  (GTK_SCROLLBOX (data->scrollbox), TRUE);
 
   gtk_tooltips_set_tip (data->tooltips, data->tooltipbox,
                         _("Cannot update weather data"), NULL);
@@ -250,7 +255,8 @@ set_icon_current (xfceweather_data *data)
 
   icon = get_icon (get_data (data->weatherdata, WICON), data->iconsize);
   gtk_image_set_from_pixbuf (GTK_IMAGE (data->iconimage), icon);
-  g_object_unref (G_OBJECT (icon));
+  if (G_LIKELY (icon))
+    g_object_unref (G_OBJECT (icon));
 
   gtk_tooltips_set_tip (data->tooltips, data->tooltipbox,
                         translate_desc (get_data (data->weatherdata, TRANS)),
@@ -705,7 +711,9 @@ xfceweather_create_control (XfcePanelPlugin *plugin)
   icon = get_icon ("99", GTK_ICON_SIZE_SMALL);
   data->iconimage = gtk_image_new_from_pixbuf (icon);
   gtk_misc_set_alignment (GTK_MISC (data->iconimage), 0.5, 1);
-  g_object_unref (G_OBJECT (icon));
+
+  if (G_LIKELY (icon))
+    g_object_unref (G_OBJECT (icon));
 
   data->labels = g_array_new (FALSE, TRUE, sizeof (datas));
 
@@ -717,6 +725,7 @@ xfceweather_create_control (XfcePanelPlugin *plugin)
   data->tooltipbox = gtk_event_box_new ();
   gtk_container_add (GTK_CONTAINER (data->tooltipbox), vbox);
   gtk_widget_show_all (data->tooltipbox);
+  GTK_WIDGET_SET_FLAGS (GTK_WIDGET(data->tooltipbox), GTK_NO_WINDOW);
 
   xfce_panel_plugin_add_action_widget (plugin, data->tooltipbox);
 
