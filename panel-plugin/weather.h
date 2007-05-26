@@ -39,8 +39,6 @@ typedef struct
 
   GArray          *labels;
 
-  GtkIconSize      iconsize;
-
   gint             size;
   gint             updatetimeout;
 

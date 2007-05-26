@@ -45,10 +45,6 @@
 
 
 
-static gint GTK_ICON_SIZE_SMALL = 0;
-
-
-
 gboolean
 check_envproxy (gchar **proxy_host,
                 gint   *proxy_port)
@@ -210,12 +206,8 @@ get_filename (const xfceweather_data *data)
 static void
 set_icon_error (xfceweather_data *data)
 {
-  GdkPixbuf *icon = get_icon ("99", data->iconsize);
-
-  gtk_image_set_from_pixbuf (GTK_IMAGE (data->iconimage), icon);
-
-  if (G_LIKELY (icon))
-    g_object_unref (G_OBJECT (icon));
+  GdkPixbuf *icon;
+  gint       height;
 
   if (data->weatherdata)
     {
@@ -225,6 +217,15 @@ set_icon_error (xfceweather_data *data)
 
   gtk_scrollbox_set_label (GTK_SCROLLBOX (data->scrollbox), -1, "<span size=\"small\">No Data</span>");
   gtk_scrollbox_enablecb  (GTK_SCROLLBOX (data->scrollbox), TRUE);
+  
+  gtk_widget_get_size_request (data->scrollbox, NULL, &height);
+  
+  icon = get_icon ("99", data->size - height - 2);
+  
+  gtk_image_set_from_pixbuf (GTK_IMAGE (data->iconimage), icon);
+
+  if (G_LIKELY (icon))
+    g_object_unref (G_OBJECT (icon));
 
   gtk_tooltips_set_tip (data->tooltips, data->tooltipbox,
                         _("Cannot update weather data"), NULL);
@@ -239,6 +240,7 @@ set_icon_current (xfceweather_data *data)
   GdkPixbuf *icon = NULL;
   datas      opt;
   gchar     *str;
+  gint       size, height;
 
   for (i = 0; i < data->labels->len; i++)
     {
@@ -252,9 +254,23 @@ set_icon_current (xfceweather_data *data)
     }
 
   gtk_scrollbox_enablecb (GTK_SCROLLBOX (data->scrollbox), TRUE);
+  
+  
 
-  icon = get_icon (get_data (data->weatherdata, WICON), data->iconsize);
+  if (i == 0)
+    {
+      size = data->size;
+    }
+  else
+    {
+      gtk_widget_get_size_request (data->scrollbox, NULL, &height);
+      size = data->size - height - 2;
+    }
+  
+  icon = get_icon (get_data (data->weatherdata, WICON), size);
+  
   gtk_image_set_from_pixbuf (GTK_IMAGE (data->iconimage), icon);
+  
   if (G_LIKELY (icon))
     g_object_unref (G_OBJECT (icon));
 
@@ -389,6 +405,17 @@ labels_clear (GArray *array)
     }
 
   return array;
+}
+
+
+
+static void
+xfceweather_set_visibility (xfceweather_data *data)
+{
+  if (data->labels->len > 0)
+    gtk_widget_show (data->scrollbox);
+  else
+    gtk_widget_hide (data->scrollbox);
 }
 
 
@@ -645,6 +672,8 @@ xfceweather_dialog_response (GtkWidget          *dlg,
 
       xfce_panel_plugin_unblock_menu (data->plugin);
       xfceweather_write_config (data->plugin, data);
+      
+      xfceweather_set_visibility (data);
     }
 }
 
@@ -697,9 +726,6 @@ xfceweather_create_control (XfcePanelPlugin *plugin)
   datas             lbl;
   GdkPixbuf        *icon = NULL;
 
-  if (!GTK_ICON_SIZE_SMALL)
-    GTK_ICON_SIZE_SMALL = gtk_icon_size_register ("iconsize_small", 16, 16);
-
   data->plugin = plugin;
 
   data->tooltips = gtk_tooltips_new ();
@@ -708,7 +734,7 @@ xfceweather_create_control (XfcePanelPlugin *plugin)
 
   data->scrollbox = gtk_scrollbox_new ();
 
-  icon = get_icon ("99", GTK_ICON_SIZE_SMALL);
+  icon = get_icon ("99", 16);
   data->iconimage = gtk_image_new_from_pixbuf (icon);
   gtk_misc_set_alignment (GTK_MISC (data->iconimage), 0.5, 1);
 
@@ -801,16 +827,6 @@ xfceweather_set_size (XfcePanelPlugin  *panel,
 {
   data->size = size;
 
-  /* arbitrary, choose something that works */
-  if (size <= 30)
-    data->iconsize = GTK_ICON_SIZE_SMALL;
-  else if (size <= 36)
-    data->iconsize = GTK_ICON_SIZE_BUTTON;
-  else if (size <= 48)
-    data->iconsize = GTK_ICON_SIZE_LARGE_TOOLBAR;
-  else
-    data->iconsize = GTK_ICON_SIZE_DND;
-
   gtk_scrollbox_clear (GTK_SCROLLBOX (data->scrollbox));
 
   if (data->weatherdata)
@@ -833,6 +849,8 @@ weather_construct (XfcePanelPlugin *plugin)
   data = xfceweather_create_control (plugin);
 
   xfceweather_read_config (plugin, data);
+  
+  xfceweather_set_visibility (data);
 
   xfceweather_set_size (plugin, xfce_panel_plugin_get_size (plugin), data);
 

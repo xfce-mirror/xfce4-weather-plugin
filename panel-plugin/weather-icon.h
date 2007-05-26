@@ -22,7 +22,7 @@
 
 G_BEGIN_DECLS
 
-GdkPixbuf *get_icon (const gchar * icon, GtkIconSize size);
+GdkPixbuf *get_icon (const gchar * icon, gint size);
 
 G_END_DECLS
 

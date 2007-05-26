@@ -34,19 +34,15 @@
 
 GdkPixbuf *
 get_icon (const gchar *number,
-          GtkIconSize  size)
+          gint         size)
 {
   GdkPixbuf *image = NULL;
   gchar     *filename;
-  gint       width, height;
 
-  gtk_icon_size_lookup (size, &width, &height);
+  filename = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s" G_DIR_SEPARATOR_S "%s.png",
+                              THEMESDIR, DEFAULT_W_THEME, number);
 
-  filename = g_strdup_printf ("%s%s%s%s%s.png",
-                              THEMESDIR, G_DIR_SEPARATOR_S,
-                              DEFAULT_W_THEME, G_DIR_SEPARATOR_S, number);
-
-  image = gdk_pixbuf_new_from_file_at_scale (filename, width, height, TRUE, NULL);
+  image = gdk_pixbuf_new_from_file_at_scale (filename, size, size, TRUE, NULL);
 
   if (G_UNLIKELY (!image))
     g_warning ("Unable to open image: %s", filename);
