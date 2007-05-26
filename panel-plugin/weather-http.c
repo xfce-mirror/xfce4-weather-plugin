@@ -171,7 +171,7 @@ keep_sending (gpointer data)
           return FALSE;
         }
     }
-  else if (errno != EAGAIN)        /* some other error happened */
+  else if (errno != EAGAIN && errno != ENOTCONN) /* some other error happened */
     {
 
       DBG ("file desc: %d", request->fd);
@@ -239,7 +239,7 @@ keep_receiving (gpointer data)
       callback (TRUE, request->cb_data);
       return FALSE;
     }
-  else if (errno != EAGAIN)
+  else if (errno != EAGAIN && errno != ENOTCONN)
     {
       perror ("keep_receiving()");
       request->cb_function (FALSE, request->cb_data);
