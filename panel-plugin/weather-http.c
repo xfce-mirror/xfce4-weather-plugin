@@ -68,7 +68,11 @@ http_connect (gchar *hostname,
 {
   struct sockaddr_in  dest_host;
   struct hostent     *host_address;
-  gint                fd;
+  gint                fd, iters_left;
+  fd_set              wfd;
+  struct timeval      tv = { 2, 0 };
+  gint                sock_err = 0;
+  socklen_t           sock_err_len = sizeof (gint);
 
   if ((host_address = gethostbyname (hostname)) == NULL)
     return -1;
@@ -89,8 +93,39 @@ http_connect (gchar *hostname,
       return -1;
     }
   else
-    return fd;
+    {
+      for (iters_left = 25; iters_left >= 0; iters_left--)
+        {
+          FD_ZERO(&wfd);
+          FD_SET(fd, &wfd);
 
+          DBG ("checking for a connection...");
+
+          /* wait until the connect attempt finishes */
+          if (select (FD_SETSIZE, NULL, &wfd, NULL, &tv) < 0)
+            break;
+
+          /* check to see if it finished, and, if so, if there was an
+           * error, or if it completed successfully */
+          if (FD_ISSET (fd, &wfd))
+            {
+              if (!getsockopt (fd, SOL_SOCKET, SO_ERROR, &sock_err, &sock_err_len)
+                  && !sock_err)
+                {
+                  DBG ("connection succeeded");
+                }
+              else
+                {
+                  DBG ("connection failed: sock_err is %d", sock_err);
+                }
+
+              break;
+            }
+
+          }
+
+      return fd;
+    }
 }
 
 
