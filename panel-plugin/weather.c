@@ -206,8 +206,13 @@ get_filename (const xfceweather_data *data)
 static void
 set_icon_error (xfceweather_data *data)
 {
-  GdkPixbuf *icon;
-  gint       height;
+  GdkPixbuf   *icon;
+  gint         height;
+  gint         size;
+  gchar       *str;
+  const gchar *txtsize;
+
+  size = data->size;
 
   if (data->weatherdata)
     {
@@ -215,7 +220,20 @@ set_icon_error (xfceweather_data *data)
       data->weatherdata = NULL;
     }
 
-  gtk_scrollbox_set_label (GTK_SCROLLBOX (data->scrollbox), -1, "<span size=\"small\">No Data</span>");
+  /* arbitrary, choose something that works */
+  if (size > 36)
+    txtsize = "medium";
+  else if (size > 30)
+    txtsize = "small";
+  else if (size > 24)
+    txtsize = "x-small";
+  else
+    txtsize = "xx-small";
+
+  str = g_strdup_printf ("<span size=\"%s\">No Data</span>", txtsize);
+  gtk_scrollbox_set_label (GTK_SCROLLBOX (data->scrollbox), -1, str);
+  g_free (str);
+
   gtk_scrollbox_enablecb  (GTK_SCROLLBOX (data->scrollbox), TRUE);
   
   gtk_widget_get_size_request (data->scrollbox, NULL, &height);

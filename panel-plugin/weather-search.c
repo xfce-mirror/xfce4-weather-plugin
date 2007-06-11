@@ -23,6 +23,8 @@
 
 #include <string.h>
 
+#include <libxfcegui4/libxfcegui4.h>
+
 #include "weather-parsers.h"
 #include "weather-data.h"
 #include "weather.h"
@@ -178,7 +180,7 @@ create_search_dialog (GtkWindow *parent,
                       gchar     *proxy_host,
                       gint       proxy_port)
 {
-  GtkWidget         *vbox, *label, *button, *hbox, *scroll, *frame;
+  GtkWidget         *vbox, *button, *hbox, *scroll, *frame;
   GtkTreeViewColumn *column;
   GtkCellRenderer   *renderer = gtk_cell_renderer_text_new ();
   search_dialog     *dialog;
@@ -192,11 +194,11 @@ create_search_dialog (GtkWindow *parent,
     return NULL;
 
   dialog->dialog =
-    gtk_dialog_new_with_buttons (_("Search weather location code"), parent,
-                                 GTK_DIALOG_MODAL |
-                                 GTK_DIALOG_DESTROY_WITH_PARENT, GTK_STOCK_OK,
-                                 GTK_RESPONSE_ACCEPT, GTK_STOCK_CANCEL,
-                                 GTK_RESPONSE_REJECT, NULL);
+    xfce_titled_dialog_new_with_buttons (_("Search weather location code"), parent,
+						GTK_DIALOG_MODAL |
+						GTK_DIALOG_DESTROY_WITH_PARENT, 
+						GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT,
+						GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
 
   gtk_window_set_icon_name (GTK_WINDOW (dialog->dialog), GTK_STOCK_FIND);
 
@@ -205,9 +207,8 @@ create_search_dialog (GtkWindow *parent,
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog->dialog)->vbox), vbox,
                       TRUE, TRUE, 0);
 
-  label = gtk_label_new (_("Enter a city name or zip code:"));
-  gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
-  gtk_box_pack_start (GTK_BOX (vbox), label, FALSE, FALSE, 0);
+  xfce_titled_dialog_set_subtitle (XFCE_TITLED_DIALOG (dialog->dialog), 
+				   _("Enter a city name or zip code"));
 
   hbox = gtk_hbox_new (FALSE, BORDER);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
@@ -239,7 +240,7 @@ create_search_dialog (GtkWindow *parent,
                     G_CALLBACK (pass_search_results), dialog->dialog);
   gtk_container_add (GTK_CONTAINER (scroll), dialog->result_list);
 
-  gtk_widget_set_size_request (dialog->dialog, 350, 250);
+  gtk_widget_set_size_request (dialog->dialog, 425, 250);
 
   return dialog;
 }
