@@ -1,7 +1,7 @@
 /*  $Id$
  *
  *  Copyright (c) 2003-2007 Xfce Development Team
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -78,20 +78,20 @@ sanitize_str (const gchar *str)
 
 
 static void
-cb_searchdone (gboolean result,
-               gpointer user_data)
+cb_searchdone (gboolean  succeed,
+               gchar    *received,
+               gpointer  user_data)
 {
   search_dialog *dialog = (search_dialog *) user_data;
   xmlDoc        *doc;
   xmlNode       *cur_node;
   gchar         *id, *city;
 
-  if (!result || dialog->recv_buffer == NULL)
+  if (!succeed || received == NULL)
     return;
 
-  doc = xmlParseMemory (dialog->recv_buffer, strlen (dialog->recv_buffer));
-  g_free (dialog->recv_buffer);
-  dialog->recv_buffer = NULL;
+  doc = xmlParseMemory (received, strlen (received));
+  g_free (received);
 
   if (!doc)
     return;
@@ -131,35 +131,32 @@ cb_searchdone (gboolean result,
 
 
 
-static gboolean
+static void
 search_cb (GtkWidget *widget,
            gpointer   user_data)
 {
   search_dialog *dialog = (search_dialog *) user_data;
   gchar         *sane_str, *url;
   const gchar   *str;
-  gboolean       result;
 
   str = gtk_entry_get_text (GTK_ENTRY (dialog->search_entry));
 
   if (strlen (str) == 0)
-    return FALSE;
+    return;
 
   gtk_list_store_clear (GTK_LIST_STORE (dialog->result_mdl));
 
   if ((sane_str = sanitize_str (str)) == NULL)
-    return FALSE;
+    return;
 
   url = g_strdup_printf ("/search/search?where=%s", sane_str);
   g_free (sane_str);
 
-  result =
-    http_get_buffer (url, "xoap.weather.com", dialog->proxy_host,
-                     dialog->proxy_port, &dialog->recv_buffer, cb_searchdone,
-                     (gpointer) dialog);
-  g_free (url);
+  weather_http_receive_data ("xoap.weather.com", url,
+                             dialog->proxy_host, dialog->proxy_port,
+                             cb_searchdone, dialog);
 
-  return result;
+  g_free (url);
 }
 
 
@@ -196,7 +193,7 @@ create_search_dialog (GtkWindow *parent,
   dialog->dialog =
     xfce_titled_dialog_new_with_buttons (_("Search weather location code"), parent,
 						GTK_DIALOG_MODAL |
-						GTK_DIALOG_DESTROY_WITH_PARENT, 
+						GTK_DIALOG_DESTROY_WITH_PARENT,
 						GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT,
 						GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
 
@@ -207,7 +204,7 @@ create_search_dialog (GtkWindow *parent,
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dialog->dialog)->vbox), vbox,
                       TRUE, TRUE, 0);
 
-  xfce_titled_dialog_set_subtitle (XFCE_TITLED_DIALOG (dialog->dialog), 
+  xfce_titled_dialog_set_subtitle (XFCE_TITLED_DIALOG (dialog->dialog),
 				   _("Enter a city name or zip code"));
 
   hbox = gtk_hbox_new (FALSE, BORDER);
@@ -226,7 +223,7 @@ create_search_dialog (GtkWindow *parent,
   frame = gtk_frame_new (NULL);
   gtk_frame_set_shadow_type (GTK_FRAME (frame), GTK_SHADOW_IN);
   gtk_box_pack_start (GTK_BOX (vbox), frame, TRUE, TRUE, 0);
-  
+
   scroll = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scroll),
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
@@ -267,7 +264,7 @@ run_search_dialog (search_dialog *dialog)
           dialog->result = g_strdup (g_value_get_string (&value));
 
           g_value_unset (&value);
-          
+
           return TRUE;
         }
     }

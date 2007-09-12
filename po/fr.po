@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce-weather-plugin 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-11 09:29+0200\n"
+"POT-Creation-Date: 2007-09-12 22:07+0200\n"
 "PO-Revision-Date: 2007-06-15 17:51+0100\n"
 "Last-Translator: Maximilian Schleiss <maximilian@xfce.org>\n"
 "Language-Team: French <xfce-i18n@xfce.org>\n"
@@ -28,8 +28,7 @@ msgstr "UV"
 msgid "WD"
 msgstr "SV"
 
-#: ../panel-plugin/weather.c:112
-#: ../panel-plugin/weather.c:115
+#: ../panel-plugin/weather.c:112 ../panel-plugin/weather.c:115
 msgid "P"
 msgstr "P"
 
@@ -57,17 +56,16 @@ msgstr "VV"
 msgid "WG"
 msgstr "B"
 
-#: ../panel-plugin/weather.c:249
+#: ../panel-plugin/weather.c:231
 msgid "Cannot update weather data"
 msgstr "Échec à la mise à jour des données météo"
 
-#: ../panel-plugin/weather.c:681
+#: ../panel-plugin/weather.c:629
 #, c-format
 msgid "Unable to open the following url: %s"
 msgstr "Échec à l'ouverture du lien : %s"
 
-#: ../panel-plugin/weather.c:709
-#: ../panel-plugin/weather-summary.c:374
+#: ../panel-plugin/weather.c:657 ../panel-plugin/weather-summary.c:374
 #: ../panel-plugin/weather.desktop.in.in.h:2
 msgid "Weather Update"
 msgstr "Mise-à-jour météo"
@@ -177,15 +175,54 @@ msgstr "km"
 msgid "mi"
 msgstr "mi"
 
-#: ../panel-plugin/weather-search.c:197
+#. display error
+#: ../panel-plugin/weather-http.c:145
+#, c-format
+msgid "Failed to get the hostname \"%s\". Retry in %d seconds."
+msgstr ""
+
+#. display error
+#: ../panel-plugin/weather-http.c:162
+#, c-format
+msgid "Failed to open the socket (%s)."
+msgstr ""
+
+#. display error
+#: ../panel-plugin/weather-http.c:184
+#, c-format
+msgid "Failed to create a connection with the host (%s)."
+msgstr ""
+
+#. display error
+#: ../panel-plugin/weather-http.c:217
+#, c-format
+msgid "Failed to send the request (%s)."
+msgstr ""
+
+#. display error
+#: ../panel-plugin/weather-http.c:254
+#, c-format
+msgid "Failed to receive data (%s)"
+msgstr ""
+
+#. display error
+#: ../panel-plugin/weather-http.c:295
+msgid "Unable to detect the content length."
+msgstr ""
+
+#: ../panel-plugin/weather-http.c:303
+msgid "No content received."
+msgstr ""
+
+#: ../panel-plugin/weather-search.c:194
 msgid "Search weather location code"
 msgstr "Chercher un code de lieu de station météo"
 
-#: ../panel-plugin/weather-search.c:211
+#: ../panel-plugin/weather-search.c:208
 msgid "Enter a city name or zip code"
 msgstr "Entrer un nom de ville ou un code postal"
 
-#: ../panel-plugin/weather-search.c:237
+#: ../panel-plugin/weather-search.c:234
 msgid "Results"
 msgstr "Résultats"
 
@@ -1013,12 +1050,15 @@ msgstr "Afficher les conditions météo actuelles"
 
 #~ msgid "Showers in the Vincinity"
 #~ msgstr "Averses à proximité"
+
 #~ msgid "Flurries"
 #~ msgstr "Bourrasques"
+
 #~ msgid "Sleet"
 #~ msgstr "Verglas"
+
 #~ msgid "Thunder storms"
 #~ msgstr "Orage"
+
 #~ msgid "Properties"
 #~ msgstr "Propriétés"
-

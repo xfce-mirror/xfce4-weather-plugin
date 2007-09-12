@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-06-11 09:29+0200\n"
+"POT-Creation-Date: 2007-09-12 22:07+0200\n"
 "PO-Revision-Date: 2007-08-23 22:22+0100\n"
 "Last-Translator: Nuno Miguel <nunis@netcabo.pt>\n"
 "Language-Team: \n"
@@ -27,8 +27,7 @@ msgstr "U"
 msgid "WD"
 msgstr "WD"
 
-#: ../panel-plugin/weather.c:112
-#: ../panel-plugin/weather.c:115
+#: ../panel-plugin/weather.c:112 ../panel-plugin/weather.c:115
 msgid "P"
 msgstr "P"
 
@@ -56,17 +55,16 @@ msgstr "WS"
 msgid "WG"
 msgstr "RV"
 
-#: ../panel-plugin/weather.c:249
+#: ../panel-plugin/weather.c:231
 msgid "Cannot update weather data"
 msgstr "Impossível actualizar dados do tempo"
 
-#: ../panel-plugin/weather.c:681
+#: ../panel-plugin/weather.c:629
 #, c-format
 msgid "Unable to open the following url: %s"
 msgstr "Impossível abrir o seguinte url: %s"
 
-#: ../panel-plugin/weather.c:709
-#: ../panel-plugin/weather-summary.c:374
+#: ../panel-plugin/weather.c:657 ../panel-plugin/weather-summary.c:374
 #: ../panel-plugin/weather.desktop.in.in.h:2
 msgid "Weather Update"
 msgstr "Actualizar Tempo"
@@ -176,15 +174,54 @@ msgstr "km"
 msgid "mi"
 msgstr "mi"
 
-#: ../panel-plugin/weather-search.c:197
+#. display error
+#: ../panel-plugin/weather-http.c:145
+#, c-format
+msgid "Failed to get the hostname \"%s\". Retry in %d seconds."
+msgstr ""
+
+#. display error
+#: ../panel-plugin/weather-http.c:162
+#, c-format
+msgid "Failed to open the socket (%s)."
+msgstr ""
+
+#. display error
+#: ../panel-plugin/weather-http.c:184
+#, c-format
+msgid "Failed to create a connection with the host (%s)."
+msgstr ""
+
+#. display error
+#: ../panel-plugin/weather-http.c:217
+#, c-format
+msgid "Failed to send the request (%s)."
+msgstr ""
+
+#. display error
+#: ../panel-plugin/weather-http.c:254
+#, c-format
+msgid "Failed to receive data (%s)"
+msgstr ""
+
+#. display error
+#: ../panel-plugin/weather-http.c:295
+msgid "Unable to detect the content length."
+msgstr ""
+
+#: ../panel-plugin/weather-http.c:303
+msgid "No content received."
+msgstr ""
+
+#: ../panel-plugin/weather-search.c:194
 msgid "Search weather location code"
 msgstr "Procurar código de localização de tempo"
 
-#: ../panel-plugin/weather-search.c:211
+#: ../panel-plugin/weather-search.c:208
 msgid "Enter a city name or zip code"
 msgstr "Indique a cidade ou código zip"
 
-#: ../panel-plugin/weather-search.c:237
+#: ../panel-plugin/weather-search.c:234
 msgid "Results"
 msgstr "Resultados"
 
@@ -1009,4 +1046,3 @@ msgstr "Ilimitado"
 #: ../panel-plugin/weather.desktop.in.in.h:1
 msgid "Show current weather conditions"
 msgstr "Mostrar condições actuais de tempo"
-

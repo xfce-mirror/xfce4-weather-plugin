@@ -1,7 +1,7 @@
 /*  $Id$
  *
  *  Copyright (c) 2003-2007 Xfce Development Team
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -22,17 +22,16 @@
 
 G_BEGIN_DECLS
 
-typedef void (*CB_TYPE) (gboolean, gpointer);
+typedef void   (*WeatherFunc) (gboolean succeed, gchar *received, gpointer user_data);
 
-gboolean
-http_get_file (gchar * url, gchar * hostname,
-               gchar * filename, gchar * proxy_host, gint proxy_port,
-               CB_TYPE callback, gpointer data);
+void weather_http_cleanup_qeue (void);
 
-gboolean
-http_get_buffer (gchar * url, gchar * hostname,
-                 gchar * proxy_host, gint proxy_port, gchar ** buffer,
-                 CB_TYPE callback, gpointer data);
+void weather_http_receive_data (const gchar  *hostname,
+                                const gchar  *url,
+                                const gchar  *proxy_host,
+                                gint          proxy_port,
+                                WeatherFunc   cb_func,
+                                gpointer      user_data);
 
 G_END_DECLS
 
