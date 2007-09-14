@@ -126,24 +126,21 @@ weather_http_receive_data_idle (gpointer user_data)
   gchar               buffer[1024];
   gint                bytes, n, m;
   gchar              *request;
-  struct hostent       *host;
+  struct hostent     *host;
   struct sockaddr_in  sockaddr;
-  const gchar        *p, *hostname;
+  const gchar        *p;
   GTimeVal            timeout;
 
   /* set the current time */
   g_get_current_time (&timeout);
 
-  /* hostname we're going to use */
-  hostname = connection->proxy_host ? connection->proxy_host : connection->hostname;
-
   /* try to get the hostname */
-  host = gethostbyname (hostname);
+  host = gethostbyname (connection->proxy_host ? connection->proxy_host : connection->hostname);
   if (G_UNLIKELY (host == NULL))
     {
       /* display error */
-      g_message (_("Failed to get the hostname \"%s\". Retry in %d seconds."),
-                 hostname, WEATHER_RESCHEDULE_TIMEOUT / 1000);
+      g_message (_("Failed to get the hostname. Retry in %d seconds."),
+                 WEATHER_RESCHEDULE_TIMEOUT / 1000);
 
       /* try again later */
       connection->status = STATUS_RESCHEDULE;
@@ -194,9 +191,9 @@ weather_http_receive_data_idle (gpointer user_data)
 
   /* create the request */
   if (connection->proxy_host)
-    request = g_strdup_printf ("GET http://%s%s HTTP/1.0\r\n\r\n", hostname, connection->url);
+    request = g_strdup_printf ("GET http://%s%s HTTP/1.0\r\n\r\n", connection->hostname, connection->url);
   else
-    request = g_strdup_printf ("GET %s HTTP/1.0\r\nHost: %s\r\n\r\n", connection->url, hostname);
+    request = g_strdup_printf ("GET %s HTTP/1.0\r\nHost: %s\r\n\r\n", connection->url, connection->hostname);
 
   /* send the request */
   for (m = 0, n = strlen (request); m < n;)

@@ -236,11 +236,11 @@ set_icon_error (xfceweather_data *data)
 static void
 set_icon_current (xfceweather_data *data)
 {
-  guint      i;
-  GdkPixbuf *icon = NULL;
-  datas      opt;
-  gchar     *str;
-  gint       size, height;
+  guint           i;
+  GdkPixbuf      *icon = NULL;
+  datas           opt;
+  gchar          *str;
+  gint            size, height;
 
   for (i = 0; i < data->labels->len; i++)
     {
@@ -254,8 +254,6 @@ set_icon_current (xfceweather_data *data)
     }
 
   gtk_scrollbox_enablecb (GTK_SCROLLBOX (data->scrollbox), TRUE);
-
-
 
   if (i == 0)
     {
@@ -297,15 +295,15 @@ cb_update (gboolean  succeed,
 
       g_free (result);
 
-     if (G_LIKELY (doc))
-       {
-         cur_node = xmlDocGetRootElement (doc);
+      if (G_LIKELY (doc))
+        {
+          cur_node = xmlDocGetRootElement (doc);
 
-         if (cur_node)
-           weather = parse_weather (cur_node);
+          if (cur_node)
+            weather = parse_weather (cur_node);
 
-         xmlFreeDoc (doc);
-       }
+          xmlFreeDoc (doc);
+        }
     }
 
   gtk_scrollbox_clear (GTK_SCROLLBOX (data->scrollbox));
@@ -326,10 +324,8 @@ cb_update (gboolean  succeed,
 
 
 
-/* -1 error 0 no update needed 1 updating */
-static void
-update_weatherdata (xfceweather_data *data,
-                    gboolean          force)
+static gboolean
+update_weatherdata (xfceweather_data *data)
 {
   gchar *url;
 
@@ -338,23 +334,23 @@ update_weatherdata (xfceweather_data *data,
       gtk_scrollbox_clear (GTK_SCROLLBOX (data->scrollbox));
       set_icon_error (data);
 
-      return;
+      return TRUE;
     }
 
-  //if (force || ((time (NULL) - attrs.st_mtime) > (UPDATE_TIME)))
-    {
-      /* build url */
-      url = g_strdup_printf ("/weather/local/%s?cc=*&dayf=%d&unit=%c",
-                             data->location_code, XML_WEATHER_DAYF_N,
-                             data->unit == METRIC ? 'm' : 'i');
+  /* build url */
+  url = g_strdup_printf ("/weather/local/%s?cc=*&dayf=%d&unit=%c",
+                         data->location_code, XML_WEATHER_DAYF_N,
+                         data->unit == METRIC ? 'm' : 'i');
 
-      /* start receive thread */
-      weather_http_receive_data ("xoap.weather.com", url, data->proxy_host,
-                                 data->proxy_port, cb_update, data);
+  /* start receive thread */
+  weather_http_receive_data ("xoap.weather.com", url, data->proxy_host,
+                             data->proxy_port, cb_update, data);
 
-      /* cleanup */
-      g_free (url);
-    }
+  /* cleanup */
+  g_free (url);
+
+  /* keep timeout running */
+  return TRUE;
 }
 
 
@@ -521,38 +517,23 @@ xfceweather_write_config (XfcePanelPlugin  *plugin,
 
 
 
-static gboolean
-update_cb (xfceweather_data *data)
-{
-  DBG ("update_cb(): callback called");
-
-  update_weatherdata (data, FALSE);
-
-  DBG ("update_cb(): request added, returning");
-
-  return TRUE;
-}
-
-
-
 static void
-update_weatherdata_with_reset (xfceweather_data *data,
-                          gboolean          force)
+update_weatherdata_with_reset (xfceweather_data *data)
 {
   if (data->updatetimeout)
     g_source_remove (data->updatetimeout);
 
-  update_weatherdata (data, force);
+  update_weatherdata (data);
 
   data->updatetimeout =
-    gtk_timeout_add (UPDATE_TIME * 1000, (GSourceFunc) update_cb, data);
+    gtk_timeout_add (UPDATE_TIME * 1000, (GSourceFunc) update_weatherdata, data);
 }
 
 
 static void
 update_config (xfceweather_data * data)
 {
-  update_weatherdata_with_reset (data, TRUE);        /* force because units could have changed */
+  update_weatherdata_with_reset (data);
 }
 
 
@@ -594,7 +575,9 @@ cb_click (GtkWidget      *widget,
         }
     }
   else if (event->button == 2)
-    update_weatherdata_with_reset (data, TRUE);
+    {
+      update_weatherdata_with_reset (data);
+    }
 
   return FALSE;
 }
@@ -607,7 +590,7 @@ mi_click (GtkWidget *widget,
 {
   xfceweather_data *data = (xfceweather_data *) user_data;
 
-  update_weatherdata_with_reset (data, TRUE);
+  update_weatherdata_with_reset (data);
 }
 
 
@@ -747,7 +730,7 @@ xfceweather_create_control (XfcePanelPlugin *plugin)
   gtk_scrollbox_clear (GTK_SCROLLBOX (data->scrollbox));
 
   data->updatetimeout =
-    gtk_timeout_add (UPDATE_TIME * 1000, (GSourceFunc) update_cb, data);
+    gtk_timeout_add (UPDATE_TIME * 1000, (GSourceFunc) update_weatherdata, data);
 
   return data;
 }
@@ -802,6 +785,7 @@ xfceweather_set_size (XfcePanelPlugin  *panel,
   else
     set_icon_error (data);
 
+  /* we handled the size */
   return TRUE;
 }
 
@@ -837,7 +821,7 @@ weather_construct (XfcePanelPlugin *plugin)
   g_signal_connect (G_OBJECT (plugin), "configure-plugin",
                     G_CALLBACK (xfceweather_create_options), data);
 
-  update_weatherdata (data, TRUE);
+  update_weatherdata (data);
 }
 
 XFCE_PANEL_PLUGIN_REGISTER_EXTERNAL (weather_construct);

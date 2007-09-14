@@ -1,7 +1,7 @@
 /*  $Id$
  *
  *  Copyright (c) 2003-2007 Xfce Development Team
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -148,8 +148,6 @@ get_data_wind (xml_wind   *data,
       return EMPTY_STRING;
     }
 
-  DBG ("starting");
-
   switch (type)
     {
     case _WIND_SPEED:
@@ -165,10 +163,6 @@ get_data_wind (xml_wind   *data,
       str = data->d;
       break;
     }
-
-  DBG ("print %p", data->d);
-
-  DBG ("%s", str);
 
   return CHK_NULL (str);
 }
