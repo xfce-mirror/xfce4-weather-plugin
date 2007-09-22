@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-09-12 22:07+0200\n"
-"PO-Revision-Date: 2007-08-23 22:22+0100\n"
+"PO-Revision-Date: 2007-09-21 15:53+0100\n"
 "Last-Translator: Nuno Miguel <nunis@netcabo.pt>\n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -25,9 +25,10 @@ msgstr "U"
 
 #: ../panel-plugin/weather.c:109
 msgid "WD"
-msgstr "WD"
+msgstr "DV"
 
-#: ../panel-plugin/weather.c:112 ../panel-plugin/weather.c:115
+#: ../panel-plugin/weather.c:112
+#: ../panel-plugin/weather.c:115
 msgid "P"
 msgstr "P"
 
@@ -49,7 +50,7 @@ msgstr "H"
 
 #: ../panel-plugin/weather.c:130
 msgid "WS"
-msgstr "WS"
+msgstr "VV"
 
 #: ../panel-plugin/weather.c:133
 msgid "WG"
@@ -64,7 +65,8 @@ msgstr "Impossível actualizar dados do tempo"
 msgid "Unable to open the following url: %s"
 msgstr "Impossível abrir o seguinte url: %s"
 
-#: ../panel-plugin/weather.c:657 ../panel-plugin/weather-summary.c:374
+#: ../panel-plugin/weather.c:657
+#: ../panel-plugin/weather-summary.c:374
 #: ../panel-plugin/weather.desktop.in.in.h:2
 msgid "Weather Update"
 msgstr "Actualizar Tempo"
@@ -87,7 +89,7 @@ msgstr "Estado da atmosfera (P)"
 
 #: ../panel-plugin/weather-config.c:42
 msgid "Wind speed (WS)"
-msgstr "Velocidade do vento (WS"
+msgstr "Velocidade do vento (VV)"
 
 #: ../panel-plugin/weather-config.c:43
 msgid "Wind gust (WG)"
@@ -95,7 +97,7 @@ msgstr "Rajada de Vento (RV)"
 
 #: ../panel-plugin/weather-config.c:44
 msgid "Wind direction (WD)"
-msgstr "Direcção do vento (WD)"
+msgstr "Direcção do vento (DV)"
 
 #: ../panel-plugin/weather-config.c:45
 msgid "Humidity (H)"
@@ -111,7 +113,7 @@ msgstr "Índice UV (UV)"
 
 #: ../panel-plugin/weather-config.c:48
 msgid "Dewpoint (DP)"
-msgstr "Ponto de Oravalho (PO)"
+msgstr "Ponto de Orvalho (PO)"
 
 #: ../panel-plugin/weather-config.c:226
 msgid "Please enter proxy settings"
@@ -136,11 +138,11 @@ msgstr "Código de localidade:"
 #. proxy
 #: ../panel-plugin/weather-config.c:355
 msgid "Proxy server:"
-msgstr "Servidor proxy"
+msgstr "Servidor proxy:"
 
 #: ../panel-plugin/weather-config.c:358
 msgid "Use proxy server"
-msgstr "Use um servidor DICT"
+msgstr "Usar servidor proxy"
 
 #: ../panel-plugin/weather-config.c:360
 msgid "Auto-detect from environment"
@@ -148,7 +150,7 @@ msgstr "Auto-detectar do ambiente"
 
 #: ../panel-plugin/weather-config.c:432
 msgid "Labels to display"
-msgstr "Texto para mostrar:"
+msgstr "Campos a mostrar"
 
 #: ../panel-plugin/weather-data.c:404
 msgid "km/h"
@@ -164,7 +166,7 @@ msgstr "hPa"
 
 #: ../panel-plugin/weather-data.c:407
 msgid "in"
-msgstr "entrada"
+msgstr "pol"
 
 #: ../panel-plugin/weather-data.c:410
 msgid "km"
@@ -178,40 +180,40 @@ msgstr "mi"
 #: ../panel-plugin/weather-http.c:145
 #, c-format
 msgid "Failed to get the hostname \"%s\". Retry in %d seconds."
-msgstr ""
+msgstr "Falhou ao obter o nome do host \"%s\". Tentar em %d segundos."
 
 #. display error
 #: ../panel-plugin/weather-http.c:162
 #, c-format
 msgid "Failed to open the socket (%s)."
-msgstr ""
+msgstr "Falhou ao abrir o socket (%s)."
 
 #. display error
 #: ../panel-plugin/weather-http.c:184
 #, c-format
 msgid "Failed to create a connection with the host (%s)."
-msgstr ""
+msgstr "Falhou ao criar ligação com o host (%s)."
 
 #. display error
 #: ../panel-plugin/weather-http.c:217
 #, c-format
 msgid "Failed to send the request (%s)."
-msgstr ""
+msgstr "Falhou ao enviar o pedido (%s)."
 
 #. display error
 #: ../panel-plugin/weather-http.c:254
 #, c-format
 msgid "Failed to receive data (%s)"
-msgstr ""
+msgstr "Falhou a recepção de dados (%s)"
 
 #. display error
 #: ../panel-plugin/weather-http.c:295
 msgid "Unable to detect the content length."
-msgstr ""
+msgstr "Incapaz de detectar o tamanho do conteúdo."
 
 #: ../panel-plugin/weather-http.c:303
 msgid "No content received."
-msgstr ""
+msgstr "Nenhum conteúdo recebido."
 
 #: ../panel-plugin/weather-search.c:194
 msgid "Search weather location code"
@@ -255,7 +257,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-summary.c:96
 msgid "Temperature"
-msgstr "Temperatura (T)"
+msgstr "Temperatura"
 
 #: ../panel-plugin/weather-summary.c:97
 msgid "Windchill"
@@ -285,7 +287,7 @@ msgstr "Velocidade"
 
 #: ../panel-plugin/weather-summary.c:113
 msgid "Direction"
-msgstr "Direcção do vento (WD)"
+msgstr "Direcção"
 
 #: ../panel-plugin/weather-summary.c:119
 msgid "Gusts"
@@ -302,7 +304,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-summary.c:125
 msgid "Index"
-msgstr "Índice UV (UV)"
+msgstr "Índice"
 
 #: ../panel-plugin/weather-summary.c:126
 msgid "Risk"
@@ -336,11 +338,11 @@ msgstr ""
 
 #: ../panel-plugin/weather-summary.c:142
 msgid "Rise"
-msgstr "Ascensão"
+msgstr "Nascer do Sol"
 
 #: ../panel-plugin/weather-summary.c:148
 msgid "Set"
-msgstr "Mudar"
+msgstr "Pôr do Sol"
 
 #. Other
 #: ../panel-plugin/weather-summary.c:153
@@ -408,11 +410,11 @@ msgstr "Neve Ligeira de manhã"
 
 #: ../panel-plugin/weather-translate.c:44
 msgid "AM Rain / Snow Showers"
-msgstr "Chuva / Aguaceiros de Neve de manhã"
+msgstr "Chuva de manhã / Aguaceiros de Neve"
 
 #: ../panel-plugin/weather-translate.c:45
 msgid "AM Rain / Wind"
-msgstr "Chuva / Vento de manhã"
+msgstr "Chuva de manhã / Vento"
 
 #: ../panel-plugin/weather-translate.c:46
 msgid "AM Showers"
@@ -420,7 +422,7 @@ msgstr "Aguaceiros de manhã"
 
 #: ../panel-plugin/weather-translate.c:47
 msgid "AM Showers / Wind"
-msgstr "Aguaceiros / Vento de manhã"
+msgstr "Aguaceiros de manhã / Vento"
 
 #: ../panel-plugin/weather-translate.c:48
 msgid "AM Snow Showers"
@@ -428,7 +430,7 @@ msgstr "Aguaceiros de neve de manhã"
 
 #: ../panel-plugin/weather-translate.c:49
 msgid "AM Snow Showers / Wind"
-msgstr "Aguaceiros de Neve / Vento à tarde"
+msgstr "Aguaceiros de Neve de manhã / Vento"
 
 #: ../panel-plugin/weather-translate.c:50
 msgid "AM T-Storms"
@@ -480,7 +482,7 @@ msgstr "Limpo"
 
 #: ../panel-plugin/weather-translate.c:62
 msgid "Clearing"
-msgstr "Desprendido"
+msgstr "Clareando"
 
 #: ../panel-plugin/weather-translate.c:63
 msgid "Clouds"
@@ -488,7 +490,7 @@ msgstr "Nuvens"
 
 #: ../panel-plugin/weather-translate.c:64
 msgid "Clouds Early / Clearing Late"
-msgstr "Nuvens Cedo / Limpo de tarde"
+msgstr "Nuvens Cedo / A clarear à tarde"
 
 #: ../panel-plugin/weather-translate.c:65
 msgid "Cloudy"
@@ -532,7 +534,7 @@ msgstr "Poeira"
 
 #: ../panel-plugin/weather-translate.c:75
 msgid "Fair"
-msgstr "Agradável"
+msgstr "Claro"
 
 #: ../panel-plugin/weather-translate.c:76
 msgid "Few Showers"
@@ -728,7 +730,7 @@ msgstr "Neve Leve à Tarde"
 
 #: ../panel-plugin/weather-translate.c:124
 msgid "PM Rain / Wind"
-msgstr "Chuva / Vento à tarde"
+msgstr "Chuva  à tarde / Vento"
 
 #: ../panel-plugin/weather-translate.c:125
 msgid "PM Showers"
@@ -884,7 +886,7 @@ msgstr "Solarengo"
 
 #: ../panel-plugin/weather-translate.c:163
 msgid "Sunny / Wind"
-msgstr "Soalheiro / Vento"
+msgstr "Solarengo / Vento"
 
 #: ../panel-plugin/weather-translate.c:164
 msgid "T-Showers"
@@ -904,11 +906,11 @@ msgstr "Trovoadas de Manhã"
 
 #: ../panel-plugin/weather-translate.c:168
 msgid "Thunder"
-msgstr "Tempestade"
+msgstr "Trovão"
 
 #: ../panel-plugin/weather-translate.c:169
 msgid "Thunder in the Vincinity"
-msgstr "Relâmpagos Próximos"
+msgstr "Trovoada nas Proximidades"
 
 #: ../panel-plugin/weather-translate.c:170
 msgid "Variable Cloudiness"
@@ -932,7 +934,7 @@ msgstr "Mistura Invernal"
 
 #: ../panel-plugin/weather-translate.c:181
 msgid "rising"
-msgstr "levantar"
+msgstr "aumentando"
 
 #: ../panel-plugin/weather-translate.c:182
 msgid "steady"
@@ -940,7 +942,7 @@ msgstr "estável"
 
 #: ../panel-plugin/weather-translate.c:183
 msgid "falling"
-msgstr "maré-baixa"
+msgstr "caindo"
 
 #: ../panel-plugin/weather-translate.c:190
 msgid "Low"
@@ -1037,7 +1039,7 @@ msgstr "calmo"
 
 #: ../panel-plugin/weather-translate.c:431
 msgid "N/A"
-msgstr "N/A"
+msgstr "N/D"
 
 #: ../panel-plugin/weather-translate.c:479
 msgid "Unlimited"
@@ -1046,3 +1048,4 @@ msgstr "Ilimitado"
 #: ../panel-plugin/weather.desktop.in.in.h:1
 msgid "Show current weather conditions"
 msgstr "Mostrar condições actuais de tempo"
+
