@@ -155,8 +155,8 @@ weather_http_receive_data_idle (gpointer user_data)
   connection->fd = socket (PF_INET, SOCK_STREAM, 0);
   if (G_UNLIKELY (connection->fd < 0))
     {
-      /* display error */
-      g_error (_("Failed to open the socket (%s)."), g_strerror (errno));
+      /* display warning */
+      g_warning (_("Failed to open the socket (%s)."), g_strerror (errno));
 
       /* set status */
       connection->status = STATUS_ERROR;
@@ -177,8 +177,8 @@ weather_http_receive_data_idle (gpointer user_data)
   m = connect (connection->fd, (struct sockaddr *)&sockaddr, sizeof(struct sockaddr));
   if (G_UNLIKELY (m < 0))
     {
-      /* display error */
-      g_error (_("Failed to create a connection with the host (%s)."), g_strerror (errno));
+      /* display warning */
+      g_warning (_("Failed to create a connection with the host (%s)."), g_strerror (errno));
 
       /* set status */
       connection->status = STATUS_ERROR;
@@ -210,8 +210,8 @@ weather_http_receive_data_idle (gpointer user_data)
           /* just try again on EAGAIN/EINTR */
           if (G_LIKELY (errno != EAGAIN && errno != EINTR))
             {
-              /* display error */
-              g_error (_("Failed to send the request (%s)."), g_strerror (errno));
+              /* display warning */
+              g_warning (_("Failed to send the request (%s)."), g_strerror (errno));
 
               /* cleanup the request */
               g_free (request);
@@ -247,8 +247,8 @@ weather_http_receive_data_idle (gpointer user_data)
       /* check for problems */
       if (G_UNLIKELY (bytes < 0))
         {
-          /* display error */
-          g_error (_("Failed to receive data (%s)"), g_strerror (errno));
+          /* display warning */
+          g_warning (_("Failed to receive data (%s)"), g_strerror (errno));
 
           /* set status */
           connection->status = STATUS_ERROR;
@@ -288,8 +288,8 @@ weather_http_receive_data_idle (gpointer user_data)
         }
       else
         {
-          /* display error */
-          g_error (_("Unable to detect the content length."));
+          /* display warning */
+          g_warning (_("Unable to detect the content length."));
 
           /* set status */
           connection->status = STATUS_ERROR;
@@ -297,7 +297,7 @@ weather_http_receive_data_idle (gpointer user_data)
     }
   else
     {
-      g_error (_("No content received."));
+      g_warning (_("No content received."));
 
       /* set status */
       connection->status = STATUS_ERROR;
