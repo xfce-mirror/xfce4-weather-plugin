@@ -13,7 +13,7 @@ m4_define([weather_version_major], [0])
 m4_define([weather_version_minor], [6])
 m4_define([weather_version_micro], [2])
 m4_define([weather_version_build], [r@REVISION@])
-m4_define([weather_version_tag], [svn])
+m4_define([weather_version_tag], [])
 m4_define([weather_version], [weather_version_major().weather_version_minor().weather_version_micro()ifelse(weather_version_tag(), [svn], [weather_version_tag()-weather_version_build()], [weather_version_tag()])])
 
 dnl ***************************
@@ -46,7 +46,7 @@ dnl **********************************
 AC_HEADER_STDC()
 AC_CHECK_HEADERS([string.h fcntl.h errno.h sys/socket.h netdb.h \
                   netinet/in.h sys/types.h time.h unistd.h stdio.h \
-                  sys/stat.h stddef.h stdlib.h])
+                  sys/stat.h stddef.h stdlib.h netinet/in.h])
 
 dnl ******************************
 dnl *** Check for i18n support ***
