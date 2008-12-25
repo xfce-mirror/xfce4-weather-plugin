@@ -8,9 +8,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce-weather-plugin 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2007-09-12 22:07+0200\n"
-"PO-Revision-Date: 2008-11-09 14:39+0900\n"
-"Last-Translator: Nobuhiro Iwamatsu <iwamatsu@nigauri.org>\n"
+"POT-Creation-Date: 2008-12-20 23:18+0900\n"
+"PO-Revision-Date: 2008-12-20 23:17+0900\n"
+"Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <xfce-i18n@xfce.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
@@ -28,8 +28,7 @@ msgstr "紫外線"
 msgid "WD"
 msgstr "風向"
 
-#: ../panel-plugin/weather.c:112
-#: ../panel-plugin/weather.c:115
+#: ../panel-plugin/weather.c:112 ../panel-plugin/weather.c:115
 msgid "P"
 msgstr "気圧"
 
@@ -61,16 +60,15 @@ msgstr "突風"
 msgid "Cannot update weather data"
 msgstr "気象データを更新できません"
 
-#: ../panel-plugin/weather.c:629
+#: ../panel-plugin/weather.c:612
 #, c-format
 msgid "Unable to open the following url: %s"
 msgstr "次の URL を開くことができません: %s"
 
-#: ../panel-plugin/weather.c:657
-#: ../panel-plugin/weather-summary.c:374
+#: ../panel-plugin/weather.c:640 ../panel-plugin/weather-summary.c:374
 #: ../panel-plugin/weather.desktop.in.in.h:2
 msgid "Weather Update"
-msgstr "Weather Update"
+msgstr "現在のお天気"
 
 #: ../panel-plugin/weather-config.c:38
 msgid "Windchill (F)"
@@ -126,7 +124,7 @@ msgstr "測定単位:"
 
 #: ../panel-plugin/weather-config.c:315
 msgid "Imperial"
-msgstr "ヤードポンド法"
+msgstr "ヤード・ポンド法"
 
 #: ../panel-plugin/weather-config.c:317
 msgid "Metric"
@@ -153,76 +151,76 @@ msgstr "環境から自動検出する"
 msgid "Labels to display"
 msgstr "表示するラベル"
 
-#: ../panel-plugin/weather-data.c:404
+#: ../panel-plugin/weather-data.c:398
 msgid "km/h"
 msgstr "km/h"
 
-#: ../panel-plugin/weather-data.c:404
+#: ../panel-plugin/weather-data.c:398
 msgid "mph"
 msgstr "mph"
 
-#: ../panel-plugin/weather-data.c:407
+#: ../panel-plugin/weather-data.c:401
 msgid "hPa"
 msgstr "hPa"
 
-#: ../panel-plugin/weather-data.c:407
+#: ../panel-plugin/weather-data.c:401
 msgid "in"
 msgstr "インチ"
 
-#: ../panel-plugin/weather-data.c:410
+#: ../panel-plugin/weather-data.c:404
 msgid "km"
 msgstr "km"
 
-#: ../panel-plugin/weather-data.c:410
+#: ../panel-plugin/weather-data.c:404
 msgid "mi"
 msgstr "マイル"
 
 #. display error
-#: ../panel-plugin/weather-http.c:145
+#: ../panel-plugin/weather-http.c:143
 #, c-format
-msgid "Failed to get the hostname \"%s\". Retry in %d seconds."
-msgstr "ホスト名 \"%s\" の取得に失敗しました。%d 秒後に再試行してください。"
+msgid "Failed to get the hostname. Retry in %d seconds."
+msgstr "ホスト名の取得に失敗しました。%d 秒後に再試行してください。"
 
-#. display error
-#: ../panel-plugin/weather-http.c:162
+#. display warning
+#: ../panel-plugin/weather-http.c:160
 #, c-format
 msgid "Failed to open the socket (%s)."
-msgstr "ソケットを開くのに失敗しました (%s)。"
+msgstr "ソケットを開くことに失敗しました (%s)。"
 
-#. display error
-#: ../panel-plugin/weather-http.c:184
+#. display warning
+#: ../panel-plugin/weather-http.c:182
 #, c-format
 msgid "Failed to create a connection with the host (%s)."
-msgstr "ホストとの接続の作成に失敗しました (%s)。"
+msgstr "ホストとの接続の生成に失敗しました (%s)。"
 
-#. display error
-#: ../panel-plugin/weather-http.c:217
+#. display warning
+#: ../panel-plugin/weather-http.c:215
 #, c-format
 msgid "Failed to send the request (%s)."
 msgstr "リクエストの送信に失敗しました (%s)。"
 
-#. display error
-#: ../panel-plugin/weather-http.c:254
+#. display warning
+#: ../panel-plugin/weather-http.c:252
 #, c-format
 msgid "Failed to receive data (%s)"
 msgstr "データの受信に失敗しました (%s)"
 
-#. display error
-#: ../panel-plugin/weather-http.c:295
+#. display warning
+#: ../panel-plugin/weather-http.c:293
 msgid "Unable to detect the content length."
 msgstr "内容の長さを検出できませんでした。"
 
-#: ../panel-plugin/weather-http.c:303
+#: ../panel-plugin/weather-http.c:301
 msgid "No content received."
 msgstr "受信された内容はありません。"
 
 #: ../panel-plugin/weather-search.c:194
 msgid "Search weather location code"
-msgstr "気象地域コードを検索する"
+msgstr "気象地域コードの検索"
 
 #: ../panel-plugin/weather-search.c:208
 msgid "Enter a city name or zip code"
-msgstr "都市名または郵便番号を入力する"
+msgstr "都市名または郵便番号を入力してください"
 
 #: ../panel-plugin/weather-search.c:234
 msgid "Results"
@@ -235,7 +233,7 @@ msgid ""
 "Weather report for: %s.\n"
 "\n"
 msgstr ""
-"%s の天気予報です。\n"
+"%s の天気情報です。\n"
 "\n"
 
 #: ../panel-plugin/weather-summary.c:89
@@ -322,7 +320,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-summary.c:132
 msgid "Pressure"
-msgstr "圧力"
+msgstr "気圧"
 
 #: ../panel-plugin/weather-summary.c:134
 msgid "State"
@@ -374,7 +372,7 @@ msgstr "夜: %s"
 
 #: ../panel-plugin/weather-summary.c:231
 msgid "<b>Precipitation</b>"
-msgstr "<b>降水量</b>"
+msgstr "<b>降水確率</b>"
 
 #: ../panel-plugin/weather-summary.c:253
 msgid "<b>Temperature</b>"
@@ -387,7 +385,7 @@ msgstr "<b>風</b>"
 #: ../panel-plugin/weather-summary.c:380
 #, c-format
 msgid "Weather report for: %s"
-msgstr "天気予報: %s"
+msgstr "天気情報: %s"
 
 #: ../panel-plugin/weather-summary.c:403
 msgid "Summary"
@@ -395,7 +393,7 @@ msgstr "概要"
 
 #: ../panel-plugin/weather-summary.c:406
 msgid "Forecast"
-msgstr "見通し"
+msgstr "予報"
 
 #: ../panel-plugin/weather-translate.c:41
 msgid "AM Clouds / PM Sun"
@@ -427,7 +425,7 @@ msgstr "午前 にわか雨 / 風"
 
 #: ../panel-plugin/weather-translate.c:48
 msgid "AM Snow Showers"
-msgstr "午前 にわか雨 / 風"
+msgstr "午前 にわか雨"
 
 #: ../panel-plugin/weather-translate.c:49
 msgid "AM Snow Showers / Wind"
@@ -471,7 +469,7 @@ msgstr "降雪確率"
 
 #: ../panel-plugin/weather-translate.c:59
 msgid "Chance of Snow/Rain"
-msgstr "雪/雨の確率"
+msgstr "降雪/降水確率"
 
 #: ../panel-plugin/weather-translate.c:60
 msgid "Chance of T-Storm"
@@ -1032,7 +1030,7 @@ msgstr "南南東"
 #: ../panel-plugin/weather-translate.c:335
 #, c-format
 msgid "%x at %X Local Time"
-msgstr "%x: %X 現地時間"
+msgstr "現地時間 %x: %X"
 
 #: ../panel-plugin/weather-translate.c:429
 msgid "calm"
@@ -1048,5 +1046,4 @@ msgstr "無制限"
 
 #: ../panel-plugin/weather.desktop.in.in.h:1
 msgid "Show current weather conditions"
-msgstr "現在の天候状態を表示する"
-
+msgstr "現在の天候の状態を表示します。"
