@@ -12,7 +12,7 @@ msgstr ""
 "Project-Id-Version: xfce4-weather-plugin 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-09-12 22:07+0200\n"
-"PO-Revision-Date: 2009-04-14 21:13+0100\n"
+"PO-Revision-Date: 2009-04-17 21:44+0100\n"
 "Last-Translator: Leandro Regueiro <leandro.regueiro@gmail.com>\n"
 "Language-Team: Galician <proxecto@trasno.net>\n"
 "MIME-Version: 1.0\n"
@@ -66,14 +66,13 @@ msgid "WG"
 msgstr ""
 
 #: ../panel-plugin/weather.c:231
-#, fuzzy
 msgid "Cannot update weather data"
-msgstr "Non se poden gardar os datos do calendario"
+msgstr "Non se puideron actualizar os datos do tempo"
 
 #: ../panel-plugin/weather.c:629
-#, fuzzy, c-format
+#, c-format
 msgid "Unable to open the following url: %s"
-msgstr "Non se puido abrir %s para escribir"
+msgstr "Non se puido abrir o seguinte url: %s"
 
 #: ../panel-plugin/weather.c:657
 #: ../panel-plugin/weather-summary.c:374
@@ -96,7 +95,7 @@ msgstr "Presión atmosférica (P)"
 #: ../panel-plugin/weather-config.c:41
 #, fuzzy
 msgid "Atmosphere state (P)"
-msgstr "E_stado/Provincia:"
+msgstr "Estado explícito"
 
 #: ../panel-plugin/weather-config.c:42
 #, fuzzy
@@ -109,9 +108,8 @@ msgid "Wind gust (WG)"
 msgstr "Unidade de velocidade do _vento:"
 
 #: ../panel-plugin/weather-config.c:44
-#, fuzzy
 msgid "Wind direction (WD)"
-msgstr "A dirección do empaquetado da barra de menú"
+msgstr "Dirección do vento (WD)"
 
 #: ../panel-plugin/weather-config.c:45
 msgid "Humidity (H)"
@@ -122,9 +120,8 @@ msgid "Visibility (V)"
 msgstr "Visibilidade (V)"
 
 #: ../panel-plugin/weather-config.c:47
-#, fuzzy
 msgid "UV Index (UV)"
-msgstr "Índice de cor:"
+msgstr "Índice UV (UV)"
 
 #: ../panel-plugin/weather-config.c:48
 msgid "Dewpoint (DP)"
@@ -135,9 +132,8 @@ msgid "Please enter proxy settings"
 msgstr "Introduza a configuración do proxy"
 
 #: ../panel-plugin/weather-config.c:309
-#, fuzzy
 msgid "Measurement unit:"
-msgstr "Unidades de lonxitude:"
+msgstr "Unidade de medición:"
 
 #: ../panel-plugin/weather-config.c:315
 msgid "Imperial"
@@ -150,7 +146,7 @@ msgstr "Métrico"
 #: ../panel-plugin/weather-config.c:332
 #, fuzzy
 msgid "Location code:"
-msgstr "Código fonte C"
+msgstr "<b>Dobradura do código</b>"
 
 #. proxy
 #: ../panel-plugin/weather-config.c:355
@@ -185,7 +181,7 @@ msgstr "hPa"
 #: ../panel-plugin/weather-data.c:407
 #, fuzzy
 msgid "in"
-msgstr "pl."
+msgstr "pl"
 
 #: ../panel-plugin/weather-data.c:410
 msgid "km"
@@ -199,50 +195,45 @@ msgstr "mi"
 #: ../panel-plugin/weather-http.c:145
 #, c-format
 msgid "Failed to get the hostname \"%s\". Retry in %d seconds."
-msgstr ""
+msgstr "Produciuse un erro ó obter o nome de máquina \"%s\". Volverase intentar en %d segundos."
 
 #. display error
 #: ../panel-plugin/weather-http.c:162
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open the socket (%s)."
-msgstr "Non puido abrir o conectador: %s"
+msgstr "Non puido abrir o conectador (%s)."
 
 #. display error
 #: ../panel-plugin/weather-http.c:184
 #, c-format
 msgid "Failed to create a connection with the host (%s)."
-msgstr ""
+msgstr "Non se puido crear unha conexión ca máquina (%s)."
 
 #. display error
 #: ../panel-plugin/weather-http.c:217
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to send the request (%s)."
-msgstr "Fallo ao enviar %d de %d mensaxes"
+msgstr "Fallo ao enviar a solicitude (%s)."
 
 #. display error
 #: ../panel-plugin/weather-http.c:254
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to receive data (%s)"
-msgstr ""
-"Erro ao gardar datos:\n"
-"\n"
-"%s"
+msgstr "Fallo ao recibir os datos (%s)"
 
 #. display error
 #: ../panel-plugin/weather-http.c:295
-#, fuzzy
 msgid "Unable to detect the content length."
-msgstr "Non é posible analizar o contido da mensaxe"
+msgstr "Non se puido detectar a lonxitude do contido."
 
 #: ../panel-plugin/weather-http.c:303
-#, fuzzy
 msgid "No content received."
-msgstr "Recibido en nome de <b>%s</b>"
+msgstr "Non se recibiu ningún contido."
 
 #: ../panel-plugin/weather-search.c:194
 #, fuzzy
 msgid "Search weather location code"
-msgstr "Ver<i>%(name)s</i> na busca de <b>Google Code</b>"
+msgstr "Ver <i>%(name)s</i> en <b>Buscar no Google Code</b>"
 
 #: ../panel-plugin/weather-search.c:208
 msgid "Enter a city name or zip code"
@@ -254,11 +245,13 @@ msgstr "Resultados"
 
 #. head
 #: ../panel-plugin/weather-summary.c:84
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Weather report for: %s.\n"
 "\n"
-msgstr "Previsión meteorolóxica para unha cidade"
+msgstr ""
+"Previsión meteorolóxica para: %s.\n"
+"\n"
 
 #: ../panel-plugin/weather-summary.c:89
 #, c-format
@@ -266,6 +259,8 @@ msgid ""
 "Observation station located in %s\n"
 "Last update: %s.\n"
 msgstr ""
+"Estación de observación situada en %s\n"
+"Última actualización: %s.\n"
 
 #. Temperature
 #: ../panel-plugin/weather-summary.c:95
@@ -292,7 +287,7 @@ msgstr "Descrición"
 #: ../panel-plugin/weather-summary.c:103
 #, fuzzy
 msgid "Dew point"
-msgstr "Punto de condensación:"
+msgstr "Punto de cond:"
 
 #. Wind
 #: ../panel-plugin/weather-summary.c:106
@@ -330,7 +325,7 @@ msgstr "Índice"
 
 #: ../panel-plugin/weather-summary.c:126
 msgid "Risk"
-msgstr ""
+msgstr "Risco"
 
 #. Atmospheric pressure
 #: ../panel-plugin/weather-summary.c:131
@@ -372,6 +367,8 @@ msgid ""
 "\n"
 "Other\n"
 msgstr ""
+"\n"
+"Outro\n"
 
 #: ../panel-plugin/weather-summary.c:154
 msgid "Humidity"
@@ -424,7 +421,7 @@ msgstr "_12 horas (AM/PM)"
 #: ../panel-plugin/weather-translate.c:42
 #, fuzzy
 msgid "AM Light Rain"
-msgstr "Nova fonte de luz"
+msgstr "_Luz e sombra"
 
 #: ../panel-plugin/weather-translate.c:43
 #, fuzzy
@@ -443,7 +440,7 @@ msgstr "Unidade de velocidade do _vento:"
 #: ../panel-plugin/weather-translate.c:46
 #, fuzzy
 msgid "AM Showers"
-msgstr "Chuvia abundante"
+msgstr "Tempo: chuvascos"
 
 #: ../panel-plugin/weather-translate.c:47
 #, fuzzy
@@ -462,7 +459,7 @@ msgstr ""
 #: ../panel-plugin/weather-translate.c:50
 #, fuzzy
 msgid "AM T-Storms"
-msgstr "Estou fóra da oficina"
+msgstr "Estou listo/a"
 
 #: ../panel-plugin/weather-translate.c:51
 #, fuzzy
@@ -488,23 +485,21 @@ msgid "Chance of Rain"
 msgstr "Probabilidade de chuvia"
 
 #: ../panel-plugin/weather-translate.c:56
-#, fuzzy
 msgid "Chance of Rain/Snow"
-msgstr "Folerpas de neve lixeiras"
+msgstr "Posibilidade de chuvia/neve"
 
 #: ../panel-plugin/weather-translate.c:57
 #, fuzzy
 msgid "Chance of Showers"
-msgstr "Chuvia abundante"
+msgstr "Tempo: chuvascos"
 
 #: ../panel-plugin/weather-translate.c:58
 msgid "Chance of Snow"
 msgstr "Probabilidade de neve"
 
 #: ../panel-plugin/weather-translate.c:59
-#, fuzzy
 msgid "Chance of Snow/Rain"
-msgstr "Folerpas de neve lixeiras"
+msgstr "Posibilidade de neve/chuvia"
 
 #: ../panel-plugin/weather-translate.c:60
 #, fuzzy
@@ -540,12 +535,12 @@ msgstr "A renderizar vento"
 #: ../panel-plugin/weather-translate.c:67
 #, fuzzy
 msgid "Cloudy Periods"
-msgstr "Tempo: anubrado"
+msgstr "_Número de períodos:"
 
 #: ../panel-plugin/weather-translate.c:68
 #, fuzzy
 msgid "Continued Hot"
-msgstr "Hot spot _X:"
+msgstr "Contactos frecuentes"
 
 #: ../panel-plugin/weather-translate.c:69
 msgid "Cumulonimbus Clouds Observed"
@@ -568,7 +563,7 @@ msgstr "Chuvisca"
 #: ../panel-plugin/weather-translate.c:73
 #, fuzzy
 msgid "Dry"
-msgstr "Execución en seco"
+msgstr "Simulacro"
 
 #: ../panel-plugin/weather-translate.c:74
 msgid "Dust"
@@ -577,12 +572,12 @@ msgstr "Po"
 #: ../panel-plugin/weather-translate.c:75
 #, fuzzy
 msgid "Fair"
-msgstr "Aceptable"
+msgstr "Aceptábel"
 
 #: ../panel-plugin/weather-translate.c:76
 #, fuzzy
 msgid "Few Showers"
-msgstr "Chuvia abundante"
+msgstr "Tempo: chuvascos"
 
 #: ../panel-plugin/weather-translate.c:77
 #, fuzzy
@@ -643,7 +638,7 @@ msgstr "Neve forte"
 #: ../panel-plugin/weather-translate.c:89
 #, fuzzy
 msgid "Hot And Humid"
-msgstr "R_echeo e Trazo"
+msgstr "Buscar e substituí_r..."
 
 #: ../panel-plugin/weather-translate.c:90
 msgid "Hot!"
@@ -667,7 +662,7 @@ msgstr "Nubes diferentes..."
 #: ../panel-plugin/weather-translate.c:94
 #, fuzzy
 msgid "Isolated Showers"
-msgstr "Chuvia abundante"
+msgstr "Tempo: chuvascos"
 
 #: ../panel-plugin/weather-translate.c:95
 msgid "Isolated T-Storms"
@@ -695,12 +690,12 @@ msgstr "Unidade de velocidade do _vento:"
 #: ../panel-plugin/weather-translate.c:100
 #, fuzzy
 msgid "Light rain late"
-msgstr "Nova fonte de luz"
+msgstr "_Luz e sombra"
 
 #: ../panel-plugin/weather-translate.c:101
 #, fuzzy
 msgid "Light Rain Shower"
-msgstr "Nova fonte de luz"
+msgstr "_Luz e sombra"
 
 #: ../panel-plugin/weather-translate.c:102
 #, fuzzy
@@ -714,17 +709,16 @@ msgstr ""
 #: ../panel-plugin/weather-translate.c:104
 #, fuzzy
 msgid "Mild and Breezy"
-msgstr "R_echeo e Trazo"
+msgstr "Buscar e substituí_r..."
 
 #: ../panel-plugin/weather-translate.c:105
-#, fuzzy
 msgid "Mist"
 msgstr "Brétema"
 
 #: ../panel-plugin/weather-translate.c:106
 #, fuzzy
 msgid "Mostly Clear"
-msgstr "Limpar os valores"
+msgstr "Confirmar limpeza"
 
 #: ../panel-plugin/weather-translate.c:107
 #, fuzzy
@@ -800,7 +794,7 @@ msgstr "Tempo: sol"
 #: ../panel-plugin/weather-translate.c:122
 #, fuzzy
 msgid "PM Light Rain"
-msgstr "Nova fonte de luz"
+msgstr "_Luz e sombra"
 
 #: ../panel-plugin/weather-translate.c:123
 #, fuzzy
@@ -815,7 +809,7 @@ msgstr "Unidade de velocidade do _vento:"
 #: ../panel-plugin/weather-translate.c:125
 #, fuzzy
 msgid "PM Showers"
-msgstr "Chuvia abundante"
+msgstr "Tempo: chuvascos"
 
 #: ../panel-plugin/weather-translate.c:126
 #, fuzzy
@@ -825,7 +819,7 @@ msgstr "Fortes precipitacións de sarabia"
 #: ../panel-plugin/weather-translate.c:127
 #, fuzzy
 msgid "PM T-Storms"
-msgstr "<b>PM</b>: reflexo"
+msgstr "00/00/00, 00:00"
 
 #: ../panel-plugin/weather-translate.c:128
 msgid "Rain"
@@ -864,7 +858,7 @@ msgstr "A renderizar vento"
 #: ../panel-plugin/weather-translate.c:135
 #, fuzzy
 msgid "Rain and Sleet"
-msgstr "R_echeo e Trazo"
+msgstr "Buscar e substituí_r..."
 
 #: ../panel-plugin/weather-translate.c:136
 #, fuzzy
@@ -879,7 +873,7 @@ msgstr "Folerpas de neve lixeiras"
 #: ../panel-plugin/weather-translate.c:138
 #, fuzzy
 msgid "Rain Shower"
-msgstr "Gotas de choiva"
+msgstr "Pingas de chuvia"
 
 #: ../panel-plugin/weather-translate.c:139
 msgid "Rain Shower and Windy"
@@ -893,12 +887,12 @@ msgstr "Folerpas de neve lixeiras"
 #: ../panel-plugin/weather-translate.c:141
 #, fuzzy
 msgid "Rain/Lightning"
-msgstr "Gotas de choiva"
+msgstr "Pingas de chuvia"
 
 #: ../panel-plugin/weather-translate.c:142
 #, fuzzy
 msgid "Scattered Showers"
-msgstr "Chuvia abundante"
+msgstr "Tempo: chuvascos"
 
 #: ../panel-plugin/weather-translate.c:143
 #, fuzzy
@@ -917,7 +911,7 @@ msgstr "Pouco anubrado"
 #: ../panel-plugin/weather-translate.c:146
 #, fuzzy
 msgid "Showers"
-msgstr "Chuvia abundante"
+msgstr "Tempo: chuvascos"
 
 #: ../panel-plugin/weather-translate.c:147
 #, fuzzy
@@ -927,7 +921,7 @@ msgstr "A renderizar vento"
 #: ../panel-plugin/weather-translate.c:148
 #, fuzzy
 msgid "Showers Early"
-msgstr "Chuvia abundante"
+msgstr "Tempo: chuvascos"
 
 #: ../panel-plugin/weather-translate.c:149
 #, fuzzy
@@ -937,7 +931,7 @@ msgstr "Néboa nas proximidades"
 #: ../panel-plugin/weather-translate.c:150
 #, fuzzy
 msgid "Showers Late"
-msgstr "Chuvia abundante"
+msgstr "Tempo: chuvascos"
 
 #: ../panel-plugin/weather-translate.c:151
 #, fuzzy
@@ -956,12 +950,12 @@ msgstr "Neve"
 #: ../panel-plugin/weather-translate.c:154
 #, fuzzy
 msgid "Snow and Rain"
-msgstr "R_echeo e Trazo"
+msgstr "Buscar e substituí_r..."
 
 #: ../panel-plugin/weather-translate.c:155
 #, fuzzy
 msgid "Snow or Rain"
-msgstr "Vermello ou ton"
+msgstr "Compresor ou Turbina"
 
 #: ../panel-plugin/weather-translate.c:156
 #, fuzzy
@@ -991,7 +985,7 @@ msgstr "Fortes precipitacións de sarabia"
 #: ../panel-plugin/weather-translate.c:161
 #, fuzzy
 msgid "Snow to Rain"
-msgstr "Obxecto a camiño"
+msgstr "Imaxe á grabar"
 
 #: ../panel-plugin/weather-translate.c:162
 msgid "Sunny"
@@ -1005,12 +999,12 @@ msgstr "A renderizar vento"
 #: ../panel-plugin/weather-translate.c:164
 #, fuzzy
 msgid "T-Showers"
-msgstr "Chuvia abundante"
+msgstr "Tempo: chuvascos"
 
 #: ../panel-plugin/weather-translate.c:165
 #, fuzzy
 msgid "T-Storm"
-msgstr "Tormenta"
+msgstr "tormenta"
 
 #: ../panel-plugin/weather-translate.c:166
 #, fuzzy
@@ -1030,12 +1024,12 @@ msgstr "Thunder Bay"
 #: ../panel-plugin/weather-translate.c:169
 #, fuzzy
 msgid "Thunder in the Vincinity"
-msgstr "Exportando"
+msgstr "Executar nun terminal"
 
 #: ../panel-plugin/weather-translate.c:170
 #, fuzzy
 msgid "Variable Cloudiness"
-msgstr "<b>Buscar variable</b>"
+msgstr "<b>Variábel de busca</b>"
 
 #: ../panel-plugin/weather-translate.c:171
 #, fuzzy
@@ -1045,7 +1039,7 @@ msgstr "Nubes diferentes..."
 #: ../panel-plugin/weather-translate.c:172
 #, fuzzy
 msgid "Windy/Rain"
-msgstr "Gotas de choiva"
+msgstr "Pingas de chuvia"
 
 #: ../panel-plugin/weather-translate.c:173
 #, fuzzy
@@ -1061,12 +1055,14 @@ msgid "rising"
 msgstr ""
 
 #: ../panel-plugin/weather-translate.c:182
+#, fuzzy
 msgid "steady"
-msgstr ""
+msgstr "Suxeitar"
 
 #: ../panel-plugin/weather-translate.c:183
+#, fuzzy
 msgid "falling"
-msgstr ""
+msgstr "Palabras a caer"
 
 #: ../panel-plugin/weather-translate.c:190
 msgid "Low"
@@ -1132,7 +1128,7 @@ msgstr ""
 #: ../panel-plugin/weather-translate.c:211
 #, fuzzy
 msgid "NE"
-msgstr "Clo_nar"
+msgstr "Elemento no_vo"
 
 #: ../panel-plugin/weather-translate.c:212
 msgid "ENE"
@@ -1166,7 +1162,6 @@ msgid "calm"
 msgstr "calmo"
 
 #: ../panel-plugin/weather-translate.c:431
-#, fuzzy
 msgid "N/A"
 msgstr "N/A"
 
