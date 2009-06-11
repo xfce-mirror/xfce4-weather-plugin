@@ -138,9 +138,8 @@ make_label (xml_weather    *weatherdata,
 
   /* arbitrary, choose something that works */
   if (orientation == GTK_ORIENTATION_HORIZONTAL)
-    size += 24;
-
-  if (size > 36)
+    txtsize = "medium";
+  else if (size > 36)
     txtsize = "medium";
   else if (size > 30)
     txtsize = "small";
@@ -207,9 +206,8 @@ set_icon_error (xfceweather_data *data)
   /* arbitrary, choose something that works */
 
   if (data->orientation == GTK_ORIENTATION_HORIZONTAL)
-    size += 24;
-
-  if (size > 36)
+    txtsize = "medium";
+  else if (size > 36)
     txtsize = "medium";
   else if (size > 30)
     txtsize = "small";
