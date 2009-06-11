@@ -32,6 +32,9 @@
 #include "weather-icon.h"
 
 
+static gboolean lnk_clicked (GtkTextTag *tag, GObject *obj,
+			     GdkEvent *event, GtkTextIter *iter,
+			     GtkWidget *textview);
 
 #define BORDER                           8
 #define APPEND_BTEXT(text)               gtk_text_buffer_insert_with_tags(GTK_TEXT_BUFFER(buffer),\
@@ -39,16 +42,130 @@
 #define APPEND_TEXT_ITEM_REAL(text)      gtk_text_buffer_insert(GTK_TEXT_BUFFER(buffer), \
                                                                 &iter, text, -1);\
                                          g_free (value);
-#define APPEND_TEXT_ITEM(text, item)     value = g_strdup_printf("\t%s: %s %s\n",\
-                                                                 text,\
+#define APPEND_TEXT_ITEM(text, item)     value = g_strdup_printf("\t%s%s%s %s\n",\
+                                                                 text, text?": ":"", \
                                                                  get_data(data, item),\
                                                                  get_unit(unit, item));\
                                          APPEND_TEXT_ITEM_REAL(value);
+#define APPEND_LINK_ITEM(prefix, text, url, lnk_tag) \
+					 gtk_text_buffer_insert(GTK_TEXT_BUFFER(buffer), \
+                                                                &iter, prefix, -1);\
+					 gtk_text_buffer_insert_with_tags(GTK_TEXT_BUFFER(buffer), \
+                                                                &iter, text, -1, lnk_tag, NULL);\
+					 gtk_text_buffer_insert(GTK_TEXT_BUFFER(buffer), \
+                                                                &iter, "\n", -1);\
+					 g_object_set_data_full(G_OBJECT(lnk_tag), "url", g_strdup(url), g_free); \
+					 g_signal_connect(G_OBJECT(lnk_tag), "event", \
+						G_CALLBACK(lnk_clicked), NULL); 
 
 
 
 static GtkTooltips *tooltips = NULL;
 
+static gboolean lnk_clicked (GtkTextTag *tag, GObject *obj,
+			     GdkEvent *event, GtkTextIter *iter,
+			     GtkWidget *textview)
+{
+  if (event->type == GDK_BUTTON_RELEASE) {
+    const gchar *url = g_object_get_data(G_OBJECT(tag), "url");
+    gchar *str = g_strdup_printf("exo-open %s", url);
+
+    xfce_exec(str, FALSE, FALSE, NULL);
+    g_free(str);
+  } else if (event->type == GDK_LEAVE_NOTIFY) {
+     gdk_window_set_cursor(gtk_text_view_get_window(GTK_TEXT_VIEW(obj),
+				GTK_TEXT_WINDOW_TEXT), NULL);
+  } 
+  return FALSE;
+}
+
+static gboolean
+icon_clicked (GtkWidget      *widget,
+              GdkEventButton *event,
+              gpointer        user_data)
+{
+  return lnk_clicked(user_data, NULL, (GdkEvent *)(event), NULL, NULL);
+}
+
+static GdkCursor *hand_cursor = NULL;
+static GdkCursor *text_cursor = NULL;
+static gboolean on_icon = FALSE;
+static gboolean view_motion_notify(GtkWidget *widget,
+				   GdkEventMotion *event,
+				   GtkWidget *view)
+{
+  GtkTextBuffer *buffer;
+
+  buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(view));
+
+  if (event->x != -1 && event->y != -1) {
+    gint bx, by;
+    GtkTextIter iter;
+    GSList *tags;
+    GSList *cur;
+
+    gtk_text_view_window_to_buffer_coords(GTK_TEXT_VIEW(view), 
+    						GTK_TEXT_WINDOW_WIDGET,
+    						event->x, event->y, &bx, &by);
+    gtk_text_view_get_iter_at_location(GTK_TEXT_VIEW(view),
+    						&iter, bx, by);
+    tags = gtk_text_iter_get_tags(&iter);
+    for (cur = tags; cur != NULL; cur = cur->next) {
+      GtkTextTag *tag = cur->data;
+      if (g_object_get_data(G_OBJECT(tag), "url")) {
+        gdk_window_set_cursor(gtk_text_view_get_window(GTK_TEXT_VIEW(view),
+				   GTK_TEXT_WINDOW_TEXT), hand_cursor);
+        return FALSE;
+      }
+    }
+  }
+  if (!on_icon)
+    gdk_window_set_cursor(gtk_text_view_get_window(GTK_TEXT_VIEW(view),
+			     GTK_TEXT_WINDOW_TEXT), text_cursor);
+  return FALSE;
+}
+
+static gboolean icon_motion_notify(GtkWidget *widget,
+				   GdkEventMotion *event,
+				   GtkWidget *view)
+{
+  on_icon = TRUE;
+  gdk_window_set_cursor(gtk_text_view_get_window(GTK_TEXT_VIEW(view),
+			     GTK_TEXT_WINDOW_TEXT), hand_cursor);
+  return FALSE;
+}
+
+static gboolean view_leave_notify(GtkWidget *widget,
+				   GdkEventMotion *event,
+				   GtkWidget *view)
+{
+  on_icon = FALSE;
+  gdk_window_set_cursor(gtk_text_view_get_window(GTK_TEXT_VIEW(view),
+			     GTK_TEXT_WINDOW_TEXT), text_cursor);
+  return FALSE;
+}
+
+static GtkWidget *weather_channel_evt = NULL;
+static void view_scrolled_cb (GtkAdjustment *adj, GtkWidget *view)
+{
+  if (weather_channel_evt) {
+    gint x, y, x1, y1;
+    x1 = view->allocation.width - 61 - 5;
+    y1 = view->requisition.height - 61 - 5;
+    gtk_text_view_buffer_to_window_coords(
+			GTK_TEXT_VIEW(view),
+			GTK_TEXT_WINDOW_TEXT, x1, y1, &x, &y);
+    gtk_text_view_move_child(GTK_TEXT_VIEW(view), 
+			weather_channel_evt, x, y);
+  }
+}
+
+static void view_size_allocate_cb	(GtkWidget	*widget,
+					 GtkAllocation	*allocation,
+					 gpointer	 data)
+{
+  view_scrolled_cb(NULL, GTK_WIDGET(data));
+}
 
 
 static GtkWidget *
@@ -57,12 +174,16 @@ create_summary_tab (xml_weather *data,
 {
   GtkTextBuffer *buffer;
   GtkTextIter    iter;
-  GtkTextTag    *btag;
+  GtkTextTag    *btag, *ltag0, *ltag1, *ltag2, *ltag3, *ltag4;
   gchar         *value, *date, *wind, *sun_val, *vis;
   GtkWidget     *view, *frame, *scrolled;
+  GdkColor       lnk_color;
+  GtkAdjustment *adj;
+  GtkWidget     *weather_channel_icon;
 
   view = gtk_text_view_new ();
   gtk_text_view_set_editable (GTK_TEXT_VIEW (view), FALSE);
+  gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (view), FALSE);
   frame = gtk_frame_new (NULL);
   scrolled = gtk_scrolled_window_new (NULL, NULL);
 
@@ -79,6 +200,13 @@ create_summary_tab (xml_weather *data,
   btag =
     gtk_text_buffer_create_tag (buffer, NULL, "weight", PANGO_WEIGHT_BOLD,
                                 NULL);
+
+  gdk_color_parse("#0000ff", &lnk_color);
+  ltag0 = gtk_text_buffer_create_tag(buffer, "lnk0", "foreground-gdk", &lnk_color, NULL);
+  ltag1 = gtk_text_buffer_create_tag(buffer, "lnk1", "foreground-gdk", &lnk_color, NULL);
+  ltag2 = gtk_text_buffer_create_tag(buffer, "lnk2", "foreground-gdk", &lnk_color, NULL);
+  ltag3 = gtk_text_buffer_create_tag(buffer, "lnk3", "foreground-gdk", &lnk_color, NULL);
+  ltag4 = gtk_text_buffer_create_tag(buffer, "lnk4", "foreground-gdk", &lnk_color, NULL);
 
   /* head */
   value = g_strdup_printf (_("Weather report for: %s.\n\n"), get_data (data, DNAM));
@@ -157,10 +285,55 @@ create_summary_tab (xml_weather *data,
   g_free (vis);
   APPEND_TEXT_ITEM_REAL (value);
 
+  APPEND_BTEXT (_("\nMore on weather.com\n"));
+  value = g_strdup_printf("http://www.weather.com/?par=xoap&site=wx_logo&cm_ven=bd_oap&cm_cat=%s&cm_pla=HomePage&cm_ite=Logo",
+  		PARTNER_ID);
+  g_object_set_data_full(G_OBJECT(ltag0), "url", value, g_free);
+
+  APPEND_LINK_ITEM ("\t", get_data (data, LNK1_TXT), get_data (data, LNK1), ltag1);
+  APPEND_LINK_ITEM ("\t", get_data (data, LNK2_TXT), get_data (data, LNK2), ltag2);
+  APPEND_LINK_ITEM ("\t", get_data (data, LNK3_TXT), get_data (data, LNK3), ltag3);
+  APPEND_LINK_ITEM ("\t", get_data (data, LNK4_TXT), get_data (data, LNK4), ltag4);
+
+  g_signal_connect(G_OBJECT(view), "motion-notify-event",
+		   G_CALLBACK(view_motion_notify), view);
+  g_signal_connect(G_OBJECT(view), "leave-notify-event",
+		   G_CALLBACK(view_leave_notify), view);
+		   
+  weather_channel_icon = gtk_image_new_from_pixbuf(get_icon("weather_channel", -1));
+  if (weather_channel_icon) {
+    weather_channel_evt = gtk_event_box_new();
+    gtk_container_add(GTK_CONTAINER(weather_channel_evt), weather_channel_icon);
+    gtk_text_view_add_child_in_window(GTK_TEXT_VIEW(view), weather_channel_evt, 
+                                      GTK_TEXT_WINDOW_TEXT, 0, 0);
+    gtk_widget_show_all(weather_channel_evt);
+    adj = gtk_scrolled_window_get_vadjustment(
+	    GTK_SCROLLED_WINDOW(scrolled));
+    g_signal_connect(G_OBJECT(adj), "value-changed",
+		     G_CALLBACK(view_scrolled_cb), view);
+    g_signal_connect(G_OBJECT(view), "size_allocate",
+		     G_CALLBACK(view_size_allocate_cb),
+		     view);
+    g_signal_connect(G_OBJECT(weather_channel_evt), "button-release-event",
+		     G_CALLBACK(icon_clicked),
+		     ltag0);
+    g_signal_connect(G_OBJECT(weather_channel_evt), "enter-notify-event",
+		     G_CALLBACK(icon_motion_notify), view);
+    g_signal_connect(G_OBJECT(weather_channel_evt), "visibility-notify-event",
+		     G_CALLBACK(icon_motion_notify), view);
+    g_signal_connect(G_OBJECT(weather_channel_evt), "motion-notify-event",
+		     G_CALLBACK(icon_motion_notify), view);
+    g_signal_connect(G_OBJECT(weather_channel_evt), "leave-notify-event",
+		     G_CALLBACK(view_leave_notify), view);
+  }
+  if (hand_cursor == NULL)
+    hand_cursor = gdk_cursor_new(GDK_HAND2);
+  if (text_cursor == NULL)
+    text_cursor = gdk_cursor_new(GDK_XTERM);
+
+
   return frame;
 }
-
-
 
 static GtkWidget *
 make_forecast (xml_dayf *weatherdata,
@@ -360,8 +533,6 @@ create_forecast_tab (xml_weather *data,
 
   return widg;
 }
-
-
 
 GtkWidget *
 create_summary_window (xml_weather *data,

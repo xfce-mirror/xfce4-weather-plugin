@@ -22,6 +22,8 @@
 
 #include <libxfce4panel/xfce-panel-plugin.h>
 #include <libxfce4util/libxfce4util.h>
+#define PARTNER_ID       "1121946239"
+#define LICENSE_KEY      "3c4cd39ee5dec84f"
 
 G_BEGIN_DECLS
 
@@ -49,7 +51,6 @@ typedef struct
   gint             updatetimeout;
 
   gchar           *location_code;
-
   units            unit;
 
   xml_weather     *weatherdata;

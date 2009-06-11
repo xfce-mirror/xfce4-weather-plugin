@@ -352,9 +352,10 @@ update_weatherdata (xfceweather_data *data)
     }
 
   /* build url */
-  url = g_strdup_printf ("/weather/local/%s?cc=*&dayf=%d&unit=%c",
+  url = g_strdup_printf ("/weather/local/%s?cc=*&dayf=%d&unit=%c&link=xoap&prod=xoap&par=%s&key=%s",
                          data->location_code, XML_WEATHER_DAYF_N,
-                         data->unit == METRIC ? 'm' : 'i');
+                         data->unit == METRIC ? 'm' : 'i',
+			 PARTNER_ID, LICENSE_KEY);
 
   /* start receive thread */
   weather_http_receive_data ("xoap.weather.com", url, data->proxy_host,

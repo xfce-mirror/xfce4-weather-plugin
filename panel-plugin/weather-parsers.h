@@ -28,13 +28,21 @@ G_BEGIN_DECLS
 #define DATA(node) (gchar *) xmlNodeListGetString(node->doc, node->children, 1)
 #define NODE_IS_TYPE(node, type) xmlStrEqual (node->name, (const xmlChar *) type)
 #define XML_WEATHER_DAYF_N 5
-  typedef struct
+
+typedef struct
 {
   gchar *dnam;
   gchar *sunr;
   gchar *suns;
 }
 xml_loc;
+
+typedef struct
+{
+  gchar *lnk[4];
+  gchar *lnk_txt[4];
+}
+xml_lnk;
 
 typedef struct
 {
@@ -105,6 +113,7 @@ xml_dayf;
 typedef struct
 {
   xml_loc *loc;
+  xml_lnk *lnk;
   xml_cc *cc;
   xml_dayf *dayf[XML_WEATHER_DAYF_N];
 }
@@ -114,6 +123,8 @@ xml_weather;
 xml_weather *parse_weather (xmlNode * cur_node);
 
 xml_loc *parse_loc (xmlNode * cur_node);
+
+xml_lnk *parse_lnk (xmlNode * cur_node);
 
 xml_cc *parse_cc (xmlNode * cur_node);
 

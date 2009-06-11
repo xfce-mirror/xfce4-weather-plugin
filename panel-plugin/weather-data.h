@@ -104,6 +104,19 @@ forecast;
 
 typedef enum
 {
+  LNK1          = 0x0400,
+  LNK2          = 0x0401,
+  LNK3          = 0x0402,
+  LNK4          = 0x0403,
+  LNK1_TXT      = 0x0404,
+  LNK2_TXT      = 0x0405,
+  LNK3_TXT      = 0x0406,
+  LNK4_TXT      = 0x0407
+}
+lnks;
+
+typedef enum
+{
   METRIC,
   IMPERIAL
 }

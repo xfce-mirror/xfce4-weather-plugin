@@ -30,6 +30,7 @@
 #define DATAS_CC    0x0100
 #define DATAS_LOC   0x0200
 #define DATAS_DAYF  0x0300
+#define DATAS_LNK   0x0400
 #define KILL_RING_S 5
 
 #define EMPTY_STRING g_strdup("-")
@@ -262,6 +263,49 @@ get_data_loc (xml_loc   *data,
   return CHK_NULL (str);
 }
 
+static gchar *
+get_data_lnk (xml_lnk   *data,
+              lnks       type)
+{
+  gchar *str = NULL;
+
+  if (!data)
+    {
+      DBG ("get_data_lnk: xml-lnk not present");
+      return EMPTY_STRING;
+    }
+
+  switch (type)
+    {
+    case LNK1:
+      str = data->lnk[0];
+      break;
+    case LNK2:
+      str = data->lnk[1];
+      break;
+    case LNK3:
+      str = data->lnk[2];
+      break;
+    case LNK4:
+      str = data->lnk[3];
+      break;
+    case LNK1_TXT:
+      str = data->lnk_txt[0];
+      break;
+    case LNK2_TXT:
+      str = data->lnk_txt[1];
+      break;
+    case LNK3_TXT:
+      str = data->lnk_txt[2];
+      break;
+    case LNK4_TXT:
+      str = data->lnk_txt[3];
+      break;
+    }
+
+  return CHK_NULL (str);
+}
+
 
 
 const gchar *
@@ -283,6 +327,9 @@ get_data (xml_weather *data,
           break;
         case DATAS_LOC:
           str = get_data_loc (data->loc, type);
+          break;
+        case DATAS_LNK:
+          str = get_data_lnk (data->lnk, type);
           break;
         default:
           str = EMPTY_STRING;

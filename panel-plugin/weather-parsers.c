@@ -50,6 +50,8 @@ parse_weather (xmlNode *cur_node)
         ret->cc = parse_cc (cur_node);
       else if (NODE_IS_TYPE (cur_node, "loc"))
         ret->loc = parse_loc (cur_node);
+      else if (NODE_IS_TYPE (cur_node, "lnks"))
+        ret->lnk = parse_lnk (cur_node);
       else if (NODE_IS_TYPE (cur_node, "dayf"))
         {
           for (child_node = cur_node->children; child_node;
@@ -93,6 +95,37 @@ parse_loc (xmlNode *cur_node)
         ret->sunr = DATA (cur_node);
       else if (NODE_IS_TYPE (cur_node, "suns"))
         ret->suns = DATA (cur_node);
+    }
+
+  return ret;
+}
+
+xml_lnk *
+parse_lnk (xmlNode *cur_node)
+{
+  xml_lnk *ret;
+  int i = 0;
+  if ((ret = panel_slice_new0 (xml_lnk)) == NULL)
+    return NULL;
+
+
+  for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next)
+    {
+      if (cur_node->type != XML_ELEMENT_NODE)
+        continue;
+
+      if (NODE_IS_TYPE (cur_node, "link")) {
+        xmlNode *l_node;
+        if (i < 4) {
+	  for (l_node = cur_node->children; l_node; l_node = l_node->next) {
+              if (NODE_IS_TYPE (l_node, "l"))
+		ret->lnk[i] = DATA(l_node);
+	      else if (NODE_IS_TYPE (l_node, "t"))
+		ret->lnk_txt[i] = DATA(l_node);
+	  }
+	}
+	i++;
+      }
     }
 
   return ret;
@@ -367,7 +400,16 @@ xml_loc_free (xml_loc *data)
   panel_slice_free (xml_loc, data);
 }
 
-
+static void
+xml_lnk_free (xml_lnk *data)
+{
+  int i;
+  for (i = 0; i < 4; i++) {
+    g_free (data->lnk[i]);
+    g_free (data->lnk_txt[i]);
+  }
+  panel_slice_free (xml_lnk, data);
+}
 
 static void
 xml_part_free (xml_part *data)
@@ -420,6 +462,9 @@ xml_weather_free (xml_weather *data)
 
   if (data->loc)
     xml_loc_free (data->loc);
+
+  if (data->lnk)
+    xml_lnk_free (data->lnk);
 
   if (data->dayf)
     {
