@@ -23,6 +23,7 @@
 
 #include <sys/types.h>
 #include <sys/socket.h>
+#include <sys/stat.h>
 #include <errno.h>
 #include <netdb.h>
 #include <fcntl.h>
@@ -30,6 +31,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <netinet/in.h>
+#include <resolv.h>
 
 #include <glib.h>
 #include <gtk/gtk.h>
@@ -118,7 +120,25 @@ weather_http_receive_data_check (WeatherConnection *connection,
   return FALSE;
 }
 
+static void refresh_resolvers(void)
+{
+#ifdef G_OS_UNIX
+	static time_t resolv_conf_changed = (time_t)NULL;
+	struct stat s;
 
+	/* This makes the glibc re-read resolv.conf, if it changed
+	 * since our startup. 
+	 * Why doesn't the glibc do it by itself?
+	 */
+	if (stat("/etc/resolv.conf", &s) == 0) {
+		if (s.st_mtime > resolv_conf_changed) {
+			resolv_conf_changed = s.st_mtime;
+			res_init();
+		}
+	} /* else
+		we'll have bigger problems. */
+#endif /*G_OS_UNIX*/
+}
 
 static gboolean
 weather_http_receive_data_idle (gpointer user_data)
@@ -134,6 +154,9 @@ weather_http_receive_data_idle (gpointer user_data)
 
   /* set the current time */
   g_get_current_time (&timeout);
+
+  /* force the libc to get resolvers right, if they changed for some reason */
+  refresh_resolvers();
 
   /* try to get the hostname */
   host = gethostbyname (connection->proxy_host ? connection->proxy_host : connection->hostname);

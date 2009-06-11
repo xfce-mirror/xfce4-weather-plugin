@@ -45,7 +45,8 @@ xfce4_weather_plugin_LDADD =						\
         $(LIBXFCE4UTIL_LIBS)                                     	\
 	$(LIBXFCEGUI4_LIBS)						\
         $(GTK_LIBS)                                              	\
-	$(LIBXML_LIBS)
+	$(LIBXML_LIBS)							\
+	$(LIBRESOLV)
 	
 desktopdir = $(datadir)/xfce4/panel-plugins
 desktop_in_in_files = weather.desktop.in.in
