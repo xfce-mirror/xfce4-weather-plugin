@@ -43,8 +43,6 @@
 #define BORDER           8
 #define PLUGIN_WEBSITE   "http://goodies.xfce.org/projects/panel-plugins/xfce4-weather-plugin"
 
-
-
 gboolean
 check_envproxy (gchar **proxy_host,
                 gint   *proxy_port)
@@ -88,10 +86,11 @@ check_envproxy (gchar **proxy_host,
 
 
 static gchar *
-make_label (xml_weather *weatherdata,
-            datas        opt,
-            units        unit,
-            gint         size)
+make_label (xml_weather    *weatherdata,
+            datas          opt,
+            units          unit,
+            gint           size,
+	    GtkOrientation orientation)
 {
 
   gchar       *str, *value;
@@ -138,6 +137,9 @@ make_label (xml_weather *weatherdata,
     }
 
   /* arbitrary, choose something that works */
+  if (orientation == GTK_ORIENTATION_HORIZONTAL)
+    size += 24;
+
   if (size > 36)
     txtsize = "medium";
   else if (size > 30)
@@ -203,6 +205,10 @@ set_icon_error (xfceweather_data *data)
     }
 
   /* arbitrary, choose something that works */
+
+  if (data->orientation == GTK_ORIENTATION_HORIZONTAL)
+    size += 24;
+
   if (size > 36)
     txtsize = "medium";
   else if (size > 30)
@@ -220,7 +226,10 @@ set_icon_error (xfceweather_data *data)
 
   gtk_widget_get_size_request (data->scrollbox, NULL, &height);
 
-  icon = get_icon ("99", data->size - height - 2);
+  if (data->orientation == GTK_ORIENTATION_VERTICAL)
+    icon = get_icon ("99", data->size - height - 2);
+  else
+    icon = get_icon ("99", data->size);
 
   gtk_image_set_from_pixbuf (GTK_IMAGE (data->iconimage), icon);
 
@@ -246,7 +255,7 @@ set_icon_current (xfceweather_data *data)
     {
       opt = g_array_index (data->labels, datas, i);
 
-      str = make_label (data->weatherdata, opt, data->unit, data->size);
+      str = make_label (data->weatherdata, opt, data->unit, data->size, data->orientation);
 
       gtk_scrollbox_set_label (GTK_SCROLLBOX (data->scrollbox), -1, str);
 
@@ -262,7 +271,10 @@ set_icon_current (xfceweather_data *data)
   else
     {
       gtk_widget_get_size_request (data->scrollbox, NULL, &height);
-      size = data->size - height - 2;
+      if (data->orientation == GTK_ORIENTATION_VERTICAL)
+        size = data->size - height - 2;
+      else
+        size = data->size;
     }
 
   icon = get_icon (get_data (data->weatherdata, WICON), size);
@@ -671,7 +683,7 @@ static xfceweather_data *
 xfceweather_create_control (XfcePanelPlugin *plugin)
 {
   xfceweather_data *data = panel_slice_new0 (xfceweather_data);
-  GtkWidget        *vbox, *refresh;
+  GtkWidget        *refresh;
   datas             lbl;
   GdkPixbuf        *icon = NULL;
 
@@ -685,20 +697,24 @@ xfceweather_create_control (XfcePanelPlugin *plugin)
 
   icon = get_icon ("99", 16);
   data->iconimage = gtk_image_new_from_pixbuf (icon);
-  gtk_misc_set_alignment (GTK_MISC (data->iconimage), 0.5, 1);
 
   if (G_LIKELY (icon))
     g_object_unref (G_OBJECT (icon));
 
   data->labels = g_array_new (FALSE, TRUE, sizeof (datas));
 
-  vbox = gtk_vbox_new (FALSE, 0);
+  data->vbox_center_scrollbox = gtk_vbox_new(FALSE, 0);
+  data->top_hbox = gtk_hbox_new (FALSE, 0);
+  gtk_misc_set_alignment (GTK_MISC (data->iconimage), 1, 0.5);
+  gtk_box_pack_start (GTK_BOX (data->top_hbox), data->iconimage, TRUE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (data->vbox_center_scrollbox), data->scrollbox, TRUE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (data->top_hbox), data->vbox_center_scrollbox, TRUE, FALSE, 0);
 
-  gtk_box_pack_start (GTK_BOX (vbox), data->iconimage, TRUE, FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (vbox), data->scrollbox, TRUE, TRUE, 0);
+  data->top_vbox = gtk_vbox_new (FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (data->top_vbox), data->top_hbox, TRUE, FALSE, 0);
 
   data->tooltipbox = gtk_event_box_new ();
-  gtk_container_add (GTK_CONTAINER (data->tooltipbox), vbox);
+  gtk_container_add (GTK_CONTAINER (data->tooltipbox), data->top_vbox);
   gtk_widget_show_all (data->tooltipbox);
   GTK_WIDGET_SET_FLAGS (GTK_WIDGET(data->tooltipbox), GTK_NO_WINDOW);
 
@@ -789,6 +805,36 @@ xfceweather_set_size (XfcePanelPlugin  *panel,
   return TRUE;
 }
 
+static gboolean
+xfceweather_set_orientation (XfcePanelPlugin  *panel,
+                             GtkOrientation    orientation,
+                             xfceweather_data *data)
+{
+  GtkWidget *parent = gtk_widget_get_parent(data->vbox_center_scrollbox);
+
+  data->orientation = orientation;
+
+  g_object_ref(G_OBJECT(data->vbox_center_scrollbox));
+  gtk_container_remove(GTK_CONTAINER(parent), data->vbox_center_scrollbox);
+
+  if (data->orientation == GTK_ORIENTATION_HORIZONTAL) {
+    gtk_box_pack_start (GTK_BOX (data->top_hbox), data->vbox_center_scrollbox, TRUE, FALSE, 0);
+  } else {
+    gtk_box_pack_start (GTK_BOX (data->top_vbox), data->vbox_center_scrollbox, TRUE, FALSE, 0);
+  }
+  g_object_unref(G_OBJECT(data->vbox_center_scrollbox));
+
+  gtk_scrollbox_clear (GTK_SCROLLBOX (data->scrollbox));
+  
+  if (data->weatherdata)
+    set_icon_current (data);
+  else
+    set_icon_error (data);
+
+  /* we handled the orientation */
+  return TRUE;
+}
+
 
 
 static void
@@ -805,6 +851,7 @@ weather_construct (XfcePanelPlugin *plugin)
   xfceweather_set_visibility (data);
 
   xfceweather_set_size (plugin, xfce_panel_plugin_get_size (plugin), data);
+  xfceweather_set_orientation (plugin, xfce_panel_plugin_get_orientation(plugin), data);
 
   gtk_container_add (GTK_CONTAINER (plugin), data->tooltipbox);
 
@@ -816,6 +863,9 @@ weather_construct (XfcePanelPlugin *plugin)
 
   g_signal_connect (G_OBJECT (plugin), "size-changed",
                     G_CALLBACK (xfceweather_set_size), data);
+
+  g_signal_connect (G_OBJECT (plugin), "orientation-changed",
+                    G_CALLBACK (xfceweather_set_orientation), data);
 
   xfce_panel_plugin_menu_show_configure (plugin);
   g_signal_connect (G_OBJECT (plugin), "configure-plugin",

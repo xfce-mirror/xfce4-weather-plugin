@@ -31,6 +31,9 @@ typedef struct
 
   GtkTooltips     *tooltips;
 
+  GtkWidget       *top_vbox;
+  GtkWidget       *top_hbox;
+  GtkWidget       *vbox_center_scrollbox;
   GtkWidget       *scrollbox;
   GtkWidget       *iconimage;
   GtkWidget       *tooltipbox;
@@ -40,6 +43,7 @@ typedef struct
   GArray          *labels;
 
   gint             size;
+  GtkOrientation   orientation;
   gint             updatetimeout;
 
   gchar           *location_code;
