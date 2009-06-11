@@ -236,8 +236,10 @@ set_icon_error (xfceweather_data *data)
   if (G_LIKELY (icon))
     g_object_unref (G_OBJECT (icon));
 
+#if !GTK_CHECK_VERSION(2,12,0)
   gtk_tooltips_set_tip (data->tooltips, data->tooltipbox,
                         _("Cannot update weather data"), NULL);
+#endif
 }
 
 
@@ -284,9 +286,11 @@ set_icon_current (xfceweather_data *data)
   if (G_LIKELY (icon))
     g_object_unref (G_OBJECT (icon));
 
+#if !GTK_CHECK_VERSION(2,12,0)
   gtk_tooltips_set_tip (data->tooltips, data->tooltipbox,
                         translate_desc (get_data (data->weatherdata, TRANS)),
                         NULL);
+#endif
 }
 
 
@@ -677,6 +681,34 @@ xfceweather_create_options (XfcePanelPlugin  *plugin,
   gtk_widget_show (dlg);
 }
 
+static gboolean weather_get_tooltip_cb (GtkWidget        *widget,
+					gint              x,
+					gint              y,
+					gboolean          keyboard_mode,
+					GtkTooltip       *tooltip,
+					xfceweather_data *data) 
+{
+  GdkPixbuf *icon;
+  gchar *markup_text;
+  
+  if (data->weatherdata == NULL) {
+    gtk_tooltip_set_text (tooltip, _("Cannot update weather data"));
+  } else {
+    markup_text = g_markup_printf_escaped(
+  	  "<b>%s</b>\n"
+	  "%s", 
+	  get_data (data->weatherdata, DNAM),
+	  translate_desc (get_data (data->weatherdata, TRANS))
+	  );
+    gtk_tooltip_set_markup (tooltip, markup_text);
+    g_free(markup_text);
+  }
+  icon = get_icon (get_data (data->weatherdata, WICON), 32);
+  gtk_tooltip_set_icon (tooltip, icon);
+  g_object_unref (G_OBJECT(icon));
+  
+  return TRUE;
+}
 
 
 static xfceweather_data *
@@ -689,10 +721,11 @@ xfceweather_create_control (XfcePanelPlugin *plugin)
 
   data->plugin = plugin;
 
+#if !GTK_CHECK_VERSION(2,12,0)
   data->tooltips = gtk_tooltips_new ();
   g_object_ref (data->tooltips);
   gtk_object_sink (GTK_OBJECT (data->tooltips));
-
+#endif
   data->scrollbox = gtk_scrollbox_new ();
 
   icon = get_icon ("99", 16);
@@ -718,10 +751,17 @@ xfceweather_create_control (XfcePanelPlugin *plugin)
   gtk_widget_show_all (data->tooltipbox);
   GTK_WIDGET_SET_FLAGS (GTK_WIDGET(data->tooltipbox), GTK_NO_WINDOW);
 
+#if GTK_CHECK_VERSION(2,12,0)
+  g_object_set (G_OBJECT(data->tooltipbox), "has-tooltip", TRUE, NULL);
+  g_signal_connect(G_OBJECT(data->tooltipbox), "query-tooltip", 
+		   G_CALLBACK(weather_get_tooltip_cb),
+		  data);
+#endif
   xfce_panel_plugin_add_action_widget (plugin, data->tooltipbox);
 
   g_signal_connect (G_OBJECT (data->tooltipbox), "button-press-event",
                     G_CALLBACK (cb_click), data);
+  gtk_widget_add_events(data->scrollbox, GDK_BUTTON_PRESS_MASK);
 
   /* add refresh button to right click menu, for people who missed the middle mouse click feature */
   refresh = gtk_image_menu_item_new_from_stock ("gtk-refresh", NULL);
@@ -772,8 +812,10 @@ xfceweather_free (XfcePanelPlugin  *plugin,
   xmlCleanupParser ();
 
   /* Free Tooltip */
+#if !GTK_CHECK_VERSION(2,12,0)
   gtk_tooltips_set_tip (data->tooltips, data->tooltipbox, NULL, NULL);
   g_object_unref (G_OBJECT (data->tooltips));
+#endif
 
   /* Free chars */
   g_free (data->location_code);

@@ -29,7 +29,9 @@ typedef struct
 {
   XfcePanelPlugin *plugin;
 
+#if !GTK_CHECK_VERSION(2,12,0)
   GtkTooltips     *tooltips;
+#endif
 
   GtkWidget       *top_vbox;
   GtkWidget       *top_hbox;
