@@ -50,7 +50,8 @@ liquid_DATA =	0.png							\
 		45.png							\
 		46.png							\
 		47.png							\
-		99.png
+		99.png							\
+		weather_channel.png
 
 EXTRA_DIST =								\
 	$(liquid_DATA)
