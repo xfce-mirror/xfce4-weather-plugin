@@ -41,7 +41,6 @@
 #define XFCEWEATHER_ROOT "weather"
 #define UPDATE_TIME      1600
 #define BORDER           8
-#define PLUGIN_WEBSITE   "http://goodies.xfce.org/projects/panel-plugins/xfce4-weather-plugin"
 
 gboolean
 check_envproxy (gchar **proxy_host,

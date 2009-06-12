@@ -68,9 +68,9 @@ static gboolean lnk_clicked (GtkTextTag *tag, GObject *obj,
 {
   if (event->type == GDK_BUTTON_RELEASE) {
     const gchar *url = g_object_get_data(G_OBJECT(tag), "url");
-    gchar *str = g_strdup_printf("exo-open %s", url);
+    gchar *str = g_strdup_printf("exo-open --launch WebBrowser %s", url);
 
-    xfce_exec(str, FALSE, FALSE, NULL);
+    g_spawn_command_line_async(str, NULL);
     g_free(str);
   } else if (event->type == GDK_LEAVE_NOTIFY) {
      gdk_window_set_cursor(gtk_text_view_get_window(GTK_TEXT_VIEW(obj),
@@ -534,6 +534,17 @@ create_forecast_tab (xml_weather *data,
   return widg;
 }
 
+static void
+summary_dialog_response (GtkWidget          *dlg,
+                         gint                response,
+                         GtkWidget          *window)
+{
+	if (response == GTK_RESPONSE_ACCEPT)
+		gtk_widget_destroy(window);
+	else
+		g_spawn_command_line_async ("exo-open --launch WebBrowser " PLUGIN_WEBSITE, NULL);
+}
+
 GtkWidget *
 create_summary_window (xml_weather *data,
                        units        unit)
@@ -545,7 +556,9 @@ create_summary_window (xml_weather *data,
   window = xfce_titled_dialog_new_with_buttons (_("Weather Update"),
                                                 NULL,
                                                 GTK_DIALOG_NO_SEPARATOR,
-                                                GTK_STOCK_OK,
+                                                GTK_STOCK_ABOUT, 
+						GTK_RESPONSE_HELP,
+                                                GTK_STOCK_CLOSE,
                                                 GTK_RESPONSE_ACCEPT, NULL);
 
   title = g_strdup_printf (_("Weather report for: %s"), get_data (data, DNAM));
@@ -579,7 +592,7 @@ create_summary_window (xml_weather *data,
   gtk_box_pack_start (GTK_BOX (vbox), notebook, TRUE, TRUE, 0);
 
   g_signal_connect (G_OBJECT (window), "response",
-                    G_CALLBACK (gtk_widget_destroy), window);
+                    G_CALLBACK (summary_dialog_response), window);
 
   gtk_window_set_default_size (GTK_WINDOW (window), 500, 400);
 
