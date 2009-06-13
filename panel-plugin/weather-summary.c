@@ -583,11 +583,11 @@ create_summary_window (xml_weather *data,
   notebook = gtk_notebook_new ();
   gtk_container_set_border_width (GTK_CONTAINER (notebook), BORDER);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-                            create_summary_tab (data, unit),
-                            gtk_label_new (_("Summary")));
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
                             create_forecast_tab (data, unit),
                             gtk_label_new (_("Forecast")));
+  gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
+                            create_summary_tab (data, unit),
+                            gtk_label_new (_("Details")));
 
   gtk_box_pack_start (GTK_BOX (vbox), notebook, TRUE, TRUE, 0);
 
