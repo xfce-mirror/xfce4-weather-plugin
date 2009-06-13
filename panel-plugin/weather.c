@@ -89,7 +89,8 @@ make_label (xml_weather    *weatherdata,
             datas          opt,
             units          unit,
             gint           size,
-	    GtkOrientation orientation)
+	    GtkOrientation orientation,
+	    gboolean       multiple_labels)
 {
 
   gchar       *str, *value;
@@ -167,19 +168,31 @@ make_label (xml_weather    *weatherdata,
     }
 
 
-
-  if (value != NULL)
-    {
-      str = g_strdup_printf ("<span size=\"%s\">%s: %s</span>",
-                             txtsize, lbl, value);
-      g_free (value);
-    }
-  else
-    {
-      str = g_strdup_printf ("<span size=\"%s\">%s: %s %s</span>",
-                             txtsize, lbl, rawvalue, get_unit (unit, opt));
-    }
-
+  if (multiple_labels) {
+    if (value != NULL)
+      {
+	str = g_strdup_printf ("<span size=\"%s\">%s: %s</span>",
+                               txtsize, lbl, value);
+	g_free (value);
+      }
+    else
+      {
+	str = g_strdup_printf ("<span size=\"%s\">%s: %s %s</span>",
+                               txtsize, lbl, rawvalue, get_unit (unit, opt));
+      }
+  } else {
+    if (value != NULL)
+      {
+	str = g_strdup_printf ("<span size=\"%s\">%s</span>",
+                               txtsize, value);
+	g_free (value);
+      }
+    else
+      {
+	str = g_strdup_printf ("<span size=\"%s\">%s %s</span>",
+                               txtsize, rawvalue, get_unit (unit, opt));
+      }
+  }
   return str;
 }
 
@@ -254,7 +267,7 @@ set_icon_current (xfceweather_data *data)
     {
       opt = g_array_index (data->labels, datas, i);
 
-      str = make_label (data->weatherdata, opt, data->unit, data->size, data->orientation);
+      str = make_label (data->weatherdata, opt, data->unit, data->size, data->orientation, (data->labels->len > 1));
 
       gtk_scrollbox_set_label (GTK_SCROLLBOX (data->scrollbox), -1, str);
 

@@ -1,5 +1,12 @@
 2009-06-13	Colin Leroy <colin@colino.net>
 
+	* panel-plugin/weather.c: fix bug #4642, "Change Location of 
+	Text / Format". The location part was already fixed (bug #5442),
+	this removes the "T:" or similar prefix when there's only one value
+	to display.
+
+2009-06-13	Colin Leroy <colin@colino.net>
+
 	* panel-plugin/weather-translate.c: fix bug #3818, "weekdays in 
 	Russian are displayed ugly in forecast tab". First patch fixes a
 	too short buffer (by Sergey Otinov), second patch checks whether
