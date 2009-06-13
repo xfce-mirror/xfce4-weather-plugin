@@ -44,9 +44,12 @@ get_icon (const gchar *number,
 
   image = gdk_pixbuf_new_from_file_at_scale (filename, size, size, TRUE, NULL);
 
-  if (G_UNLIKELY (!image))
+  if (G_UNLIKELY (!image)) {
     g_warning ("Unable to open image: %s", filename);
-
+    if (number && strcmp(number, "99")) {
+      g_free(filename);
+      return get_icon("99", size);
+  }
   g_free (filename);
 
   return image;

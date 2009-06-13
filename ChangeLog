@@ -1,5 +1,10 @@
 2009-06-13	Colin Leroy <colin@colino.net>
 
+	* panel-plugin/weather-icon.c: fix bug #5456, "Icon unaccessible when 
+	XOAP error". If we couldn't load an icon, load the default one (99).
+
+2009-06-13	Colin Leroy <colin@colino.net>
+
 	* panel-plugin/weather-summary.c: fix bug #5127, "Bug: Wireless: UMTS |
 	Improvement: Default: Forecast". The first part of it is probably fixed
 	by the fix to bug #4118, this addresses the second part: Forecast tab
