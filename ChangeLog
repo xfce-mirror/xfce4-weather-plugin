@@ -1,3 +1,11 @@
+2009-06-13	Colin Leroy <colin@colino.net>
+
+	* panel-plugin/weather-translate.c: fix bug #3818, "weekdays in 
+	Russian are displayed ugly in forecast tab". First patch fixes a
+	too short buffer (by Sergey Otinov), second patch checks whether
+	the strftime-formatted buffer is UTF-8 (based on a patch from
+	Yves-Alexis Perez).
+
 2009-06-12	Colin Leroy <colin@colino.net>
 
 	* panel-plugin/*: Add an about button in the summary window.

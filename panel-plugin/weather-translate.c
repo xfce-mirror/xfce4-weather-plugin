@@ -32,7 +32,7 @@
 
 
 #define HDATE_N    (sizeof(gchar) * 100)
-#define DAY_LOC_N  (sizeof(gchar) * 20)
+#define DAY_LOC_N  (sizeof(gchar) * 100)
 #define TIME_LOC_N (sizeof(gchar) * 20)
 
 
@@ -302,8 +302,9 @@ translate_lsup (const gchar *lsup)
   gchar      *hdate;
   struct tm   time;
   gint        size = 0, i = 0;
- gchar      **lsup_split;
-
+  gchar      **lsup_split;
+  int          len;
+  
   if (lsup == NULL || strlen (lsup) == 0)
     return NULL;
 
@@ -332,8 +333,13 @@ translate_lsup (const gchar *lsup)
     {
       hdate = g_malloc (HDATE_N);
 
-      strftime (hdate, HDATE_N, _("%x at %X Local Time"), &time);
-
+      len = strftime (hdate, HDATE_N, _("%x at %X Local Time"), &time);
+      hdate[len] = 0;
+      if (!g_utf8_validate(hdate, -1, NULL)) {
+         gchar *utf8 = g_locale_to_utf8(hdate, -1, NULL, NULL, NULL);
+	 g_free(hdate);
+	 hdate = utf8;
+      }
       return hdate;
     }
   else
@@ -350,6 +356,7 @@ translate_day (const gchar *day)
   guint        i;
   const gchar *days[] = {"su", "mo", "tu", "we", "th", "fr", "sa", NULL};
   gchar       *day_loc;
+  int          len;
 
   if (day == NULL || strlen (day) < 2)
     return NULL;
@@ -366,7 +373,13 @@ translate_day (const gchar *day)
 
       day_loc = g_malloc (DAY_LOC_N);
 
-      strftime (day_loc, DAY_LOC_N, "%A", &time);
+      len = strftime (day_loc, DAY_LOC_N, "%A", &time);
+      day_loc[len] = 0;
+      if (!g_utf8_validate(day_loc, -1, NULL)) {
+         gchar *utf8 = g_locale_to_utf8(day_loc, -1, NULL, NULL, NULL);
+	 g_free(day_loc);
+	 day_loc = utf8;
+      }
 
       return day_loc;
     }
@@ -444,6 +457,7 @@ translate_time (const gchar *time)
   gchar     **time_split, *time_loc;
   gint        i = 0, size = 0;
   struct tm   time_tm;
+  int          len;
 
   if (strlen (time) == 0)
     return NULL;
@@ -461,7 +475,13 @@ translate_time (const gchar *time)
   _fill_time (&time_tm, time_split[0], time_split[1], time_split[2]);
   g_strfreev (time_split);
 
-  strftime (time_loc, TIME_LOC_N, "%X", &time_tm);
+  len = strftime (time_loc, TIME_LOC_N, "%X", &time_tm);
+  time_loc[len] = 0;
+  if (!g_utf8_validate(time_loc, -1, NULL)) {
+     gchar *utf8 = g_locale_to_utf8(time_loc, -1, NULL, NULL, NULL);
+     g_free(time_loc);
+     time_loc = utf8;
+  }
 
   return time_loc;
 }
