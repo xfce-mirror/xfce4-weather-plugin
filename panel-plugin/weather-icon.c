@@ -49,6 +49,7 @@ get_icon (const gchar *number,
     if (number && strcmp(number, "99")) {
       g_free(filename);
       return get_icon("99", size);
+    }
   }
   g_free (filename);
 
