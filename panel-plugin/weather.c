@@ -47,7 +47,11 @@ check_envproxy (gchar **proxy_host,
                 gint   *proxy_port)
 {
 
-  gchar *env_proxy = getenv ("HTTP_PROXY"), *tmp, **split;
+  gchar *env_proxy = NULL, *tmp, **split;
+
+  env_proxy = getenv ("HTTP_PROXY");
+  if (!env_proxy)
+    env_proxy = getenv ("http_proxy");
 
   if (!env_proxy)
     return FALSE;
