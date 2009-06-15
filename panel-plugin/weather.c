@@ -481,6 +481,11 @@ xfceweather_read_config (XfcePanelPlugin  *plugin,
       data->proxy_port = data->saved_proxy_port;
     }
 
+  data->animation_transitions = xfce_rc_read_bool_entry (rc, 
+  		"animation_transitions", TRUE);
+
+  gtk_scrollbox_set_animate(GTK_SCROLLBOX(data->scrollbox), data->animation_transitions);
+
   data->labels = labels_clear (data->labels);
 
   for (i = 0; i < 100 /* arbitrary */ ; ++i)
@@ -534,6 +539,8 @@ xfceweather_write_config (XfcePanelPlugin  *plugin,
 
       xfce_rc_write_int_entry (rc, "proxy_port", data->proxy_port);
     }
+
+  xfce_rc_write_bool_entry (rc, "animation_transitions", data->animation_transitions);
 
   for (i = 0; i < data->labels->len; i++)
     {

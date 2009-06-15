@@ -30,6 +30,7 @@
 
 #include "weather-config.h"
 #include "weather-search.h"
+#include "weather-scrollbox.h"
 
 #define OPTIONS_N 11
 #define BORDER    8
@@ -205,6 +206,11 @@ apply_options (xfceweather_dialog *dialog)
       data->proxy_host = NULL;
     }
 
+  data->animation_transitions = gtk_toggle_button_get_active(
+  	GTK_TOGGLE_BUTTON(dialog->chk_animate_transition));
+
+  gtk_scrollbox_set_animate(GTK_SCROLLBOX(data->scrollbox), data->animation_transitions);
+  
   if (!gtk_toggle_button_get_active
       (GTK_TOGGLE_BUTTON (dialog->chk_proxy_use)))
     data->proxy_fromenv = FALSE;
@@ -474,6 +480,14 @@ create_config_dialog (xfceweather_data *data,
                     G_CALLBACK (cb_addoption), dialog);
   g_signal_connect (G_OBJECT (button_del), "clicked",
                     G_CALLBACK (cb_deloption), dialog);
+
+
+  
+  dialog->chk_animate_transition =
+    gtk_check_button_new_with_label (_("Animate transitions between labels"));
+  gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON
+	 (dialog->chk_animate_transition), dialog->wd->animation_transitions);
+  gtk_box_pack_start (GTK_BOX (vbox), dialog->chk_animate_transition, FALSE, FALSE, 0);
 
   gtk_widget_show_all (vbox);
 

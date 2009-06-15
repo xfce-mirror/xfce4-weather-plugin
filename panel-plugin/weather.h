@@ -64,6 +64,8 @@ typedef struct
    * but not active proxy setttings */
   gchar           *saved_proxy_host;
   gint             saved_proxy_port;
+  
+  gboolean         animation_transitions;
 }
 xfceweather_data;
 

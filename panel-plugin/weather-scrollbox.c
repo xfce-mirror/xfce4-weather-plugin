@@ -437,7 +437,7 @@ gtk_scrollbox_expose (GtkWidget      *widget,
     gdk_draw_drawable (widget->window,
                        widget->style->fg_gc[GTK_WIDGET_STATE (widget)],
                        self->pixmap,
-                       0, self->draw_offset,
+                       0, (self->animate ? self->draw_offset : 0),
                        self->draw_middle, 0,
                        widget->allocation.width, widget->allocation.height);
 
@@ -545,4 +545,9 @@ gtk_scrollbox_clear (GtkScrollbox *self)
   gtk_widget_set_size_request (GTK_WIDGET (self), 0, 0);
   self->draw_middle = 0;
   self->draw_maxmiddle = 0;
+}
+
+void gtk_scrollbox_set_animate(GtkScrollbox *self, gboolean animate)
+{ 
+  self->animate = animate;
 }

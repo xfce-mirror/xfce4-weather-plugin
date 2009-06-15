@@ -46,6 +46,8 @@ typedef struct
   GtkWidget        *lst_xmloption;
   GtkListStore     *mdl_xmloption;
 
+  GtkWidget        *chk_animate_transition;
+
   xfceweather_data *wd;
 }
 xfceweather_dialog;

@@ -45,7 +45,7 @@ struct _GtkScrollbox
   gint            draw_middle;
   gint            draw_maxmiddle;
   gint            draw_timeout;
-
+  gboolean        animate;
   GdkPixmap      *pixmap;
 };
 
@@ -61,6 +61,8 @@ GtkWidget *gtk_scrollbox_new (void);
 void gtk_scrollbox_enablecb (GtkScrollbox * self, gboolean enable);
 
 void gtk_scrollbox_clear (GtkScrollbox * self);
+
+void gtk_scrollbox_set_animate(GtkScrollbox *self, gboolean animate);
 
 G_END_DECLS
 
