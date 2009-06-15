@@ -42,6 +42,10 @@
 #define UPDATE_TIME      1600
 #define BORDER           8
 
+#if !GLIB_CHECK_VERSION(2,14,0)
+#define g_timeout_add_seconds(t,c,d) g_timeout_add((t)*1000,(c),(d))
+#endif
+
 gboolean
 check_envproxy (gchar **proxy_host,
                 gint   *proxy_port)
@@ -564,7 +568,7 @@ update_weatherdata_with_reset (xfceweather_data *data)
   update_weatherdata (data);
 
   data->updatetimeout =
-    gtk_timeout_add (UPDATE_TIME * 1000, (GSourceFunc) update_weatherdata, data);
+    g_timeout_add_seconds (UPDATE_TIME, (GSourceFunc) update_weatherdata, data);
 }
 
 
@@ -808,7 +812,7 @@ xfceweather_create_control (XfcePanelPlugin *plugin)
   gtk_scrollbox_clear (GTK_SCROLLBOX (data->scrollbox));
 
   data->updatetimeout =
-    gtk_timeout_add (UPDATE_TIME * 1000, (GSourceFunc) update_weatherdata, data);
+    g_timeout_add_seconds (UPDATE_TIME, (GSourceFunc) update_weatherdata, data);
 
   return data;
 }
