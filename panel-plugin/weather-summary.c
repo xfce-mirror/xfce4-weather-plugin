@@ -541,7 +541,7 @@ summary_dialog_response (GtkWidget          *dlg,
 {
 	if (response == GTK_RESPONSE_ACCEPT)
 		gtk_widget_destroy(window);
-	else
+	else if (response == GTK_RESPONSE_HELP)
 		g_spawn_command_line_async ("exo-open --launch WebBrowser " PLUGIN_WEBSITE, NULL);
 }
 
