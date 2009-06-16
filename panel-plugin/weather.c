@@ -591,6 +591,28 @@ close_summary (GtkWidget *widget,
 
 
 
+static void
+forecast_click (GtkWidget *widget,
+          gpointer   user_data)
+{
+  xfceweather_data *data = (xfceweather_data *) user_data;
+
+  if (data->summary_window != NULL)
+    {
+
+      gtk_window_present (GTK_WINDOW (data->summary_window));
+    }
+  else
+    {
+      data->summary_window = create_summary_window (data->weatherdata,
+                                                    data->unit);
+      g_signal_connect (G_OBJECT (data->summary_window), "destroy",
+                	G_CALLBACK (close_summary), data);
+
+      gtk_widget_show_all (data->summary_window);
+    }
+}
+
 static gboolean
 cb_click (GtkWidget      *widget,
           GdkEventButton *event,
@@ -600,21 +622,7 @@ cb_click (GtkWidget      *widget,
 
   if (event->button == 1)
     {
-
-      if (data->summary_window != NULL)
-        {
-
-          gtk_window_present (GTK_WINDOW (data->summary_window));
-        }
-      else
-        {
-          data->summary_window = create_summary_window (data->weatherdata,
-                                                        data->unit);
-          g_signal_connect (G_OBJECT (data->summary_window), "destroy",
-                            G_CALLBACK (close_summary), data);
-
-          gtk_widget_show_all (data->summary_window);
-        }
+      forecast_click(widget, user_data);
     }
   else if (event->button == 2)
     {
@@ -623,8 +631,6 @@ cb_click (GtkWidget      *widget,
 
   return FALSE;
 }
-
-
 
 static void
 mi_click (GtkWidget *widget,
@@ -741,7 +747,7 @@ static xfceweather_data *
 xfceweather_create_control (XfcePanelPlugin *plugin)
 {
   xfceweather_data *data = panel_slice_new0 (xfceweather_data);
-  GtkWidget        *refresh;
+  GtkWidget        *refresh, *forecast;
   datas             lbl;
   GdkPixbuf        *icon = NULL;
 
@@ -797,6 +803,20 @@ xfceweather_create_control (XfcePanelPlugin *plugin)
                     G_CALLBACK (mi_click), data);
 
   xfce_panel_plugin_menu_insert_item (plugin, GTK_MENU_ITEM (refresh));
+
+  /* add refresh button to right click menu, for people who missed the middle mouse click feature */
+  forecast = gtk_image_menu_item_new_with_mnemonic (_("_Forecast"));
+  icon = get_icon ("32", 16);
+  gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(forecast),
+  	gtk_image_new_from_pixbuf(icon));
+  if (G_LIKELY (icon))
+    g_object_unref (G_OBJECT (icon));
+  gtk_widget_show (forecast);
+
+  g_signal_connect (G_OBJECT (forecast), "activate",
+                    G_CALLBACK (forecast_click), data);
+
+  xfce_panel_plugin_menu_insert_item (plugin, GTK_MENU_ITEM (forecast));
 
   /* assign to tempval because g_array_append_val () is using & operator */
   lbl = TEMP;
