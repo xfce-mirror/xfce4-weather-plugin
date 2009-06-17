@@ -325,7 +325,12 @@ cb_update (gboolean  succeed,
 
   if (G_LIKELY (succeed && result))
     {
-      doc = xmlParseMemory (result, strlen (result));
+      if (g_utf8_validate(result, -1, NULL)) {
+	/* force parsing as UTF-8, the XML encoding header may lie */
+	doc = xmlReadMemory (result, strlen (result), NULL, "UTF-8", 0);
+      } else {
+	doc = xmlParseMemory (result, strlen(result));
+      }
 
       g_free (result);
 
@@ -447,6 +452,16 @@ xfceweather_read_config (XfcePanelPlugin  *plugin,
       data->location_code = g_strdup (value);
     }
 
+  value = xfce_rc_read_entry (rc, "loc_name", NULL);
+
+  if (value)
+    {
+      if (data->location_name)
+        g_free (data->location_name);
+
+      data->location_name = g_strdup (value);
+    }
+
   if (xfce_rc_read_bool_entry (rc, "celcius", TRUE))
     data->unit = METRIC;
   else
@@ -534,6 +549,9 @@ xfceweather_write_config (XfcePanelPlugin  *plugin,
 
   if (data->location_code)
     xfce_rc_write_entry (rc, "loc_code", data->location_code);
+
+  if (data->location_name)
+    xfce_rc_write_entry (rc, "loc_name", data->location_name);
 
   xfce_rc_write_bool_entry (rc, "proxy_fromenv", data->proxy_fromenv);
 
@@ -865,6 +883,7 @@ xfceweather_free (XfcePanelPlugin  *plugin,
 
   /* Free chars */
   g_free (data->location_code);
+  g_free (data->location_name);
   g_free (data->proxy_host);
 
   /* Free Array */

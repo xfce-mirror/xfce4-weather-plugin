@@ -31,12 +31,16 @@ typedef struct
   GtkWidget    *dialog;
   GtkWidget    *search_entry;
   GtkWidget    *result_list;
+  GtkWidget    *find_button;
   GtkListStore *result_mdl;
 
   gchar        *result;
+  gchar        *result_name;
 
   gchar        *proxy_host;
   gint          proxy_port;
+  
+  gchar        *last_search;
 }
 search_dialog;
 

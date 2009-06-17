@@ -52,6 +52,7 @@ typedef struct
   gint             updatetimeout;
 
   gchar           *location_code;
+  gchar		  *location_name;
   units            unit;
 
   xml_weather     *weatherdata;

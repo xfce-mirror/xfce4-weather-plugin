@@ -177,8 +177,14 @@ apply_options (xfceweather_dialog *dialog)
   if (data->location_code)
     g_free (data->location_code);
 
+  if (data->location_name)
+    g_free (data->location_name);
+
   data->location_code =
     g_strdup (gtk_entry_get_text (GTK_ENTRY (dialog->txt_loc_code)));
+
+  data->location_name =
+    g_strdup (gtk_label_get_text (GTK_LABEL (dialog->txt_loc_name)));
 
   /* call labels_clear() here */
   if (data->labels && data->labels->len > 0)
@@ -280,9 +286,13 @@ cb_findlocation (GtkButton *button,
                                   dialog->wd->proxy_host,
                                   dialog->wd->proxy_port);
 
-  if (run_search_dialog (sdialog))
+  if (run_search_dialog (sdialog)) {
     gtk_entry_set_text (GTK_ENTRY (dialog->txt_loc_code), sdialog->result);
-
+    gtk_label_set_text (GTK_LABEL (dialog->txt_loc_name), sdialog->result_name);
+#if GTK_CHECK_VERSION(2,12,0)
+    gtk_widget_set_tooltip_text(dialog->txt_loc_name,sdialog->result_name);
+#endif
+  }
   free_search_dialog (sdialog);
 
   return FALSE;
@@ -335,25 +345,48 @@ create_config_dialog (xfceweather_data *data,
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
 
-  label = gtk_label_new (_("Location code:"));
+  label = gtk_label_new (_("Location:"));
   dialog->txt_loc_code = gtk_entry_new ();
+  dialog->txt_loc_name = gtk_label_new ("");
 
   gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
-
+  gtk_misc_set_alignment (GTK_MISC (dialog->txt_loc_name), 0, 0.5);
+  
+#if GTK_CHECK_VERSION(2,12,0)
+  gtk_label_set_ellipsize (GTK_LABEL(dialog->txt_loc_name), PANGO_ELLIPSIZE_END);
+#endif  
   if (dialog->wd->location_code != NULL)
     gtk_entry_set_text (GTK_ENTRY (dialog->txt_loc_code),
                         dialog->wd->location_code);
+
+  if (dialog->wd->location_name != NULL)
+    gtk_label_set_text (GTK_LABEL (dialog->txt_loc_name),
+                        dialog->wd->location_name);
+  else if (dialog->wd->weatherdata && 
+           get_data (dialog->wd->weatherdata, DNAM) != NULL &&
+	   strlen (get_data (dialog->wd->weatherdata, DNAM)) > 1)  
+    gtk_label_set_text (GTK_LABEL (dialog->txt_loc_name),
+                        get_data (dialog->wd->weatherdata, DNAM));
+  else
+    gtk_label_set_text (GTK_LABEL (dialog->txt_loc_name),
+                        dialog->wd->location_code);
+
+#if GTK_CHECK_VERSION(2,12,0)
+  gtk_widget_set_tooltip_text(dialog->txt_loc_name,
+  	gtk_label_get_text(GTK_LABEL(dialog->txt_loc_name)));
+#endif
+
   gtk_size_group_add_widget (sg, label);
 
-  button = gtk_button_new ();
+  button = gtk_button_new_with_label(_("Change..."));
   image = gtk_image_new_from_stock (GTK_STOCK_FIND, GTK_ICON_SIZE_BUTTON);
-  gtk_container_add (GTK_CONTAINER (button), image);
+  gtk_button_set_image (GTK_BUTTON (button), image);
   g_signal_connect (G_OBJECT (button), "clicked",
                     G_CALLBACK (cb_findlocation), dialog);
 
   hbox = gtk_hbox_new (FALSE, BORDER);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), dialog->txt_loc_code, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), dialog->txt_loc_name, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (hbox), button, FALSE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 

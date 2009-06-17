@@ -59,11 +59,6 @@ sanitize_str (const gchar *str)
     {
       if (g_ascii_isspace (c))
         g_string_append (retstr, "%20");
-      else if (g_ascii_isalnum (c) == FALSE)
-        {
-          g_string_free (retstr, TRUE);
-          return NULL;
-        }
       else
         g_string_append_c (retstr, c);
     }
@@ -86,11 +81,21 @@ cb_searchdone (gboolean  succeed,
   xmlDoc        *doc;
   xmlNode       *cur_node;
   gchar         *id, *city;
+  gboolean      found = FALSE;
+  GtkTreeIter       iter;
+  GtkTreeSelection *selection;
+
+  gtk_widget_set_sensitive(dialog->find_button, TRUE);
 
   if (!succeed || received == NULL)
     return;
 
-  doc = xmlParseMemory (received, strlen (received));
+  if (g_utf8_validate(received, -1, NULL)) {
+    /* force parsing as UTF-8, the XML encoding header may lie */
+    doc = xmlReadMemory (received, strlen (received), NULL, "UTF-8", 0);
+  } else {
+    doc = xmlParseMemory (received, strlen(received));
+  }
   g_free (received);
 
   if (!doc)
@@ -118,6 +123,7 @@ cb_searchdone (gboolean  succeed,
                 }
 
               append_result (dialog->result_mdl, id, city);
+	      found = TRUE;
               g_free (id);
               g_free (city);
             }
@@ -126,6 +132,13 @@ cb_searchdone (gboolean  succeed,
 
   xmlFreeDoc (doc);
 
+  if (found) {
+    if (gtk_tree_model_get_iter_first(GTK_TREE_MODEL (dialog->result_mdl), &iter)) {
+      selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->result_list));
+      gtk_tree_selection_select_iter(selection, &iter);
+      gtk_dialog_set_response_sensitive(GTK_DIALOG(dialog->dialog), GTK_RESPONSE_ACCEPT, TRUE);
+    }
+  }
   return;
 }
 
@@ -138,16 +151,30 @@ search_cb (GtkWidget *widget,
   search_dialog *dialog = (search_dialog *) user_data;
   gchar         *sane_str, *url;
   const gchar   *str;
-
   str = gtk_entry_get_text (GTK_ENTRY (dialog->search_entry));
 
   if (strlen (str) == 0)
     return;
 
+  if (dialog->last_search && !strcmp(str, dialog->last_search)) {
+    GtkTreeSelection *selection;
+    selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->result_list));
+    if (gtk_tree_selection_count_selected_rows(selection) == 1) {
+      gtk_dialog_response(GTK_DIALOG(dialog->dialog), GTK_RESPONSE_ACCEPT);
+      return;
+    }
+  }
+  
+  g_free(dialog->last_search);
+  dialog->last_search = g_strdup(str);
+
   gtk_list_store_clear (GTK_LIST_STORE (dialog->result_mdl));
 
   if ((sane_str = sanitize_str (str)) == NULL)
     return;
+
+  gtk_widget_set_sensitive(dialog->find_button, FALSE);
+  gtk_dialog_set_response_sensitive(GTK_DIALOG(dialog->dialog), GTK_RESPONSE_ACCEPT, FALSE);
 
   url = g_strdup_printf ("/search/search?where=%s", sane_str);
   g_free (sane_str);
@@ -177,7 +204,7 @@ create_search_dialog (GtkWindow *parent,
                       gchar     *proxy_host,
                       gint       proxy_port)
 {
-  GtkWidget         *vbox, *button, *hbox, *scroll, *frame;
+  GtkWidget         *vbox, *hbox, *scroll, *frame;
   GtkTreeViewColumn *column;
   GtkCellRenderer   *renderer = gtk_cell_renderer_text_new ();
   search_dialog     *dialog;
@@ -197,6 +224,8 @@ create_search_dialog (GtkWindow *parent,
 						GTK_STOCK_CANCEL, GTK_RESPONSE_REJECT,
 						GTK_STOCK_OK, GTK_RESPONSE_ACCEPT, NULL);
 
+  gtk_dialog_set_response_sensitive(GTK_DIALOG(dialog->dialog), GTK_RESPONSE_ACCEPT, FALSE);
+
   gtk_window_set_icon_name (GTK_WINDOW (dialog->dialog), GTK_STOCK_FIND);
 
   vbox = gtk_vbox_new (FALSE, BORDER);
@@ -215,9 +244,9 @@ create_search_dialog (GtkWindow *parent,
   g_signal_connect (G_OBJECT (dialog->search_entry), "activate",
                     G_CALLBACK (search_cb), dialog);
 
-  button = gtk_button_new_from_stock (GTK_STOCK_FIND);
-  gtk_box_pack_start (GTK_BOX (hbox), button, TRUE, TRUE, 0);
-  g_signal_connect (G_OBJECT (button), "clicked",
+  dialog->find_button = gtk_button_new_from_stock (GTK_STOCK_FIND);
+  gtk_box_pack_start (GTK_BOX (hbox), dialog->find_button, TRUE, TRUE, 0);
+  g_signal_connect (G_OBJECT (dialog->find_button), "clicked",
                     G_CALLBACK (search_cb), dialog);
 
   frame = gtk_frame_new (NULL);
@@ -265,6 +294,12 @@ run_search_dialog (search_dialog *dialog)
 
           g_value_unset (&value);
 
+          gtk_tree_model_get_value (GTK_TREE_MODEL (dialog->result_mdl),
+                                    &iter, 0, &value);
+          dialog->result_name = g_strdup (g_value_get_string (&value));
+
+          g_value_unset (&value);
+
           return TRUE;
         }
     }
@@ -278,6 +313,8 @@ void
 free_search_dialog (search_dialog * dialog)
 {
   g_free (dialog->result);
+  g_free (dialog->result_name);
+  g_free (dialog->last_search);
 
   gtk_widget_destroy (dialog->dialog);
 
