@@ -273,7 +273,31 @@ option_i (datas opt)
   return -1;
 }
 
+static void auto_locate_cb(const gchar *loc_name, const gchar *loc_code, gpointer user_data)
+{
+  xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+  
+  if (loc_code && loc_name) {
+    gtk_entry_set_text (GTK_ENTRY (dialog->txt_loc_code), loc_code);
+    gtk_label_set_text (GTK_LABEL (dialog->txt_loc_name), loc_name);
+    gtk_widget_set_sensitive(dialog->txt_loc_name, TRUE);
+#if GTK_CHECK_VERSION(2,12,0)
+    gtk_widget_set_tooltip_text(dialog->txt_loc_name,loc_name);
+#endif
+  } else {
+    gtk_entry_set_text (GTK_ENTRY (dialog->txt_loc_code), "");
+    gtk_label_set_text (GTK_LABEL (dialog->txt_loc_name), _("Unset"));
+    gtk_widget_set_sensitive(dialog->txt_loc_name, TRUE);
+  }
+}
 
+static void start_auto_locate(xfceweather_dialog *dialog)
+{
+  gtk_widget_set_sensitive(dialog->txt_loc_name, FALSE);
+  gtk_label_set_text (GTK_LABEL (dialog->txt_loc_name), _("Detecting..."));
+  weather_search_by_ip(dialog->wd->proxy_host, dialog->wd->proxy_port,
+  	auto_locate_cb, dialog);
+}
 
 static gboolean
 cb_findlocation (GtkButton *button,
@@ -289,6 +313,7 @@ cb_findlocation (GtkButton *button,
   if (run_search_dialog (sdialog)) {
     gtk_entry_set_text (GTK_ENTRY (dialog->txt_loc_code), sdialog->result);
     gtk_label_set_text (GTK_LABEL (dialog->txt_loc_name), sdialog->result_name);
+    gtk_widget_set_sensitive(dialog->txt_loc_name, TRUE);
 #if GTK_CHECK_VERSION(2,12,0)
     gtk_widget_set_tooltip_text(dialog->txt_loc_name,sdialog->result_name);
 #endif
@@ -376,6 +401,9 @@ create_config_dialog (xfceweather_data *data,
   	gtk_label_get_text(GTK_LABEL(dialog->txt_loc_name)));
 #endif
 
+  if (dialog->wd->location_code == NULL) {
+    start_auto_locate(dialog);
+  }
   gtk_size_group_add_widget (sg, label);
 
   button = gtk_button_new_with_label(_("Change..."));

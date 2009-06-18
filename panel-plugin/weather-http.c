@@ -32,6 +32,8 @@
 #include <stdlib.h>
 #include <netinet/in.h>
 #include <resolv.h>
+#include <signal.h>
+#include <setjmp.h>
 
 #include <glib.h>
 #include <gtk/gtk.h>
@@ -140,6 +142,15 @@ static void refresh_resolvers(void)
 #endif /*G_OS_UNIX*/
 }
 
+#ifdef G_OS_UNIX
+static sigjmp_buf jmpenv;
+
+static void timeout_handler(gint sig)
+{
+	siglongjmp(jmpenv, 1);
+}
+#endif /*G_OS_UNIX*/
+
 static gboolean
 weather_http_receive_data_idle (gpointer user_data)
 {
@@ -151,7 +162,18 @@ weather_http_receive_data_idle (gpointer user_data)
   struct sockaddr_in  sockaddr;
   const gchar        *p;
   GTimeVal            timeout;
+#ifdef G_OS_UNIX
+  void (*prev_handler)(gint);
 
+  alarm(0);
+  prev_handler = signal(SIGALRM, timeout_handler);
+  if (sigsetjmp(jmpenv, 1)) {
+	  alarm(0);
+	  signal(SIGALRM, prev_handler);
+	  connection->status = STATUS_TIMEOUT;
+	  return FALSE;
+  }
+#endif
   /* set the current time */
   g_get_current_time (&timeout);
 
@@ -159,7 +181,15 @@ weather_http_receive_data_idle (gpointer user_data)
   refresh_resolvers();
 
   /* try to get the hostname */
+#ifdef G_OS_UNIX
+  alarm(WEATHER_MAX_CONN_TIMEOUT);
+#endif
   host = gethostbyname (connection->proxy_host ? connection->proxy_host : connection->hostname);
+#ifdef G_OS_UNIX
+  alarm(0);
+  signal(SIGALRM, prev_handler);
+#endif
+
   if (G_UNLIKELY (host == NULL))
     {
       /* display error */
@@ -198,7 +228,15 @@ weather_http_receive_data_idle (gpointer user_data)
   memset(&(sockaddr.sin_zero), '\0', 8);
 
   /* open a connection with the host */
+#ifdef G_OS_UNIX
+  signal(SIGALRM, timeout_handler);
+  alarm(WEATHER_MAX_CONN_TIMEOUT);
+#endif
   m = connect (connection->fd, (struct sockaddr *)&sockaddr, sizeof(struct sockaddr));
+#ifdef G_OS_UNIX
+  alarm(0);
+  signal(SIGALRM, prev_handler);
+#endif
   if (G_UNLIKELY (m < 0))
     {
       /* display warning */

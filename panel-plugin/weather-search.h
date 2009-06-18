@@ -33,6 +33,7 @@ typedef struct
   GtkWidget    *result_list;
   GtkWidget    *find_button;
   GtkListStore *result_mdl;
+  GtkTreeViewColumn *column;
 
   gchar        *result;
   gchar        *result_name;
@@ -47,6 +48,10 @@ search_dialog;
 search_dialog *create_search_dialog (GtkWindow *, gchar *, gint);
 
 gboolean run_search_dialog (search_dialog * dialog);
+
+gboolean weather_search_by_ip(const gchar *proxy_host, gint proxy_port,
+	void (*gui_cb)(const gchar *loc_name, const gchar *loc_code, gpointer user_data),
+	gpointer user_data);
 
 void free_search_dialog (search_dialog * dialog);
 
