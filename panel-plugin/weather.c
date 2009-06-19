@@ -62,10 +62,12 @@ check_envproxy (gchar **proxy_host,
 
   tmp = strstr (env_proxy, "://");
 
-  if (!tmp || strlen (tmp) < 3)
+  if (!tmp)
+    tmp = env_proxy;
+  else if (strlen (tmp) >= 3)
+    env_proxy = tmp + 3;
+  else
     return FALSE;
-
-  env_proxy = tmp + 3;
 
   /* we don't support username:password so return */
   tmp = strchr (env_proxy, '@');
