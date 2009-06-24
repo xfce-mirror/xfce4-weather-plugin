@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce-weather-plugin 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-06-16 09:35+0200\n"
-"PO-Revision-Date: 2009-06-16 13:05+0100\n"
+"POT-Creation-Date: 2009-06-18 19:26+0200\n"
+"PO-Revision-Date: 2009-06-24 06:29+0100\n"
 "Last-Translator: Colin Leroy <colin@colino.net>\n"
 "Language-Team: French <xfce-i18n@xfce.org>\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,8 @@ msgstr "UV"
 msgid "WD"
 msgstr "SV"
 
-#: ../panel-plugin/weather.c:119 ../panel-plugin/weather.c:122
+#: ../panel-plugin/weather.c:119
+#: ../panel-plugin/weather.c:122
 msgid "P"
 msgstr "P"
 
@@ -56,22 +57,24 @@ msgstr "VV"
 msgid "WG"
 msgstr "B"
 
-#: ../panel-plugin/weather.c:259 ../panel-plugin/weather.c:727
+#: ../panel-plugin/weather.c:259
+#: ../panel-plugin/weather.c:745
 msgid "Cannot update weather data"
 msgstr "Échec à la mise à jour des données météo"
 
-#: ../panel-plugin/weather.c:660
+#: ../panel-plugin/weather.c:678
 #, c-format
 msgid "Unable to open the following url: %s"
 msgstr "Échec à l'ouverture du lien : %s"
 
-#: ../panel-plugin/weather.c:688 ../panel-plugin/weather-summary.c:556
+#: ../panel-plugin/weather.c:706
+#: ../panel-plugin/weather-summary.c:556
 #: ../panel-plugin/weather.desktop.in.in.h:2
 msgid "Weather Update"
 msgstr "Mise-à-jour météo"
 
 #. add refresh button to right click menu, for people who missed the middle mouse click feature
-#: ../panel-plugin/weather.c:808
+#: ../panel-plugin/weather.c:826
 msgid "_Forecast"
 msgstr "_Prévision"
 
@@ -119,44 +122,56 @@ msgstr "Indice UV (UV)"
 msgid "Dewpoint (DP)"
 msgstr "Point de rosée (PR)"
 
-#: ../panel-plugin/weather-config.c:232
+#: ../panel-plugin/weather-config.c:238
 msgid "Please enter proxy settings"
 msgstr "Veuillez entrer les paramètres du proxy"
 
-#: ../panel-plugin/weather-config.c:315
+#: ../panel-plugin/weather-config.c:289
+msgid "Unset"
+msgstr "Non spécifié"
+
+#: ../panel-plugin/weather-config.c:297
+msgid "Detecting..."
+msgstr "Détection..."
+
+#: ../panel-plugin/weather-config.c:350
 msgid "Measurement unit:"
 msgstr "Unité de mesure :"
 
-#: ../panel-plugin/weather-config.c:321
+#: ../panel-plugin/weather-config.c:356
 msgid "Imperial"
 msgstr "Impérial"
 
-#: ../panel-plugin/weather-config.c:323
+#: ../panel-plugin/weather-config.c:358
 msgid "Metric"
 msgstr "Métrique"
 
-#: ../panel-plugin/weather-config.c:338
-msgid "Location code:"
-msgstr "Code de lieu :"
+#: ../panel-plugin/weather-config.c:373
+msgid "Location:"
+msgstr "Lieu :"
+
+#: ../panel-plugin/weather-config.c:409
+msgid "Change..."
+msgstr "Changer..."
 
 #. proxy
-#: ../panel-plugin/weather-config.c:361
+#: ../panel-plugin/weather-config.c:422
 msgid "Proxy server:"
 msgstr "Serveur proxy :"
 
-#: ../panel-plugin/weather-config.c:364
+#: ../panel-plugin/weather-config.c:425
 msgid "Use proxy server"
 msgstr "Utiliser un serveur proxy"
 
-#: ../panel-plugin/weather-config.c:366
+#: ../panel-plugin/weather-config.c:427
 msgid "Auto-detect from environment"
 msgstr "Détection automatique à partir de l'environnement"
 
-#: ../panel-plugin/weather-config.c:438
+#: ../panel-plugin/weather-config.c:499
 msgid "Labels to display"
 msgstr "Étiquettes à afficher"
 
-#: ../panel-plugin/weather-config.c:487
+#: ../panel-plugin/weather-config.c:548
 msgid "Animate transitions between labels"
 msgstr "Animer les transitions entre étiquettes."
 
@@ -185,55 +200,60 @@ msgid "mi"
 msgstr "mi"
 
 #. display error
-#: ../panel-plugin/weather-http.c:166
+#: ../panel-plugin/weather-http.c:196
 #, c-format
 msgid "Failed to get the hostname. Retry in %d seconds."
 msgstr "Impossible de résoudre le nom d'hôte. Réessai dans %d secondes."
 
 #. display warning
-#: ../panel-plugin/weather-http.c:183
+#: ../panel-plugin/weather-http.c:213
 #, c-format
 msgid "Failed to open the socket (%s)."
 msgstr "Impossible d'ouvrir la connexion (%s)."
 
 #. display warning
-#: ../panel-plugin/weather-http.c:205
+#: ../panel-plugin/weather-http.c:243
 #, c-format
 msgid "Failed to create a connection with the host (%s)."
 msgstr "Impossible de se connecter à l'hôte (%s)."
 
 #. display warning
-#: ../panel-plugin/weather-http.c:242
+#: ../panel-plugin/weather-http.c:280
 #, c-format
 msgid "Failed to send the request (%s)."
 msgstr "Impossible d'envoyer la requête (%s)."
 
 #. display warning
-#: ../panel-plugin/weather-http.c:279
+#: ../panel-plugin/weather-http.c:317
 #, c-format
 msgid "Failed to receive data (%s)"
 msgstr "Impossible de recevoir des données (%s)"
 
 #. display warning
-#: ../panel-plugin/weather-http.c:320
+#: ../panel-plugin/weather-http.c:358
 msgid "Unable to detect the content length."
 msgstr "Impossible de détecter la longueur du contenu."
 
-#: ../panel-plugin/weather-http.c:328
+#: ../panel-plugin/weather-http.c:366
 msgid "No content received."
 msgstr "Aucun contenu reçu."
 
-#: ../panel-plugin/weather-search.c:194
+#: ../panel-plugin/weather-search.c:143
+#: ../panel-plugin/weather-search.c:275
+msgid "Results"
+msgstr "Résultats"
+
+#: ../panel-plugin/weather-search.c:184
+msgid "Searching..."
+msgstr "Recherche..."
+
+#: ../panel-plugin/weather-search.c:224
 msgid "Search weather location code"
 msgstr "Chercher un code de lieu de station météo"
 
-#: ../panel-plugin/weather-search.c:208
+#: ../panel-plugin/weather-search.c:248
 msgid "Enter a city name or zip code"
 msgstr "Entrer un nom de ville ou un code postal"
-
-#: ../panel-plugin/weather-search.c:234
-msgid "Results"
-msgstr "Résultats"
 
 #. head
 #: ../panel-plugin/weather-summary.c:212
@@ -1079,18 +1099,14 @@ msgstr "Afficher les conditions météo actuelles"
 
 #~ msgid "Summary"
 #~ msgstr "Résumé"
-
 #~ msgid "Showers in the Vincinity"
 #~ msgstr "Averses à proximité"
-
 #~ msgid "Flurries"
 #~ msgstr "Bourrasques"
-
 #~ msgid "Sleet"
 #~ msgstr "Verglas"
-
 #~ msgid "Thunder storms"
 #~ msgstr "Orage"
-
 #~ msgid "Properties"
 #~ msgstr "Propriétés"
+
