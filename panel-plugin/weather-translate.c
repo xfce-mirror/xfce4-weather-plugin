@@ -85,6 +85,7 @@ static const gchar *desc_strings[] = {
   N_("Haze"),
   N_("Hazy"),
   N_("Heavy Rain"),
+  N_("Heavy Rain Shower"),
   N_("Heavy Snow"),
   N_("Hot And Humid"),
   N_("Hot!"),
@@ -166,9 +167,11 @@ static const gchar *desc_strings[] = {
   N_("Sunny / Wind"),
   N_("T-Showers"),
   N_("T-Storm"),
+  N_("T-Storms"),
   N_("T-Storms / Wind"),
   N_("T-Storms Early"),
   N_("Thunder"),
+  N_("Thunder in the Vicinity"),
   N_("Thunder in the Vincinity"),
   N_("Variable Cloudiness"),
   N_("Variable Clouds"),
@@ -217,6 +220,7 @@ static const gchar *wdirs[] = {
   N_("ESE"),
   N_("SE"),
   N_("SSE"),
+  N_("CALM"),
   NULL
 };
 
