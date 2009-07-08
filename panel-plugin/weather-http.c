@@ -125,20 +125,7 @@ weather_http_receive_data_check (WeatherConnection *connection,
 static void refresh_resolvers(void)
 {
 #ifdef G_OS_UNIX
-	static time_t resolv_conf_changed = (time_t)NULL;
-	struct stat s;
-
-	/* This makes the glibc re-read resolv.conf, if it changed
-	 * since our startup. 
-	 * Why doesn't the glibc do it by itself?
-	 */
-	if (stat("/etc/resolv.conf", &s) == 0) {
-		if (s.st_mtime > resolv_conf_changed) {
-			resolv_conf_changed = s.st_mtime;
-			res_init();
-		}
-	} /* else
-		we'll have bigger problems. */
+	res_init();
 #endif /*G_OS_UNIX*/
 }
 
@@ -158,8 +145,11 @@ weather_http_receive_data_idle (gpointer user_data)
   gchar               buffer[1024];
   gint                bytes, n, m;
   gchar              *request;
-  struct hostent     *host;
-  struct sockaddr_in  sockaddr;
+  
+  struct addrinfo     h, *r, *a;
+  const gchar         *port = NULL;
+  gint                err;
+
   const gchar        *p;
   GTimeVal            timeout;
 #ifdef G_OS_UNIX
@@ -184,16 +174,30 @@ weather_http_receive_data_idle (gpointer user_data)
 #ifdef G_OS_UNIX
   alarm(WEATHER_MAX_CONN_TIMEOUT);
 #endif
-  host = gethostbyname (connection->proxy_host ? connection->proxy_host : connection->hostname);
+
+  memset(&h, 0, sizeof(h));
+  h.ai_family = AF_INET;
+  h.ai_socktype = SOCK_STREAM;
+  h.ai_protocol = IPPROTO_TCP;
+  
+  if (connection->proxy_port)
+  	port = g_strdup_printf("%d", connection->proxy_port);
+  else
+  	port = g_strdup("80");
+  
+  err = getaddrinfo(connection->proxy_host ? connection->proxy_host : connection->hostname,
+  		port, &h, &r);
+
+  g_free(port);
 #ifdef G_OS_UNIX
   alarm(0);
   signal(SIGALRM, prev_handler);
 #endif
 
-  if (G_UNLIKELY (host == NULL))
+  if (G_UNLIKELY (err != 0))
     {
       /* display error */
-      g_message (_("Failed to get the hostname. Retry in %d seconds."),
+      g_message (_("Failed to get the hostname %s. Retry in %d seconds."), gai_strerror(err),
                  WEATHER_RESCHEDULE_TIMEOUT / 1000);
 
       /* try again later */
@@ -206,7 +210,31 @@ weather_http_receive_data_idle (gpointer user_data)
     return FALSE;
 
   /* open the socket */
-  connection->fd = socket (PF_INET, SOCK_STREAM, 0);
+  
+  for (a = r; a != NULL; a = a->ai_next) {
+    connection->fd = socket (a->ai_family, a->ai_socktype, a->ai_protocol);
+    if (connection->fd < 0) {
+      err = errno;
+      continue;
+    }
+#ifdef G_OS_UNIX
+    signal(SIGALRM, timeout_handler);
+    alarm(WEATHER_MAX_CONN_TIMEOUT);
+#endif
+    m = connect (connection->fd, a->ai_addr, a->ai_addrlen);
+#ifdef G_OS_UNIX
+    alarm(0);
+    signal(SIGALRM, prev_handler);
+#endif
+    if (m == 0)
+      break;
+    else 
+      err = errno;
+
+    if (weather_http_receive_data_check (connection, timeout))
+      break;
+  }
+
   if (G_UNLIKELY (connection->fd < 0))
     {
       /* display warning */
@@ -218,25 +246,6 @@ weather_http_receive_data_idle (gpointer user_data)
       return FALSE;
     }
 
-  if (weather_http_receive_data_check (connection, timeout))
-    return FALSE;
-
-  /* complete the host information */
-  sockaddr.sin_family = PF_INET;
-  sockaddr.sin_port = htons (connection->proxy_port ? connection->proxy_port : 80);
-  sockaddr.sin_addr = *((struct in_addr *)host->h_addr);
-  memset(&(sockaddr.sin_zero), '\0', 8);
-
-  /* open a connection with the host */
-#ifdef G_OS_UNIX
-  signal(SIGALRM, timeout_handler);
-  alarm(WEATHER_MAX_CONN_TIMEOUT);
-#endif
-  m = connect (connection->fd, (struct sockaddr *)&sockaddr, sizeof(struct sockaddr));
-#ifdef G_OS_UNIX
-  alarm(0);
-  signal(SIGALRM, prev_handler);
-#endif
   if (G_UNLIKELY (m < 0))
     {
       /* display warning */
