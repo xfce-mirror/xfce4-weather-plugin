@@ -173,7 +173,7 @@ make_label (xml_weather    *weatherdata,
       value = translate_wind_speed (rawvalue, unit);
       break;
     case BAR_D:
-      value = translate_bard(rawvalue);
+      value = g_strdup(translate_bard(rawvalue));
       break;
     default:
       value = NULL;
