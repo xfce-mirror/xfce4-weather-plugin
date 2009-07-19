@@ -389,7 +389,7 @@ weather_http_receive_data_destroyed (gpointer user_data)
   WeatherConnection *connection = user_data;
 
   /* close the socket */
-  if (connection->fd != -1)
+  if (connection->fd >= 0)
     {
       close (connection->fd);
       connection->fd = -1;
@@ -472,7 +472,7 @@ weather_http_receive_data (const gchar  *hostname,
   connection->cb_user_data = user_data;
   connection->status = STATUS_NOT_EXECUTED;
   connection->received = NULL;
-  connection->fd = 0;
+  connection->fd = -1;
   connection->counter = 1;
 
   /* start idle function */
