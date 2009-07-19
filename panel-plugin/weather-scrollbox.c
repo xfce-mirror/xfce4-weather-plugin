@@ -445,6 +445,12 @@ gtk_scrollbox_expose (GtkWidget      *widget,
 }
 
 
+void
+gtk_scrollbox_next_label(GtkScrollbox *self)
+{
+  stop_callback (self);
+  start_draw_down (self);
+}
 
 void
 gtk_scrollbox_enablecb (GtkScrollbox *self,

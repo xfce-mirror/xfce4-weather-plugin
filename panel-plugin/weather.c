@@ -655,6 +655,22 @@ cb_click (GtkWidget      *widget,
   return FALSE;
 }
 
+static gboolean
+cb_scroll (GtkWidget      *widget,
+           GdkEventScroll *event,
+           gpointer        user_data)
+{
+  xfceweather_data *data = (xfceweather_data *) user_data;
+
+  if (event->direction == GDK_SCROLL_UP || event->direction == GDK_SCROLL_DOWN)
+    {
+      gtk_scrollbox_next_label(GTK_SCROLLBOX(data->scrollbox));
+    }
+
+  return FALSE;
+}
+
+
 static void
 mi_click (GtkWidget *widget,
           gpointer   user_data)
@@ -816,6 +832,8 @@ xfceweather_create_control (XfcePanelPlugin *plugin)
 
   g_signal_connect (G_OBJECT (data->tooltipbox), "button-press-event",
                     G_CALLBACK (cb_click), data);
+  g_signal_connect (G_OBJECT (data->tooltipbox), "scroll-event",
+                    G_CALLBACK (cb_scroll), data);
   gtk_widget_add_events(data->scrollbox, GDK_BUTTON_PRESS_MASK);
 
   /* add refresh button to right click menu, for people who missed the middle mouse click feature */
