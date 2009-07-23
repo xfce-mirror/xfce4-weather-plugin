@@ -44,8 +44,8 @@ static gboolean lnk_clicked (GtkTextTag *tag, GObject *obj,
                                          g_free (value);
 #define APPEND_TEXT_ITEM(text, item)     value = g_strdup_printf("\t%s%s%s %s\n",\
                                                                  text, text?": ":"", \
-                                                                 get_data(data, item),\
-                                                                 get_unit(unit, item));\
+                                                                 get_data(data->weatherdata, item),\
+                                                                 get_unit(data->unit, item));\
                                          APPEND_TEXT_ITEM_REAL(value);
 #define APPEND_LINK_ITEM(prefix, text, url, lnk_tag) \
 					 gtk_text_buffer_insert(GTK_TEXT_BUFFER(buffer), \
@@ -150,8 +150,8 @@ static void view_scrolled_cb (GtkAdjustment *adj, GtkWidget *view)
 {
   if (weather_channel_evt) {
     gint x, y, x1, y1;
-    x1 = view->allocation.width - 61 - 5;
-    y1 = view->requisition.height - 61 - 5;
+    x1 = view->allocation.width - 73 - 5;
+    y1 = view->requisition.height - 55 - 5;
     gtk_text_view_buffer_to_window_coords(
 			GTK_TEXT_VIEW(view),
 			GTK_TEXT_WINDOW_TEXT, x1, y1, &x, &y);
@@ -167,10 +167,67 @@ static void view_size_allocate_cb	(GtkWidget	*widget,
   view_scrolled_cb(NULL, GTK_WIDGET(data));
 }
 
+static gchar *get_logo_path (void)
+{
+	gchar *dir = g_strconcat(g_get_user_cache_dir(), G_DIR_SEPARATOR_S,
+				"xfce4", G_DIR_SEPARATOR_S, "weather-plugin", NULL);
+
+	g_mkdir_with_parents(dir, 0644);
+	g_free(dir);
+
+	return g_strconcat(g_get_user_cache_dir(), G_DIR_SEPARATOR_S,
+				"xfce4", G_DIR_SEPARATOR_S, "weather-plugin",
+				G_DIR_SEPARATOR_S, "weather_logo.jpg", NULL);
+}
+
+static void
+logo_fetched (gboolean  succeed,
+           void     *result,
+	   size_t    len,
+           gpointer  user_data)
+{
+	if (succeed && result) {
+		gchar *path = get_logo_path();
+		GError *error = NULL;
+		GdkPixbuf *pixbuf = NULL;
+		if (!g_file_set_contents(path, result, len, &error)) {
+			printf("err %s\n", error?error->message:"?");
+			g_error_free(error);
+			g_free(result);
+			g_free(path);
+			return;
+		}
+		g_free(result);
+		pixbuf = gdk_pixbuf_new_from_file(path, NULL);
+		g_free(path);
+		if (pixbuf) {
+			gtk_image_set_from_pixbuf(GTK_IMAGE(user_data), pixbuf);
+			g_object_unref(pixbuf);
+		}
+	}
+}
+
+static GtkWidget *weather_summary_get_logo(xfceweather_data *data)
+{
+	GtkWidget *image = gtk_image_new();
+	GdkPixbuf *pixbuf = NULL;
+	gchar *path = get_logo_path();
+	
+	pixbuf = gdk_pixbuf_new_from_file(path, NULL);
+	g_free(path);
+	if (pixbuf == NULL) {
+		weather_http_receive_data ("xoap.weather.com", "/web/common/twc/logos/web_73x55.jpg", 
+			data->proxy_host, data->proxy_port, logo_fetched, image);
+	} else {
+		gtk_image_set_from_pixbuf(GTK_IMAGE(image), pixbuf);
+		g_object_unref(pixbuf);
+	}
+	
+	return image;
+}
 
 static GtkWidget *
-create_summary_tab (xml_weather *data,
-                    units        unit)
+create_summary_tab (xfceweather_data *data)
 {
   GtkTextBuffer *buffer;
   GtkTextIter    iter;
@@ -209,13 +266,13 @@ create_summary_tab (xml_weather *data,
   ltag4 = gtk_text_buffer_create_tag(buffer, "lnk4", "foreground-gdk", &lnk_color, NULL);
 
   /* head */
-  value = g_strdup_printf (_("Weather report for: %s.\n\n"), get_data (data, DNAM));
+  value = g_strdup_printf (_("Weather report for: %s.\n\n"), get_data (data->weatherdata, DNAM));
   APPEND_BTEXT (value);
   g_free (value);
 
-  date = translate_lsup (get_data (data, LSUP));
+  date = translate_lsup (get_data (data->weatherdata, LSUP));
   value = g_strdup_printf (_("Observation station located in %s\nLast update: %s.\n"),
-                           get_data (data, OBST), date ? date : get_data (data, LSUP));
+                           get_data (data->weatherdata, OBST), date ? date : get_data (data->weatherdata, LSUP));
   g_free (date);
   APPEND_TEXT_ITEM_REAL (value);
 
@@ -226,24 +283,24 @@ create_summary_tab (xml_weather *data,
 
   /* special case for TRANS because of translate_desc */
   value = g_strdup_printf ("\t%s: %s\n", _("Description"),
-                           translate_desc (get_data (data, TRANS)));
+                           translate_desc (get_data (data->weatherdata, TRANS)));
   APPEND_TEXT_ITEM_REAL (value);
   APPEND_TEXT_ITEM (_("Dew point"), DEWP);
 
   /* Wind */
   APPEND_BTEXT (_("\nWind\n"));
-  wind = translate_wind_speed (get_data (data, WIND_SPEED), unit);
+  wind = translate_wind_speed (get_data (data->weatherdata, WIND_SPEED), data->unit);
   value = g_strdup_printf ("\t%s: %s\n", _("Speed"), wind);
   g_free (wind);
   APPEND_TEXT_ITEM_REAL (value);
 
-  wind = translate_wind_direction (get_data (data, WIND_DIRECTION));
+  wind = translate_wind_direction (get_data (data->weatherdata, WIND_DIRECTION));
   value = g_strdup_printf ("\t%s: %s\n", _("Direction"),
-                           wind ? wind : get_data (data, WIND_DIRECTION));
+                           wind ? wind : get_data (data->weatherdata, WIND_DIRECTION));
   g_free (wind);
   APPEND_TEXT_ITEM_REAL (value);
 
-  wind = translate_wind_speed (get_data (data, WIND_GUST), unit);
+  wind = translate_wind_speed (get_data (data->weatherdata, WIND_GUST), data->unit);
   value = g_strdup_printf ("\t%s: %s\n", _("Gusts"), wind);
   g_free (wind);
   APPEND_TEXT_ITEM_REAL (value);
@@ -252,7 +309,7 @@ create_summary_tab (xml_weather *data,
   APPEND_BTEXT (_("\nUV\n"));
   APPEND_TEXT_ITEM (_("Index"), UV_INDEX);
   value = g_strdup_printf ("\t%s: %s\n", _("Risk"),
-                           translate_risk (get_data (data, UV_TRANS)));
+                           translate_risk (get_data (data->weatherdata, UV_TRANS)));
   APPEND_TEXT_ITEM_REAL (value);
 
   /* Atmospheric pressure */
@@ -260,27 +317,27 @@ create_summary_tab (xml_weather *data,
   APPEND_TEXT_ITEM (_("Pressure"), BAR_R);
 
   value = g_strdup_printf ("\t%s: %s\n",  _("State"),
-                           translate_bard (get_data (data, BAR_D)));
+                           translate_bard (get_data (data->weatherdata, BAR_D)));
   APPEND_TEXT_ITEM_REAL (value);
 
   /* Sun */
   APPEND_BTEXT (_("\nSun\n"));
-  sun_val = translate_time (get_data (data, SUNR));
+  sun_val = translate_time (get_data (data->weatherdata, SUNR));
   value = g_strdup_printf ("\t%s: %s\n",
-                           _("Rise"), sun_val ? sun_val : get_data (data, SUNR));
+                           _("Rise"), sun_val ? sun_val : get_data (data->weatherdata, SUNR));
   g_free (sun_val);
   APPEND_TEXT_ITEM_REAL (value);
 
-  sun_val = translate_time (get_data (data, SUNS));
+  sun_val = translate_time (get_data (data->weatherdata, SUNS));
   value = g_strdup_printf ("\t%s: %s\n",
-                           _("Set"), sun_val ? sun_val : get_data (data, SUNS));
+                           _("Set"), sun_val ? sun_val : get_data (data->weatherdata, SUNS));
   g_free (sun_val);
   APPEND_TEXT_ITEM_REAL (value);
 
   /* Other */
   APPEND_BTEXT (_("\nOther\n"));
   APPEND_TEXT_ITEM (_("Humidity"), HMID);
-  vis = translate_visibility (get_data (data, VIS), unit);
+  vis = translate_visibility (get_data (data->weatherdata, VIS), data->unit);
   value = g_strdup_printf ("\t%s: %s\n", _("Visibility"), vis);
   g_free (vis);
   APPEND_TEXT_ITEM_REAL (value);
@@ -290,17 +347,18 @@ create_summary_tab (xml_weather *data,
   		PARTNER_ID);
   g_object_set_data_full(G_OBJECT(ltag0), "url", value, g_free);
 
-  APPEND_LINK_ITEM ("\t", get_data (data, LNK1_TXT), get_data (data, LNK1), ltag1);
-  APPEND_LINK_ITEM ("\t", get_data (data, LNK2_TXT), get_data (data, LNK2), ltag2);
-  APPEND_LINK_ITEM ("\t", get_data (data, LNK3_TXT), get_data (data, LNK3), ltag3);
-  APPEND_LINK_ITEM ("\t", get_data (data, LNK4_TXT), get_data (data, LNK4), ltag4);
+  APPEND_LINK_ITEM ("\t", get_data (data->weatherdata, LNK1_TXT), get_data (data->weatherdata, LNK1), ltag1);
+  APPEND_LINK_ITEM ("\t", get_data (data->weatherdata, LNK2_TXT), get_data (data->weatherdata, LNK2), ltag2);
+  APPEND_LINK_ITEM ("\t", get_data (data->weatherdata, LNK3_TXT), get_data (data->weatherdata, LNK3), ltag3);
+  APPEND_LINK_ITEM ("\t", get_data (data->weatherdata, LNK4_TXT), get_data (data->weatherdata, LNK4), ltag4);
 
   g_signal_connect(G_OBJECT(view), "motion-notify-event",
 		   G_CALLBACK(view_motion_notify), view);
   g_signal_connect(G_OBJECT(view), "leave-notify-event",
 		   G_CALLBACK(view_leave_notify), view);
 		   
-  weather_channel_icon = gtk_image_new_from_pixbuf(get_icon("weather_channel", -1));
+  weather_channel_icon = weather_summary_get_logo(data);
+
   if (weather_channel_icon) {
     weather_channel_evt = gtk_event_box_new();
     gtk_container_add(GTK_CONTAINER(weather_channel_evt), weather_channel_icon);
@@ -501,33 +559,32 @@ make_forecast (xml_dayf *weatherdata,
 
 
 static GtkWidget *
-create_forecast_tab (xml_weather *data,
-                     units        unit)
+create_forecast_tab (xfceweather_data *data)
 {
   GtkWidget *widg = gtk_hbox_new (FALSE, 0);
   guint      i;
 
   gtk_container_set_border_width (GTK_CONTAINER (widg), 6);
 
-  if (data && data->dayf)
+  if (data->weatherdata && data->weatherdata->dayf)
     {
       for (i = 0; i < XML_WEATHER_DAYF_N - 1; i++)
         {
-          if (!data->dayf[i])
+          if (!data->weatherdata->dayf[i])
             break;
 
-          DBG ("%s", data->dayf[i]->day);
+          DBG ("%s", data->weatherdata->dayf[i]->day);
 
           gtk_box_pack_start (GTK_BOX (widg),
-                              make_forecast (data->dayf[i], unit), FALSE,
+                              make_forecast (data->weatherdata->dayf[i], data->unit), FALSE,
                               FALSE, 0);
           gtk_box_pack_start (GTK_BOX (widg), gtk_vseparator_new (), TRUE,
                               TRUE, 0);
         }
 
-      if (data->dayf[i])
+      if (data->weatherdata->dayf[i])
         gtk_box_pack_start (GTK_BOX (widg),
-                            make_forecast (data->dayf[i], unit), FALSE, FALSE,
+                            make_forecast (data->weatherdata->dayf[i], data->unit), FALSE, FALSE,
                             0);
     }
 
@@ -546,8 +603,7 @@ summary_dialog_response (GtkWidget          *dlg,
 }
 
 GtkWidget *
-create_summary_window (xml_weather *data,
-                       units        unit)
+create_summary_window (xfceweather_data *data)
 {
   GtkWidget *window, *notebook, *vbox;
   gchar     *title;
@@ -561,7 +617,7 @@ create_summary_window (xml_weather *data,
                                                 GTK_STOCK_CLOSE,
                                                 GTK_RESPONSE_ACCEPT, NULL);
 
-  title = g_strdup_printf (_("Weather report for: %s"), get_data (data, DNAM));
+  title = g_strdup_printf (_("Weather report for: %s"), get_data (data->weatherdata, DNAM));
 
   xfce_titled_dialog_set_subtitle (XFCE_TITLED_DIALOG (window), title);
   g_free (title);
@@ -570,7 +626,7 @@ create_summary_window (xml_weather *data,
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), vbox, TRUE, TRUE,
                       0);
 
-  icon = get_icon (get_data (data, WICON), 48);
+  icon = get_icon (get_data (data->weatherdata, WICON), 48);
 
   if (!icon)
     icon = get_icon ("99", 48);
@@ -583,10 +639,10 @@ create_summary_window (xml_weather *data,
   notebook = gtk_notebook_new ();
   gtk_container_set_border_width (GTK_CONTAINER (notebook), BORDER);
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-                            create_forecast_tab (data, unit),
+                            create_forecast_tab (data),
                             gtk_label_new (_("Forecast")));
   gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-                            create_summary_tab (data, unit),
+                            create_summary_tab (data),
                             gtk_label_new (_("Details")));
 
   gtk_box_pack_start (GTK_BOX (vbox), notebook, TRUE, TRUE, 0);

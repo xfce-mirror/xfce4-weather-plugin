@@ -75,6 +75,7 @@ sanitize_str (const gchar *str)
 static void
 cb_searchdone (gboolean  succeed,
                gchar    *received,
+	       size_t    len,
                gpointer  user_data)
 {
   search_dialog *dialog = (search_dialog *) user_data;
@@ -342,6 +343,7 @@ geolocation_data;
 static void
 cb_geo_searchdone (gboolean  succeed,
                gchar    *received,
+	       size_t    len,
                gpointer  user_data)
 {
   geolocation_data *data = (geolocation_data *) user_data;
@@ -408,6 +410,7 @@ cb_geo_searchdone (gboolean  succeed,
 static void
 cb_geolocation (gboolean  succeed,
                 gchar    *received,
+		size_t    len,
                 gpointer  user_data)
 {
   geolocation_data *data = (geolocation_data *) user_data;

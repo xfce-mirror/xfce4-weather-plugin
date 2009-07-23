@@ -22,7 +22,7 @@
 
 G_BEGIN_DECLS
 
-GtkWidget * create_summary_window (xml_weather * data, units unit);
+GtkWidget * create_summary_window (xfceweather_data *data);
 
 G_END_DECLS
 #endif

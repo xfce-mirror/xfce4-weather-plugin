@@ -85,7 +85,8 @@ struct _WeatherConnection
   gint         status;
 
   /* received data */
-  GString     *received;
+  void     *received;
+  size_t    received_len;
 
   /* connection descriptor */
   gint         fd;
@@ -147,7 +148,7 @@ weather_http_receive_data_idle (gpointer user_data)
   gchar              *request;
   
   struct addrinfo     h, *r, *a;
-  const gchar         *port = NULL;
+  gchar      	     *port = NULL;
   gint                err;
 
   const gchar        *p;
@@ -308,7 +309,7 @@ weather_http_receive_data_idle (gpointer user_data)
   g_free (request);
 
   /* create and empty string */
-  connection->received = g_string_sized_new (5000);
+  connection->received_len = 0;
 
   /* download the file content */
   do
@@ -332,34 +333,49 @@ weather_http_receive_data_idle (gpointer user_data)
         }
 
       /* prepend the downloaded data */
-      connection->received = g_string_append_len (connection->received, buffer, bytes);
+      connection->received = g_realloc(connection->received, connection->received_len + bytes);
+      memcpy(connection->received+connection->received_len, buffer, bytes);
+      connection->received_len += bytes;
     }
   while (bytes > 0);
 
   if (weather_http_receive_data_check (connection, timeout))
     return FALSE;
 
-  if (G_LIKELY (connection->received->len > 0))
+  if (G_LIKELY (connection->received_len > 0))
     {
       /* get the pointer to the content-length */
-      p = strstr (connection->received->str, "Content-Length:");
+      p = strstr ((char *)connection->received, "Content-Length:");
 
       if (G_LIKELY (p))
         {
+	  int cts_len = 0;
           /* advance the pointer */
-          p += 15;
+          p += strlen("Content-Length:");
 
-          /* calculate the header length */
-          n = connection->received->len - strtol (p, NULL, 10);
+          cts_len = strtol (p, NULL, 10);
+          if (G_UNLIKELY (cts_len < 0)) {
+	     g_warning(_("Negative content length"));
+             /* set status */
+             connection->status = STATUS_ERROR;
+	  } else {
+             /* calculate the header length */
+             n = connection->received_len - cts_len;
 
-          if (G_LIKELY (n > 0))
-            {
-              /* erase the header from the reveiced string */
-              g_string_erase (connection->received, 0, n);
-            }
+             if (G_LIKELY (n > 0))
+               {
+        	 /* erase the header from the reveiced string */
+		 void *tmp = g_malloc(cts_len+1);
+		 memcpy(tmp, connection->received+n, cts_len);
+		 ((gchar *)tmp)[cts_len] = 0;
+		 g_free(connection->received);
+		 connection->received = tmp;
+		 connection->received_len = cts_len;
+               }
 
-          /* everything went fine... */
-          connection->status = STATUS_SUCCEED;
+             /* everything went fine... */
+             connection->status = STATUS_SUCCEED;
+	  }
         }
       else
         {
@@ -401,7 +417,7 @@ weather_http_receive_data_destroyed (gpointer user_data)
   if (connection->status == STATUS_SUCCEED && connection->cb_func)
     {
       /* execute the callback process */
-      (*connection->cb_func) (TRUE, g_string_free (connection->received, FALSE),
+      (*connection->cb_func) (TRUE, connection->received, connection->received_len,
                               connection->cb_user_data);
     }
   else if (connection->status == STATUS_RESCHEDULE &&
@@ -410,8 +426,8 @@ weather_http_receive_data_destroyed (gpointer user_data)
       /* cleanup the received data */
       if (connection->received)
         {
-          g_string_free (connection->received, TRUE);
-          connection->received = NULL;
+          g_free(connection->received);
+	  connection->received = NULL;
         }
 
       /* increase counter */
@@ -429,11 +445,13 @@ weather_http_receive_data_destroyed (gpointer user_data)
     {
       /* execute empty callback */
       if (connection->cb_func)
-        (*connection->cb_func) (FALSE, NULL, connection->cb_user_data);
+        (*connection->cb_func) (FALSE, NULL, 0, connection->cb_user_data);
 
       /* cleanup */
-      if (connection->received)
-        g_string_free (connection->received, TRUE);
+      if (connection->received) {
+        g_free(connection->received);
+        connection->received = NULL;
+      }
     }
 
   /* remove from the list */
@@ -472,6 +490,7 @@ weather_http_receive_data (const gchar  *hostname,
   connection->cb_user_data = user_data;
   connection->status = STATUS_NOT_EXECUTED;
   connection->received = NULL;
+  connection->received_len = 0;
   connection->fd = -1;
   connection->counter = 1;
 

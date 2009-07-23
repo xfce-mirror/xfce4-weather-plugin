@@ -320,7 +320,8 @@ set_icon_current (xfceweather_data *data)
 
 static void
 cb_update (gboolean  succeed,
-           gchar    *result,
+           void    *result,
+	   size_t    len,
            gpointer  user_data)
 {
   xfceweather_data *data = user_data;
@@ -627,8 +628,7 @@ forecast_click (GtkWidget *widget,
     }
   else
     {
-      data->summary_window = create_summary_window (data->weatherdata,
-                                                    data->unit);
+      data->summary_window = create_summary_window (data);
       g_signal_connect (G_OBJECT (data->summary_window), "destroy",
                 	G_CALLBACK (close_summary), data);
 
