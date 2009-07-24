@@ -1,20 +1,23 @@
-# Hungarian translation of the xfce-weather-plugin package.
-# Copyright (C) 2006-2007 The Xfce development team.
-# This file is distributed under the same license as the xfce-weather-plugin package.
-# Gabor Kelemen <kelemeng@gnome.hu>, 2006.
-# SZERVÁC Attila <sas@321.hu>, 2007.
+# Hungarian translation of xfce4-weather-plugin
+# Copyright 2006, 2009. Free Software Foundation, Inc.
+# This file is distributed under the same license as the xfce4-weather-plugin package.
 #
+# SZERVÁC Attila <sas@321.hu>, 2007.
+# Gabor Kelemen <kelemeng at gnome dot hu>, 2006, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: xfce4-weather-plugin 0.6.0\n"
+"Project-Id-Version: xfce4-weather-plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-21 08:37+0200\n"
-"PO-Revision-Date: 2007-10-29 05:44+0100\n"
-"Last-Translator: SZERVÁC Attila <sas@321.hu>\n"
-"Language-Team: Hungarian <xfce-i18n@xfce.org>\n"
+"POT-Creation-Date: 2009-07-24 18:33+0200\n"
+"PO-Revision-Date: 2009-07-24 23:55+0200\n"
+"Last-Translator: Gabor Kelemen <kelemeng at gnome dot hu>\n"
+"Language-Team: Hungarian <gnome at gnome dot hu>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Launchpad-Export-Date: 2009-07-23 16:44+0000\n"
+"X-Generator: KBabel 1.11.4\n"
+"Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
 #: ../panel-plugin/weather.c:112
 msgid "V"
@@ -22,7 +25,7 @@ msgstr "L"
 
 #: ../panel-plugin/weather.c:115
 msgid "U"
-msgstr "U"
+msgstr "UV"
 
 #: ../panel-plugin/weather.c:118
 msgid "WD"
@@ -42,7 +45,7 @@ msgstr "H"
 
 #: ../panel-plugin/weather.c:133
 msgid "D"
-msgstr "D"
+msgstr "HP"
 
 #: ../panel-plugin/weather.c:136
 msgid "H"
@@ -63,16 +66,15 @@ msgstr "Nem lehet frissíteni az időjárási adatokat"
 #: ../panel-plugin/weather.c:699
 #, c-format
 msgid "Unable to open the following url: %s"
-msgstr "Az alábbi url nem nyitható meg: %s"
+msgstr "A következő URL megnyitása meghiúsult: %s"
 
-#: ../panel-plugin/weather.c:727 ../panel-plugin/weather-summary.c:556
+#: ../panel-plugin/weather.c:727 ../panel-plugin/weather-summary.c:612
 #: ../panel-plugin/weather.desktop.in.in.h:2
 msgid "Weather Update"
 msgstr "Időjárási adatok frissítése"
 
 #. add refresh button to right click menu, for people who missed the middle mouse click feature
 #: ../panel-plugin/weather.c:849
-#, fuzzy
 msgid "_Forecast"
 msgstr "Előrejelzés"
 
@@ -118,19 +120,19 @@ msgstr "UV index (UV)"
 
 #: ../panel-plugin/weather-config.c:49
 msgid "Dewpoint (DP)"
-msgstr "Harmatpont (DP)"
+msgstr "Harmatpont (HP)"
 
 #: ../panel-plugin/weather-config.c:238
 msgid "Please enter proxy settings"
-msgstr "Kérem adja meg a proxybeállításokat"
+msgstr "Adja meg a proxybeállításokat"
 
 #: ../panel-plugin/weather-config.c:289
 msgid "Unset"
-msgstr ""
+msgstr "Visszaállítás"
 
 #: ../panel-plugin/weather-config.c:297
 msgid "Detecting..."
-msgstr ""
+msgstr "Észlelés…"
 
 #: ../panel-plugin/weather-config.c:350
 msgid "Measurement unit:"
@@ -138,25 +140,24 @@ msgstr "Mértékrendszer:"
 
 #: ../panel-plugin/weather-config.c:356
 msgid "Imperial"
-msgstr "Birodalmi"
+msgstr "Angolszász"
 
 #: ../panel-plugin/weather-config.c:358
 msgid "Metric"
 msgstr "Metrikus"
 
 #: ../panel-plugin/weather-config.c:373
-#, fuzzy
 msgid "Location:"
-msgstr "Helységkód:"
+msgstr "Hely:"
 
 #: ../panel-plugin/weather-config.c:409
 msgid "Change..."
-msgstr ""
+msgstr "Változtatás…"
 
 #. proxy
 #: ../panel-plugin/weather-config.c:422
 msgid "Proxy server:"
-msgstr "Proxykiszolgáló:"
+msgstr "Proxy kiszolgáló:"
 
 #: ../panel-plugin/weather-config.c:425
 msgid "Use proxy server"
@@ -168,15 +169,15 @@ msgstr "Automatikus érzékelés a környezetből"
 
 #: ../panel-plugin/weather-config.c:499
 msgid "Labels to display"
-msgstr "megjelenítendő címkék"
+msgstr "Megjelenítendő címkék"
 
 #: ../panel-plugin/weather-config.c:548
 msgid "Animate transitions between labels"
-msgstr ""
+msgstr "Átmenetek animálása címkék közt"
 
 #: ../panel-plugin/weather-data.c:445
 msgid "km/h"
-msgstr "km/ó"
+msgstr "km/h"
 
 #: ../panel-plugin/weather-data.c:445
 msgid "mph"
@@ -188,7 +189,7 @@ msgstr "hPa"
 
 #: ../panel-plugin/weather-data.c:448
 msgid "in"
-msgstr "itt:"
+msgstr "in"
 
 #: ../panel-plugin/weather-data.c:451
 msgid "km"
@@ -196,85 +197,88 @@ msgstr "km"
 
 #: ../panel-plugin/weather-data.c:451
 msgid "mi"
-msgstr "mi"
+msgstr "mé"
 
 #. display error
-#: ../panel-plugin/weather-http.c:200
+#: ../panel-plugin/weather-http.c:201
 #, c-format
 msgid "Failed to get the hostname %s. Retry in %d seconds."
-msgstr ""
+msgstr "A gépnév (%s) lekérése meghiúsult. Újrapróbálkozás %d másodperc múlva."
 
 #. display warning
-#: ../panel-plugin/weather-http.c:241
+#: ../panel-plugin/weather-http.c:242
 #, c-format
 msgid "Failed to open the socket (%s)."
-msgstr ""
+msgstr "A foglalat (%s) megnyitása meghiúsult."
 
 #. display warning
-#: ../panel-plugin/weather-http.c:252
+#: ../panel-plugin/weather-http.c:253
 #, c-format
 msgid "Failed to create a connection with the host (%s)."
-msgstr "A kapcsolat létrehozása meghiúsult: (%s)."
+msgstr "Nem sikerült kapcsolatot létrehozni a géppel (%s)."
 
 #. display warning
-#: ../panel-plugin/weather-http.c:289
+#: ../panel-plugin/weather-http.c:290
 #, c-format
 msgid "Failed to send the request (%s)."
-msgstr "Kérés küldése meghiúsult (%s)."
+msgstr "Nem sikerült elküldeni a kérést (%s)."
 
 #. display warning
-#: ../panel-plugin/weather-http.c:326
+#: ../panel-plugin/weather-http.c:327
 #, c-format
 msgid "Failed to receive data (%s)"
-msgstr "Adatok fogadása meghiúsult (%s)"
+msgstr "Nem sikerült adatokat fogadni (%s)"
+
+#: ../panel-plugin/weather-http.c:358
+msgid "Negative content length"
+msgstr "Negatív tartalomhossz"
 
 #. display warning
-#: ../panel-plugin/weather-http.c:367
+#: ../panel-plugin/weather-http.c:383
 msgid "Unable to detect the content length."
-msgstr "Nem látom a tartalom hosszát."
+msgstr "A tartalomhossz nem érzékelhető."
 
-#: ../panel-plugin/weather-http.c:375
+#: ../panel-plugin/weather-http.c:391
 msgid "No content received."
-msgstr "Nem jött tartalom."
+msgstr "Nem érkezett tartalom."
 
-#: ../panel-plugin/weather-search.c:143 ../panel-plugin/weather-search.c:275
+#: ../panel-plugin/weather-search.c:144 ../panel-plugin/weather-search.c:276
 msgid "Results"
 msgstr "Eredmények"
 
-#: ../panel-plugin/weather-search.c:184
-#, fuzzy
+#: ../panel-plugin/weather-search.c:185
 msgid "Searching..."
-msgstr "Tisztul"
+msgstr "Keresés…"
 
-#: ../panel-plugin/weather-search.c:224
+#: ../panel-plugin/weather-search.c:225
 msgid "Search weather location code"
 msgstr "Időjárási helységkódok keresése"
 
-#: ../panel-plugin/weather-search.c:248
+#: ../panel-plugin/weather-search.c:249
 msgid "Enter a city name or zip code"
-msgstr "Add meg egy város nevét vagy irányító-számát"
+msgstr "Adja meg egy város nevét vagy irányítószámát:"
 
 #. head
-#: ../panel-plugin/weather-summary.c:212
+#: ../panel-plugin/weather-summary.c:269
 #, c-format
 msgid ""
 "Weather report for: %s.\n"
 "\n"
 msgstr ""
-"Időjárásjelentés a következőhöz: %s.\n"
+"Időjárás-jelentés a következőhöz: %s.\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:217
+#: ../panel-plugin/weather-summary.c:274
 #, c-format
 msgid ""
 "Observation station located in %s\n"
 "Last update: %s.\n"
 msgstr ""
-"A mérő-állomás helye: %s\n"
-"Utolsó frissítés: %s\n"
+"A megfigyelőállomás helye: %s\n"
+"Utolsó frissítés: %s.\n"
 
 #. Temperature
-#: ../panel-plugin/weather-summary.c:223
+#: ../panel-plugin/weather-summary.c:280
 msgid ""
 "\n"
 "Temperature\n"
@@ -282,25 +286,25 @@ msgstr ""
 "\n"
 "Hőmérséklet\n"
 
-#: ../panel-plugin/weather-summary.c:224
+#: ../panel-plugin/weather-summary.c:281
 msgid "Temperature"
 msgstr "Hőmérséklet"
 
-#: ../panel-plugin/weather-summary.c:225
+#: ../panel-plugin/weather-summary.c:282
 msgid "Windchill"
 msgstr "Szélérzet"
 
 #. special case for TRANS because of translate_desc
-#: ../panel-plugin/weather-summary.c:228
+#: ../panel-plugin/weather-summary.c:285
 msgid "Description"
 msgstr "Leírás"
 
-#: ../panel-plugin/weather-summary.c:231
+#: ../panel-plugin/weather-summary.c:288
 msgid "Dew point"
 msgstr "Harmatpont"
 
 #. Wind
-#: ../panel-plugin/weather-summary.c:234
+#: ../panel-plugin/weather-summary.c:291
 msgid ""
 "\n"
 "Wind\n"
@@ -308,20 +312,20 @@ msgstr ""
 "\n"
 "Szél\n"
 
-#: ../panel-plugin/weather-summary.c:236
+#: ../panel-plugin/weather-summary.c:293
 msgid "Speed"
 msgstr "Sebesség"
 
-#: ../panel-plugin/weather-summary.c:241
+#: ../panel-plugin/weather-summary.c:298
 msgid "Direction"
 msgstr "Irány"
 
-#: ../panel-plugin/weather-summary.c:247
+#: ../panel-plugin/weather-summary.c:304
 msgid "Gusts"
 msgstr "Széllökések"
 
 #. UV
-#: ../panel-plugin/weather-summary.c:252
+#: ../panel-plugin/weather-summary.c:309
 msgid ""
 "\n"
 "UV\n"
@@ -329,16 +333,16 @@ msgstr ""
 "\n"
 "UV\n"
 
-#: ../panel-plugin/weather-summary.c:253
+#: ../panel-plugin/weather-summary.c:310
 msgid "Index"
 msgstr "Index"
 
-#: ../panel-plugin/weather-summary.c:254
+#: ../panel-plugin/weather-summary.c:311
 msgid "Risk"
 msgstr "Veszély"
 
 #. Atmospheric pressure
-#: ../panel-plugin/weather-summary.c:259
+#: ../panel-plugin/weather-summary.c:316
 msgid ""
 "\n"
 "Atmospheric pressure\n"
@@ -346,16 +350,16 @@ msgstr ""
 "\n"
 "Légnyomás\n"
 
-#: ../panel-plugin/weather-summary.c:260
+#: ../panel-plugin/weather-summary.c:317
 msgid "Pressure"
 msgstr "Nyomás"
 
-#: ../panel-plugin/weather-summary.c:262
+#: ../panel-plugin/weather-summary.c:319
 msgid "State"
 msgstr "Állapot"
 
 #. Sun
-#: ../panel-plugin/weather-summary.c:267
+#: ../panel-plugin/weather-summary.c:324
 msgid ""
 "\n"
 "Sun\n"
@@ -363,16 +367,16 @@ msgstr ""
 "\n"
 "Nap\n"
 
-#: ../panel-plugin/weather-summary.c:270
+#: ../panel-plugin/weather-summary.c:327
 msgid "Rise"
 msgstr "Felkel"
 
-#: ../panel-plugin/weather-summary.c:276
+#: ../panel-plugin/weather-summary.c:333
 msgid "Set"
 msgstr "Nyugszik"
 
 #. Other
-#: ../panel-plugin/weather-summary.c:281
+#: ../panel-plugin/weather-summary.c:338
 msgid ""
 "\n"
 "Other\n"
@@ -380,58 +384,60 @@ msgstr ""
 "\n"
 "Egyéb\n"
 
-#: ../panel-plugin/weather-summary.c:282
+#: ../panel-plugin/weather-summary.c:339
 msgid "Humidity"
 msgstr "Páratartalom"
 
-#: ../panel-plugin/weather-summary.c:284
+#: ../panel-plugin/weather-summary.c:341
 msgid "Visibility"
 msgstr "Látási viszonyok"
 
-#: ../panel-plugin/weather-summary.c:288
+#: ../panel-plugin/weather-summary.c:345
 msgid ""
 "\n"
 "More on weather.com\n"
 msgstr ""
+"\n"
+"További részletek a weather.com-on\n"
 
-#: ../panel-plugin/weather-summary.c:388
+#: ../panel-plugin/weather-summary.c:446
 #, c-format
 msgid "Day: %s"
 msgstr "Nappal: %s"
 
-#: ../panel-plugin/weather-summary.c:393
+#: ../panel-plugin/weather-summary.c:451
 #, c-format
 msgid "Night: %s"
 msgstr "Éjszaka: %s"
 
-#: ../panel-plugin/weather-summary.c:404
+#: ../panel-plugin/weather-summary.c:462
 msgid "<b>Precipitation</b>"
 msgstr "<b>Csapadék</b>"
 
-#: ../panel-plugin/weather-summary.c:426
+#: ../panel-plugin/weather-summary.c:484
 msgid "<b>Temperature</b>"
 msgstr "<b>Hőmérséklet</b>"
 
-#: ../panel-plugin/weather-summary.c:450
+#: ../panel-plugin/weather-summary.c:508
 msgid "<b>Wind</b>"
 msgstr "<b>Szél</b>"
 
-#: ../panel-plugin/weather-summary.c:564
+#: ../panel-plugin/weather-summary.c:620
 #, c-format
 msgid "Weather report for: %s"
-msgstr "Időjárás-jelentés ehhez: %s"
+msgstr "Időjárás-jelentés a következőhöz: %s"
 
-#: ../panel-plugin/weather-summary.c:587
+#: ../panel-plugin/weather-summary.c:643
 msgid "Forecast"
 msgstr "Előrejelzés"
 
-#: ../panel-plugin/weather-summary.c:590
+#: ../panel-plugin/weather-summary.c:646
 msgid "Details"
-msgstr ""
+msgstr "Részletek"
 
 #: ../panel-plugin/weather-translate.c:41
 msgid "AM Clouds / PM Sun"
-msgstr "Délelőtt felhő / Délután Nap"
+msgstr "Délelőtt felhők / Délután napos"
 
 #: ../panel-plugin/weather-translate.c:42
 msgid "AM Light Rain"
@@ -439,15 +445,15 @@ msgstr "Délelőtt csendes eső"
 
 #: ../panel-plugin/weather-translate.c:43
 msgid "AM Light Snow"
-msgstr "Délelőtti enyhe havazás"
+msgstr "Délelőtt enyhe havazás"
 
 #: ../panel-plugin/weather-translate.c:44
 msgid "AM Rain / Snow Showers"
-msgstr "Délelőtti eső / hózáporok"
+msgstr "Délelőtt záporok (eső vagy hó)"
 
 #: ../panel-plugin/weather-translate.c:45
 msgid "AM Rain / Wind"
-msgstr "Délelőtti eső / szél"
+msgstr "Délelőtt eső/szél"
 
 #: ../panel-plugin/weather-translate.c:46
 msgid "AM Showers"
@@ -455,19 +461,19 @@ msgstr "Délelőtt záporok"
 
 #: ../panel-plugin/weather-translate.c:47
 msgid "AM Showers / Wind"
-msgstr "Délelőtti záporok / szél"
+msgstr "Délelőtt záporok / szél"
 
 #: ../panel-plugin/weather-translate.c:48
 msgid "AM Snow Showers"
-msgstr "Délelőtti hózáporok"
+msgstr "Délelőtt zuhogó hó"
 
 #: ../panel-plugin/weather-translate.c:49
 msgid "AM Snow Showers / Wind"
-msgstr "Délelőtti hózáporok / szél"
+msgstr "Délelőtt zuhogó hó / szél"
 
 #: ../panel-plugin/weather-translate.c:50
 msgid "AM T-Storms"
-msgstr "Délelőtt viharok"
+msgstr "Délelőtt felhőszakadás"
 
 #: ../panel-plugin/weather-translate.c:51
 msgid "Becoming Cloudy"
@@ -507,7 +513,7 @@ msgstr "Hó/eső várható"
 
 #: ../panel-plugin/weather-translate.c:60
 msgid "Chance of T-Storm"
-msgstr "Vihar várható"
+msgstr "Felhőszakadás várható"
 
 #: ../panel-plugin/weather-translate.c:61
 msgid "Clear"
@@ -531,7 +537,7 @@ msgstr "Felhős"
 
 #: ../panel-plugin/weather-translate.c:66
 msgid "Cloudy / Wind"
-msgstr "Felhős / szeles"
+msgstr "Felhős / szél"
 
 #: ../panel-plugin/weather-translate.c:67
 msgid "Cloudy Periods"
@@ -539,7 +545,7 @@ msgstr "Felhős időszakok"
 
 #: ../panel-plugin/weather-translate.c:68
 msgid "Continued Hot"
-msgstr "Hosszantartó forróság"
+msgstr "Tartós forróság"
 
 #: ../panel-plugin/weather-translate.c:69
 msgid "Cumulonimbus Clouds Observed"
@@ -551,7 +557,7 @@ msgstr "Hóvihar"
 
 #: ../panel-plugin/weather-translate.c:71
 msgid "Drifting Snow and Windy"
-msgstr "Hóvihar és szél"
+msgstr "Hófúvás / szél"
 
 #: ../panel-plugin/weather-translate.c:72
 msgid "Drizzle"
@@ -595,7 +601,7 @@ msgstr "Fagyos eső/hó"
 
 #: ../panel-plugin/weather-translate.c:82
 msgid "Frigid"
-msgstr "Hideg"
+msgstr "Fagyos"
 
 #: ../panel-plugin/weather-translate.c:83
 msgid "Frozen Precip"
@@ -607,7 +613,7 @@ msgstr "Jégeső"
 
 #: ../panel-plugin/weather-translate.c:85
 msgid "Haze"
-msgstr "Köd"
+msgstr "Száraz légköri homály"
 
 #: ../panel-plugin/weather-translate.c:86
 msgid "Hazy"
@@ -618,9 +624,8 @@ msgid "Heavy Rain"
 msgstr "Heves esőzés"
 
 #: ../panel-plugin/weather-translate.c:88
-#, fuzzy
 msgid "Heavy Rain Shower"
-msgstr "Zápor"
+msgstr "Heves záporok"
 
 #: ../panel-plugin/weather-translate.c:89
 msgid "Heavy Snow"
@@ -652,7 +657,7 @@ msgstr "Elkülönülő zivatarok"
 
 #: ../panel-plugin/weather-translate.c:96
 msgid "Isolated T-Storms"
-msgstr "Elszórt viharok"
+msgstr "Elkülönülő felhőszakadások"
 
 #: ../panel-plugin/weather-translate.c:97
 msgid "Light Drizzle"
@@ -671,9 +676,8 @@ msgid "Light Rain / Wind"
 msgstr "Csendes eső/szél"
 
 #: ../panel-plugin/weather-translate.c:101
-#, fuzzy
 msgid "Light rain late"
-msgstr "Csendes eső"
+msgstr "Este csendes eső"
 
 #: ../panel-plugin/weather-translate.c:102
 msgid "Light Rain Shower"
@@ -697,7 +701,7 @@ msgstr "Pára"
 
 #: ../panel-plugin/weather-translate.c:107
 msgid "Mostly Clear"
-msgstr "Többnyire derüs"
+msgstr "Többnyire derűs"
 
 #: ../panel-plugin/weather-translate.c:108
 msgid "Mostly Cloudy"
@@ -705,11 +709,11 @@ msgstr "Többnyire felhős"
 
 #: ../panel-plugin/weather-translate.c:109
 msgid "Mostly Cloudy / Wind"
-msgstr "Nagyrészt felhős / szeles"
+msgstr "Többnyire felhős / szél"
 
 #: ../panel-plugin/weather-translate.c:110
 msgid "Mostly Cloudy and Windy"
-msgstr "Nagyrészt felhős és szeles"
+msgstr "Többnyire felhős és szeles"
 
 #: ../panel-plugin/weather-translate.c:111
 msgid "Mostly Sunny"
@@ -717,11 +721,11 @@ msgstr "Többnyire napos"
 
 #: ../panel-plugin/weather-translate.c:112
 msgid "Mostly Sunny / Wind"
-msgstr "Többnyire napos / szeles"
+msgstr "Többnyire napos / szél"
 
 #: ../panel-plugin/weather-translate.c:113
 msgid "N/A Not Available"
-msgstr "N/A nincs adat"
+msgstr "Nem érhető el"
 
 #: ../panel-plugin/weather-translate.c:114
 msgid "Occasional Sunshine"
@@ -733,7 +737,7 @@ msgstr "Borús"
 
 #: ../panel-plugin/weather-translate.c:116
 msgid "Partial Clearing"
-msgstr "Részlegesen tisztul"
+msgstr "Részleges tisztulás"
 
 #: ../panel-plugin/weather-translate.c:117
 msgid "Partial Fog"
@@ -749,11 +753,11 @@ msgstr "Részlegesen felhős"
 
 #: ../panel-plugin/weather-translate.c:120
 msgid "Partly Cloudy / Wind"
-msgstr "Részben felhős / szeles"
+msgstr "Részlegesen felhős / szél"
 
 #: ../panel-plugin/weather-translate.c:121
 msgid "Partly Cloudy and Windy"
-msgstr "Részben felhős és szeles"
+msgstr "Részlegesen felhős és szeles"
 
 #: ../panel-plugin/weather-translate.c:122
 msgid "Partly Sunny"
@@ -765,16 +769,15 @@ msgstr "Délután csendes eső"
 
 #: ../panel-plugin/weather-translate.c:124
 msgid "PM Light Snow"
-msgstr "Délutáni enyhe havazás"
+msgstr "Délután enyhe havazás"
 
 #: ../panel-plugin/weather-translate.c:125
 msgid "PM Rain / Wind"
-msgstr "Délutáni eső/szél"
+msgstr "Délután eső / szél"
 
 #: ../panel-plugin/weather-translate.c:126
-#, fuzzy
 msgid "PM Rain / Snow Showers"
-msgstr "Délelőtti eső / hózáporok"
+msgstr "Délután záporok (eső vagy hó)"
 
 #: ../panel-plugin/weather-translate.c:127
 msgid "PM Showers"
@@ -782,11 +785,11 @@ msgstr "Délutáni záporok"
 
 #: ../panel-plugin/weather-translate.c:128
 msgid "PM Snow Showers"
-msgstr "Délutáni hózáporok"
+msgstr "Délután zuhogó hó"
 
 #: ../panel-plugin/weather-translate.c:129
 msgid "PM T-Storms"
-msgstr "Délutáni viharok"
+msgstr "Délután felhőszakadás"
 
 #: ../panel-plugin/weather-translate.c:130
 msgid "Rain"
@@ -801,18 +804,16 @@ msgid "Rain / Snow / Wind"
 msgstr "Eső / hó / szél"
 
 #: ../panel-plugin/weather-translate.c:133
-#, fuzzy
 msgid "Rain / Snow Late"
-msgstr "Eső vagy havazás"
+msgstr "Eső / később havazás"
 
 #: ../panel-plugin/weather-translate.c:134
 msgid "Rain / Snow Showers"
 msgstr "Záporok (eső vagy hó)"
 
 #: ../panel-plugin/weather-translate.c:135
-#, fuzzy
 msgid "Rain / Snow Showers Early"
-msgstr "Záporok (eső vagy hó)"
+msgstr "Korai záporok (eső vagy hó)"
 
 #: ../panel-plugin/weather-translate.c:136
 msgid "Rain / Thunder"
@@ -820,7 +821,7 @@ msgstr "Eső / mennydörgés"
 
 #: ../panel-plugin/weather-translate.c:137
 msgid "Rain / Wind"
-msgstr "Eső/szél"
+msgstr "Eső / szél"
 
 #: ../panel-plugin/weather-translate.c:138
 msgid "Rain and Sleet"
@@ -844,27 +845,27 @@ msgstr "Zápor és szél"
 
 #: ../panel-plugin/weather-translate.c:143
 msgid "Rain to snow"
-msgstr "Esőből hóba"
+msgstr "Átmenet esőből hóba"
 
 #: ../panel-plugin/weather-translate.c:144
 msgid "Rain/Lightning"
-msgstr "Eső/villám"
+msgstr "Eső / villámlás"
 
 #: ../panel-plugin/weather-translate.c:145
 msgid "Scattered Showers"
-msgstr "Szórt záporok"
+msgstr "Elszórt záporok"
 
 #: ../panel-plugin/weather-translate.c:146
 msgid "Scattered Snow Showers"
-msgstr "Szórt hózáporok"
+msgstr "Elszórt hózáporok"
 
 #: ../panel-plugin/weather-translate.c:147
 msgid "Scattered Snow Showers / Wind"
-msgstr "Szórt hózáporok / szél"
+msgstr "Elszórt hózáporok/szél"
 
 #: ../panel-plugin/weather-translate.c:148
 msgid "Scattered T-Storms"
-msgstr "Szórt zivatarok"
+msgstr "Elszórt felhőszakadások"
 
 #: ../panel-plugin/weather-translate.c:149
 msgid "Showers"
@@ -876,7 +877,7 @@ msgstr "Záporok / szél"
 
 #: ../panel-plugin/weather-translate.c:151
 msgid "Showers Early"
-msgstr "Korai zivatarok"
+msgstr "Korai záporok"
 
 #: ../panel-plugin/weather-translate.c:152
 msgid "Showers in the Vicinity"
@@ -911,13 +912,12 @@ msgid "Snow Shower"
 msgstr "Hózivatar"
 
 #: ../panel-plugin/weather-translate.c:160
-#, fuzzy
 msgid "Light Snow Shower"
-msgstr "Enyhe zápor"
+msgstr "Enyhe hózápor"
 
 #: ../panel-plugin/weather-translate.c:161
 msgid "Snow Shower / Wind"
-msgstr "Hózivatar / szél"
+msgstr "Hózápor / szél"
 
 #: ../panel-plugin/weather-translate.c:162
 msgid "Snow Showers Early"
@@ -941,41 +941,39 @@ msgstr "Napos"
 
 #: ../panel-plugin/weather-translate.c:167
 msgid "Sunny / Wind"
-msgstr "Napos / szeles"
+msgstr "Napos / szél"
 
 #: ../panel-plugin/weather-translate.c:168
 msgid "T-Showers"
-msgstr "Zivatarok"
+msgstr "Heves zivatar"
 
 #: ../panel-plugin/weather-translate.c:169
 msgid "T-Storm"
-msgstr "Viharok"
+msgstr "Felhőszakadás"
 
 #: ../panel-plugin/weather-translate.c:170
-#, fuzzy
 msgid "T-Storms"
-msgstr "Viharok"
+msgstr "Felhőszakadások"
 
 #: ../panel-plugin/weather-translate.c:171
 msgid "T-Storms / Wind"
-msgstr "Viharok / szél"
+msgstr "Felhőszakadások / szél"
 
 #: ../panel-plugin/weather-translate.c:172
 msgid "T-Storms Early"
-msgstr "Korai viharok"
+msgstr "Korai felhőszakadások"
 
 #: ../panel-plugin/weather-translate.c:173
 msgid "Thunder"
 msgstr "Mennydörgés"
 
 #: ../panel-plugin/weather-translate.c:174
-#, fuzzy
 msgid "Thunder in the Vicinity"
-msgstr "Villám a környéken"
+msgstr "Mennydörgés a környéken"
 
 #: ../panel-plugin/weather-translate.c:175
 msgid "Thunder in the Vincinity"
-msgstr "Villám a környéken"
+msgstr "Mennydörgés a környéken"
 
 #: ../panel-plugin/weather-translate.c:176
 msgid "Variable Cloudiness"
@@ -1095,7 +1093,7 @@ msgstr "DDK"
 
 #: ../panel-plugin/weather-translate.c:223
 msgid "CALM"
-msgstr ""
+msgstr "ENYHE"
 
 #: ../panel-plugin/weather-translate.c:343
 #, c-format
@@ -1104,11 +1102,11 @@ msgstr "%x helyi idő szerint ekkor: %X"
 
 #: ../panel-plugin/weather-translate.c:449
 msgid "calm"
-msgstr "csendes"
+msgstr "enyhe"
 
 #: ../panel-plugin/weather-translate.c:451
 msgid "N/A"
-msgstr "N/A"
+msgstr "–"
 
 #: ../panel-plugin/weather-translate.c:506
 msgid "Unlimited"
@@ -1116,23 +1114,5 @@ msgstr "Korlátlan"
 
 #: ../panel-plugin/weather.desktop.in.in.h:1
 msgid "Show current weather conditions"
-msgstr "A jelenlegi időjárás mutatása"
+msgstr "A jelenlegi időjárási helyzet megjelenítése"
 
-#~ msgid "Summary"
-#~ msgstr "Összegzés"
-
-#, fuzzy
-#~ msgid "Showers in the Vincinity"
-#~ msgstr "Záporok a környéken"
-
-#~ msgid "Flurries"
-#~ msgstr "Széllökések"
-
-#~ msgid "Sleet"
-#~ msgstr "Ónos eső"
-
-#~ msgid "Thunder storms"
-#~ msgstr "Zivatarok"
-
-#~ msgid "Properties"
-#~ msgstr "Tulajdonságok"
