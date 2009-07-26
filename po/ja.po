@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce-weather-plugin 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-07-21 08:37+0200\n"
-"PO-Revision-Date: 2009-07-10 01:23+0900\n"
+"POT-Creation-Date: 2009-07-27 01:41+0900\n"
+"PO-Revision-Date: 2009-07-26 16:16+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <xfce-i18n@xfce.org>\n"
 "MIME-Version: 1.0\n"
@@ -65,7 +65,7 @@ msgstr "気象データを更新できません"
 msgid "Unable to open the following url: %s"
 msgstr "次の URL を開くことができません: %s"
 
-#: ../panel-plugin/weather.c:727 ../panel-plugin/weather-summary.c:556
+#: ../panel-plugin/weather.c:727 ../panel-plugin/weather-summary.c:612
 #: ../panel-plugin/weather.desktop.in.in.h:2
 msgid "Weather Update"
 msgstr "現在のお天気"
@@ -197,62 +197,66 @@ msgid "mi"
 msgstr "マイル"
 
 #. display error
-#: ../panel-plugin/weather-http.c:200
+#: ../panel-plugin/weather-http.c:201
 #, c-format
 msgid "Failed to get the hostname %s. Retry in %d seconds."
 msgstr "ホスト名 %s の取得に失敗しました。%d 秒後に再試行してください。"
 
 #. display warning
-#: ../panel-plugin/weather-http.c:241
+#: ../panel-plugin/weather-http.c:242
 #, c-format
 msgid "Failed to open the socket (%s)."
 msgstr "ソケットを開くことに失敗しました (%s)。"
 
 #. display warning
-#: ../panel-plugin/weather-http.c:252
+#: ../panel-plugin/weather-http.c:253
 #, c-format
 msgid "Failed to create a connection with the host (%s)."
 msgstr "ホストとの接続の生成に失敗しました (%s)。"
 
 #. display warning
-#: ../panel-plugin/weather-http.c:289
+#: ../panel-plugin/weather-http.c:290
 #, c-format
 msgid "Failed to send the request (%s)."
 msgstr "リクエストの送信に失敗しました (%s)。"
 
 #. display warning
-#: ../panel-plugin/weather-http.c:326
+#: ../panel-plugin/weather-http.c:327
 #, c-format
 msgid "Failed to receive data (%s)"
 msgstr "データの受信に失敗しました (%s)"
 
+#: ../panel-plugin/weather-http.c:358
+msgid "Negative content length"
+msgstr "負の内容長です"
+
 #. display warning
-#: ../panel-plugin/weather-http.c:367
+#: ../panel-plugin/weather-http.c:383
 msgid "Unable to detect the content length."
 msgstr "内容の長さを検出できませんでした。"
 
-#: ../panel-plugin/weather-http.c:375
+#: ../panel-plugin/weather-http.c:391
 msgid "No content received."
 msgstr "受信された内容はありません。"
 
-#: ../panel-plugin/weather-search.c:143 ../panel-plugin/weather-search.c:275
+#: ../panel-plugin/weather-search.c:144 ../panel-plugin/weather-search.c:276
 msgid "Results"
 msgstr "結果"
 
-#: ../panel-plugin/weather-search.c:184
+#: ../panel-plugin/weather-search.c:185
 msgid "Searching..."
 msgstr "検索しています..."
 
-#: ../panel-plugin/weather-search.c:224
+#: ../panel-plugin/weather-search.c:225
 msgid "Search weather location code"
 msgstr "気象地域コードの検索"
 
-#: ../panel-plugin/weather-search.c:248
+#: ../panel-plugin/weather-search.c:249
 msgid "Enter a city name or zip code"
 msgstr "都市名または ZIP コードを入力してください"
 
 #. head
-#: ../panel-plugin/weather-summary.c:212
+#: ../panel-plugin/weather-summary.c:269
 #, c-format
 msgid ""
 "Weather report for: %s.\n"
@@ -261,7 +265,7 @@ msgstr ""
 "%s の天気情報です。\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:217
+#: ../panel-plugin/weather-summary.c:274
 #, c-format
 msgid ""
 "Observation station located in %s\n"
@@ -271,7 +275,7 @@ msgstr ""
 "最終更新: %s\n"
 
 #. Temperature
-#: ../panel-plugin/weather-summary.c:223
+#: ../panel-plugin/weather-summary.c:280
 msgid ""
 "\n"
 "Temperature\n"
@@ -279,25 +283,25 @@ msgstr ""
 "\n"
 "気温\n"
 
-#: ../panel-plugin/weather-summary.c:224
+#: ../panel-plugin/weather-summary.c:281
 msgid "Temperature"
 msgstr "温度"
 
-#: ../panel-plugin/weather-summary.c:225
+#: ../panel-plugin/weather-summary.c:282
 msgid "Windchill"
 msgstr "体感温度"
 
 #. special case for TRANS because of translate_desc
-#: ../panel-plugin/weather-summary.c:228
+#: ../panel-plugin/weather-summary.c:285
 msgid "Description"
 msgstr "天候"
 
-#: ../panel-plugin/weather-summary.c:231
+#: ../panel-plugin/weather-summary.c:288
 msgid "Dew point"
 msgstr "露点"
 
 #. Wind
-#: ../panel-plugin/weather-summary.c:234
+#: ../panel-plugin/weather-summary.c:291
 msgid ""
 "\n"
 "Wind\n"
@@ -305,20 +309,20 @@ msgstr ""
 "\n"
 "風\n"
 
-#: ../panel-plugin/weather-summary.c:236
+#: ../panel-plugin/weather-summary.c:293
 msgid "Speed"
 msgstr "速度"
 
-#: ../panel-plugin/weather-summary.c:241
+#: ../panel-plugin/weather-summary.c:298
 msgid "Direction"
 msgstr "方向"
 
-#: ../panel-plugin/weather-summary.c:247
+#: ../panel-plugin/weather-summary.c:304
 msgid "Gusts"
 msgstr "突風"
 
 #. UV
-#: ../panel-plugin/weather-summary.c:252
+#: ../panel-plugin/weather-summary.c:309
 msgid ""
 "\n"
 "UV\n"
@@ -326,16 +330,16 @@ msgstr ""
 "\n"
 "紫外線\n"
 
-#: ../panel-plugin/weather-summary.c:253
+#: ../panel-plugin/weather-summary.c:310
 msgid "Index"
 msgstr "指数"
 
-#: ../panel-plugin/weather-summary.c:254
+#: ../panel-plugin/weather-summary.c:311
 msgid "Risk"
 msgstr "危険性"
 
 #. Atmospheric pressure
-#: ../panel-plugin/weather-summary.c:259
+#: ../panel-plugin/weather-summary.c:316
 msgid ""
 "\n"
 "Atmospheric pressure\n"
@@ -343,16 +347,16 @@ msgstr ""
 "\n"
 "気圧\n"
 
-#: ../panel-plugin/weather-summary.c:260
+#: ../panel-plugin/weather-summary.c:317
 msgid "Pressure"
 msgstr "気圧"
 
-#: ../panel-plugin/weather-summary.c:262
+#: ../panel-plugin/weather-summary.c:319
 msgid "State"
 msgstr "状態"
 
 #. Sun
-#: ../panel-plugin/weather-summary.c:267
+#: ../panel-plugin/weather-summary.c:324
 msgid ""
 "\n"
 "Sun\n"
@@ -360,16 +364,16 @@ msgstr ""
 "\n"
 "太陽\n"
 
-#: ../panel-plugin/weather-summary.c:270
+#: ../panel-plugin/weather-summary.c:327
 msgid "Rise"
 msgstr "日の出"
 
-#: ../panel-plugin/weather-summary.c:276
+#: ../panel-plugin/weather-summary.c:333
 msgid "Set"
 msgstr "日の入り"
 
 #. Other
-#: ../panel-plugin/weather-summary.c:281
+#: ../panel-plugin/weather-summary.c:338
 msgid ""
 "\n"
 "Other\n"
@@ -377,15 +381,15 @@ msgstr ""
 "\n"
 "その他\n"
 
-#: ../panel-plugin/weather-summary.c:282
+#: ../panel-plugin/weather-summary.c:339
 msgid "Humidity"
 msgstr "湿度"
 
-#: ../panel-plugin/weather-summary.c:284
+#: ../panel-plugin/weather-summary.c:341
 msgid "Visibility"
 msgstr "視程"
 
-#: ../panel-plugin/weather-summary.c:288
+#: ../panel-plugin/weather-summary.c:345
 msgid ""
 "\n"
 "More on weather.com\n"
@@ -393,38 +397,38 @@ msgstr ""
 "\n"
 "より詳しい情報は weather.com へ\n"
 
-#: ../panel-plugin/weather-summary.c:388
+#: ../panel-plugin/weather-summary.c:446
 #, c-format
 msgid "Day: %s"
 msgstr "日中: %s"
 
-#: ../panel-plugin/weather-summary.c:393
+#: ../panel-plugin/weather-summary.c:451
 #, c-format
 msgid "Night: %s"
 msgstr "夜: %s"
 
-#: ../panel-plugin/weather-summary.c:404
+#: ../panel-plugin/weather-summary.c:462
 msgid "<b>Precipitation</b>"
 msgstr "<b>降水確率</b>"
 
-#: ../panel-plugin/weather-summary.c:426
+#: ../panel-plugin/weather-summary.c:484
 msgid "<b>Temperature</b>"
 msgstr "<b>気温</b>"
 
-#: ../panel-plugin/weather-summary.c:450
+#: ../panel-plugin/weather-summary.c:508
 msgid "<b>Wind</b>"
 msgstr "<b>風</b>"
 
-#: ../panel-plugin/weather-summary.c:564
+#: ../panel-plugin/weather-summary.c:620
 #, c-format
 msgid "Weather report for: %s"
 msgstr "天気情報: %s"
 
-#: ../panel-plugin/weather-summary.c:587
+#: ../panel-plugin/weather-summary.c:643
 msgid "Forecast"
 msgstr "予報"
 
-#: ../panel-plugin/weather-summary.c:590
+#: ../panel-plugin/weather-summary.c:646
 msgid "Details"
 msgstr "詳細"
 
