@@ -8,16 +8,14 @@ msgstr ""
 "Project-Id-Version: xfce4-weather-plugin 0.6.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-07-21 08:37+0200\n"
-"PO-Revision-Date: 2008-10-16 10:50+0200\n"
-"Last-Translator: Lars Jensen <lars@jink.dk>\n"
+"PO-Revision-Date: 2009-08-04 15:20+0100\n"
+"Last-Translator: Lars Christian Jensen <larschrjensen@gmail.com>\n"
 "Language-Team: Dansk <dansk@dansk-gruppen.dk>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: KBabel 1.11.4\n"
-"#Konventioner:#S = sigtbarhed#VR = vindretning#AT = atmosfærisktryk#CF = "
-"chill-faktor#T = temperatur#H = luftfugtighed#VH = vindhastighed#VS = "
-"vindstød\n"
+"#Konventioner: #S = sigtbarhed#VR = vindretning#AT = atmosfærisktryk#CF = chill-faktor#T = temperatur#H = luftfugtighed#VH = vindhastighed#VS = vindstød\n"
 
 #: ../panel-plugin/weather.c:112
 msgid "V"
@@ -31,7 +29,8 @@ msgstr "U"
 msgid "WD"
 msgstr "VR"
 
-#: ../panel-plugin/weather.c:121 ../panel-plugin/weather.c:124
+#: ../panel-plugin/weather.c:121
+#: ../panel-plugin/weather.c:124
 msgid "P"
 msgstr "AT"
 
@@ -59,7 +58,8 @@ msgstr "VH"
 msgid "WG"
 msgstr "VS"
 
-#: ../panel-plugin/weather.c:264 ../panel-plugin/weather.c:766
+#: ../panel-plugin/weather.c:264
+#: ../panel-plugin/weather.c:766
 msgid "Cannot update weather data"
 msgstr "Kan ikke opdatere vejrdata"
 
@@ -68,16 +68,16 @@ msgstr "Kan ikke opdatere vejrdata"
 msgid "Unable to open the following url: %s"
 msgstr "Kunne ikke åbne følgende url: %s"
 
-#: ../panel-plugin/weather.c:727 ../panel-plugin/weather-summary.c:556
+#: ../panel-plugin/weather.c:727
+#: ../panel-plugin/weather-summary.c:556
 #: ../panel-plugin/weather.desktop.in.in.h:2
 msgid "Weather Update"
 msgstr "Vejropdatering"
 
 #. add refresh button to right click menu, for people who missed the middle mouse click feature
 #: ../panel-plugin/weather.c:849
-#, fuzzy
 msgid "_Forecast"
-msgstr "Udsigt"
+msgstr "_Udsigt"
 
 #: ../panel-plugin/weather-config.c:39
 msgid "Windchill (F)"
@@ -129,11 +129,11 @@ msgstr "Indtast venligst proxy-indstillingerne"
 
 #: ../panel-plugin/weather-config.c:289
 msgid "Unset"
-msgstr ""
+msgstr "Fjern"
 
 #: ../panel-plugin/weather-config.c:297
 msgid "Detecting..."
-msgstr ""
+msgstr "Detekterer..."
 
 #: ../panel-plugin/weather-config.c:350
 msgid "Measurement unit:"
@@ -148,13 +148,12 @@ msgid "Metric"
 msgstr "Metrisk"
 
 #: ../panel-plugin/weather-config.c:373
-#, fuzzy
 msgid "Location:"
-msgstr "Lokationskode:"
+msgstr "Lokation:"
 
 #: ../panel-plugin/weather-config.c:409
 msgid "Change..."
-msgstr ""
+msgstr "Ændr..."
 
 #. proxy
 #: ../panel-plugin/weather-config.c:422
@@ -175,7 +174,7 @@ msgstr "Vælg etiketter til visning"
 
 #: ../panel-plugin/weather-config.c:548
 msgid "Animate transitions between labels"
-msgstr ""
+msgstr "Animër overgangene mellem mærkater"
 
 #: ../panel-plugin/weather-data.c:445
 msgid "km/h"
@@ -203,9 +202,9 @@ msgstr "mi"
 
 #. display error
 #: ../panel-plugin/weather-http.c:200
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to get the hostname %s. Retry in %d seconds."
-msgstr "Kunne ikke finde værtsnavnet \"%s\". Prøver igen om %d sekunder."
+msgstr "Kunne ikke hente værtsnavnet \"%s\". Prøver igen om %d sekunder."
 
 #. display warning
 #: ../panel-plugin/weather-http.c:241
@@ -240,14 +239,14 @@ msgstr "Kunne ikke beregne indeholdets længde."
 msgid "No content received."
 msgstr "Intet indhold modtaget."
 
-#: ../panel-plugin/weather-search.c:143 ../panel-plugin/weather-search.c:275
+#: ../panel-plugin/weather-search.c:143
+#: ../panel-plugin/weather-search.c:275
 msgid "Results"
 msgstr "Resultater"
 
 #: ../panel-plugin/weather-search.c:184
-#, fuzzy
 msgid "Searching..."
-msgstr "Opklaring"
+msgstr "Søger..."
 
 #: ../panel-plugin/weather-search.c:224
 msgid "Search weather location code"
@@ -396,6 +395,8 @@ msgid ""
 "\n"
 "More on weather.com\n"
 msgstr ""
+"\n"
+"Mere på weather.com\n"
 
 #: ../panel-plugin/weather-summary.c:388
 #, c-format
@@ -430,7 +431,7 @@ msgstr "Udsigt"
 
 #: ../panel-plugin/weather-summary.c:590
 msgid "Details"
-msgstr ""
+msgstr "Detaljer"
 
 #: ../panel-plugin/weather-translate.c:41
 msgid "AM Clouds / PM Sun"
@@ -621,9 +622,8 @@ msgid "Heavy Rain"
 msgstr "Kraftig regn"
 
 #: ../panel-plugin/weather-translate.c:88
-#, fuzzy
 msgid "Heavy Rain Shower"
-msgstr "Regnbyer"
+msgstr "Tunge regnbyer"
 
 #: ../panel-plugin/weather-translate.c:89
 msgid "Heavy Snow"
@@ -774,9 +774,8 @@ msgid "PM Rain / Wind"
 msgstr "Eftermiddag regn / blæst"
 
 #: ../panel-plugin/weather-translate.c:126
-#, fuzzy
 msgid "PM Rain / Snow Showers"
-msgstr "Formiddag regn / snebyger"
+msgstr "Eftermiddag regn- / snebyger"
 
 #: ../panel-plugin/weather-translate.c:127
 msgid "PM Showers"
@@ -800,7 +799,7 @@ msgstr "Regn / sne"
 
 #: ../panel-plugin/weather-translate.c:132
 msgid "Rain / Snow / Wind"
-msgstr "Regn / sne / blæst"
+msgstr "Regn- / sne / blæst"
 
 #: ../panel-plugin/weather-translate.c:133
 msgid "Rain / Snow Late"
@@ -808,12 +807,11 @@ msgstr "Regn / sne sent"
 
 #: ../panel-plugin/weather-translate.c:134
 msgid "Rain / Snow Showers"
-msgstr "Regn / snebyger"
+msgstr "Regn- / snebyger"
 
 #: ../panel-plugin/weather-translate.c:135
-#, fuzzy
 msgid "Rain / Snow Showers Early"
-msgstr "Regn / snebyger"
+msgstr "Regn- / snebyger tidligt"
 
 #: ../panel-plugin/weather-translate.c:136
 msgid "Rain / Thunder"
@@ -912,9 +910,8 @@ msgid "Snow Shower"
 msgstr "Snebyger"
 
 #: ../panel-plugin/weather-translate.c:160
-#, fuzzy
 msgid "Light Snow Shower"
-msgstr "Lette regnbyer"
+msgstr "Lette snebyger"
 
 #: ../panel-plugin/weather-translate.c:161
 msgid "Snow Shower / Wind"
@@ -953,7 +950,6 @@ msgid "T-Storm"
 msgstr "Tordenvejr"
 
 #: ../panel-plugin/weather-translate.c:170
-#, fuzzy
 msgid "T-Storms"
 msgstr "Tordenvejr"
 
@@ -970,9 +966,8 @@ msgid "Thunder"
 msgstr "Torden"
 
 #: ../panel-plugin/weather-translate.c:174
-#, fuzzy
 msgid "Thunder in the Vicinity"
-msgstr "Torden i lokalområder"
+msgstr "Torden i nærheden"
 
 #: ../panel-plugin/weather-translate.c:175
 msgid "Thunder in the Vincinity"
@@ -1096,7 +1091,7 @@ msgstr "SSØ"
 
 #: ../panel-plugin/weather-translate.c:223
 msgid "CALM"
-msgstr ""
+msgstr "ROLIGT"
 
 #: ../panel-plugin/weather-translate.c:343
 #, c-format
@@ -1121,3 +1116,4 @@ msgstr "Vis nuværende vejrtilstande"
 
 #~ msgid "Summary"
 #~ msgstr "Sammendrag"
+
