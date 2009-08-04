@@ -172,7 +172,7 @@ static gchar *get_logo_path (void)
 	gchar *dir = g_strconcat(g_get_user_cache_dir(), G_DIR_SEPARATOR_S,
 				"xfce4", G_DIR_SEPARATOR_S, "weather-plugin", NULL);
 
-	g_mkdir_with_parents(dir, 0644);
+	g_mkdir_with_parents(dir, 0755);
 	g_free(dir);
 
 	return g_strconcat(g_get_user_cache_dir(), G_DIR_SEPARATOR_S,
