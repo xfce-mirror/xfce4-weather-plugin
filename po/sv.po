@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: xfce4-weather-plugin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2009-07-21 08:37+0200\n"
-"PO-Revision-Date: 2009-01-05 11:39+0100\n"
+"PO-Revision-Date: 2009-12-16 17:58+0100\n"
 "Last-Translator: Daniel Nylander <po@danielnylander.se>\n"
 "Language-Team: Swedish <tp-sv@listor.tp-sv.se>\n"
 "MIME-Version: 1.0\n"
@@ -28,7 +28,8 @@ msgstr "U"
 msgid "WD"
 msgstr "WD"
 
-#: ../panel-plugin/weather.c:121 ../panel-plugin/weather.c:124
+#: ../panel-plugin/weather.c:121
+#: ../panel-plugin/weather.c:124
 msgid "P"
 msgstr "P"
 
@@ -56,7 +57,8 @@ msgstr "WS"
 msgid "WG"
 msgstr "WG"
 
-#: ../panel-plugin/weather.c:264 ../panel-plugin/weather.c:766
+#: ../panel-plugin/weather.c:264
+#: ../panel-plugin/weather.c:766
 msgid "Cannot update weather data"
 msgstr "Kan inte uppdatera väderdata"
 
@@ -65,16 +67,16 @@ msgstr "Kan inte uppdatera väderdata"
 msgid "Unable to open the following url: %s"
 msgstr "Kunde inte öppna följande url: %s"
 
-#: ../panel-plugin/weather.c:727 ../panel-plugin/weather-summary.c:556
+#: ../panel-plugin/weather.c:727
+#: ../panel-plugin/weather-summary.c:556
 #: ../panel-plugin/weather.desktop.in.in.h:2
 msgid "Weather Update"
 msgstr "Väderuppdatering"
 
 #. add refresh button to right click menu, for people who missed the middle mouse click feature
 #: ../panel-plugin/weather.c:849
-#, fuzzy
 msgid "_Forecast"
-msgstr "Prognos"
+msgstr "_Prognos"
 
 #: ../panel-plugin/weather-config.c:39
 msgid "Windchill (F)"
@@ -126,11 +128,11 @@ msgstr "Ange proxyinställningar"
 
 #: ../panel-plugin/weather-config.c:289
 msgid "Unset"
-msgstr ""
+msgstr "Ta bort"
 
 #: ../panel-plugin/weather-config.c:297
 msgid "Detecting..."
-msgstr ""
+msgstr "Identifierar..."
 
 #: ../panel-plugin/weather-config.c:350
 msgid "Measurement unit:"
@@ -145,13 +147,12 @@ msgid "Metric"
 msgstr "Metrisk"
 
 #: ../panel-plugin/weather-config.c:373
-#, fuzzy
 msgid "Location:"
-msgstr "Platskod:"
+msgstr "Plats:"
 
 #: ../panel-plugin/weather-config.c:409
 msgid "Change..."
-msgstr ""
+msgstr "Ändra..."
 
 #. proxy
 #: ../panel-plugin/weather-config.c:422
@@ -172,7 +173,7 @@ msgstr "Etiketter att visa"
 
 #: ../panel-plugin/weather-config.c:548
 msgid "Animate transitions between labels"
-msgstr ""
+msgstr "Animera övergångar mellan etiketter"
 
 #: ../panel-plugin/weather-data.c:445
 msgid "km/h"
@@ -200,9 +201,9 @@ msgstr "mi"
 
 #. display error
 #: ../panel-plugin/weather-http.c:200
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to get the hostname %s. Retry in %d seconds."
-msgstr "Misslyckades med att få värdnamnet. Försöker igen om %d sekunder."
+msgstr "Misslyckades med att få tag på värdnamnet %s. Försöker igen om %d sekunder."
 
 #. display warning
 #: ../panel-plugin/weather-http.c:241
@@ -237,14 +238,14 @@ msgstr "Kunde inte detektera innehållslängden."
 msgid "No content received."
 msgstr "Inget innehåll togs emot."
 
-#: ../panel-plugin/weather-search.c:143 ../panel-plugin/weather-search.c:275
+#: ../panel-plugin/weather-search.c:143
+#: ../panel-plugin/weather-search.c:275
 msgid "Results"
 msgstr "Resultat"
 
 #: ../panel-plugin/weather-search.c:184
-#, fuzzy
 msgid "Searching..."
-msgstr "Uppsprickande"
+msgstr "Söker..."
 
 #: ../panel-plugin/weather-search.c:224
 msgid "Search weather location code"
@@ -393,6 +394,8 @@ msgid ""
 "\n"
 "More on weather.com\n"
 msgstr ""
+"\n"
+"Mer på weather.com\n"
 
 #: ../panel-plugin/weather-summary.c:388
 #, c-format
@@ -427,7 +430,7 @@ msgstr "Prognos"
 
 #: ../panel-plugin/weather-summary.c:590
 msgid "Details"
-msgstr ""
+msgstr "Detaljer"
 
 #: ../panel-plugin/weather-translate.c:41
 msgid "AM Clouds / PM Sun"
@@ -618,9 +621,8 @@ msgid "Heavy Rain"
 msgstr "Kraftigt regn"
 
 #: ../panel-plugin/weather-translate.c:88
-#, fuzzy
 msgid "Heavy Rain Shower"
-msgstr "Regnskurar"
+msgstr "Kraftiga regnskurar"
 
 #: ../panel-plugin/weather-translate.c:89
 msgid "Heavy Snow"
@@ -771,7 +773,6 @@ msgid "PM Rain / Wind"
 msgstr "Regn på eftermiddag / Vind"
 
 #: ../panel-plugin/weather-translate.c:126
-#, fuzzy
 msgid "PM Rain / Snow Showers"
 msgstr "Regn på förmiddag / Snöbyar"
 
@@ -808,7 +809,6 @@ msgid "Rain / Snow Showers"
 msgstr "Regn / Snöbyar"
 
 #: ../panel-plugin/weather-translate.c:135
-#, fuzzy
 msgid "Rain / Snow Showers Early"
 msgstr "Regn / Snöbyar"
 
@@ -909,7 +909,6 @@ msgid "Snow Shower"
 msgstr "Snöbyar"
 
 #: ../panel-plugin/weather-translate.c:160
-#, fuzzy
 msgid "Light Snow Shower"
 msgstr "Lätta regnskurar"
 
@@ -950,9 +949,8 @@ msgid "T-Storm"
 msgstr "Åskväder"
 
 #: ../panel-plugin/weather-translate.c:170
-#, fuzzy
 msgid "T-Storms"
-msgstr "Åskväder"
+msgstr "Åskstormar"
 
 #: ../panel-plugin/weather-translate.c:171
 msgid "T-Storms / Wind"
@@ -967,7 +965,6 @@ msgid "Thunder"
 msgstr "Åskväder"
 
 #: ../panel-plugin/weather-translate.c:174
-#, fuzzy
 msgid "Thunder in the Vicinity"
 msgstr "Åska i närheten"
 
@@ -1093,7 +1090,7 @@ msgstr "SSO"
 
 #: ../panel-plugin/weather-translate.c:223
 msgid "CALM"
-msgstr ""
+msgstr "LUGNT"
 
 #: ../panel-plugin/weather-translate.c:343
 #, c-format
@@ -1118,6 +1115,6 @@ msgstr "Visa aktuella väderförhållanden"
 
 #~ msgid "Summary"
 #~ msgstr "Sammandrag"
-
 #~ msgid "DEFAULT_LOCATION"
 #~ msgstr "Stockholm (Arlanda)"
+
