@@ -21,6 +21,8 @@
 #include <config.h>
 #endif
 
+#include <sys/select.h>
+#include <sys/time.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/stat.h>
@@ -146,6 +148,8 @@ weather_http_receive_data_idle (gpointer user_data)
   gchar               buffer[1024];
   gint                bytes, n, m;
   gchar              *request;
+  fd_set              fds;
+  struct timeval      select_timeout;
   
   struct addrinfo     h, *r, *a;
   gchar      	     *port = NULL;
@@ -312,16 +316,32 @@ weather_http_receive_data_idle (gpointer user_data)
   connection->received_len = 0;
 
   /* download the file content */
+  FD_ZERO (&fds);
   do
     {
-      /* download some bytes */
-      bytes = recv (connection->fd, buffer, sizeof (buffer) - sizeof (gchar), 0);
+      /* FIXME: recv() may block. send() and connect() may block too and the
+       * only right solution is to rewrite whole code using non-blocking
+       * sockets, but that's hard, connect() is already protected with alarm()
+       * and send() blocks only when socket buffers are ultra-small */
+      FD_SET (connection->fd, &fds);
+      select_timeout.tv_sec = WEATHER_MAX_CONN_TIMEOUT;
+      select_timeout.tv_usec = 0;
 
-      if (weather_http_receive_data_check (connection, timeout))
-        return FALSE;
+      m = select (connection->fd+1, &fds, 0, 0, &select_timeout);
+      if (G_LIKELY (m == 1))
+        {
+          bytes = recv (connection->fd, buffer, sizeof (buffer) - sizeof (gchar), 0);
+          if (G_LIKELY (bytes > 0))
+            {
+              /* prepend the downloaded data */
+              connection->received = g_realloc(connection->received, connection->received_len + bytes);
+              memcpy(connection->received+connection->received_len, buffer, bytes);
+              connection->received_len += bytes;
+            }
+        }
 
       /* check for problems */
-      if (G_UNLIKELY (bytes < 0))
+      if (G_UNLIKELY (m < 0 || bytes < 0))
         {
           /* display warning */
           g_warning (_("Failed to receive data (%s)"), g_strerror (errno));
@@ -332,15 +352,10 @@ weather_http_receive_data_idle (gpointer user_data)
           return FALSE;
         }
 
-      /* prepend the downloaded data */
-      connection->received = g_realloc(connection->received, connection->received_len + bytes);
-      memcpy(connection->received+connection->received_len, buffer, bytes);
-      connection->received_len += bytes;
+      if (weather_http_receive_data_check (connection, timeout))
+        return FALSE;
     }
   while (bytes > 0);
-
-  if (weather_http_receive_data_check (connection, timeout))
-    return FALSE;
 
   if (G_LIKELY (connection->received_len > 0))
     {
