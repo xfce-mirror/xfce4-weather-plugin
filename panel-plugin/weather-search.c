@@ -348,9 +348,6 @@ cb_geo_searchdone (gboolean  succeed,
   xmlDoc        *doc;
   xmlNode       *cur_node;
   gchar         *id, *city;
-  gboolean      found = FALSE;
-  GtkTreeIter       iter;
-  GtkTreeSelection *selection;
 
   if (!succeed || received == NULL) {
     data->cb(NULL, NULL, data->user_data);
@@ -416,7 +413,6 @@ cb_geolocation (gboolean  succeed,
   xmlNode       *cur_node;
   gchar         *city = NULL, *country = NULL;
   gchar         *country_code = NULL, *region = NULL;
-  gboolean      found = FALSE;
 
   if (!succeed || received == NULL) {
     data->cb(NULL, NULL, data->user_data);
@@ -502,8 +498,6 @@ void weather_search_by_ip(
         void (*gui_cb)(const gchar *loc_name, const gchar *loc_code, gpointer user_data),
 	gpointer user_data)
 {
-  gchar *city = NULL, *country = NULL;
-  gchar *search = NULL;
   geolocation_data *data;
   
   if (!gui_cb)

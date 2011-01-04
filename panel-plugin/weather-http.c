@@ -86,7 +86,7 @@ struct _WeatherConnection
   gint         status;
 
   /* received data */
-  void     *received;
+  gchar     *received;
   size_t    received_len;
 
   /* connection descriptor */
@@ -134,7 +134,7 @@ static void refresh_resolvers(void)
 #ifdef G_OS_UNIX
 static sigjmp_buf jmpenv;
 
-static void timeout_handler(gint sig)
+G_GNUC_NORETURN static void timeout_handler(gint sig)
 {
 	siglongjmp(jmpenv, 1);
 }

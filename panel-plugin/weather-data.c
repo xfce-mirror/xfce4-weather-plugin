@@ -400,7 +400,7 @@ get_data_f (xml_dayf *data,
               str = data->hi;
               break;
             default:
-              str = g_strdup ("-");
+              str = EMPTY_STRING;
               break;
             }
           break;

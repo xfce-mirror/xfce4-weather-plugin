@@ -33,7 +33,7 @@
 #define OPTIONS_N 11
 #define BORDER    8
 
-const static labeloption labeloptions[OPTIONS_N] = {
+static const labeloption labeloptions[OPTIONS_N] = {
   {N_("Windchill (F)"), FLIK},
   {N_("Temperature (T)"), TEMP},
   {N_("Atmosphere pressure (P)"), BAR_R},

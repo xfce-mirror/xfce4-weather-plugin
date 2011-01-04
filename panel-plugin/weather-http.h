@@ -20,7 +20,7 @@
 
 G_BEGIN_DECLS
 
-typedef void   (*WeatherFunc) (gboolean succeed, void *received, size_t len, gpointer user_data);
+typedef void   (*WeatherFunc) (gboolean succeed, gchar *received, size_t len, gpointer user_data);
 
 void weather_http_cleanup_qeue (void);
 

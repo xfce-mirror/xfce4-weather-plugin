@@ -284,19 +284,19 @@ translate_desc (const gchar *desc)
 
 /* used by translate_lsup and translate_time */
 static void
-_fill_time (struct tm   *time,
+_fill_time (struct tm   *time_tm,
             const gchar *hour,
             const gchar *minute,
             const gchar *am)
 {
-  time->tm_hour = atoi (hour);
+  time_tm->tm_hour = atoi (hour);
 
-  if (am[0] == 'P' && time->tm_hour != 12)        /* PM or AM */
-    time->tm_hour += 12;
+  if (am[0] == 'P' && time_tm->tm_hour != 12)        /* PM or AM */
+    time_tm->tm_hour += 12;
 
-  time->tm_min = atoi (minute);
-  time->tm_sec = 0;
-  time->tm_isdst = -1;
+  time_tm->tm_min = atoi (minute);
+  time_tm->tm_sec = 0;
+  time_tm->tm_isdst = -1;
 }
 
 
@@ -305,7 +305,7 @@ gchar *
 translate_lsup (const gchar *lsup)
 {
   gchar      *hdate;
-  struct tm   time;
+  struct tm   time_tm;
   gint        size = 0, i = 0;
   gchar      **lsup_split;
   int          len;
@@ -326,19 +326,19 @@ translate_lsup (const gchar *lsup)
       return NULL;
     }
 
-  time.tm_mon = atoi (lsup_split[0]) - 1;
-  time.tm_mday = atoi (lsup_split[1]);
-  time.tm_year = atoi (lsup_split[2]) + 100;
+  time_tm.tm_mon = atoi (lsup_split[0]) - 1;
+  time_tm.tm_mday = atoi (lsup_split[1]);
+  time_tm.tm_year = atoi (lsup_split[2]) + 100;
 
-  _fill_time (&time, lsup_split[3], lsup_split[4], lsup_split[5]);
+  _fill_time (&time_tm, lsup_split[3], lsup_split[4], lsup_split[5]);
 
   g_strfreev (lsup_split);
 
-  if (mktime (&time) != -1)
+  if (mktime (&time_tm) != -1)
     {
       hdate = g_malloc (HDATE_N);
 
-      len = strftime (hdate, HDATE_N, _("%x at %X Local Time"), &time);
+      len = strftime (hdate, HDATE_N, _("%x at %X Local Time"), &time_tm);
       hdate[len] = 0;
       if (!g_utf8_validate(hdate, -1, NULL)) {
          gchar *utf8 = g_locale_to_utf8(hdate, -1, NULL, NULL, NULL);
@@ -357,7 +357,7 @@ gchar *
 translate_day (const gchar *day)
 {
   gint         wday = -1;
-  struct tm    time;
+  struct tm    time_tm;
   guint        i;
   const gchar *days[] = {"su", "mo", "tu", "we", "th", "fr", "sa", NULL};
   gchar       *day_loc;
@@ -374,11 +374,11 @@ translate_day (const gchar *day)
     return NULL;
   else
     {
-      time.tm_wday = wday;
+      time_tm.tm_wday = wday;
 
       day_loc = g_malloc (DAY_LOC_N);
 
-      len = strftime (day_loc, DAY_LOC_N, "%A", &time);
+      len = strftime (day_loc, DAY_LOC_N, "%A", &time_tm);
       day_loc[len] = 0;
       if (!g_utf8_validate(day_loc, -1, NULL)) {
          gchar *utf8 = g_locale_to_utf8(day_loc, -1, NULL, NULL, NULL);
@@ -457,17 +457,17 @@ translate_wind_speed (const gchar *wspeed,
 
 
 gchar *
-translate_time (const gchar *time)
+translate_time (const gchar *timestr)
 {
   gchar     **time_split, *time_loc;
   gint        i = 0, size = 0;
   struct tm   time_tm;
   int          len;
 
-  if (strlen (time) == 0)
+  if (strlen (timestr) == 0)
     return NULL;
 
-  time_split = g_strsplit_set (time, ": ", 3);
+  time_split = g_strsplit_set (timestr, ": ", 3);
 
   while (time_split[i++])
     size++;

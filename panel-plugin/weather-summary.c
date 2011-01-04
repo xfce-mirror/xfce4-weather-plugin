@@ -23,6 +23,7 @@
 
 #include "weather-parsers.h"
 #include "weather-data.h"
+#include "weather-http.h"
 #include "weather.h"
 
 #include "weather-summary.h"
@@ -180,7 +181,7 @@ static gchar *get_logo_path (void)
 
 static void
 logo_fetched (gboolean  succeed,
-           void     *result,
+           gchar     *result,
 	   size_t    len,
            gpointer  user_data)
 {
