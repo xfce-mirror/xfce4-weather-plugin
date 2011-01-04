@@ -180,7 +180,7 @@ weather_http_receive_data_idle (gpointer user_data)
 #endif
 
   memset(&h, 0, sizeof(h));
-  h.ai_family = AF_INET;
+  h.ai_family = AF_UNSPEC;
   h.ai_socktype = SOCK_STREAM;
   h.ai_protocol = IPPROTO_TCP;
   
