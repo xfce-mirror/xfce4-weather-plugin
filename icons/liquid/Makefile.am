@@ -1,5 +1,3 @@
-# $Id$
-
 liquiddir = $(datadir)/xfce4/weather/icons/liquid
 
 liquid_DATA =	0.png							\

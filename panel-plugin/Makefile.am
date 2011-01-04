@@ -1,5 +1,3 @@
-# $Id$
-
 INCLUDES =								\
         -I$(top_srcdir)                                         	\
 	-DTHEMESDIR=\"$(datadir)/xfce4/weather/icons\" 			\

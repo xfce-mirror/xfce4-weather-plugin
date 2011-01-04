@@ -1,5 +1,3 @@
-# $Id$
-
 SUBDIRS =								\
 	panel-plugin							\
 	po								\
