@@ -497,7 +497,7 @@ cb_geolocation (gboolean  succeed,
 
 
 
-gboolean weather_search_by_ip(
+void weather_search_by_ip(
 	const gchar *proxy_host, gint proxy_port,
         void (*gui_cb)(const gchar *loc_name, const gchar *loc_code, gpointer user_data),
 	gpointer user_data)
@@ -518,5 +518,5 @@ gboolean weather_search_by_ip(
   weather_http_receive_data ("ipinfodb.com", "/ip_query.php",
                              proxy_host, proxy_port,
                              cb_geolocation, data);
-
+  return;
 }
