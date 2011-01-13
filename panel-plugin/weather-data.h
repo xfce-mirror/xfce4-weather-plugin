@@ -126,8 +126,6 @@ const gchar *get_data_f (xml_dayf *, forecast type);
 
 const gchar *get_unit (units unit, datas type);
 
-void free_get_data_buffer (void);
-
 G_END_DECLS
 
 #endif

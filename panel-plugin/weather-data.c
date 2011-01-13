@@ -29,59 +29,11 @@
 #define DATAS_LOC   0x0200
 #define DATAS_DAYF  0x0300
 #define DATAS_LNK   0x0400
-#define KILL_RING_S 5
 
-#define EMPTY_STRING g_strdup("-")
-#define CHK_NULL(str) str ? g_strdup(str) : EMPTY_STRING;
+#define EMPTY_STRING "-"
+#define CHK_NULL(str) (str ? str : EMPTY_STRING);
 
-
-
-gchar *kill_ring[KILL_RING_S] = { NULL, };
-
-
-
-static gchar *
-copy_buffer (gchar *str)
-{
-  static gint  p = 0;
-  gchar       *s;
-
-  if (!str)
-    {
-      DBG ("copy_buffer: received NULL pointer");
-      return EMPTY_STRING;
-    }
-
-  if (p >= KILL_RING_S)
-    p = 0;
-
-  if (kill_ring[p])
-    g_free (kill_ring[p]);
-
-  s = g_strdup (str);
-
-  kill_ring[p++] = s;
-
-  return s;
-}
-
-
-
-void
-free_get_data_buffer (void)
-{
-  guint i;
-
-  for (i = 0; i < KILL_RING_S; i++)
-    {
-      if (kill_ring[i])
-        g_free (kill_ring[i]);
-    }
-}
-
-
-
-static gchar *
+static const gchar *
 get_data_uv (xml_uv   *data,
              datas_uv  type)
 {
@@ -90,17 +42,18 @@ get_data_uv (xml_uv   *data,
   if (!data)
     {
       DBG ("get_data_bar: xml-uv not present");
-      return EMPTY_STRING;
     }
-
-  switch (type)
+  else
     {
-    case _UV_INDEX:
-      str = data->i;
-      break;
-    case _UV_TRANS:
-      str = data->t;
-      break;
+      switch (type)
+        {
+        case _UV_INDEX:
+          str = data->i;
+          break;
+        case _UV_TRANS:
+          str = data->t;
+          break;
+        }
     }
 
   return CHK_NULL (str);
@@ -108,7 +61,7 @@ get_data_uv (xml_uv   *data,
 
 
 
-static gchar *
+static const gchar *
 get_data_bar (xml_bar   *data,
               datas_bar  type)
 {
@@ -117,17 +70,18 @@ get_data_bar (xml_bar   *data,
   if (!data)
     {
       DBG ("get_data_bar: xml-wind not present");
-      return EMPTY_STRING;
     }
-
-  switch (type)
+  else
     {
-    case _BAR_R:
-      str = data->r;
-      break;
-    case _BAR_D:
-      str = data->d;
-      break;
+      switch (type)
+        {
+        case _BAR_R:
+          str = data->r;
+          break;
+        case _BAR_D:
+          str = data->d;
+          break;
+        }
     }
 
   return CHK_NULL (str);
@@ -135,7 +89,7 @@ get_data_bar (xml_bar   *data,
 
 
 
-static gchar *
+static const gchar *
 get_data_wind (xml_wind   *data,
                datas_wind  type)
 {
@@ -144,23 +98,24 @@ get_data_wind (xml_wind   *data,
   if (!data)
     {
       DBG ("get_data_wind: xml-wind not present");
-      return EMPTY_STRING;
     }
-
-  switch (type)
+  else
     {
-    case _WIND_SPEED:
-      str = data->s;
-      break;
-    case _WIND_GUST:
-      str = data->gust;
-      break;
-    case _WIND_DIRECTION:
-      str = data->t;
-      break;
-    case _WIND_TRANS:
-      str = data->d;
-      break;
+      switch (type)
+        {
+        case _WIND_SPEED:
+          str = data->s;
+          break;
+        case _WIND_GUST:
+          str = data->gust;
+          break;
+        case _WIND_DIRECTION:
+          str = data->t;
+          break;
+        case _WIND_TRANS:
+          str = data->d;
+          break;
+        }
     }
 
   return CHK_NULL (str);
@@ -169,7 +124,7 @@ get_data_wind (xml_wind   *data,
 
 
 /* -- This is not the same as the previous functions */
-static gchar *
+static const gchar *
 get_data_cc (xml_cc *data,
              datas   type)
 {
@@ -178,54 +133,55 @@ get_data_cc (xml_cc *data,
   if (!data)
     {
       DBG ("get_data_cc: xml-cc not present");
-      return EMPTY_STRING;
     }
-
-  switch (type)
+  else
     {
-    case LSUP:
-      str = data->lsup;
-      break;
-    case OBST:
-      str = data->obst;
-      break;
-    case FLIK:
-      str = data->flik;
-      break;
-    case TRANS:
-      str = data->t;
-      break;
-    case TEMP:
-      str = data->tmp;
-      break;
-    case HMID:
-      str = data->hmid;
-      break;
-    case VIS:
-      str = data->vis;
-      break;
-    case UV_INDEX:
-      return get_data_uv (data->uv, _UV_INDEX);
-    case UV_TRANS:
-      return get_data_uv (data->uv, _UV_TRANS);
-    case WIND_SPEED:
-      return get_data_wind (data->wind, _WIND_SPEED);
-    case WIND_GUST:
-      return get_data_wind (data->wind, _WIND_GUST);
-    case WIND_DIRECTION:
-      return get_data_wind (data->wind, _WIND_DIRECTION);
-    case WIND_TRANS:
-      return get_data_wind (data->wind, _WIND_TRANS);
-    case BAR_R:
-      return get_data_bar (data->bar, _BAR_R);
-    case BAR_D:
-      return get_data_bar (data->bar, _BAR_D);
-    case DEWP:
-      str = data->dewp;
-      break;
-    case WICON:
-      str = data->icon;
-      break;
+      switch (type)
+        {
+        case LSUP:
+          str = data->lsup;
+          break;
+        case OBST:
+          str = data->obst;
+          break;
+        case FLIK:
+          str = data->flik;
+          break;
+        case TRANS:
+          str = data->t;
+          break;
+        case TEMP:
+          str = data->tmp;
+          break;
+        case HMID:
+          str = data->hmid;
+          break;
+        case VIS:
+          str = data->vis;
+          break;
+        case UV_INDEX:
+          return get_data_uv (data->uv, _UV_INDEX);
+        case UV_TRANS:
+          return get_data_uv (data->uv, _UV_TRANS);
+        case WIND_SPEED:
+          return get_data_wind (data->wind, _WIND_SPEED);
+        case WIND_GUST:
+          return get_data_wind (data->wind, _WIND_GUST);
+        case WIND_DIRECTION:
+          return get_data_wind (data->wind, _WIND_DIRECTION);
+        case WIND_TRANS:
+          return get_data_wind (data->wind, _WIND_TRANS);
+        case BAR_R:
+          return get_data_bar (data->bar, _BAR_R);
+        case BAR_D:
+          return get_data_bar (data->bar, _BAR_D);
+        case DEWP:
+          str = data->dewp;
+          break;
+        case WICON:
+          str = data->icon;
+          break;
+        }
     }
 
   return CHK_NULL (str);
@@ -233,7 +189,7 @@ get_data_cc (xml_cc *data,
 
 
 
-static gchar *
+static const gchar *
 get_data_loc (xml_loc   *data,
               datas_loc  type)
 {
@@ -242,26 +198,27 @@ get_data_loc (xml_loc   *data,
   if (!data)
     {
       DBG ("get_data_loc: xml-loc not present");
-      return EMPTY_STRING;
     }
-
-  switch (type)
+  else
     {
-    case DNAM:
-      str = data->dnam;
-      break;
-    case SUNR:
-      str = data->sunr;
-      break;
-    case SUNS:
-      str = data->suns;
-      break;
+      switch (type)
+        {
+        case DNAM:
+          str = data->dnam;
+          break;
+        case SUNR:
+          str = data->sunr;
+          break;
+        case SUNS:
+          str = data->suns;
+          break;
+        }
     }
 
   return CHK_NULL (str);
 }
 
-static gchar *
+static const gchar *
 get_data_lnk (xml_lnk   *data,
               lnks       type)
 {
@@ -270,35 +227,36 @@ get_data_lnk (xml_lnk   *data,
   if (!data)
     {
       DBG ("get_data_lnk: xml-lnk not present");
-      return EMPTY_STRING;
     }
-
-  switch (type)
+  else
     {
-    case LNK1:
-      str = data->lnk[0];
-      break;
-    case LNK2:
-      str = data->lnk[1];
-      break;
-    case LNK3:
-      str = data->lnk[2];
-      break;
-    case LNK4:
-      str = data->lnk[3];
-      break;
-    case LNK1_TXT:
-      str = data->lnk_txt[0];
-      break;
-    case LNK2_TXT:
-      str = data->lnk_txt[1];
-      break;
-    case LNK3_TXT:
-      str = data->lnk_txt[2];
-      break;
-    case LNK4_TXT:
-      str = data->lnk_txt[3];
-      break;
+      switch (type)
+        {
+        case LNK1:
+          str = data->lnk[0];
+          break;
+        case LNK2:
+          str = data->lnk[1];
+          break;
+        case LNK3:
+          str = data->lnk[2];
+          break;
+        case LNK4:
+          str = data->lnk[3];
+          break;
+        case LNK1_TXT:
+          str = data->lnk_txt[0];
+          break;
+        case LNK2_TXT:
+          str = data->lnk_txt[1];
+          break;
+        case LNK3_TXT:
+          str = data->lnk_txt[2];
+          break;
+        case LNK4_TXT:
+          str = data->lnk_txt[3];
+          break;
+        }
     }
 
   return CHK_NULL (str);
@@ -310,12 +268,9 @@ const gchar *
 get_data (xml_weather *data,
          datas         type)
 {
-  gchar *str = NULL;
-  gchar *p;
+  const gchar *str = NULL;
 
-  if (!data)
-    str = EMPTY_STRING;
-  else
+  if (data)
     {
 
       switch (type & 0xFF00)
@@ -334,45 +289,42 @@ get_data (xml_weather *data,
         }
     }
 
-  p = copy_buffer (str);
-  g_free (str);
-
-  return p;
+  return CHK_NULL (str);
 }
 
 
 
-static gchar *
+static const gchar *
 get_data_part (xml_part *data,
                forecast  type)
 {
-  gchar *str = NULL;
+  const gchar *str = NULL;
 
   DBG ("now here %s", data->ppcp);
 
-  if (!data)
-    return EMPTY_STRING;
-
-  switch (type & 0x000F)
+  if (data)
     {
-    case F_ICON:
-      str = data->icon;
-      break;
-    case F_TRANS:
-      str = data->t;
-      break;
-    case F_PPCP:
-      str = data->ppcp;
-      break;
-    case F_W_SPEED:
-      str = get_data_wind (data->wind, _WIND_SPEED);
-      break;
-    case F_W_DIRECTION:
-      str = get_data_wind (data->wind, _WIND_DIRECTION);
-      break;
+      switch (type & 0x000F)
+        {
+        case F_ICON:
+          str = data->icon;
+          break;
+        case F_TRANS:
+          str = data->t;
+          break;
+        case F_PPCP:
+          str = data->ppcp;
+          break;
+        case F_W_SPEED:
+          str = get_data_wind (data->wind, _WIND_SPEED);
+          break;
+        case F_W_DIRECTION:
+          str = get_data_wind (data->wind, _WIND_DIRECTION);
+          break;
+        }
     }
 
-  return str;
+  return CHK_NULL (str);
 }
 
 
@@ -381,7 +333,7 @@ const gchar *
 get_data_f (xml_dayf *data,
             forecast  type)
 {
-  gchar *p, *str = NULL;
+  const gchar *str = NULL;
 
   if (data)
     {
@@ -399,9 +351,8 @@ get_data_f (xml_dayf *data,
             case TEMP_MAX:
               str = data->hi;
               break;
-            default:
-              str = EMPTY_STRING;
-              break;
+	    default:
+	      break;
             }
           break;
         case NPART:
@@ -413,14 +364,7 @@ get_data_f (xml_dayf *data,
         }
     }
 
-  if (!str)
-    str = "-";
-
-
-  p = copy_buffer (str);
-  DBG ("value: %s", p);
-
-  return p;
+  return CHK_NULL (str);
 }
 
 
@@ -452,5 +396,5 @@ get_unit (units unit,
       str = "";
     }
 
-  return copy_buffer (str);
+  return str;
 }

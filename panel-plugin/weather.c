@@ -893,7 +893,6 @@ xfceweather_free (XfcePanelPlugin  *plugin,
       data->updatetimeout = 0;
     }
 
-  free_get_data_buffer ();
   xmlCleanupParser ();
 
   /* Free Tooltip */
