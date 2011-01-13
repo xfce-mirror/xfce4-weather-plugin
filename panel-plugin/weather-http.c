@@ -281,7 +281,11 @@ weather_http_receive_data_idle (gpointer user_data)
       bytes = send (connection->fd, request + m, n - m, 0);
 
       if (weather_http_receive_data_check (connection, timeout))
-        return FALSE;
+        {
+          g_free (request);
+
+          return FALSE;
+        }
 
       /* check for problems */
       if (G_UNLIKELY (bytes < 0))

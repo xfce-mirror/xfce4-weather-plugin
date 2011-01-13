@@ -477,6 +477,7 @@ cb_geolocation (gboolean  succeed,
      if ((sane_str = sanitize_str (full_loc)) == NULL) {
        data->cb(NULL, NULL, data->user_data);
        g_free(data);
+       g_free(full_loc);
        return;
      }
      g_free(full_loc);

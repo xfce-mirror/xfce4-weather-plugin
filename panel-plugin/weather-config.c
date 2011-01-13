@@ -235,6 +235,8 @@ apply_options (xfceweather_dialog *dialog)
         {
           xfce_err (_("Please enter proxy settings"));
           gtk_widget_grab_focus (dialog->txt_proxy_host);
+          g_free (text);
+
           return;
         }
 
