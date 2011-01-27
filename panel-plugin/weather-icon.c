@@ -38,6 +38,9 @@ get_icon (const gchar *number,
   GdkPixbuf *image = NULL;
   gchar     *filename;
 
+  if (number == NULL || strcmp (number, "-") == 0)
+    number = "99";
+
   filename = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s" G_DIR_SEPARATOR_S "%s.png",
                               THEMESDIR, DEFAULT_W_THEME, number);
 

@@ -55,7 +55,7 @@ static gboolean lnk_clicked (GtkTextTag *tag, GObject *obj,
                                                                 &iter, "\n", -1);\
 					 g_object_set_data_full(G_OBJECT(lnk_tag), "url", g_strdup(url), g_free); \
 					 g_signal_connect(G_OBJECT(lnk_tag), "event", \
-						G_CALLBACK(lnk_clicked), NULL); 
+						G_CALLBACK(lnk_clicked), NULL);
 
 
 
@@ -74,7 +74,7 @@ static gboolean lnk_clicked (GtkTextTag *tag, GObject *obj,
   } else if (event->type == GDK_LEAVE_NOTIFY) {
      gdk_window_set_cursor(gtk_text_view_get_window(GTK_TEXT_VIEW(obj),
 				GTK_TEXT_WINDOW_TEXT), NULL);
-  } 
+  }
   return FALSE;
 }
 
@@ -103,7 +103,7 @@ static gboolean view_motion_notify(GtkWidget *widget,
     GSList *tags;
     GSList *cur;
 
-    gtk_text_view_window_to_buffer_coords(GTK_TEXT_VIEW(view), 
+    gtk_text_view_window_to_buffer_coords(GTK_TEXT_VIEW(view),
     						GTK_TEXT_WINDOW_WIDGET,
     						event->x, event->y, &bx, &by);
     gtk_text_view_get_iter_at_location(GTK_TEXT_VIEW(view),
@@ -154,7 +154,7 @@ static void view_scrolled_cb (GtkAdjustment *adj, GtkWidget *view)
     gtk_text_view_buffer_to_window_coords(
 			GTK_TEXT_VIEW(view),
 			GTK_TEXT_WINDOW_TEXT, x1, y1, &x, &y);
-    gtk_text_view_move_child(GTK_TEXT_VIEW(view), 
+    gtk_text_view_move_child(GTK_TEXT_VIEW(view),
 			weather_channel_evt, x, y);
   }
 }
@@ -211,17 +211,17 @@ static GtkWidget *weather_summary_get_logo(xfceweather_data *data)
 	GtkWidget *image = gtk_image_new();
 	GdkPixbuf *pixbuf = NULL;
 	gchar *path = get_logo_path();
-	
+
 	pixbuf = gdk_pixbuf_new_from_file(path, NULL);
 	g_free(path);
 	if (pixbuf == NULL) {
-		weather_http_receive_data ("xoap.weather.com", "/web/common/twc/logos/web_73x55.jpg", 
+		weather_http_receive_data ("xoap.weather.com", "/web/common/twc/logos/web_73x55.jpg",
 			data->proxy_host, data->proxy_port, logo_fetched, image);
 	} else {
 		gtk_image_set_from_pixbuf(GTK_IMAGE(image), pixbuf);
 		g_object_unref(pixbuf);
 	}
-	
+
 	return image;
 }
 
@@ -355,13 +355,13 @@ create_summary_tab (xfceweather_data *data)
 		   G_CALLBACK(view_motion_notify), view);
   g_signal_connect(G_OBJECT(view), "leave-notify-event",
 		   G_CALLBACK(view_leave_notify), view);
-		   
+
   weather_channel_icon = weather_summary_get_logo(data);
 
   if (weather_channel_icon) {
     weather_channel_evt = gtk_event_box_new();
     gtk_container_add(GTK_CONTAINER(weather_channel_evt), weather_channel_icon);
-    gtk_text_view_add_child_in_window(GTK_TEXT_VIEW(view), weather_channel_evt, 
+    gtk_text_view_add_child_in_window(GTK_TEXT_VIEW(view), weather_channel_evt,
                                       GTK_TEXT_WINDOW_TEXT, 0, 0);
     gtk_widget_show_all(weather_channel_evt);
     adj = gtk_scrolled_window_get_vadjustment(
@@ -611,7 +611,7 @@ create_summary_window (xfceweather_data *data)
   window = xfce_titled_dialog_new_with_buttons (_("Weather Update"),
                                                 NULL,
                                                 GTK_DIALOG_NO_SEPARATOR,
-                                                GTK_STOCK_ABOUT, 
+                                                GTK_STOCK_ABOUT,
 						GTK_RESPONSE_HELP,
                                                 GTK_STOCK_CLOSE,
                                                 GTK_RESPONSE_ACCEPT, NULL);

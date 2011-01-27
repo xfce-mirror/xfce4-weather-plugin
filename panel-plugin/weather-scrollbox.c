@@ -23,160 +23,180 @@
 
 #include <glib.h>
 #include <gtk/gtk.h>
-#include <libxfce4panel/xfce-panel-macros.h>
+#include <libxfce4panel/libxfce4panel.h>
 
 #include "weather-scrollbox.h"
 #define LABEL_REFRESH 3000
 #define LABEL_SPEED   25
 
+static void gtk_scrollbox_finalize (GObject *object);
+static void gtk_scrollbox_size_request (GtkWidget *widget, GtkRequisition *requisition);
+static gboolean gtk_scrollbox_expose_event (GtkWidget *widget, GdkEventExpose *event);
+static gboolean gtk_scrollbox_fade_out (gpointer user_data);
 
-
-typedef struct
-{
-  gchar      *msg;
-  GdkPixmap *pixmap;
-}
-Label;
-
-enum
-{
-  GTK_SCROLLBOX_ENABLECB = 1
-};
-
-
-
-static GObjectClass *parent_class;
-static gboolean      start_draw_down (GtkScrollbox * self);
-static void          start_draw_up (GtkScrollbox * self);
-static void          stop_callback (GtkScrollbox * self);
-static GdkPixmap    *make_pixmap (GtkScrollbox *, gchar *);
-
-
+G_DEFINE_TYPE (GtkScrollbox, gtk_scrollbox, GTK_TYPE_DRAWING_AREA)
 
 static void
-free_label (Label *lbl)
+gtk_scrollbox_class_init (GtkScrollboxClass *klass)
 {
-  if (lbl->pixmap)
-    g_object_unref (G_OBJECT (lbl->pixmap));
-  if (lbl->msg)
-    g_free (lbl->msg);
+  GObjectClass   *gobject_class;
+  GtkWidgetClass *widget_class;
 
-  panel_slice_free (Label, lbl);
-}
+  gobject_class = G_OBJECT_CLASS (klass);
+  gobject_class->finalize = gtk_scrollbox_finalize;
 
-
-
-static gboolean
-draw_up (GtkScrollbox *self)
-{
-  GdkRectangle update_rect = { 0, 0,
-                               GTK_WIDGET (self)->allocation.width,
-                               GTK_WIDGET (self)->allocation.height
-                             };
-
-  if (self->draw_offset == 0)
-    {
-      self->draw_timeout = g_timeout_add (LABEL_REFRESH,
-                                          (GSourceFunc) start_draw_down,
-                                          self);
-
-      return FALSE;
-    }
-  else
-    self->draw_offset++;
-
-  gtk_widget_draw (GTK_WIDGET (self), &update_rect);
-
-  return TRUE;
-}
-
-
-
-static gboolean
-draw_down (GtkScrollbox *self)
-{
-  GdkRectangle update_rect = { 0, 0,
-                               GTK_WIDGET (self)->allocation.width,
-                               GTK_WIDGET (self)->allocation.height
-                             };
-
-  if (self->draw_offset == self->draw_maxoffset)
-    {
-      self->draw_timeout = 0;
-      start_draw_up (self);
-
-      return FALSE;
-    }
-  else
-    self->draw_offset--;
-
-  gtk_widget_draw (GTK_WIDGET (self), &update_rect);
-
-  return TRUE;
+  widget_class = GTK_WIDGET_CLASS (klass);
+  widget_class->size_request = gtk_scrollbox_size_request;
+  widget_class->expose_event = gtk_scrollbox_expose_event;
+  //widget_class->style_changed = gtk_scrollbox_style_changed;
 }
 
 
 
 static void
-start_draw_up (GtkScrollbox *self)
+gtk_scrollbox_init (GtkScrollbox *self)
 {
-  gint           width, height;
-  Label         *lbl;
-  static size_t  i = 0;
-  GdkRectangle   update_rect = { 0, 0,
-                                 GTK_WIDGET (self)->allocation.width,
-                                 GTK_WIDGET (self)->allocation.height
-                               };
+  GTK_WIDGET_SET_FLAGS (self, GTK_NO_WINDOW);
 
-  if (self->labels->len == 0)
-    return;
+  self->labels = NULL;
+  self->timeout_id = 0;
+  self->offset = 0;
+  self->active = NULL;
+}
 
-  if (i >= self->labels->len)
-    i = 0;
 
-  lbl = (Label *) g_ptr_array_index (self->labels, i);
-  self->pixmap = lbl->pixmap;
 
-  /* If we failed to create a proper pixmap, try again now */
-  if (!lbl->pixmap)
+static void
+gtk_scrollbox_finalize (GObject *object)
+{
+  GtkScrollbox *self = GTK_SCROLLBOX (object);
+
+  /* stop running timeout */
+  if (self->timeout_id != 0)
+    g_source_remove (self->timeout_id);
+
+  /* free all the labels */
+  g_slist_foreach (self->labels, (GFunc) g_object_unref, NULL);
+  g_slist_free (self->labels);
+
+  G_OBJECT_CLASS (gtk_scrollbox_parent_class)->finalize (object);
+}
+
+
+
+static void
+gtk_scrollbox_size_request (GtkWidget      *widget,
+                            GtkRequisition *requisition)
+{
+  GtkScrollbox   *self = GTK_SCROLLBOX (widget);
+  GSList         *li;
+  PangoLayout    *layout;
+  PangoRectangle  logical_rect;
+  gint            width, height;
+
+  requisition->width = 0;
+  requisition->height = 0;
+
+  for (li = self->labels; li != NULL; li = li->next)
     {
-      lbl->pixmap = make_pixmap (self, lbl->msg);
-      if (!lbl->pixmap)
-        {
-          /* Still no pixmap. We need to restart the timer */
-          if (self->draw_timeout)
-            stop_callback (self);
-          self->draw_timeout =
-            g_timeout_add (LABEL_SPEED, (GSourceFunc) start_draw_up, self);
-          return;
-        }
+      layout = PANGO_LAYOUT (li->data);
+      pango_layout_get_extents (layout, NULL, &logical_rect);
+      width = PANGO_PIXELS (logical_rect.width);
+      height = PANGO_PIXELS (logical_rect.height);
+
+      requisition->width = MAX (width, requisition->width);
+      requisition->height = MAX (height, requisition->height);
+    }
+}
+
+
+static gboolean
+gtk_scrollbox_expose_event (GtkWidget      *widget,
+                            GdkEventExpose *event)
+{
+  GtkScrollbox   *self =  GTK_SCROLLBOX (widget);
+  PangoLayout    *layout;
+  gint            width, height;
+  PangoRectangle  logical_rect;
+
+  if (self->active != NULL)
+    {
+      layout = PANGO_LAYOUT (self->active->data);
+      pango_layout_get_extents (layout, NULL, &logical_rect);
+      width = PANGO_PIXELS (logical_rect.width);
+      height = PANGO_PIXELS (logical_rect.height);
+
+      gtk_paint_layout (widget->style,
+                        widget->window,
+                        GTK_WIDGET_STATE (widget),
+                        TRUE, &event->area,
+                        widget, "GtkScrollbox",
+                        widget->allocation.x + (widget->allocation.width - width) / 2,
+                        widget->allocation.y + (widget->allocation.height - height) / 2 + (self->animate ? self->offset : 0),
+                        layout);
+
     }
 
-  if (self->labels->len == 1)
-    {
-      self->pixmap = lbl->pixmap;
-      self->draw_offset = 0;
-
-      gtk_widget_draw (GTK_WIDGET (self), &update_rect);
-      return;
-    }
-
-  gdk_drawable_get_size (GDK_DRAWABLE (self->pixmap), &width, &height);
-  self->draw_middle = self->draw_maxmiddle - width / 2;
-
-  self->draw_timeout =
-    g_timeout_add (LABEL_SPEED, (GSourceFunc) draw_up, self);
-
-  i++;
+  return FALSE;
 }
 
 
 
 static gboolean
-start_draw_down (GtkScrollbox *self)
+gtk_scrollbox_sleep (gpointer user_data)
 {
-  self->draw_timeout =
-    g_timeout_add (LABEL_SPEED, (GSourceFunc) draw_down, self);
+  GtkScrollbox *self = GTK_SCROLLBOX (user_data);
+
+  self->timeout_id = g_timeout_add (LABEL_SPEED, gtk_scrollbox_fade_out, self);
+
+  return FALSE;
+}
+
+
+
+static gboolean
+gtk_scrollbox_fade_in (gpointer user_data)
+{
+  GtkScrollbox *self = GTK_SCROLLBOX (user_data);
+
+  /* decrease counter */
+  self->offset--;
+
+  gtk_widget_queue_draw (GTK_WIDGET (self));
+
+  if (self->offset > 0)
+    return TRUE;
+
+  self->timeout_id = g_timeout_add (LABEL_REFRESH, gtk_scrollbox_sleep, self);
+
+  return FALSE;
+}
+
+
+
+static gboolean
+gtk_scrollbox_fade_out (gpointer user_data)
+{
+  GtkScrollbox *self = GTK_SCROLLBOX (user_data);
+
+  /* increase counter */
+  self->offset++;
+
+  gtk_widget_queue_draw (GTK_WIDGET (self));
+
+  if (self->offset < GTK_WIDGET (self)->allocation.height)
+    return TRUE;
+
+  if (self->active != NULL)
+    {
+      if (self->active->next != NULL)
+        self->active = self->active->next;
+      else
+        self->active = self->labels;
+
+      self->timeout_id = g_timeout_add (LABEL_SPEED,
+                                        gtk_scrollbox_fade_in, self);
+    }
 
   return FALSE;
 }
@@ -184,282 +204,46 @@ start_draw_down (GtkScrollbox *self)
 
 
 static void
-stop_callback (GtkScrollbox *self)
+gtk_scrollbox_start_fade (GtkScrollbox *self)
 {
-  if (self->draw_timeout == 0)
-    return;
+  if (self->timeout_id != 0)
+    {
+      g_source_remove (self->timeout_id);
+      self->timeout_id = 0;
+    }
 
-  g_source_remove (self->draw_timeout);
-  self->draw_timeout = 0;
-}
+  self->active = self->labels;
 
-
-
-static void
-start_callback (GtkScrollbox *self)
-{
-  if (self->draw_timeout)
-    stop_callback (self);
-
-  start_draw_up (self);
-}
-
-
-
-static GdkPixmap *
-make_pixmap (GtkScrollbox *self,
-             gchar        *value)
-{
-  GdkWindow      *rootwin;
-  PangoLayout    *pl;
-  gint            width, height, middle;
-  GdkPixmap      *pixmap;
-  GtkRequisition  widgsize = { 0, };
-  GtkWidget      *widget = (GtkWidget *) self;
-
-
-  /* If we can't draw yet, don't do anything to avoid screwing things */
-  if (!GDK_IS_GC (widget->style->bg_gc[0]))
-    return NULL;
-
-  rootwin = gtk_widget_get_root_window (widget);
-
-  pl = gtk_widget_create_pango_layout (widget, NULL);
-  pango_layout_set_markup (pl, value, -1);
-
-  pango_layout_get_pixel_size (pl, &width, &height);
-
-  pixmap = gdk_pixmap_new (GDK_DRAWABLE (rootwin), width, height, -1);
-
-  gdk_draw_rectangle (GDK_DRAWABLE (pixmap),
-                      widget->style->bg_gc[0], TRUE, 0, 0, width, height);
-
-  gdk_draw_layout (GDK_DRAWABLE (pixmap), widget->style->fg_gc[0], 0, 0, pl);
-
-  g_object_unref (G_OBJECT (pl));
-
-  gtk_widget_size_request (widget, &widgsize);
-
-  if (width <= widgsize.width)
-    width = widgsize.width;
-
-  if (height <= widgsize.height)
-    height = widgsize.height;
+  if (g_slist_length (self->labels) > 1)
+    {
+      self->offset = GTK_WIDGET (self)->allocation.height;
+      self->timeout_id = g_timeout_add (25, gtk_scrollbox_fade_in,
+                                        self);
+    }
   else
-    self->draw_maxoffset = -height;
-
-  if (width != widgsize.width || height != widgsize.height)
-    gtk_widget_set_size_request (widget, width, height);
-
-  middle = width / 2;
-  if (self->draw_maxmiddle < middle)
-    self->draw_maxmiddle = middle;
-
-  return pixmap;
+    {
+      self->offset = 0;
+    }
 }
 
 
 
 void
 gtk_scrollbox_set_label (GtkScrollbox *self,
-                         gint          n,
-                         gchar        *value)
+                         gint          position,
+                         gchar        *markup)
 {
-  gboolean   append = TRUE;
-  GdkPixmap *newpixmap;
-  Label     *newlbl, *lbl;
-
-  if (n != -1)
-    append = FALSE;
-
-  if (!append)
-    {
-      lbl = (Label *) g_ptr_array_index (self->labels, n);
-
-      if (lbl)
-        free_label (lbl);
-
-      newlbl = lbl;
-    }
-  else
-    {
-      newlbl = panel_slice_new0 (Label);
-      g_ptr_array_add (self->labels, newlbl);
-    }
-
-  newpixmap = make_pixmap (self, value);
-
-  newlbl->pixmap = newpixmap;
-  newlbl->msg = g_strdup (value);
-}
+  PangoLayout *layout;
 
 
+  g_return_if_fail (GTK_IS_SCROLLBOX (self));
 
-static void
-gtk_scrollbox_set_property (GObject      *object,
-                            guint         property_id,
-                            const GValue *value,
-                            GParamSpec   *pspec)
-{
-  GtkScrollbox *self = (GtkScrollbox *) object;
-  gboolean      realvalue;
+  layout = gtk_widget_create_pango_layout (GTK_WIDGET (self), NULL);
+  pango_layout_set_markup (layout, markup, -1);
+  self->labels = g_slist_insert (self->labels, layout, position);
+  gtk_widget_queue_resize (GTK_WIDGET (self));
 
-  switch (property_id)
-    {
-    case GTK_SCROLLBOX_ENABLECB:
-      {
-        realvalue = g_value_get_boolean (value);
-
-        if (!realvalue && self->draw_timeout)
-          stop_callback (self);
-        else if (realvalue && !self->draw_timeout)
-          start_callback (self);
-
-        break;
-      }
-    default:
-      /* We don't have any other property... */
-      g_assert (FALSE);
-
-      break;
-    }
-}
-
-
-
-static void
-gtk_scrollbox_get_property (GObject    *object,
-                            guint       property_id,
-                            GValue     *value,
-                            GParamSpec *pspec)
-{
-  return;
-}
-
-
-
-static void
-gtk_scrollbox_finalize (GObject *gobject)
-{
-  GtkScrollbox *self = (GtkScrollbox *) gobject;
-  guint         i;
-  Label        *lbl;
-
-  if (self->draw_timeout)
-    {
-      g_source_remove (self->draw_timeout);
-      self->draw_timeout = 0;
-    }
-
-  if (self->labels->len > 0)
-    {
-      for (i = 0; i < self->labels->len; i++)
-        {
-          lbl = (Label *) g_ptr_array_index (self->labels, i);
-
-          if (lbl->pixmap)
-            g_object_unref (G_OBJECT (lbl->pixmap));
-
-          g_free (lbl->msg);
-        }
-      g_ptr_array_free (self->labels, TRUE);
-    }
-
-  G_OBJECT_CLASS (parent_class)->finalize (gobject);
-}
-
-
-
-static void
-redraw_labels (GtkWidget *widget,
-               GtkStyle  *previous_style)
-{
-  GtkScrollbox *self = GTK_SCROLLBOX (widget);
-  guint         i;
-  GdkPixmap    *newpixmap;
-  Label        *lbl;
-
-  if (self->labels->len < 1)
-    return;
-
-  stop_callback (self);
-
-  gtk_widget_set_size_request (GTK_WIDGET (self), 0, 0);
-  self->draw_middle = 0;
-  self->draw_maxmiddle = 0;
-
-  for (i = 0; i < self->labels->len; i++)
-    {
-      lbl = (Label *) g_ptr_array_index (self->labels, i);
-
-      if (!lbl->msg)
-        continue;
-
-      newpixmap = make_pixmap (self, lbl->msg);
-
-      if (lbl->pixmap)
-        g_object_unref (G_OBJECT (lbl->pixmap));
-
-      lbl->pixmap = newpixmap;
-    }
-
-  start_callback (self);
-
-}
-
-
-
-static void
-gtk_scrollbox_instance_init (GTypeInstance *instance,
-                             gpointer       g_class)
-{
-  GtkScrollbox *self = (GtkScrollbox *) instance;
-
-  self->draw_timeout = 0;
-  self->labels = g_ptr_array_new ();
-  self->pixmap = NULL;
-
-  g_signal_connect (G_OBJECT (self), "style-set",
-                    G_CALLBACK (redraw_labels), NULL);
-}
-
-
-
-static gboolean
-gtk_scrollbox_expose (GtkWidget      *widget,
-                      GdkEventExpose *event)
-{
-  GtkScrollbox *self = (GtkScrollbox *) widget;
-
-  if (self->pixmap)
-    gdk_draw_drawable (widget->window,
-                       widget->style->fg_gc[GTK_WIDGET_STATE (widget)],
-                       self->pixmap,
-                       0, (self->animate ? self->draw_offset : 0),
-                       self->draw_middle, 0,
-                       widget->allocation.width, widget->allocation.height);
-
-  return FALSE;
-}
-
-
-void
-gtk_scrollbox_next_label(GtkScrollbox *self)
-{
-  stop_callback (self);
-  start_draw_down (self);
-}
-
-void
-gtk_scrollbox_enablecb (GtkScrollbox *self,
-                        gboolean      enable)
-{
-  GValue val = { 0, };
-
-  g_value_init (&val, G_TYPE_BOOLEAN);
-  g_value_set_boolean (&val, enable);
-
-  g_object_set_property (G_OBJECT (self), "enablecb", &val);
+  gtk_scrollbox_start_fade (self);
 }
 
 
@@ -467,65 +251,7 @@ gtk_scrollbox_enablecb (GtkScrollbox *self,
 GtkWidget *
 gtk_scrollbox_new (void)
 {
-  return GTK_WIDGET (g_object_new (GTK_TYPE_SCROLLBOX, NULL));
-}
-
-
-
-static void
-gtk_scrollbox_class_init (gpointer g_class,
-                          gpointer g_class_data)
-{
-
-  GObjectClass   *gobject_class = G_OBJECT_CLASS (g_class);
-  GtkWidgetClass *widget_class = GTK_WIDGET_CLASS (g_class);
-  GParamSpec     *scrollbox_param_spec;
-
-  parent_class = g_type_class_peek_parent (g_class);
-
-  gobject_class->set_property = gtk_scrollbox_set_property;
-  gobject_class->get_property = gtk_scrollbox_get_property;
-
-  scrollbox_param_spec = g_param_spec_boolean ("enablecb",
-                                               "Enable callback",
-                                               "Enable or disable the callback",
-                                               FALSE, G_PARAM_READWRITE);
-  g_object_class_install_property (gobject_class,
-                                   GTK_SCROLLBOX_ENABLECB,
-                                   scrollbox_param_spec);
-
-  widget_class->expose_event = gtk_scrollbox_expose;
-  gobject_class->finalize = gtk_scrollbox_finalize;
-}
-
-
-
-GType
-gtk_scrollbox_get_type (void)
-{
-  static GType type = 0;
-
-  if (type == 0)
-    {
-
-      static const GTypeInfo info = {
-        sizeof (GtkScrollboxClass),
-        NULL,                        /* base_init      */
-        NULL,                        /* base_finalize  */
-        gtk_scrollbox_class_init,    /* class_init     */
-        NULL,                        /* class_finalize */
-        NULL,                        /* class_data     */
-        sizeof (GtkScrollbox),
-        0,                           /* n_preallocs    */
-        gtk_scrollbox_instance_init, /* instance_init  */
-        NULL
-      };
-
-      type = g_type_register_static (GTK_TYPE_DRAWING_AREA,
-                                     "GtkScrollbox", &info, 0);
-    }
-
-  return type;
+  return g_object_new (GTK_TYPE_SCROLLBOX, NULL);
 }
 
 
@@ -533,25 +259,30 @@ gtk_scrollbox_get_type (void)
 void
 gtk_scrollbox_clear (GtkScrollbox *self)
 {
-  Label *lbl;
+  g_return_if_fail (GTK_IS_SCROLLBOX (self));
 
-  stop_callback (self);
+  g_slist_foreach (self->labels, (GFunc) g_object_unref, NULL);
+  g_slist_free (self->labels);
+  self->labels = NULL;
 
-  while (self->labels->len > 0)
-    {
-      lbl = (Label *) g_ptr_array_index (self->labels, 0);
-      free_label (lbl);
-
-      g_ptr_array_remove_index (self->labels, 0);
-    }
-
-  self->pixmap = NULL;
-  gtk_widget_set_size_request (GTK_WIDGET (self), 0, 0);
-  self->draw_middle = 0;
-  self->draw_maxmiddle = 0;
+  gtk_widget_queue_resize (GTK_WIDGET (self));
 }
 
+
+
 void gtk_scrollbox_set_animate(GtkScrollbox *self, gboolean animate)
-{ 
+{
   self->animate = animate;
+}
+
+
+
+void gtk_scrollbox_next_label(GtkScrollbox *self)
+{
+  if (self->active->next != NULL)
+    {
+      self->active = self->active->next;
+
+      gtk_widget_queue_resize (GTK_WIDGET (self));
+    }
 }

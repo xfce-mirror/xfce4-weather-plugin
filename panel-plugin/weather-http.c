@@ -39,7 +39,7 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 #include <libxfce4util/libxfce4util.h>
-#include <libxfce4panel/xfce-panel-macros.h>
+#include <libxfce4panel/libxfce4panel.h>
 
 #include "weather-http.h"
 
@@ -149,7 +149,7 @@ weather_http_receive_data_idle (gpointer user_data)
   gchar              *request;
   fd_set              fds;
   struct timeval      select_timeout;
-  
+
   struct addrinfo     h, *r, *a;
   gchar      	     *port = NULL;
   gint                err;
@@ -183,12 +183,12 @@ weather_http_receive_data_idle (gpointer user_data)
   h.ai_family = AF_UNSPEC;
   h.ai_socktype = SOCK_STREAM;
   h.ai_protocol = IPPROTO_TCP;
-  
+
   if (connection->proxy_port)
   	port = g_strdup_printf("%d", connection->proxy_port);
   else
   	port = g_strdup("80");
-  
+
   err = getaddrinfo(connection->proxy_host ? connection->proxy_host : connection->hostname,
   		port, &h, &r);
 
@@ -214,7 +214,7 @@ weather_http_receive_data_idle (gpointer user_data)
     return FALSE;
 
   /* open the socket */
-  
+
   for (a = r; a != NULL; a = a->ai_next) {
     connection->fd = socket (a->ai_family, a->ai_socktype, a->ai_protocol);
     if (connection->fd < 0) {
@@ -232,7 +232,7 @@ weather_http_receive_data_idle (gpointer user_data)
 #endif
     if (m == 0)
       break;
-    else 
+    else
       err = errno;
 
     if (weather_http_receive_data_check (connection, timeout))
@@ -271,7 +271,7 @@ weather_http_receive_data_idle (gpointer user_data)
     request = g_strdup_printf ("GET %s HTTP/1.1\r\n"
     				"Host: %s\r\n"
 				"Connection: close\r\n"
-				"\r\n", 
+				"\r\n",
 				connection->url, connection->hostname);
 
   /* send the request */
@@ -481,7 +481,7 @@ weather_http_receive_data_destroyed (gpointer user_data)
   g_free (connection->proxy_host);
 
   /* cleanup */
-  panel_slice_free (WeatherConnection, connection);
+  g_slice_free (WeatherConnection, connection);
 }
 
 
@@ -497,7 +497,7 @@ weather_http_receive_data (const gchar  *hostname,
   WeatherConnection *connection;
 
   /* create slice */
-  connection = panel_slice_new0 (WeatherConnection);
+  connection = g_slice_new0 (WeatherConnection);
 
   /* set connection properties */
   connection->hostname = g_strdup (hostname);

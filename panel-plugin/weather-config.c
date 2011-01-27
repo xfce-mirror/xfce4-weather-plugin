@@ -1,5 +1,5 @@
 /*  Copyright (c) 2003-2007 Xfce Development Team
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -162,6 +162,7 @@ apply_options (xfceweather_dialog *dialog)
   gchar       *text;
   gint         option;
   GValue       value = { 0, };
+  GtkWidget   *widget;
 
   xfceweather_data *data = (xfceweather_data *) dialog->wd;
 
@@ -214,7 +215,7 @@ apply_options (xfceweather_dialog *dialog)
   	GTK_TOGGLE_BUTTON(dialog->chk_animate_transition));
 
   gtk_scrollbox_set_animate(GTK_SCROLLBOX(data->scrollbox), data->animation_transitions);
-  
+
   if (!gtk_toggle_button_get_active
       (GTK_TOGGLE_BUTTON (dialog->chk_proxy_use)))
     data->proxy_fromenv = FALSE;
@@ -233,7 +234,12 @@ apply_options (xfceweather_dialog *dialog)
 
       if (strlen (text) == 0)
         {
-          xfce_err (_("Please enter proxy settings"));
+          widget = gtk_message_dialog_new (NULL, GTK_DIALOG_NO_SEPARATOR,
+                                           GTK_MESSAGE_ERROR, GTK_BUTTONS_CLOSE,
+                                           _("Please enter proxy settings"));
+          gtk_dialog_run (GTK_DIALOG (widget));
+          gtk_widget_destroy (widget);
+
           gtk_widget_grab_focus (dialog->txt_proxy_host);
           g_free (text);
 
@@ -276,7 +282,7 @@ option_i (datas opt)
 static void auto_locate_cb(const gchar *loc_name, const gchar *loc_code, gpointer user_data)
 {
   xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-  
+
   if (loc_code && loc_name) {
     gtk_entry_set_text (GTK_ENTRY (dialog->txt_loc_code), loc_code);
     gtk_label_set_text (GTK_LABEL (dialog->txt_loc_name), loc_name);
@@ -342,7 +348,7 @@ create_config_dialog (xfceweather_data *data,
   sg = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
   sg_buttons = gtk_size_group_new (GTK_SIZE_GROUP_HORIZONTAL);
 
-  dialog = panel_slice_new0 (xfceweather_dialog);
+  dialog = g_slice_new0 (xfceweather_dialog);
 
   dialog->wd = (xfceweather_data *) data;
   dialog->dialog = gtk_widget_get_toplevel (vbox);
@@ -376,10 +382,10 @@ create_config_dialog (xfceweather_data *data,
 
   gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
   gtk_misc_set_alignment (GTK_MISC (dialog->txt_loc_name), 0, 0.5);
-  
+
 #if GTK_CHECK_VERSION(2,12,0)
   gtk_label_set_ellipsize (GTK_LABEL(dialog->txt_loc_name), PANGO_ELLIPSIZE_END);
-#endif  
+#endif
   if (dialog->wd->location_code != NULL)
     gtk_entry_set_text (GTK_ENTRY (dialog->txt_loc_code),
                         dialog->wd->location_code);
@@ -387,9 +393,9 @@ create_config_dialog (xfceweather_data *data,
   if (dialog->wd->location_name != NULL)
     gtk_label_set_text (GTK_LABEL (dialog->txt_loc_name),
                         dialog->wd->location_name);
-  else if (dialog->wd->weatherdata && 
+  else if (dialog->wd->weatherdata &&
            get_data (dialog->wd->weatherdata, DNAM) != NULL &&
-	   strlen (get_data (dialog->wd->weatherdata, DNAM)) > 1)  
+	   strlen (get_data (dialog->wd->weatherdata, DNAM)) > 1)
     gtk_label_set_text (GTK_LABEL (dialog->txt_loc_name),
                         get_data (dialog->wd->weatherdata, DNAM));
   else
@@ -543,7 +549,7 @@ create_config_dialog (xfceweather_data *data,
                     G_CALLBACK (cb_deloption), dialog);
 
 
-  
+
   dialog->chk_animate_transition =
     gtk_check_button_new_with_label (_("Animate transitions between labels"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON

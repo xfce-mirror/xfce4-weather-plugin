@@ -138,7 +138,7 @@ cb_searchdone (gboolean  succeed,
       gtk_dialog_set_response_sensitive(GTK_DIALOG(dialog->dialog), GTK_RESPONSE_ACCEPT, TRUE);
     }
   }
-  
+
 gtk_tree_view_column_set_title(dialog->column, _("Results"));
   return;
 }
@@ -165,7 +165,7 @@ search_cb (GtkWidget *widget,
       return;
     }
   }
-  
+
   g_free(dialog->last_search);
   dialog->last_search = g_strdup(str);
 
@@ -211,7 +211,7 @@ create_search_dialog (GtkWindow *parent,
   search_dialog     *dialog;
   GtkWidget         *dialog_vbox, *dialog_action;
 
-  dialog = panel_slice_new0 (search_dialog);
+  dialog = g_slice_new0 (search_dialog);
 
   dialog->proxy_host = proxy_host;
   dialog->proxy_port = proxy_port;
@@ -242,7 +242,7 @@ create_search_dialog (GtkWindow *parent,
   gtk_container_set_border_width (GTK_CONTAINER (vbox), 6);
   gtk_box_pack_start (GTK_BOX (dialog_vbox), vbox,
                       TRUE, TRUE, 0);
-  
+
   xfce_titled_dialog_set_subtitle (XFCE_TITLED_DIALOG (dialog->dialog),
 				   _("Enter a city name or zip code"));
 
@@ -251,7 +251,7 @@ create_search_dialog (GtkWindow *parent,
 
   dialog->search_entry = gtk_entry_new ();
   gtk_box_pack_start (GTK_BOX (hbox), dialog->search_entry, TRUE, TRUE, 0);
-  
+
   g_signal_connect (G_OBJECT (dialog->search_entry), "activate",
                     G_CALLBACK (search_cb), dialog);
 
@@ -327,7 +327,7 @@ free_search_dialog (search_dialog * dialog)
 
   gtk_widget_destroy (dialog->dialog);
 
-  panel_slice_free (search_dialog, dialog);
+  g_slice_free (search_dialog, dialog);
 }
 
 typedef struct {
@@ -335,7 +335,7 @@ typedef struct {
   gint proxy_port;
   void (*cb)(const gchar *loc_name, const gchar *loc_code, gpointer user_data);
   gpointer user_data;
-} 
+}
 geolocation_data;
 
 static void
@@ -397,7 +397,7 @@ cb_geo_searchdone (gboolean  succeed,
             }
         }
     }
-  
+
   g_free(data);
   xmlFreeDoc (doc);
 }
@@ -457,7 +457,7 @@ cb_geolocation (gboolean  succeed,
             }
         }
     }
-  
+
   if (country_code && region && !strcmp(country_code, "US")) {
     g_free(country);
     country = region;
@@ -465,7 +465,7 @@ cb_geolocation (gboolean  succeed,
   }
   g_free(country_code);
   g_free(region);
-  
+
   xmlFreeDoc (doc);
 
   if (city && country) {
@@ -473,7 +473,7 @@ cb_geolocation (gboolean  succeed,
      gchar *url, *sane_str;
      g_free(city);
      g_free(country);
-     
+
      if ((sane_str = sanitize_str (full_loc)) == NULL) {
        data->cb(NULL, NULL, data->user_data);
        g_free(data);
@@ -481,7 +481,7 @@ cb_geolocation (gboolean  succeed,
        return;
      }
      g_free(full_loc);
-     
+
      url = g_strdup_printf ("/search/search?where=%s", sane_str);
      g_free (sane_str);
 
@@ -500,7 +500,7 @@ void weather_search_by_ip(
 	gpointer user_data)
 {
   geolocation_data *data;
-  
+
   if (!gui_cb)
     return;
 

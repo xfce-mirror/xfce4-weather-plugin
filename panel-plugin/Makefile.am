@@ -1,13 +1,13 @@
 INCLUDES =								\
-        -I$(top_srcdir)                                         	\
+	-I$(top_srcdir)							\
 	-DTHEMESDIR=\"$(datadir)/xfce4/weather/icons\" 			\
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"				\
 	-DG_LOG_DOMAIN=\"weather\"
 
-plugindir = $(libexecdir)/xfce4/panel-plugins
-
 plugin_PROGRAMS =							\
 	xfce4-weather-plugin
+
+plugindir = $(libexecdir)/xfce4/panel-plugins
 
 xfce4_weather_plugin_SOURCES =						\
 	weather.c							\
@@ -34,18 +34,18 @@ xfce4_weather_plugin_SOURCES =						\
 xfce4_weather_plugin_CFLAGS =						\
 	$(LIBXFCE4PANEL_CFLAGS)						\
 	$(LIBXFCEGUI4_CFLAGS)						\
-        $(LIBXFCE4UTIL_CFLAGS)                                   	\
-        $(GTK_CFLAGS)                                            	\
+	$(LIBXFCE4UTIL_CFLAGS)						\
+	$(GTK_CFLAGS)							\
 	$(LIBXML_CFLAGS)
 
 xfce4_weather_plugin_LDADD =						\
-        $(LIBXFCE4PANEL_LIBS)						\
-        $(LIBXFCE4UTIL_LIBS)                                     	\
+	$(LIBXFCE4PANEL_LIBS)						\
+	$(LIBXFCE4UTIL_LIBS)						\
 	$(LIBXFCEGUI4_LIBS)						\
-        $(GTK_LIBS)                                              	\
+	$(GTK_LIBS)							\
 	$(LIBXML_LIBS)							\
 	$(LIBRESOLV)
-	
+
 desktopdir = $(datadir)/xfce4/panel-plugins
 desktop_in_in_files = weather.desktop.in.in
 desktop_in_files = $(desktop_in_in_files:.desktop.in.in=.desktop.in)

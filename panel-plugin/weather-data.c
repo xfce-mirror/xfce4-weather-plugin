@@ -30,7 +30,7 @@
 #define DATAS_DAYF  0x0300
 #define DATAS_LNK   0x0400
 
-#define EMPTY_STRING "-"
+#define EMPTY_STRING "99"
 #define CHK_NULL(str) (str ? str : EMPTY_STRING);
 
 static const gchar *

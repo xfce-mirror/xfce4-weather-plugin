@@ -18,7 +18,7 @@
 #ifndef __WEATHER_H__
 #define __WEATHER_H__
 
-#include <libxfce4panel/xfce-panel-plugin.h>
+#include <libxfce4panel/libxfce4panel.h>
 #include <libxfce4util/libxfce4util.h>
 #define PLUGIN_WEBSITE   "http://goodies.xfce.org/projects/panel-plugins/xfce4-weather-plugin"
 #define PARTNER_ID       "1121946239"

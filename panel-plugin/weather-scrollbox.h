@@ -1,5 +1,5 @@
 /*  Copyright (c) 2003-2007 Xfce Development Team
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -34,29 +34,23 @@ typedef struct _GtkScrollboxClass GtkScrollboxClass;
 
 struct _GtkScrollbox
 {
-  GtkDrawingArea  parent;
+  GtkDrawingArea  __parent__;
 
-  GPtrArray      *labels;
-
-  gint            draw_offset;
-  gint            draw_maxoffset;
-  gint            draw_middle;
-  gint            draw_maxmiddle;
-  gint            draw_timeout;
-  gboolean        animate;
-  GdkPixmap      *pixmap;
+  GSList *labels;
+  guint timeout_id;
+  gint offset;
+  GSList *active;
+  gboolean animate;
 };
 
 struct _GtkScrollboxClass
 {
-  GtkDrawingAreaClass parent;
+  GtkDrawingAreaClass __parent__;
 };
 
-void gtk_scrollbox_set_label (GtkScrollbox * self, gint n, gchar * value);
+void gtk_scrollbox_set_label (GtkScrollbox * self, gint position, gchar *markup);
 
 GtkWidget *gtk_scrollbox_new (void);
-
-void gtk_scrollbox_enablecb (GtkScrollbox * self, gboolean enable);
 
 void gtk_scrollbox_clear (GtkScrollbox * self);
 

@@ -243,8 +243,6 @@ set_icon_error (xfceweather_data *data)
   gtk_scrollbox_set_label (GTK_SCROLLBOX (data->scrollbox), -1, str);
   g_free (str);
 
-  gtk_scrollbox_enablecb  (GTK_SCROLLBOX (data->scrollbox), TRUE);
-
   gtk_widget_get_size_request (data->scrollbox, NULL, &height);
 
   if (data->orientation == GTK_ORIENTATION_VERTICAL)
@@ -285,8 +283,6 @@ set_icon_current (xfceweather_data *data)
       g_free (str);
     }
 
-  gtk_scrollbox_enablecb (GTK_SCROLLBOX (data->scrollbox), TRUE);
-
   if (i == 0)
     {
       size = data->size;
@@ -299,9 +295,9 @@ set_icon_current (xfceweather_data *data)
       else
         size = data->size;
     }
-
+ 
   icon = get_icon (get_data (data->weatherdata, WICON), size);
-
+ 
   gtk_image_set_from_pixbuf (GTK_IMAGE (data->iconimage), icon);
 
   if (G_LIKELY (icon))
@@ -504,7 +500,7 @@ xfceweather_read_config (XfcePanelPlugin  *plugin,
       data->proxy_port = data->saved_proxy_port;
     }
 
-  data->animation_transitions = xfce_rc_read_bool_entry (rc, 
+  data->animation_transitions = xfce_rc_read_bool_entry (rc,
   		"animation_transitions", TRUE);
 
   gtk_scrollbox_set_animate(GTK_SCROLLBOX(data->scrollbox), data->animation_transitions);
@@ -702,7 +698,7 @@ xfceweather_dialog_response (GtkWidget          *dlg,
 
       gtk_widget_destroy (dlg);
       gtk_list_store_clear (dialog->mdl_xmloption);
-      panel_slice_free (xfceweather_dialog, dialog);
+      g_slice_free (xfceweather_dialog, dialog);
 
       xfce_panel_plugin_unblock_menu (data->plugin);
       xfceweather_write_config (data->plugin, data);
@@ -755,17 +751,17 @@ static gboolean weather_get_tooltip_cb (GtkWidget        *widget,
 					gint              y,
 					gboolean          keyboard_mode,
 					GtkTooltip       *tooltip,
-					xfceweather_data *data) 
+					xfceweather_data *data)
 {
   GdkPixbuf *icon;
   gchar *markup_text;
-  
+
   if (data->weatherdata == NULL) {
     gtk_tooltip_set_text (tooltip, _("Cannot update weather data"));
   } else {
     markup_text = g_markup_printf_escaped(
   	  "<b>%s</b>\n"
-	  "%s", 
+	  "%s",
 	  get_data (data->weatherdata, DNAM),
 	  translate_desc (get_data (data->weatherdata, TRANS))
 	  );
@@ -775,7 +771,7 @@ static gboolean weather_get_tooltip_cb (GtkWidget        *widget,
   icon = get_icon (get_data (data->weatherdata, WICON), 32);
   gtk_tooltip_set_icon (tooltip, icon);
   g_object_unref (G_OBJECT(icon));
-  
+
   return TRUE;
 }
 
@@ -783,7 +779,7 @@ static gboolean weather_get_tooltip_cb (GtkWidget        *widget,
 static xfceweather_data *
 xfceweather_create_control (XfcePanelPlugin *plugin)
 {
-  xfceweather_data *data = panel_slice_new0 (xfceweather_data);
+  xfceweather_data *data = g_slice_new0 (xfceweather_data);
   GtkWidget        *refresh, *mi;
   datas             lbl;
   GdkPixbuf        *icon = NULL;
@@ -822,7 +818,7 @@ xfceweather_create_control (XfcePanelPlugin *plugin)
 
 #if GTK_CHECK_VERSION(2,12,0)
   g_object_set (G_OBJECT(data->tooltipbox), "has-tooltip", TRUE, NULL);
-  g_signal_connect(G_OBJECT(data->tooltipbox), "query-tooltip", 
+  g_signal_connect(G_OBJECT(data->tooltipbox), "query-tooltip",
 		   G_CALLBACK(weather_get_tooltip_cb),
 		  data);
 #endif
@@ -909,7 +905,7 @@ xfceweather_free (XfcePanelPlugin  *plugin,
   /* Free Array */
   g_array_free (data->labels, TRUE);
 
-  panel_slice_free (xfceweather_data, data);
+  g_slice_free (xfceweather_data, data);
 }
 
 
@@ -952,7 +948,7 @@ xfceweather_set_orientation (XfcePanelPlugin  *panel,
   g_object_unref(G_OBJECT(data->vbox_center_scrollbox));
 
   gtk_scrollbox_clear (GTK_SCROLLBOX (data->scrollbox));
-  
+
   if (data->weatherdata)
     set_icon_current (data);
   else
