@@ -813,8 +813,8 @@ xfceweather_create_control (XfcePanelPlugin *plugin)
 
   data->tooltipbox = gtk_event_box_new ();
   gtk_container_add (GTK_CONTAINER (data->tooltipbox), data->top_vbox);
+  gtk_event_box_set_visible_window (GTK_EVENT_BOX (data->tooltipbox), FALSE);
   gtk_widget_show_all (data->tooltipbox);
-  GTK_WIDGET_SET_FLAGS (GTK_WIDGET(data->tooltipbox), GTK_NO_WINDOW);
 
 #if GTK_CHECK_VERSION(2,12,0)
   g_object_set (G_OBJECT(data->tooltipbox), "has-tooltip", TRUE, NULL);

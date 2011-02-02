@@ -118,6 +118,10 @@ gtk_scrollbox_expose_event (GtkWidget      *widget,
   PangoLayout    *layout;
   gint            width, height;
   PangoRectangle  logical_rect;
+  gboolean        result = FALSE;
+
+  if (GTK_WIDGET_CLASS (gtk_scrollbox_parent_class)->expose_event != NULL)
+    result = GTK_WIDGET_CLASS (gtk_scrollbox_parent_class)->expose_event (widget, event);
 
   if (self->active != NULL)
     {
@@ -137,7 +141,7 @@ gtk_scrollbox_expose_event (GtkWidget      *widget,
 
     }
 
-  return FALSE;
+  return result;
 }
 
 
