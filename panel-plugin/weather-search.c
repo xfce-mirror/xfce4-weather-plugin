@@ -468,7 +468,7 @@ cb_geolocation (gboolean  succeed,
             }
         }
     }
-g_message ("%s %s %s %s", city, country, country_code, region);
+
   if (country && city)
     {
       if (country_code && !strcmp (country_code, "US") && region)
