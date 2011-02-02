@@ -149,7 +149,6 @@ weather_http_receive_data_idle (gpointer user_data)
   gchar              *request;
   fd_set              fds;
   struct timeval      select_timeout;
-
   struct addrinfo     h, *r, *a;
   gchar      	     *port = NULL;
   gint                err;
@@ -363,37 +362,48 @@ weather_http_receive_data_idle (gpointer user_data)
   if (G_LIKELY (connection->received_len > 0))
     {
       /* get the pointer to the content-length */
+      int cts_len = -1;
       p = strstr ((char *)connection->received, "Content-Length:");
-
       if (G_LIKELY (p))
         {
-	  int cts_len = 0;
           /* advance the pointer */
           p += strlen("Content-Length:");
 
           cts_len = strtol (p, NULL, 10);
-          if (G_UNLIKELY (cts_len < 0)) {
-	     g_warning(_("Negative content length"));
-             /* set status */
-             connection->status = STATUS_ERROR;
-	  } else {
-             /* calculate the header length */
-             n = connection->received_len - cts_len;
+          if (G_UNLIKELY (cts_len < 0))
+            {
+              g_warning(_("Negative content length"));
 
-             if (G_LIKELY (n > 0))
-               {
-        	 /* erase the header from the reveiced string */
-		 void *tmp = g_malloc(cts_len+1);
-		 memcpy(tmp, connection->received+n, cts_len);
-		 ((gchar *)tmp)[cts_len] = 0;
-		 g_free(connection->received);
-		 connection->received = tmp;
-		 connection->received_len = cts_len;
-               }
+              /* set status */
+              connection->status = STATUS_ERROR;
+            }
+        }
+      else
+        {
+          /* hack for archive.xfce.org, which return no content-length */
+          p = strstr ((char *)connection->received, "<Response>");
+          if (G_LIKELY (p))
+            cts_len = connection->received_len - (p - connection->received);
+        }
 
-             /* everything went fine... */
-             connection->status = STATUS_SUCCEED;
-	  }
+      if (cts_len > -1)
+        {
+          /* calculate the header length */
+          n = connection->received_len - cts_len;
+
+          if (G_LIKELY (n > 0))
+            {
+              /* erase the header from the reveiced string */
+              void *tmp = g_malloc(cts_len+1);
+              memcpy(tmp, connection->received+n, cts_len);
+              ((gchar *)tmp)[cts_len] = 0;
+              g_free(connection->received);
+              connection->received = tmp;
+              connection->received_len = cts_len;
+            }
+
+          /* everything went fine... */
+          connection->status = STATUS_SUCCEED;
         }
       else
         {

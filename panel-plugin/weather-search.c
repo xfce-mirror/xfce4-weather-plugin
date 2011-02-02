@@ -413,17 +413,28 @@ cb_geolocation (gboolean  succeed,
   xmlNode       *cur_node;
   gchar         *city = NULL, *country = NULL;
   gchar         *country_code = NULL, *region = NULL;
+  gchar         *full_loc;
+  gsize          length;
+  gchar         *p;
 
   if (!succeed || received == NULL) {
     data->cb(NULL, NULL, data->user_data);
     g_free(data);
     return;
   }
+
+  /* hack for archive.xfce.org, which return no content-length */
+  p = strstr (received, "</Response>");
+  if (p != NULL)
+    length = p - received + strlen ("</Response>");
+  else
+    length = strlen (received);
+
   if (g_utf8_validate(received, -1, NULL)) {
     /* force parsing as UTF-8, the XML encoding header may lie */
-    doc = xmlReadMemory (received, strlen (received), NULL, "UTF-8", 0);
+    doc = xmlReadMemory (received, length, NULL, "UTF-8", 0);
   } else {
-    doc = xmlParseMemory (received, strlen(received));
+    doc = xmlParseMemory (received, length);
   }
   g_free (received);
 
@@ -457,22 +468,32 @@ cb_geolocation (gboolean  succeed,
             }
         }
     }
+g_message ("%s %s %s %s", city, country, country_code, region);
+  if (country && city)
+    {
+      if (country_code && !strcmp (country_code, "US") && region)
+        full_loc = g_strdup_printf ("%s, %s", city, region);
+      else
+        full_loc = g_strdup_printf ("%s, %s", city, country);
+    }
+  else if (country)
+    {
+      full_loc = g_strdup (country);
+    }
+  else
+    {
+      full_loc = NULL;
+    }
 
-  if (country_code && region && !strcmp(country_code, "US")) {
-    g_free(country);
-    country = region;
-    region = NULL;
-  }
-  g_free(country_code);
-  g_free(region);
+  g_free (country_code);
+  g_free (region);
+  g_free (country);
+  g_free (city);
 
   xmlFreeDoc (doc);
 
-  if (city && country) {
-     gchar *full_loc = g_strdup_printf("%s, %s", city, country);
+  if (full_loc) {
      gchar *url, *sane_str;
-     g_free(city);
-     g_free(country);
 
      if ((sane_str = sanitize_str (full_loc)) == NULL) {
        data->cb(NULL, NULL, data->user_data);
@@ -510,7 +531,9 @@ void weather_search_by_ip(
   data->proxy_host = proxy_host;
   data->proxy_port = proxy_port;
 
-  weather_http_receive_data ("ipinfodb.com", "/ip_query.php",
+  /* archive.xfce.org is our download server that runs mod_geoip
+   * with the www.maxmind.com database */
+  weather_http_receive_data ("archive.xfce.org", "/geolocation",
                              proxy_host, proxy_port,
                              cb_geolocation, data);
   return;
