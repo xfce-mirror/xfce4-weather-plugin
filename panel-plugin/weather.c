@@ -377,13 +377,11 @@ update_weatherdata (xfceweather_data *data)
     }
 
   /* build url */
-  url = g_strdup_printf ("/weather/local/%s?cc=*&dayf=%d&unit=%c&link=xoap&prod=xoap&par=%s&key=%s",
-                         "FIXME", XML_WEATHER_DAYF_N,
-                         data->unit == METRIC ? 'm' : 'i',
-			 PARTNER_ID, LICENSE_KEY);
+  url = g_strdup_printf ("/weatherapi/locationforecastlts/1.1/?lat=%s;lon=%s",
+                         data->lat, data->lon);
 
   /* start receive thread */
-  weather_http_receive_data ("xoap.weather.com", url, data->proxy_host,
+  weather_http_receive_data ("api.yr.no", url, data->proxy_host,
                              data->proxy_port, cb_update, data);
 
   /* cleanup */
