@@ -33,7 +33,7 @@ xfce4_weather_plugin_SOURCES =						\
 
 xfce4_weather_plugin_CFLAGS =						\
 	$(LIBXFCE4PANEL_CFLAGS)						\
-	$(LIBXFCEGUI4_CFLAGS)						\
+	$(LIBXFCE4UI_CFLAGS)						\
 	$(LIBXFCE4UTIL_CFLAGS)						\
 	$(GTK_CFLAGS)							\
 	$(LIBXML_CFLAGS)
@@ -41,7 +41,7 @@ xfce4_weather_plugin_CFLAGS =						\
 xfce4_weather_plugin_LDADD =						\
 	$(LIBXFCE4PANEL_LIBS)						\
 	$(LIBXFCE4UTIL_LIBS)						\
-	$(LIBXFCEGUI4_LIBS)						\
+	$(LIBXFCE4UI_LIBS)						\
 	$(GTK_LIBS)							\
 	$(LIBXML_LIBS)							\
 	$(LIBRESOLV)

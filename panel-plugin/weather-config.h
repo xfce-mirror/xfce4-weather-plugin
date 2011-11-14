@@ -31,7 +31,8 @@ typedef struct
 {
   GtkWidget        *dialog;
   GtkWidget        *opt_unit;
-  GtkWidget        *txt_loc_code;
+  GtkWidget        *txt_lat;
+  GtkWidget        *txt_lon;
   GtkWidget        *txt_loc_name;
   GtkWidget        *txt_proxy_host;
   GtkWidget        *txt_proxy_port;

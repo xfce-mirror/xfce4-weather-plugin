@@ -21,7 +21,7 @@
 
 #include <string.h>
 
-#include <libxfcegui4/libxfcegui4.h>
+#include <libxfce4ui/libxfce4ui.h>
 
 #include "weather-parsers.h"
 #include "weather-data.h"
@@ -36,13 +36,14 @@
 
 static void
 append_result (GtkListStore *mdl,
-               gchar        *id,
+               gchar        *lat,
+	       gchar        *lon,
                gchar        *city)
 {
   GtkTreeIter iter;
 
   gtk_list_store_append (mdl, &iter);
-  gtk_list_store_set (mdl, &iter, 0, city, 1, id, -1);
+  gtk_list_store_set (mdl, &iter, 0, city, 1, lat, lon, -1);
 }
 
 
@@ -79,7 +80,7 @@ cb_searchdone (gboolean  succeed,
   search_dialog *dialog = (search_dialog *) user_data;
   xmlDoc        *doc;
   xmlNode       *cur_node;
-  gchar         *id, *city;
+  gchar         *lat, *lon, *city;
   gint           found = 0;
   GtkTreeIter       iter;
   GtkTreeSelection *selection;
@@ -106,24 +107,29 @@ cb_searchdone (gboolean  succeed,
     {
       for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next)
         {
-          if (NODE_IS_TYPE (cur_node, "loc"))
+          if (NODE_IS_TYPE (cur_node, "place"))
             {
-              id = (gchar *) xmlGetProp (cur_node, (const xmlChar *) "id");
-
-              if (!id)
-                continue;
-
-              city = DATA (cur_node);
+              lat = (gchar *) xmlGetProp (cur_node, (const xmlChar *) "lat");
+	      if (!lat)
+		continue;
+              lon = (gchar *) xmlGetProp (cur_node, (const xmlChar *) "lon");
+	      if (!lon) {
+	        g_free(lat);
+		continue;
+	      }
+              city = (gchar *) xmlGetProp (cur_node, (const xmlChar *) "display_name");
 
               if (!city)
                 {
-                  g_free (id);
+                  g_free (lat);
+                  g_free (lon);
                   continue;
                 }
 
-              append_result (dialog->result_mdl, id, city);
+              append_result (dialog->result_mdl, lat, lon, city);
 	      found++;
-              g_free (id);
+              g_free (lat);
+              g_free (lon);
               g_free (city);
             }
         }
@@ -177,11 +183,11 @@ search_cb (GtkWidget *widget,
   gtk_widget_set_sensitive(dialog->find_button, FALSE);
   gtk_dialog_set_response_sensitive(GTK_DIALOG(dialog->dialog), GTK_RESPONSE_ACCEPT, FALSE);
 
-  url = g_strdup_printf ("/search/search?where=%s", sane_str);
+  url = g_strdup_printf ("/search?q=%s&format=xml", sane_str);
   g_free (sane_str);
 
   gtk_tree_view_column_set_title(dialog->column, _("Searching..."));
-  weather_http_receive_data ("xoap.weather.com", url,
+  weather_http_receive_data ("nominatim.openstreetmap.org", url,
                              dialog->proxy_host, dialog->proxy_port,
                              cb_searchdone, dialog);
 
@@ -269,7 +275,7 @@ create_search_dialog (GtkWindow *parent,
                                   GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
   gtk_container_add (GTK_CONTAINER (frame), scroll);
 
-  dialog->result_mdl = gtk_list_store_new (2, G_TYPE_STRING, G_TYPE_STRING);
+  dialog->result_mdl = gtk_list_store_new (3, G_TYPE_STRING, G_TYPE_STRING, G_TYPE_STRING);
   dialog->result_list = gtk_tree_view_new_with_model (GTK_TREE_MODEL (dialog->result_mdl));
   dialog->column = gtk_tree_view_column_new_with_attributes (_("Results"), renderer, "text", 0, NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (dialog->result_list), dialog->column);
@@ -301,7 +307,13 @@ run_search_dialog (search_dialog *dialog)
         {
           gtk_tree_model_get_value (GTK_TREE_MODEL (dialog->result_mdl),
                                     &iter, 1, &value);
-          dialog->result = g_strdup (g_value_get_string (&value));
+          dialog->result_lat = g_strdup (g_value_get_string (&value));
+
+          g_value_unset (&value);
+
+          gtk_tree_model_get_value (GTK_TREE_MODEL (dialog->result_mdl),
+                                    &iter, 2, &value);
+          dialog->result_lon = g_strdup (g_value_get_string (&value));
 
           g_value_unset (&value);
 
@@ -321,7 +333,8 @@ run_search_dialog (search_dialog *dialog)
 void
 free_search_dialog (search_dialog * dialog)
 {
-  g_free (dialog->result);
+  g_free (dialog->result_lat);
+  g_free (dialog->result_lon);
   g_free (dialog->result_name);
   g_free (dialog->last_search);
 
@@ -333,7 +346,7 @@ free_search_dialog (search_dialog * dialog)
 typedef struct {
   const gchar *proxy_host;
   gint proxy_port;
-  void (*cb)(const gchar *loc_name, const gchar *loc_code, gpointer user_data);
+  void (*cb)(const gchar *loc_name, const gchar *lat, const gchar *lon, gpointer user_data);
   gpointer user_data;
 }
 geolocation_data;
@@ -347,10 +360,10 @@ cb_geo_searchdone (gboolean  succeed,
   geolocation_data *data = (geolocation_data *) user_data;
   xmlDoc        *doc;
   xmlNode       *cur_node;
-  gchar         *id, *city;
+  gchar         *lat, *lon, *city;
 
   if (!succeed || received == NULL) {
-    data->cb(NULL, NULL, data->user_data);
+    data->cb(NULL, NULL, NULL, data->user_data);
     g_free(data);
     return;
   }
@@ -364,7 +377,7 @@ cb_geo_searchdone (gboolean  succeed,
   g_free (received);
 
   if (!doc) {
-    data->cb(NULL, NULL, data->user_data);
+    data->cb(NULL, NULL, NULL, data->user_data);
     g_free(data);
     return;
   }
@@ -375,23 +388,29 @@ cb_geo_searchdone (gboolean  succeed,
     {
       for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next)
         {
-          if (NODE_IS_TYPE (cur_node, "loc"))
+          if (NODE_IS_TYPE (cur_node, "place"))
             {
-              id = (gchar *) xmlGetProp (cur_node, (const xmlChar *) "id");
+              lat = (gchar *) xmlGetProp (cur_node, (const xmlChar *) "lat");
+	      if (!lat)
+		continue;
+              lon = (gchar *) xmlGetProp (cur_node, (const xmlChar *) "lon");
+	      if (!lon) {
+	        g_free(lat);
+		continue;
+	      }
 
-              if (!id)
-                continue;
-
-              city = DATA (cur_node);
+              city = (gchar *) xmlGetProp (cur_node, (const xmlChar *) "display_name");
 
               if (!city)
                 {
-                  g_free (id);
+	        g_free(lat);
+	        g_free(lon);
                   continue;
                 }
 
-              data->cb(city, id, data->user_data);
-              g_free (id);
+              data->cb(city, lat, lon, data->user_data);
+              g_free (lat);
+              g_free (lon);
               g_free (city);
 	      break;
             }
@@ -418,7 +437,7 @@ cb_geolocation (gboolean  succeed,
   gchar         *p;
 
   if (!succeed || received == NULL) {
-    data->cb(NULL, NULL, data->user_data);
+    data->cb(NULL, NULL, NULL, data->user_data);
     g_free(data);
     return;
   }
@@ -439,7 +458,7 @@ cb_geolocation (gboolean  succeed,
   g_free (received);
 
   if (!doc) {
-    data->cb(NULL, NULL, data->user_data);
+    data->cb(NULL, NULL, NULL, data->user_data);
     g_free(data);
     return;
   }
@@ -496,17 +515,17 @@ cb_geolocation (gboolean  succeed,
      gchar *url, *sane_str;
 
      if ((sane_str = sanitize_str (full_loc)) == NULL) {
-       data->cb(NULL, NULL, data->user_data);
+       data->cb(NULL, NULL, NULL, data->user_data);
        g_free(data);
        g_free(full_loc);
        return;
      }
      g_free(full_loc);
 
-     url = g_strdup_printf ("/search/search?where=%s", sane_str);
+     url = g_strdup_printf ("/search?q=%s&format=xml", sane_str);
      g_free (sane_str);
 
-     weather_http_receive_data ("xoap.weather.com", url,
+     weather_http_receive_data ("nominatim.openstreetmap.org", url,
                         	data->proxy_host, data->proxy_port,
                         	cb_geo_searchdone, data);
      g_free(url);
@@ -517,7 +536,7 @@ cb_geolocation (gboolean  succeed,
 
 void weather_search_by_ip(
 	const gchar *proxy_host, gint proxy_port,
-        void (*gui_cb)(const gchar *loc_name, const gchar *loc_code, gpointer user_data),
+        void (*gui_cb)(const gchar *loc_name, const gchar *lat, const gchar *lon, gpointer user_data),
 	gpointer user_data)
 {
   geolocation_data *data;

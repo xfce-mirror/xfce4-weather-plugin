@@ -49,7 +49,8 @@ typedef struct
   GtkOrientation   orientation;
   gint             updatetimeout;
 
-  gchar           *location_code;
+  gchar           *lat;
+  gchar           *lon;
   gchar		  *location_name;
   units            unit;
 

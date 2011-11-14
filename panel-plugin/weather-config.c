@@ -20,7 +20,7 @@
 #endif
 
 #include <string.h>
-#include <libxfcegui4/libxfcegui4.h>
+#include <libxfce4ui/libxfce4ui.h>
 
 #include "weather-parsers.h"
 #include "weather-data.h"
@@ -173,14 +173,20 @@ apply_options (xfceweather_dialog *dialog)
   else
     data->unit = METRIC;
 
-  if (data->location_code)
-    g_free (data->location_code);
+  if (data->lat)
+    g_free (data->lat);
+
+  if (data->lon)
+    g_free (data->lon);
 
   if (data->location_name)
     g_free (data->location_name);
 
-  data->location_code =
-    g_strdup (gtk_entry_get_text (GTK_ENTRY (dialog->txt_loc_code)));
+  data->lat =
+    g_strdup (gtk_entry_get_text (GTK_ENTRY (dialog->txt_lat)));
+
+  data->lon =
+    g_strdup (gtk_entry_get_text (GTK_ENTRY (dialog->txt_lon)));
 
   data->location_name =
     g_strdup (gtk_label_get_text (GTK_LABEL (dialog->txt_loc_name)));
@@ -279,19 +285,21 @@ option_i (datas opt)
   return -1;
 }
 
-static void auto_locate_cb(const gchar *loc_name, const gchar *loc_code, gpointer user_data)
+static void auto_locate_cb(const gchar *loc_name, const gchar *lat, const gchar *lon, gpointer user_data)
 {
   xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
 
-  if (loc_code && loc_name) {
-    gtk_entry_set_text (GTK_ENTRY (dialog->txt_loc_code), loc_code);
+  if (lat && lon && loc_name) {
+    gtk_entry_set_text (GTK_ENTRY (dialog->txt_lat), lat);
+    gtk_entry_set_text (GTK_ENTRY (dialog->txt_lon), lon);
     gtk_label_set_text (GTK_LABEL (dialog->txt_loc_name), loc_name);
     gtk_widget_set_sensitive(dialog->txt_loc_name, TRUE);
 #if GTK_CHECK_VERSION(2,12,0)
     gtk_widget_set_tooltip_text(dialog->txt_loc_name,loc_name);
 #endif
   } else {
-    gtk_entry_set_text (GTK_ENTRY (dialog->txt_loc_code), "");
+    gtk_entry_set_text (GTK_ENTRY (dialog->txt_lat), "");
+    gtk_entry_set_text (GTK_ENTRY (dialog->txt_lon), "");
     gtk_label_set_text (GTK_LABEL (dialog->txt_loc_name), _("Unset"));
     gtk_widget_set_sensitive(dialog->txt_loc_name, TRUE);
   }
@@ -317,7 +325,8 @@ cb_findlocation (GtkButton *button,
                                   dialog->wd->proxy_port);
 
   if (run_search_dialog (sdialog)) {
-    gtk_entry_set_text (GTK_ENTRY (dialog->txt_loc_code), sdialog->result);
+    gtk_entry_set_text (GTK_ENTRY (dialog->txt_lat), sdialog->result_lat);
+    gtk_entry_set_text (GTK_ENTRY (dialog->txt_lon), sdialog->result_lon);
     gtk_label_set_text (GTK_LABEL (dialog->txt_loc_name), sdialog->result_name);
     gtk_widget_set_sensitive(dialog->txt_loc_name, TRUE);
 #if GTK_CHECK_VERSION(2,12,0)
@@ -377,7 +386,8 @@ create_config_dialog (xfceweather_data *data,
 
 
   label = gtk_label_new (_("Location:"));
-  dialog->txt_loc_code = gtk_entry_new ();
+  dialog->txt_lat = gtk_entry_new ();
+  dialog->txt_lon = gtk_entry_new ();
   dialog->txt_loc_name = gtk_label_new ("");
 
   gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
@@ -386,28 +396,23 @@ create_config_dialog (xfceweather_data *data,
 #if GTK_CHECK_VERSION(2,12,0)
   gtk_label_set_ellipsize (GTK_LABEL(dialog->txt_loc_name), PANGO_ELLIPSIZE_END);
 #endif
-  if (dialog->wd->location_code != NULL)
-    gtk_entry_set_text (GTK_ENTRY (dialog->txt_loc_code),
-                        dialog->wd->location_code);
+  if (dialog->wd->lat != NULL)
+    gtk_entry_set_text (GTK_ENTRY (dialog->txt_lat),
+                        dialog->wd->lat);
+  if (dialog->wd->lon != NULL)
+    gtk_entry_set_text (GTK_ENTRY (dialog->txt_lon),
+                        dialog->wd->lon);
 
   if (dialog->wd->location_name != NULL)
     gtk_label_set_text (GTK_LABEL (dialog->txt_loc_name),
                         dialog->wd->location_name);
-  else if (dialog->wd->weatherdata &&
-           get_data (dialog->wd->weatherdata, DNAM) != NULL &&
-	   strlen (get_data (dialog->wd->weatherdata, DNAM)) > 1)
-    gtk_label_set_text (GTK_LABEL (dialog->txt_loc_name),
-                        get_data (dialog->wd->weatherdata, DNAM));
-  else
-    gtk_label_set_text (GTK_LABEL (dialog->txt_loc_name),
-                        dialog->wd->location_code);
 
 #if GTK_CHECK_VERSION(2,12,0)
   gtk_widget_set_tooltip_text(dialog->txt_loc_name,
   	gtk_label_get_text(GTK_LABEL(dialog->txt_loc_name)));
 #endif
 
-  if (dialog->wd->location_code == NULL) {
+  if (dialog->wd->lat == NULL || dialog->wd->lon == NULL) {
     start_auto_locate(dialog);
   }
   gtk_size_group_add_widget (sg, label);

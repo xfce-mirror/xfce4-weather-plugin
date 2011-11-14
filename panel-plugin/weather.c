@@ -23,7 +23,7 @@
 #include <sys/stat.h>
 
 #include <libxfce4util/libxfce4util.h>
-#include <libxfcegui4/libxfcegui4.h>
+#include <libxfce4ui/libxfce4ui.h>
 
 #include "weather-parsers.h"
 #include "weather-data.h"
@@ -368,7 +368,7 @@ update_weatherdata (xfceweather_data *data)
 {
   gchar *url;
 
-  if (!data->location_code)
+  if (!data->lat || !data->lon)
     {
       gtk_scrollbox_clear (GTK_SCROLLBOX (data->scrollbox));
       set_icon_error (data);
@@ -378,7 +378,7 @@ update_weatherdata (xfceweather_data *data)
 
   /* build url */
   url = g_strdup_printf ("/weather/local/%s?cc=*&dayf=%d&unit=%c&link=xoap&prod=xoap&par=%s&key=%s",
-                         data->location_code, XML_WEATHER_DAYF_N,
+                         "FIXME", XML_WEATHER_DAYF_N,
                          data->unit == METRIC ? 'm' : 'i',
 			 PARTNER_ID, LICENSE_KEY);
 
@@ -442,14 +442,24 @@ xfceweather_read_config (XfcePanelPlugin  *plugin,
   if (!rc)
     return;
 
-  value = xfce_rc_read_entry (rc, "loc_code", NULL);
+  value = xfce_rc_read_entry (rc, "lat", NULL);
 
   if (value)
     {
-      if (data->location_code)
-        g_free (data->location_code);
+      if (data->lat)
+        g_free (data->lat);
 
-      data->location_code = g_strdup (value);
+      data->lat = g_strdup (value);
+    }
+
+  value = xfce_rc_read_entry (rc, "lon", NULL);
+
+  if (value)
+    {
+      if (data->lon)
+        g_free (data->lon);
+
+      data->lon = g_strdup (value);
     }
 
   value = xfce_rc_read_entry (rc, "loc_name", NULL);
@@ -547,8 +557,11 @@ xfceweather_write_config (XfcePanelPlugin  *plugin,
 
   xfce_rc_write_bool_entry (rc, "celcius", (data->unit == METRIC));
 
-  if (data->location_code)
-    xfce_rc_write_entry (rc, "loc_code", data->location_code);
+  if (data->lat)
+    xfce_rc_write_entry (rc, "lat", data->lat);
+
+  if (data->lon)
+    xfce_rc_write_entry (rc, "lon", data->lon);
 
   if (data->location_name)
     xfce_rc_write_entry (rc, "loc_name", data->location_name);
@@ -898,7 +911,8 @@ xfceweather_free (XfcePanelPlugin  *plugin,
 #endif
 
   /* Free chars */
-  g_free (data->location_code);
+  g_free (data->lat);
+  g_free (data->lon);
   g_free (data->location_name);
   g_free (data->proxy_host);
 
