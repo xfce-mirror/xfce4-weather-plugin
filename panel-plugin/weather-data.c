@@ -82,7 +82,7 @@ get_unit (xml_weather *data, units unit, datas type)
 
 	switch(type) {
 	case TEMPERATURE:
-		return CHK_NULL(loc->temperature_unit);
+		return strcmp(loc->temperature_unit, "celcius") ? "°F":"°C";
 	case PRESSURE:
 		return CHK_NULL(loc->pressure_unit);
 	case WIND_SPEED:
