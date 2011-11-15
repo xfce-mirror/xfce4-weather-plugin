@@ -21,8 +21,26 @@
 
 #include "weather-parsers.h"
 #include <libxfce4panel/libxfce4panel.h>
+#define _XOPEN_SOURCE
+#include <time.h>
+#include <stdlib.h>
 
+static time_t my_timegm(struct tm *tm)
+{
+	time_t ret;
+	char *tz;
 
+	tz = getenv("TZ");
+	setenv("TZ", "", 1);
+	tzset();
+	ret = mktime(tm);
+	if (tz)
+		setenv("TZ", tz, 1);
+	else
+		unsetenv("TZ");
+	tzset();
+	return ret;
+}
 
 xml_weather *
 parse_weather (xmlNode *cur_node)
@@ -31,7 +49,7 @@ parse_weather (xmlNode *cur_node)
   xmlNode     *child_node;
   guint        i = 0;
 
-  if (!NODE_IS_TYPE (cur_node, "weather"))
+  if (!NODE_IS_TYPE (cur_node, "weatherdata"))
     {
       return NULL;
     }
@@ -39,30 +57,26 @@ parse_weather (xmlNode *cur_node)
   if ((ret = g_slice_new0 (xml_weather)) == NULL)
     return NULL;
 
+  ret->num_timeslices = 0;
   for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next)
     {
       if (cur_node->type != XML_ELEMENT_NODE)
         continue;
 
-      if (NODE_IS_TYPE (cur_node, "cc"))
-        ret->cc = parse_cc (cur_node);
-      else if (NODE_IS_TYPE (cur_node, "loc"))
-        ret->loc = parse_loc (cur_node);
-      else if (NODE_IS_TYPE (cur_node, "lnks"))
-        ret->lnk = parse_lnk (cur_node);
-      else if (NODE_IS_TYPE (cur_node, "dayf"))
+      if (NODE_IS_TYPE (cur_node, "product"))
         {
+	  gchar *class = xmlGetProp (cur_node, (const xmlChar *) "class");
+	  if (xmlStrcasecmp(class, "pointData")) {
+		xmlFree(class);
+		continue;
+	  }
+	  g_free(class);
           for (child_node = cur_node->children; child_node;
                child_node = child_node->next)
             {
-              if (NODE_IS_TYPE (child_node, "day"))
+              if (NODE_IS_TYPE (child_node, "time"))
                 {
-                  if (i >= XML_WEATHER_DAYF_N)
-                    break;
-
-                  ret->dayf[i] = parse_dayf (child_node);
-
-                  i++;
+                  parse_time(child_node, ret);
                 }
             }
         }
@@ -71,409 +85,146 @@ parse_weather (xmlNode *cur_node)
   return ret;
 }
 
+void parse_time (xmlNode * cur_node, xml_weather * data) {
+	gchar *datatype = xmlGetProp (cur_node, (const xmlChar *) "datatype");
+	gchar *start = xmlGetProp (cur_node, (const xmlChar *) "from");
+	gchar *end = xmlGetProp (cur_node, (const xmlChar *) "to");
+	struct tm start_t, end_t;
+	time_t start_ts, end_ts;
+	time_t cur_ts;
 
-
-xml_loc *
-parse_loc (xmlNode *cur_node)
-{
-  xml_loc *ret;
-
-  if ((ret = g_slice_new0 (xml_loc)) == NULL)
-    return NULL;
-
-
-  for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next)
-    {
-      if (cur_node->type != XML_ELEMENT_NODE)
-        continue;
-
-      if (NODE_IS_TYPE (cur_node, "dnam"))
-        ret->dnam = DATA (cur_node);
-      else if (NODE_IS_TYPE (cur_node, "sunr"))
-        ret->sunr = DATA (cur_node);
-      else if (NODE_IS_TYPE (cur_node, "suns"))
-        ret->suns = DATA (cur_node);
-    }
-
-  return ret;
-}
-
-xml_lnk *
-parse_lnk (xmlNode *cur_node)
-{
-  xml_lnk *ret;
-  int i = 0;
-  if ((ret = g_slice_new0 (xml_lnk)) == NULL)
-    return NULL;
-
-
-  for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next)
-    {
-      if (cur_node->type != XML_ELEMENT_NODE)
-        continue;
-
-      if (NODE_IS_TYPE (cur_node, "link")) {
-        xmlNode *l_node;
-        if (i < 4) {
-	  for (l_node = cur_node->children; l_node; l_node = l_node->next) {
-              if (NODE_IS_TYPE (l_node, "l"))
-		ret->lnk[i] = DATA(l_node);
-	      else if (NODE_IS_TYPE (l_node, "t"))
-		ret->lnk_txt[i] = DATA(l_node);
-	  }
+	if (xmlStrcasecmp(datatype, "forecast")) {
+		xmlFree(datatype);
+		xmlFree(start);
+		xmlFree(end);
+		return;
 	}
-	i++;
-      }
-    }
 
-  return ret;
+	xmlFree(datatype);
+
+	if (strptime(start, "%Y-%m-%dT%H:%M:%SZ", &start_t) == NULL) {
+		xmlFree(start);
+		xmlFree(end);
+		return;
+	}
+
+	if (strptime(end, "%Y-%m-%dT%H:%M:%SZ", &end_t) == NULL) {
+		xmlFree(start);
+		xmlFree(end);
+		return;
+	}
+
+	xmlFree(start);
+	xmlFree(end);
+
+	start_ts = my_timegm(&start_t);
+	end_ts = my_timegm(&end_t);
+	
+	/* split per-hour */
+	for (cur_ts = start_ts; cur_ts < end_ts; cur_ts += 3600) {
+		xml_time *timeslice = get_timeslice(data, cur_ts, cur_ts + 3600);
+		xmlNode *child_node;
+
+		if (!timeslice)
+			return;
+		for (child_node = cur_node->children; child_node;
+		     child_node = child_node->next) {
+			if (NODE_IS_TYPE (child_node, "location")) {
+				if (timeslice->location == NULL)
+					timeslice->location =
+						g_slice_new0(xml_location);
+				parse_location(child_node, timeslice->location);
+			}
+		}
+	}
 }
 
-
-
-static xml_uv *
-parse_uv (xmlNode *cur_node)
+xml_time *get_timeslice(xml_weather *data, time_t start, time_t end)
 {
-  xml_uv *ret;
+	int i;
+	for (i = 0; i < data->num_timeslices; i++) {
+		if (data->timeslice[i]->start == start
+		 && data->timeslice[i]->end == end)
+			return data->timeslice[i];
+	}
+	if (data->num_timeslices == MAX_TIMESLICE -1)
+		return NULL;
 
-  if ((ret = g_slice_new0 (xml_uv)) == NULL)
-    return NULL;
+	data->timeslice[data->num_timeslices] = g_slice_new0(xml_time);
+	data->num_timeslices++;
 
-  for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next)
-    {
-      if (cur_node->type != XML_ELEMENT_NODE)
-        continue;
-
-      if (NODE_IS_TYPE (cur_node, "i"))
-        ret->i = DATA (cur_node);
-      else if (NODE_IS_TYPE (cur_node, "t"))
-        ret->t = DATA (cur_node);
-    }
-
-  return ret;
+	return data->timeslice[data->num_timeslices - 1];
 }
 
-
-
-static xml_bar *
-parse_bar (xmlNode *cur_node)
+void parse_location (xmlNode * cur_node, xml_location *loc)
 {
-  xml_bar *ret;
+	xmlNode *child_node;
 
-  if ((ret = g_slice_new0 (xml_bar)) == NULL)
-    return NULL;
-
-  for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next)
-    {
-      if (cur_node->type != XML_ELEMENT_NODE)
-        continue;
-
-      if (NODE_IS_TYPE (cur_node, "r"))
-        ret->r = DATA (cur_node);
-      else if (NODE_IS_TYPE (cur_node, "d"))
-        ret->d = DATA (cur_node);
-    }
-
-  return ret;
+	for (child_node = cur_node->children; child_node;
+	     child_node = child_node->next) {
+		if (NODE_IS_TYPE (child_node, "temperature")) {
+			g_free(loc->temperature_unit);
+			g_free(loc->temperature_value);
+			loc->temperature_unit = PROP(child_node, "unit");
+			loc->temperature_value = PROP(child_node, "value");
+		}
+		if (NODE_IS_TYPE (child_node, "windDirection")) {
+			g_free(loc->wind_dir_deg);
+			g_free(loc->wind_dir_name);
+			loc->wind_dir_deg = PROP(child_node, "deg");
+			loc->wind_dir_name = PROP(child_node, "name");
+		}
+		if (NODE_IS_TYPE (child_node, "windSpeed")) {
+			g_free(loc->wind_speed_mps);
+			g_free(loc->wind_speed_beaufort);
+			loc->wind_speed_mps = PROP(child_node, "mps");
+			loc->wind_speed_beaufort = PROP(child_node, "beaufort");
+		}
+		if (NODE_IS_TYPE (child_node, "humidity")) {
+			g_free(loc->humidity_unit);
+			g_free(loc->humidity_value);
+			loc->humidity_unit = PROP(child_node, "unit");
+			loc->humidity_value = PROP(child_node, "value");
+		}
+		if (NODE_IS_TYPE (child_node, "pressure")) {
+			g_free(loc->pressure_unit);
+			g_free(loc->pressure_value);
+			loc->pressure_unit = PROP(child_node, "unit");
+			loc->pressure_value = PROP(child_node, "value");
+		}
+		if (NODE_IS_TYPE (child_node, "fog")) {
+			g_free(loc->fog_percent);
+			loc->fog_percent = PROP(child_node, "percent");
+		}
+		if (NODE_IS_TYPE (child_node, "lowClouds")) {
+			g_free(loc->cloudiness_percent[CLOUDINESS_LOW]);
+			loc->cloudiness_percent[CLOUDINESS_LOW] = PROP(child_node, "percent");
+		}
+		if (NODE_IS_TYPE (child_node, "mediumClouds")) {
+			g_free(loc->cloudiness_percent[CLOUDINESS_MED]);
+			loc->cloudiness_percent[CLOUDINESS_MED] = PROP(child_node, "percent");
+		}
+		if (NODE_IS_TYPE (child_node, "highClouds")) {
+			g_free(loc->cloudiness_percent[CLOUDINESS_HIGH]);
+			loc->cloudiness_percent[CLOUDINESS_HIGH] = PROP(child_node, "percent");
+		}
+		if (NODE_IS_TYPE (child_node, "precipitation")) {
+			g_free(loc->precipitation_unit);
+			g_free(loc->precipitation_value);
+			loc->precipitation_unit = PROP(child_node, "unit");
+			loc->precipitation_value = PROP(child_node, "value");
+		}
+		if (NODE_IS_TYPE (child_node, "symbol")) {
+			g_free(loc->symbol);
+			loc->symbol = PROP(child_node, "id");
+		}
+	}
 }
-
-
-
-static xml_wind *
-parse_wind (xmlNode *cur_node)
-{
-  xml_wind *ret;
-
-  if ((ret = g_slice_new0 (xml_wind)) == NULL)
-    return NULL;
-
-  for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next)
-    {
-      if (cur_node->type != XML_ELEMENT_NODE)
-        continue;
-
-      if (NODE_IS_TYPE (cur_node, "s"))
-        ret->s = DATA (cur_node);
-      else if (NODE_IS_TYPE (cur_node, "gust"))
-        ret->gust = DATA (cur_node);
-      else if (NODE_IS_TYPE (cur_node, "d"))
-        ret->d = DATA (cur_node);
-      else if (NODE_IS_TYPE (cur_node, "t"))
-        ret->t = DATA (cur_node);
-    }
-
-  return ret;
-}
-
-
-
-xml_cc *
-parse_cc (xmlNode *cur_node)
-{
-  xml_cc *ret;
-
-  if ((ret = g_slice_new0 (xml_cc)) == NULL)
-    return NULL;
-
-  for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next)
-    {
-      if (cur_node->type != XML_ELEMENT_NODE)
-        continue;
-
-      if (NODE_IS_TYPE (cur_node, "tmp"))
-        ret->tmp = DATA (cur_node);
-      else if (NODE_IS_TYPE (cur_node, "icon"))
-        ret->icon = DATA (cur_node);
-      else if (NODE_IS_TYPE (cur_node, "t"))
-        ret->t = DATA (cur_node);
-      else if (NODE_IS_TYPE (cur_node, "flik"))
-        ret->flik = DATA (cur_node);
-      else if (NODE_IS_TYPE (cur_node, "bar"))
-        ret->bar = parse_bar (cur_node);
-      else if (NODE_IS_TYPE (cur_node, "wind"))
-        ret->wind = parse_wind (cur_node);
-      else if (NODE_IS_TYPE (cur_node, "hmid"))
-        ret->hmid = DATA (cur_node);
-      else if (NODE_IS_TYPE (cur_node, "vis"))
-        ret->vis = DATA (cur_node);
-      else if (NODE_IS_TYPE (cur_node, "uv"))
-        ret->uv = parse_uv (cur_node);
-      else if (NODE_IS_TYPE (cur_node, "dewp"))
-        ret->dewp = DATA (cur_node);
-      else if (NODE_IS_TYPE (cur_node, "lsup"))
-        ret->lsup = DATA (cur_node);
-      else if (NODE_IS_TYPE (cur_node, "obst"))
-        ret->obst = DATA (cur_node);
-    }
-
-  return ret;
-}
-
-
-
-static xml_part *
-parse_part (xmlNode *cur_node)
-{
-  xml_part *ret;
-
-  if ((ret = g_slice_new0 (xml_part)) == NULL)
-    return NULL;
-
-  for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next)
-    {
-      if (cur_node->type != XML_ELEMENT_NODE)
-        continue;
-
-      if (NODE_IS_TYPE (cur_node, "icon"))
-        ret->icon = DATA (cur_node);
-      else if (NODE_IS_TYPE (cur_node, "t"))
-        ret->t = DATA (cur_node);
-      else if (NODE_IS_TYPE (cur_node, "wind"))
-        ret->wind = parse_wind (cur_node);
-      else if (NODE_IS_TYPE (cur_node, "ppcp"))
-        ret->ppcp = DATA (cur_node);
-      else if (NODE_IS_TYPE (cur_node, "hmid"))
-        ret->hmid = DATA (cur_node);
-    }
-
-  return ret;
-}
-
-
-
-xml_dayf *
-parse_dayf (xmlNode *cur_node)
-{
-  xml_dayf *ret;
-  gchar    *value;
-
-  if ((ret = g_slice_new0 (xml_dayf)) == NULL)
-    return NULL;
-
-  ret->day = (gchar *) xmlGetProp (cur_node, (const xmlChar *) "t");
-  ret->date = (gchar *) xmlGetProp (cur_node, (const xmlChar *) "dt");
-
-  for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next)
-    {
-      if (cur_node->type != XML_ELEMENT_NODE)
-        continue;
-
-      if (NODE_IS_TYPE (cur_node, "hi"))
-        {
-          ret->hi = DATA (cur_node);
-          g_assert (ret->hi != NULL);
-        }
-      else if (NODE_IS_TYPE (cur_node, "low"))
-        {
-          ret->low = DATA (cur_node);
-        }
-      else if (NODE_IS_TYPE (cur_node, "part"))
-        {
-          value = (gchar *) xmlGetProp (cur_node, (const xmlChar *) "p");
-
-          if (xmlStrEqual ((const xmlChar *) value, (const xmlChar *) "d"))
-            ret->part[0] = parse_part (cur_node);
-          else
-            if (xmlStrEqual ((const xmlChar *) value, (const xmlChar *) "n"))
-            ret->part[1] = parse_part (cur_node);
-
-          g_free (value);
-        }
-    }
-
-  return ret;
-}
-
-
-
-static void
-xml_uv_free (xml_uv * data)
-{
-  g_free (data->i);
-  g_free (data->t);
-
-  g_slice_free (xml_uv, data);
-}
-
-
-
-static void
-xml_wind_free (xml_wind * data)
-{
-  g_free (data->s);
-  g_free (data->gust);
-  g_free (data->d);
-  g_free (data->t);
-
-  g_slice_free (xml_wind, data);
-}
-
-
-
-static void
-xml_bar_free (xml_bar * data)
-{
-  g_free (data->r);
-  g_free (data->d);
-
-  g_slice_free (xml_bar, data);
-}
-
-
-
-static void
-xml_cc_free (xml_cc * data)
-{
-  g_free (data->obst);
-  g_free (data->lsup);
-  g_free (data->flik);
-  g_free (data->t);
-  g_free (data->icon);
-  g_free (data->tmp);
-  g_free (data->hmid);
-  g_free (data->vis);
-  g_free (data->dewp);
-
-  if (data->uv)
-    xml_uv_free (data->uv);
-
-  if (data->wind)
-    xml_wind_free (data->wind);
-
-  if (data->bar)
-    xml_bar_free (data->bar);
-
-  g_slice_free (xml_cc, data);
-}
-
-
-
-static void
-xml_loc_free (xml_loc *data)
-{
-  g_free (data->dnam);
-  g_free (data->sunr);
-  g_free (data->suns);
-
-  g_slice_free (xml_loc, data);
-}
-
-static void
-xml_lnk_free (xml_lnk *data)
-{
-  int i;
-  for (i = 0; i < 4; i++) {
-    g_free (data->lnk[i]);
-    g_free (data->lnk_txt[i]);
-  }
-  g_slice_free (xml_lnk, data);
-}
-
-static void
-xml_part_free (xml_part *data)
-{
-  if (!data)
-    return;
-
-  g_free (data->icon);
-  g_free (data->t);
-  g_free (data->ppcp);
-  g_free (data->hmid);
-
-  if (data->wind)
-    xml_wind_free (data->wind);
-
-  g_slice_free (xml_part, data);
-}
-
-
-
-static void
-xml_dayf_free (xml_dayf *data)
-{
-  if (!data)
-    return;
-
-  g_free (data->day);
-  g_free (data->date);
-  g_free (data->hi);
-  g_free (data->low);
-
-  if (data->part[0])
-    xml_part_free (data->part[0]);
-
-  if (data->part[1])
-    xml_part_free (data->part[1]);
-
-  g_slice_free (xml_dayf, data);
-}
-
-
 
 void
 xml_weather_free (xml_weather *data)
 {
   guint i;
-
-  if (data->cc)
-    xml_cc_free (data->cc);
-
-  if (data->loc)
-    xml_loc_free (data->loc);
-
-  if (data->lnk)
-    xml_lnk_free (data->lnk);
-
-  if (data->dayf)
-    {
-      for (i = 0; i < XML_WEATHER_DAYF_N; i++)
-        {
-          if (!data->dayf[i])
-            break;
-
-          xml_dayf_free (data->dayf[i]);
-        }
-    }
 
   g_slice_free (xml_weather, data);
 }

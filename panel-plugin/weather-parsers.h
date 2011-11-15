@@ -24,109 +24,67 @@
 
 G_BEGIN_DECLS
 #define DATA(node) (gchar *) xmlNodeListGetString(node->doc, node->children, 1)
+#define PROP(node, prop) ((gchar *) xmlGetProp ((node), (const xmlChar *) (prop)))
 #define NODE_IS_TYPE(node, type) xmlStrEqual (node->name, (const xmlChar *) type)
-#define XML_WEATHER_DAYF_N 5
+#define MAX_TIMESLICE 250
+
+enum
+{
+	CLOUDINESS_LOW = 0,
+	CLOUDINESS_MED,
+	CLOUDINESS_HIGH,
+	NUM_CLOUDINESS
+};
 
 typedef struct
 {
-  gchar *dnam;
-  gchar *sunr;
-  gchar *suns;
+	gchar *temperature_value;
+	gchar *temperature_unit;
+	
+	gchar *wind_dir_deg;
+	gchar *wind_dir_name;
+	gchar *wind_speed_mps;
+	gchar *wind_speed_beaufort;
+
+	gchar *humidity_value;
+	gchar *humidity_unit;
+	
+	gchar *pressure_value;
+	gchar *pressure_unit;
+	
+	gchar *cloudiness_percent[NUM_CLOUDINESS];
+	gchar *fog_percent;
+	
+	gchar *precipitation_value;
+	gchar *precipitation_unit;
+
+	gchar *symbol;
 }
-xml_loc;
+xml_location;
 
 typedef struct
 {
-  gchar *lnk[4];
-  gchar *lnk_txt[4];
+	time_t start;
+	time_t end;
+	xml_location *location;
 }
-xml_lnk;
+xml_time;
 
 typedef struct
 {
-  gchar *i;
-  gchar *t;
-}
-xml_uv;
-
-typedef struct
-{
-  gchar *s;
-  gchar *gust;
-  gchar *d;
-  gchar *t;
-}
-xml_wind;
-
-typedef struct
-{
-  gchar *r;
-  gchar *d;
-}
-xml_bar;
-
-typedef struct
-{
-  gchar *lsup;
-  gchar *obst;
-  gchar *flik;
-  gchar *t;
-  gchar *icon;
-  gchar *tmp;
-
-  gchar *hmid;
-  gchar *vis;
-
-  xml_uv *uv;
-  xml_wind *wind;
-  xml_bar *bar;
-
-  gchar *dewp;
-}
-xml_cc;
-
-typedef struct
-{
-  gchar *icon;
-  gchar *t;
-  gchar *ppcp;
-  gchar *hmid;
-
-  xml_wind *wind;
-}
-xml_part;
-
-typedef struct
-{
-  gchar *day;
-  gchar *date;
-
-  gchar *hi;
-  gchar *low;
-
-  xml_part *part[2];
-}
-xml_dayf;
-
-typedef struct
-{
-  xml_loc *loc;
-  xml_lnk *lnk;
-  xml_cc *cc;
-  xml_dayf *dayf[XML_WEATHER_DAYF_N];
+  xml_time *timeslice[MAX_TIMESLICE];
+  guint num_timeslices;
 }
 xml_weather;
 
 
 xml_weather *parse_weather (xmlNode * cur_node);
 
-xml_loc *parse_loc (xmlNode * cur_node);
+void parse_time (xmlNode * cur_node, xml_weather * data);
 
-xml_lnk *parse_lnk (xmlNode * cur_node);
+void parse_location (xmlNode * cur_node, xml_location *location);
 
-xml_cc *parse_cc (xmlNode * cur_node);
-
-xml_dayf *parse_dayf (xmlNode * cur_node);
+xml_time *get_timeslice(xml_weather *data, time_t start, time_t end);
 
 void xml_weather_free (xml_weather * data);
 
