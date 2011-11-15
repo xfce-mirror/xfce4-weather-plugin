@@ -265,10 +265,10 @@ create_summary_tab (xfceweather_data *data)
   ltag4 = gtk_text_buffer_create_tag(buffer, "lnk4", "foreground-gdk", &lnk_color, NULL);
 
   /* head */
-  value = g_strdup_printf (_("Weather report for: %s.\n\n"), get_data (data->weatherdata, DNAM));
+  value = g_strdup_printf (_("Weather report for: %s.\n\n"), data->location_name);
   APPEND_BTEXT (value);
   g_free (value);
-
+#if 0
   date = translate_lsup (get_data (data->weatherdata, LSUP));
   value = g_strdup_printf (_("Observation station located in %s\nLast update: %s.\n"),
                            get_data (data->weatherdata, OBST), date ? date : get_data (data->weatherdata, LSUP));
@@ -350,12 +350,12 @@ create_summary_tab (xfceweather_data *data)
   APPEND_LINK_ITEM ("\t", get_data (data->weatherdata, LNK2_TXT), get_data (data->weatherdata, LNK2), ltag2);
   APPEND_LINK_ITEM ("\t", get_data (data->weatherdata, LNK3_TXT), get_data (data->weatherdata, LNK3), ltag3);
   APPEND_LINK_ITEM ("\t", get_data (data->weatherdata, LNK4_TXT), get_data (data->weatherdata, LNK4), ltag4);
-
+#endif
   g_signal_connect(G_OBJECT(view), "motion-notify-event",
 		   G_CALLBACK(view_motion_notify), view);
   g_signal_connect(G_OBJECT(view), "leave-notify-event",
 		   G_CALLBACK(view_leave_notify), view);
-
+#if 0
   weather_channel_icon = weather_summary_get_logo(data);
 
   if (weather_channel_icon) {
@@ -383,6 +383,7 @@ create_summary_tab (xfceweather_data *data)
     g_signal_connect(G_OBJECT(weather_channel_evt), "leave-notify-event",
 		     G_CALLBACK(view_leave_notify), view);
   }
+#endif
   if (hand_cursor == NULL)
     hand_cursor = gdk_cursor_new(GDK_HAND2);
   if (text_cursor == NULL)
@@ -393,7 +394,7 @@ create_summary_tab (xfceweather_data *data)
 }
 
 static GtkWidget *
-make_forecast (xml_dayf *weatherdata,
+make_forecast (xml_weather *weatherdata,
                units     unit)
 {
   GtkWidget *item_vbox, *temp_hbox, *icon_hbox,
@@ -401,9 +402,10 @@ make_forecast (xml_dayf *weatherdata,
   GdkPixbuf *icon;
   gchar     *str, *day, *wind;
 
+  item_vbox = gtk_vbox_new (FALSE, 0);
+#if 0
   DBG ("this day %s", weatherdata->day);
 
-  item_vbox = gtk_vbox_new (FALSE, 0);
   gtk_container_set_border_width (GTK_CONTAINER (item_vbox), 6);
 
 
@@ -551,7 +553,7 @@ make_forecast (xml_dayf *weatherdata,
   gtk_box_pack_start (GTK_BOX (item_vbox), temp_hbox, FALSE, FALSE, 0);
 
   DBG ("Done");
-
+#endif
   return item_vbox;
 }
 
@@ -564,7 +566,7 @@ create_forecast_tab (xfceweather_data *data)
   guint      i;
 
   gtk_container_set_border_width (GTK_CONTAINER (widg), 6);
-
+#if 0
   if (data->weatherdata && data->weatherdata->dayf)
     {
       for (i = 0; i < XML_WEATHER_DAYF_N - 1; i++)
@@ -586,7 +588,7 @@ create_forecast_tab (xfceweather_data *data)
                             make_forecast (data->weatherdata->dayf[i], data->unit), FALSE, FALSE,
                             0);
     }
-
+#endif
   return widg;
 }
 
@@ -616,7 +618,7 @@ create_summary_window (xfceweather_data *data)
                                                 GTK_STOCK_CLOSE,
                                                 GTK_RESPONSE_ACCEPT, NULL);
 
-  title = g_strdup_printf (_("Weather report for: %s"), get_data (data->weatherdata, DNAM));
+  title = g_strdup_printf (_("Weather report for: %s"), data->location_name);
 
   xfce_titled_dialog_set_subtitle (XFCE_TITLED_DIALOG (window), title);
   g_free (title);
@@ -625,7 +627,7 @@ create_summary_window (xfceweather_data *data)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), vbox, TRUE, TRUE,
                       0);
 
-  icon = get_icon (get_data (data->weatherdata, WICON), 48);
+  icon = get_icon (get_data (data->weatherdata, SYMBOL), 48);
 
   if (!icon)
     icon = get_icon ("99", 48);

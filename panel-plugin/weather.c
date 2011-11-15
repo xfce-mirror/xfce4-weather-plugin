@@ -106,38 +106,29 @@ make_label (xml_weather    *weatherdata,
 
   switch (opt)
     {
-    case VIS:
-      lbl = _("V");
-      break;
-    case UV_INDEX:
-      lbl = _("U");
-      break;
-    case WIND_DIRECTION:
-      lbl = _("WD");
-      break;
-    case BAR_D:
-      lbl = _("P");
-      break;
-    case BAR_R:
-      lbl = _("P");
-      break;
-    case FLIK:
-      lbl = _("F");
-      break;
-    case TEMP:
+    case TEMPERATURE:
       lbl = _("T");
       break;
-    case DEWP:
-      lbl = _("D");
-      break;
-    case HMID:
-      lbl = _("H");
+    case PRESSURE:
+      lbl = _("P");
       break;
     case WIND_SPEED:
       lbl = _("WS");
       break;
-    case WIND_GUST:
-      lbl = _("WG");
+    case WIND_DIRECTION:
+      lbl = _("WD");
+      break;
+    case HUMIDITY:
+      lbl = _("H");
+      break;
+    case CLOUDINESS:
+      lbl = _("C");
+      break;
+    case FOG:
+      lbl = _("F");
+      break;
+    case PRECIPITATIONS:
+      lbl = _("R");
       break;
     default:
       lbl = "?";
@@ -160,18 +151,11 @@ make_label (xml_weather    *weatherdata,
 
   switch (opt)
     {
-    case VIS:
-      value = translate_visibility (rawvalue, unit);
-      break;
     case WIND_DIRECTION:
       value = translate_wind_direction (rawvalue);
       break;
     case WIND_SPEED:
-    case WIND_GUST:
       value = translate_wind_speed (rawvalue, unit);
-      break;
-    case BAR_D:
-      value = g_strdup(translate_bard(rawvalue));
       break;
     default:
       value = NULL;
@@ -189,7 +173,7 @@ make_label (xml_weather    *weatherdata,
     else
       {
 	str = g_strdup_printf ("<span size=\"%s\">%s: %s %s</span>",
-                               txtsize, lbl, rawvalue, get_unit (unit, opt));
+                               txtsize, lbl, rawvalue, get_unit (weatherdata, unit, opt));
       }
   } else {
     if (value != NULL)
@@ -201,7 +185,7 @@ make_label (xml_weather    *weatherdata,
     else
       {
 	str = g_strdup_printf ("<span size=\"%s\">%s %s</span>",
-                               txtsize, rawvalue, get_unit (unit, opt));
+                               txtsize, rawvalue, get_unit (weatherdata, unit, opt));
       }
   }
   return str;
@@ -296,7 +280,7 @@ set_icon_current (xfceweather_data *data)
         size = data->size;
     }
  
-  icon = get_icon (get_data (data->weatherdata, WICON), size);
+  icon = get_icon (get_data (data->weatherdata, SYMBOL), size);
  
   gtk_image_set_from_pixbuf (GTK_IMAGE (data->iconimage), icon);
 
@@ -381,6 +365,7 @@ update_weatherdata (xfceweather_data *data)
                          data->lat, data->lon);
 
   /* start receive thread */
+  g_warning("getting http://api.yr.no/%s", url);
   weather_http_receive_data ("api.yr.no", url, data->proxy_host,
                              data->proxy_port, cb_update, data);
 
@@ -773,13 +758,13 @@ static gboolean weather_get_tooltip_cb (GtkWidget        *widget,
     markup_text = g_markup_printf_escaped(
   	  "<b>%s</b>\n"
 	  "%s",
-	  get_data (data->weatherdata, DNAM),
-	  translate_desc (get_data (data->weatherdata, TRANS))
+	  data->location_name,
+	  translate_desc (get_data (data->weatherdata, SYMBOL))
 	  );
     gtk_tooltip_set_markup (tooltip, markup_text);
     g_free(markup_text);
   }
-  icon = get_icon (get_data (data->weatherdata, WICON), 32);
+  icon = get_icon (get_data (data->weatherdata, SYMBOL), 32);
   gtk_tooltip_set_icon (tooltip, icon);
   g_object_unref (G_OBJECT(icon));
 
@@ -865,7 +850,7 @@ xfceweather_create_control (XfcePanelPlugin *plugin)
   xfce_panel_plugin_menu_insert_item (plugin, GTK_MENU_ITEM (mi));
 
   /* assign to tempval because g_array_append_val () is using & operator */
-  lbl = TEMP;
+  lbl = TEMPERATURE;
   g_array_append_val (data->labels, lbl);
   lbl = WIND_DIRECTION;
   g_array_append_val (data->labels, lbl);

@@ -85,6 +85,7 @@ void parse_time (xmlNode * cur_node, xml_weather * data);
 void parse_location (xmlNode * cur_node, xml_location *location);
 
 xml_time *get_timeslice(xml_weather *data, time_t start, time_t end);
+xml_time *get_current_timeslice(xml_weather *data);
 
 void xml_weather_free (xml_weather * data);
 

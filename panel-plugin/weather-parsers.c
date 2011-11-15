@@ -120,13 +120,23 @@ void parse_time (xmlNode * cur_node, xml_weather * data) {
 	start_ts = my_timegm(&start_t);
 	end_ts = my_timegm(&end_t);
 	
+	/* time elements with end == start are the ones with temperatures etc.
+	 * They seem to be for each three hours (6 after 4 days).
+	 */
+	if (end_ts == start_ts && start_ts > time(NULL) + 4 * 24 * 3600)
+		start_ts -= 6 * 3600;
+	else if (end_ts == start_ts)
+		start_ts -= 3 * 3600;
+
 	/* split per-hour */
 	for (cur_ts = start_ts; cur_ts < end_ts; cur_ts += 3600) {
 		xml_time *timeslice = get_timeslice(data, cur_ts, cur_ts + 3600);
 		xmlNode *child_node;
 
-		if (!timeslice)
+		if (!timeslice) {
+			g_warning("no timeslice");
 			return;
+		}
 		for (child_node = cur_node->children; child_node;
 		     child_node = child_node->next) {
 			if (NODE_IS_TYPE (child_node, "location")) {
@@ -151,9 +161,25 @@ xml_time *get_timeslice(xml_weather *data, time_t start, time_t end)
 		return NULL;
 
 	data->timeslice[data->num_timeslices] = g_slice_new0(xml_time);
+	data->timeslice[data->num_timeslices]->start = start;
+	data->timeslice[data->num_timeslices]->end = end;
 	data->num_timeslices++;
 
 	return data->timeslice[data->num_timeslices - 1];
+}
+
+xml_time *get_current_timeslice(xml_weather *data)
+{
+	time_t now = time(NULL);
+	int i;
+
+	for (i = 0; i < data->num_timeslices; i++) {
+		if (data->timeslice[i]->start <= now
+		 && data->timeslice[i]->end >= now)
+			return data->timeslice[i];
+	}
+
+	return NULL;	
 }
 
 void parse_location (xmlNode * cur_node, xml_location *loc)

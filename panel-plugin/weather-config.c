@@ -34,17 +34,14 @@
 #define BORDER    8
 
 static const labeloption labeloptions[OPTIONS_N] = {
-  {N_("Windchill (F)"), FLIK},
-  {N_("Temperature (T)"), TEMP},
-  {N_("Atmosphere pressure (P)"), BAR_R},
-  {N_("Atmosphere state (P)"), BAR_D},
+  {N_("Temperature (T)"), TEMPERATURE},
+  {N_("Atmosphere pressure (P)"), PRESSURE},
   {N_("Wind speed (WS)"), WIND_SPEED},
-  {N_("Wind gust (WG)"), WIND_GUST},
   {N_("Wind direction (WD)"), WIND_DIRECTION},
-  {N_("Humidity (H)"), HMID},
-  {N_("Visibility (V)"), VIS},
-  {N_("UV Index (UV)"), UV_INDEX},
-  {N_("Dewpoint (DP)"), DEWP},
+  {N_("Humidity (H)"), HUMIDITY},
+  {N_("Cloudiness (C)"), CLOUDINESS},
+  {N_("Fog (F)"), FOG},
+  {N_("Precipitations (R)"), PRECIPITATIONS},
 };
 
 typedef void (*cb_function) (xfceweather_data *);

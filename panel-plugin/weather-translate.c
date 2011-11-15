@@ -449,7 +449,7 @@ translate_wind_speed (const gchar *wspeed,
     wspeed_loc = g_strdup (_("N/A"));
   else
     wspeed_loc =
-      g_strdup_printf ("%s %s", wspeed, get_unit (unit, WIND_SPEED));
+      g_strdup_printf ("%s %s", wspeed, get_unit (/* FIXME */NULL, unit, WIND_SPEED));
 
   return wspeed_loc;
 }
@@ -489,21 +489,4 @@ translate_time (const gchar *timestr)
   }
 
   return time_loc;
-}
-
-
-
-/* Unlimited or a number */
-gchar *
-translate_visibility (const gchar *vis,
-                      units        unit)
-{
-  gchar *vis_loc;
-
-  if (g_ascii_strcasecmp (vis, "Unlimited") == 0)
-    vis_loc = g_strdup (_("Unlimited"));
-  else
-    vis_loc = g_strdup_printf ("%s %s", vis, get_unit (unit, VIS));
-
-  return vis_loc;
 }
