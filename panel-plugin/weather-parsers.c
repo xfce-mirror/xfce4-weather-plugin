@@ -257,10 +257,41 @@ void parse_location (xmlNode * cur_node, xml_location *loc)
 	}
 }
 
-void
-xml_weather_free (xml_weather *data)
+static void xml_location_free(xml_location *loc)
+{
+	g_free(loc->temperature_unit);
+	g_free(loc->temperature_value);
+	g_free(loc->wind_dir_deg);
+	g_free(loc->wind_dir_name);
+	g_free(loc->wind_speed_mps);
+	g_free(loc->wind_speed_beaufort);
+	g_free(loc->humidity_unit);
+	g_free(loc->humidity_value);
+	g_free(loc->pressure_unit);
+	g_free(loc->pressure_value);
+	g_free(loc->fog_percent);
+	g_free(loc->cloudiness_percent[CLOUD_LOW]);
+	g_free(loc->cloudiness_percent[CLOUD_MED]);
+	g_free(loc->cloudiness_percent[CLOUD_HIGH]);
+	g_free(loc->precipitation_unit);
+	g_free(loc->precipitation_value);
+	g_free(loc->symbol);
+	g_slice_free (xml_location, loc);
+}
+
+static void xml_time_free(xml_time *timeslice)
+{
+  xml_location_free(timeslice->location);
+  g_slice_free (xml_time, timeslice);
+}
+
+void xml_weather_free (xml_weather *data)
 {
   guint i;
+
+  for (i = 0; i < data->num_timeslices; i++) {
+    xml_time_free(data->timeslice[i]);
+  }
 
   g_slice_free (xml_weather, data);
 }

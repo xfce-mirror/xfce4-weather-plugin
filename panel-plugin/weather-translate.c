@@ -278,10 +278,10 @@ typedef struct {
 	gchar *desc;
 } SymbolToDesc;
 static const SymbolToDesc symbol_to_desc[] = {
-	{ 1, "SUN",		N_("Sunny") },
-	{ 2, "LIGHTCLOUD",	N_("Lightly cloudy") },
-	{ 3, "PARTLYCLOUD",	N_("Partly cloudy") },
-	{ 4, "CLOUD",		N_("Cloudy") },
+	{ 1, "SUN",		N_("Sunny")		},
+	{ 2, "LIGHTCLOUD",	N_("Lightly cloudy")	},
+	{ 3, "PARTLYCLOUD",	N_("Partly cloudy")	},
+	{ 4, "CLOUD",		N_("Cloudy")		},
 	{ 5, "LIGHTRAINSUN",	N_("Sunny, rain showers") },
 	{ 6, "LIGHTRAINTHUNDERSUN",
 				N_("Sunny, rain showers with thunder") },

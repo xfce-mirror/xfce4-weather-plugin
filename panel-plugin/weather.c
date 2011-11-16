@@ -843,7 +843,7 @@ xfceweather_create_control (XfcePanelPlugin *plugin)
 
   /* add refresh button to right click menu, for people who missed the middle mouse click feature */
   mi = gtk_image_menu_item_new_with_mnemonic (_("_Forecast"));
-  icon = get_icon ("32", 16);
+  icon = get_icon ("SUN", 16);
   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi),
   	gtk_image_new_from_pixbuf(icon));
   if (G_LIKELY (icon))

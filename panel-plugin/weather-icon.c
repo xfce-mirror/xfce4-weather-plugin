@@ -37,6 +37,7 @@ get_icon (const gchar *number,
 {
   GdkPixbuf *image = NULL;
   gchar     *filename;
+  gchar     *night;
 
   if (number == NULL || strcmp (number, "-") == 0)
     number = "99";

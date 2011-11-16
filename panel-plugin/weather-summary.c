@@ -268,7 +268,7 @@ create_summary_tab (xfceweather_data *data)
   g_free (value);
 
   timeslice = get_current_timeslice(data->weatherdata, FALSE);
-  value = g_strdup_printf (_("Coordinates: lat %s lon %s\nData applies to: %s.\n"),
+  value = g_strdup_printf (_("Coordinates: lat %s lon %s\nData applies to: %s\n"),
                            data->lat, data->lon, ctime(&timeslice->start));
   APPEND_TEXT_ITEM_REAL (value);
 
