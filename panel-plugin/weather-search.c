@@ -43,7 +43,7 @@ append_result (GtkListStore *mdl,
   GtkTreeIter iter;
 
   gtk_list_store_append (mdl, &iter);
-  gtk_list_store_set (mdl, &iter, 0, city, 1, lat, lon, -1);
+  gtk_list_store_set (mdl, &iter, 0, city, 1, lat, 2, lon, -1);
 }
 
 
