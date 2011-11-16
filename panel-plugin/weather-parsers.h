@@ -58,6 +58,7 @@ typedef struct
 	gchar *precipitation_value;
 	gchar *precipitation_unit;
 
+	gint   symbol_id;
 	gchar *symbol;
 }
 xml_location;

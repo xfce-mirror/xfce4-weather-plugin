@@ -30,7 +30,7 @@
 #include "weather-search.h"
 #include "weather-scrollbox.h"
 
-#define OPTIONS_N 11
+#define OPTIONS_N 12
 #define BORDER    8
 
 static const labeloption labeloptions[OPTIONS_N] = {

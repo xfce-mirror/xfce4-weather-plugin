@@ -252,6 +252,7 @@ void parse_location (xmlNode * cur_node, xml_location *loc)
 		if (NODE_IS_TYPE (child_node, "symbol")) {
 			g_free(loc->symbol);
 			loc->symbol = PROP(child_node, "id");
+			loc->symbol_id = strtol(PROP(child_node, "number"), NULL, 10);
 		}
 	}
 }

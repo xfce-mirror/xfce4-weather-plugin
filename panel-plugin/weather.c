@@ -295,7 +295,7 @@ set_icon_current (xfceweather_data *data)
 
 #if !GTK_CHECK_VERSION(2,12,0)
   gtk_tooltips_set_tip (data->tooltips, data->tooltipbox,
-                        translate_desc (get_data (data->weatherdata, TRANS)),
+                        translate_desc (get_data (data->weatherdata, SYMBOL)),
                         NULL);
 #endif
 }

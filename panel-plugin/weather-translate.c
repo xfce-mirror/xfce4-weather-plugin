@@ -272,12 +272,48 @@ translate_risk (const gchar *risk)
   return translate_str (risk_strings, risk);
 }
 
-
+typedef struct {
+	gint id;
+	gchar *symbol;
+	gchar *desc;
+} SymbolToDesc;
+static const SymbolToDesc symbol_to_desc[] = {
+	{ 1, "SUN",		N_("Sunny") },
+	{ 2, "LIGHTCLOUD",	N_("Lightly cloudy") },
+	{ 3, "PARTLYCLOUD",	N_("Partly cloudy") },
+	{ 4, "CLOUD",		N_("Cloudy") },
+	{ 5, "LIGHTRAINSUN",	N_("Sunny, rain showers") },
+	{ 6, "LIGHTRAINTHUNDERSUN",
+				N_("Sunny, rain showers with thunder") },
+	{ 7, "SLEETSUN",	N_("Sunny, Sleet") },
+	{ 8, "SNOWSUN",		N_("Sunny, Snow") },
+	{ 9, "LIGHTRAIN",	N_("Rain showers") },
+	{ 10,"RAIN",		N_("Rain") },
+	{ 11,"RAINTHUNDER",	N_("Rain with thunder") },
+	{ 12,"SLEET",		N_("Sleet") },
+	{ 13,"SNOW",		N_("Snow") },
+	{ 14,"SNOWTHUNDER",	N_("Snow with thunder") },
+	{ 15,"FOG",		N_("Fog") },
+	{ 16,"SUN",		N_("Sunny") },
+	{ 17,"LIGHTCLOUD",	N_("Lightly cloudy") },
+	{ 18,"LIGHTRAINSUN",	N_("Sunny, rain showers") },
+	{ 19,"SNOWSUN",		N_("Sunny, Snow") },
+	{ 20,"SLEETSUNTHUNDER",	N_("Sunny, Sleet and thunder") },
+	{ 21,"SNOWSUNTHUNDER",	N_("Sunny, Snow and thunder") },
+	{ 22,"LIGHTRAINTHUNDER",N_("Rain showers with thunder") },
+	{ 23,"SLEETTHUNDER",	N_("Sleet and thunder") },
+};
+#define NUM_SYMBOLS (sizeof(symbol_to_desc)/sizeof(symbol_to_desc[0]))
 
 const gchar *
 translate_desc (const gchar *desc)
 {
-  return translate_str (desc_strings, desc);
+  int i;
+  for (i = 0; i < NUM_SYMBOLS; i++) {
+    if (!strcmp(desc, symbol_to_desc[i].symbol))
+	return _(symbol_to_desc[i].desc);
+  }
+  return desc;
 }
 
 
