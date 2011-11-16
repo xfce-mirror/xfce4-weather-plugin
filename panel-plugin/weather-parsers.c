@@ -92,6 +92,8 @@ void parse_time (xmlNode * cur_node, xml_weather * data) {
 	struct tm start_t, end_t;
 	time_t start_ts, end_ts;
 	time_t cur_ts;
+	xml_time *timeslice;
+	xmlNode *child_node;
 
 	if (xmlStrcasecmp(datatype, "forecast")) {
 		xmlFree(datatype);
@@ -120,31 +122,19 @@ void parse_time (xmlNode * cur_node, xml_weather * data) {
 	start_ts = my_timegm(&start_t);
 	end_ts = my_timegm(&end_t);
 	
-	/* time elements with end == start are the ones with temperatures etc.
-	 * They seem to be for each three hours (6 after 4 days).
-	 */
-	if (end_ts == start_ts && start_ts > time(NULL) + 4 * 24 * 3600)
-		start_ts -= 6 * 3600;
-	else if (end_ts == start_ts)
-		start_ts -= 3 * 3600;
-
-	/* split per-hour */
-	for (cur_ts = start_ts; cur_ts < end_ts; cur_ts += 3600) {
-		xml_time *timeslice = get_timeslice(data, cur_ts, cur_ts + 3600);
-		xmlNode *child_node;
-
-		if (!timeslice) {
-			g_warning("no timeslice");
-			return;
-		}
-		for (child_node = cur_node->children; child_node;
-		     child_node = child_node->next) {
-			if (NODE_IS_TYPE (child_node, "location")) {
-				if (timeslice->location == NULL)
-					timeslice->location =
-						g_slice_new0(xml_location);
-				parse_location(child_node, timeslice->location);
-			}
+	timeslice = get_timeslice(data, start_ts, end_ts);
+	
+	if (!timeslice) {
+		g_warning("no timeslice");
+		return;
+	}
+	for (child_node = cur_node->children; child_node;
+	     child_node = child_node->next) {
+		if (NODE_IS_TYPE (child_node, "location")) {
+			if (timeslice->location == NULL)
+				timeslice->location =
+					g_slice_new0(xml_location);
+			parse_location(child_node, timeslice->location);
 		}
 	}
 }
@@ -168,16 +158,35 @@ xml_time *get_timeslice(xml_weather *data, time_t start, time_t end)
 	return data->timeslice[data->num_timeslices - 1];
 }
 
-xml_time *get_current_timeslice(xml_weather *data)
+xml_time *get_current_timeslice(xml_weather *data, gboolean interval)
 {
 	time_t now = time(NULL);
+	int closest = -1;
+	int min_found = 7 * 24 * 3600;
 	int i;
 
 	for (i = 0; i < data->num_timeslices; i++) {
+		if (interval != 
+		    (data->timeslice[i]->start != data->timeslice[i]->end))
+			continue;
 		if (data->timeslice[i]->start <= now
 		 && data->timeslice[i]->end >= now)
 			return data->timeslice[i];
+		/* we also search for the closest before */
+		if (data->timeslice[i]->end < now
+		 && data->timeslice[i]->end - now < min_found) {
+			min_found = data->timeslice[i]->end - now;
+			closest = i;
+		}
+		/* and after */
+		if (data->timeslice[i]->start > now
+		 && data->timeslice[i]->start - now < min_found) {
+			min_found = data->timeslice[i]->start - now;
+			closest = i;
+		}
 	}
+	if (closest != -1)
+		return data->timeslice[closest];
 
 	return NULL;	
 }
@@ -223,16 +232,16 @@ void parse_location (xmlNode * cur_node, xml_location *loc)
 			loc->fog_percent = PROP(child_node, "percent");
 		}
 		if (NODE_IS_TYPE (child_node, "lowClouds")) {
-			g_free(loc->cloudiness_percent[CLOUDINESS_LOW]);
-			loc->cloudiness_percent[CLOUDINESS_LOW] = PROP(child_node, "percent");
+			g_free(loc->cloudiness_percent[CLOUD_LOW]);
+			loc->cloudiness_percent[CLOUD_LOW] = PROP(child_node, "percent");
 		}
 		if (NODE_IS_TYPE (child_node, "mediumClouds")) {
-			g_free(loc->cloudiness_percent[CLOUDINESS_MED]);
-			loc->cloudiness_percent[CLOUDINESS_MED] = PROP(child_node, "percent");
+			g_free(loc->cloudiness_percent[CLOUD_MED]);
+			loc->cloudiness_percent[CLOUD_MED] = PROP(child_node, "percent");
 		}
 		if (NODE_IS_TYPE (child_node, "highClouds")) {
-			g_free(loc->cloudiness_percent[CLOUDINESS_HIGH]);
-			loc->cloudiness_percent[CLOUDINESS_HIGH] = PROP(child_node, "percent");
+			g_free(loc->cloudiness_percent[CLOUD_HIGH]);
+			loc->cloudiness_percent[CLOUD_HIGH] = PROP(child_node, "percent");
 		}
 		if (NODE_IS_TYPE (child_node, "precipitation")) {
 			g_free(loc->precipitation_unit);

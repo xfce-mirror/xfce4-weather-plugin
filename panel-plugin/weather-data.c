@@ -27,6 +27,11 @@
 
 #define CHK_NULL(s) ((s) ? (s):"")
 
+static gboolean need_interval(datas type)
+{
+	return type == PRECIPITATIONS || type == SYMBOL;
+}
+
 const gchar *
 get_data (xml_weather *data, datas type)
 {
@@ -36,7 +41,7 @@ get_data (xml_weather *data, datas type)
 	if (data == NULL)
 		return "";
 
-	timeslice = get_current_timeslice(data);
+	timeslice = get_current_timeslice(data, need_interval(type));
 	if (timeslice == NULL)
 		return "";
 
@@ -49,12 +54,20 @@ get_data (xml_weather *data, datas type)
 		return CHK_NULL(loc->pressure_value);
 	case WIND_SPEED:
 		return CHK_NULL( loc->wind_speed_mps);
+	case WIND_BEAUFORT:
+		return CHK_NULL( loc->wind_speed_beaufort);
 	case WIND_DIRECTION:
 		return CHK_NULL(loc->wind_dir_name);
+	case WIND_DIRECTION_DEG:
+		return CHK_NULL(loc->wind_dir_deg);
 	case HUMIDITY:
 		return CHK_NULL(loc->humidity_value);
-	case CLOUDINESS:
-		return CHK_NULL(loc->cloudiness_percent[CLOUDINESS_LOW]);
+	case CLOUDINESS_LOW:
+		return CHK_NULL(loc->cloudiness_percent[CLOUD_LOW]);
+	case CLOUDINESS_MED:
+		return CHK_NULL(loc->cloudiness_percent[CLOUD_MED]);
+	case CLOUDINESS_HIGH:
+		return CHK_NULL(loc->cloudiness_percent[CLOUD_HIGH]);
 	case FOG:
 		return CHK_NULL(loc->fog_percent);
 	case PRECIPITATIONS:
@@ -74,7 +87,7 @@ get_unit (xml_weather *data, units unit, datas type)
 	if (data == NULL)
 		return "";
 
-	timeslice = get_current_timeslice(data);
+	timeslice = get_current_timeslice(data, need_interval(type));
 	if (timeslice == NULL)
 		return "";
 
@@ -87,17 +100,19 @@ get_unit (xml_weather *data, units unit, datas type)
 		return CHK_NULL(loc->pressure_unit);
 	case WIND_SPEED:
 		return "m/s";
-	case WIND_DIRECTION:
-		return "";
+	case WIND_DIRECTION_DEG:
+		return "°";
 	case HUMIDITY:
-		return "%";
-	case CLOUDINESS:
-		return "%";
+	case CLOUDINESS_LOW:
+	case CLOUDINESS_MED:
+	case CLOUDINESS_HIGH:
 	case FOG:
 		return "%";
 	case PRECIPITATIONS:
 		return "mm";
 	case SYMBOL:
+	case WIND_BEAUFORT:
+	case WIND_DIRECTION:
 		return "";
 	}
 	return "";

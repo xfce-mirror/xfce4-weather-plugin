@@ -30,9 +30,9 @@ G_BEGIN_DECLS
 
 enum
 {
-	CLOUDINESS_LOW = 0,
-	CLOUDINESS_MED,
-	CLOUDINESS_HIGH,
+	CLOUD_LOW = 0,
+	CLOUD_MED,
+	CLOUD_HIGH,
 	NUM_CLOUDINESS
 };
 
@@ -85,7 +85,7 @@ void parse_time (xmlNode * cur_node, xml_weather * data);
 void parse_location (xmlNode * cur_node, xml_location *location);
 
 xml_time *get_timeslice(xml_weather *data, time_t start, time_t end);
-xml_time *get_current_timeslice(xml_weather *data);
+xml_time *get_current_timeslice(xml_weather *data, gboolean interval);
 
 void xml_weather_free (xml_weather * data);
 

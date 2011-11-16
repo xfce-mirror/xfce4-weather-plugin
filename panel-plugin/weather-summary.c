@@ -44,7 +44,7 @@ static gboolean lnk_clicked (GtkTextTag *tag, GObject *obj,
 #define APPEND_TEXT_ITEM(text, item)     value = g_strdup_printf("\t%s%s%s %s\n",\
                                                                  text, text?": ":"", \
                                                                  get_data(data->weatherdata, item),\
-                                                                 get_unit(data->unit, item));\
+                                                                 get_unit(data->weatherdata, data->unit, item));\
                                          APPEND_TEXT_ITEM_REAL(value);
 #define APPEND_LINK_ITEM(prefix, text, url, lnk_tag) \
 					 gtk_text_buffer_insert(GTK_TEXT_BUFFER(buffer), \
@@ -230,12 +230,14 @@ create_summary_tab (xfceweather_data *data)
 {
   GtkTextBuffer *buffer;
   GtkTextIter    iter;
-  GtkTextTag    *btag, *ltag0, *ltag1, *ltag2, *ltag3, *ltag4;
-  gchar         *value, *date, *wind, *sun_val, *vis;
+  GtkTextTag    *btag, *ltag1;
+  gchar         *value, *wind, *sun_val, *vis;
   GtkWidget     *view, *frame, *scrolled;
   GdkColor       lnk_color;
   GtkAdjustment *adj;
   GtkWidget     *weather_channel_icon;
+  gchar         *start;
+  xml_time      *timeslice;
 
   view = gtk_text_view_new ();
   gtk_text_view_set_editable (GTK_TEXT_VIEW (view), FALSE);
@@ -258,132 +260,58 @@ create_summary_tab (xfceweather_data *data)
                                 NULL);
 
   gdk_color_parse("#0000ff", &lnk_color);
-  ltag0 = gtk_text_buffer_create_tag(buffer, "lnk0", "foreground-gdk", &lnk_color, NULL);
   ltag1 = gtk_text_buffer_create_tag(buffer, "lnk1", "foreground-gdk", &lnk_color, NULL);
-  ltag2 = gtk_text_buffer_create_tag(buffer, "lnk2", "foreground-gdk", &lnk_color, NULL);
-  ltag3 = gtk_text_buffer_create_tag(buffer, "lnk3", "foreground-gdk", &lnk_color, NULL);
-  ltag4 = gtk_text_buffer_create_tag(buffer, "lnk4", "foreground-gdk", &lnk_color, NULL);
 
   /* head */
   value = g_strdup_printf (_("Weather report for: %s.\n\n"), data->location_name);
   APPEND_BTEXT (value);
   g_free (value);
-#if 0
-  date = translate_lsup (get_data (data->weatherdata, LSUP));
-  value = g_strdup_printf (_("Observation station located in %s\nLast update: %s.\n"),
-                           get_data (data->weatherdata, OBST), date ? date : get_data (data->weatherdata, LSUP));
-  g_free (date);
+
+  timeslice = get_current_timeslice(data->weatherdata, FALSE);
+  value = g_strdup_printf (_("Coordinates: lat %s lon %s\nData applies to: %s.\n"),
+                           data->lat, data->lon, ctime(&timeslice->start));
   APPEND_TEXT_ITEM_REAL (value);
 
   /* Temperature */
   APPEND_BTEXT (_("\nTemperature\n"));
-  APPEND_TEXT_ITEM (_("Temperature"), TEMP);
-  APPEND_TEXT_ITEM (_("Windchill"), FLIK);
-
-  /* special case for TRANS because of translate_desc */
-  value = g_strdup_printf ("\t%s: %s\n", _("Description"),
-                           translate_desc (get_data (data->weatherdata, TRANS)));
-  APPEND_TEXT_ITEM_REAL (value);
-  APPEND_TEXT_ITEM (_("Dew point"), DEWP);
+  APPEND_TEXT_ITEM (_("Temperature"), TEMPERATURE);
 
   /* Wind */
   APPEND_BTEXT (_("\nWind\n"));
-  wind = translate_wind_speed (get_data (data->weatherdata, WIND_SPEED), data->unit);
-  value = g_strdup_printf ("\t%s: %s\n", _("Speed"), wind);
+  wind = translate_wind_speed (data->weatherdata, get_data (data->weatherdata, WIND_SPEED), data->unit);
+  value = g_strdup_printf ("\t%s: %s (%s on the Beaufort scale)\n", _("Speed"), wind,
+		get_data (data->weatherdata, WIND_BEAUFORT));
   g_free (wind);
   APPEND_TEXT_ITEM_REAL (value);
 
   wind = translate_wind_direction (get_data (data->weatherdata, WIND_DIRECTION));
-  value = g_strdup_printf ("\t%s: %s\n", _("Direction"),
-                           wind ? wind : get_data (data->weatherdata, WIND_DIRECTION));
+  value = g_strdup_printf ("\t%s: %s (%s%s)\n", _("Direction"),
+                           wind ? wind : get_data (data->weatherdata, WIND_DIRECTION),
+			   get_data (data->weatherdata, WIND_DIRECTION_DEG),
+			   get_unit (data->weatherdata, data->unit, WIND_DIRECTION_DEG));
   g_free (wind);
-  APPEND_TEXT_ITEM_REAL (value);
-
-  wind = translate_wind_speed (get_data (data->weatherdata, WIND_GUST), data->unit);
-  value = g_strdup_printf ("\t%s: %s\n", _("Gusts"), wind);
-  g_free (wind);
-  APPEND_TEXT_ITEM_REAL (value);
-
-  /* UV */
-  APPEND_BTEXT (_("\nUV\n"));
-  APPEND_TEXT_ITEM (_("Index"), UV_INDEX);
-  value = g_strdup_printf ("\t%s: %s\n", _("Risk"),
-                           translate_risk (get_data (data->weatherdata, UV_TRANS)));
   APPEND_TEXT_ITEM_REAL (value);
 
   /* Atmospheric pressure */
   APPEND_BTEXT (_("\nAtmospheric pressure\n"));
-  APPEND_TEXT_ITEM (_("Pressure"), BAR_R);
-
-  value = g_strdup_printf ("\t%s: %s\n",  _("State"),
-                           translate_bard (get_data (data->weatherdata, BAR_D)));
-  APPEND_TEXT_ITEM_REAL (value);
-
-  /* Sun */
-  APPEND_BTEXT (_("\nSun\n"));
-  sun_val = translate_time (get_data (data->weatherdata, SUNR));
-  value = g_strdup_printf ("\t%s: %s\n",
-                           _("Rise"), sun_val ? sun_val : get_data (data->weatherdata, SUNR));
-  g_free (sun_val);
-  APPEND_TEXT_ITEM_REAL (value);
-
-  sun_val = translate_time (get_data (data->weatherdata, SUNS));
-  value = g_strdup_printf ("\t%s: %s\n",
-                           _("Set"), sun_val ? sun_val : get_data (data->weatherdata, SUNS));
-  g_free (sun_val);
-  APPEND_TEXT_ITEM_REAL (value);
+  APPEND_TEXT_ITEM (_("Pressure"), PRESSURE);
 
   /* Other */
   APPEND_BTEXT (_("\nOther\n"));
-  APPEND_TEXT_ITEM (_("Humidity"), HMID);
-  vis = translate_visibility (get_data (data->weatherdata, VIS), data->unit);
-  value = g_strdup_printf ("\t%s: %s\n", _("Visibility"), vis);
-  g_free (vis);
-  APPEND_TEXT_ITEM_REAL (value);
+  APPEND_TEXT_ITEM (_("Humidity"), HUMIDITY);
+  APPEND_TEXT_ITEM (_("Low clouds"), CLOUDINESS_LOW);
+  APPEND_TEXT_ITEM (_("Medium clouds"), CLOUDINESS_MED);
+  APPEND_TEXT_ITEM (_("High clouds"), CLOUDINESS_HIGH);
+  APPEND_TEXT_ITEM (_("Fog"), FOG);
 
-  APPEND_BTEXT (_("\nMore on weather.com\n"));
-  value = g_strdup_printf("http://www.weather.com/?par=xoap&site=wx_logo&cm_ven=bd_oap&cm_cat=%s&cm_pla=HomePage&cm_ite=Logo",
-  		PARTNER_ID);
-  g_object_set_data_full(G_OBJECT(ltag0), "url", value, g_free);
+  APPEND_BTEXT (_("\nData from The Norwegian Meteorological Institute\n"));
+  APPEND_LINK_ITEM ("\t", "Thanks to met.no", "http://met.no/", ltag1);
 
-  APPEND_LINK_ITEM ("\t", get_data (data->weatherdata, LNK1_TXT), get_data (data->weatherdata, LNK1), ltag1);
-  APPEND_LINK_ITEM ("\t", get_data (data->weatherdata, LNK2_TXT), get_data (data->weatherdata, LNK2), ltag2);
-  APPEND_LINK_ITEM ("\t", get_data (data->weatherdata, LNK3_TXT), get_data (data->weatherdata, LNK3), ltag3);
-  APPEND_LINK_ITEM ("\t", get_data (data->weatherdata, LNK4_TXT), get_data (data->weatherdata, LNK4), ltag4);
-#endif
   g_signal_connect(G_OBJECT(view), "motion-notify-event",
 		   G_CALLBACK(view_motion_notify), view);
   g_signal_connect(G_OBJECT(view), "leave-notify-event",
 		   G_CALLBACK(view_leave_notify), view);
-#if 0
-  weather_channel_icon = weather_summary_get_logo(data);
 
-  if (weather_channel_icon) {
-    weather_channel_evt = gtk_event_box_new();
-    gtk_container_add(GTK_CONTAINER(weather_channel_evt), weather_channel_icon);
-    gtk_text_view_add_child_in_window(GTK_TEXT_VIEW(view), weather_channel_evt,
-                                      GTK_TEXT_WINDOW_TEXT, 0, 0);
-    gtk_widget_show_all(weather_channel_evt);
-    adj = gtk_scrolled_window_get_vadjustment(
-	    GTK_SCROLLED_WINDOW(scrolled));
-    g_signal_connect(G_OBJECT(adj), "value-changed",
-		     G_CALLBACK(view_scrolled_cb), view);
-    g_signal_connect(G_OBJECT(view), "size_allocate",
-		     G_CALLBACK(view_size_allocate_cb),
-		     view);
-    g_signal_connect(G_OBJECT(weather_channel_evt), "button-release-event",
-		     G_CALLBACK(icon_clicked),
-		     ltag0);
-    g_signal_connect(G_OBJECT(weather_channel_evt), "enter-notify-event",
-		     G_CALLBACK(icon_motion_notify), view);
-    g_signal_connect(G_OBJECT(weather_channel_evt), "visibility-notify-event",
-		     G_CALLBACK(icon_motion_notify), view);
-    g_signal_connect(G_OBJECT(weather_channel_evt), "motion-notify-event",
-		     G_CALLBACK(icon_motion_notify), view);
-    g_signal_connect(G_OBJECT(weather_channel_evt), "leave-notify-event",
-		     G_CALLBACK(view_leave_notify), view);
-  }
-#endif
   if (hand_cursor == NULL)
     hand_cursor = gdk_cursor_new(GDK_HAND2);
   if (text_cursor == NULL)

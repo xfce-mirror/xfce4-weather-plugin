@@ -438,7 +438,8 @@ translate_wind_direction (const gchar *wdir)
 
 /* calm or a number */
 gchar *
-translate_wind_speed (const gchar *wspeed,
+translate_wind_speed (xml_weather *data,
+                      const gchar *wspeed,
                       units        unit)
 {
   gchar *wspeed_loc;
@@ -449,7 +450,7 @@ translate_wind_speed (const gchar *wspeed,
     wspeed_loc = g_strdup (_("N/A"));
   else
     wspeed_loc =
-      g_strdup_printf ("%s %s", wspeed, get_unit (/* FIXME */NULL, unit, WIND_SPEED));
+      g_strdup_printf ("%s %s", wspeed, get_unit (data, unit, WIND_SPEED));
 
   return wspeed_loc;
 }

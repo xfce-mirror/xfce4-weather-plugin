@@ -121,8 +121,14 @@ make_label (xml_weather    *weatherdata,
     case HUMIDITY:
       lbl = _("H");
       break;
-    case CLOUDINESS:
-      lbl = _("C");
+    case CLOUDINESS_LOW:
+      lbl = _("CL");
+      break;
+    case CLOUDINESS_MED:
+      lbl = _("CM");
+      break;
+    case CLOUDINESS_HIGH:
+      lbl = _("CH");
       break;
     case FOG:
       lbl = _("F");
@@ -155,7 +161,7 @@ make_label (xml_weather    *weatherdata,
       value = translate_wind_direction (rawvalue);
       break;
     case WIND_SPEED:
-      value = translate_wind_speed (rawvalue, unit);
+      value = translate_wind_speed (weatherdata, rawvalue, unit);
       break;
     default:
       value = NULL;
