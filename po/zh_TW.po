@@ -8,7 +8,7 @@
 # glossary at http://www.weather.com.hk/other/wreport.asp
 # and actual weather reports at www.hko.gov.hk
 #
-# Secondary references: 
+# Secondary references:
 # glossary at http://photino.cwb.gov.tw/rdcweb/lib/cd/cd05glos/abv2.txt
 # glossary at http://photino.cwb.gov.tw/rdcweb/lib/h/h_000061.htm
 # http://earth.fg.tp.edu.tw/learn/weather/
@@ -35,8 +35,8 @@ msgstr ""
 "Project-Id-Version: xfce4-weather-plugin 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-02-02 21:29+0100\n"
-"PO-Revision-Date: 2006-09-06 18:51+0800\n"
-"Last-Translator: Ambrose Li <acli@ada.dhs.org>\n"
+"PO-Revision-Date: 2012-01-16 18:13+0800\n"
+"Last-Translator: Cheng-Chia Tseng <pswo10680@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <xfce-i18n@xfce.org>\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -55,7 +55,8 @@ msgstr "UV"
 msgid "WD"
 msgstr "風向"
 
-#: ../panel-plugin/weather.c:119 ../panel-plugin/weather.c:122
+#: ../panel-plugin/weather.c:119
+#: ../panel-plugin/weather.c:122
 msgid "P"
 msgstr "氣壓"
 
@@ -83,25 +84,26 @@ msgstr "風速"
 msgid "WG"
 msgstr "陣風"
 
-#: ../panel-plugin/weather.c:260 ../panel-plugin/weather.c:760
+#: ../panel-plugin/weather.c:260
+#: ../panel-plugin/weather.c:760
 msgid "Cannot update weather data"
 msgstr "無法更新天氣資料"
 
 #: ../panel-plugin/weather.c:693
 #, c-format
 msgid "Unable to open the following url: %s"
-msgstr ""
+msgstr "無法開啟下列網址：%s"
 
-#: ../panel-plugin/weather.c:721 ../panel-plugin/weather-summary.c:611
+#: ../panel-plugin/weather.c:721
+#: ../panel-plugin/weather-summary.c:611
 #: ../panel-plugin/weather.desktop.in.in.h:2
 msgid "Weather Update"
 msgstr "天氣報告"
 
 #. add refresh button to right click menu, for people who missed the middle mouse click feature
 #: ../panel-plugin/weather.c:843
-#, fuzzy
 msgid "_Forecast"
-msgstr "天氣預報"
+msgstr "天氣預報(_F)"
 
 #  NOTE weather.com.hk translation "風寒指數", but Canadian idiom is "風凍指數"
 #  NOTE The non-Canadian term is not used here even though it has been spotted in other hk/tw sites; it is just not familiar to people who would be affected by this weather condition
@@ -156,11 +158,11 @@ msgstr "請輸入代理伺服器選項"
 
 #: ../panel-plugin/weather-config.c:295
 msgid "Unset"
-msgstr ""
+msgstr "取消設定"
 
 #: ../panel-plugin/weather-config.c:303
 msgid "Detecting..."
-msgstr ""
+msgstr "正在偵測..."
 
 #: ../panel-plugin/weather-config.c:356
 msgid "Measurement unit:"
@@ -175,13 +177,12 @@ msgid "Metric"
 msgstr "公制"
 
 #: ../panel-plugin/weather-config.c:379
-#, fuzzy
 msgid "Location:"
-msgstr "地區編號："
+msgstr "位置："
 
 #: ../panel-plugin/weather-config.c:415
 msgid "Change..."
-msgstr ""
+msgstr "變更..."
 
 #. proxy
 #: ../panel-plugin/weather-config.c:428
@@ -202,7 +203,7 @@ msgstr "顯示資料"
 
 #: ../panel-plugin/weather-config.c:554
 msgid "Animate transitions between labels"
-msgstr ""
+msgstr "標籤之間的轉場以動畫呈現"
 
 #  NOTE "公里/小時" is too long; SI symbols do not need translation
 #: ../panel-plugin/weather-data.c:387
@@ -236,54 +237,54 @@ msgstr "哩"
 #: ../panel-plugin/weather-http.c:203
 #, c-format
 msgid "Failed to get the hostname %s. Retry in %d seconds."
-msgstr ""
+msgstr "無法取得主機名稱 %s。%d 秒內重試。"
 
 #. display warning
 #: ../panel-plugin/weather-http.c:244
 #, c-format
 msgid "Failed to open the socket (%s)."
-msgstr ""
+msgstr "無法開啟 socket (%s)。"
 
 #. display warning
 #: ../panel-plugin/weather-http.c:255
 #, c-format
 msgid "Failed to create a connection with the host (%s)."
-msgstr ""
+msgstr "無法與主機 (%s) 建立連線。"
 
 #. display warning
 #: ../panel-plugin/weather-http.c:296
 #, c-format
 msgid "Failed to send the request (%s)."
-msgstr ""
+msgstr "無法送出請求 (%s)。"
 
 #. display warning
 #: ../panel-plugin/weather-http.c:349
 #, c-format
 msgid "Failed to receive data (%s)"
-msgstr ""
+msgstr "無法接收資料 (%s)"
 
 #: ../panel-plugin/weather-http.c:375
 msgid "Negative content length"
-msgstr ""
+msgstr "負內容長度"
 
 #. display warning
 #: ../panel-plugin/weather-http.c:411
 msgid "Unable to detect the content length."
-msgstr ""
+msgstr "無法偵測內容長度。"
 
 #: ../panel-plugin/weather-http.c:419
 msgid "No content received."
-msgstr ""
+msgstr "未接收到內容。"
 
-#: ../panel-plugin/weather-search.c:142 ../panel-plugin/weather-search.c:274
+#: ../panel-plugin/weather-search.c:142
+#: ../panel-plugin/weather-search.c:274
 msgid "Results"
 msgstr "搜尋結果"
 
 #  XXX
 #: ../panel-plugin/weather-search.c:183
-#, fuzzy
 msgid "Searching..."
-msgstr "轉趨明朗"
+msgstr "正在搜尋..."
 
 #: ../panel-plugin/weather-search.c:223
 msgid "Search weather location code"
@@ -439,6 +440,8 @@ msgid ""
 "\n"
 "More on weather.com\n"
 msgstr ""
+"\n"
+"詳細請見 weather.com\n"
 
 #: ../panel-plugin/weather-summary.c:445
 #, c-format
@@ -466,11 +469,9 @@ msgid "<b>Wind</b>"
 msgstr "<b>風勢</b>"
 
 #: ../panel-plugin/weather-summary.c:619
-#, fuzzy, c-format
+#, c-format
 msgid "Weather report for: %s"
-msgstr ""
-"%s 之天氣報告：\n"
-"\n"
+msgstr "%s 天氣報告"
 
 #: ../panel-plugin/weather-summary.c:642
 msgid "Forecast"
@@ -478,7 +479,7 @@ msgstr "天氣預報"
 
 #: ../panel-plugin/weather-summary.c:645
 msgid "Details"
-msgstr ""
+msgstr "詳細資料"
 
 #: ../panel-plugin/weather-translate.c:39
 msgid "AM Clouds / PM Sun"
@@ -843,7 +844,7 @@ msgstr "大致陽光普照"
 
 #: ../panel-plugin/weather-translate.c:111
 msgid "N/A Not Available"
-msgstr ""
+msgstr "N/A 不適用"
 
 #  XXX cf. "sunny interval" (but is this closer to "sunny periods"?)
 #: ../panel-plugin/weather-translate.c:112
@@ -1326,14 +1327,3 @@ msgstr "顯示目前天氣狀況"
 #, fuzzy
 #~ msgid "Showers in the Vincinity"
 #~ msgstr "附近地方有驟雨"
-
-#  NOTE Canadian idiom
-#~ msgid "Flurries"
-#~ msgstr "飄雪"
-
-#  NOTE cwb.gov.tw translation; according to glossary at cwb.gov.tw, this can mean either "ice pellets" or "wet snow"
-#~ msgid "Sleet"
-#~ msgstr "霰"
-
-#~ msgid "Thunder storms"
-#~ msgstr "雷暴"
