@@ -534,7 +534,7 @@ summary_dialog_response (GtkWidget          *dlg,
 GtkWidget *
 create_summary_window (xfceweather_data *data)
 {
-  GtkWidget *window, *notebook, *vbox;
+  GtkWidget *window, *notebook, *vbox, *hbox, *label;
   gchar     *title;
   GdkPixbuf *icon;
   xml_time  *timeslice;
@@ -546,11 +546,11 @@ create_summary_window (xfceweather_data *data)
 						GTK_RESPONSE_HELP,
                                                 GTK_STOCK_CLOSE,
                                                 GTK_RESPONSE_ACCEPT, NULL);
-
-  title = g_strdup_printf (_("Weather report for: %s"), data->location_name);
-
-  xfce_titled_dialog_set_subtitle (XFCE_TITLED_DIALOG (window), title);
-  g_free (title);
+  if (data->location_name != NULL) {
+    title = g_strdup_printf (_("Weather report for: %s"), data->location_name);
+    xfce_titled_dialog_set_subtitle (XFCE_TITLED_DIALOG (window), title);
+    g_free (title);
+  }
 
   vbox = gtk_vbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), vbox, TRUE, TRUE,
@@ -564,16 +564,31 @@ create_summary_window (xfceweather_data *data)
   if (G_LIKELY (icon))
     g_object_unref (G_OBJECT (icon));
 
-  notebook = gtk_notebook_new ();
-  gtk_container_set_border_width (GTK_CONTAINER (notebook), BORDER);
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-                            create_forecast_tab (data),
-                            gtk_label_new (_("Forecast")));
-  gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-                            create_summary_tab (data),
-                            gtk_label_new (_("Details")));
+  if (data->location_name == NULL || data->weatherdata == NULL) {
+    hbox = gtk_hbox_new (FALSE, 0);
+    gtk_widget_show(hbox);
+    if (data->location_name == NULL)
+      label = gtk_label_new(_("Please set a location in the plugin settings."));
+    else
+      label = gtk_label_new(_("Currently no data available."));
+    gtk_widget_show(label);
+    gtk_box_pack_start (GTK_BOX (hbox), GTK_WIDGET(label),
+                        TRUE, TRUE, 0);
 
-  gtk_box_pack_start (GTK_BOX (vbox), notebook, TRUE, TRUE, 0);
+    gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET(hbox),
+                        TRUE, TRUE, 0);
+  } else {
+    notebook = gtk_notebook_new ();
+    gtk_container_set_border_width (GTK_CONTAINER (notebook), BORDER);
+    gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
+                              create_forecast_tab (data),
+                              gtk_label_new (_("Forecast")));
+    gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
+                              create_summary_tab (data),
+                              gtk_label_new (_("Details")));
+
+    gtk_box_pack_start (GTK_BOX (vbox), notebook, TRUE, TRUE, 0);
+  }
 
   g_signal_connect (G_OBJECT (window), "response",
                     G_CALLBACK (summary_dialog_response), window);
