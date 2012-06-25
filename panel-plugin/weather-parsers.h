@@ -78,7 +78,6 @@ typedef struct
 }
 xml_weather;
 
-
 xml_weather *parse_weather (xmlNode * cur_node);
 
 void parse_time (xmlNode * cur_node, xml_weather * data);
@@ -88,6 +87,7 @@ void parse_location (xmlNode * cur_node, xml_location *location);
 xml_time *get_timeslice(xml_weather *data, time_t start, time_t end);
 xml_time *get_current_timeslice(xml_weather *data, gboolean interval);
 
+void xml_time_free(xml_time *timeslice);
 void xml_weather_free (xml_weather * data);
 
 G_END_DECLS

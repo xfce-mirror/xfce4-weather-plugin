@@ -114,3 +114,200 @@ get_unit (xml_time *timeslice, units unit, datas type)
 	return "";
 }
 
+/*
+ * Calculate start and end of a daytime interval using given dates.
+ * We ought to take one of the intervals supplied by the XML feed,
+ * which gives the most consistent data and does not force too many
+ * searches to find something that fits. The following chosen
+ * intervals were pretty reliable for several tested locations at the
+ * time of this writing and gave reasonable results:
+ *   Morning:   08:00-14:00
+ *   Afternoon: 14:00-20:00
+ *   Evening:   20:00-02:00
+ *   Night:     02:00-08:00
+ */
+void
+get_daytime_interval(struct tm *start_t, struct tm *end_t, daytime dt)
+{
+    start_t->tm_min = end_t->tm_min = 0;
+    start_t->tm_sec = end_t->tm_sec = 0;
+    start_t->tm_isdst = end_t->tm_isdst = -1;
+	switch(dt) {
+	case MORNING:
+		start_t->tm_hour = 8;
+		end_t->tm_hour = 14;
+		break;
+	case AFTERNOON:
+		start_t->tm_hour = 14;
+		end_t->tm_hour = 20;
+		break;
+	case EVENING:
+		start_t->tm_hour = 20;
+		end_t->tm_hour = 26;
+		break;
+	case NIGHT:
+		start_t->tm_hour = 26;
+		end_t->tm_hour = 32;
+		break;
+	}
+}
+
+time_t
+time_calc(struct tm tm_time, gint year, gint month, gint day, gint hour, gint min, gint sec)
+{
+    time_t result;
+    struct tm tm_new;
+    tm_new = tm_time;
+    if (year)
+        tm_new.tm_year += year;
+    if (month)
+        tm_new.tm_mon += month;
+    if (day)
+        tm_new.tm_mday += day;
+    if (hour)
+        tm_new.tm_hour += hour;
+    if (min)
+        tm_new.tm_min += min;
+    if (sec)
+        tm_new.tm_sec += sec;
+    result = mktime(&tm_new);
+    return result;
+}
+
+time_t
+time_calc_hour(struct tm tm_time, gint hours) {
+    return time_calc(tm_time, 0, 0, 0, hours, 0, 0);
+}
+
+time_t
+time_calc_day(struct tm tm_time, gint days) {
+    return time_calc(tm_time, 0, 0, days, 0, 0, 0);
+}
+
+/*
+ * Find a timeslice that best matches the start and end times within
+ * reasonable limits.
+ */
+xml_time *
+find_timeslice(xml_weather *data, struct tm tm_start, struct tm tm_end)
+{
+    time_t start_t, end_t;
+    gint hours, hours_limit = 3, interval = 0, interval_limit;
+
+    /* first search for intervals of the same length */
+    start_t = mktime(&tm_start);
+    end_t = mktime(&tm_end);
+    interval_limit = (gint) (difftime(end_t, start_t) / 3600);
+
+    while (interval <= interval_limit) {
+        hours = 0;
+        while (hours <= hours_limit) {
+            /* check with previous hours */
+            start_t = time_calc_hour(tm_start, 0 - hours);
+            end_t = time_calc_hour(tm_end, 0 - hours - interval);
+
+            if (has_timeslice(data, start_t, end_t))
+                return get_timeslice(data, start_t, end_t);
+
+            /* check with later hours */
+            start_t = time_calc_hour(tm_start, hours);
+            end_t = time_calc_hour(tm_end, hours - interval);
+
+            if (has_timeslice(data, start_t, end_t))
+                return get_timeslice(data, start_t, end_t);
+
+            hours++;
+        }
+        interval++;
+    }
+
+    return NULL;
+}
+
+/*
+ * Take point and interval data and generate one combined timeslice
+ * that provides all information needed to present a forecast.
+ */
+xml_time *
+make_combined_timeslice(xml_time *point, xml_time *interval)
+{
+    xml_time *forecast;
+	xml_location *loc;
+	gint i;
+
+    if (point == NULL || interval == NULL)
+        return NULL;
+
+	forecast = g_slice_new0(xml_time);
+	if (forecast == NULL)
+		return NULL;
+
+    loc = g_slice_new0(xml_location);
+    if (loc == NULL)
+        return forecast;
+
+    forecast->start = point->start;
+    forecast->end = interval->end;
+
+    loc->temperature_value = g_strdup(point->location->temperature_value);
+    loc->temperature_unit = g_strdup(point->location->temperature_unit);
+
+    loc->wind_dir_deg = g_strdup(point->location->wind_dir_deg);
+    loc->wind_dir_name = g_strdup(point->location->wind_dir_name);
+    loc->wind_speed_mps = g_strdup(point->location->wind_speed_mps);
+    loc->wind_speed_beaufort = g_strdup(point->location->wind_speed_beaufort);
+
+    loc->humidity_value = g_strdup(point->location->humidity_value);
+    loc->humidity_unit = g_strdup(point->location->humidity_unit);
+
+    loc->pressure_value = g_strdup(point->location->pressure_value);
+    loc->pressure_unit = g_strdup(point->location->pressure_unit);
+
+    for (i = 0; i < NUM_CLOUDINESS; i++)
+        loc->cloudiness_percent[i] = g_strdup(point->location->cloudiness_percent[i]);
+
+    loc->fog_percent = g_strdup(point->location->fog_percent);
+
+    loc->precipitation_value = g_strdup(interval->location->precipitation_value);
+    loc->precipitation_unit = g_strdup(interval->location->precipitation_unit);
+
+    loc->symbol_id = interval->location->symbol_id;
+    loc->symbol = g_strdup(interval->location->symbol);
+
+    forecast->location = loc;
+
+    return forecast;
+}
+
+/*
+ * Get forecast data for a given daytime for the day (today + day).
+ */
+xml_time *
+make_forecast_data(xml_weather *data, int day, daytime dt)
+{
+	xml_time *forecast, *point, *interval;
+	struct tm tm_now, tm_start, tm_end;
+	time_t now, start_t, end_t;
+
+	/* initialize times to the current day */
+	time(&now);
+	tm_start = *localtime(&now);
+	tm_end = *localtime(&now);
+
+	/* calculate daytime interval start and end times for the  requested day */
+	tm_start.tm_mday += day;
+	tm_end.tm_mday += day;
+	get_daytime_interval(&tm_start, &tm_end, dt);
+    start_t = mktime(&tm_start);
+    end_t = mktime(&tm_end);
+
+	/* find point data */
+    point = find_timeslice(data, tm_start, tm_start);
+
+	/* next find interval data */
+    interval = find_timeslice(data, tm_start, tm_end);
+
+    /* create a new timeslice with combined point and interval data */
+    forecast = make_combined_timeslice(point, interval);
+	return forecast;
+}

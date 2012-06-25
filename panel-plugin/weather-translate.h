@@ -36,7 +36,7 @@ gchar *translate_day (gint);
 
 gchar *translate_wind_direction (const gchar *);
 
-gchar *translate_wind_speed (xml_time *timeslice, const gchar *, units);
+gchar *translate_wind_speed (xml_time *, const gchar *, units);
 
 gchar *translate_time (const gchar *);
 

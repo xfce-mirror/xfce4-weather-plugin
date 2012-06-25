@@ -41,10 +41,25 @@ typedef enum {
 	METRIC
 } units;
 
+typedef enum {
+	MORNING,
+	AFTERNOON,
+	EVENING,
+	NIGHT
+} daytime;
+
 const gchar *
 get_data (xml_time *timeslice, datas type);
 const gchar *
 get_unit (xml_time *timeslice, units unit, datas type);
+time_t
+time_calc(struct tm tm_time, gint year, gint mon, gint day, gint hour, gint min, gint sec);
+time_t
+time_calc_hour(struct tm tm_time, gint hours);
+time_t
+time_calc_day(struct tm tm_time, gint days);
+xml_time *
+make_forecast_data(xml_weather *data, int day, daytime dt);
 G_END_DECLS
 
 #endif

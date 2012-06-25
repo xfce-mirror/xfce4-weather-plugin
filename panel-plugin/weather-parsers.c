@@ -282,7 +282,7 @@ static void xml_location_free(xml_location *loc)
 	g_slice_free (xml_location, loc);
 }
 
-static void xml_time_free(xml_time *timeslice)
+void xml_time_free(xml_time *timeslice)
 {
   xml_location_free(timeslice->location);
   g_slice_free (xml_time, timeslice);
