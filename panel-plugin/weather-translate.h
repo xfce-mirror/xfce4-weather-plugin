@@ -23,7 +23,7 @@
 
 G_BEGIN_DECLS
 
-const gchar *translate_desc (const gchar *);
+const gchar *translate_desc (const gchar *, gboolean);
 
 const gchar *translate_bard (const gchar *);
 

@@ -304,7 +304,7 @@ set_icon_current (xfceweather_data *data)
 
 #if !GTK_CHECK_VERSION(2,12,0)
   gtk_tooltips_set_tip (data->tooltips, data->tooltipbox,
-                        translate_desc (get_data (timeslice, SYMBOL)),
+                        translate_desc (get_data (timeslice, SYMBOL), nighttime),
                         NULL);
 #endif
 }
@@ -778,7 +778,7 @@ static gboolean weather_get_tooltip_cb (GtkWidget        *widget,
   	  "<b>%s</b>\n"
 	  "%s",
 	  data->location_name,
-	  translate_desc (get_data (timeslice, SYMBOL))
+	  translate_desc (get_data (timeslice, SYMBOL), nighttime)
 	  );
     gtk_tooltip_set_markup (tooltip, markup_text);
     g_free(markup_text);
