@@ -27,6 +27,17 @@
 
 #define CHK_NULL(s) ((s) ? (s):"")
 
+gboolean has_timeslice(xml_weather *data, time_t start, time_t end)
+{
+    int i = 0;
+	for (i = 0; i < data->num_timeslices; i++) {
+        if (data->timeslice[i]->start == start
+			&& data->timeslice[i]->end == end)
+            return TRUE;
+	}
+    return FALSE;
+}
+
 const gchar *
 get_data (xml_time *timeslice, datas type)
 {
