@@ -20,7 +20,7 @@
 
 G_BEGIN_DECLS
 
-GdkPixbuf *get_icon (const gchar * icon, gint size);
+GdkPixbuf *get_icon (const gchar * icon, gint size, gboolean night);
 
 G_END_DECLS
 

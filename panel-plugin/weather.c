@@ -240,9 +240,9 @@ set_icon_error (xfceweather_data *data)
   gtk_widget_get_size_request (data->scrollbox, NULL, &height);
 
   if (data->orientation == GTK_ORIENTATION_VERTICAL)
-    icon = get_icon ("99", data->size - height - 2);
+    icon = get_icon ("99", data->size - height - 2, FALSE);
   else
-    icon = get_icon ("99", data->size);
+    icon = get_icon ("99", data->size, FALSE);
 
   gtk_image_set_from_pixbuf (GTK_IMAGE (data->iconimage), icon);
 
@@ -266,6 +266,7 @@ set_icon_current (xfceweather_data *data)
   datas           opt;
   gchar          *str;
   gint            size, height;
+  gboolean        nighttime;
 
   for (i = 0; i < data->labels->len; i++)
     {
@@ -293,7 +294,8 @@ set_icon_current (xfceweather_data *data)
  
   /* get data from current timeslice */
   timeslice = get_current_timeslice(data->weatherdata, TRUE);
-  icon = get_icon (get_data (timeslice, SYMBOL), size);
+  nighttime = is_night_time();
+  icon = get_icon (get_data (timeslice, SYMBOL), size, nighttime);
  
   gtk_image_set_from_pixbuf (GTK_IMAGE (data->iconimage), icon);
 
@@ -765,9 +767,10 @@ static gboolean weather_get_tooltip_cb (GtkWidget        *widget,
   GdkPixbuf *icon;
   gchar *markup_text;
   xml_time *timeslice;
+  gboolean nighttime;
 
   timeslice = get_current_timeslice(data->weatherdata, TRUE);
-
+  nighttime = is_night_time();
   if (data->weatherdata == NULL) {
     gtk_tooltip_set_text (tooltip, _("Cannot update weather data"));
   } else {
@@ -780,7 +783,7 @@ static gboolean weather_get_tooltip_cb (GtkWidget        *widget,
     gtk_tooltip_set_markup (tooltip, markup_text);
     g_free(markup_text);
   }
-  icon = get_icon (get_data (timeslice, SYMBOL), 32);
+  icon = get_icon (get_data (timeslice, SYMBOL), 32, nighttime);
   gtk_tooltip_set_icon (tooltip, icon);
   g_object_unref (G_OBJECT(icon));
 
@@ -805,7 +808,7 @@ xfceweather_create_control (XfcePanelPlugin *plugin)
 #endif
   data->scrollbox = gtk_scrollbox_new ();
 
-  icon = get_icon ("99", 16);
+  icon = get_icon ("99", 16, FALSE);
   data->iconimage = gtk_image_new_from_pixbuf (icon);
 
   if (G_LIKELY (icon))
@@ -853,7 +856,7 @@ xfceweather_create_control (XfcePanelPlugin *plugin)
 
   /* add refresh button to right click menu, for people who missed the middle mouse click feature */
   mi = gtk_image_menu_item_new_with_mnemonic (_("_Forecast"));
-  icon = get_icon ("SUN", 16);
+  icon = get_icon ("SUN", 16, FALSE);
   gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi),
   	gtk_image_new_from_pixbuf(icon));
   if (G_LIKELY (icon))

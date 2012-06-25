@@ -25,25 +25,50 @@
 
 #include "weather-icon.h"
 
-
-
 #define DEFAULT_W_THEME "liquid"
 
-
+const gchar *night_symbols[] = {
+  "CLOUD",
+  "LIGHTCLOUD",
+  "LIGHTRAINSUN",
+  "LIGHTRAINTHUNDERSUN",
+  "PARTLYCLOUD",
+  "SNOWSUN",
+  "SUN",
+  NULL
+};
 
 GdkPixbuf *
 get_icon (const gchar *number,
-          gint         size)
+          gint         size,
+          gboolean     night)
 {
   GdkPixbuf *image = NULL;
-  gchar     *filename;
-  gchar     *night;
+  gchar     *filename, *night_suffix = "";
+  gint       number_len, night_symbol_len;
+  guint      i;
 
-  if (number == NULL || strlen(number) == 0 || strcmp (number, "-") == 0)
+  if (number == NULL || strlen(number) == 0)
     number = "99";
+  else if (night)
+    {
+      number_len = strlen(number);
+      for (i = 0; night_symbols[i] != NULL; i++)
+        {
+          night_symbol_len = strlen(night_symbols[i]);
+          if (number_len != night_symbol_len)
+            continue;
 
-  filename = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s" G_DIR_SEPARATOR_S "%s.png",
-                              THEMESDIR, DEFAULT_W_THEME, number);
+          if (number[0] != night_symbols[i][0])
+            continue;
+
+          if (!g_ascii_strncasecmp (night_symbols[i], number, number_len))
+            night_suffix = "-night";
+        }
+    }
+
+  filename = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s" G_DIR_SEPARATOR_S "%s%s.png",
+                              THEMESDIR, DEFAULT_W_THEME, number, night_suffix);
 
   image = gdk_pixbuf_new_from_file_at_scale (filename, size, size, TRUE, NULL);
 
@@ -51,7 +76,7 @@ get_icon (const gchar *number,
     g_warning ("Unable to open image: %s", filename);
     if (number && strcmp(number, "99")) {
       g_free(filename);
-      return get_icon("99", size);
+      return get_icon("99", size, FALSE);
     }
   }
   g_free (filename);

@@ -557,10 +557,7 @@ create_summary_window (xfceweather_data *data)
                       0);
 
   timeslice = get_current_timeslice(data->weatherdata, TRUE);
-  icon = get_icon (get_data (timeslice, SYMBOL), 48);
-
-  if (!icon)
-    icon = get_icon ("99", 48);
+  icon = get_icon (get_data (timeslice, SYMBOL), 48, is_night_time());
 
   gtk_window_set_icon (GTK_WINDOW (window), icon);
 
