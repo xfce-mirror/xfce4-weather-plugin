@@ -39,7 +39,7 @@ get_icon (const gchar *number,
   gchar     *filename;
   gchar     *night;
 
-  if (number == NULL || strcmp (number, "-") == 0)
+  if (number == NULL || strlen(number) == 0 || strcmp (number, "-") == 0)
     number = "99";
 
   filename = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s" G_DIR_SEPARATOR_S "%s.png",
