@@ -152,6 +152,21 @@ get_daytime_interval(struct tm *start_t, struct tm *end_t, daytime dt)
 	}
 }
 
+/*
+ * Check whether it is night or day. Until we have a way to get the
+ * exact times for sunrise and sunset, we'll have to use reasonable
+ * hardcoded values.
+ */
+gboolean
+is_night_time()
+{
+    time_t now;
+    struct tm tm_now;
+    time(&now);
+    tm_now = *localtime(&now);
+    return (tm_now.tm_hour >= 21 || tm_now.tm_hour < 5);
+}
+
 time_t
 time_calc(struct tm tm_time, gint year, gint month, gint day, gint hour, gint min, gint sec)
 {

@@ -52,6 +52,8 @@ const gchar *
 get_data (xml_time *timeslice, datas type);
 const gchar *
 get_unit (xml_time *timeslice, units unit, datas type);
+gboolean
+is_night_time();
 time_t
 time_calc(struct tm tm_time, gint year, gint mon, gint day, gint hour, gint min, gint sec);
 time_t
