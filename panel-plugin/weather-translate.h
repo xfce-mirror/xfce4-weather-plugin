@@ -32,7 +32,7 @@ const gchar *translate_risk (const gchar *);
 /* these return a newly alocted string, that should be freed */
 gchar *translate_lsup (const gchar *);
 
-gchar *translate_day (const gchar *);
+gchar *translate_day (gint);
 
 gchar *translate_wind_direction (const gchar *);
 

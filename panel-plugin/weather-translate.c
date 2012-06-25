@@ -390,40 +390,28 @@ translate_lsup (const gchar *lsup)
 
 
 gchar *
-translate_day (const gchar *day)
+translate_day (gint weekday)
 {
-  gint         wday = -1;
   struct tm    time_tm;
-  guint        i;
-  const gchar *days[] = {"su", "mo", "tu", "we", "th", "fr", "sa", NULL};
   gchar       *day_loc;
   int          len;
 
-  if (day == NULL || strlen (day) < 2)
+  if (weekday < 0 || weekday > 6)
     return NULL;
 
-  for (i = 0; days[i] != NULL; i++)
-    if (!g_ascii_strncasecmp (day, days[i], 2))
-      wday = i;
+  time_tm.tm_wday = weekday;
 
-  if (wday == -1)
-    return NULL;
-  else
-    {
-      time_tm.tm_wday = wday;
+  day_loc = g_malloc (DAY_LOC_N);
 
-      day_loc = g_malloc (DAY_LOC_N);
+  len = strftime (day_loc, DAY_LOC_N, "%A", &time_tm);
+  day_loc[len] = 0;
+  if (!g_utf8_validate(day_loc, -1, NULL)) {
+    gchar *utf8 = g_locale_to_utf8(day_loc, -1, NULL, NULL, NULL);
+    g_free(day_loc);
+    day_loc = utf8;
+  }
 
-      len = strftime (day_loc, DAY_LOC_N, "%A", &time_tm);
-      day_loc[len] = 0;
-      if (!g_utf8_validate(day_loc, -1, NULL)) {
-         gchar *utf8 = g_locale_to_utf8(day_loc, -1, NULL, NULL, NULL);
-	 g_free(day_loc);
-	 day_loc = utf8;
-      }
-
-      return day_loc;
-    }
+  return day_loc;
 }
 
 
