@@ -321,168 +321,157 @@ create_summary_tab (xfceweather_data *data)
   return frame;
 }
 
+GtkWidget *
+add_forecast_cell(GtkWidget *widget, GdkColor *color) {
+    GtkWidget *ebox;
+    ebox = gtk_event_box_new();
+    if (color == NULL)
+        gtk_event_box_set_visible_window(GTK_EVENT_BOX(ebox), FALSE);
+    else {
+        gtk_event_box_set_visible_window(GTK_EVENT_BOX(ebox), TRUE);
+        gtk_widget_modify_bg(GTK_WIDGET(ebox), GTK_STATE_NORMAL, color);
+    }
+    gtk_widget_show(GTK_WIDGET(ebox));
+    gtk_container_add(GTK_CONTAINER(ebox), GTK_WIDGET(widget));
+    return ebox;
+}
+
+GtkWidget *
+add_forecast_header(gchar *text, gdouble angle, GdkColor *color)
+{
+    gchar *str;
+    GtkWidget *label, *box;
+
+    box = gtk_vbox_new(FALSE, 0);
+    gtk_container_set_border_width(GTK_CONTAINER(box), 4);
+    gtk_widget_show(GTK_WIDGET(box));
+
+    label = gtk_label_new(NULL);
+    gtk_label_set_angle(label, angle);
+    gtk_widget_show(label);
+    str = g_strdup_printf("<span foreground=\"white\"><b>%s</b></span>", text ? text : "");
+    gtk_label_set_markup(GTK_LABEL(label), str);
+    g_free(str);
+    gtk_box_pack_start(GTK_BOX(box), GTK_WIDGET(label),
+                       TRUE, FALSE, 2);
+    return add_forecast_cell(box, color);
+}
+
 static GtkWidget *
-make_forecast (xml_weather *weatherdata,
+make_forecast (xfceweather_data *data,
                units     unit)
 {
-  GtkWidget *item_vbox, *temp_hbox, *icon_hbox,
-            *label, *icon_d, *icon_n, *box_d, *box_n;
-  GdkPixbuf *icon;
-  gchar     *str, *day, *wind;
+    GtkWidget *ebox, *table, *scrolled, *day_label;
+    GtkWidget *forecast_box, *box, *label, *image;
+    GdkPixbuf *icon;
+    GdkColor lightbg = {0, 0xeaea, 0xeaea, 0xeaea};
+    GdkColor darkbg = {0, 0x6666, 0x6666, 0x6666};
+    gint num_days = 5, i, weekday, daytime;
+    gchar *dayname, *value;
+    xml_time *fcdata;
+    time_t now_t = time(NULL), fcday_t;
+    struct tm tm_fcday;
 
-  item_vbox = gtk_vbox_new (FALSE, 0);
-#if 0
-  DBG ("this day %s", weatherdata->day);
+    table = gtk_table_new(num_days + 1, 5, FALSE);
+    gtk_table_set_row_spacings(GTK_TABLE(table), 0);
+    gtk_table_set_col_spacings(GTK_TABLE(table), 0);
+    gtk_widget_show(GTK_WIDGET(table));
 
-  gtk_container_set_border_width (GTK_CONTAINER (item_vbox), 6);
+    /* empty upper left corner */
+    box = gtk_vbox_new(FALSE, 0);
+    gtk_widget_show(GTK_WIDGET(box));
+    gtk_table_attach_defaults(GTK_TABLE(table),
+                              add_forecast_cell(box, NULL),
+                              0, 1, 0, 1);
 
+    /* daytime headers */
+    gtk_table_attach_defaults(GTK_TABLE(table),
+                              add_forecast_header(_("Morning"), 0.0, &darkbg),
+                              1, 2, 0, 1);
+    gtk_table_attach_defaults(GTK_TABLE(table),
+                              add_forecast_header(_("Afternoon"), 0.0, &darkbg),
+                              2, 3, 0, 1);
+    gtk_table_attach_defaults(GTK_TABLE(table),
+                              add_forecast_header(_("Evening"), 0.0, &darkbg),
+                              3, 4, 0, 1);
+    gtk_table_attach_defaults(GTK_TABLE(table),
+                              add_forecast_header(_("Night"), 0.0, &darkbg),
+                              4, 5, 0, 1);
 
-  label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
+    for (i = 0; i < num_days; i++) {
+        /* Forecast day headers */
+        tm_fcday = *localtime(&now_t);
+        fcday_t = time_calc_day(tm_fcday, i);
+        weekday = localtime(&fcday_t)->tm_wday;
+        if (i == 0)
+            dayname = _("Today");
+        else if (i == 1)
+            dayname = _("Tomorrow");
+        else
+            dayname = translate_day(weekday);
 
-  day = translate_day (get_data_f (weatherdata, WDAY));
-  str = g_strdup_printf ("<b>%s</b>", day ? day : get_data_f (weatherdata, WDAY));
-  g_free (day);
+        if (i % 2)
+            box = add_forecast_header(dayname, 90.0, &darkbg);
+        else
+            box = add_forecast_header(dayname, 90.0, &darkbg);
 
-  gtk_label_set_markup (GTK_LABEL (label), str);
-  g_free (str);
+        gtk_table_attach_defaults(GTK_TABLE(table), GTK_WIDGET(box),
+                                  0, 1, i+1, i+2);
 
-  gtk_box_pack_start (GTK_BOX (item_vbox), label, FALSE, FALSE, 0);
+        /* Get forecast data for each daytime */
+        for (daytime = MORNING; daytime <= NIGHT; daytime++) {
+            forecast_box = gtk_vbox_new(FALSE, 0);
+            if (i % 2)
+                box = add_forecast_cell(forecast_box, NULL);
+            else
+                box = add_forecast_cell(forecast_box, &lightbg);
 
-  icon_hbox = gtk_hbox_new (FALSE, 0);
+            fcdata = make_forecast_data(data->weatherdata, i, daytime);
+            if (fcdata != NULL) {
+                if (fcdata->location != NULL) {
+                    icon = get_icon(get_data(fcdata, SYMBOL), 48, (daytime == NIGHT));
+                    image = gtk_image_new_from_pixbuf(icon);
+                    gtk_box_pack_start(GTK_BOX(forecast_box), GTK_WIDGET(image),
+                                        TRUE, TRUE, 0);
+                    if (G_LIKELY (icon))
+                        g_object_unref (G_OBJECT (icon));
 
-  icon = get_icon (get_data_f (weatherdata, ICON_D), 48);
-  icon_d = gtk_image_new_from_pixbuf (icon);
-  box_d = gtk_event_box_new ();
-  gtk_event_box_set_visible_window (GTK_EVENT_BOX (box_d), FALSE);
-  gtk_container_add (GTK_CONTAINER (box_d), icon_d);
+                    value = g_strdup_printf(" %s ",
+                                            translate_desc(get_data(fcdata, SYMBOL),
+                                                           (daytime == NIGHT)));
+                    label = gtk_label_new(NULL);
+                    gtk_label_set_markup(GTK_LABEL(label), value);
+                    gtk_widget_show(GTK_WIDGET(label));
+                    gtk_box_pack_start(GTK_BOX(forecast_box), GTK_WIDGET(label),
+                                        TRUE, TRUE, 0);
+                    g_free(value);
 
-  if (G_LIKELY (icon))
-    g_object_unref (G_OBJECT (icon));
+                    value = g_strdup_printf(" %s %s ",
+                                            get_data(fcdata, TEMPERATURE),
+                                            get_unit(fcdata, data->unit, TEMPERATURE));
+                    label = gtk_label_new(value);
+                    gtk_widget_show(GTK_WIDGET(label));
+                    gtk_box_pack_start(GTK_BOX(forecast_box), GTK_WIDGET(label),
+                                        TRUE, TRUE, 0);
+                    g_free(value);
 
-  icon = get_icon (get_data_f (weatherdata, ICON_N), 48);
-  icon_n = gtk_image_new_from_pixbuf (icon);
-  box_n = gtk_event_box_new ();
-  gtk_event_box_set_visible_window (GTK_EVENT_BOX (box_n), FALSE);
-  gtk_container_add (GTK_CONTAINER (box_n), icon_n);
-
-  if (G_LIKELY (icon))
-    g_object_unref (G_OBJECT (icon));
-
-  if (G_UNLIKELY (!tooltips))
-    tooltips = gtk_tooltips_new ();
-
-  str = g_strdup_printf (_("Day: %s"),
-                         translate_desc (get_data_f (weatherdata, TRANS_D)));
-  gtk_tooltips_set_tip (tooltips, box_d, str, NULL);
-  g_free (str);
-
-  str = g_strdup_printf (_("Night: %s"),
-                         translate_desc (get_data_f (weatherdata, TRANS_N)));
-  gtk_tooltips_set_tip (tooltips, box_n, str, NULL);
-  g_free (str);
-
-  gtk_box_pack_start (GTK_BOX (icon_hbox), box_d, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (icon_hbox), box_n, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (item_vbox), icon_hbox, FALSE, FALSE, 0);
-
-  label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
-  gtk_label_set_markup (GTK_LABEL (label), _("<b>Precipitation</b>"));
-  gtk_box_pack_start (GTK_BOX (item_vbox), label, FALSE, FALSE, 0);
-
-  temp_hbox = gtk_hbox_new (FALSE, 0);
-  label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
-  str = g_strdup_printf ("%s %%", get_data_f (weatherdata, PPCP_D));
-  gtk_label_set_markup (GTK_LABEL (label), str);
-  g_free (str);
-  gtk_box_pack_start (GTK_BOX (temp_hbox), label, TRUE, TRUE, 0);
-
-  label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
-  str = g_strdup_printf ("%s %%", get_data_f (weatherdata, PPCP_N));
-  gtk_label_set_markup (GTK_LABEL (label), str);
-  g_free (str);
-
-  gtk_box_pack_start (GTK_BOX (temp_hbox), label, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (item_vbox), temp_hbox, FALSE, FALSE, 0);
-
-  label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
-  gtk_label_set_markup (GTK_LABEL (label), _("<b>Temperature</b>"));
-  gtk_box_pack_start (GTK_BOX (item_vbox), label, FALSE, FALSE, 0);
-
-  temp_hbox = gtk_hbox_new (FALSE, 0);
-  label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
-  str = g_strdup_printf ("<span foreground=\"red\">%s</span> %s",
-                         get_data_f (weatherdata, TEMP_MAX), get_unit (unit,
-                                                                       TEMP));
-  gtk_label_set_markup (GTK_LABEL (label), str);
-  g_free (str);
-  gtk_box_pack_start (GTK_BOX (temp_hbox), label, TRUE, TRUE, 0);
-  label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
-  str = g_strdup_printf ("<span foreground=\"blue\">%s</span> %s",
-                         get_data_f (weatherdata, TEMP_MIN), get_unit (unit,
-                                                                       TEMP));
-  gtk_label_set_markup (GTK_LABEL (label), str);
-  g_free (str);
-  gtk_box_pack_start (GTK_BOX (temp_hbox), label, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (item_vbox), temp_hbox, FALSE, FALSE, 0);
-
-  label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
-  gtk_label_set_markup (GTK_LABEL (label), _("<b>Wind</b>"));
-  gtk_box_pack_start (GTK_BOX (item_vbox), label, FALSE, FALSE, 0);
-
-  temp_hbox = gtk_hbox_new (FALSE, 0);
-  label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
-
-  wind = translate_wind_direction (get_data_f (weatherdata, W_DIRECTION_D));
-  gtk_label_set_markup (GTK_LABEL (label),
-                        wind ? wind : get_data_f (weatherdata,
-                                                  W_DIRECTION_D));
-  g_free (wind);
-
-  gtk_box_pack_start (GTK_BOX (temp_hbox), label, TRUE, TRUE, 0);
-
-  label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
-
-  wind = translate_wind_direction (get_data_f (weatherdata, W_DIRECTION_N));
-  gtk_label_set_markup (GTK_LABEL (label),
-                        wind ? wind : get_data_f (weatherdata,
-                                                  W_DIRECTION_N));
-  g_free (wind);
-
-  gtk_box_pack_start (GTK_BOX (temp_hbox), label, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (item_vbox), temp_hbox, FALSE, FALSE, 0);
-
-  /* speed */
-  temp_hbox = gtk_hbox_new (FALSE, 2);
-  label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
-  str = g_strdup_printf ("%s %s", get_data_f (weatherdata, W_SPEED_D),
-                         get_unit (unit, WIND_SPEED));
-  gtk_label_set_markup (GTK_LABEL (label), str);
-  g_free (str);
-  gtk_box_pack_start (GTK_BOX (temp_hbox), label, TRUE, TRUE, 0);
-
-  label = gtk_label_new (NULL);
-  gtk_misc_set_alignment (GTK_MISC (label), 0.5, 0.5);
-  str = g_strdup_printf ("%s %s", get_data_f (weatherdata, W_SPEED_N),
-                         get_unit (unit, WIND_SPEED));
-  gtk_label_set_markup (GTK_LABEL (label), str);
-  g_free (str);
-  gtk_box_pack_start (GTK_BOX (temp_hbox), label, TRUE, TRUE, 0);
-  gtk_box_pack_start (GTK_BOX (item_vbox), temp_hbox, FALSE, FALSE, 0);
-
-  DBG ("Done");
-#endif
-  return item_vbox;
+                    value = g_strdup_printf(" %s %s %s ",
+                                            translate_wind_direction(get_data(fcdata, WIND_DIRECTION)),
+                                            get_data(fcdata, WIND_SPEED),
+                                            get_unit(fcdata, data->unit, WIND_SPEED));
+                    label = gtk_label_new(value);
+                    gtk_widget_show(GTK_WIDGET(label));
+                    gtk_box_pack_start(GTK_BOX(forecast_box), label, TRUE, TRUE, 0);
+                    g_free(value);
+                }
+                xml_time_free(fcdata);
+            }
+            gtk_table_attach_defaults(GTK_TABLE(table),
+                                      GTK_WIDGET(box),
+                                      1+daytime, 2+daytime, i+1, i+2);
+        }
+    }
+    return table;
 }
 
 
@@ -490,34 +479,17 @@ make_forecast (xml_weather *weatherdata,
 static GtkWidget *
 create_forecast_tab (xfceweather_data *data)
 {
-  GtkWidget *widg = gtk_hbox_new (FALSE, 0);
+  GtkWidget *box;
   guint      i;
 
-  gtk_container_set_border_width (GTK_CONTAINER (widg), 6);
-#if 0
-  if (data->weatherdata && data->weatherdata->dayf)
-    {
-      for (i = 0; i < XML_WEATHER_DAYF_N - 1; i++)
-        {
-          if (!data->weatherdata->dayf[i])
-            break;
-
-          DBG ("%s", data->weatherdata->dayf[i]->day);
-
-          gtk_box_pack_start (GTK_BOX (widg),
-                              make_forecast (data->weatherdata->dayf[i], data->unit), FALSE,
-                              FALSE, 0);
-          gtk_box_pack_start (GTK_BOX (widg), gtk_vseparator_new (), TRUE,
-                              TRUE, 0);
-        }
-
-      if (data->weatherdata->dayf[i])
-        gtk_box_pack_start (GTK_BOX (widg),
-                            make_forecast (data->weatherdata->dayf[i], data->unit), FALSE, FALSE,
-                            0);
-    }
-#endif
-  return widg;
+  box = gtk_vbox_new (FALSE, 0);
+  gtk_widget_show(box);
+  gtk_container_set_border_width (GTK_CONTAINER (box), 6);
+  if (data->weatherdata)
+      gtk_box_pack_start (GTK_BOX (box),
+                          make_forecast (data, data->unit),
+                          FALSE, FALSE, 0);
+  return box;
 }
 
 static void
