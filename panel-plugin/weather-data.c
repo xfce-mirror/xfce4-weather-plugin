@@ -27,21 +27,11 @@
 
 #define CHK_NULL(s) ((s) ? (s):"")
 
-static gboolean need_interval(datas type)
-{
-	return type == PRECIPITATIONS || type == SYMBOL;
-}
-
 const gchar *
-get_data (xml_weather *data, datas type)
+get_data (xml_time *timeslice, datas type)
 {
-	const xml_time *timeslice = NULL;
 	const xml_location *loc = NULL;
 
-	if (data == NULL)
-		return "";
-
-	timeslice = get_current_timeslice(data, need_interval(type));
 	if (timeslice == NULL)
 		return "";
 
@@ -79,15 +69,10 @@ get_data (xml_weather *data, datas type)
 }
 
 const gchar *
-get_unit (xml_weather *data, units unit, datas type)
+get_unit (xml_time *timeslice, units unit, datas type)
 {
-	const xml_time *timeslice = NULL;
 	const xml_location *loc = NULL;
 
-	if (data == NULL)
-		return "";
-
-	timeslice = get_current_timeslice(data, need_interval(type));
 	if (timeslice == NULL)
 		return "";
 

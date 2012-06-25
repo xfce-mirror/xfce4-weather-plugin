@@ -42,9 +42,9 @@ typedef enum {
 } units;
 
 const gchar *
-get_data (xml_weather *data, datas type);
+get_data (xml_time *timeslice, datas type);
 const gchar *
-get_unit (xml_weather *data, units unit, datas type);
+get_unit (xml_time *timeslice, units unit, datas type);
 G_END_DECLS
 
 #endif

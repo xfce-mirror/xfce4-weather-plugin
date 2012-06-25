@@ -165,6 +165,9 @@ xml_time *get_current_timeslice(xml_weather *data, gboolean interval)
 	int min_found = 7 * 24 * 3600;
 	int i;
 
+	if (data == NULL)
+		return NULL;
+
 	for (i = 0; i < data->num_timeslices; i++) {
 		if (interval != 
 		    (data->timeslice[i]->start != data->timeslice[i]->end))

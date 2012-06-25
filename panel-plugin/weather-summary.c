@@ -43,8 +43,8 @@ static gboolean lnk_clicked (GtkTextTag *tag, GObject *obj,
                                          g_free (value);
 #define APPEND_TEXT_ITEM(text, item)     value = g_strdup_printf("\t%s%s%s %s\n",\
                                                                  text, text?": ":"", \
-                                                                 get_data(data->weatherdata, item),\
-                                                                 get_unit(data->weatherdata, data->unit, item));\
+                                                                 get_data(timeslice, item), \
+                                                                 get_unit(timeslice, data->unit, item)); \
                                          APPEND_TEXT_ITEM_REAL(value);
 #define APPEND_LINK_ITEM(prefix, text, url, lnk_tag) \
 					 gtk_text_buffer_insert(GTK_TEXT_BUFFER(buffer), \
@@ -278,17 +278,17 @@ create_summary_tab (xfceweather_data *data)
 
   /* Wind */
   APPEND_BTEXT (_("\nWind\n"));
-  wind = translate_wind_speed (data->weatherdata, get_data (data->weatherdata, WIND_SPEED), data->unit);
+  wind = translate_wind_speed (timeslice, get_data (timeslice, WIND_SPEED), data->unit);
   value = g_strdup_printf ("\t%s: %s (%s on the Beaufort scale)\n", _("Speed"), wind,
-		get_data (data->weatherdata, WIND_BEAUFORT));
+                           get_data (timeslice, WIND_BEAUFORT));
   g_free (wind);
   APPEND_TEXT_ITEM_REAL (value);
 
-  wind = translate_wind_direction (get_data (data->weatherdata, WIND_DIRECTION));
+  wind = translate_wind_direction (get_data (timeslice, WIND_DIRECTION));
   value = g_strdup_printf ("\t%s: %s (%s%s)\n", _("Direction"),
-                           wind ? wind : get_data (data->weatherdata, WIND_DIRECTION),
-			   get_data (data->weatherdata, WIND_DIRECTION_DEG),
-			   get_unit (data->weatherdata, data->unit, WIND_DIRECTION_DEG));
+                           wind ? wind : get_data (timeslice, WIND_DIRECTION),
+                           get_data (timeslice, WIND_DIRECTION_DEG),
+                           get_unit (timeslice, data->unit, WIND_DIRECTION_DEG));
   g_free (wind);
   APPEND_TEXT_ITEM_REAL (value);
 
@@ -537,6 +537,7 @@ create_summary_window (xfceweather_data *data)
   GtkWidget *window, *notebook, *vbox;
   gchar     *title;
   GdkPixbuf *icon;
+  xml_time  *timeslice;
 
   window = xfce_titled_dialog_new_with_buttons (_("Weather Update"),
                                                 NULL,
@@ -555,7 +556,8 @@ create_summary_window (xfceweather_data *data)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), vbox, TRUE, TRUE,
                       0);
 
-  icon = get_icon (get_data (data->weatherdata, SYMBOL), 48);
+  timeslice = get_current_timeslice(data->weatherdata, TRUE);
+  icon = get_icon (get_data (timeslice, SYMBOL), 48);
 
   if (!icon)
     icon = get_icon ("99", 48);

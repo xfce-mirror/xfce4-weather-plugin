@@ -474,7 +474,7 @@ translate_wind_direction (const gchar *wdir)
 
 /* calm or a number */
 gchar *
-translate_wind_speed (xml_weather *data,
+translate_wind_speed (xml_time *timeslice,
                       const gchar *wspeed,
                       units        unit)
 {
@@ -484,9 +484,10 @@ translate_wind_speed (xml_weather *data,
     wspeed_loc = g_strdup (_("calm"));
   else if (g_ascii_strcasecmp (wspeed, "N/A") == 0)
     wspeed_loc = g_strdup (_("N/A"));
-  else
+  else {
     wspeed_loc =
-      g_strdup_printf ("%s %s", wspeed, get_unit (data, unit, WIND_SPEED));
+      g_strdup_printf ("%s %s", wspeed, get_unit (timeslice, unit, WIND_SPEED));
+  }
 
   return wspeed_loc;
 }
