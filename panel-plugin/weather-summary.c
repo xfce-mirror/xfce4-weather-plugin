@@ -242,6 +242,7 @@ create_summary_tab (xfceweather_data *data)
   view = gtk_text_view_new ();
   gtk_text_view_set_editable (GTK_TEXT_VIEW (view), FALSE);
   gtk_text_view_set_cursor_visible (GTK_TEXT_VIEW (view), FALSE);
+  gtk_container_set_border_width (GTK_CONTAINER (view), BORDER);
   frame = gtk_frame_new (NULL);
   scrolled = gtk_scrolled_window_new (NULL, NULL);
 
@@ -268,7 +269,10 @@ create_summary_tab (xfceweather_data *data)
   g_free (value);
 
   timeslice = get_current_timeslice(data->weatherdata, FALSE);
-  value = g_strdup_printf (_("Coordinates: lat %s lon %s\nData applies to: %s\n"),
+  APPEND_BTEXT(_("Coordinates and Time\n"));
+  value = g_strdup_printf (_("\tLatitude: %s \n"
+                             "\tLongitude: %s\n\n"
+                             "\tData applies to: %s"),
                            data->lat, data->lon, ctime(&timeslice->start));
   APPEND_TEXT_ITEM_REAL (value);
 
@@ -292,31 +296,30 @@ create_summary_tab (xfceweather_data *data)
   g_free (wind);
   APPEND_TEXT_ITEM_REAL (value);
 
-  /* Atmospheric pressure */
-  APPEND_BTEXT (_("\nAtmospheric pressure\n"));
+  /* Atmosphere */
+  APPEND_BTEXT (_("\nAtmosphere\n"));
   APPEND_TEXT_ITEM (_("Pressure"), PRESSURE);
-
-  /* Other */
-  APPEND_BTEXT (_("\nOther\n"));
   APPEND_TEXT_ITEM (_("Humidity"), HUMIDITY);
+
+  /* Clouds */
+  APPEND_BTEXT (_("\nClouds\n"));
+  APPEND_TEXT_ITEM (_("Fog"), FOG);
   APPEND_TEXT_ITEM (_("Low clouds"), CLOUDINESS_LOW);
   APPEND_TEXT_ITEM (_("Medium clouds"), CLOUDINESS_MED);
   APPEND_TEXT_ITEM (_("High clouds"), CLOUDINESS_HIGH);
-  APPEND_TEXT_ITEM (_("Fog"), FOG);
 
   APPEND_BTEXT (_("\nData from The Norwegian Meteorological Institute\n"));
   APPEND_LINK_ITEM ("\t", "Thanks to met.no", "http://met.no/", ltag1);
 
   g_signal_connect(G_OBJECT(view), "motion-notify-event",
-		   G_CALLBACK(view_motion_notify), view);
+                   G_CALLBACK(view_motion_notify), view);
   g_signal_connect(G_OBJECT(view), "leave-notify-event",
-		   G_CALLBACK(view_leave_notify), view);
+                   G_CALLBACK(view_leave_notify), view);
 
   if (hand_cursor == NULL)
     hand_cursor = gdk_cursor_new(GDK_HAND2);
   if (text_cursor == NULL)
     text_cursor = gdk_cursor_new(GDK_XTERM);
-
 
   return frame;
 }
