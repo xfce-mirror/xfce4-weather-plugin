@@ -38,6 +38,10 @@ enum
 
 typedef struct
 {
+    gchar *altitude;
+    gchar *latitude;
+    gchar *longitude;
+
 	gchar *temperature_value;
 	gchar *temperature_unit;
 	

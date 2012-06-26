@@ -49,6 +49,12 @@ get_data (xml_time *timeslice, datas type)
 	loc = timeslice->location;
 
 	switch(type) {
+	case ALTITUDE:
+		return CHK_NULL(loc->altitude);
+	case LATITUDE:
+		return CHK_NULL(loc->latitude);
+	case LONGITUDE:
+		return CHK_NULL(loc->longitude);
 	case TEMPERATURE:
 		return CHK_NULL(loc->temperature_value);
 	case PRESSURE:
@@ -90,6 +96,8 @@ get_unit (xml_time *timeslice, units unit, datas type)
 	loc = timeslice->location;
 
 	switch(type) {
+	case ALTITUDE:
+		return "m";
 	case TEMPERATURE:
 		return strcmp(loc->temperature_unit, "celcius") ? "°F":"°C";
 	case PRESSURE:
@@ -97,6 +105,8 @@ get_unit (xml_time *timeslice, units unit, datas type)
 	case WIND_SPEED:
 		return "m/s";
 	case WIND_DIRECTION_DEG:
+	case LATITUDE:
+	case LONGITUDE:
 		return "°";
 	case HUMIDITY:
 	case CLOUDINESS_LOW:
@@ -263,6 +273,10 @@ make_combined_timeslice(xml_time *point, xml_time *interval)
 
     forecast->start = point->start;
     forecast->end = interval->end;
+
+    loc->altitude = g_strdup(point->location->altitude);
+    loc->latitude = g_strdup(point->location->latitude);
+    loc->longitude = g_strdup(point->location->longitude);
 
     loc->temperature_value = g_strdup(point->location->temperature_value);
     loc->temperature_unit = g_strdup(point->location->temperature_unit);

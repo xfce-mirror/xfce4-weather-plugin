@@ -270,10 +270,17 @@ create_summary_tab (xfceweather_data *data)
 
   timeslice = get_current_timeslice(data->weatherdata, FALSE);
   APPEND_BTEXT(_("Coordinates and Time\n"));
-  value = g_strdup_printf (_("\tLatitude: %s \n"
-                             "\tLongitude: %s\n\n"
+  value = g_strdup_printf (_("\tAltitude: %s %s\n"
+                             "\tLatitude: %s%s\n"
+                             "\tLongitude: %s%s\n\n"
                              "\tData applies to: %s"),
-                           data->lat, data->lon, ctime(&timeslice->start));
+                           get_data(timeslice, ALTITUDE),
+                           get_unit(timeslice, data->unit, ALTITUDE),
+                           get_data(timeslice, LATITUDE),
+                           get_unit(timeslice, data->unit, LATITUDE),
+                           get_data(timeslice, LONGITUDE),
+                           get_unit(timeslice, data->unit, LONGITUDE),
+                           ctime(&timeslice->start));
   APPEND_TEXT_ITEM_REAL (value);
 
   /* Temperature */
