@@ -44,6 +44,7 @@ static const labeloption labeloptions[OPTIONS_N] = {
   {N_("Low cloudiness (CL)"), CLOUDINESS_LOW},
   {N_("Medium cloudiness (CM)"), CLOUDINESS_MED},
   {N_("High cloudiness (CH)"), CLOUDINESS_HIGH},
+  {N_("Overall Cloudiness (CO)"), CLOUDINESS_OVERALL},
   {N_("Fog (F)"), FOG},
   {N_("Precipitations (R)"), PRECIPITATIONS},
 };

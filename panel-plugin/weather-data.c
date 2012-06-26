@@ -75,6 +75,8 @@ get_data (xml_time *timeslice, datas type)
 		return CHK_NULL(loc->cloudiness_percent[CLOUD_MED]);
 	case CLOUDINESS_HIGH:
 		return CHK_NULL(loc->cloudiness_percent[CLOUD_HIGH]);
+	case CLOUDINESS_OVERALL:
+		return CHK_NULL(loc->cloudiness_percent[CLOUD_OVERALL]);
 	case FOG:
 		return CHK_NULL(loc->fog_percent);
 	case PRECIPITATIONS:
@@ -112,6 +114,7 @@ get_unit (xml_time *timeslice, units unit, datas type)
 	case CLOUDINESS_LOW:
 	case CLOUDINESS_MED:
 	case CLOUDINESS_HIGH:
+	case CLOUDINESS_OVERALL:
 	case FOG:
 		return "%";
 	case PRECIPITATIONS:

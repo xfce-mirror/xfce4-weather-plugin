@@ -131,6 +131,9 @@ make_label (xml_weather    *weatherdata,
     case CLOUDINESS_HIGH:
       lbl = _("CH");
       break;
+    case CLOUDINESS_OVERALL:
+      lbl = _("CO");
+      break;
     case FOG:
       lbl = _("F");
       break;

@@ -243,6 +243,10 @@ void parse_location (xmlNode * cur_node, xml_location *loc)
 			loc->pressure_unit = PROP(child_node, "unit");
 			loc->pressure_value = PROP(child_node, "value");
 		}
+		if (NODE_IS_TYPE (child_node, "cloudiness")) {
+			g_free(loc->cloudiness_percent[CLOUD_OVERALL]);
+			loc->cloudiness_percent[CLOUD_OVERALL] = PROP(child_node, "percent");
+		}
 		if (NODE_IS_TYPE (child_node, "fog")) {
 			g_free(loc->fog_percent);
 			loc->fog_percent = PROP(child_node, "percent");

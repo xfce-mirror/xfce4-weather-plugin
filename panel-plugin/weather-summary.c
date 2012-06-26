@@ -314,6 +314,7 @@ create_summary_tab (xfceweather_data *data)
   APPEND_TEXT_ITEM (_("Low clouds"), CLOUDINESS_LOW);
   APPEND_TEXT_ITEM (_("Medium clouds"), CLOUDINESS_MED);
   APPEND_TEXT_ITEM (_("High clouds"), CLOUDINESS_HIGH);
+  APPEND_TEXT_ITEM (_("Cloudiness"), CLOUDINESS_OVERALL);
 
   APPEND_BTEXT (_("\nData from The Norwegian Meteorological Institute\n"));
   APPEND_LINK_ITEM ("\t", "Thanks to met.no", "http://met.no/", ltag1);
