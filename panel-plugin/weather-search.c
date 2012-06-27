@@ -283,7 +283,7 @@ create_search_dialog (GtkWindow *parent,
                     G_CALLBACK (pass_search_results), dialog->dialog);
   gtk_container_add (GTK_CONTAINER (scroll), dialog->result_list);
 
-  gtk_widget_set_size_request (dialog->dialog, 425, 250);
+  gtk_widget_set_size_request (dialog->dialog, 600, 500);
 
   return dialog;
 }
