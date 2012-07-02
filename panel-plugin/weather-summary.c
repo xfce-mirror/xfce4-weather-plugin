@@ -360,8 +360,8 @@ add_forecast_header(gchar *text, gdouble angle, GdkColor *color)
     gtk_widget_show(GTK_WIDGET(box));
 
     label = gtk_label_new(NULL);
-    gtk_label_set_angle(label, angle);
-    gtk_widget_show(label);
+    gtk_label_set_angle(GTK_LABEL(label), angle);
+    gtk_widget_show(GTK_WIDGET(label));
     str = g_strdup_printf("<span foreground=\"white\"><b>%s</b></span>", text ? text : "");
     gtk_label_set_markup(GTK_LABEL(label), str);
     g_free(str);
