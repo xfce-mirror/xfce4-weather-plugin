@@ -473,6 +473,16 @@ xfceweather_read_config (XfcePanelPlugin  *plugin,
       data->location_name = g_strdup (value);
     }
 
+  value = xfce_rc_read_entry (rc, "loc_name_short", NULL);
+
+  if (value)
+    {
+      if (data->location_name_short)
+        g_free (data->location_name_short);
+
+      data->location_name_short = g_strdup (value);
+    }
+
   if (xfce_rc_read_bool_entry (rc, "celcius", TRUE))
     data->unit = METRIC;
   else
@@ -566,6 +576,9 @@ xfceweather_write_config (XfcePanelPlugin  *plugin,
 
   if (data->location_name)
     xfce_rc_write_entry (rc, "loc_name", data->location_name);
+
+  if (data->location_name_short)
+    xfce_rc_write_entry (rc, "loc_name_short", data->location_name_short);
 
   xfce_rc_write_bool_entry (rc, "proxy_fromenv", data->proxy_fromenv);
 

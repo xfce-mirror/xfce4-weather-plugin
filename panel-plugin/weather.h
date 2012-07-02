@@ -52,6 +52,7 @@ typedef struct
   gchar           *lat;
   gchar           *lon;
   gchar		  *location_name;
+  gchar           *location_name_short;
   units            unit;
 
   xml_weather     *weatherdata;

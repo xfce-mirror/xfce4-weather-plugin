@@ -161,7 +161,7 @@ apply_options (xfceweather_dialog *dialog)
   gint         history = 0;
   gboolean     hasiter = FALSE;
   GtkTreeIter  iter;
-  gchar       *text;
+  gchar       *text, *pos;
   gint         option;
   GValue       value = { 0, };
   GtkWidget   *widget;
@@ -184,6 +184,9 @@ apply_options (xfceweather_dialog *dialog)
   if (data->location_name)
     g_free (data->location_name);
 
+  if (data->location_name_short)
+    g_free (data->location_name_short);
+
   data->lat =
     g_strdup (gtk_entry_get_text (GTK_ENTRY (dialog->txt_lat)));
 
@@ -192,6 +195,14 @@ apply_options (xfceweather_dialog *dialog)
 
   data->location_name =
     g_strdup (gtk_label_get_text (GTK_LABEL (dialog->txt_loc_name)));
+
+  pos = g_utf8_strchr(data->location_name, -1, ',');
+  if (pos != NULL)
+    data->location_name_short =
+      g_utf8_substring (data->location_name, 0,
+        g_utf8_pointer_to_offset (data->location_name, pos));
+  else
+    data->location_name_short = g_strdup (data->location_name);
 
   /* call labels_clear() here */
   if (data->labels && data->labels->len > 0)
