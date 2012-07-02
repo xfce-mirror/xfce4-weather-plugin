@@ -630,10 +630,7 @@ forecast_click (GtkWidget *widget,
   xfceweather_data *data = (xfceweather_data *) user_data;
 
   if (data->summary_window != NULL)
-    {
-
-      gtk_window_present (GTK_WINDOW (data->summary_window));
-    }
+      gtk_widget_destroy (data->summary_window);
   else
     {
       data->summary_window = create_summary_window (data);
