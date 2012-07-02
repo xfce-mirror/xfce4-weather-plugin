@@ -250,7 +250,8 @@ gtk_scrollbox_start_fade (GtkScrollbox *self)
     else
       self->offset = 0;
 
-      self->timeout_id = g_timeout_add (25, gtk_scrollbox_fade_in,
+      self->timeout_id = g_timeout_add (LABEL_SPEED,
+                                        gtk_scrollbox_fade_in,
                                         self);
     }
   else
