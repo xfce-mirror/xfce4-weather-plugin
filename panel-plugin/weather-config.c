@@ -30,7 +30,7 @@
 #include "weather-search.h"
 #include "weather-scrollbox.h"
 
-#define OPTIONS_N 12
+#define OPTIONS_N 13
 #define BORDER    8
 
 static const labeloption labeloptions[OPTIONS_N] = {
@@ -140,7 +140,7 @@ make_label (void)
   menu = gtk_menu_new ();
   widget = gtk_option_menu_new ();
 
-  for (i = 0; i < 11; i++)
+  for (i = 0; i < OPTIONS_N; i++)
     {
       labeloption opt = labeloptions[i];
 
