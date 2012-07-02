@@ -352,12 +352,15 @@ add_forecast_cell(GtkWidget *widget, GdkColor *color) {
 GtkWidget *
 add_forecast_header(gchar *text, gdouble angle, GdkColor *color)
 {
+    GtkWidget *label, *align;
     gchar *str;
-    GtkWidget *label, *box;
 
-    box = gtk_vbox_new(FALSE, 0);
-    gtk_container_set_border_width(GTK_CONTAINER(box), 4);
-    gtk_widget_show(GTK_WIDGET(box));
+	if (angle)
+		align = gtk_alignment_new(1, 1, 0, 1);
+	else
+		align = gtk_alignment_new(1, 1, 1, 0);
+	gtk_container_set_border_width(GTK_CONTAINER(align), 4);
+    gtk_widget_show(GTK_WIDGET(align));
 
     label = gtk_label_new(NULL);
     gtk_label_set_angle(GTK_LABEL(label), angle);
@@ -365,17 +368,17 @@ add_forecast_header(gchar *text, gdouble angle, GdkColor *color)
     str = g_strdup_printf("<span foreground=\"white\"><b>%s</b></span>", text ? text : "");
     gtk_label_set_markup(GTK_LABEL(label), str);
     g_free(str);
-    gtk_box_pack_start(GTK_BOX(box), GTK_WIDGET(label),
-                       TRUE, FALSE, 2);
-    return add_forecast_cell(box, color);
+    gtk_container_add(GTK_CONTAINER(align), GTK_WIDGET(label));
+
+    return add_forecast_cell(align, color);
 }
 
 static GtkWidget *
 make_forecast (xfceweather_data *data,
                units     unit)
 {
-    GtkWidget *ebox, *table, *scrolled, *day_label;
-    GtkWidget *forecast_box, *box, *label, *image;
+    GtkWidget *table, *ebox, *box, *align;
+    GtkWidget *forecast_box, *label, *image;
     GdkPixbuf *icon;
     GdkColor lightbg = {0, 0xeaea, 0xeaea, 0xeaea};
     GdkColor darkbg = {0, 0x6666, 0x6666, 0x6666};
@@ -394,7 +397,7 @@ make_forecast (xfceweather_data *data,
     box = gtk_vbox_new(FALSE, 0);
     gtk_widget_show(GTK_WIDGET(box));
     gtk_table_attach_defaults(GTK_TABLE(table),
-                              add_forecast_cell(box, NULL),
+                              add_forecast_cell(box, &darkbg),
                               0, 1, 0, 1);
 
     /* daytime headers */
@@ -423,21 +426,21 @@ make_forecast (xfceweather_data *data,
         else
             dayname = translate_day(weekday);
 
-        if (i % 2)
-            box = add_forecast_header(dayname, 90.0, &darkbg);
-        else
-            box = add_forecast_header(dayname, 90.0, &darkbg);
+        ebox = add_forecast_header(dayname, 90.0, &darkbg);
 
-        gtk_table_attach_defaults(GTK_TABLE(table), GTK_WIDGET(box),
+        gtk_table_attach_defaults(GTK_TABLE(table), GTK_WIDGET(ebox),
                                   0, 1, i+1, i+2);
 
         /* Get forecast data for each daytime */
         for (daytime = MORNING; daytime <= NIGHT; daytime++) {
             forecast_box = gtk_vbox_new(FALSE, 0);
+            align = gtk_alignment_new(0.5, 0.5, 1, 1);
+            gtk_container_set_border_width(GTK_CONTAINER(align), 4);
+            gtk_container_add(GTK_CONTAINER(align), GTK_WIDGET(forecast_box));
             if (i % 2)
-                box = add_forecast_cell(forecast_box, NULL);
+                ebox = add_forecast_cell(align, NULL);
             else
-                box = add_forecast_cell(forecast_box, &lightbg);
+                ebox = add_forecast_cell(align, &lightbg);
 
             fcdata = make_forecast_data(data->weatherdata, i, daytime);
             if (fcdata != NULL) {
@@ -449,7 +452,7 @@ make_forecast (xfceweather_data *data,
                     if (G_LIKELY (icon))
                         g_object_unref (G_OBJECT (icon));
 
-                    value = g_strdup_printf(" %s ",
+                    value = g_strdup_printf("%s",
                                             translate_desc(get_data(fcdata, SYMBOL),
                                                            (daytime == NIGHT)));
                     label = gtk_label_new(NULL);
@@ -459,7 +462,7 @@ make_forecast (xfceweather_data *data,
                                         TRUE, TRUE, 0);
                     g_free(value);
 
-                    value = g_strdup_printf(" %s %s ",
+                    value = g_strdup_printf("%s %s",
                                             get_data(fcdata, TEMPERATURE),
                                             get_unit(fcdata, data->unit, TEMPERATURE));
                     label = gtk_label_new(value);
@@ -468,7 +471,7 @@ make_forecast (xfceweather_data *data,
                                         TRUE, TRUE, 0);
                     g_free(value);
 
-                    value = g_strdup_printf(" %s %s %s ",
+                    value = g_strdup_printf("%s %s %s",
                                             translate_wind_direction(get_data(fcdata, WIND_DIRECTION)),
                                             get_data(fcdata, WIND_SPEED),
                                             get_unit(fcdata, data->unit, WIND_SPEED));
@@ -480,7 +483,7 @@ make_forecast (xfceweather_data *data,
                 xml_time_free(fcdata);
             }
             gtk_table_attach_defaults(GTK_TABLE(table),
-                                      GTK_WIDGET(box),
+                                      GTK_WIDGET(ebox),
                                       1+daytime, 2+daytime, i+1, i+2);
         }
     }
@@ -492,17 +495,15 @@ make_forecast (xfceweather_data *data,
 static GtkWidget *
 create_forecast_tab (xfceweather_data *data)
 {
-  GtkWidget *box;
+  GtkWidget *align;
   guint      i;
 
-  box = gtk_vbox_new (FALSE, 0);
-  gtk_widget_show(box);
-  gtk_container_set_border_width (GTK_CONTAINER (box), 6);
+  align = gtk_alignment_new(0.5, 0, 0.5, 0);
+  gtk_container_set_border_width (GTK_CONTAINER (align), 6);
   if (data->weatherdata)
-      gtk_box_pack_start (GTK_BOX (box),
-                          make_forecast (data, data->unit),
-                          FALSE, FALSE, 0);
-  return box;
+    gtk_container_add(GTK_CONTAINER(align),
+                      GTK_WIDGET(make_forecast (data, data->unit)));
+  return align;
 }
 
 static void
@@ -577,8 +578,6 @@ create_summary_window (xfceweather_data *data)
 
   g_signal_connect (G_OBJECT (window), "response",
                     G_CALLBACK (summary_dialog_response), window);
-
-  gtk_window_set_default_size (GTK_WINDOW (window), 500, 400);
 
   return window;
 }
