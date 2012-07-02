@@ -45,8 +45,10 @@ typedef struct
 
   GArray          *labels;
 
+  gint             panel_size;
   gint             size;
   GtkOrientation   orientation;
+  GtkOrientation   panel_orientation;
   gint             updatetimeout;
 
   gchar           *lat;

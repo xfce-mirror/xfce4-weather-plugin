@@ -41,6 +41,7 @@ struct _GtkScrollbox
   gint offset;
   GSList *active;
   gboolean animate;
+  GtkOrientation orientation;
 };
 
 struct _GtkScrollboxClass
@@ -49,6 +50,8 @@ struct _GtkScrollboxClass
 };
 
 void gtk_scrollbox_set_label (GtkScrollbox * self, gint position, gchar *markup);
+
+void gtk_scrollbox_set_orientation (GtkScrollbox *self, GtkOrientation orientation);
 
 GtkWidget *gtk_scrollbox_new (void);
 

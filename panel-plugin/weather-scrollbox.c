@@ -62,6 +62,7 @@ gtk_scrollbox_init (GtkScrollbox *self)
   self->timeout_id = 0;
   self->offset = 0;
   self->active = NULL;
+  self->orientation = GTK_ORIENTATION_HORIZONTAL;
 }
 
 
@@ -101,8 +102,16 @@ gtk_scrollbox_size_request (GtkWidget      *widget,
     {
       layout = PANGO_LAYOUT (li->data);
       pango_layout_get_extents (layout, NULL, &logical_rect);
-      width = PANGO_PIXELS (logical_rect.width);
-      height = PANGO_PIXELS (logical_rect.height);
+      if (self->orientation == GTK_ORIENTATION_HORIZONTAL)
+        {
+          width = PANGO_PIXELS (logical_rect.width);
+          height = PANGO_PIXELS (logical_rect.height);
+        }
+      else
+        {
+          height = PANGO_PIXELS (logical_rect.width);
+          width = PANGO_PIXELS (logical_rect.height);
+        }
 
       requisition->width = MAX (width, requisition->width);
       requisition->height = MAX (height, requisition->height);
@@ -119,6 +128,7 @@ gtk_scrollbox_expose_event (GtkWidget      *widget,
   gint            width, height;
   PangoRectangle  logical_rect;
   gboolean        result = FALSE;
+  PangoMatrix     matrix = PANGO_MATRIX_INIT;
 
   if (GTK_WIDGET_CLASS (gtk_scrollbox_parent_class)->expose_event != NULL)
     result = GTK_WIDGET_CLASS (gtk_scrollbox_parent_class)->expose_event (widget, event);
@@ -126,9 +136,19 @@ gtk_scrollbox_expose_event (GtkWidget      *widget,
   if (self->active != NULL)
     {
       layout = PANGO_LAYOUT (self->active->data);
+      pango_matrix_rotate(&matrix, (self->orientation == GTK_ORIENTATION_HORIZONTAL) ? 0.0 : -90.0);
+      pango_context_set_matrix(pango_layout_get_context (layout), &matrix);
       pango_layout_get_extents (layout, NULL, &logical_rect);
-      width = PANGO_PIXELS (logical_rect.width);
-      height = PANGO_PIXELS (logical_rect.height);
+      if (self->orientation == GTK_ORIENTATION_HORIZONTAL)
+        {
+          width = PANGO_PIXELS (logical_rect.width);
+          height = PANGO_PIXELS (logical_rect.height);
+        }
+      else
+        {
+          height = PANGO_PIXELS (logical_rect.width);
+          width = PANGO_PIXELS (logical_rect.height);
+        }
 
       gtk_paint_layout (widget->style,
                         widget->window,
@@ -248,6 +268,18 @@ gtk_scrollbox_set_label (GtkScrollbox *self,
   gtk_widget_queue_resize (GTK_WIDGET (self));
 
   gtk_scrollbox_start_fade (self);
+}
+
+
+
+void
+gtk_scrollbox_set_orientation (GtkScrollbox *self,
+                               GtkOrientation orientation)
+{
+  g_return_if_fail (GTK_IS_SCROLLBOX (self));
+
+  self->orientation = orientation;
+  gtk_widget_queue_resize (GTK_WIDGET (self));
 }
 
 
