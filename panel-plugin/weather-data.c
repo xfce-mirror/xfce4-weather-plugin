@@ -43,6 +43,7 @@ gchar *
 get_data (xml_time *timeslice, units unit, datas type)
 {
 	const xml_location *loc = NULL;
+	double val;
 
 	if (timeslice == NULL)
 		return g_strdup("");
@@ -57,7 +58,15 @@ get_data (xml_time *timeslice, units unit, datas type)
 	case LONGITUDE:
 		return LOCALE_DOUBLE(loc->longitude, "%.4f");
 	case TEMPERATURE:
-		return LOCALE_DOUBLE(loc->temperature_value, "%.1f");
+		val = g_ascii_strtod(loc->temperature_value, NULL);
+		if (unit == IMPERIAL
+			&& (strcmp(loc->temperature_unit, "celcius") == 0
+				|| strcmp(loc->temperature_unit, "celsius" == 0)))
+			val = val * 9.0 / 5.0 + 32.0;
+		else if (unit == METRIC
+				 && strcmp(loc->temperature_unit, "fahrenheit") == 0)
+			val = (val - 32.0) * 5.0 / 9.0;
+		return g_strdup_printf ("%.1f", val);
 	case PRESSURE:
 		return LOCALE_DOUBLE(loc->pressure_value, "%.1f");
 	case WIND_SPEED:
@@ -102,7 +111,7 @@ get_unit (xml_time *timeslice, units unit, datas type)
 	case ALTITUDE:
 		return "m";
 	case TEMPERATURE:
-		return strcmp(loc->temperature_unit, "celcius") ? "°F":"°C";
+		return (unit == IMPERIAL) ? _("°F") : _("°C");
 	case PRESSURE:
 		return (loc->pressure_unit) ? loc->pressure_unit : "";
 	case WIND_SPEED:
