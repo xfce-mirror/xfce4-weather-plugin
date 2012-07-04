@@ -100,7 +100,12 @@ get_data (xml_time *timeslice, units unit, datas type)
 	case FOG:
 		return LOCALE_DOUBLE(loc->fog_percent, "%.1f");
 	case PRECIPITATIONS:
-		return LOCALE_DOUBLE(loc->precipitation_value, "%.1f");
+		if (unit == METRIC)
+			return LOCALE_DOUBLE(loc->precipitation_value, "%.1f");
+		val = g_ascii_strtod(loc->precipitation_value, NULL);
+		if (unit == IMPERIAL)
+			val /= 25.4;
+		return g_strdup_printf("%.3f", val);
 	case SYMBOL:
 		return CHK_NULL(loc->symbol);
 	}
@@ -138,7 +143,7 @@ get_unit (xml_time *timeslice, units unit, datas type)
 	case FOG:
 		return "%";
 	case PRECIPITATIONS:
-		return "mm";
+		return (unit == IMPERIAL) ? _("in") : _("mm");
 	case SYMBOL:
 	case WIND_BEAUFORT:
 	case WIND_DIRECTION:
