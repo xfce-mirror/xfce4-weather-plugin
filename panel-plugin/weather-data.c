@@ -70,7 +70,12 @@ get_data (xml_time *timeslice, units unit, datas type)
 	case PRESSURE:
 		return LOCALE_DOUBLE(loc->pressure_value, "%.1f");
 	case WIND_SPEED:
-		return LOCALE_DOUBLE(loc->wind_speed_mps, "%.1f");
+		val = g_ascii_strtod(loc->wind_speed_mps, NULL);
+		if (unit == IMPERIAL)
+			val *= 2.2369362920544;
+		else if (unit == METRIC)
+			val *= 3.6;
+		return g_strdup_printf("%.1f", val);
 	case WIND_BEAUFORT:
 		return CHK_NULL(loc->wind_speed_beaufort);
 	case WIND_DIRECTION:
@@ -115,7 +120,7 @@ get_unit (xml_time *timeslice, units unit, datas type)
 	case PRESSURE:
 		return (loc->pressure_unit) ? loc->pressure_unit : "";
 	case WIND_SPEED:
-		return "m/s";
+		return (unit == IMPERIAL) ? _("mph") : _("km/h");
 	case WIND_DIRECTION_DEG:
 	case LATITUDE:
 	case LONGITUDE:
