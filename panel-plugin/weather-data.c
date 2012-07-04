@@ -52,7 +52,11 @@ get_data (xml_time *timeslice, units unit, datas type)
 
 	switch(type) {
 	case ALTITUDE:
-		return CHK_NULL(loc->altitude);
+		if (unit == METRIC)
+			return LOCALE_DOUBLE(loc->altitude, "%.0f");
+		val = g_ascii_strtod(loc->altitude, NULL);
+		val /= 0.3048;
+		return g_strdup_printf("%.2f", val);
 	case LATITUDE:
 		return LOCALE_DOUBLE(loc->latitude, "%.4f");
 	case LONGITUDE:
@@ -124,7 +128,7 @@ get_unit (xml_time *timeslice, units unit, datas type)
 
 	switch(type) {
 	case ALTITUDE:
-		return "m";
+		return (unit == IMPERIAL) ? _("ft") : _("m");
 	case TEMPERATURE:
 		return (unit == IMPERIAL) ? _("°F") : _("°C");
 	case PRESSURE:
