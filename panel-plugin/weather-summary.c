@@ -242,6 +242,8 @@ create_summary_tab (xfceweather_data *data)
   GtkAdjustment *adj;
   GtkWidget     *weather_channel_icon;
   xml_time      *timeslice;
+  struct tm     *start, *end;
+  char           interval_start[80], interval_end[80];
 
   view = gtk_text_view_new ();
   gtk_text_view_set_editable (GTK_TEXT_VIEW (view), FALSE);
@@ -278,9 +280,13 @@ create_summary_tab (xfceweather_data *data)
   APPEND_TEXT_ITEM (_("Latitude"), LATITUDE);
   APPEND_TEXT_ITEM (_("Longitude"), LONGITUDE);
 
-  value = g_strdup_printf (_("\n\tData applies to time interval\n\tfrom %s\tto %s"),
-                           ctime(&timeslice->start),
-                           ctime(&timeslice->end));
+  start = localtime(&timeslice->start);
+  strftime (interval_start, 80, "%c", start);
+  end = localtime(&timeslice->end);
+  strftime (interval_end, 80, "%c", end);
+  value = g_strdup_printf (_("\n\tData applies to time interval\n\tfrom %s\n\tto %s\n"),
+                           interval_start,
+                           interval_end);
   APPEND_TEXT_ITEM_REAL (value);
 
   /* Temperature */
