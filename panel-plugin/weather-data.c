@@ -25,7 +25,7 @@
 #include "weather-data.h"
 #include "weather.h"
 
-#define CHK_NULL(s) ((s) ? (s):"")
+#define CHK_NULL(s) ((s) ? g_strdup(s):g_strdup(""))
 
 gboolean has_timeslice(xml_weather *data, time_t start, time_t end)
 {
@@ -38,13 +38,13 @@ gboolean has_timeslice(xml_weather *data, time_t start, time_t end)
     return FALSE;
 }
 
-const gchar *
+gchar *
 get_data (xml_time *timeslice, datas type)
 {
 	const xml_location *loc = NULL;
 
 	if (timeslice == NULL)
-		return "";
+		return g_strdup("");
 
 	loc = timeslice->location;
 
@@ -60,9 +60,9 @@ get_data (xml_time *timeslice, datas type)
 	case PRESSURE:
 		return CHK_NULL(loc->pressure_value);
 	case WIND_SPEED:
-		return CHK_NULL( loc->wind_speed_mps);
+		return CHK_NULL(loc->wind_speed_mps);
 	case WIND_BEAUFORT:
-		return CHK_NULL( loc->wind_speed_beaufort);
+		return CHK_NULL(loc->wind_speed_beaufort);
 	case WIND_DIRECTION:
 		return CHK_NULL(loc->wind_dir_name);
 	case WIND_DIRECTION_DEG:
@@ -84,7 +84,7 @@ get_data (xml_time *timeslice, datas type)
 	case SYMBOL:
 		return CHK_NULL(loc->symbol);
 	}
-	return "";
+	return g_strdup("");
 }
 
 const gchar *
@@ -103,7 +103,7 @@ get_unit (xml_time *timeslice, units unit, datas type)
 	case TEMPERATURE:
 		return strcmp(loc->temperature_unit, "celcius") ? "°F":"°C";
 	case PRESSURE:
-		return CHK_NULL(loc->pressure_unit);
+		return (loc->pressure_unit) ? loc->pressure_unit : "";
 	case WIND_SPEED:
 		return "m/s";
 	case WIND_DIRECTION_DEG:

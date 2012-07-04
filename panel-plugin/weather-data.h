@@ -52,7 +52,7 @@ typedef enum {
 	NIGHT
 } daytime;
 
-const gchar *
+gchar *
 get_data (xml_time *timeslice, datas type);
 const gchar *
 get_unit (xml_time *timeslice, units unit, datas type);

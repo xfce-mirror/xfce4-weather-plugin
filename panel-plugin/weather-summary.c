@@ -41,10 +41,14 @@ static gboolean lnk_clicked (GtkTextTag *tag, GObject *obj,
 #define APPEND_TEXT_ITEM_REAL(text)      gtk_text_buffer_insert(GTK_TEXT_BUFFER(buffer), \
                                                                 &iter, text, -1);\
                                          g_free (value);
-#define APPEND_TEXT_ITEM(text, item)     value = g_strdup_printf("\t%s%s%s %s\n",\
-                                                                 text, text?": ":"", \
-                                                                 get_data(timeslice, item), \
-                                                                 get_unit(timeslice, data->unit, item)); \
+#define APPEND_TEXT_ITEM(text, item)     rawvalue = get_data(timeslice, item); \
+                                         unit = get_unit(timeslice, data->unit, item); \
+                                         value = g_strdup_printf("\t%s%s%s%s%s\n", \
+                                                                 text, text ? ": " : "", \
+                                                                 rawvalue, \
+                                                                 strcmp(unit, "°") ? " " : "", \
+                                                                 unit); \
+                                         g_free (rawvalue);\
                                          APPEND_TEXT_ITEM_REAL(value);
 #define APPEND_LINK_ITEM(prefix, text, url, lnk_tag) \
 					 gtk_text_buffer_insert(GTK_TEXT_BUFFER(buffer), \
@@ -231,12 +235,12 @@ create_summary_tab (xfceweather_data *data)
   GtkTextBuffer *buffer;
   GtkTextIter    iter;
   GtkTextTag    *btag, *ltag1;
-  gchar         *value, *wind, *sun_val, *vis;
+  gchar         *value, *wind, *sun_val, *vis, *rawvalue;
+  const gchar   *unit;
   GtkWidget     *view, *frame, *scrolled;
   GdkColor       lnk_color;
   GtkAdjustment *adj;
   GtkWidget     *weather_channel_icon;
-  gchar         *start;
   xml_time      *timeslice;
 
   view = gtk_text_view_new ();
@@ -270,17 +274,11 @@ create_summary_tab (xfceweather_data *data)
 
   timeslice = get_current_timeslice(data->weatherdata, FALSE);
   APPEND_BTEXT(_("Coordinates and Time\n"));
-  value = g_strdup_printf (_("\tAltitude: %s %s\n"
-                             "\tLatitude: %s%s\n"
-                             "\tLongitude: %s%s\n\n"
-                             "\tData applies to time interval\n"
-                             "\tfrom %s\tto %s"),
-                           get_data(timeslice, ALTITUDE),
-                           get_unit(timeslice, data->unit, ALTITUDE),
-                           get_data(timeslice, LATITUDE),
-                           get_unit(timeslice, data->unit, LATITUDE),
-                           get_data(timeslice, LONGITUDE),
-                           get_unit(timeslice, data->unit, LONGITUDE),
+  APPEND_TEXT_ITEM (_("Altitude"), ALTITUDE);
+  APPEND_TEXT_ITEM (_("Latitude"), LATITUDE);
+  APPEND_TEXT_ITEM (_("Longitude"), LONGITUDE);
+
+  value = g_strdup_printf (_("\n\tData applies to time interval\n\tfrom %s\tto %s"),
                            ctime(&timeslice->start),
                            ctime(&timeslice->end));
   APPEND_TEXT_ITEM_REAL (value);
@@ -291,17 +289,23 @@ create_summary_tab (xfceweather_data *data)
 
   /* Wind */
   APPEND_BTEXT (_("\nWind\n"));
-  wind = translate_wind_speed (timeslice, get_data (timeslice, WIND_SPEED), data->unit);
-  value = g_strdup_printf (_("\t%s: %s (%s on the Beaufort scale)\n"), _("Speed"), wind,
-                           get_data (timeslice, WIND_BEAUFORT));
+  rawvalue = get_data (timeslice, WIND_SPEED);
+  wind = translate_wind_speed (timeslice, rawvalue, data->unit);
+  g_free (rawvalue);
+  rawvalue = get_data (timeslice, WIND_BEAUFORT);
+  value = g_strdup_printf (_("\t%s: %s (%s on the Beaufort scale)\n"), _("Speed"), wind, rawvalue);
+  g_free (rawvalue);
   g_free (wind);
   APPEND_TEXT_ITEM_REAL (value);
 
-  wind = translate_wind_direction (get_data (timeslice, WIND_DIRECTION));
+  rawvalue = get_data (timeslice, WIND_DIRECTION);
+  wind = translate_wind_direction (rawvalue);
+  g_free (rawvalue);
+  rawvalue = get_data (timeslice, WIND_DIRECTION_DEG);
   value = g_strdup_printf ("\t%s: %s (%s%s)\n", _("Direction"),
-                           wind ? wind : get_data (timeslice, WIND_DIRECTION),
-                           get_data (timeslice, WIND_DIRECTION_DEG),
+                           wind, rawvalue,
                            get_unit (timeslice, data->unit, WIND_DIRECTION_DEG));
+  g_free (rawvalue);
   g_free (wind);
   APPEND_TEXT_ITEM_REAL (value);
 
@@ -383,7 +387,7 @@ make_forecast (xfceweather_data *data,
     GdkColor lightbg = {0, 0xeaea, 0xeaea, 0xeaea};
     GdkColor darkbg = {0, 0x6666, 0x6666, 0x6666};
     gint num_days = 5, i, weekday, daytime;
-    gchar *dayname, *value;
+    gchar *dayname, *wind_speed, *value, *rawvalue;
     xml_time *fcdata;
     time_t now_t = time(NULL), fcday_t;
     struct tm tm_fcday;
@@ -445,16 +449,20 @@ make_forecast (xfceweather_data *data,
             fcdata = make_forecast_data(data->weatherdata, i, daytime);
             if (fcdata != NULL) {
                 if (fcdata->location != NULL) {
-                    icon = get_icon(get_data(fcdata, SYMBOL), 48, (daytime == NIGHT));
+                    rawvalue = get_data(fcdata, SYMBOL);
+                    icon = get_icon(rawvalue, 48, (daytime == NIGHT));
+                    g_free(rawvalue);
                     image = gtk_image_new_from_pixbuf(icon);
                     gtk_box_pack_start(GTK_BOX(forecast_box), GTK_WIDGET(image),
                                         TRUE, TRUE, 0);
                     if (G_LIKELY (icon))
                         g_object_unref (G_OBJECT (icon));
 
+                    rawvalue = get_data(fcdata, SYMBOL);
                     value = g_strdup_printf("%s",
-                                            translate_desc(get_data(fcdata, SYMBOL),
+                                            translate_desc(rawvalue,
                                                            (daytime == NIGHT)));
+                    g_free(rawvalue);
                     label = gtk_label_new(NULL);
                     gtk_label_set_markup(GTK_LABEL(label), value);
                     gtk_widget_show(GTK_WIDGET(label));
@@ -462,19 +470,25 @@ make_forecast (xfceweather_data *data,
                                         TRUE, TRUE, 0);
                     g_free(value);
 
+                    rawvalue = get_data(fcdata, TEMPERATURE);
                     value = g_strdup_printf("%s %s",
-                                            get_data(fcdata, TEMPERATURE),
+                                            rawvalue,
                                             get_unit(fcdata, data->unit, TEMPERATURE));
+                    g_free(rawvalue);
                     label = gtk_label_new(value);
                     gtk_widget_show(GTK_WIDGET(label));
                     gtk_box_pack_start(GTK_BOX(forecast_box), GTK_WIDGET(label),
                                         TRUE, TRUE, 0);
                     g_free(value);
 
+                    rawvalue = get_data(fcdata, WIND_DIRECTION);
+                    wind_speed = get_data(fcdata, WIND_SPEED);
                     value = g_strdup_printf("%s %s %s",
-                                            translate_wind_direction(get_data(fcdata, WIND_DIRECTION)),
-                                            get_data(fcdata, WIND_SPEED),
+                                            translate_wind_direction(rawvalue),
+                                            wind_speed,
                                             get_unit(fcdata, data->unit, WIND_SPEED));
+                    g_free(wind_speed);
+                    g_free(rawvalue);
                     label = gtk_label_new(value);
                     gtk_widget_show(GTK_WIDGET(label));
                     gtk_box_pack_start(GTK_BOX(forecast_box), label, TRUE, TRUE, 0);
@@ -521,7 +535,7 @@ GtkWidget *
 create_summary_window (xfceweather_data *data)
 {
   GtkWidget *window, *notebook, *vbox, *hbox, *label;
-  gchar     *title;
+  gchar     *title, *rawvalue;
   GdkPixbuf *icon;
   xml_time  *timeslice;
 
@@ -543,7 +557,10 @@ create_summary_window (xfceweather_data *data)
                       0);
 
   timeslice = get_current_timeslice(data->weatherdata, TRUE);
-  icon = get_icon (get_data (timeslice, SYMBOL), 48, is_night_time());
+
+  rawvalue = get_data (timeslice, SYMBOL);
+  icon = get_icon (rawvalue, 48, is_night_time());
+  g_free (rawvalue);
 
   gtk_window_set_icon (GTK_WINDOW (window), icon);
 

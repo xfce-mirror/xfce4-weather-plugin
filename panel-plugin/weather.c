@@ -100,10 +100,9 @@ make_label (xml_weather    *weatherdata,
 	    GtkOrientation orientation,
 	    gboolean       multiple_labels)
 {
-
-  gchar       *str, *value;
+  gchar       *str, *value, *rawvalue;
   xml_time    *timeslice;
-  const gchar *rawvalue, *lbl, *txtsize;
+  const gchar *lbl, *txtsize;
 
   switch (opt)
     {
@@ -201,6 +200,7 @@ make_label (xml_weather    *weatherdata,
                                txtsize, rawvalue, get_unit (timeslice, unit, opt));
       }
   }
+  g_free (rawvalue);
   return str;
 }
 
@@ -316,7 +316,10 @@ set_icon_current (xfceweather_data *data)
   /* get data from current timeslice */
   timeslice = get_current_timeslice(data->weatherdata, TRUE);
   nighttime = is_night_time();
-  icon = get_icon (get_data (timeslice, SYMBOL), size, nighttime);
+
+  str = get_data (timeslice, SYMBOL);
+  icon = get_icon (str, size, nighttime);
+  g_free (str);
  
   gtk_image_set_from_pixbuf (GTK_IMAGE (data->iconimage), icon);
 
@@ -324,9 +327,11 @@ set_icon_current (xfceweather_data *data)
     g_object_unref (G_OBJECT (icon));
 
 #if !GTK_CHECK_VERSION(2,12,0)
+  str = get_data (timeslice, SYMBOL);
   gtk_tooltips_set_tip (data->tooltips, data->tooltipbox,
-                        translate_desc (get_data (timeslice, SYMBOL), nighttime),
+                        translate_desc (str, nighttime),
                         NULL);
+  g_free (str);
 #endif
 }
 
@@ -796,7 +801,7 @@ static gboolean weather_get_tooltip_cb (GtkWidget        *widget,
 					xfceweather_data *data)
 {
   GdkPixbuf *icon;
-  gchar *markup_text;
+  gchar *markup_text, *rawvalue;
   xml_time *timeslice;
   gboolean nighttime;
 
@@ -805,16 +810,21 @@ static gboolean weather_get_tooltip_cb (GtkWidget        *widget,
   if (data->weatherdata == NULL) {
     gtk_tooltip_set_text (tooltip, _("Cannot update weather data"));
   } else {
+    rawvalue = get_data (timeslice, SYMBOL);
     markup_text = g_markup_printf_escaped(
   	  "<b>%s</b>\n"
 	  "%s",
 	  data->location_name,
-	  translate_desc (get_data (timeslice, SYMBOL), nighttime)
+	  translate_desc (rawvalue, nighttime)
 	  );
+    g_free(rawvalue);
     gtk_tooltip_set_markup (tooltip, markup_text);
     g_free(markup_text);
   }
-  icon = get_icon (get_data (timeslice, SYMBOL), 32, nighttime);
+
+  rawvalue = get_data (timeslice, SYMBOL);
+  icon = get_icon (rawvalue, 32, nighttime);
+  g_free (rawvalue);
   gtk_tooltip_set_icon (tooltip, icon);
   g_object_unref (G_OBJECT(icon));
 
