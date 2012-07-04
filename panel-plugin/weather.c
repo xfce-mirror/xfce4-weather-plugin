@@ -159,7 +159,7 @@ make_label (xml_weather    *weatherdata,
   /* get data from current timeslice */
   timeslice = get_current_timeslice(weatherdata,
                                     opt == PRECIPITATIONS || opt == SYMBOL);
-  rawvalue = get_data(timeslice, opt);
+  rawvalue = get_data(timeslice, unit, opt);
 
   switch (opt)
     {
@@ -317,7 +317,7 @@ set_icon_current (xfceweather_data *data)
   timeslice = get_current_timeslice(data->weatherdata, TRUE);
   nighttime = is_night_time();
 
-  str = get_data (timeslice, SYMBOL);
+  str = get_data (timeslice, data->unit, SYMBOL);
   icon = get_icon (str, size, nighttime);
   g_free (str);
  
@@ -327,7 +327,7 @@ set_icon_current (xfceweather_data *data)
     g_object_unref (G_OBJECT (icon));
 
 #if !GTK_CHECK_VERSION(2,12,0)
-  str = get_data (timeslice, SYMBOL);
+  str = get_data (timeslice, data->unit, SYMBOL);
   gtk_tooltips_set_tip (data->tooltips, data->tooltipbox,
                         translate_desc (str, nighttime),
                         NULL);
@@ -810,7 +810,7 @@ static gboolean weather_get_tooltip_cb (GtkWidget        *widget,
   if (data->weatherdata == NULL) {
     gtk_tooltip_set_text (tooltip, _("Cannot update weather data"));
   } else {
-    rawvalue = get_data (timeslice, SYMBOL);
+    rawvalue = get_data (timeslice, data->unit, SYMBOL);
     markup_text = g_markup_printf_escaped(
   	  "<b>%s</b>\n"
 	  "%s",
@@ -822,7 +822,7 @@ static gboolean weather_get_tooltip_cb (GtkWidget        *widget,
     g_free(markup_text);
   }
 
-  rawvalue = get_data (timeslice, SYMBOL);
+  rawvalue = get_data (timeslice, data->unit, SYMBOL);
   icon = get_icon (rawvalue, 32, nighttime);
   g_free (rawvalue);
   gtk_tooltip_set_icon (tooltip, icon);

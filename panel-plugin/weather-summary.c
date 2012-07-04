@@ -41,7 +41,7 @@ static gboolean lnk_clicked (GtkTextTag *tag, GObject *obj,
 #define APPEND_TEXT_ITEM_REAL(text)      gtk_text_buffer_insert(GTK_TEXT_BUFFER(buffer), \
                                                                 &iter, text, -1);\
                                          g_free (value);
-#define APPEND_TEXT_ITEM(text, item)     rawvalue = get_data(timeslice, item); \
+#define APPEND_TEXT_ITEM(text, item)     rawvalue = get_data(timeslice, data->unit, item); \
                                          unit = get_unit(timeslice, data->unit, item); \
                                          value = g_strdup_printf("\t%s%s%s%s%s\n", \
                                                                  text, text ? ": " : "", \
@@ -295,19 +295,19 @@ create_summary_tab (xfceweather_data *data)
 
   /* Wind */
   APPEND_BTEXT (_("\nWind\n"));
-  rawvalue = get_data (timeslice, WIND_SPEED);
+  rawvalue = get_data (timeslice, data->unit, WIND_SPEED);
   wind = translate_wind_speed (timeslice, rawvalue, data->unit);
   g_free (rawvalue);
-  rawvalue = get_data (timeslice, WIND_BEAUFORT);
+  rawvalue = get_data (timeslice, data->unit, WIND_BEAUFORT);
   value = g_strdup_printf (_("\t%s: %s (%s on the Beaufort scale)\n"), _("Speed"), wind, rawvalue);
   g_free (rawvalue);
   g_free (wind);
   APPEND_TEXT_ITEM_REAL (value);
 
-  rawvalue = get_data (timeslice, WIND_DIRECTION);
+  rawvalue = get_data (timeslice, data->unit, WIND_DIRECTION);
   wind = translate_wind_direction (rawvalue);
   g_free (rawvalue);
-  rawvalue = get_data (timeslice, WIND_DIRECTION_DEG);
+  rawvalue = get_data (timeslice, data->unit, WIND_DIRECTION_DEG);
   value = g_strdup_printf ("\t%s: %s (%s%s)\n", _("Direction"),
                            wind, rawvalue,
                            get_unit (timeslice, data->unit, WIND_DIRECTION_DEG));
@@ -455,7 +455,7 @@ make_forecast (xfceweather_data *data,
             fcdata = make_forecast_data(data->weatherdata, i, daytime);
             if (fcdata != NULL) {
                 if (fcdata->location != NULL) {
-                    rawvalue = get_data(fcdata, SYMBOL);
+                    rawvalue = get_data(fcdata, data->unit, SYMBOL);
                     icon = get_icon(rawvalue, 48, (daytime == NIGHT));
                     g_free(rawvalue);
                     image = gtk_image_new_from_pixbuf(icon);
@@ -464,7 +464,7 @@ make_forecast (xfceweather_data *data,
                     if (G_LIKELY (icon))
                         g_object_unref (G_OBJECT (icon));
 
-                    rawvalue = get_data(fcdata, SYMBOL);
+                    rawvalue = get_data(fcdata, data->unit, SYMBOL);
                     value = g_strdup_printf("%s",
                                             translate_desc(rawvalue,
                                                            (daytime == NIGHT)));
@@ -476,7 +476,7 @@ make_forecast (xfceweather_data *data,
                                         TRUE, TRUE, 0);
                     g_free(value);
 
-                    rawvalue = get_data(fcdata, TEMPERATURE);
+                    rawvalue = get_data(fcdata, data->unit, TEMPERATURE);
                     value = g_strdup_printf("%s %s",
                                             rawvalue,
                                             get_unit(fcdata, data->unit, TEMPERATURE));
@@ -487,8 +487,8 @@ make_forecast (xfceweather_data *data,
                                         TRUE, TRUE, 0);
                     g_free(value);
 
-                    rawvalue = get_data(fcdata, WIND_DIRECTION);
-                    wind_speed = get_data(fcdata, WIND_SPEED);
+                    rawvalue = get_data(fcdata, data->unit, WIND_DIRECTION);
+                    wind_speed = get_data(fcdata, data->unit, WIND_SPEED);
                     value = g_strdup_printf("%s %s %s",
                                             translate_wind_direction(rawvalue),
                                             wind_speed,
@@ -564,7 +564,7 @@ create_summary_window (xfceweather_data *data)
 
   timeslice = get_current_timeslice(data->weatherdata, TRUE);
 
-  rawvalue = get_data (timeslice, SYMBOL);
+  rawvalue = get_data (timeslice, data->unit, SYMBOL);
   icon = get_icon (rawvalue, 48, is_night_time());
   g_free (rawvalue);
 

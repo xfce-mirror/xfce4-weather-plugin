@@ -40,7 +40,7 @@ gboolean has_timeslice(xml_weather *data, time_t start, time_t end)
 }
 
 gchar *
-get_data (xml_time *timeslice, datas type)
+get_data (xml_time *timeslice, units unit, datas type)
 {
 	const xml_location *loc = NULL;
 
