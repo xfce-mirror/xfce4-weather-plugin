@@ -68,7 +68,12 @@ get_data (xml_time *timeslice, units unit, datas type)
 			val = (val - 32.0) * 5.0 / 9.0;
 		return g_strdup_printf ("%.1f", val);
 	case PRESSURE:
-		return LOCALE_DOUBLE(loc->pressure_value, "%.1f");
+		if (unit == METRIC)
+			return LOCALE_DOUBLE(loc->pressure_value, "%.1f");
+		val = g_ascii_strtod(loc->pressure_value, NULL);
+		if (unit == IMPERIAL)
+			val *= 0.01450378911491;
+		return g_strdup_printf("%.1f", val);
 	case WIND_SPEED:
 		val = g_ascii_strtod(loc->wind_speed_mps, NULL);
 		if (unit == IMPERIAL)
@@ -118,7 +123,7 @@ get_unit (xml_time *timeslice, units unit, datas type)
 	case TEMPERATURE:
 		return (unit == IMPERIAL) ? _("°F") : _("°C");
 	case PRESSURE:
-		return (loc->pressure_unit) ? loc->pressure_unit : "";
+		return (unit == IMPERIAL) ? _("psi") : _("hPa");
 	case WIND_SPEED:
 		return (unit == IMPERIAL) ? _("mph") : _("km/h");
 	case WIND_DIRECTION_DEG:
