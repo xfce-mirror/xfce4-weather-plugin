@@ -26,6 +26,7 @@
 #include "weather.h"
 
 #define CHK_NULL(s) ((s) ? g_strdup(s):g_strdup(""))
+#define LOCALE_DOUBLE(value, format) (g_strdup_printf(format, g_ascii_strtod(value, NULL)))
 
 gboolean has_timeslice(xml_weather *data, time_t start, time_t end)
 {
@@ -52,35 +53,35 @@ get_data (xml_time *timeslice, datas type)
 	case ALTITUDE:
 		return CHK_NULL(loc->altitude);
 	case LATITUDE:
-		return CHK_NULL(loc->latitude);
+		return LOCALE_DOUBLE(loc->latitude, "%.4f");
 	case LONGITUDE:
-		return CHK_NULL(loc->longitude);
+		return LOCALE_DOUBLE(loc->longitude, "%.4f");
 	case TEMPERATURE:
-		return CHK_NULL(loc->temperature_value);
+		return LOCALE_DOUBLE(loc->temperature_value, "%.1f");
 	case PRESSURE:
-		return CHK_NULL(loc->pressure_value);
+		return LOCALE_DOUBLE(loc->pressure_value, "%.1f");
 	case WIND_SPEED:
-		return CHK_NULL(loc->wind_speed_mps);
+		return LOCALE_DOUBLE(loc->wind_speed_mps, "%.1f");
 	case WIND_BEAUFORT:
 		return CHK_NULL(loc->wind_speed_beaufort);
 	case WIND_DIRECTION:
 		return CHK_NULL(loc->wind_dir_name);
 	case WIND_DIRECTION_DEG:
-		return CHK_NULL(loc->wind_dir_deg);
+		return LOCALE_DOUBLE(loc->wind_dir_deg, "%.1f");
 	case HUMIDITY:
-		return CHK_NULL(loc->humidity_value);
+		return LOCALE_DOUBLE(loc->humidity_value, "%.1f");
 	case CLOUDINESS_LOW:
-		return CHK_NULL(loc->cloudiness_percent[CLOUD_LOW]);
+		return LOCALE_DOUBLE(loc->cloudiness_percent[CLOUD_LOW], "%.1f");
 	case CLOUDINESS_MED:
-		return CHK_NULL(loc->cloudiness_percent[CLOUD_MED]);
+		return LOCALE_DOUBLE(loc->cloudiness_percent[CLOUD_MED], "%.1f");
 	case CLOUDINESS_HIGH:
-		return CHK_NULL(loc->cloudiness_percent[CLOUD_HIGH]);
+		return LOCALE_DOUBLE(loc->cloudiness_percent[CLOUD_HIGH], "%.1f");
 	case CLOUDINESS_OVERALL:
-		return CHK_NULL(loc->cloudiness_percent[CLOUD_OVERALL]);
+		return LOCALE_DOUBLE(loc->cloudiness_percent[CLOUD_OVERALL], "%.1f");
 	case FOG:
-		return CHK_NULL(loc->fog_percent);
+		return LOCALE_DOUBLE(loc->fog_percent, "%.1f");
 	case PRECIPITATIONS:
-		return CHK_NULL(loc->precipitation_value);
+		return LOCALE_DOUBLE(loc->precipitation_value, "%.1f");
 	case SYMBOL:
 		return CHK_NULL(loc->symbol);
 	}
