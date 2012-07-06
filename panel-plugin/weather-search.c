@@ -219,11 +219,11 @@ create_search_dialog (GtkWindow *parent,
 
   dialog = g_slice_new0 (search_dialog);
 
-  dialog->proxy_host = proxy_host;
-  dialog->proxy_port = proxy_port;
-
   if (!dialog)
     return NULL;
+
+  dialog->proxy_host = proxy_host;
+  dialog->proxy_port = proxy_port;
 
   dialog->dialog =
     xfce_titled_dialog_new_with_buttons (_("Search weather location code"), parent,
