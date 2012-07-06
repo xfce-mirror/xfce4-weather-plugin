@@ -259,10 +259,6 @@ find_timeslice(xml_weather *data, struct tm tm_start, struct tm tm_end)
     while (interval <= interval_limit) {
         hours = 0;
         while (hours <= hours_limit) {
-            /* try to find exact match */
-            if (has_timeslice(data, start_t, end_t))
-                return get_timeslice(data, start_t, end_t);
-
             /* check with previous hours */
             start_t = time_calc_hour(tm_start, 0 - hours);
             end_t = time_calc_hour(tm_end, 0 - hours - interval);
