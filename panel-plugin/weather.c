@@ -157,8 +157,7 @@ make_label (xml_weather    *weatherdata,
     txtsize = "xx-small";
 
   /* get data from current timeslice */
-  timeslice = get_current_timeslice(weatherdata,
-                                    opt == PRECIPITATIONS || opt == SYMBOL);
+  timeslice = get_current_timeslice(weatherdata);
   rawvalue = get_data(timeslice, unit, opt);
 
   switch (opt)
@@ -314,7 +313,7 @@ set_icon_current (xfceweather_data *data)
     }
  
   /* get data from current timeslice */
-  timeslice = get_current_timeslice(data->weatherdata, TRUE);
+  timeslice = get_current_timeslice(data->weatherdata);
   nighttime = is_night_time();
 
   str = get_data (timeslice, data->unit, SYMBOL);
@@ -805,7 +804,7 @@ static gboolean weather_get_tooltip_cb (GtkWidget        *widget,
   xml_time *timeslice;
   gboolean nighttime;
 
-  timeslice = get_current_timeslice(data->weatherdata, TRUE);
+  timeslice = get_current_timeslice(data->weatherdata);
   nighttime = is_night_time();
   if (data->weatherdata == NULL) {
     gtk_tooltip_set_text (tooltip, _("Cannot update weather data"));

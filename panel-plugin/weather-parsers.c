@@ -158,7 +158,7 @@ xml_time *get_timeslice(xml_weather *data, time_t start, time_t end)
 	return data->timeslice[data->num_timeslices - 1];
 }
 
-xml_time *get_current_timeslice(xml_weather *data, gboolean need_interval)
+xml_time *get_current_timeslice(xml_weather *data)
 {
     xml_time *forecast, *point_data, *interval_data;
     struct tm tm_now, tm_start, tm_end;
