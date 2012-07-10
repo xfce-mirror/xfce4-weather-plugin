@@ -215,6 +215,7 @@ time_calc(struct tm tm_time, gint year, gint month, gint day, gint hour, gint mi
     time_t result;
     struct tm tm_new;
     tm_new = tm_time;
+    tm_new.tm_isdst = -1;
     if (year)
         tm_new.tm_year += year;
     if (month)
@@ -242,43 +243,82 @@ time_calc_day(struct tm tm_time, gint days) {
 }
 
 /*
- * Find a timeslice that best matches the start and end times within
- * reasonable limits.
+ * Find timeslice of the given interval near start and end
+ * times. Shift maximum prev_hours_limit hours into the past and
+ * next_hours_limit hours into the future.
  */
 xml_time *
-find_timeslice(xml_weather *data, struct tm tm_start, struct tm tm_end)
+find_timeslice(xml_weather *data, struct tm tm_start, struct tm tm_end,
+			   gint prev_hours_limit, gint next_hours_limit)
 {
-    time_t start_t, end_t;
-    gint hours, hours_limit = 3, interval = 0, interval_limit;
+	time_t start_t, end_t;
+	gint hours = 0;
 
-    /* first search for intervals of the same length */
-    start_t = mktime(&tm_start);
-    end_t = mktime(&tm_end);
-    interval_limit = (gint) (difftime(end_t, start_t) / 3600);
+	/* set start and end times to the exact hour */
+	tm_end.tm_min = tm_start.tm_min = 0;
+	tm_end.tm_sec = tm_start.tm_sec = 0;
 
-    while (interval <= interval_limit) {
-        hours = 0;
-        while (hours <= hours_limit) {
-            /* check with previous hours */
-            start_t = time_calc_hour(tm_start, 0 - hours);
-            end_t = time_calc_hour(tm_end, 0 - hours - interval);
+	while (hours >= prev_hours_limit && hours <= next_hours_limit) {
+		/* check previous hours */
+		if ((0 - hours) >= prev_hours_limit) {
+			start_t = time_calc_hour(tm_start, 0 - hours);
+			end_t = time_calc_hour(tm_end, 0 - hours);
 
-            if (has_timeslice(data, start_t, end_t))
-                return get_timeslice(data, start_t, end_t);
+			if (has_timeslice(data, start_t, end_t))
+				return get_timeslice(data, start_t, end_t);
+		}
 
-            /* check with later hours */
-            start_t = time_calc_hour(tm_start, hours);
-            end_t = time_calc_hour(tm_end, hours - interval);
+		/* check later hours */
+		if (hours != 0 && hours <= next_hours_limit) {
+			start_t = time_calc_hour(tm_start, hours);
+			end_t = time_calc_hour(tm_end, hours);
 
-            if (has_timeslice(data, start_t, end_t))
-                return get_timeslice(data, start_t, end_t);
+			if (has_timeslice(data, start_t, end_t))
+				return get_timeslice(data, start_t, end_t);
+		}
+		hours++;
+	}
+	return NULL;
+}
 
-            hours++;
-        }
-        interval++;
-    }
+/*
+ * Find the timeslice with the shortest interval near the given start and end times
+ */
+xml_time *
+find_shortest_timeslice(xml_weather *data, struct tm tm_start, struct tm tm_end,
+						gint prev_hours_limit, gint next_hours_limit, gint interval_limit)
+{
+	xml_time *interval_data;
+	time_t start_t, end_t;
+	gint hours, interval;
 
-    return NULL;
+	/* set start and end times to the exact hour */
+	tm_end.tm_min = tm_start.tm_min = 0;
+	tm_end.tm_sec = tm_start.tm_sec = 0;
+
+	start_t = mktime(&tm_start);
+	end_t = mktime(&tm_end);
+
+	tm_start = *localtime(&start_t);
+	tm_end = *localtime(&end_t);
+
+	/* minimum interval is provided by tm_start and tm_end */
+	interval = (gint) (difftime(end_t, start_t) / 3600);
+
+	while (interval <= interval_limit) {
+		interval_data = find_timeslice(data, tm_start, tm_end,
+									   prev_hours_limit, next_hours_limit);
+		if (interval_data != NULL)
+			return interval_data;
+
+		interval++;
+		start_t = mktime(&tm_start);
+		end_t = time_calc_hour(tm_end, interval);
+		tm_start = *localtime(&start_t);
+		tm_end = *localtime(&end_t);
+	}
+
+	return NULL;
 }
 
 /*
@@ -346,29 +386,41 @@ make_combined_timeslice(xml_time *point, xml_time *interval)
 xml_time *
 make_forecast_data(xml_weather *data, int day, daytime dt)
 {
-	xml_time *forecast, *point, *interval;
+	xml_time *forecast, *point_data, *interval_data;
 	struct tm tm_now, tm_start, tm_end;
 	time_t now, start_t, end_t;
+	gint interval;
 
 	/* initialize times to the current day */
 	time(&now);
 	tm_start = *localtime(&now);
 	tm_end = *localtime(&now);
 
-	/* calculate daytime interval start and end times for the  requested day */
+	/* calculate daytime interval start and end times for the requested day */
 	tm_start.tm_mday += day;
 	tm_end.tm_mday += day;
 	get_daytime_interval(&tm_start, &tm_end, dt);
     start_t = mktime(&tm_start);
     end_t = mktime(&tm_end);
 
-	/* find point data */
-    point = find_timeslice(data, tm_start, tm_start);
+	/* find point data using a maximum variance of ±3 hours*/
+	point_data = find_timeslice(data, tm_start, tm_start, -3, 3);
+	if (point_data == NULL)
+		return NULL;
 
-	/* next find interval data */
-    interval = find_timeslice(data, tm_start, tm_end);
+	/* next find biggest possible (limited by daytime) interval data
+	   using a maximum deviation of ±3 hours */
+	while ((interval = (gint) (difftime(end_t, start_t) / 3600)) > 0) {
+		interval_data = find_timeslice(data, tm_start, tm_end, -3, 3);
+		if (interval_data != NULL)
+			break;
+		end_t = time_calc_hour(tm_end, -1);
+		tm_end = *localtime(&tm_end);
+	}
+	if (interval_data == NULL)
+		return NULL;
 
     /* create a new timeslice with combined point and interval data */
-    forecast = make_combined_timeslice(point, interval);
+    forecast = make_combined_timeslice(point_data, interval_data);
 	return forecast;
 }

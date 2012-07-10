@@ -158,40 +158,48 @@ xml_time *get_timeslice(xml_weather *data, time_t start, time_t end)
 	return data->timeslice[data->num_timeslices - 1];
 }
 
-xml_time *get_current_timeslice(xml_weather *data, gboolean interval)
+xml_time *get_current_timeslice(xml_weather *data, gboolean need_interval)
 {
-	time_t now = time(NULL);
-	int closest = -1;
-	int min_found = 7 * 24 * 3600;
-	int i;
+    xml_time *forecast, *point_data, *interval_data;
+    struct tm tm_now, tm_start, tm_end;
+    time_t now, start_t, end_t;
+    gint interval;
 
-	if (data == NULL)
-		return NULL;
+    /* get the current time */
+    time(&now);
+    tm_now = *localtime(&now);
 
-	for (i = 0; i < data->num_timeslices; i++) {
-		if (interval != 
-		    (data->timeslice[i]->start != data->timeslice[i]->end))
-			continue;
-		if (data->timeslice[i]->start <= now
-		 && data->timeslice[i]->end >= now)
-			return data->timeslice[i];
-		/* we also search for the closest before */
-		if (data->timeslice[i]->end < now
-		 && data->timeslice[i]->end - now < min_found) {
-			min_found = data->timeslice[i]->end - now;
-			closest = i;
-		}
-		/* and after */
-		if (data->timeslice[i]->start > now
-		 && data->timeslice[i]->start - now < min_found) {
-			min_found = data->timeslice[i]->start - now;
-			closest = i;
-		}
-	}
-	if (closest != -1)
-		return data->timeslice[closest];
+    /* find nearest point data, starting with the current hour, with a
+     * deviation of 1 hour into the past and 6 hours into the future */
+    point_data = find_timeslice(data, tm_now, tm_now, -1, 6);
+    if (point_data == NULL)
+        return NULL;
 
-	return NULL;	
+    /* now search for the nearest and shortest interval data
+     * available, using a maximum interval of 6 hours */
+    tm_end = tm_start = tm_now;
+    start_t = mktime(&tm_start);
+
+    /* set interval to 1 hour as minimum, we don't want to retrieve point data */
+    end_t = time_calc_hour(tm_end, 1);
+    tm_end = *localtime(&end_t);
+
+    /* We want to keep the hour deviation as small as possible,
+     * so let's try an interval with ±1 hour deviation first */
+    interval_data = find_shortest_timeslice(data, tm_start, tm_end, -1, 1, 6);
+    if (interval_data == NULL) {
+        /* in case we were unsuccessful we might need to enlarge the search radius */
+        interval_data = find_shortest_timeslice(data, tm_start, tm_end, -3, 3, 6);
+        if (interval_data == NULL)
+            /* and maybe it's necessary to try even harder... */
+            interval_data = find_shortest_timeslice(data, tm_start, tm_end, -3, 6, 6);
+    }
+    if (interval_data == NULL)
+        return NULL;
+
+    /* create a new timeslice with combined point and interval data */
+    forecast = make_combined_timeslice(point_data, interval_data);
+    return forecast;
 }
 
 void parse_location (xmlNode * cur_node, xml_location *loc)
