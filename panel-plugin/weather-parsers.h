@@ -72,6 +72,7 @@ typedef struct
 {
 	time_t start;
 	time_t end;
+	time_t point;
 	xml_location *location;
 }
 xml_time;

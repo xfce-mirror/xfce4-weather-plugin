@@ -343,7 +343,8 @@ make_combined_timeslice(xml_time *point, xml_time *interval)
     if (loc == NULL)
         return forecast;
 
-    forecast->start = point->start;
+    forecast->point = point->start;
+    forecast->start = interval->start;
     forecast->end = interval->end;
 
     loc->altitude = g_strdup(point->location->altitude);

@@ -242,8 +242,8 @@ create_summary_tab (xfceweather_data *data)
   GtkAdjustment *adj;
   GtkWidget     *weather_channel_icon;
   xml_time      *timeslice;
-  struct tm     *start, *end;
-  char           interval_start[80], interval_end[80];
+  struct tm     *start, *end, *point_tm;
+  char           interval_start[80], interval_end[80], point[80];
 
   view = gtk_text_view_new ();
   gtk_text_view_set_editable (GTK_TEXT_VIEW (view), FALSE);
@@ -275,19 +275,30 @@ create_summary_tab (xfceweather_data *data)
   g_free (value);
 
   timeslice = get_current_timeslice(data->weatherdata);
-  APPEND_BTEXT(_("Coordinates and Time\n"));
+  APPEND_BTEXT(_("Coordinates\n"));
   APPEND_TEXT_ITEM (_("Altitude"), ALTITUDE);
   APPEND_TEXT_ITEM (_("Latitude"), LATITUDE);
   APPEND_TEXT_ITEM (_("Longitude"), LONGITUDE);
+
+  APPEND_BTEXT(_("\nTime\n"));
+  point_tm = localtime(&timeslice->point);
+  strftime (point, 80, "%c", point_tm);
+  value = g_strdup_printf (_("\tPoint data applies to:\n\t%s\n"), point);
+  APPEND_TEXT_ITEM_REAL (value);
 
   start = localtime(&timeslice->start);
   strftime (interval_start, 80, "%c", start);
   end = localtime(&timeslice->end);
   strftime (interval_end, 80, "%c", end);
-  value = g_strdup_printf (_("\n\tData applies to time interval\n\tfrom %s\n\tto %s\n"),
+  value = g_strdup_printf (_("\n\tInterval data applies to:\n\t%s\n\t%s\n"),
                            interval_start,
                            interval_end);
   APPEND_TEXT_ITEM_REAL (value);
+
+  value = g_strdup_printf (_("\n\tInterval data provides icon, description and precipitation,"
+                             "\n\twhile point data supplies the rest.\n"), point);
+  APPEND_TEXT_ITEM_REAL (value);
+
 
   /* Temperature */
   APPEND_BTEXT (_("\nTemperature\n"));
