@@ -344,7 +344,7 @@ create_summary_tab (xfceweather_data *data)
   APPEND_TEXT_ITEM (_("Cloudiness"), CLOUDINESS_OVERALL);
 
   APPEND_BTEXT (_("\nData from The Norwegian Meteorological Institute\n"));
-  APPEND_LINK_ITEM ("\t", "Thanks to met.no", "http://met.no/", ltag1);
+  APPEND_LINK_ITEM ("\t", _("Thanks to met.no"), "http://met.no/", ltag1);
 
   g_signal_connect(G_OBJECT(view), "motion-notify-event",
                    G_CALLBACK(view_motion_notify), view);
