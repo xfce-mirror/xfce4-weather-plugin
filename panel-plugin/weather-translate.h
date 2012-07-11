@@ -25,22 +25,12 @@ G_BEGIN_DECLS
 
 const gchar *translate_desc (const gchar *, gboolean);
 
-const gchar *translate_bard (const gchar *);
-
-const gchar *translate_risk (const gchar *);
-
-/* these return a newly alocted string, that should be freed */
-gchar *translate_lsup (const gchar *);
-
+/* these return a newly allocated string, that should be freed */
 gchar *translate_day (gint);
 
 gchar *translate_wind_direction (const gchar *);
 
 gchar *translate_wind_speed (xml_time *, const gchar *, unit_systems);
-
-gchar *translate_time (const gchar *);
-
-gchar *translate_visibility (const gchar *, unit_systems);
 
 G_END_DECLS
 
