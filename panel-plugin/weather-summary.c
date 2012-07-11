@@ -326,6 +326,10 @@ create_summary_tab (xfceweather_data *data)
   g_free (wind);
   APPEND_TEXT_ITEM_REAL (value);
 
+  /* Precipitation */
+  APPEND_BTEXT (_("\nPrecipitations\n"));
+  APPEND_TEXT_ITEM(_("Precipitations amount"), PRECIPITATIONS);
+
   /* Atmosphere */
   APPEND_BTEXT (_("\nAtmosphere\n"));
   APPEND_TEXT_ITEM (_("Pressure"), PRESSURE);
