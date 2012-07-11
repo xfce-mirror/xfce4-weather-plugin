@@ -147,7 +147,7 @@ make_label (xfceweather_data *data,
       lbl = _("CH");
       break;
     case CLOUDINESS_OVERALL:
-      lbl = _("CO");
+      lbl = _("C");
       break;
     case FOG:
       lbl = _("F");
