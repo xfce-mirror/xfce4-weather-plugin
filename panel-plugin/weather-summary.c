@@ -527,17 +527,46 @@ make_forecast (xfceweather_data *data)
 
 
 static GtkWidget *
-create_forecast_tab (xfceweather_data *data)
+create_forecast_tab (xfceweather_data *data, GtkWidget *window)
 {
-  GtkWidget *align;
-  guint      i;
+    GtkWidget   *align, *hbox, *scrolled, *table;
+    GdkWindow   *win;
+    GdkScreen   *screen;
+    GdkRectangle rect;
+    gint         monitor_num, height_needed, height_max;
 
-  align = gtk_alignment_new(0.5, 0, 0.5, 0);
-  gtk_container_set_border_width (GTK_CONTAINER (align), 6);
-  if (data->weatherdata)
-    gtk_container_add(GTK_CONTAINER(align),
-                      GTK_WIDGET(make_forecast (data)));
-  return align;
+    /* calculate maximum height we may use, subtracting some sane value for safety */
+    screen = gtk_window_get_screen(GTK_WINDOW(window));
+    win = GTK_WIDGET(window)->window;
+    monitor_num = gdk_screen_get_monitor_at_window(GDK_SCREEN(screen), GDK_WINDOW(win));
+    gdk_screen_get_monitor_geometry(GDK_SCREEN(screen), monitor_num, &rect);
+    height_max = rect.height * 0.85 - 200;
+
+    /* calculate height needed using a good arbitrary value */
+    height_needed = data->forecast_days * 110;
+
+    /* generate the forecast table */
+    table = GTK_WIDGET(make_forecast(data));
+
+    align = gtk_alignment_new(0.5, 0, 0.5, 0);
+    if (height_needed < height_max) {
+        gtk_container_add(GTK_CONTAINER(align), GTK_WIDGET(table));
+        gtk_container_set_border_width(GTK_CONTAINER(align), BORDER);
+        return align;
+    } else {
+        hbox = gtk_hbox_new(FALSE, 0);
+        gtk_box_pack_start(GTK_BOX(hbox), table, TRUE, FALSE, 0);
+        gtk_container_add(GTK_CONTAINER(align), GTK_WIDGET(hbox));
+
+        scrolled = gtk_scrolled_window_new (NULL, NULL);
+        gtk_container_set_border_width(GTK_CONTAINER(scrolled), BORDER);
+
+        gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(scrolled), align);
+        gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled),
+                                       GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
+        gtk_widget_set_size_request(GTK_WIDGET(scrolled), 550, height_max);
+        return scrolled;
+    }
 }
 
 static void
@@ -605,7 +634,7 @@ create_summary_window (xfceweather_data *data)
     notebook = gtk_notebook_new ();
     gtk_container_set_border_width (GTK_CONTAINER (notebook), BORDER);
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
-                              create_forecast_tab (data),
+                              create_forecast_tab (data, window),
                               gtk_label_new (_("Forecast")));
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
                               create_summary_tab (data),
