@@ -229,7 +229,7 @@ set_icon_error (xfceweather_data *data)
 
   txtsize = get_label_size(data);
 
-  str = g_strdup_printf ("<span size=\"%s\">No Data</span>", txtsize);
+  str = g_strdup_printf ("<span size=\"%s\">%s</span>", txtsize, _("No Data"));
   gtk_scrollbox_set_label (GTK_SCROLLBOX (data->scrollbox), -1, str);
   g_free (str);
 
