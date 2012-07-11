@@ -274,7 +274,7 @@ create_summary_tab (xfceweather_data *data)
   APPEND_BTEXT (value);
   g_free (value);
 
-  timeslice = get_current_timeslice(data->weatherdata);
+  timeslice = get_current_conditions(data->weatherdata);
   APPEND_BTEXT(_("Coordinates\n"));
   APPEND_TEXT_ITEM (_("Altitude"), ALTITUDE);
   APPEND_TEXT_ITEM (_("Latitude"), LATITUDE);
@@ -573,7 +573,7 @@ create_summary_window (xfceweather_data *data)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), vbox, TRUE, TRUE,
                       0);
 
-  timeslice = get_current_timeslice(data->weatherdata);
+  timeslice = get_current_conditions(data->weatherdata);
 
   rawvalue = get_data (timeslice, data->unit, SYMBOL);
   icon = get_icon (rawvalue, 48, is_night_time());

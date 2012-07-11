@@ -195,6 +195,16 @@ get_daytime_interval(struct tm *start_t, struct tm *end_t, daytime dt)
 }
 
 /*
+ * Return current weather conditions, or NULL if not available.
+ */
+xml_time *get_current_conditions(xml_weather *data)
+{
+    if (data == NULL)
+        return NULL;
+    return data->current_conditions;
+}
+
+/*
  * Check whether it is night or day. Until we have a way to get the
  * exact times for sunrise and sunset, we'll have to use reasonable
  * hardcoded values.

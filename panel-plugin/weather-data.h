@@ -65,6 +65,8 @@ time_calc_hour(struct tm tm_time, gint hours);
 time_t
 time_calc_day(struct tm tm_time, gint days);
 xml_time *
+get_current_conditions(xml_weather *data);
+xml_time *
 make_forecast_data(xml_weather *data, int day, daytime dt);
 G_END_DECLS
 
