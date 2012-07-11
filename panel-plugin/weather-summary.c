@@ -601,6 +601,7 @@ create_summary_window (xfceweather_data *data)
 
     gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET(hbox),
                         TRUE, TRUE, 0);
+    gtk_window_set_default_size (GTK_WINDOW (window), 500, 400);
   } else {
     notebook = gtk_notebook_new ();
     gtk_container_set_border_width (GTK_CONTAINER (notebook), BORDER);
