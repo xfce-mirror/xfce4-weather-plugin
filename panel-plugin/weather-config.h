@@ -30,7 +30,7 @@ labeloption;
 typedef struct
 {
   GtkWidget        *dialog;
-  GtkWidget        *opt_unit_system;
+  GtkWidget        *combo_unit_system;
   GtkWidget        *txt_lat;
   GtkWidget        *txt_lon;
   GtkWidget        *txt_loc_name;

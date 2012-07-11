@@ -158,19 +158,18 @@ make_label (void)
 void
 apply_options (xfceweather_dialog *dialog)
 {
-  gint         history = 0;
+  gint         option;
   gboolean     hasiter = FALSE;
   GtkTreeIter  iter;
   gchar       *text, *pos;
-  gint         option;
   GValue       value = { 0, };
   GtkWidget   *widget;
 
   xfceweather_data *data = (xfceweather_data *) dialog->wd;
 
-  history = gtk_option_menu_get_history (GTK_OPTION_MENU (dialog->opt_unit_system));
+  option = gtk_combo_box_get_active(GTK_COMBO_BOX(dialog->combo_unit_system));
 
-  if (history == 0)
+  if (option == IMPERIAL)
     data->unit_system = IMPERIAL;
   else
     data->unit_system = METRIC;
@@ -359,7 +358,7 @@ create_config_dialog (xfceweather_data *data,
 {
   xfceweather_dialog *dialog;
   GtkWidget          *vbox2, *vbox3, *hbox, *hbox2, *label,
-                     *menu, *button_add, *button_del, *image, *button, *scroll;
+                     *button_add, *button_del, *image, *button, *scroll;
   GtkSizeGroup       *sg, *sg_buttons;
   GtkTreeViewColumn  *column;
   GtkCellRenderer    *renderer;
@@ -375,26 +374,25 @@ create_config_dialog (xfceweather_data *data,
   dialog->wd = (xfceweather_data *) data;
   dialog->dialog = gtk_widget_get_toplevel (vbox);
 
-  label = gtk_label_new (_("System of Measurement:"));
+  label = gtk_label_new_with_mnemonic (_("System of _Measurement:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
-  menu = gtk_menu_new ();
-  dialog->opt_unit_system = gtk_option_menu_new ();
 
-  gtk_menu_shell_append ((GtkMenuShell *) (GTK_MENU (menu)),
-                         (gtk_menu_item_new_with_label (_("Imperial"))));
-  gtk_menu_shell_append ((GtkMenuShell *) (GTK_MENU (menu)),
-                         (gtk_menu_item_new_with_label (_("Metric"))));
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (dialog->opt_unit_system), menu);
+  dialog->combo_unit_system = gtk_combo_box_new_text();
+  gtk_combo_box_append_text(GTK_COMBO_BOX(dialog->combo_unit_system),
+                            _("Imperial"));
+  gtk_combo_box_append_text(GTK_COMBO_BOX(dialog->combo_unit_system),
+                            _("Metric"));
+  gtk_label_set_mnemonic_widget(GTK_LABEL(label),
+                                GTK_WIDGET(dialog->combo_unit_system));
 
-  if (dialog->wd->unit_system == IMPERIAL)
-    gtk_option_menu_set_history (GTK_OPTION_MENU (dialog->opt_unit_system), 0);
+  if(dialog->wd != NULL && dialog->wd->unit_system == IMPERIAL)
+    gtk_combo_box_set_active(GTK_COMBO_BOX(dialog->combo_unit_system), IMPERIAL);
   else
-    gtk_option_menu_set_history (GTK_OPTION_MENU (dialog->opt_unit_system), 1);
-  gtk_size_group_add_widget (sg, label);
+    gtk_combo_box_set_active(GTK_COMBO_BOX(dialog->combo_unit_system), METRIC);
 
   hbox = gtk_hbox_new (FALSE, BORDER);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), dialog->opt_unit_system, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), dialog->combo_unit_system, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
 
@@ -430,7 +428,7 @@ create_config_dialog (xfceweather_data *data,
   }
   gtk_size_group_add_widget (sg, label);
 
-  button = gtk_button_new_with_label(_("Change..."));
+  button = gtk_button_new_with_mnemonic(_("Chan_ge..."));
   image = gtk_image_new_from_stock (GTK_STOCK_FIND, GTK_ICON_SIZE_BUTTON);
   gtk_button_set_image (GTK_BUTTON (button), image);
   g_signal_connect (G_OBJECT (button), "clicked",
@@ -446,9 +444,9 @@ create_config_dialog (xfceweather_data *data,
   label = gtk_label_new (_("Proxy server:"));
   dialog->txt_proxy_host = gtk_entry_new ();
   dialog->chk_proxy_use =
-    gtk_check_button_new_with_label (_("Use proxy server"));
+    gtk_check_button_new_with_mnemonic (_("_Use proxy server"));
   dialog->chk_proxy_fromenv =
-    gtk_check_button_new_with_label (_("Auto-detect from environment"));
+    gtk_check_button_new_with_mnemonic (_("Auto-detect from _environment"));
   dialog->txt_proxy_port = gtk_spin_button_new_with_range (0, 65536, 1);
 
   gtk_misc_set_alignment (GTK_MISC (label), 0, 0);
@@ -520,7 +518,7 @@ create_config_dialog (xfceweather_data *data,
 
   renderer = gtk_cell_renderer_text_new ();
   column =
-    gtk_tree_view_column_new_with_attributes (_("Labels to display"),
+    gtk_tree_view_column_new_with_attributes (_("_Labels to display"),
                                               renderer, "text", 0, NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (dialog->lst_xmloption), column);
 
@@ -569,7 +567,7 @@ create_config_dialog (xfceweather_data *data,
 
 
   dialog->chk_animate_transition =
-    gtk_check_button_new_with_label (_("Animate transitions between labels"));
+    gtk_check_button_new_with_mnemonic (_("_Animate transitions between labels"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON
 	 (dialog->chk_animate_transition), dialog->wd->animation_transitions);
   gtk_box_pack_start (GTK_BOX (vbox), dialog->chk_animate_transition, FALSE, FALSE, 0);
