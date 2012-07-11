@@ -89,9 +89,8 @@ void parse_time (xmlNode * cur_node, xml_weather * data) {
 	gchar *datatype = xmlGetProp (cur_node, (const xmlChar *) "datatype");
 	gchar *start = xmlGetProp (cur_node, (const xmlChar *) "from");
 	gchar *end = xmlGetProp (cur_node, (const xmlChar *) "to");
-	struct tm start_t, end_t;
-	time_t start_ts, end_ts;
-	time_t cur_ts;
+	struct tm start_tm, end_tm;
+	time_t start_t, end_t;
 	xml_time *timeslice;
 	xmlNode *child_node;
 
@@ -104,13 +103,13 @@ void parse_time (xmlNode * cur_node, xml_weather * data) {
 
 	xmlFree(datatype);
 
-	if (strptime(start, "%Y-%m-%dT%H:%M:%SZ", &start_t) == NULL) {
+	if (strptime(start, "%Y-%m-%dT%H:%M:%SZ", &start_tm) == NULL) {
 		xmlFree(start);
 		xmlFree(end);
 		return;
 	}
 
-	if (strptime(end, "%Y-%m-%dT%H:%M:%SZ", &end_t) == NULL) {
+	if (strptime(end, "%Y-%m-%dT%H:%M:%SZ", &end_tm) == NULL) {
 		xmlFree(start);
 		xmlFree(end);
 		return;
@@ -119,10 +118,10 @@ void parse_time (xmlNode * cur_node, xml_weather * data) {
 	xmlFree(start);
 	xmlFree(end);
 
-	start_ts = my_timegm(&start_t);
-	end_ts = my_timegm(&end_t);
+	start_t = my_timegm(&start_tm);
+	end_t = my_timegm(&end_tm);
 	
-	timeslice = get_timeslice(data, start_ts, end_ts);
+	timeslice = get_timeslice(data, start_t, end_t);
 	
 	if (!timeslice) {
 		g_warning("no timeslice");
@@ -139,20 +138,20 @@ void parse_time (xmlNode * cur_node, xml_weather * data) {
 	}
 }
 
-xml_time *get_timeslice(xml_weather *data, time_t start, time_t end)
+xml_time *get_timeslice(xml_weather *data, time_t start_t, time_t end_t)
 {
 	int i;
 	for (i = 0; i < data->num_timeslices; i++) {
-		if (data->timeslice[i]->start == start
-		 && data->timeslice[i]->end == end)
+		if (data->timeslice[i]->start == start_t
+		 && data->timeslice[i]->end == end_t)
 			return data->timeslice[i];
 	}
 	if (data->num_timeslices == MAX_TIMESLICE -1)
 		return NULL;
 
 	data->timeslice[data->num_timeslices] = g_slice_new0(xml_time);
-	data->timeslice[data->num_timeslices]->start = start;
-	data->timeslice[data->num_timeslices]->end = end;
+	data->timeslice[data->num_timeslices]->start = start_t;
+	data->timeslice[data->num_timeslices]->end = end_t;
 	data->num_timeslices++;
 
 	return data->timeslice[data->num_timeslices - 1];
@@ -160,46 +159,46 @@ xml_time *get_timeslice(xml_weather *data, time_t start, time_t end)
 
 xml_time *make_current_conditions(xml_weather *data)
 {
-    xml_time *forecast, *point_data, *interval_data;
-    struct tm tm_now, tm_start, tm_end;
-    time_t now, start_t, end_t;
+    xml_time *conditions, *point_data, *interval_data;
+    struct tm now_tm, start_tm, end_tm;
+    time_t now_t, start_t, end_t;
     gint interval;
 
     /* get the current time */
-    time(&now);
-    tm_now = *localtime(&now);
+    time(&now_t);
+    now_tm = *localtime(&now_t);
 
     /* find nearest point data, starting with the current hour, with a
      * deviation of 1 hour into the past and 6 hours into the future */
-    point_data = find_timeslice(data, tm_now, tm_now, -1, 6);
+    point_data = find_timeslice(data, now_tm, now_tm, -1, 6);
     if (point_data == NULL)
         return NULL;
 
     /* now search for the nearest and shortest interval data
      * available, using a maximum interval of 6 hours */
-    tm_end = tm_start = tm_now;
-    start_t = mktime(&tm_start);
+    end_tm = start_tm = now_tm;
+    start_t = mktime(&start_tm);
 
     /* set interval to 1 hour as minimum, we don't want to retrieve point data */
-    end_t = time_calc_hour(tm_end, 1);
-    tm_end = *localtime(&end_t);
+    end_t = time_calc_hour(end_tm, 1);
+    end_tm = *localtime(&end_t);
 
     /* We want to keep the hour deviation as small as possible,
      * so let's try an interval with ±1 hour deviation first */
-    interval_data = find_shortest_timeslice(data, tm_start, tm_end, -1, 1, 6);
+    interval_data = find_shortest_timeslice(data, start_tm, end_tm, -1, 1, 6);
     if (interval_data == NULL) {
         /* in case we were unsuccessful we might need to enlarge the search radius */
-        interval_data = find_shortest_timeslice(data, tm_start, tm_end, -3, 3, 6);
+        interval_data = find_shortest_timeslice(data, start_tm, end_tm, -3, 3, 6);
         if (interval_data == NULL)
             /* and maybe it's necessary to try even harder... */
-            interval_data = find_shortest_timeslice(data, tm_start, tm_end, -3, 6, 6);
+            interval_data = find_shortest_timeslice(data, start_tm, end_tm, -3, 6, 6);
     }
     if (interval_data == NULL)
         return NULL;
 
     /* create a new timeslice with combined point and interval data */
-    forecast = make_combined_timeslice(point_data, interval_data);
-    return forecast;
+    conditions = make_combined_timeslice(point_data, interval_data);
+    return conditions;
 }
 
 void parse_location (xmlNode * cur_node, xml_location *loc)

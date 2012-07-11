@@ -28,12 +28,12 @@
 #define CHK_NULL(s) ((s) ? g_strdup(s):g_strdup(""))
 #define LOCALE_DOUBLE(value, format) (g_strdup_printf(format, g_ascii_strtod(value, NULL)))
 
-gboolean has_timeslice(xml_weather *data, time_t start, time_t end)
+gboolean has_timeslice(xml_weather *data, time_t start_t, time_t end_t)
 {
     int i = 0;
 	for (i = 0; i < data->num_timeslices; i++) {
-        if (data->timeslice[i]->start == start
-			&& data->timeslice[i]->end == end)
+        if (data->timeslice[i]->start == start_t
+			&& data->timeslice[i]->end == end_t)
             return TRUE;
 	}
     return FALSE;
@@ -169,27 +169,27 @@ get_unit (xml_time *timeslice, units unit, datas type)
  *   Night:     02:00-08:00
  */
 void
-get_daytime_interval(struct tm *start_t, struct tm *end_t, daytime dt)
+get_daytime_interval(struct tm *start_tm, struct tm *end_tm, daytime dt)
 {
-    start_t->tm_min = end_t->tm_min = 0;
-    start_t->tm_sec = end_t->tm_sec = 0;
-    start_t->tm_isdst = end_t->tm_isdst = -1;
+    start_tm->tm_min = end_tm->tm_min = 0;
+    start_tm->tm_sec = end_tm->tm_sec = 0;
+    start_tm->tm_isdst = end_tm->tm_isdst = -1;
 	switch(dt) {
 	case MORNING:
-		start_t->tm_hour = 8;
-		end_t->tm_hour = 14;
+		start_tm->tm_hour = 8;
+		end_tm->tm_hour = 14;
 		break;
 	case AFTERNOON:
-		start_t->tm_hour = 14;
-		end_t->tm_hour = 20;
+		start_tm->tm_hour = 14;
+		end_tm->tm_hour = 20;
 		break;
 	case EVENING:
-		start_t->tm_hour = 20;
-		end_t->tm_hour = 26;
+		start_tm->tm_hour = 20;
+		end_tm->tm_hour = 26;
 		break;
 	case NIGHT:
-		start_t->tm_hour = 26;
-		end_t->tm_hour = 32;
+		start_tm->tm_hour = 26;
+		end_tm->tm_hour = 32;
 		break;
 	}
 }
@@ -212,44 +212,44 @@ xml_time *get_current_conditions(xml_weather *data)
 gboolean
 is_night_time()
 {
-    time_t now;
-    struct tm tm_now;
-    time(&now);
-    tm_now = *localtime(&now);
-    return (tm_now.tm_hour >= 21 || tm_now.tm_hour < 5);
+    time_t now_t;
+    struct tm now_tm;
+    time(&now_t);
+    now_tm = *localtime(&now_t);
+    return (now_tm.tm_hour >= 21 || now_tm.tm_hour < 5);
 }
 
 time_t
-time_calc(struct tm tm_time, gint year, gint month, gint day, gint hour, gint min, gint sec)
+time_calc(struct tm time_tm, gint year, gint month, gint day, gint hour, gint min, gint sec)
 {
     time_t result;
-    struct tm tm_new;
-    tm_new = tm_time;
-    tm_new.tm_isdst = -1;
+    struct tm new_tm;
+    new_tm = time_tm;
+    new_tm.tm_isdst = -1;
     if (year)
-        tm_new.tm_year += year;
+        new_tm.tm_year += year;
     if (month)
-        tm_new.tm_mon += month;
+        new_tm.tm_mon += month;
     if (day)
-        tm_new.tm_mday += day;
+        new_tm.tm_mday += day;
     if (hour)
-        tm_new.tm_hour += hour;
+        new_tm.tm_hour += hour;
     if (min)
-        tm_new.tm_min += min;
+        new_tm.tm_min += min;
     if (sec)
-        tm_new.tm_sec += sec;
-    result = mktime(&tm_new);
+        new_tm.tm_sec += sec;
+    result = mktime(&new_tm);
     return result;
 }
 
 time_t
-time_calc_hour(struct tm tm_time, gint hours) {
-    return time_calc(tm_time, 0, 0, 0, hours, 0, 0);
+time_calc_hour(struct tm time_tm, gint hours) {
+    return time_calc(time_tm, 0, 0, 0, hours, 0, 0);
 }
 
 time_t
-time_calc_day(struct tm tm_time, gint days) {
-    return time_calc(tm_time, 0, 0, days, 0, 0, 0);
+time_calc_day(struct tm time_tm, gint days) {
+    return time_calc(time_tm, 0, 0, days, 0, 0, 0);
 }
 
 /*
@@ -258,21 +258,21 @@ time_calc_day(struct tm tm_time, gint days) {
  * next_hours_limit hours into the future.
  */
 xml_time *
-find_timeslice(xml_weather *data, struct tm tm_start, struct tm tm_end,
+find_timeslice(xml_weather *data, struct tm start_tm, struct tm end_tm,
 			   gint prev_hours_limit, gint next_hours_limit)
 {
 	time_t start_t, end_t;
 	gint hours = 0;
 
 	/* set start and end times to the exact hour */
-	tm_end.tm_min = tm_start.tm_min = 0;
-	tm_end.tm_sec = tm_start.tm_sec = 0;
+	end_tm.tm_min = start_tm.tm_min = 0;
+	end_tm.tm_sec = start_tm.tm_sec = 0;
 
 	while (hours >= prev_hours_limit && hours <= next_hours_limit) {
 		/* check previous hours */
 		if ((0 - hours) >= prev_hours_limit) {
-			start_t = time_calc_hour(tm_start, 0 - hours);
-			end_t = time_calc_hour(tm_end, 0 - hours);
+			start_t = time_calc_hour(start_tm, 0 - hours);
+			end_t = time_calc_hour(end_tm, 0 - hours);
 
 			if (has_timeslice(data, start_t, end_t))
 				return get_timeslice(data, start_t, end_t);
@@ -280,8 +280,8 @@ find_timeslice(xml_weather *data, struct tm tm_start, struct tm tm_end,
 
 		/* check later hours */
 		if (hours != 0 && hours <= next_hours_limit) {
-			start_t = time_calc_hour(tm_start, hours);
-			end_t = time_calc_hour(tm_end, hours);
+			start_t = time_calc_hour(start_tm, hours);
+			end_t = time_calc_hour(end_tm, hours);
 
 			if (has_timeslice(data, start_t, end_t))
 				return get_timeslice(data, start_t, end_t);
@@ -295,7 +295,7 @@ find_timeslice(xml_weather *data, struct tm tm_start, struct tm tm_end,
  * Find the timeslice with the shortest interval near the given start and end times
  */
 xml_time *
-find_shortest_timeslice(xml_weather *data, struct tm tm_start, struct tm tm_end,
+find_shortest_timeslice(xml_weather *data, struct tm start_tm, struct tm end_tm,
 						gint prev_hours_limit, gint next_hours_limit, gint interval_limit)
 {
 	xml_time *interval_data;
@@ -303,29 +303,29 @@ find_shortest_timeslice(xml_weather *data, struct tm tm_start, struct tm tm_end,
 	gint hours, interval;
 
 	/* set start and end times to the exact hour */
-	tm_end.tm_min = tm_start.tm_min = 0;
-	tm_end.tm_sec = tm_start.tm_sec = 0;
+	end_tm.tm_min = start_tm.tm_min = 0;
+	end_tm.tm_sec = start_tm.tm_sec = 0;
 
-	start_t = mktime(&tm_start);
-	end_t = mktime(&tm_end);
+	start_t = mktime(&start_tm);
+	end_t = mktime(&end_tm);
 
-	tm_start = *localtime(&start_t);
-	tm_end = *localtime(&end_t);
+	start_tm = *localtime(&start_t);
+	end_tm = *localtime(&end_t);
 
-	/* minimum interval is provided by tm_start and tm_end */
+	/* minimum interval is provided by start_tm and end_tm */
 	interval = (gint) (difftime(end_t, start_t) / 3600);
 
 	while (interval <= interval_limit) {
-		interval_data = find_timeslice(data, tm_start, tm_end,
+		interval_data = find_timeslice(data, start_tm, end_tm,
 									   prev_hours_limit, next_hours_limit);
 		if (interval_data != NULL)
 			return interval_data;
 
 		interval++;
-		start_t = mktime(&tm_start);
-		end_t = time_calc_hour(tm_end, interval);
-		tm_start = *localtime(&start_t);
-		tm_end = *localtime(&end_t);
+		start_t = mktime(&start_tm);
+		end_t = time_calc_hour(end_tm, interval);
+		start_tm = *localtime(&start_t);
+		end_tm = *localtime(&end_t);
 	}
 
 	return NULL;
@@ -398,35 +398,35 @@ xml_time *
 make_forecast_data(xml_weather *data, int day, daytime dt)
 {
 	xml_time *forecast, *point_data, *interval_data;
-	struct tm tm_now, tm_start, tm_end;
-	time_t now, start_t, end_t;
+	struct tm now_tm, start_tm, end_tm;
+	time_t now_t, start_t, end_t;
 	gint interval;
 
 	/* initialize times to the current day */
-	time(&now);
-	tm_start = *localtime(&now);
-	tm_end = *localtime(&now);
+	time(&now_t);
+	start_tm = *localtime(&now_t);
+	end_tm = *localtime(&now_t);
 
 	/* calculate daytime interval start and end times for the requested day */
-	tm_start.tm_mday += day;
-	tm_end.tm_mday += day;
-	get_daytime_interval(&tm_start, &tm_end, dt);
-    start_t = mktime(&tm_start);
-    end_t = mktime(&tm_end);
+	start_tm.tm_mday += day;
+	end_tm.tm_mday += day;
+	get_daytime_interval(&start_tm, &end_tm, dt);
+    start_t = mktime(&start_tm);
+    end_t = mktime(&end_tm);
 
 	/* find point data using a maximum variance of ±3 hours*/
-	point_data = find_timeslice(data, tm_start, tm_start, -3, 3);
+	point_data = find_timeslice(data, start_tm, start_tm, -3, 3);
 	if (point_data == NULL)
 		return NULL;
 
 	/* next find biggest possible (limited by daytime) interval data
 	   using a maximum deviation of ±3 hours */
 	while ((interval = (gint) (difftime(end_t, start_t) / 3600)) > 0) {
-		interval_data = find_timeslice(data, tm_start, tm_end, -3, 3);
+		interval_data = find_timeslice(data, start_tm, end_tm, -3, 3);
 		if (interval_data != NULL)
 			break;
-		end_t = time_calc_hour(tm_end, -1);
-		tm_end = *localtime(&tm_end);
+		end_t = time_calc_hour(end_tm, -1);
+		end_tm = *localtime(&end_tm);
 	}
 	if (interval_data == NULL)
 		return NULL;

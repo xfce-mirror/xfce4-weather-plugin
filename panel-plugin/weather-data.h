@@ -59,11 +59,11 @@ get_unit (xml_time *timeslice, units unit, datas type);
 gboolean
 is_night_time();
 time_t
-time_calc(struct tm tm_time, gint year, gint mon, gint day, gint hour, gint min, gint sec);
+time_calc(struct tm time_tm, gint year, gint mon, gint day, gint hour, gint min, gint sec);
 time_t
-time_calc_hour(struct tm tm_time, gint hours);
+time_calc_hour(struct tm time_tm, gint hours);
 time_t
-time_calc_day(struct tm tm_time, gint days);
+time_calc_day(struct tm time_tm, gint days);
 xml_time *
 get_current_conditions(xml_weather *data);
 xml_time *
