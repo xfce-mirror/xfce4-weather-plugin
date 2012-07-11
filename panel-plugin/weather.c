@@ -500,10 +500,7 @@ xfceweather_read_config (XfcePanelPlugin  *plugin,
       data->location_name_short = g_strdup (value);
     }
 
-  if (xfce_rc_read_bool_entry (rc, "celcius", TRUE))
-    data->unit_system = METRIC;
-  else
-    data->unit_system = IMPERIAL;
+  data->unit_system = xfce_rc_read_int_entry(rc, "unit_system", METRIC);
 
   if (data->proxy_host)
     {
@@ -583,7 +580,7 @@ xfceweather_write_config (XfcePanelPlugin  *plugin,
   if (!rc)
     return;
 
-  xfce_rc_write_bool_entry (rc, "celcius", (data->unit_system == METRIC));
+  xfce_rc_write_int_entry (rc, "unit_system", data->unit_system);
 
   if (data->lat)
     xfce_rc_write_entry (rc, "lat", data->lat);
