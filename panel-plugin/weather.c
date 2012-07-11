@@ -90,15 +90,31 @@ check_envproxy (gchar **proxy_host,
   return TRUE;
 }
 
-
+static gchar *
+get_label_size (xfceweather_data *data)
+{
+#if LIBXFCE4PANEL_CHECK_VERSION (4,9,0)
+  /* use small label with low number of columns in deskbar mode */
+  if (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_DESKBAR)
+    if (data->panel_size > 99)
+      return "medium";
+    else if (data->panel_size > 79)
+      return "small";
+    else
+      return "x-small";
+  else
+#endif
+  if (data->panel_size > 25)
+    return "medium";
+  else if (data->panel_size > 23)
+    return "small";
+  else
+    return "x-small";
+}
 
 static gchar *
-make_label (xml_weather    *weatherdata,
-            datas          opt,
-            units          unit,
-            gint           size,
-	    GtkOrientation orientation,
-	    gboolean       multiple_labels)
+make_label (xfceweather_data *data,
+            datas             opt)
 {
   gchar       *str, *value, *rawvalue;
   xml_time    *conditions;
@@ -144,21 +160,11 @@ make_label (xml_weather    *weatherdata,
       break;
     }
 
-  /* arbitrary, choose something that works */
-  if (orientation == GTK_ORIENTATION_HORIZONTAL)
-    txtsize = "medium";
-  else if (size > 36)
-    txtsize = "medium";
-  else if (size > 30)
-    txtsize = "small";
-  else if (size > 24)
-    txtsize = "x-small";
-  else
-    txtsize = "xx-small";
+  txtsize = get_label_size(data);
 
   /* get current weather conditions */
-  conditions = get_current_conditions(weatherdata);
-  rawvalue = get_data(conditions, unit, opt);
+  conditions = get_current_conditions(data->weatherdata);
+  rawvalue = get_data(conditions, data->unit, opt);
 
   switch (opt)
     {
@@ -166,15 +172,14 @@ make_label (xml_weather    *weatherdata,
       value = translate_wind_direction (rawvalue);
       break;
     case WIND_SPEED:
-      value = translate_wind_speed (conditions, rawvalue, unit);
+      value = translate_wind_speed (conditions, rawvalue, data->unit);
       break;
     default:
       value = NULL;
       break;
     }
 
-
-  if (multiple_labels) {
+  if (data->labels->len > 1) {
     if (value != NULL)
       {
 	str = g_strdup_printf ("<span size=\"%s\">%s: %s</span>",
@@ -184,7 +189,7 @@ make_label (xml_weather    *weatherdata,
     else
       {
 	str = g_strdup_printf ("<span size=\"%s\">%s: %s %s</span>",
-                               txtsize, lbl, rawvalue, get_unit (conditions, unit, opt));
+                               txtsize, lbl, rawvalue, get_unit (conditions, data->unit, opt));
       }
   } else {
     if (value != NULL)
@@ -196,7 +201,7 @@ make_label (xml_weather    *weatherdata,
     else
       {
 	str = g_strdup_printf ("<span size=\"%s\">%s %s</span>",
-                               txtsize, rawvalue, get_unit (conditions, unit, opt));
+                               txtsize, rawvalue, get_unit (conditions, data->unit, opt));
       }
   }
   g_free (rawvalue);
@@ -222,18 +227,7 @@ set_icon_error (xfceweather_data *data)
       data->weatherdata = NULL;
     }
 
-  /* arbitrary, choose something that works */
-
-  if (data->panel_orientation == GTK_ORIENTATION_HORIZONTAL)
-    txtsize = "medium";
-  else if (size > 36)
-    txtsize = "medium";
-  else if (size > 30)
-    txtsize = "small";
-  else if (size > 24)
-    txtsize = "x-small";
-  else
-    txtsize = "xx-small";
+  txtsize = get_label_size(data);
 
   str = g_strdup_printf ("<span size=\"%s\">No Data</span>", txtsize);
   gtk_scrollbox_set_label (GTK_SCROLLBOX (data->scrollbox), -1, str);
@@ -283,7 +277,7 @@ set_icon_current (xfceweather_data *data)
     {
       opt = g_array_index (data->labels, datas, i);
 
-      str = make_label (data->weatherdata, opt, data->unit, data->panel_size, data->panel_orientation, (data->labels->len > 1));
+      str = make_label (data, opt);
 
       gtk_scrollbox_set_label (GTK_SCROLLBOX (data->scrollbox), -1, str);
 
