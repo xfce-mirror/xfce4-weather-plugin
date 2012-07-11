@@ -101,7 +101,7 @@ make_label (xml_weather    *weatherdata,
 	    gboolean       multiple_labels)
 {
   gchar       *str, *value, *rawvalue;
-  xml_time    *timeslice;
+  xml_time    *conditions;
   const gchar *lbl, *txtsize;
 
   switch (opt)
@@ -156,9 +156,9 @@ make_label (xml_weather    *weatherdata,
   else
     txtsize = "xx-small";
 
-  /* get data from current timeslice */
-  timeslice = get_current_conditions(weatherdata);
-  rawvalue = get_data(timeslice, unit, opt);
+  /* get current weather conditions */
+  conditions = get_current_conditions(weatherdata);
+  rawvalue = get_data(conditions, unit, opt);
 
   switch (opt)
     {
@@ -166,7 +166,7 @@ make_label (xml_weather    *weatherdata,
       value = translate_wind_direction (rawvalue);
       break;
     case WIND_SPEED:
-      value = translate_wind_speed (timeslice, rawvalue, unit);
+      value = translate_wind_speed (conditions, rawvalue, unit);
       break;
     default:
       value = NULL;
@@ -184,7 +184,7 @@ make_label (xml_weather    *weatherdata,
     else
       {
 	str = g_strdup_printf ("<span size=\"%s\">%s: %s %s</span>",
-                               txtsize, lbl, rawvalue, get_unit (timeslice, unit, opt));
+                               txtsize, lbl, rawvalue, get_unit (conditions, unit, opt));
       }
   } else {
     if (value != NULL)
@@ -196,7 +196,7 @@ make_label (xml_weather    *weatherdata,
     else
       {
 	str = g_strdup_printf ("<span size=\"%s\">%s %s</span>",
-                               txtsize, rawvalue, get_unit (timeslice, unit, opt));
+                               txtsize, rawvalue, get_unit (conditions, unit, opt));
       }
   }
   g_free (rawvalue);
@@ -271,7 +271,7 @@ set_icon_error (xfceweather_data *data)
 static void
 set_icon_current (xfceweather_data *data)
 {
-  xml_time       *timeslice;
+  xml_time       *conditions;
   guint           i;
   GdkPixbuf      *icon = NULL;
   datas           opt;
@@ -312,11 +312,11 @@ set_icon_current (xfceweather_data *data)
 #endif
     }
  
-  /* get data from current timeslice */
-  timeslice = get_current_conditions(data->weatherdata);
+  /* get current weather conditions */
+  conditions = get_current_conditions(data->weatherdata);
   nighttime = is_night_time();
 
-  str = get_data (timeslice, data->unit, SYMBOL);
+  str = get_data (conditions, data->unit, SYMBOL);
   icon = get_icon (str, size, nighttime);
   g_free (str);
  
@@ -326,7 +326,7 @@ set_icon_current (xfceweather_data *data)
     g_object_unref (G_OBJECT (icon));
 
 #if !GTK_CHECK_VERSION(2,12,0)
-  str = get_data (timeslice, data->unit, SYMBOL);
+  str = get_data (conditions, data->unit, SYMBOL);
   gtk_tooltips_set_tip (data->tooltips, data->tooltipbox,
                         translate_desc (str, nighttime),
                         NULL);
@@ -802,15 +802,15 @@ static gboolean weather_get_tooltip_cb (GtkWidget        *widget,
 {
   GdkPixbuf *icon;
   gchar *markup_text, *rawvalue;
-  xml_time *timeslice;
+  xml_time *conditions;
   gboolean nighttime;
 
-  timeslice = get_current_conditions(data->weatherdata);
+  conditions = get_current_conditions(data->weatherdata);
   nighttime = is_night_time();
   if (data->weatherdata == NULL) {
     gtk_tooltip_set_text (tooltip, _("Cannot update weather data"));
   } else {
-    rawvalue = get_data (timeslice, data->unit, SYMBOL);
+    rawvalue = get_data (conditions, data->unit, SYMBOL);
     markup_text = g_markup_printf_escaped(
   	  "<b>%s</b>\n"
 	  "%s",
@@ -822,7 +822,7 @@ static gboolean weather_get_tooltip_cb (GtkWidget        *widget,
     g_free(markup_text);
   }
 
-  rawvalue = get_data (timeslice, data->unit, SYMBOL);
+  rawvalue = get_data (conditions, data->unit, SYMBOL);
   icon = get_icon (rawvalue, 32, nighttime);
   g_free (rawvalue);
   gtk_tooltip_set_icon (tooltip, icon);

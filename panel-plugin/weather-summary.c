@@ -41,8 +41,8 @@ static gboolean lnk_clicked (GtkTextTag *tag, GObject *obj,
 #define APPEND_TEXT_ITEM_REAL(text)      gtk_text_buffer_insert(GTK_TEXT_BUFFER(buffer), \
                                                                 &iter, text, -1);\
                                          g_free (value);
-#define APPEND_TEXT_ITEM(text, item)     rawvalue = get_data(timeslice, data->unit, item); \
-                                         unit = get_unit(timeslice, data->unit, item); \
+#define APPEND_TEXT_ITEM(text, item)     rawvalue = get_data(conditions, data->unit, item); \
+                                         unit = get_unit(conditions, data->unit, item); \
                                          value = g_strdup_printf("\t%s%s%s%s%s\n", \
                                                                  text, text ? ": " : "", \
                                                                  rawvalue, \
@@ -241,7 +241,7 @@ create_summary_tab (xfceweather_data *data)
   GdkColor       lnk_color;
   GtkAdjustment *adj;
   GtkWidget     *weather_channel_icon;
-  xml_time      *timeslice;
+  xml_time      *conditions;
   struct tm     *start, *end, *point_tm;
   char           interval_start[80], interval_end[80], point[80];
 
@@ -274,21 +274,21 @@ create_summary_tab (xfceweather_data *data)
   APPEND_BTEXT (value);
   g_free (value);
 
-  timeslice = get_current_conditions(data->weatherdata);
+  conditions = get_current_conditions(data->weatherdata);
   APPEND_BTEXT(_("Coordinates\n"));
   APPEND_TEXT_ITEM (_("Altitude"), ALTITUDE);
   APPEND_TEXT_ITEM (_("Latitude"), LATITUDE);
   APPEND_TEXT_ITEM (_("Longitude"), LONGITUDE);
 
   APPEND_BTEXT(_("\nTime\n"));
-  point_tm = localtime(&timeslice->point);
+  point_tm = localtime(&conditions->point);
   strftime (point, 80, "%c", point_tm);
   value = g_strdup_printf (_("\tPoint data applies to:\n\t%s\n"), point);
   APPEND_TEXT_ITEM_REAL (value);
 
-  start = localtime(&timeslice->start);
+  start = localtime(&conditions->start);
   strftime (interval_start, 80, "%c", start);
-  end = localtime(&timeslice->end);
+  end = localtime(&conditions->end);
   strftime (interval_end, 80, "%c", end);
   value = g_strdup_printf (_("\n\tInterval data applies to:\n\t%s\n\t%s\n"),
                            interval_start,
@@ -306,22 +306,22 @@ create_summary_tab (xfceweather_data *data)
 
   /* Wind */
   APPEND_BTEXT (_("\nWind\n"));
-  rawvalue = get_data (timeslice, data->unit, WIND_SPEED);
-  wind = translate_wind_speed (timeslice, rawvalue, data->unit);
+  rawvalue = get_data (conditions, data->unit, WIND_SPEED);
+  wind = translate_wind_speed (conditions, rawvalue, data->unit);
   g_free (rawvalue);
-  rawvalue = get_data (timeslice, data->unit, WIND_BEAUFORT);
+  rawvalue = get_data (conditions, data->unit, WIND_BEAUFORT);
   value = g_strdup_printf (_("\t%s: %s (%s on the Beaufort scale)\n"), _("Speed"), wind, rawvalue);
   g_free (rawvalue);
   g_free (wind);
   APPEND_TEXT_ITEM_REAL (value);
 
-  rawvalue = get_data (timeslice, data->unit, WIND_DIRECTION);
+  rawvalue = get_data (conditions, data->unit, WIND_DIRECTION);
   wind = translate_wind_direction (rawvalue);
   g_free (rawvalue);
-  rawvalue = get_data (timeslice, data->unit, WIND_DIRECTION_DEG);
+  rawvalue = get_data (conditions, data->unit, WIND_DIRECTION_DEG);
   value = g_strdup_printf ("\t%s: %s (%s%s)\n", _("Direction"),
                            wind, rawvalue,
-                           get_unit (timeslice, data->unit, WIND_DIRECTION_DEG));
+                           get_unit (conditions, data->unit, WIND_DIRECTION_DEG));
   g_free (rawvalue);
   g_free (wind);
   APPEND_TEXT_ITEM_REAL (value);
@@ -554,7 +554,7 @@ create_summary_window (xfceweather_data *data)
   GtkWidget *window, *notebook, *vbox, *hbox, *label;
   gchar     *title, *rawvalue;
   GdkPixbuf *icon;
-  xml_time  *timeslice;
+  xml_time  *conditions;
 
   window = xfce_titled_dialog_new_with_buttons (_("Weather Update"),
                                                 NULL,
@@ -573,9 +573,9 @@ create_summary_window (xfceweather_data *data)
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (window)->vbox), vbox, TRUE, TRUE,
                       0);
 
-  timeslice = get_current_conditions(data->weatherdata);
+  conditions = get_current_conditions(data->weatherdata);
 
-  rawvalue = get_data (timeslice, data->unit, SYMBOL);
+  rawvalue = get_data (conditions, data->unit, SYMBOL);
   icon = get_icon (rawvalue, 48, is_night_time());
   g_free (rawvalue);
 
