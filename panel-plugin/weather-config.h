@@ -38,6 +38,7 @@ typedef struct
   GtkWidget        *txt_proxy_port;
   GtkWidget        *chk_proxy_use;
   GtkWidget        *chk_proxy_fromenv;
+  GtkWidget        *spin_forecast_days;
 
   GtkWidget        *tooltip_yes;
   GtkWidget        *tooltip_no;

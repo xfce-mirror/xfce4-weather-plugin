@@ -535,6 +535,9 @@ xfceweather_read_config (XfcePanelPlugin  *plugin,
       data->proxy_port = data->saved_proxy_port;
     }
 
+  val = xfce_rc_read_int_entry (rc, "forecast_days", 5);
+  data->forecast_days = (val > 0 && val <= MAX_FORECAST_DAYS) ? val : 5;
+
   data->animation_transitions = xfce_rc_read_bool_entry (rc,
   		"animation_transitions", TRUE);
 
@@ -602,6 +605,8 @@ xfceweather_write_config (XfcePanelPlugin  *plugin,
 
       xfce_rc_write_int_entry (rc, "proxy_port", data->proxy_port);
     }
+
+  xfce_rc_write_int_entry (rc, "forecast_days", data->forecast_days);
 
   xfce_rc_write_bool_entry (rc, "animation_transitions", data->animation_transitions);
 

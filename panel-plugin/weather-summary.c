@@ -406,13 +406,13 @@ make_forecast (xfceweather_data *data)
     GdkPixbuf *icon;
     GdkColor lightbg = {0, 0xeaea, 0xeaea, 0xeaea};
     GdkColor darkbg = {0, 0x6666, 0x6666, 0x6666};
-    gint num_days = 5, i, weekday, daytime;
+    gint i, weekday, daytime;
     gchar *dayname, *wind_speed, *value, *rawvalue;
     xml_time *fcdata;
     time_t now_t = time(NULL), fcday_t;
     struct tm tm_fcday;
 
-    table = gtk_table_new(num_days + 1, 5, FALSE);
+    table = gtk_table_new(data->forecast_days + 1, 5, FALSE);
     gtk_table_set_row_spacings(GTK_TABLE(table), 0);
     gtk_table_set_col_spacings(GTK_TABLE(table), 0);
     gtk_widget_show(GTK_WIDGET(table));
@@ -438,7 +438,7 @@ make_forecast (xfceweather_data *data)
                               add_forecast_header(_("Night"), 0.0, &darkbg),
                               4, 5, 0, 1);
 
-    for (i = 0; i < num_days; i++) {
+    for (i = 0; i < data->forecast_days; i++) {
         /* Forecast day headers */
         tm_fcday = *localtime(&now_t);
         fcday_t = time_calc_day(tm_fcday, i);

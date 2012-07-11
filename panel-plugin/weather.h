@@ -23,6 +23,7 @@
 #define PLUGIN_WEBSITE   "http://goodies.xfce.org/projects/panel-plugins/xfce4-weather-plugin"
 #define PARTNER_ID       "1121946239"
 #define LICENSE_KEY      "3c4cd39ee5dec84f"
+#define MAX_FORECAST_DAYS 10
 
 G_BEGIN_DECLS
 
@@ -69,6 +70,7 @@ typedef struct
   gint             saved_proxy_port;
   
   gboolean         animation_transitions;
+  gint             forecast_days;
 }
 xfceweather_data;
 

@@ -229,6 +229,8 @@ apply_options (xfceweather_dialog *dialog)
       data->proxy_host = NULL;
     }
 
+  data->forecast_days = (gint) gtk_spin_button_get_value (GTK_SPIN_BUTTON (dialog->spin_forecast_days));
+
   data->animation_transitions = gtk_toggle_button_get_active(
   	GTK_TOGGLE_BUTTON(dialog->chk_animate_transition));
 
@@ -508,6 +510,21 @@ create_config_dialog (xfceweather_data *data,
       gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON (dialog->chk_proxy_use),
                                     FALSE);
     }
+
+
+  /* number of days shown in forecast */
+  label = gtk_label_new_with_mnemonic (_("Number of _forecast days:"));
+  dialog->spin_forecast_days = gtk_spin_button_new_with_range (1, MAX_FORECAST_DAYS, 1);
+  gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->spin_forecast_days),
+                             dialog->wd->forecast_days);
+  gtk_label_set_mnemonic_widget(GTK_LABEL (label),
+                                GTK_WIDGET (dialog->spin_forecast_days));
+
+  hbox = gtk_hbox_new (FALSE, BORDER);
+  gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), dialog->spin_forecast_days, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
+  gtk_size_group_add_widget (sg, label);
 
 
   /* labels */
