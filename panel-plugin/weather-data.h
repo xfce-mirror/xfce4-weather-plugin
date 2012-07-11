@@ -43,7 +43,7 @@ typedef enum {
 typedef enum {
 	IMPERIAL,
 	METRIC
-} units;
+} unit_systems;
 
 typedef enum {
 	MORNING,
@@ -53,9 +53,9 @@ typedef enum {
 } daytime;
 
 gchar *
-get_data (xml_time *timeslice, units unit, datas type);
+get_data (xml_time *timeslice, unit_systems unit_system, datas type);
 const gchar *
-get_unit (xml_time *timeslice, units unit, datas type);
+get_unit (xml_time *timeslice, unit_systems unit_system, datas type);
 gboolean
 is_night_time();
 time_t

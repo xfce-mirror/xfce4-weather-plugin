@@ -41,8 +41,8 @@ static gboolean lnk_clicked (GtkTextTag *tag, GObject *obj,
 #define APPEND_TEXT_ITEM_REAL(text)      gtk_text_buffer_insert(GTK_TEXT_BUFFER(buffer), \
                                                                 &iter, text, -1);\
                                          g_free (value);
-#define APPEND_TEXT_ITEM(text, item)     rawvalue = get_data(conditions, data->unit, item); \
-                                         unit = get_unit(conditions, data->unit, item); \
+#define APPEND_TEXT_ITEM(text, item)     rawvalue = get_data(conditions, data->unit_system, item); \
+                                         unit = get_unit(conditions, data->unit_system, item); \
                                          value = g_strdup_printf("\t%s%s%s%s%s\n", \
                                                                  text, text ? ": " : "", \
                                                                  rawvalue, \
@@ -306,22 +306,22 @@ create_summary_tab (xfceweather_data *data)
 
   /* Wind */
   APPEND_BTEXT (_("\nWind\n"));
-  rawvalue = get_data (conditions, data->unit, WIND_SPEED);
-  wind = translate_wind_speed (conditions, rawvalue, data->unit);
+  rawvalue = get_data (conditions, data->unit_system, WIND_SPEED);
+  wind = translate_wind_speed (conditions, rawvalue, data->unit_system);
   g_free (rawvalue);
-  rawvalue = get_data (conditions, data->unit, WIND_BEAUFORT);
+  rawvalue = get_data (conditions, data->unit_system, WIND_BEAUFORT);
   value = g_strdup_printf (_("\t%s: %s (%s on the Beaufort scale)\n"), _("Speed"), wind, rawvalue);
   g_free (rawvalue);
   g_free (wind);
   APPEND_TEXT_ITEM_REAL (value);
 
-  rawvalue = get_data (conditions, data->unit, WIND_DIRECTION);
+  rawvalue = get_data (conditions, data->unit_system, WIND_DIRECTION);
   wind = translate_wind_direction (rawvalue);
   g_free (rawvalue);
-  rawvalue = get_data (conditions, data->unit, WIND_DIRECTION_DEG);
+  rawvalue = get_data (conditions, data->unit_system, WIND_DIRECTION_DEG);
   value = g_strdup_printf ("\t%s: %s (%s%s)\n", _("Direction"),
                            wind, rawvalue,
-                           get_unit (conditions, data->unit, WIND_DIRECTION_DEG));
+                           get_unit (conditions, data->unit_system, WIND_DIRECTION_DEG));
   g_free (rawvalue);
   g_free (wind);
   APPEND_TEXT_ITEM_REAL (value);
@@ -399,8 +399,7 @@ add_forecast_header(gchar *text, gdouble angle, GdkColor *color)
 }
 
 static GtkWidget *
-make_forecast (xfceweather_data *data,
-               units     unit)
+make_forecast (xfceweather_data *data)
 {
     GtkWidget *table, *ebox, *box, *align;
     GtkWidget *forecast_box, *label, *image;
@@ -470,7 +469,7 @@ make_forecast (xfceweather_data *data,
             fcdata = make_forecast_data(data->weatherdata, i, daytime);
             if (fcdata != NULL) {
                 if (fcdata->location != NULL) {
-                    rawvalue = get_data(fcdata, data->unit, SYMBOL);
+                    rawvalue = get_data(fcdata, data->unit_system, SYMBOL);
                     icon = get_icon(rawvalue, 48, (daytime == NIGHT));
                     g_free(rawvalue);
                     image = gtk_image_new_from_pixbuf(icon);
@@ -479,7 +478,7 @@ make_forecast (xfceweather_data *data,
                     if (G_LIKELY (icon))
                         g_object_unref (G_OBJECT (icon));
 
-                    rawvalue = get_data(fcdata, data->unit, SYMBOL);
+                    rawvalue = get_data(fcdata, data->unit_system, SYMBOL);
                     value = g_strdup_printf("%s",
                                             translate_desc(rawvalue,
                                                            (daytime == NIGHT)));
@@ -491,10 +490,10 @@ make_forecast (xfceweather_data *data,
                                         TRUE, TRUE, 0);
                     g_free(value);
 
-                    rawvalue = get_data(fcdata, data->unit, TEMPERATURE);
+                    rawvalue = get_data(fcdata, data->unit_system, TEMPERATURE);
                     value = g_strdup_printf("%s %s",
                                             rawvalue,
-                                            get_unit(fcdata, data->unit, TEMPERATURE));
+                                            get_unit(fcdata, data->unit_system, TEMPERATURE));
                     g_free(rawvalue);
                     label = gtk_label_new(value);
                     gtk_widget_show(GTK_WIDGET(label));
@@ -502,12 +501,12 @@ make_forecast (xfceweather_data *data,
                                         TRUE, TRUE, 0);
                     g_free(value);
 
-                    rawvalue = get_data(fcdata, data->unit, WIND_DIRECTION);
-                    wind_speed = get_data(fcdata, data->unit, WIND_SPEED);
+                    rawvalue = get_data(fcdata, data->unit_system, WIND_DIRECTION);
+                    wind_speed = get_data(fcdata, data->unit_system, WIND_SPEED);
                     value = g_strdup_printf("%s %s %s",
                                             translate_wind_direction(rawvalue),
                                             wind_speed,
-                                            get_unit(fcdata, data->unit, WIND_SPEED));
+                                            get_unit(fcdata, data->unit_system, WIND_SPEED));
                     g_free(wind_speed);
                     g_free(rawvalue);
                     label = gtk_label_new(value);
@@ -537,7 +536,7 @@ create_forecast_tab (xfceweather_data *data)
   gtk_container_set_border_width (GTK_CONTAINER (align), 6);
   if (data->weatherdata)
     gtk_container_add(GTK_CONTAINER(align),
-                      GTK_WIDGET(make_forecast (data, data->unit)));
+                      GTK_WIDGET(make_forecast (data)));
   return align;
 }
 
@@ -579,7 +578,7 @@ create_summary_window (xfceweather_data *data)
 
   conditions = get_current_conditions(data->weatherdata);
 
-  rawvalue = get_data (conditions, data->unit, SYMBOL);
+  rawvalue = get_data (conditions, data->unit_system, SYMBOL);
   icon = get_icon (rawvalue, 48, is_night_time());
   g_free (rawvalue);
 

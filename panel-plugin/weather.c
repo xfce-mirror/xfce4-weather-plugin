@@ -164,7 +164,7 @@ make_label (xfceweather_data *data,
 
   /* get current weather conditions */
   conditions = get_current_conditions(data->weatherdata);
-  rawvalue = get_data(conditions, data->unit, opt);
+  rawvalue = get_data(conditions, data->unit_system, opt);
 
   switch (opt)
     {
@@ -172,7 +172,7 @@ make_label (xfceweather_data *data,
       value = translate_wind_direction (rawvalue);
       break;
     case WIND_SPEED:
-      value = translate_wind_speed (conditions, rawvalue, data->unit);
+      value = translate_wind_speed (conditions, rawvalue, data->unit_system);
       break;
     default:
       value = NULL;
@@ -189,7 +189,7 @@ make_label (xfceweather_data *data,
     else
       {
 	str = g_strdup_printf ("<span size=\"%s\">%s: %s %s</span>",
-                               txtsize, lbl, rawvalue, get_unit (conditions, data->unit, opt));
+                               txtsize, lbl, rawvalue, get_unit (conditions, data->unit_system, opt));
       }
   } else {
     if (value != NULL)
@@ -201,7 +201,7 @@ make_label (xfceweather_data *data,
     else
       {
 	str = g_strdup_printf ("<span size=\"%s\">%s %s</span>",
-                               txtsize, rawvalue, get_unit (conditions, data->unit, opt));
+                               txtsize, rawvalue, get_unit (conditions, data->unit_system, opt));
       }
   }
   g_free (rawvalue);
@@ -310,7 +310,7 @@ set_icon_current (xfceweather_data *data)
   conditions = get_current_conditions(data->weatherdata);
   nighttime = is_night_time();
 
-  str = get_data (conditions, data->unit, SYMBOL);
+  str = get_data (conditions, data->unit_system, SYMBOL);
   icon = get_icon (str, size, nighttime);
   g_free (str);
  
@@ -320,7 +320,7 @@ set_icon_current (xfceweather_data *data)
     g_object_unref (G_OBJECT (icon));
 
 #if !GTK_CHECK_VERSION(2,12,0)
-  str = get_data (conditions, data->unit, SYMBOL);
+  str = get_data (conditions, data->unit_system, SYMBOL);
   gtk_tooltips_set_tip (data->tooltips, data->tooltipbox,
                         translate_desc (str, nighttime),
                         NULL);
@@ -501,9 +501,9 @@ xfceweather_read_config (XfcePanelPlugin  *plugin,
     }
 
   if (xfce_rc_read_bool_entry (rc, "celcius", TRUE))
-    data->unit = METRIC;
+    data->unit_system = METRIC;
   else
-    data->unit = IMPERIAL;
+    data->unit_system = IMPERIAL;
 
   if (data->proxy_host)
     {
@@ -583,7 +583,7 @@ xfceweather_write_config (XfcePanelPlugin  *plugin,
   if (!rc)
     return;
 
-  xfce_rc_write_bool_entry (rc, "celcius", (data->unit == METRIC));
+  xfce_rc_write_bool_entry (rc, "celcius", (data->unit_system == METRIC));
 
   if (data->lat)
     xfce_rc_write_entry (rc, "lat", data->lat);
@@ -804,7 +804,7 @@ static gboolean weather_get_tooltip_cb (GtkWidget        *widget,
   if (data->weatherdata == NULL) {
     gtk_tooltip_set_text (tooltip, _("Cannot update weather data"));
   } else {
-    rawvalue = get_data (conditions, data->unit, SYMBOL);
+    rawvalue = get_data (conditions, data->unit_system, SYMBOL);
     markup_text = g_markup_printf_escaped(
   	  "<b>%s</b>\n"
 	  "%s",
@@ -816,7 +816,7 @@ static gboolean weather_get_tooltip_cb (GtkWidget        *widget,
     g_free(markup_text);
   }
 
-  rawvalue = get_data (conditions, data->unit, SYMBOL);
+  rawvalue = get_data (conditions, data->unit_system, SYMBOL);
   icon = get_icon (rawvalue, 32, nighttime);
   g_free (rawvalue);
   gtk_tooltip_set_icon (tooltip, icon);

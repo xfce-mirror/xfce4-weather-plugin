@@ -168,12 +168,12 @@ apply_options (xfceweather_dialog *dialog)
 
   xfceweather_data *data = (xfceweather_data *) dialog->wd;
 
-  history = gtk_option_menu_get_history (GTK_OPTION_MENU (dialog->opt_unit));
+  history = gtk_option_menu_get_history (GTK_OPTION_MENU (dialog->opt_unit_system));
 
   if (history == 0)
-    data->unit = IMPERIAL;
+    data->unit_system = IMPERIAL;
   else
-    data->unit = METRIC;
+    data->unit_system = METRIC;
 
   if (data->lat)
     g_free (data->lat);
@@ -375,26 +375,26 @@ create_config_dialog (xfceweather_data *data,
   dialog->wd = (xfceweather_data *) data;
   dialog->dialog = gtk_widget_get_toplevel (vbox);
 
-  label = gtk_label_new (_("Measurement unit:"));
+  label = gtk_label_new (_("System of Measurement:"));
   gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
   menu = gtk_menu_new ();
-  dialog->opt_unit = gtk_option_menu_new ();
+  dialog->opt_unit_system = gtk_option_menu_new ();
 
   gtk_menu_shell_append ((GtkMenuShell *) (GTK_MENU (menu)),
                          (gtk_menu_item_new_with_label (_("Imperial"))));
   gtk_menu_shell_append ((GtkMenuShell *) (GTK_MENU (menu)),
                          (gtk_menu_item_new_with_label (_("Metric"))));
-  gtk_option_menu_set_menu (GTK_OPTION_MENU (dialog->opt_unit), menu);
+  gtk_option_menu_set_menu (GTK_OPTION_MENU (dialog->opt_unit_system), menu);
 
-  if (dialog->wd->unit == IMPERIAL)
-    gtk_option_menu_set_history (GTK_OPTION_MENU (dialog->opt_unit), 0);
+  if (dialog->wd->unit_system == IMPERIAL)
+    gtk_option_menu_set_history (GTK_OPTION_MENU (dialog->opt_unit_system), 0);
   else
-    gtk_option_menu_set_history (GTK_OPTION_MENU (dialog->opt_unit), 1);
+    gtk_option_menu_set_history (GTK_OPTION_MENU (dialog->opt_unit_system), 1);
   gtk_size_group_add_widget (sg, label);
 
   hbox = gtk_hbox_new (FALSE, BORDER);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
-  gtk_box_pack_start (GTK_BOX (hbox), dialog->opt_unit, TRUE, TRUE, 0);
+  gtk_box_pack_start (GTK_BOX (hbox), dialog->opt_unit_system, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
 

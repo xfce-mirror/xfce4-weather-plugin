@@ -36,11 +36,11 @@ gchar *translate_day (gint);
 
 gchar *translate_wind_direction (const gchar *);
 
-gchar *translate_wind_speed (xml_time *, const gchar *, units);
+gchar *translate_wind_speed (xml_time *, const gchar *, unit_systems);
 
 gchar *translate_time (const gchar *);
 
-gchar *translate_visibility (const gchar *, units);
+gchar *translate_visibility (const gchar *, unit_systems);
 
 G_END_DECLS
 

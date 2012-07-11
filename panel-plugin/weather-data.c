@@ -40,7 +40,7 @@ gboolean has_timeslice(xml_weather *data, time_t start_t, time_t end_t)
 }
 
 gchar *
-get_data (xml_time *timeslice, units unit, datas type)
+get_data (xml_time *timeslice, unit_systems unit_system, datas type)
 {
 	const xml_location *loc = NULL;
 	double val;
@@ -52,7 +52,7 @@ get_data (xml_time *timeslice, units unit, datas type)
 
 	switch(type) {
 	case ALTITUDE:
-		if (unit == METRIC)
+		if (unit_system == METRIC)
 			return LOCALE_DOUBLE(loc->altitude, "%.0f");
 		val = g_ascii_strtod(loc->altitude, NULL);
 		val /= 0.3048;
@@ -63,26 +63,26 @@ get_data (xml_time *timeslice, units unit, datas type)
 		return LOCALE_DOUBLE(loc->longitude, "%.4f");
 	case TEMPERATURE:
 		val = g_ascii_strtod(loc->temperature_value, NULL);
-		if (unit == IMPERIAL
+		if (unit_system == IMPERIAL
 			&& (strcmp(loc->temperature_unit, "celcius") == 0
 				|| strcmp(loc->temperature_unit, "celsius" == 0)))
 			val = val * 9.0 / 5.0 + 32.0;
-		else if (unit == METRIC
+		else if (unit_system == METRIC
 				 && strcmp(loc->temperature_unit, "fahrenheit") == 0)
 			val = (val - 32.0) * 5.0 / 9.0;
 		return g_strdup_printf ("%.1f", val);
 	case PRESSURE:
-		if (unit == METRIC)
+		if (unit_system == METRIC)
 			return LOCALE_DOUBLE(loc->pressure_value, "%.1f");
 		val = g_ascii_strtod(loc->pressure_value, NULL);
-		if (unit == IMPERIAL)
+		if (unit_system == IMPERIAL)
 			val *= 0.01450378911491;
 		return g_strdup_printf("%.1f", val);
 	case WIND_SPEED:
 		val = g_ascii_strtod(loc->wind_speed_mps, NULL);
-		if (unit == IMPERIAL)
+		if (unit_system == IMPERIAL)
 			val *= 2.2369362920544;
-		else if (unit == METRIC)
+		else if (unit_system == METRIC)
 			val *= 3.6;
 		return g_strdup_printf("%.1f", val);
 	case WIND_BEAUFORT:
@@ -104,10 +104,10 @@ get_data (xml_time *timeslice, units unit, datas type)
 	case FOG:
 		return LOCALE_DOUBLE(loc->fog_percent, "%.1f");
 	case PRECIPITATIONS:
-		if (unit == METRIC)
+		if (unit_system == METRIC)
 			return LOCALE_DOUBLE(loc->precipitation_value, "%.1f");
 		val = g_ascii_strtod(loc->precipitation_value, NULL);
-		if (unit == IMPERIAL)
+		if (unit_system == IMPERIAL)
 			val /= 25.4;
 		return g_strdup_printf("%.3f", val);
 	case SYMBOL:
@@ -117,7 +117,7 @@ get_data (xml_time *timeslice, units unit, datas type)
 }
 
 const gchar *
-get_unit (xml_time *timeslice, units unit, datas type)
+get_unit (xml_time *timeslice, unit_systems unit_system, datas type)
 {
 	const xml_location *loc = NULL;
 
@@ -128,13 +128,13 @@ get_unit (xml_time *timeslice, units unit, datas type)
 
 	switch(type) {
 	case ALTITUDE:
-		return (unit == IMPERIAL) ? _("ft") : _("m");
+		return (unit_system == IMPERIAL) ? _("ft") : _("m");
 	case TEMPERATURE:
-		return (unit == IMPERIAL) ? _("°F") : _("°C");
+		return (unit_system == IMPERIAL) ? _("°F") : _("°C");
 	case PRESSURE:
-		return (unit == IMPERIAL) ? _("psi") : _("hPa");
+		return (unit_system == IMPERIAL) ? _("psi") : _("hPa");
 	case WIND_SPEED:
-		return (unit == IMPERIAL) ? _("mph") : _("km/h");
+		return (unit_system == IMPERIAL) ? _("mph") : _("km/h");
 	case WIND_DIRECTION_DEG:
 	case LATITUDE:
 	case LONGITUDE:
@@ -147,7 +147,7 @@ get_unit (xml_time *timeslice, units unit, datas type)
 	case FOG:
 		return "%";
 	case PRECIPITATIONS:
-		return (unit == IMPERIAL) ? _("in") : _("mm");
+		return (unit_system == IMPERIAL) ? _("in") : _("mm");
 	case SYMBOL:
 	case WIND_BEAUFORT:
 	case WIND_DIRECTION:
