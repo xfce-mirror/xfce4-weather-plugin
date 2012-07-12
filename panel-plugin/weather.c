@@ -36,9 +36,10 @@
 #include "weather-icon.h"
 #include "weather-scrollbox.h"
 
-#define XFCEWEATHER_ROOT "weather"
-#define UPDATE_TIME      1600
-#define BORDER           8
+#define XFCEWEATHER_ROOT  "weather"
+#define UPDATE_INTERVAL   15
+#define DATA_MAX_AGE      3 * 3600
+#define BORDER            8
 
 #if !GLIB_CHECK_VERSION(2,14,0)
 #define g_timeout_add_seconds(t,c,d) g_timeout_add((t)*1000,(c),(d))
@@ -372,6 +373,8 @@ cb_update (gboolean  succeed,
         xml_weather_free (data->weatherdata);
 
       data->weatherdata = weather;
+      data->last_data_update = time (NULL);
+      data->last_conditions_update = time (NULL);
       set_icon_current (data);
     }
   else
@@ -383,10 +386,49 @@ cb_update (gboolean  succeed,
 
 
 static gboolean
+need_data_update (xfceweather_data *data)
+{
+  time_t now_t;
+  gint diff;
+
+  if (! data->updatetimeout || ! data->last_data_update)
+    return TRUE;
+
+  time(&now_t);
+  diff = (gint) difftime(now_t, data->last_data_update);
+  if (diff >= DATA_MAX_AGE)
+    return TRUE;
+
+  return FALSE;
+}
+
+
+
+static gboolean
+need_conditions_update (xfceweather_data *data)
+{
+  time_t now_t;
+  struct tm now_tm, last_tm;
+
+  if (! data->updatetimeout || ! data->last_conditions_update)
+    return TRUE;
+
+  time(&now_t);
+  now_tm = *localtime(&now_t);
+  last_tm = *localtime(&(data->last_conditions_update));
+  if (now_tm.tm_mday != last_tm.tm_mday
+      || now_tm.tm_hour != last_tm.tm_hour)
+    return TRUE;
+
+  return FALSE;
+}
+
+
+
+static gboolean
 update_weatherdata (xfceweather_data *data)
 {
   gchar *url;
-
   if (!data->lat || !data->lon)
     {
       gtk_scrollbox_clear (GTK_SCROLLBOX (data->scrollbox));
@@ -395,17 +437,35 @@ update_weatherdata (xfceweather_data *data)
       return TRUE;
     }
 
-  /* build url */
-  url = g_strdup_printf ("/weatherapi/locationforecastlts/1.1/?lat=%s;lon=%s",
-                         data->lat, data->lon);
+  /* fetch newest XML data */
+  if (need_data_update(data))
+    {
+      /* build url */
+      url = g_strdup_printf ("/weatherapi/locationforecastlts/1.1/?lat=%s;lon=%s",
+                             data->lat, data->lon);
 
-  /* start receive thread */
-  g_warning("getting http://api.yr.no/%s", url);
-  weather_http_receive_data ("api.yr.no", url, data->proxy_host,
-                             data->proxy_port, cb_update, data);
+      /* start receive thread */
+      g_warning("getting http://api.yr.no/%s", url);
+      weather_http_receive_data ("api.yr.no", url, data->proxy_host,
+                                 data->proxy_port, cb_update, data);
 
-  /* cleanup */
-  g_free (url);
+      /* cleanup */
+      g_free (url);
+    }
+  else if (need_conditions_update(data))
+    {
+      /* update current conditions, icon and labels */
+      if (data->weatherdata)
+        {
+          data->weatherdata->current_conditions = make_current_conditions(data->weatherdata);
+          data->last_conditions_update = time(NULL);
+          set_icon_current (data);
+        }
+      else
+        {
+          set_icon_error (data);
+        }
+    }
 
   /* keep timeout running */
   return TRUE;
@@ -629,10 +689,12 @@ update_weatherdata_with_reset (xfceweather_data *data)
   if (data->updatetimeout)
     g_source_remove (data->updatetimeout);
 
+  data->last_data_update = 0;
+  data->last_conditions_update = 0;
   update_weatherdata (data);
 
   data->updatetimeout =
-    g_timeout_add_seconds (UPDATE_TIME, (GSourceFunc) update_weatherdata, data);
+    g_timeout_add_seconds (UPDATE_INTERVAL, (GSourceFunc) update_weatherdata, data);
 }
 
 
@@ -919,7 +981,7 @@ xfceweather_create_control (XfcePanelPlugin *plugin)
   gtk_scrollbox_clear (GTK_SCROLLBOX (data->scrollbox));
 
   data->updatetimeout =
-    g_timeout_add_seconds (UPDATE_TIME, (GSourceFunc) update_weatherdata, data);
+    g_timeout_add_seconds (UPDATE_INTERVAL, (GSourceFunc) update_weatherdata, data);
 
   return data;
 }

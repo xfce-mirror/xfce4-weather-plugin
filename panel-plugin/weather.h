@@ -51,6 +51,8 @@ typedef struct
   GtkOrientation   orientation;
   GtkOrientation   panel_orientation;
   gint             updatetimeout;
+  time_t           last_data_update;
+  time_t           last_conditions_update;
 
   gchar           *lat;
   gchar           *lon;
