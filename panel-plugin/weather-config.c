@@ -387,10 +387,8 @@ create_config_dialog (xfceweather_data *data,
   gtk_label_set_mnemonic_widget(GTK_LABEL(label),
                                 GTK_WIDGET(dialog->combo_unit_system));
 
-  if(dialog->wd != NULL && dialog->wd->unit_system == IMPERIAL)
-    gtk_combo_box_set_active(GTK_COMBO_BOX(dialog->combo_unit_system), IMPERIAL);
-  else
-    gtk_combo_box_set_active(GTK_COMBO_BOX(dialog->combo_unit_system), METRIC);
+  gtk_combo_box_set_active(GTK_COMBO_BOX(dialog->combo_unit_system),
+                           dialog->wd->unit_system);
 
   hbox = gtk_hbox_new (FALSE, BORDER);
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
@@ -516,7 +514,7 @@ create_config_dialog (xfceweather_data *data,
   label = gtk_label_new_with_mnemonic (_("Number of _forecast days:"));
   dialog->spin_forecast_days = gtk_spin_button_new_with_range (1, MAX_FORECAST_DAYS, 1);
   gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->spin_forecast_days),
-                             dialog->wd->forecast_days);
+                             (dialog->wd->forecast_days) ? dialog->wd->forecast_days : 5);
   gtk_label_set_mnemonic_widget(GTK_LABEL (label),
                                 GTK_WIDGET (dialog->spin_forecast_days));
 
