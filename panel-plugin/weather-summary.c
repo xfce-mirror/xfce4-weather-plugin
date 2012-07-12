@@ -369,7 +369,6 @@ add_forecast_cell(GtkWidget *widget, GdkColor *color) {
         gtk_event_box_set_visible_window(GTK_EVENT_BOX(ebox), TRUE);
         gtk_widget_modify_bg(GTK_WIDGET(ebox), GTK_STATE_NORMAL, color);
     }
-    gtk_widget_show(GTK_WIDGET(ebox));
     gtk_container_add(GTK_CONTAINER(ebox), GTK_WIDGET(widget));
     return ebox;
 }
@@ -385,11 +384,9 @@ add_forecast_header(gchar *text, gdouble angle, GdkColor *color)
 	else
 		align = gtk_alignment_new(1, 1, 1, 0);
 	gtk_container_set_border_width(GTK_CONTAINER(align), 4);
-    gtk_widget_show(GTK_WIDGET(align));
 
     label = gtk_label_new(NULL);
     gtk_label_set_angle(GTK_LABEL(label), angle);
-    gtk_widget_show(GTK_WIDGET(label));
     str = g_strdup_printf("<span foreground=\"white\"><b>%s</b></span>", text ? text : "");
     gtk_label_set_markup(GTK_LABEL(label), str);
     g_free(str);
@@ -415,11 +412,9 @@ make_forecast (xfceweather_data *data)
     table = gtk_table_new(data->forecast_days + 1, 5, FALSE);
     gtk_table_set_row_spacings(GTK_TABLE(table), 0);
     gtk_table_set_col_spacings(GTK_TABLE(table), 0);
-    gtk_widget_show(GTK_WIDGET(table));
 
     /* empty upper left corner */
     box = gtk_vbox_new(FALSE, 0);
-    gtk_widget_show(GTK_WIDGET(box));
     gtk_table_attach_defaults(GTK_TABLE(table),
                               add_forecast_cell(box, &darkbg),
                               0, 1, 0, 1);
@@ -485,7 +480,6 @@ make_forecast (xfceweather_data *data)
                     g_free(rawvalue);
                     label = gtk_label_new(NULL);
                     gtk_label_set_markup(GTK_LABEL(label), value);
-                    gtk_widget_show(GTK_WIDGET(label));
                     gtk_box_pack_start(GTK_BOX(forecast_box), GTK_WIDGET(label),
                                         TRUE, TRUE, 0);
                     g_free(value);
@@ -496,7 +490,6 @@ make_forecast (xfceweather_data *data)
                                             get_unit(fcdata, data->unit_system, TEMPERATURE));
                     g_free(rawvalue);
                     label = gtk_label_new(value);
-                    gtk_widget_show(GTK_WIDGET(label));
                     gtk_box_pack_start(GTK_BOX(forecast_box), GTK_WIDGET(label),
                                         TRUE, TRUE, 0);
                     g_free(value);
@@ -510,7 +503,6 @@ make_forecast (xfceweather_data *data)
                     g_free(wind_speed);
                     g_free(rawvalue);
                     label = gtk_label_new(value);
-                    gtk_widget_show(GTK_WIDGET(label));
                     gtk_box_pack_start(GTK_BOX(forecast_box), label, TRUE, TRUE, 0);
                     g_free(value);
                 }
@@ -618,12 +610,10 @@ create_summary_window (xfceweather_data *data)
 
   if (data->location_name == NULL || data->weatherdata == NULL) {
     hbox = gtk_hbox_new (FALSE, 0);
-    gtk_widget_show(hbox);
     if (data->location_name == NULL)
       label = gtk_label_new(_("Please set a location in the plugin settings."));
     else
       label = gtk_label_new(_("Currently no data available."));
-    gtk_widget_show(label);
     gtk_box_pack_start (GTK_BOX (hbox), GTK_WIDGET(label),
                         TRUE, TRUE, 0);
 

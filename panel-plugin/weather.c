@@ -776,7 +776,6 @@ xfceweather_create_options (XfcePanelPlugin  *plugin,
 
   vbox = gtk_vbox_new (FALSE, BORDER);
   gtk_container_set_border_width (GTK_CONTAINER (vbox), BORDER - 2);
-  gtk_widget_show (vbox);
   gtk_box_pack_start (GTK_BOX (GTK_DIALOG (dlg)->vbox), vbox, TRUE, TRUE, 0);
 
   dialog = create_config_dialog (data, vbox);
