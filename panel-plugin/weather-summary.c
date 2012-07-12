@@ -410,7 +410,7 @@ make_forecast (xfceweather_data *data)
     gchar *dayname, *wind_speed, *value, *rawvalue;
     xml_time *fcdata;
     time_t now_t = time(NULL), fcday_t;
-    struct tm tm_fcday;
+    struct tm fcday_tm;
 
     table = gtk_table_new(data->forecast_days + 1, 5, FALSE);
     gtk_table_set_row_spacings(GTK_TABLE(table), 0);
@@ -440,8 +440,8 @@ make_forecast (xfceweather_data *data)
 
     for (i = 0; i < data->forecast_days; i++) {
         /* Forecast day headers */
-        tm_fcday = *localtime(&now_t);
-        fcday_t = time_calc_day(tm_fcday, i);
+        fcday_tm = *localtime(&now_t);
+        fcday_t = time_calc_day(fcday_tm, i);
         weekday = localtime(&fcday_t)->tm_wday;
         if (i == 0)
             dayname = _("Today");
