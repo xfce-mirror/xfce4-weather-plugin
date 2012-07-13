@@ -290,7 +290,7 @@ create_summary_tab (xfceweather_data *data)
   strftime (interval_start, 80, "%c", start);
   end = localtime(&conditions->end);
   strftime (interval_end, 80, "%c", end);
-  value = g_strdup_printf (_("\n\tInterval data applies to:\n\t%s\n\t%s\n"),
+  value = g_strdup_printf (_("\n\tInterval data applies to:\n\tStart:\t%s\n\tEnd:\t%s\n"),
                            interval_start,
                            interval_end);
   APPEND_TEXT_ITEM_REAL (value);
