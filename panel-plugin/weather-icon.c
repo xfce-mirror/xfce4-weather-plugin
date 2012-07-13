@@ -26,6 +26,7 @@
 #include "weather-icon.h"
 
 #define DEFAULT_W_THEME "liquid"
+#define NODATA "NODATA"
 
 const gchar *night_symbols[] = {
   "CLOUD",
@@ -49,7 +50,7 @@ get_icon (const gchar *number,
   guint      i;
 
   if (number == NULL || strlen(number) == 0)
-    number = "99";
+    number = NODATA;
   else if (night)
     {
       number_len = strlen(number);
@@ -74,9 +75,9 @@ get_icon (const gchar *number,
 
   if (G_UNLIKELY (!image)) {
     g_warning ("Unable to open image: %s", filename);
-    if (number && strcmp(number, "99")) {
+    if (number && strcmp(number, NODATA)) {
       g_free(filename);
-      return get_icon("99", size, FALSE);
+      return get_icon(NULL, size, FALSE);
     }
   }
   g_free (filename);

@@ -240,14 +240,14 @@ set_icon_error (xfceweather_data *data)
   /* make icon double-size in deskbar mode */
   if (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_DESKBAR
       && data->size != data->panel_size)
-    icon = get_icon ("99", data->size * 2, FALSE);
+    icon = get_icon (NULL, data->size * 2, FALSE);
   else
-    icon = get_icon ("99", data->size, FALSE);
+    icon = get_icon (NULL, data->size, FALSE);
 #else
   if (data->panel_orientation == GTK_ORIENTATION_VERTICAL)
-    icon = get_icon ("99", data->size - height - 2, FALSE);
+    icon = get_icon (NULL, data->size - height - 2, FALSE);
   else
-    icon = get_icon ("99", data->size, FALSE);
+    icon = get_icon (NULL, data->size, FALSE);
 #endif
 
   gtk_image_set_from_pixbuf (GTK_IMAGE (data->iconimage), icon);
@@ -910,7 +910,7 @@ xfceweather_create_control (XfcePanelPlugin *plugin)
   data->scrollbox = gtk_scrollbox_new ();
 
   data->size = xfce_panel_plugin_get_size (plugin);
-  icon = get_icon ("99", 16, FALSE);
+  icon = get_icon (NULL, 16, FALSE);
   data->iconimage = gtk_image_new_from_pixbuf (icon);
 
   if (G_LIKELY (icon))
