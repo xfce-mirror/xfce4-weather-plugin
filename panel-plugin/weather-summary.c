@@ -529,13 +529,20 @@ create_forecast_tab (xfceweather_data *data, GtkWidget *window)
     GdkScreen   *screen;
     GdkRectangle rect;
     gint         monitor_num, height_needed, height_max;
+    gdouble      factor;
 
     /* calculate maximum height we may use, subtracting some sane value for safety */
     screen = gtk_window_get_screen(GTK_WINDOW(window));
     win = GTK_WIDGET(window)->window;
     monitor_num = gdk_screen_get_monitor_at_window(GDK_SCREEN(screen), GDK_WINDOW(win));
     gdk_screen_get_monitor_geometry(GDK_SCREEN(screen), monitor_num, &rect);
-    height_max = rect.height * 0.85 - 200;
+
+    /* optimize max height a bit depending on common resolutions */
+    if ((rect.height > 600 && rect.height <= 800) || rect.height <= 480)
+        factor = 0.85;
+    else
+        factor = 0.90;
+    height_max = rect.height * factor - 200;
 
     /* calculate height needed using a good arbitrary value */
     height_needed = data->forecast_days * 110;
