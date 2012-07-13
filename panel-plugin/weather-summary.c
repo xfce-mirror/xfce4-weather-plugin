@@ -635,10 +635,10 @@ create_summary_window (xfceweather_data *data)
     gtk_container_set_border_width (GTK_CONTAINER (notebook), BORDER);
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
                               create_forecast_tab (data, window),
-                              gtk_label_new (_("Forecast")));
+                              gtk_label_new_with_mnemonic (_("_Forecast")));
     gtk_notebook_append_page (GTK_NOTEBOOK (notebook),
                               create_summary_tab (data),
-                              gtk_label_new (_("Details")));
+                              gtk_label_new_with_mnemonic (_("_Details")));
 
     gtk_box_pack_start (GTK_BOX (vbox), notebook, TRUE, TRUE, 0);
   }
