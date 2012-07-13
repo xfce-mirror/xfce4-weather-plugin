@@ -404,7 +404,7 @@ make_forecast (xfceweather_data *data)
     GdkColor lightbg = {0, 0xeaea, 0xeaea, 0xeaea};
     GdkColor darkbg = {0, 0x6666, 0x6666, 0x6666};
     gint i, weekday, daytime;
-    gchar *dayname, *wind_speed, *value, *rawvalue;
+    gchar *dayname, *wind_speed, *wind_direction, *value, *rawvalue;
     xml_time *fcdata;
     time_t now_t = time(NULL), fcday_t;
     struct tm fcday_tm;
@@ -439,13 +439,14 @@ make_forecast (xfceweather_data *data)
         fcday_t = time_calc_day(fcday_tm, i);
         weekday = localtime(&fcday_t)->tm_wday;
         if (i == 0)
-            dayname = _("Today");
+            dayname = g_strdup_printf(_("Today"));
         else if (i == 1)
-            dayname = _("Tomorrow");
+            dayname = g_strdup_printf(_("Tomorrow"));
         else
             dayname = translate_day(weekday);
 
         ebox = add_forecast_header(dayname, 90.0, &darkbg);
+        g_free(dayname);
 
         gtk_table_attach_defaults(GTK_TABLE(table), GTK_WIDGET(ebox),
                                   0, 1, i+1, i+2);
@@ -495,12 +496,14 @@ make_forecast (xfceweather_data *data)
                     g_free(value);
 
                     rawvalue = get_data(fcdata, data->unit_system, WIND_DIRECTION);
+                    wind_direction = translate_wind_direction(rawvalue);
                     wind_speed = get_data(fcdata, data->unit_system, WIND_SPEED);
                     value = g_strdup_printf("%s %s %s",
-                                            translate_wind_direction(rawvalue),
+                                            wind_direction,
                                             wind_speed,
                                             get_unit(fcdata, data->unit_system, WIND_SPEED));
                     g_free(wind_speed);
+                    g_free(wind_direction);
                     g_free(rawvalue);
                     label = gtk_label_new(value);
                     gtk_box_pack_start(GTK_BOX(forecast_box), label, TRUE, TRUE, 0);

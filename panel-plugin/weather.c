@@ -457,6 +457,9 @@ update_weatherdata (xfceweather_data *data)
       /* update current conditions, icon and labels */
       if (data->weatherdata)
         {
+          if (data->weatherdata->current_conditions)
+              xml_time_free(data->weatherdata->current_conditions);
+
           data->weatherdata->current_conditions = make_current_conditions(data->weatherdata);
           data->last_conditions_update = time(NULL);
           set_icon_current (data);
