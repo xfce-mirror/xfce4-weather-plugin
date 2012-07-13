@@ -296,7 +296,7 @@ create_summary_tab (xfceweather_data *data)
   APPEND_TEXT_ITEM_REAL (value);
 
   value = g_strdup_printf (_("\n\tInterval data provides icon, description and precipitation,"
-                             "\n\twhile point data supplies the rest.\n"), point);
+                             "\n\twhile the remaining information originates from point data.\n"));
   APPEND_TEXT_ITEM_REAL (value);
 
 
