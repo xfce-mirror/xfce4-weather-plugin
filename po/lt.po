@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-wheather-plugin 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-01-21 15:04+0200\n"
+"POT-Creation-Date: 2012-07-13 16:43+0200\n"
 "PO-Revision-Date: 2012-01-21 15:46+0200\n"
 "Last-Translator: Algimantas Margevičius <margevicius.algimantas@gmail.com>\n"
 "Language-Team: Lietuvių <>\n"
@@ -19,62 +19,71 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && (n"
 "%100<10 || n%100>=20) ? 1 : 2)\n"
 
-#: ../panel-plugin/weather.c:110
+#: ../panel-plugin/weather.c:127
 msgid "T"
 msgstr "T"
 
-#: ../panel-plugin/weather.c:113
+#: ../panel-plugin/weather.c:130
 msgid "P"
 msgstr "A"
 
-#: ../panel-plugin/weather.c:116
+#: ../panel-plugin/weather.c:133
 msgid "WS"
 msgstr "V"
 
-#: ../panel-plugin/weather.c:119
+#: ../panel-plugin/weather.c:136
 msgid "WD"
 msgstr "VK"
 
-#: ../panel-plugin/weather.c:122
+#: ../panel-plugin/weather.c:139
 msgid "H"
 msgstr "D"
 
-#: ../panel-plugin/weather.c:125
+#: ../panel-plugin/weather.c:142
 msgid "CL"
 msgstr "MD"
 
-#: ../panel-plugin/weather.c:128
+#: ../panel-plugin/weather.c:145
 msgid "CM"
 msgstr "VD"
 
-#: ../panel-plugin/weather.c:131
+#: ../panel-plugin/weather.c:148
 msgid "CH"
 msgstr "DD"
 
-#: ../panel-plugin/weather.c:134
+#: ../panel-plugin/weather.c:151
+#, fuzzy
+msgid "C"
+msgstr "MD"
+
+#: ../panel-plugin/weather.c:154
 msgid "F"
 msgstr "R"
 
-#: ../panel-plugin/weather.c:137
+#: ../panel-plugin/weather.c:157
 msgid "R"
 msgstr "A"
 
-#: ../panel-plugin/weather.c:250 ../panel-plugin/weather.c:762
+#: ../panel-plugin/weather.c:233
+msgid "No Data"
+msgstr ""
+
+#: ../panel-plugin/weather.c:260 ../panel-plugin/weather.c:871
 msgid "Cannot update weather data"
 msgstr "Nepavyko atnaujinti duomenų apie orą"
 
-#: ../panel-plugin/weather.c:695
+#: ../panel-plugin/weather.c:801
 #, c-format
 msgid "Unable to open the following url: %s"
 msgstr "Nepavyko atverti šio url: %s"
 
-#: ../panel-plugin/weather.c:723 ../panel-plugin/weather-summary.c:541
+#: ../panel-plugin/weather.c:829 ../panel-plugin/weather-summary.c:593
 #: ../panel-plugin/weather.desktop.in.in.h:1
 msgid "Weather Update"
 msgstr "Orų tarnyba"
 
 #. add refresh button to right click menu, for people who missed the middle mouse click feature
-#: ../panel-plugin/weather.c:845
+#: ../panel-plugin/weather.c:960 ../panel-plugin/weather-summary.c:638
 msgid "_Forecast"
 msgstr "_Prognozė"
 
@@ -119,65 +128,122 @@ msgid "High cloudiness (CH)"
 msgstr "Didelis debesuotumas (DD)"
 
 #: ../panel-plugin/weather-config.c:47
+#, fuzzy
+msgid "Overall cloudiness (C)"
+msgstr "Mažas debesuotumas (MD)"
+
+#: ../panel-plugin/weather-config.c:48
 msgid "Fog (F)"
 msgstr "Rūkas (R)"
 
-#: ../panel-plugin/weather-config.c:48
+#: ../panel-plugin/weather-config.c:49
 msgid "Precipitations (R)"
 msgstr "Krituliai (K)"
 
-#: ../panel-plugin/weather-config.c:246
+#: ../panel-plugin/weather-config.c:259
 msgid "Please enter proxy settings"
 msgstr "Įveskite tarpinio serverio nustatymus"
 
-#: ../panel-plugin/weather-config.c:304
+#: ../panel-plugin/weather-config.c:317
 msgid "Unset"
 msgstr "Nenustatyta"
 
-#: ../panel-plugin/weather-config.c:312
+#: ../panel-plugin/weather-config.c:325
 msgid "Detecting..."
 msgstr "Aptinkama..."
 
-#: ../panel-plugin/weather-config.c:366
-msgid "Measurement unit:"
+#: ../panel-plugin/weather-config.c:379
+#, fuzzy
+msgid "System of _Measurement:"
 msgstr "Matų sistema:"
 
-#: ../panel-plugin/weather-config.c:372
+#: ../panel-plugin/weather-config.c:384
 msgid "Imperial"
 msgstr "Imperinė"
 
-#: ../panel-plugin/weather-config.c:374
+#: ../panel-plugin/weather-config.c:386
 msgid "Metric"
 msgstr "Metrinė"
 
-#: ../panel-plugin/weather-config.c:389
+#: ../panel-plugin/weather-config.c:399
 msgid "Location:"
 msgstr "Vietovė:"
 
-#: ../panel-plugin/weather-config.c:421
-msgid "Change..."
+#: ../panel-plugin/weather-config.c:431
+#, fuzzy
+msgid "Chan_ge..."
 msgstr "Keisti..."
 
 #. proxy
-#: ../panel-plugin/weather-config.c:434
+#: ../panel-plugin/weather-config.c:444
 msgid "Proxy server:"
 msgstr "Tarpinis serveris:"
 
-#: ../panel-plugin/weather-config.c:437
-msgid "Use proxy server"
+#: ../panel-plugin/weather-config.c:447
+#, fuzzy
+msgid "_Use proxy server"
 msgstr "Naudoti tarpinį serverį"
 
-#: ../panel-plugin/weather-config.c:439
-msgid "Auto-detect from environment"
+#: ../panel-plugin/weather-config.c:449
+#, fuzzy
+msgid "Auto-detect from _environment"
 msgstr "Automatiškai sužinoti iš aplinkos"
 
-#: ../panel-plugin/weather-config.c:511
-msgid "Labels to display"
+#. number of days shown in forecast
+#: ../panel-plugin/weather-config.c:514
+msgid "Number of _forecast days:"
+msgstr ""
+
+#: ../panel-plugin/weather-config.c:536
+#, fuzzy
+msgid "_Labels to display"
 msgstr "Rodomi duomenys"
 
-#: ../panel-plugin/weather-config.c:560
-msgid "Animate transitions between labels"
+#: ../panel-plugin/weather-config.c:585
+#, fuzzy
+msgid "_Animate transitions between labels"
 msgstr "Animuoti duomenų pasikeitimą"
+
+#: ../panel-plugin/weather-data.c:131
+msgid "ft"
+msgstr ""
+
+#: ../panel-plugin/weather-data.c:131
+msgid "m"
+msgstr ""
+
+#: ../panel-plugin/weather-data.c:133
+msgid "°F"
+msgstr ""
+
+#: ../panel-plugin/weather-data.c:133
+msgid "°C"
+msgstr ""
+
+#: ../panel-plugin/weather-data.c:135
+msgid "psi"
+msgstr ""
+
+#: ../panel-plugin/weather-data.c:135
+msgid "hPa"
+msgstr ""
+
+#: ../panel-plugin/weather-data.c:137
+msgid "mph"
+msgstr ""
+
+#: ../panel-plugin/weather-data.c:137
+msgid "km/h"
+msgstr ""
+
+#: ../panel-plugin/weather-data.c:150
+#, fuzzy
+msgid "in"
+msgstr "Lietus"
+
+#: ../panel-plugin/weather-data.c:150
+msgid "mm"
+msgstr ""
 
 #. display error
 #: ../panel-plugin/weather-http.c:203
@@ -240,7 +306,7 @@ msgid "Enter a city name or zip code"
 msgstr "Įveskite miesto pavadinimą arba pašto kodą"
 
 #. head
-#: ../panel-plugin/weather-summary.c:266
+#: ../panel-plugin/weather-summary.c:273
 #, c-format
 msgid ""
 "Weather report for: %s.\n"
@@ -249,17 +315,56 @@ msgstr ""
 "Orų ataskaita: %s.\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:271
-#, c-format
+#: ../panel-plugin/weather-summary.c:278
+msgid "Coordinates\n"
+msgstr ""
+
+#: ../panel-plugin/weather-summary.c:279
+msgid "Altitude"
+msgstr ""
+
+#: ../panel-plugin/weather-summary.c:280
+msgid "Latitude"
+msgstr ""
+
+#: ../panel-plugin/weather-summary.c:281
+msgid "Longitude"
+msgstr ""
+
+#: ../panel-plugin/weather-summary.c:283
 msgid ""
-"Coordinates: lat %s lon %s\n"
-"Data applies to: %s\n"
+"\n"
+"Time\n"
+msgstr ""
+
+#: ../panel-plugin/weather-summary.c:286
+#, fuzzy, c-format
+msgid ""
+"\tPoint data applies to:\n"
+"\t%s\n"
 msgstr ""
 "Koordinatės: platuma %s ilguma %s\n"
 "Duomenys taikomi: %s\n"
 
+#: ../panel-plugin/weather-summary.c:293
+#, c-format
+msgid ""
+"\n"
+"\tInterval data applies to:\n"
+"\tStart:\t%s\n"
+"\tEnd:\t%s\n"
+msgstr ""
+
+#: ../panel-plugin/weather-summary.c:298
+#, c-format
+msgid ""
+"\n"
+"\tInterval data provides icon, description and precipitation,\n"
+"\twhile the remaining information originates from point data.\n"
+msgstr ""
+
 #. Temperature
-#: ../panel-plugin/weather-summary.c:276
+#: ../panel-plugin/weather-summary.c:304
 msgid ""
 "\n"
 "Temperature\n"
@@ -267,12 +372,12 @@ msgstr ""
 "\n"
 "Temperatūra\n"
 
-#: ../panel-plugin/weather-summary.c:277
+#: ../panel-plugin/weather-summary.c:305
 msgid "Temperature"
 msgstr "Temperatūra"
 
 #. Wind
-#: ../panel-plugin/weather-summary.c:280
+#: ../panel-plugin/weather-summary.c:308
 msgid ""
 "\n"
 "Wind\n"
@@ -280,59 +385,81 @@ msgstr ""
 "\n"
 "Vėjas\n"
 
-#: ../panel-plugin/weather-summary.c:282
+#: ../panel-plugin/weather-summary.c:313
+#, c-format
+msgid "\t%s: %s (%s on the Beaufort scale)\n"
+msgstr ""
+
+#: ../panel-plugin/weather-summary.c:313
 msgid "Speed"
 msgstr "Greitis"
 
-#: ../panel-plugin/weather-summary.c:288
+#: ../panel-plugin/weather-summary.c:322
 msgid "Direction"
 msgstr "Kryptis"
 
-#. Atmospheric pressure
-#: ../panel-plugin/weather-summary.c:296
+#. Precipitation
+#: ../panel-plugin/weather-summary.c:330
+#, fuzzy
 msgid ""
 "\n"
-"Atmospheric pressure\n"
+"Precipitations\n"
+msgstr "Krituliai (K)"
+
+#: ../panel-plugin/weather-summary.c:331
+#, fuzzy
+msgid "Precipitations amount"
+msgstr "Krituliai (K)"
+
+#. Atmosphere
+#: ../panel-plugin/weather-summary.c:334
+#, fuzzy
+msgid ""
+"\n"
+"Atmosphere\n"
 msgstr ""
 "\n"
 "Atmosferos slėgis\n"
 
-#: ../panel-plugin/weather-summary.c:297
+#: ../panel-plugin/weather-summary.c:335
 msgid "Pressure"
 msgstr "Slėgis"
 
-#. Other
-#: ../panel-plugin/weather-summary.c:300
-msgid ""
-"\n"
-"Other\n"
-msgstr ""
-"\n"
-"Kita\n"
-
-#: ../panel-plugin/weather-summary.c:301
+#: ../panel-plugin/weather-summary.c:336
 msgid "Humidity"
 msgstr "Drėgmė"
 
-#: ../panel-plugin/weather-summary.c:302
-msgid "Low clouds"
-msgstr "Mažai debesuota"
+#. Clouds
+#: ../panel-plugin/weather-summary.c:339
+#, fuzzy
+msgid ""
+"\n"
+"Clouds\n"
+msgstr "Šiek tiek debesuota"
 
-#: ../panel-plugin/weather-summary.c:303
-msgid "Medium clouds"
-msgstr "Vidutiniškai debesuota"
-
-#: ../panel-plugin/weather-summary.c:304
-msgid "High clouds"
-msgstr "Labai debesuota"
-
-#: ../panel-plugin/weather-summary.c:305
-#: ../panel-plugin/weather-translate.c:76
-#: ../panel-plugin/weather-translate.c:296
+#: ../panel-plugin/weather-summary.c:340
+#: ../panel-plugin/weather-translate.c:110
 msgid "Fog"
 msgstr "Rūkas"
 
-#: ../panel-plugin/weather-summary.c:307
+#: ../panel-plugin/weather-summary.c:341
+msgid "Low clouds"
+msgstr "Mažai debesuota"
+
+#: ../panel-plugin/weather-summary.c:342
+msgid "Medium clouds"
+msgstr "Vidutiniškai debesuota"
+
+#: ../panel-plugin/weather-summary.c:343
+msgid "High clouds"
+msgstr "Labai debesuota"
+
+#: ../panel-plugin/weather-summary.c:344
+#, fuzzy
+msgid "Cloudiness"
+msgstr "Šiek tiek debesuota"
+
+#: ../panel-plugin/weather-summary.c:346
 msgid ""
 "\n"
 "Data from The Norwegian Meteorological Institute\n"
@@ -340,777 +467,698 @@ msgstr ""
 "\n"
 "Duomenys gauti iš Norvegijos meteorologijos instituto\n"
 
-#: ../panel-plugin/weather-summary.c:375
-#, c-format
-msgid "Day: %s"
-msgstr "Dieną: %s"
+#: ../panel-plugin/weather-summary.c:347
+msgid "Thanks to met.no"
+msgstr ""
 
-#: ../panel-plugin/weather-summary.c:380
-#, c-format
-msgid "Night: %s"
+#: ../panel-plugin/weather-summary.c:424
+msgid "Morning"
+msgstr ""
+
+#: ../panel-plugin/weather-summary.c:427
+msgid "Afternoon"
+msgstr ""
+
+#: ../panel-plugin/weather-summary.c:430
+msgid "Evening"
+msgstr ""
+
+#: ../panel-plugin/weather-summary.c:433
+#, fuzzy
+msgid "Night"
 msgstr "Naktį: %s"
 
-#: ../panel-plugin/weather-summary.c:391
-msgid "<b>Precipitation</b>"
-msgstr "<b>Krituliai</b>"
+#: ../panel-plugin/weather-summary.c:442
+#, c-format
+msgid "Today"
+msgstr ""
 
-#: ../panel-plugin/weather-summary.c:413
-msgid "<b>Temperature</b>"
-msgstr "<b>Temperatūra</b>"
+#: ../panel-plugin/weather-summary.c:444
+#, c-format
+msgid "Tomorrow"
+msgstr ""
 
-#: ../panel-plugin/weather-summary.c:437
-msgid "<b>Wind</b>"
-msgstr "<b>Vėjas</b>"
-
-#: ../panel-plugin/weather-summary.c:549
+#: ../panel-plugin/weather-summary.c:601
 #, c-format
 msgid "Weather report for: %s"
 msgstr "Orų ataskaita: %s"
 
-#: ../panel-plugin/weather-summary.c:572
-msgid "Forecast"
-msgstr "Prognozė"
+#: ../panel-plugin/weather-summary.c:624
+#, fuzzy
+msgid "Please set a location in the plugin settings."
+msgstr "Įveskite tarpinio serverio nustatymus"
 
-#: ../panel-plugin/weather-summary.c:575
-msgid "Details"
+#: ../panel-plugin/weather-summary.c:626
+msgid "Currently no data available."
+msgstr ""
+
+#: ../panel-plugin/weather-summary.c:641
+#, fuzzy
+msgid "_Details"
 msgstr "Detalės"
 
-#: ../panel-plugin/weather-translate.c:39
-msgid "AM Clouds / PM Sun"
-msgstr "Priešpiet debesuota / Popiet saulėta"
-
-#: ../panel-plugin/weather-translate.c:40
-msgid "AM Light Rain"
-msgstr "Lengvas lietus priešpiet"
-
-#: ../panel-plugin/weather-translate.c:41
-msgid "AM Light Snow"
-msgstr "Priešpiet lengvai snigs"
-
-#: ../panel-plugin/weather-translate.c:42
-msgid "AM Rain / Snow Showers"
-msgstr "Priešpiet lis/ trumpai snigs"
-
-#: ../panel-plugin/weather-translate.c:43
-msgid "AM Rain / Wind"
-msgstr "Priešpiet lengvas lietus / vėjas"
-
-#: ../panel-plugin/weather-translate.c:44
-msgid "AM Showers"
-msgstr "Trumpalaikiai lietūs priešpiet"
-
-#: ../panel-plugin/weather-translate.c:45
-msgid "AM Showers / Wind"
-msgstr "Trumpalaikiai lietūs priešpiet / vėjas"
-
-#: ../panel-plugin/weather-translate.c:46
-msgid "AM Snow Showers"
-msgstr "Trumpalaikis sniegas priešpiet"
-
-#: ../panel-plugin/weather-translate.c:47
-msgid "AM Snow Showers / Wind"
-msgstr "Priešpiet trumpalaikis sniegas / vėjas"
-
-#: ../panel-plugin/weather-translate.c:48
-msgid "AM T-Storms"
-msgstr "Trumpalaikiai lietūs priešpiet"
-
-#: ../panel-plugin/weather-translate.c:49
-msgid "Becoming Cloudy"
-msgstr "Tampa debesuota"
-
-#: ../panel-plugin/weather-translate.c:50
-msgid "Blizzard"
-msgstr "Pūga"
-
-#: ../panel-plugin/weather-translate.c:51
-msgid "Blizzard Conditions"
-msgstr "Pūgos sąlygos"
-
-#: ../panel-plugin/weather-translate.c:52
-msgid "Blowing Snow"
-msgstr "Pustomas sniegas"
-
-#: ../panel-plugin/weather-translate.c:53
-msgid "Chance of Rain"
-msgstr "Lietaus tikimybė"
-
-#: ../panel-plugin/weather-translate.c:54
-msgid "Chance of Rain/Snow"
-msgstr "Lietaus/sniego tikimybė"
-
-#: ../panel-plugin/weather-translate.c:55
-msgid "Chance of Showers"
-msgstr "Liūties tikimybė"
-
-#: ../panel-plugin/weather-translate.c:56
-msgid "Chance of Snow"
-msgstr "Sniego tikimybė"
-
-#: ../panel-plugin/weather-translate.c:57
-msgid "Chance of Snow/Rain"
-msgstr "Sniego/lietaus tikimybė"
-
-#: ../panel-plugin/weather-translate.c:58
-msgid "Chance of T-Storm"
-msgstr "Audros su perkūnija tikimybė"
-
-#: ../panel-plugin/weather-translate.c:59
-msgid "Clear"
-msgstr "Nedebesuota"
-
-#: ../panel-plugin/weather-translate.c:60
-msgid "Clearing"
-msgstr "Debesys nyksta"
-
-#: ../panel-plugin/weather-translate.c:61
-msgid "Clouds"
-msgstr "Šiek tiek debesuota"
-
-#: ../panel-plugin/weather-translate.c:62
-msgid "Clouds Early / Clearing Late"
-msgstr "Anksti debesys, vėliau išsigiedrys"
-
-#: ../panel-plugin/weather-translate.c:63
-#: ../panel-plugin/weather-translate.c:284
-msgid "Cloudy"
-msgstr "Debesuota"
-
-#: ../panel-plugin/weather-translate.c:64
-msgid "Cloudy / Wind"
-msgstr "Debesuota / Vėjuota"
-
-#: ../panel-plugin/weather-translate.c:65
-msgid "Cloudy Periods"
-msgstr "Debesuota su pragiedruliais"
-
-#: ../panel-plugin/weather-translate.c:66
-msgid "Continued Hot"
-msgstr "Toliau šilta"
-
-#: ../panel-plugin/weather-translate.c:67
-msgid "Cumulonimbus Clouds Observed"
-msgstr "Pastebėti audros debesys"
-
-#: ../panel-plugin/weather-translate.c:68
-msgid "Drifting Snow"
-msgstr "Slenkantis sniegas"
-
-#: ../panel-plugin/weather-translate.c:69
-msgid "Drifting Snow and Windy"
-msgstr "Slenkantis sniegas ir vėjuota"
-
-#: ../panel-plugin/weather-translate.c:70
-msgid "Drizzle"
-msgstr "Dulksna"
-
-#: ../panel-plugin/weather-translate.c:71
-msgid "Dry"
-msgstr "Sausa"
-
-#: ../panel-plugin/weather-translate.c:72
-msgid "Dust"
-msgstr "Dulkės"
-
-#: ../panel-plugin/weather-translate.c:73
-msgid "Fair"
-msgstr "Giedra"
-
-#: ../panel-plugin/weather-translate.c:74
-msgid "Few Showers"
-msgstr "Šiek tiek lietaus"
-
-#: ../panel-plugin/weather-translate.c:75
-msgid "Few Snow Showers"
-msgstr "Retkarčiais trumpalaikis sniegas"
-
-#: ../panel-plugin/weather-translate.c:77
-msgid "Freezing Drizzle"
-msgstr "Šąlanti dulksna"
-
-#: ../panel-plugin/weather-translate.c:78
-msgid "Freezing Rain"
-msgstr "Šąlantis lietus"
-
-#: ../panel-plugin/weather-translate.c:79
-msgid "Freezing Rain/Snow"
-msgstr "Šąlantis lietus/sniegas"
-
-#: ../panel-plugin/weather-translate.c:80
-msgid "Frigid"
-msgstr "Šalta"
-
-#: ../panel-plugin/weather-translate.c:81
-msgid "Frozen Precip"
-msgstr "Užšalę krituliai"
-
-#: ../panel-plugin/weather-translate.c:82
-msgid "Hail"
-msgstr "Kruša"
-
-#: ../panel-plugin/weather-translate.c:83
-msgid "Haze"
-msgstr "Migla"
-
-#: ../panel-plugin/weather-translate.c:84
-msgid "Hazy"
-msgstr "Miglota"
-
-#: ../panel-plugin/weather-translate.c:85
-msgid "Heavy Rain"
-msgstr "Stiprus lietus"
-
-#: ../panel-plugin/weather-translate.c:86
-msgid "Heavy Rain Shower"
-msgstr "Trumpalaikiai stiprūs lietūs"
-
-#: ../panel-plugin/weather-translate.c:87
-msgid "Heavy Snow"
-msgstr "Smarkiai sninga"
-
-#: ../panel-plugin/weather-translate.c:88
-msgid "Hot And Humid"
-msgstr "Tvanku"
-
-#: ../panel-plugin/weather-translate.c:89
-msgid "Hot!"
-msgstr "Karšta!"
-
-#: ../panel-plugin/weather-translate.c:90
-msgid "Ice Crystals"
-msgstr "Kruša"
-
-#: ../panel-plugin/weather-translate.c:91
-msgid "Ice/Snow Mixture"
-msgstr "Sniegas su kruša"
-
-#: ../panel-plugin/weather-translate.c:92
-msgid "Increasing Clouds"
-msgstr "Gausėjantys debesys"
-
-#: ../panel-plugin/weather-translate.c:93
-msgid "Isolated Showers"
-msgstr "Vietomis trumpi lietūs"
-
-#: ../panel-plugin/weather-translate.c:94
-msgid "Isolated T-Storms"
-msgstr "Vietomis lietus su perkūnija"
-
-#: ../panel-plugin/weather-translate.c:95
-msgid "Light Drizzle"
-msgstr "Lengva dulksna"
-
-#: ../panel-plugin/weather-translate.c:96
-msgid "Light Drizzle and Windy"
-msgstr "Lengva dulksna bei vėjas"
-
-#: ../panel-plugin/weather-translate.c:97
-msgid "Light Rain"
-msgstr "Silpnai lyja"
-
-#: ../panel-plugin/weather-translate.c:98
-msgid "Light Rain / Wind"
-msgstr "Lengvas lietus / vėjas"
-
-#: ../panel-plugin/weather-translate.c:99
-msgid "Light rain late"
-msgstr "Silpnai lyja"
-
-#: ../panel-plugin/weather-translate.c:100
-msgid "Light Rain Shower"
-msgstr "Lijundra"
-
-#: ../panel-plugin/weather-translate.c:101
-msgid "Light Snow"
-msgstr "Silpnai sninga"
-
-#: ../panel-plugin/weather-translate.c:102
-msgid "Lightning Observed"
-msgstr "Žaibuoja"
-
-#: ../panel-plugin/weather-translate.c:103
-msgid "Mild and Breezy"
-msgstr "Vėsu ir ramu"
-
-#: ../panel-plugin/weather-translate.c:104
-msgid "Mist"
-msgstr "Migla"
-
-#: ../panel-plugin/weather-translate.c:105
-msgid "Mostly Clear"
-msgstr "Daugiausia giedra"
-
-#: ../panel-plugin/weather-translate.c:106
-msgid "Mostly Cloudy"
-msgstr "Daugiausia debesuota"
-
-#: ../panel-plugin/weather-translate.c:107
-msgid "Mostly Cloudy / Wind"
-msgstr "Daugiausia debesuota / vėjuota"
-
-#: ../panel-plugin/weather-translate.c:108
-msgid "Mostly Cloudy and Windy"
-msgstr "Daugiausia debesuota ir vėjuota"
-
-#: ../panel-plugin/weather-translate.c:109
-msgid "Mostly Sunny"
-msgstr "Daugiausia saulėta"
-
-#: ../panel-plugin/weather-translate.c:110
-msgid "Mostly Sunny / Wind"
-msgstr "Daugiausia saulėta / vėjuota"
-
-#: ../panel-plugin/weather-translate.c:111
-msgid "N/A Not Available"
-msgstr "Nėra duomenų"
-
-#: ../panel-plugin/weather-translate.c:112
-msgid "Occasional Sunshine"
-msgstr "Protarpiais švies saulė"
-
-#: ../panel-plugin/weather-translate.c:113
-msgid "Overcast"
-msgstr "Apsiniaukę"
-
-#: ../panel-plugin/weather-translate.c:114
-msgid "Partial Clearing"
-msgstr "Kai kur giedrėja"
-
-#: ../panel-plugin/weather-translate.c:115
-msgid "Partial Fog"
-msgstr "Kai kur rūkas"
-
-#: ../panel-plugin/weather-translate.c:116
-msgid "Partial Sunshine"
-msgstr "Kai kur kepina saulė"
-
-#: ../panel-plugin/weather-translate.c:117
-msgid "Partly Cloudy"
-msgstr "Kai kur debesuota"
-
-#: ../panel-plugin/weather-translate.c:118
-msgid "Partly Cloudy / Wind"
-msgstr "Kai kur debesuota / vėjuota"
-
-#: ../panel-plugin/weather-translate.c:119
-msgid "Partly Cloudy and Windy"
-msgstr "Kai kur debesuota ir vėjuota"
-
-#: ../panel-plugin/weather-translate.c:120
-msgid "Partly Sunny"
-msgstr "Kai kur saulėta"
-
-#: ../panel-plugin/weather-translate.c:121
-msgid "PM Light Rain"
-msgstr "Lengvas lietus popiet"
-
-#: ../panel-plugin/weather-translate.c:122
-msgid "PM Light Snow"
-msgstr "Popiet silpnai pasnings"
-
-#: ../panel-plugin/weather-translate.c:123
-msgid "PM Rain / Wind"
-msgstr "Popiet lengvas lietus / vėjas"
-
-#: ../panel-plugin/weather-translate.c:124
-msgid "PM Rain / Snow Showers"
-msgstr "Popiet trumpalaikiai lietūs / sniegas"
-
-#: ../panel-plugin/weather-translate.c:125
-msgid "PM Showers"
-msgstr "Trumpalaikiai lietūs popiet"
-
-#: ../panel-plugin/weather-translate.c:126
-msgid "PM Snow Showers"
-msgstr "Popiet trumpalaikis sniegas"
-
-#: ../panel-plugin/weather-translate.c:127
-msgid "PM T-Storms"
-msgstr "Popiet trumpalaikiai lietūs su perkūnija"
-
-#: ../panel-plugin/weather-translate.c:128
-#: ../panel-plugin/weather-translate.c:291
-msgid "Rain"
-msgstr "Lietus"
-
-#: ../panel-plugin/weather-translate.c:129
-msgid "Rain / Snow"
-msgstr "Lietus / sniegas"
-
-#: ../panel-plugin/weather-translate.c:130
-msgid "Rain / Snow / Wind"
-msgstr "Lietus / sniegas / Vėjas"
-
-#: ../panel-plugin/weather-translate.c:131
-msgid "Rain / Snow Late"
-msgstr "Lietus / sniegas"
-
-#: ../panel-plugin/weather-translate.c:132
-msgid "Rain / Snow Showers"
-msgstr "Trumpalaikiai lietūs / sniegas"
-
-#: ../panel-plugin/weather-translate.c:133
-msgid "Rain / Snow Showers Early"
-msgstr "Lietus / Trumpalaikiai lietūs"
-
-#: ../panel-plugin/weather-translate.c:134
-msgid "Rain / Thunder"
-msgstr "Lietus / Griaustinis"
-
-#: ../panel-plugin/weather-translate.c:135
-msgid "Rain / Wind"
-msgstr "Lietus / vėjas"
-
-#: ../panel-plugin/weather-translate.c:136
-msgid "Rain and Sleet"
-msgstr "Lietus ir šlapdriba"
-
-#: ../panel-plugin/weather-translate.c:137
-msgid "Rain and Snow"
-msgstr "Lietus ir sniegas"
-
-#: ../panel-plugin/weather-translate.c:138
-msgid "Rain or Snow"
-msgstr "Lietus arba sniegas"
-
-#: ../panel-plugin/weather-translate.c:139
-msgid "Rain Shower"
-msgstr "Trumpalaikiai lietūs"
-
-#: ../panel-plugin/weather-translate.c:140
-msgid "Rain Shower and Windy"
-msgstr "Trumpalaikiai lietūs ir vėjuota"
-
-#: ../panel-plugin/weather-translate.c:141
-msgid "Rain to snow"
-msgstr "Lietus, pereinantis į sniegą"
-
-#: ../panel-plugin/weather-translate.c:142
-msgid "Rain/Lightning"
-msgstr "Lietus/perkūnija"
-
-#: ../panel-plugin/weather-translate.c:143
-msgid "Scattered Showers"
-msgstr "Vietomis trumpalaikiai lietūs"
-
-#: ../panel-plugin/weather-translate.c:144
-msgid "Scattered Snow Showers"
-msgstr "Vietomis trumpalaikis sniegas"
-
-#: ../panel-plugin/weather-translate.c:145
-msgid "Scattered Snow Showers / Wind"
-msgstr "Vietomis trumpalaikis sniegas / vėjas"
-
-#: ../panel-plugin/weather-translate.c:146
-msgid "Scattered T-Storms"
-msgstr "Vietomis trumpalaikiai lietūs su perkūnija"
-
-#: ../panel-plugin/weather-translate.c:147
-msgid "Showers"
-msgstr "Krituliai"
-
-#: ../panel-plugin/weather-translate.c:148
-msgid "Showers / Wind"
-msgstr "Krituliai / vėjas"
-
-#: ../panel-plugin/weather-translate.c:149
-msgid "Showers Early"
-msgstr "Ankstyvi trumpalaikis krituliai"
-
-#: ../panel-plugin/weather-translate.c:150
-msgid "Showers in the Vicinity"
-msgstr "Apylinkėje trumpalaikiai lietūs"
-
-#: ../panel-plugin/weather-translate.c:151
-msgid "Showers Late"
-msgstr "Vėlyvi trumpalaikiai lietūs"
-
-#: ../panel-plugin/weather-translate.c:152
-msgid "Sleet and Snow"
-msgstr "Šlapdriba ir sniegas"
-
-#: ../panel-plugin/weather-translate.c:153
-msgid "Smoke"
-msgstr "Dūmai"
-
-#: ../panel-plugin/weather-translate.c:154
-#: ../panel-plugin/weather-translate.c:294
-msgid "Snow"
-msgstr "Sniegas"
-
-#: ../panel-plugin/weather-translate.c:155
-msgid "Snow and Rain"
-msgstr "Sniegas ir lietus"
-
-#: ../panel-plugin/weather-translate.c:156
-msgid "Snow or Rain"
-msgstr "Sniegas arba lietus"
-
-#: ../panel-plugin/weather-translate.c:157
-msgid "Snow Shower"
-msgstr "Trumpalaikis sniegas"
-
-#: ../panel-plugin/weather-translate.c:158
-msgid "Light Snow Shower"
-msgstr "Lengvas šlapias sniegas"
-
-#: ../panel-plugin/weather-translate.c:159
-msgid "Snow Shower / Wind"
-msgstr "Trumpalaikis sniegas / vėjas"
-
-#: ../panel-plugin/weather-translate.c:160
-msgid "Snow Showers Early"
-msgstr "Ankstyvas trumpalaikis sniegas"
-
-#: ../panel-plugin/weather-translate.c:161
-msgid "Snow Showers early"
-msgstr "Ankstyvas trumpalaikis sniegas"
-
-#: ../panel-plugin/weather-translate.c:162
-msgid "Snow Showers Late"
-msgstr "Vėlyvas trumpalaikis sniegas"
-
-#: ../panel-plugin/weather-translate.c:163
-msgid "Snow to Rain"
-msgstr "Sniegas, pereinantis į lietų"
-
-#: ../panel-plugin/weather-translate.c:164
-#: ../panel-plugin/weather-translate.c:281
-#: ../panel-plugin/weather-translate.c:297
-msgid "Sunny"
-msgstr "Saulėta"
-
-#: ../panel-plugin/weather-translate.c:165
-msgid "Sunny / Wind"
-msgstr "Saulėta / vėjuota"
-
-#: ../panel-plugin/weather-translate.c:166
-msgid "T-Showers"
-msgstr "Trumpalaikiai lietūs"
-
-#: ../panel-plugin/weather-translate.c:167
-msgid "T-Storm"
-msgstr "Lietus su perkūnija"
-
-#: ../panel-plugin/weather-translate.c:168
-msgid "T-Storms"
-msgstr "Lietus su perkūnija"
-
-#: ../panel-plugin/weather-translate.c:169
-msgid "T-Storms / Wind"
-msgstr "Lietus su perkūnija / vėjas"
-
-#: ../panel-plugin/weather-translate.c:170
-msgid "T-Storms Early"
-msgstr "Ankstyvas lietus su perkūnija"
-
-#: ../panel-plugin/weather-translate.c:171
-msgid "Thunder"
-msgstr "Griaustiniai"
-
-#: ../panel-plugin/weather-translate.c:172
-msgid "Thunder in the Vicinity"
-msgstr "Apylinkėje perkūnija"
-
-#: ../panel-plugin/weather-translate.c:173
-msgid "Thunder in the Vincinity"
-msgstr "Apylinkėje perkūnija"
-
-#: ../panel-plugin/weather-translate.c:174
-msgid "Variable Cloudiness"
-msgstr "Nepastovus debesuotumas"
-
-#: ../panel-plugin/weather-translate.c:175
-msgid "Variable Clouds"
-msgstr "Nepastovūs debesys"
-
-#: ../panel-plugin/weather-translate.c:176
-msgid "Windy/Rain"
-msgstr "Vėjuota/Lietinga"
-
-#: ../panel-plugin/weather-translate.c:177
-msgid "Windy/Snow"
-msgstr "Vėjuota/Snieguota"
-
-#: ../panel-plugin/weather-translate.c:178
-msgid "Wintry Mix"
-msgstr "Žiemos mišinys"
-
-#: ../panel-plugin/weather-translate.c:185
-msgid "rising"
-msgstr "kyla"
-
-#: ../panel-plugin/weather-translate.c:186
-msgid "steady"
-msgstr "pastovus"
-
-#: ../panel-plugin/weather-translate.c:187
-msgid "falling"
-msgstr "krenta"
-
-#: ../panel-plugin/weather-translate.c:194
-msgid "Low"
-msgstr "Žemas"
-
-#: ../panel-plugin/weather-translate.c:195
-msgid "Moderate"
-msgstr "Vidutinis"
-
-#: ../panel-plugin/weather-translate.c:196
-msgid "High"
-msgstr "Aukštas"
-
-#: ../panel-plugin/weather-translate.c:197
-msgid "Very High"
-msgstr "Labai aukštas"
-
-#: ../panel-plugin/weather-translate.c:198
-msgid "Extreme"
-msgstr "Ekstremalus"
-
-#: ../panel-plugin/weather-translate.c:205
+#: ../panel-plugin/weather-translate.c:34
 msgid "S"
 msgstr "P"
 
-#: ../panel-plugin/weather-translate.c:206
+#: ../panel-plugin/weather-translate.c:35
 msgid "SSW"
 msgstr "PPV"
 
-#: ../panel-plugin/weather-translate.c:207
+#: ../panel-plugin/weather-translate.c:36
 msgid "SW"
 msgstr "PV"
 
-#: ../panel-plugin/weather-translate.c:208
+#: ../panel-plugin/weather-translate.c:37
 msgid "WSW"
 msgstr "VPV"
 
-#: ../panel-plugin/weather-translate.c:209
+#: ../panel-plugin/weather-translate.c:38
 msgid "W"
 msgstr "V"
 
-#: ../panel-plugin/weather-translate.c:210
+#: ../panel-plugin/weather-translate.c:39
 msgid "WNW"
 msgstr "VŠV"
 
-#: ../panel-plugin/weather-translate.c:211
+#: ../panel-plugin/weather-translate.c:40
 msgid "NW"
 msgstr "ŠV"
 
-#: ../panel-plugin/weather-translate.c:212
+#: ../panel-plugin/weather-translate.c:41
 msgid "NNW"
 msgstr "ŠŠV"
 
-#: ../panel-plugin/weather-translate.c:213
+#: ../panel-plugin/weather-translate.c:42
 msgid "N"
 msgstr "Š"
 
-#: ../panel-plugin/weather-translate.c:214
+#: ../panel-plugin/weather-translate.c:43
 msgid "NNE"
 msgstr "ŠŠR"
 
-#: ../panel-plugin/weather-translate.c:215
+#: ../panel-plugin/weather-translate.c:44
 msgid "NE"
 msgstr "ŠR"
 
-#: ../panel-plugin/weather-translate.c:216
+#: ../panel-plugin/weather-translate.c:45
 msgid "ENE"
 msgstr "RŠR"
 
-#: ../panel-plugin/weather-translate.c:217
+#: ../panel-plugin/weather-translate.c:46
 msgid "E"
 msgstr "R"
 
-#: ../panel-plugin/weather-translate.c:218
+#: ../panel-plugin/weather-translate.c:47
 msgid "ESE"
 msgstr "RPR"
 
-#: ../panel-plugin/weather-translate.c:219
+#: ../panel-plugin/weather-translate.c:48
 msgid "SE"
 msgstr "PR"
 
-#: ../panel-plugin/weather-translate.c:220
+#: ../panel-plugin/weather-translate.c:49
 msgid "SSE"
 msgstr "PPR"
 
-#: ../panel-plugin/weather-translate.c:221
+#: ../panel-plugin/weather-translate.c:50
 msgid "CALM"
 msgstr "RAMUS"
 
-#: ../panel-plugin/weather-translate.c:282
-#: ../panel-plugin/weather-translate.c:298
+#: ../panel-plugin/weather-translate.c:95
+#: ../panel-plugin/weather-translate.c:111
+msgid "Sunny"
+msgstr "Saulėta"
+
+#: ../panel-plugin/weather-translate.c:95
+#: ../panel-plugin/weather-translate.c:111
+msgid "Clear"
+msgstr "Nedebesuota"
+
+#: ../panel-plugin/weather-translate.c:96
+#: ../panel-plugin/weather-translate.c:112
 msgid "Lightly cloudy"
 msgstr "Silpnai debesuota"
 
-#: ../panel-plugin/weather-translate.c:283
+#: ../panel-plugin/weather-translate.c:97
 msgid "Partly cloudy"
 msgstr "Kai kur debesuota"
 
-#: ../panel-plugin/weather-translate.c:285
-#: ../panel-plugin/weather-translate.c:299
+#: ../panel-plugin/weather-translate.c:98
+msgid "Cloudy"
+msgstr "Debesuota"
+
+#: ../panel-plugin/weather-translate.c:99
+#: ../panel-plugin/weather-translate.c:113
 msgid "Sunny, rain showers"
 msgstr "Saulėta, lietus"
 
-#: ../panel-plugin/weather-translate.c:287
+#: ../panel-plugin/weather-translate.c:99
+#: ../panel-plugin/weather-translate.c:113
+#, fuzzy
+msgid "Clear, rain showers"
+msgstr "Saulėta, lietus"
+
+#: ../panel-plugin/weather-translate.c:100
 msgid "Sunny, rain showers with thunder"
 msgstr "Saulėta, lietus su perkūnija"
 
-#: ../panel-plugin/weather-translate.c:288
-msgid "Sunny, Sleet"
+#: ../panel-plugin/weather-translate.c:101
+#, fuzzy
+msgid "Clear, rain showers with thunder"
+msgstr "Saulėta, lietus su perkūnija"
+
+#: ../panel-plugin/weather-translate.c:102
+#, fuzzy
+msgid "Sunny, sleet"
 msgstr "Lietus, šlapdriba"
 
-#: ../panel-plugin/weather-translate.c:289
-#: ../panel-plugin/weather-translate.c:300
-msgid "Sunny, Snow"
+#: ../panel-plugin/weather-translate.c:102
+msgid "Clear, sleet"
+msgstr ""
+
+#: ../panel-plugin/weather-translate.c:103
+#, fuzzy
+msgid "Sunny, snow"
 msgstr "Saulėta, sniegas"
 
-#: ../panel-plugin/weather-translate.c:290
+#: ../panel-plugin/weather-translate.c:103
+#, fuzzy
+msgid "Clear, snow"
+msgstr "Debesys nyksta"
+
+#: ../panel-plugin/weather-translate.c:104
 msgid "Rain showers"
 msgstr "Trumpalaikiai lietūs"
 
-#: ../panel-plugin/weather-translate.c:292
+#: ../panel-plugin/weather-translate.c:105
+msgid "Rain"
+msgstr "Lietus"
+
+#: ../panel-plugin/weather-translate.c:106
 msgid "Rain with thunder"
 msgstr "Lietus su perkūnija"
 
-#: ../panel-plugin/weather-translate.c:293
+#: ../panel-plugin/weather-translate.c:107
 msgid "Sleet"
 msgstr "Šlapdriba"
 
-#: ../panel-plugin/weather-translate.c:295
+#: ../panel-plugin/weather-translate.c:108
+msgid "Snow"
+msgstr "Sniegas"
+
+#: ../panel-plugin/weather-translate.c:109
 msgid "Snow with thunder"
 msgstr "Sniegas su perkūnija"
 
-#: ../panel-plugin/weather-translate.c:301
+#: ../panel-plugin/weather-translate.c:114
+msgid "Sunny, Snow"
+msgstr "Saulėta, sniegas"
+
+#: ../panel-plugin/weather-translate.c:114
+#, fuzzy
+msgid "Clear, Snow"
+msgstr "Smarkiai sninga"
+
+#: ../panel-plugin/weather-translate.c:115
 msgid "Sunny, Sleet and thunder"
 msgstr "Saulėta, šlapdriba ir perkūnija"
 
-#: ../panel-plugin/weather-translate.c:302
+#: ../panel-plugin/weather-translate.c:115
+#, fuzzy
+msgid "Clear, sleet and thunder"
+msgstr "Šlapdriba ir perkūnija"
+
+#: ../panel-plugin/weather-translate.c:116
 msgid "Sunny, Snow and thunder"
 msgstr "Saulėta, šlapdriba ir perkūnija"
 
-#: ../panel-plugin/weather-translate.c:303
+#: ../panel-plugin/weather-translate.c:116
+#, fuzzy
+msgid "Clear, snow and thunder"
+msgstr "Saulėta, šlapdriba ir perkūnija"
+
+#: ../panel-plugin/weather-translate.c:117
 msgid "Rain showers with thunder"
 msgstr "Trumpalaikiai lietūs su perkūnija"
 
-#: ../panel-plugin/weather-translate.c:304
+#: ../panel-plugin/weather-translate.c:118
 msgid "Sleet and thunder"
 msgstr "Šlapdriba ir perkūnija"
 
-#: ../panel-plugin/weather-translate.c:377
-#, c-format
-msgid "%x at %X Local Time"
-msgstr "%x·%X·vietos laiku"
-
-#: ../panel-plugin/weather-translate.c:484
+#: ../panel-plugin/weather-translate.c:215
 msgid "calm"
 msgstr "ramu"
 
-#: ../panel-plugin/weather-translate.c:486
+#: ../panel-plugin/weather-translate.c:217
 msgid "N/A"
 msgstr "N/D"
 
 #: ../panel-plugin/weather.desktop.in.in.h:2
 msgid "Show current weather conditions"
 msgstr "Rodyti dabartines oro sąlygas"
+
+#~ msgid ""
+#~ "\n"
+#~ "Other\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Kita\n"
+
+#~ msgid "Day: %s"
+#~ msgstr "Dieną: %s"
+
+#~ msgid "<b>Precipitation</b>"
+#~ msgstr "<b>Krituliai</b>"
+
+#~ msgid "<b>Temperature</b>"
+#~ msgstr "<b>Temperatūra</b>"
+
+#~ msgid "<b>Wind</b>"
+#~ msgstr "<b>Vėjas</b>"
+
+#~ msgid "Forecast"
+#~ msgstr "Prognozė"
+
+#~ msgid "AM Clouds / PM Sun"
+#~ msgstr "Priešpiet debesuota / Popiet saulėta"
+
+#~ msgid "AM Light Rain"
+#~ msgstr "Lengvas lietus priešpiet"
+
+#~ msgid "AM Light Snow"
+#~ msgstr "Priešpiet lengvai snigs"
+
+#~ msgid "AM Rain / Snow Showers"
+#~ msgstr "Priešpiet lis/ trumpai snigs"
+
+#~ msgid "AM Rain / Wind"
+#~ msgstr "Priešpiet lengvas lietus / vėjas"
+
+#~ msgid "AM Showers"
+#~ msgstr "Trumpalaikiai lietūs priešpiet"
+
+#~ msgid "AM Showers / Wind"
+#~ msgstr "Trumpalaikiai lietūs priešpiet / vėjas"
+
+#~ msgid "AM Snow Showers"
+#~ msgstr "Trumpalaikis sniegas priešpiet"
+
+#~ msgid "AM Snow Showers / Wind"
+#~ msgstr "Priešpiet trumpalaikis sniegas / vėjas"
+
+#~ msgid "AM T-Storms"
+#~ msgstr "Trumpalaikiai lietūs priešpiet"
+
+#~ msgid "Becoming Cloudy"
+#~ msgstr "Tampa debesuota"
+
+#~ msgid "Blizzard"
+#~ msgstr "Pūga"
+
+#~ msgid "Blizzard Conditions"
+#~ msgstr "Pūgos sąlygos"
+
+#~ msgid "Blowing Snow"
+#~ msgstr "Pustomas sniegas"
+
+#~ msgid "Chance of Rain"
+#~ msgstr "Lietaus tikimybė"
+
+#~ msgid "Chance of Rain/Snow"
+#~ msgstr "Lietaus/sniego tikimybė"
+
+#~ msgid "Chance of Showers"
+#~ msgstr "Liūties tikimybė"
+
+#~ msgid "Chance of Snow"
+#~ msgstr "Sniego tikimybė"
+
+#~ msgid "Chance of Snow/Rain"
+#~ msgstr "Sniego/lietaus tikimybė"
+
+#~ msgid "Chance of T-Storm"
+#~ msgstr "Audros su perkūnija tikimybė"
+
+#~ msgid "Clouds Early / Clearing Late"
+#~ msgstr "Anksti debesys, vėliau išsigiedrys"
+
+#~ msgid "Cloudy / Wind"
+#~ msgstr "Debesuota / Vėjuota"
+
+#~ msgid "Cloudy Periods"
+#~ msgstr "Debesuota su pragiedruliais"
+
+#~ msgid "Continued Hot"
+#~ msgstr "Toliau šilta"
+
+#~ msgid "Cumulonimbus Clouds Observed"
+#~ msgstr "Pastebėti audros debesys"
+
+#~ msgid "Drifting Snow"
+#~ msgstr "Slenkantis sniegas"
+
+#~ msgid "Drifting Snow and Windy"
+#~ msgstr "Slenkantis sniegas ir vėjuota"
+
+#~ msgid "Drizzle"
+#~ msgstr "Dulksna"
+
+#~ msgid "Dry"
+#~ msgstr "Sausa"
+
+#~ msgid "Dust"
+#~ msgstr "Dulkės"
+
+#~ msgid "Fair"
+#~ msgstr "Giedra"
+
+#~ msgid "Few Showers"
+#~ msgstr "Šiek tiek lietaus"
+
+#~ msgid "Few Snow Showers"
+#~ msgstr "Retkarčiais trumpalaikis sniegas"
+
+#~ msgid "Freezing Drizzle"
+#~ msgstr "Šąlanti dulksna"
+
+#~ msgid "Freezing Rain"
+#~ msgstr "Šąlantis lietus"
+
+#~ msgid "Freezing Rain/Snow"
+#~ msgstr "Šąlantis lietus/sniegas"
+
+#~ msgid "Frigid"
+#~ msgstr "Šalta"
+
+#~ msgid "Frozen Precip"
+#~ msgstr "Užšalę krituliai"
+
+#~ msgid "Hail"
+#~ msgstr "Kruša"
+
+#~ msgid "Haze"
+#~ msgstr "Migla"
+
+#~ msgid "Hazy"
+#~ msgstr "Miglota"
+
+#~ msgid "Heavy Rain"
+#~ msgstr "Stiprus lietus"
+
+#~ msgid "Heavy Rain Shower"
+#~ msgstr "Trumpalaikiai stiprūs lietūs"
+
+#~ msgid "Hot And Humid"
+#~ msgstr "Tvanku"
+
+#~ msgid "Hot!"
+#~ msgstr "Karšta!"
+
+#~ msgid "Ice Crystals"
+#~ msgstr "Kruša"
+
+#~ msgid "Ice/Snow Mixture"
+#~ msgstr "Sniegas su kruša"
+
+#~ msgid "Increasing Clouds"
+#~ msgstr "Gausėjantys debesys"
+
+#~ msgid "Isolated Showers"
+#~ msgstr "Vietomis trumpi lietūs"
+
+#~ msgid "Isolated T-Storms"
+#~ msgstr "Vietomis lietus su perkūnija"
+
+#~ msgid "Light Drizzle"
+#~ msgstr "Lengva dulksna"
+
+#~ msgid "Light Drizzle and Windy"
+#~ msgstr "Lengva dulksna bei vėjas"
+
+#~ msgid "Light Rain"
+#~ msgstr "Silpnai lyja"
+
+#~ msgid "Light Rain / Wind"
+#~ msgstr "Lengvas lietus / vėjas"
+
+#~ msgid "Light rain late"
+#~ msgstr "Silpnai lyja"
+
+#~ msgid "Light Rain Shower"
+#~ msgstr "Lijundra"
+
+#~ msgid "Light Snow"
+#~ msgstr "Silpnai sninga"
+
+#~ msgid "Lightning Observed"
+#~ msgstr "Žaibuoja"
+
+#~ msgid "Mild and Breezy"
+#~ msgstr "Vėsu ir ramu"
+
+#~ msgid "Mist"
+#~ msgstr "Migla"
+
+#~ msgid "Mostly Clear"
+#~ msgstr "Daugiausia giedra"
+
+#~ msgid "Mostly Cloudy"
+#~ msgstr "Daugiausia debesuota"
+
+#~ msgid "Mostly Cloudy / Wind"
+#~ msgstr "Daugiausia debesuota / vėjuota"
+
+#~ msgid "Mostly Cloudy and Windy"
+#~ msgstr "Daugiausia debesuota ir vėjuota"
+
+#~ msgid "Mostly Sunny"
+#~ msgstr "Daugiausia saulėta"
+
+#~ msgid "Mostly Sunny / Wind"
+#~ msgstr "Daugiausia saulėta / vėjuota"
+
+#~ msgid "N/A Not Available"
+#~ msgstr "Nėra duomenų"
+
+#~ msgid "Occasional Sunshine"
+#~ msgstr "Protarpiais švies saulė"
+
+#~ msgid "Overcast"
+#~ msgstr "Apsiniaukę"
+
+#~ msgid "Partial Clearing"
+#~ msgstr "Kai kur giedrėja"
+
+#~ msgid "Partial Fog"
+#~ msgstr "Kai kur rūkas"
+
+#~ msgid "Partial Sunshine"
+#~ msgstr "Kai kur kepina saulė"
+
+#~ msgid "Partly Cloudy"
+#~ msgstr "Kai kur debesuota"
+
+#~ msgid "Partly Cloudy / Wind"
+#~ msgstr "Kai kur debesuota / vėjuota"
+
+#~ msgid "Partly Cloudy and Windy"
+#~ msgstr "Kai kur debesuota ir vėjuota"
+
+#~ msgid "Partly Sunny"
+#~ msgstr "Kai kur saulėta"
+
+#~ msgid "PM Light Rain"
+#~ msgstr "Lengvas lietus popiet"
+
+#~ msgid "PM Light Snow"
+#~ msgstr "Popiet silpnai pasnings"
+
+#~ msgid "PM Rain / Wind"
+#~ msgstr "Popiet lengvas lietus / vėjas"
+
+#~ msgid "PM Rain / Snow Showers"
+#~ msgstr "Popiet trumpalaikiai lietūs / sniegas"
+
+#~ msgid "PM Showers"
+#~ msgstr "Trumpalaikiai lietūs popiet"
+
+#~ msgid "PM Snow Showers"
+#~ msgstr "Popiet trumpalaikis sniegas"
+
+#~ msgid "PM T-Storms"
+#~ msgstr "Popiet trumpalaikiai lietūs su perkūnija"
+
+#~ msgid "Rain / Snow"
+#~ msgstr "Lietus / sniegas"
+
+#~ msgid "Rain / Snow / Wind"
+#~ msgstr "Lietus / sniegas / Vėjas"
+
+#~ msgid "Rain / Snow Late"
+#~ msgstr "Lietus / sniegas"
+
+#~ msgid "Rain / Snow Showers"
+#~ msgstr "Trumpalaikiai lietūs / sniegas"
+
+#~ msgid "Rain / Snow Showers Early"
+#~ msgstr "Lietus / Trumpalaikiai lietūs"
+
+#~ msgid "Rain / Thunder"
+#~ msgstr "Lietus / Griaustinis"
+
+#~ msgid "Rain / Wind"
+#~ msgstr "Lietus / vėjas"
+
+#~ msgid "Rain and Sleet"
+#~ msgstr "Lietus ir šlapdriba"
+
+#~ msgid "Rain and Snow"
+#~ msgstr "Lietus ir sniegas"
+
+#~ msgid "Rain or Snow"
+#~ msgstr "Lietus arba sniegas"
+
+#~ msgid "Rain Shower"
+#~ msgstr "Trumpalaikiai lietūs"
+
+#~ msgid "Rain Shower and Windy"
+#~ msgstr "Trumpalaikiai lietūs ir vėjuota"
+
+#~ msgid "Rain to snow"
+#~ msgstr "Lietus, pereinantis į sniegą"
+
+#~ msgid "Rain/Lightning"
+#~ msgstr "Lietus/perkūnija"
+
+#~ msgid "Scattered Showers"
+#~ msgstr "Vietomis trumpalaikiai lietūs"
+
+#~ msgid "Scattered Snow Showers"
+#~ msgstr "Vietomis trumpalaikis sniegas"
+
+#~ msgid "Scattered Snow Showers / Wind"
+#~ msgstr "Vietomis trumpalaikis sniegas / vėjas"
+
+#~ msgid "Scattered T-Storms"
+#~ msgstr "Vietomis trumpalaikiai lietūs su perkūnija"
+
+#~ msgid "Showers"
+#~ msgstr "Krituliai"
+
+#~ msgid "Showers / Wind"
+#~ msgstr "Krituliai / vėjas"
+
+#~ msgid "Showers Early"
+#~ msgstr "Ankstyvi trumpalaikis krituliai"
+
+#~ msgid "Showers in the Vicinity"
+#~ msgstr "Apylinkėje trumpalaikiai lietūs"
+
+#~ msgid "Showers Late"
+#~ msgstr "Vėlyvi trumpalaikiai lietūs"
+
+#~ msgid "Sleet and Snow"
+#~ msgstr "Šlapdriba ir sniegas"
+
+#~ msgid "Smoke"
+#~ msgstr "Dūmai"
+
+#~ msgid "Snow and Rain"
+#~ msgstr "Sniegas ir lietus"
+
+#~ msgid "Snow or Rain"
+#~ msgstr "Sniegas arba lietus"
+
+#~ msgid "Snow Shower"
+#~ msgstr "Trumpalaikis sniegas"
+
+#~ msgid "Light Snow Shower"
+#~ msgstr "Lengvas šlapias sniegas"
+
+#~ msgid "Snow Shower / Wind"
+#~ msgstr "Trumpalaikis sniegas / vėjas"
+
+#~ msgid "Snow Showers Early"
+#~ msgstr "Ankstyvas trumpalaikis sniegas"
+
+#~ msgid "Snow Showers early"
+#~ msgstr "Ankstyvas trumpalaikis sniegas"
+
+#~ msgid "Snow Showers Late"
+#~ msgstr "Vėlyvas trumpalaikis sniegas"
+
+#~ msgid "Snow to Rain"
+#~ msgstr "Sniegas, pereinantis į lietų"
+
+#~ msgid "Sunny / Wind"
+#~ msgstr "Saulėta / vėjuota"
+
+#~ msgid "T-Showers"
+#~ msgstr "Trumpalaikiai lietūs"
+
+#~ msgid "T-Storm"
+#~ msgstr "Lietus su perkūnija"
+
+#~ msgid "T-Storms"
+#~ msgstr "Lietus su perkūnija"
+
+#~ msgid "T-Storms / Wind"
+#~ msgstr "Lietus su perkūnija / vėjas"
+
+#~ msgid "T-Storms Early"
+#~ msgstr "Ankstyvas lietus su perkūnija"
+
+#~ msgid "Thunder"
+#~ msgstr "Griaustiniai"
+
+#~ msgid "Thunder in the Vicinity"
+#~ msgstr "Apylinkėje perkūnija"
+
+#~ msgid "Thunder in the Vincinity"
+#~ msgstr "Apylinkėje perkūnija"
+
+#~ msgid "Variable Cloudiness"
+#~ msgstr "Nepastovus debesuotumas"
+
+#~ msgid "Variable Clouds"
+#~ msgstr "Nepastovūs debesys"
+
+#~ msgid "Windy/Rain"
+#~ msgstr "Vėjuota/Lietinga"
+
+#~ msgid "Windy/Snow"
+#~ msgstr "Vėjuota/Snieguota"
+
+#~ msgid "Wintry Mix"
+#~ msgstr "Žiemos mišinys"
+
+#~ msgid "rising"
+#~ msgstr "kyla"
+
+#~ msgid "steady"
+#~ msgstr "pastovus"
+
+#~ msgid "falling"
+#~ msgstr "krenta"
+
+#~ msgid "Low"
+#~ msgstr "Žemas"
+
+#~ msgid "Moderate"
+#~ msgstr "Vidutinis"
+
+#~ msgid "High"
+#~ msgstr "Aukštas"
+
+#~ msgid "Very High"
+#~ msgstr "Labai aukštas"
+
+#~ msgid "Extreme"
+#~ msgstr "Ekstremalus"
+
+#~ msgid "%x at %X Local Time"
+#~ msgstr "%x·%X·vietos laiku"
 
 #~ msgid "V"
 #~ msgstr "M"
@@ -1141,10 +1189,6 @@ msgstr "Rodyti dabartines oro sąlygas"
 
 #~ msgid "Dewpoint (DP)"
 #~ msgstr "Rasos taškas (RT)"
-
-#, fuzzy
-#~ msgid "in"
-#~ msgstr "Lietus"
 
 #, fuzzy
 #~ msgid ""

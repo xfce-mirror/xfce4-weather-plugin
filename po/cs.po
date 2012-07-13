@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-weather-plugin 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-02-02 21:29+0100\n"
+"POT-Creation-Date: 2012-07-13 16:43+0200\n"
 "PO-Revision-Date: 2012-01-09 00:18+0100\n"
 "Last-Translator: Michal Várady <miko.vaji@gmail.com>\n"
 "Language-Team: Czech <xfce-i18n@xfce.org>\n"
@@ -17,188 +17,235 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
 
-#: ../panel-plugin/weather.c:110
-msgid "V"
-msgstr "V"
-
-#: ../panel-plugin/weather.c:113
-msgid "U"
-msgstr "U"
-
-#: ../panel-plugin/weather.c:116
-msgid "WD"
-msgstr "SV"
-
-#: ../panel-plugin/weather.c:119
-#: ../panel-plugin/weather.c:122
-msgid "P"
-msgstr "P"
-
-#: ../panel-plugin/weather.c:125
-msgid "F"
-msgstr "F"
-
-#: ../panel-plugin/weather.c:128
+#: ../panel-plugin/weather.c:127
 msgid "T"
 msgstr "T"
 
-#: ../panel-plugin/weather.c:131
-msgid "D"
-msgstr "D"
+#: ../panel-plugin/weather.c:130
+msgid "P"
+msgstr "P"
 
-#: ../panel-plugin/weather.c:134
-msgid "H"
-msgstr "V"
-
-#: ../panel-plugin/weather.c:137
+#: ../panel-plugin/weather.c:133
 msgid "WS"
 msgstr "RV"
 
-#: ../panel-plugin/weather.c:140
-msgid "WG"
-msgstr "NV"
+#: ../panel-plugin/weather.c:136
+msgid "WD"
+msgstr "SV"
 
-#: ../panel-plugin/weather.c:260
-#: ../panel-plugin/weather.c:760
+#: ../panel-plugin/weather.c:139
+msgid "H"
+msgstr "V"
+
+#: ../panel-plugin/weather.c:142
+#, fuzzy
+msgid "CL"
+msgstr "CALM"
+
+#: ../panel-plugin/weather.c:145
+#, fuzzy
+msgid "CM"
+msgstr "CALM"
+
+#: ../panel-plugin/weather.c:148
+#, fuzzy
+msgid "CH"
+msgstr "V"
+
+#: ../panel-plugin/weather.c:151
+msgid "C"
+msgstr ""
+
+#: ../panel-plugin/weather.c:154
+msgid "F"
+msgstr "F"
+
+#: ../panel-plugin/weather.c:157
+msgid "R"
+msgstr ""
+
+#: ../panel-plugin/weather.c:233
+msgid "No Data"
+msgstr ""
+
+#: ../panel-plugin/weather.c:260 ../panel-plugin/weather.c:871
 msgid "Cannot update weather data"
 msgstr "Nelze aktualizovat informace o počasí"
 
-#: ../panel-plugin/weather.c:693
+#: ../panel-plugin/weather.c:801
 #, c-format
 msgid "Unable to open the following url: %s"
 msgstr "Nelze otevřít následující adresu url: %s"
 
-#: ../panel-plugin/weather.c:721
-#: ../panel-plugin/weather-summary.c:611
-#: ../panel-plugin/weather.desktop.in.in.h:2
+#: ../panel-plugin/weather.c:829 ../panel-plugin/weather-summary.c:593
+#: ../panel-plugin/weather.desktop.in.in.h:1
 msgid "Weather Update"
 msgstr "Počasí"
 
 #. add refresh button to right click menu, for people who missed the middle mouse click feature
-#: ../panel-plugin/weather.c:843
+#: ../panel-plugin/weather.c:960 ../panel-plugin/weather-summary.c:638
 msgid "_Forecast"
 msgstr "_Předpověď počasí"
 
 #: ../panel-plugin/weather-config.c:37
-msgid "Windchill (F)"
-msgstr "Teplota větru (F)"
-
-#: ../panel-plugin/weather-config.c:38
 msgid "Temperature (T)"
 msgstr "Teplota (T)"
 
-#: ../panel-plugin/weather-config.c:39
+#: ../panel-plugin/weather-config.c:38
 msgid "Atmosphere pressure (P)"
 msgstr "Atmosférický tlak (P)"
 
-#: ../panel-plugin/weather-config.c:40
-msgid "Atmosphere state (P)"
-msgstr "Tlaková tendence (P)"
-
-#: ../panel-plugin/weather-config.c:41
+#: ../panel-plugin/weather-config.c:39
 msgid "Wind speed (WS)"
 msgstr "Rychlost větru (WS)"
 
-#: ../panel-plugin/weather-config.c:42
-msgid "Wind gust (WG)"
-msgstr "Nárazy větru (WG)"
+#: ../panel-plugin/weather-config.c:40
+msgid "Wind speed - Beaufort scale (WB)"
+msgstr ""
 
-#: ../panel-plugin/weather-config.c:43
+#: ../panel-plugin/weather-config.c:41
 msgid "Wind direction (WD)"
 msgstr "Směr větru (WD)"
 
-#: ../panel-plugin/weather-config.c:44
+#: ../panel-plugin/weather-config.c:42
+#, fuzzy
+msgid "Wind direction in degrees (WD)"
+msgstr "Směr větru (WD)"
+
+#: ../panel-plugin/weather-config.c:43
 msgid "Humidity (H)"
 msgstr "Vlhkost (H)"
 
+#: ../panel-plugin/weather-config.c:44
+msgid "Low cloudiness (CL)"
+msgstr ""
+
 #: ../panel-plugin/weather-config.c:45
-msgid "Visibility (V)"
-msgstr "Viditelnost (V)"
+msgid "Medium cloudiness (CM)"
+msgstr ""
 
 #: ../panel-plugin/weather-config.c:46
-msgid "UV Index (UV)"
-msgstr "Index UV záření (UV)"
+msgid "High cloudiness (CH)"
+msgstr ""
 
 #: ../panel-plugin/weather-config.c:47
-msgid "Dewpoint (DP)"
-msgstr "Rosný bod (DP)"
+#, fuzzy
+msgid "Overall cloudiness (C)"
+msgstr "Vývoj oblačnosti"
 
-#: ../panel-plugin/weather-config.c:239
+#: ../panel-plugin/weather-config.c:48
+msgid "Fog (F)"
+msgstr ""
+
+#: ../panel-plugin/weather-config.c:49
+#, fuzzy
+msgid "Precipitations (R)"
+msgstr "<b>Srážky</b>"
+
+#: ../panel-plugin/weather-config.c:259
 msgid "Please enter proxy settings"
 msgstr "Zadejte nastavení serveru proxy"
 
-#: ../panel-plugin/weather-config.c:295
+#: ../panel-plugin/weather-config.c:317
 msgid "Unset"
 msgstr "Nenastaveno"
 
-#: ../panel-plugin/weather-config.c:303
+#: ../panel-plugin/weather-config.c:325
 msgid "Detecting..."
 msgstr "Hledání..."
 
-#: ../panel-plugin/weather-config.c:356
-msgid "Measurement unit:"
+#: ../panel-plugin/weather-config.c:379
+#, fuzzy
+msgid "System of _Measurement:"
 msgstr "Měrné jednotky:"
 
-#: ../panel-plugin/weather-config.c:362
+#: ../panel-plugin/weather-config.c:384
 msgid "Imperial"
 msgstr "Imperiální"
 
-#: ../panel-plugin/weather-config.c:364
+#: ../panel-plugin/weather-config.c:386
 msgid "Metric"
 msgstr "Metrické"
 
-#: ../panel-plugin/weather-config.c:379
+#: ../panel-plugin/weather-config.c:399
 msgid "Location:"
 msgstr "Umístění:"
 
-#: ../panel-plugin/weather-config.c:415
-msgid "Change..."
+#: ../panel-plugin/weather-config.c:431
+#, fuzzy
+msgid "Chan_ge..."
 msgstr "Změnit..."
 
 #. proxy
-#: ../panel-plugin/weather-config.c:428
+#: ../panel-plugin/weather-config.c:444
 msgid "Proxy server:"
 msgstr "Server proxy:"
 
-#: ../panel-plugin/weather-config.c:431
-msgid "Use proxy server"
+#: ../panel-plugin/weather-config.c:447
+#, fuzzy
+msgid "_Use proxy server"
 msgstr "Používat server proxy"
 
-#: ../panel-plugin/weather-config.c:433
-msgid "Auto-detect from environment"
+#: ../panel-plugin/weather-config.c:449
+#, fuzzy
+msgid "Auto-detect from _environment"
 msgstr "Automaticky zjišťovat z proměnných prostředí"
 
-#: ../panel-plugin/weather-config.c:505
-msgid "Labels to display"
+#. number of days shown in forecast
+#: ../panel-plugin/weather-config.c:514
+msgid "Number of _forecast days:"
+msgstr ""
+
+#: ../panel-plugin/weather-config.c:536
+#, fuzzy
+msgid "_Labels to display"
 msgstr "Zobrazované údaje"
 
-#: ../panel-plugin/weather-config.c:554
-msgid "Animate transitions between labels"
+#: ../panel-plugin/weather-config.c:585
+#, fuzzy
+msgid "_Animate transitions between labels"
 msgstr "Animovat přechody mezi popisky"
 
-#: ../panel-plugin/weather-data.c:387
-msgid "km/h"
-msgstr "km/h"
+#: ../panel-plugin/weather-data.c:131
+msgid "ft"
+msgstr ""
 
-#: ../panel-plugin/weather-data.c:387
-msgid "mph"
-msgstr "mi/h"
+#: ../panel-plugin/weather-data.c:131
+#, fuzzy
+msgid "m"
+msgstr "km"
 
-#: ../panel-plugin/weather-data.c:390
+#: ../panel-plugin/weather-data.c:133
+msgid "°F"
+msgstr ""
+
+#: ../panel-plugin/weather-data.c:133
+msgid "°C"
+msgstr ""
+
+#: ../panel-plugin/weather-data.c:135
+msgid "psi"
+msgstr ""
+
+#: ../panel-plugin/weather-data.c:135
 msgid "hPa"
 msgstr "hPa"
 
-#: ../panel-plugin/weather-data.c:390
+#: ../panel-plugin/weather-data.c:137
+msgid "mph"
+msgstr "mi/h"
+
+#: ../panel-plugin/weather-data.c:137
+msgid "km/h"
+msgstr "km/h"
+
+#: ../panel-plugin/weather-data.c:150
 msgid "in"
 msgstr "palců"
 
-#: ../panel-plugin/weather-data.c:393
-msgid "km"
-msgstr "km"
-
-#: ../panel-plugin/weather-data.c:393
-msgid "mi"
-msgstr "mi"
+#: ../panel-plugin/weather-data.c:150
+msgid "mm"
+msgstr ""
 
 #. display error
 #: ../panel-plugin/weather-http.c:203
@@ -243,25 +290,24 @@ msgstr "Nelze zjistit délku obsahu."
 msgid "No content received."
 msgstr "Nebyl přijat žádný obsah."
 
-#: ../panel-plugin/weather-search.c:142
-#: ../panel-plugin/weather-search.c:274
+#: ../panel-plugin/weather-search.c:148 ../panel-plugin/weather-search.c:280
 msgid "Results"
 msgstr "Výsledky"
 
-#: ../panel-plugin/weather-search.c:183
+#: ../panel-plugin/weather-search.c:189
 msgid "Searching..."
 msgstr "Hledání..."
 
-#: ../panel-plugin/weather-search.c:223
+#: ../panel-plugin/weather-search.c:229
 msgid "Search weather location code"
 msgstr "Vyhledat kód pozorovací stanice"
 
-#: ../panel-plugin/weather-search.c:247
+#: ../panel-plugin/weather-search.c:253
 msgid "Enter a city name or zip code"
 msgstr "Zadejte název města nebo PSČ"
 
 #. head
-#: ../panel-plugin/weather-summary.c:268
+#: ../panel-plugin/weather-summary.c:273
 #, c-format
 msgid ""
 "Weather report for: %s.\n"
@@ -270,17 +316,54 @@ msgstr ""
 "Informace o počasí: %s.\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:273
+#: ../panel-plugin/weather-summary.c:278
+msgid "Coordinates\n"
+msgstr ""
+
+#: ../panel-plugin/weather-summary.c:279
+msgid "Altitude"
+msgstr ""
+
+#: ../panel-plugin/weather-summary.c:280
+msgid "Latitude"
+msgstr ""
+
+#: ../panel-plugin/weather-summary.c:281
+msgid "Longitude"
+msgstr ""
+
+#: ../panel-plugin/weather-summary.c:283
+msgid ""
+"\n"
+"Time\n"
+msgstr ""
+
+#: ../panel-plugin/weather-summary.c:286
 #, c-format
 msgid ""
-"Observation station located in %s\n"
-"Last update: %s.\n"
+"\tPoint data applies to:\n"
+"\t%s\n"
 msgstr ""
-"Pozorovací stanice: %s\n"
-"Poslední aktualizace: %s.\n"
+
+#: ../panel-plugin/weather-summary.c:293
+#, c-format
+msgid ""
+"\n"
+"\tInterval data applies to:\n"
+"\tStart:\t%s\n"
+"\tEnd:\t%s\n"
+msgstr ""
+
+#: ../panel-plugin/weather-summary.c:298
+#, c-format
+msgid ""
+"\n"
+"\tInterval data provides icon, description and precipitation,\n"
+"\twhile the remaining information originates from point data.\n"
+msgstr ""
 
 #. Temperature
-#: ../panel-plugin/weather-summary.c:279
+#: ../panel-plugin/weather-summary.c:304
 msgid ""
 "\n"
 "Temperature\n"
@@ -288,25 +371,12 @@ msgstr ""
 "\n"
 "Teplota\n"
 
-#: ../panel-plugin/weather-summary.c:280
+#: ../panel-plugin/weather-summary.c:305
 msgid "Temperature"
 msgstr "Teplota"
 
-#: ../panel-plugin/weather-summary.c:281
-msgid "Windchill"
-msgstr "Teplota větru"
-
-#. special case for TRANS because of translate_desc
-#: ../panel-plugin/weather-summary.c:284
-msgid "Description"
-msgstr "Popis"
-
-#: ../panel-plugin/weather-summary.c:287
-msgid "Dew point"
-msgstr "Rosný bod"
-
 #. Wind
-#: ../panel-plugin/weather-summary.c:290
+#: ../panel-plugin/weather-summary.c:308
 msgid ""
 "\n"
 "Wind\n"
@@ -314,809 +384,853 @@ msgstr ""
 "\n"
 "Vítr\n"
 
-#: ../panel-plugin/weather-summary.c:292
+#: ../panel-plugin/weather-summary.c:313
+#, c-format
+msgid "\t%s: %s (%s on the Beaufort scale)\n"
+msgstr ""
+
+#: ../panel-plugin/weather-summary.c:313
 msgid "Speed"
 msgstr "Rychlost"
 
-#: ../panel-plugin/weather-summary.c:297
+#: ../panel-plugin/weather-summary.c:322
 msgid "Direction"
 msgstr "Směr"
 
-#: ../panel-plugin/weather-summary.c:303
-msgid "Gusts"
-msgstr "Nárazy"
-
-#. UV
-#: ../panel-plugin/weather-summary.c:308
+#. Precipitation
+#: ../panel-plugin/weather-summary.c:330
+#, fuzzy
 msgid ""
 "\n"
-"UV\n"
-msgstr ""
-"\n"
-"UV záření\n"
+"Precipitations\n"
+msgstr "<b>Srážky</b>"
 
-#: ../panel-plugin/weather-summary.c:309
-msgid "Index"
-msgstr "Index"
+#: ../panel-plugin/weather-summary.c:331
+#, fuzzy
+msgid "Precipitations amount"
+msgstr "<b>Srážky</b>"
 
-#: ../panel-plugin/weather-summary.c:310
-msgid "Risk"
-msgstr "Riziko"
-
-#. Atmospheric pressure
-#: ../panel-plugin/weather-summary.c:315
+#. Atmosphere
+#: ../panel-plugin/weather-summary.c:334
+#, fuzzy
 msgid ""
 "\n"
-"Atmospheric pressure\n"
+"Atmosphere\n"
 msgstr ""
 "\n"
 "Atmosférický tlak\n"
 
-#: ../panel-plugin/weather-summary.c:316
+#: ../panel-plugin/weather-summary.c:335
 msgid "Pressure"
 msgstr "Tlak"
 
-#: ../panel-plugin/weather-summary.c:318
-msgid "State"
-msgstr "Tendence"
-
-#. Sun
-#: ../panel-plugin/weather-summary.c:323
-msgid ""
-"\n"
-"Sun\n"
-msgstr ""
-"\n"
-"Slunce\n"
-
-#: ../panel-plugin/weather-summary.c:326
-msgid "Rise"
-msgstr "Východ"
-
-#: ../panel-plugin/weather-summary.c:332
-msgid "Set"
-msgstr "Západ"
-
-#. Other
-#: ../panel-plugin/weather-summary.c:337
-msgid ""
-"\n"
-"Other\n"
-msgstr ""
-"\n"
-"Ostatní\n"
-
-#: ../panel-plugin/weather-summary.c:338
+#: ../panel-plugin/weather-summary.c:336
 msgid "Humidity"
 msgstr "Vlhkost"
 
-#: ../panel-plugin/weather-summary.c:340
-msgid "Visibility"
-msgstr "Viditelnost"
-
-#: ../panel-plugin/weather-summary.c:344
+#. Clouds
+#: ../panel-plugin/weather-summary.c:339
+#, fuzzy
 msgid ""
 "\n"
-"More on weather.com\n"
+"Clouds\n"
+msgstr "Mraky"
+
+#: ../panel-plugin/weather-summary.c:340
+#: ../panel-plugin/weather-translate.c:110
+msgid "Fog"
+msgstr "Mlha"
+
+#: ../panel-plugin/weather-summary.c:341
+#, fuzzy
+msgid "Low clouds"
+msgstr "Mraky"
+
+#: ../panel-plugin/weather-summary.c:342
+msgid "Medium clouds"
 msgstr ""
+
+#: ../panel-plugin/weather-summary.c:343
+msgid "High clouds"
+msgstr ""
+
+#: ../panel-plugin/weather-summary.c:344
+#, fuzzy
+msgid "Cloudiness"
+msgstr "Mraky"
+
+#: ../panel-plugin/weather-summary.c:346
+msgid ""
 "\n"
-"Více na weather.com\n"
+"Data from The Norwegian Meteorological Institute\n"
+msgstr ""
 
-#: ../panel-plugin/weather-summary.c:445
-#, c-format
-msgid "Day: %s"
-msgstr "Přes den: %s"
+#: ../panel-plugin/weather-summary.c:347
+msgid "Thanks to met.no"
+msgstr ""
 
-#: ../panel-plugin/weather-summary.c:450
-#, c-format
-msgid "Night: %s"
+#: ../panel-plugin/weather-summary.c:424
+msgid "Morning"
+msgstr ""
+
+#: ../panel-plugin/weather-summary.c:427
+msgid "Afternoon"
+msgstr ""
+
+#: ../panel-plugin/weather-summary.c:430
+msgid "Evening"
+msgstr ""
+
+#: ../panel-plugin/weather-summary.c:433
+#, fuzzy
+msgid "Night"
 msgstr "V noci: %s"
 
-#: ../panel-plugin/weather-summary.c:461
-msgid "<b>Precipitation</b>"
-msgstr "<b>Srážky</b>"
+#: ../panel-plugin/weather-summary.c:442
+#, c-format
+msgid "Today"
+msgstr ""
 
-#: ../panel-plugin/weather-summary.c:483
-msgid "<b>Temperature</b>"
-msgstr "<b>Teplota</b>"
+#: ../panel-plugin/weather-summary.c:444
+#, c-format
+msgid "Tomorrow"
+msgstr ""
 
-#: ../panel-plugin/weather-summary.c:507
-msgid "<b>Wind</b>"
-msgstr "<b>Vítr</b>"
-
-#: ../panel-plugin/weather-summary.c:619
+#: ../panel-plugin/weather-summary.c:601
 #, c-format
 msgid "Weather report for: %s"
 msgstr "Informace o počasí: %s"
 
-#: ../panel-plugin/weather-summary.c:642
-msgid "Forecast"
-msgstr "Předpověď počasí"
+#: ../panel-plugin/weather-summary.c:624
+#, fuzzy
+msgid "Please set a location in the plugin settings."
+msgstr "Zadejte nastavení serveru proxy"
 
-#: ../panel-plugin/weather-summary.c:645
-msgid "Details"
+#: ../panel-plugin/weather-summary.c:626
+msgid "Currently no data available."
+msgstr ""
+
+#: ../panel-plugin/weather-summary.c:641
+#, fuzzy
+msgid "_Details"
 msgstr "Podrobnosti"
 
-#: ../panel-plugin/weather-translate.c:39
-msgid "AM Clouds / PM Sun"
-msgstr "Dopoledne oblačno, odpoledne slunečno"
-
-#: ../panel-plugin/weather-translate.c:40
-msgid "AM Light Rain"
-msgstr "Ráno slabé přeháňky"
-
-#: ../panel-plugin/weather-translate.c:41
-msgid "AM Light Snow"
-msgstr "Ráno slabé sněžení"
-
-#: ../panel-plugin/weather-translate.c:42
-msgid "AM Rain / Snow Showers"
-msgstr "Ráno dešťové a sněhové přeháňky"
-
-#: ../panel-plugin/weather-translate.c:43
-msgid "AM Rain / Wind"
-msgstr "Ráno déšť, vítr"
-
-#: ../panel-plugin/weather-translate.c:44
-msgid "AM Showers"
-msgstr "Ráno přeháňky"
-
-#: ../panel-plugin/weather-translate.c:45
-msgid "AM Showers / Wind"
-msgstr "Ráno přeháňky, vítr"
-
-#: ../panel-plugin/weather-translate.c:46
-msgid "AM Snow Showers"
-msgstr "Ráno sněhové přeháňky"
-
-#: ../panel-plugin/weather-translate.c:47
-msgid "AM Snow Showers / Wind"
-msgstr "Ráno sněhové přeháňky, vítr"
-
-#: ../panel-plugin/weather-translate.c:48
-msgid "AM T-Storms"
-msgstr "Ráno bouřky"
-
-#: ../panel-plugin/weather-translate.c:49
-msgid "Becoming Cloudy"
-msgstr "Místy zataženo"
-
-#: ../panel-plugin/weather-translate.c:50
-msgid "Blizzard"
-msgstr "Blizard"
-
-#: ../panel-plugin/weather-translate.c:51
-msgid "Blizzard Conditions"
-msgstr "Podmínky blizardu"
-
-#: ../panel-plugin/weather-translate.c:52
-msgid "Blowing Snow"
-msgstr "Navátý sníh"
-
-#: ../panel-plugin/weather-translate.c:53
-msgid "Chance of Rain"
-msgstr "Srážky"
-
-#: ../panel-plugin/weather-translate.c:54
-msgid "Chance of Rain/Snow"
-msgstr "Dešťové přeháňky se sněhem"
-
-#: ../panel-plugin/weather-translate.c:55
-msgid "Chance of Showers"
-msgstr "Dešťové přeháňky"
-
-#: ../panel-plugin/weather-translate.c:56
-msgid "Chance of Snow"
-msgstr "Sněžení"
-
-#: ../panel-plugin/weather-translate.c:57
-msgid "Chance of Snow/Rain"
-msgstr "Sněhové přeháňky přecházející v dešťové"
-
-#: ../panel-plugin/weather-translate.c:58
-msgid "Chance of T-Storm"
-msgstr "Bouřka"
-
-#: ../panel-plugin/weather-translate.c:59
-msgid "Clear"
-msgstr "Jasno"
-
-#: ../panel-plugin/weather-translate.c:60
-msgid "Clearing"
-msgstr "Vyjasňování"
-
-#: ../panel-plugin/weather-translate.c:61
-msgid "Clouds"
-msgstr "Mraky"
-
-#: ../panel-plugin/weather-translate.c:62
-msgid "Clouds Early / Clearing Late"
-msgstr "Oblačno, později vyjasňování"
-
-#: ../panel-plugin/weather-translate.c:63
-msgid "Cloudy"
-msgstr "Oblačno"
-
-#: ../panel-plugin/weather-translate.c:64
-msgid "Cloudy / Wind"
-msgstr "Oblačno, vítr"
-
-#: ../panel-plugin/weather-translate.c:65
-msgid "Cloudy Periods"
-msgstr "Místy zataženo"
-
-#: ../panel-plugin/weather-translate.c:66
-msgid "Continued Hot"
-msgstr "Dlouhotrvající horko"
-
-#: ../panel-plugin/weather-translate.c:67
-msgid "Cumulonimbus Clouds Observed"
-msgstr "Zpozorovány bouřkové mraky"
-
-#: ../panel-plugin/weather-translate.c:68
-msgid "Drifting Snow"
-msgstr "Ustupující sníh"
-
-#: ../panel-plugin/weather-translate.c:69
-msgid "Drifting Snow and Windy"
-msgstr "Ustupující sníh, vítr"
-
-#: ../panel-plugin/weather-translate.c:70
-msgid "Drizzle"
-msgstr "Mrholení"
-
-#: ../panel-plugin/weather-translate.c:71
-msgid "Dry"
-msgstr "Sucho"
-
-#: ../panel-plugin/weather-translate.c:72
-msgid "Dust"
-msgstr "Prach"
-
-#: ../panel-plugin/weather-translate.c:73
-msgid "Fair"
-msgstr "Hezky"
-
-#: ../panel-plugin/weather-translate.c:74
-msgid "Few Showers"
-msgstr "Několik přeháněk"
-
-#: ../panel-plugin/weather-translate.c:75
-msgid "Few Snow Showers"
-msgstr "Několik sněhových přeháněk"
-
-#: ../panel-plugin/weather-translate.c:76
-msgid "Fog"
-msgstr "Mlha"
-
-#: ../panel-plugin/weather-translate.c:77
-msgid "Freezing Drizzle"
-msgstr "Mrznoucí mrholení"
-
-#: ../panel-plugin/weather-translate.c:78
-msgid "Freezing Rain"
-msgstr "Mrznoucí déšť"
-
-#: ../panel-plugin/weather-translate.c:79
-msgid "Freezing Rain/Snow"
-msgstr "Namrzající déšť se sněhem"
-
-#: ../panel-plugin/weather-translate.c:80
-msgid "Frigid"
-msgstr "Velmi chladno"
-
-#: ../panel-plugin/weather-translate.c:81
-msgid "Frozen Precip"
-msgstr "Očekávaný mráz"
-
-#: ../panel-plugin/weather-translate.c:82
-msgid "Hail"
-msgstr "Přívalový déšť"
-
-#: ../panel-plugin/weather-translate.c:83
-msgid "Haze"
-msgstr "Mlhavo"
-
-#: ../panel-plugin/weather-translate.c:84
-msgid "Hazy"
-msgstr "Mlhavo"
-
-#: ../panel-plugin/weather-translate.c:85
-msgid "Heavy Rain"
-msgstr "Vydatný déšť"
-
-#: ../panel-plugin/weather-translate.c:86
-msgid "Heavy Rain Shower"
-msgstr "Silné dešťové přeháňky"
-
-#: ../panel-plugin/weather-translate.c:87
-msgid "Heavy Snow"
-msgstr "Vydatné sněžení"
-
-#: ../panel-plugin/weather-translate.c:88
-msgid "Hot And Humid"
-msgstr "Velmi horko a vlhko"
-
-#: ../panel-plugin/weather-translate.c:89
-msgid "Hot!"
-msgstr "Horko!"
-
-#: ../panel-plugin/weather-translate.c:90
-msgid "Ice Crystals"
-msgstr "Ledové krystalky"
-
-#: ../panel-plugin/weather-translate.c:91
-msgid "Ice/Snow Mixture"
-msgstr "Ledové krystalky a sněžení"
-
-#: ../panel-plugin/weather-translate.c:92
-msgid "Increasing Clouds"
-msgstr "Oblačno"
-
-#: ../panel-plugin/weather-translate.c:93
-msgid "Isolated Showers"
-msgstr "Místy dešťové přeháňky"
-
-#: ../panel-plugin/weather-translate.c:94
-msgid "Isolated T-Storms"
-msgstr "Místy bouřky"
-
-#: ../panel-plugin/weather-translate.c:95
-msgid "Light Drizzle"
-msgstr "Lehké mrholení"
-
-#: ../panel-plugin/weather-translate.c:96
-msgid "Light Drizzle and Windy"
-msgstr "Slabé mrholení s větrem"
-
-#: ../panel-plugin/weather-translate.c:97
-msgid "Light Rain"
-msgstr "Slabý déšť"
-
-#: ../panel-plugin/weather-translate.c:98
-msgid "Light Rain / Wind"
-msgstr "Slabé přeháňky s přechodně zesilujícím větrem"
-
-#: ../panel-plugin/weather-translate.c:99
-msgid "Light rain late"
-msgstr "Později slabý déšť"
-
-#: ../panel-plugin/weather-translate.c:100
-msgid "Light Rain Shower"
-msgstr "Slabé přeháňky"
-
-#: ../panel-plugin/weather-translate.c:101
-msgid "Light Snow"
-msgstr "Slabé sněžení"
-
-#: ../panel-plugin/weather-translate.c:102
-msgid "Lightning Observed"
-msgstr "Zpozorovány blesky"
-
-#: ../panel-plugin/weather-translate.c:103
-msgid "Mild and Breezy"
-msgstr "Bezvětří nebo slabý vánek"
-
-#: ../panel-plugin/weather-translate.c:104
-msgid "Mist"
-msgstr "Mlha"
-
-#: ../panel-plugin/weather-translate.c:105
-msgid "Mostly Clear"
-msgstr "Skoro jasno"
-
-#: ../panel-plugin/weather-translate.c:106
-msgid "Mostly Cloudy"
-msgstr "Oblačno"
-
-#: ../panel-plugin/weather-translate.c:107
-msgid "Mostly Cloudy / Wind"
-msgstr "Oblačno, vítr"
-
-#: ../panel-plugin/weather-translate.c:108
-msgid "Mostly Cloudy and Windy"
-msgstr "Oblačno s větrem"
-
-#: ../panel-plugin/weather-translate.c:109
-msgid "Mostly Sunny"
-msgstr "Polojasno"
-
-#: ../panel-plugin/weather-translate.c:110
-msgid "Mostly Sunny / Wind"
-msgstr "Polojasno, vítr"
-
-#: ../panel-plugin/weather-translate.c:111
-msgid "N/A Not Available"
-msgstr "N/A Nedostupný"
-
-#: ../panel-plugin/weather-translate.c:112
-msgid "Occasional Sunshine"
-msgstr "Příležitostný svit slunce"
-
-#: ../panel-plugin/weather-translate.c:113
-msgid "Overcast"
-msgstr "Zataženo"
-
-#: ../panel-plugin/weather-translate.c:114
-msgid "Partial Clearing"
-msgstr "Protrhávání oblačnosti"
-
-#: ../panel-plugin/weather-translate.c:115
-msgid "Partial Fog"
-msgstr "Slabá mlha"
-
-#: ../panel-plugin/weather-translate.c:116
-msgid "Partial Sunshine"
-msgstr "Polojasno až skoro jasno"
-
-#: ../panel-plugin/weather-translate.c:117
-msgid "Partly Cloudy"
-msgstr "Polojasno"
-
-#: ../panel-plugin/weather-translate.c:118
-msgid "Partly Cloudy / Wind"
-msgstr "Polojasno s větrem"
-
-#: ../panel-plugin/weather-translate.c:119
-msgid "Partly Cloudy and Windy"
-msgstr "Polojasno s větrem"
-
-#: ../panel-plugin/weather-translate.c:120
-msgid "Partly Sunny"
-msgstr "Oblačno až polojasno"
-
-#: ../panel-plugin/weather-translate.c:121
-msgid "PM Light Rain"
-msgstr "Odpoledne slabé přeháňky"
-
-#: ../panel-plugin/weather-translate.c:122
-msgid "PM Light Snow"
-msgstr "Odpoledne slabé sněžení"
-
-#: ../panel-plugin/weather-translate.c:123
-msgid "PM Rain / Wind"
-msgstr "Odpoledne déšť, vítr"
-
-#: ../panel-plugin/weather-translate.c:124
-msgid "PM Rain / Snow Showers"
-msgstr "Odpolední dešťové nebo sněhové přeháňky"
-
-#: ../panel-plugin/weather-translate.c:125
-msgid "PM Showers"
-msgstr "Odpoledne přeháňky"
-
-#: ../panel-plugin/weather-translate.c:126
-msgid "PM Snow Showers"
-msgstr "Odpoledne sněhové přeháňky"
-
-#: ../panel-plugin/weather-translate.c:127
-msgid "PM T-Storms"
-msgstr "Odpoledne bouřky"
-
-#: ../panel-plugin/weather-translate.c:128
-msgid "Rain"
-msgstr "Déšť"
-
-#: ../panel-plugin/weather-translate.c:129
-msgid "Rain / Snow"
-msgstr "Déšť se sněhem"
-
-#: ../panel-plugin/weather-translate.c:130
-msgid "Rain / Snow / Wind"
-msgstr "Déšť se sněhem, vítr"
-
-#: ../panel-plugin/weather-translate.c:131
-msgid "Rain / Snow Late"
-msgstr "Déšť se sněhem"
-
-#: ../panel-plugin/weather-translate.c:132
-msgid "Rain / Snow Showers"
-msgstr "Dešťové a sněhové přeháňky"
-
-#: ../panel-plugin/weather-translate.c:133
-msgid "Rain / Snow Showers Early"
-msgstr "Dešťové nebo sněhové přeháňky"
-
-#: ../panel-plugin/weather-translate.c:134
-msgid "Rain / Thunder"
-msgstr "Déšť, bouřka"
-
-#: ../panel-plugin/weather-translate.c:135
-msgid "Rain / Wind"
-msgstr "Déšť, vítr"
-
-#: ../panel-plugin/weather-translate.c:136
-msgid "Rain and Sleet"
-msgstr "Déšť a plískanice"
-
-#: ../panel-plugin/weather-translate.c:137
-msgid "Rain and Snow"
-msgstr "Déšť se sněhem"
-
-#: ../panel-plugin/weather-translate.c:138
-msgid "Rain or Snow"
-msgstr "Déšť nebo sněžení"
-
-#: ../panel-plugin/weather-translate.c:139
-msgid "Rain Shower"
-msgstr "Dešťové přeháňky"
-
-#: ../panel-plugin/weather-translate.c:140
-msgid "Rain Shower and Windy"
-msgstr "Dešťové přeháňky, větrno"
-
-#: ../panel-plugin/weather-translate.c:141
-msgid "Rain to snow"
-msgstr "Sněžení přecházející v déšť"
-
-#: ../panel-plugin/weather-translate.c:142
-msgid "Rain/Lightning"
-msgstr "Déšt, bouřka"
-
-#: ../panel-plugin/weather-translate.c:143
-msgid "Scattered Showers"
-msgstr "Protrhávání oblačnosti s přeháňkou"
-
-#: ../panel-plugin/weather-translate.c:144
-msgid "Scattered Snow Showers"
-msgstr "Protrhávání sněhové přeháňky"
-
-#: ../panel-plugin/weather-translate.c:145
-msgid "Scattered Snow Showers / Wind"
-msgstr "Protrhávání sněhové přeháňky, vítr"
-
-#: ../panel-plugin/weather-translate.c:146
-msgid "Scattered T-Storms"
-msgstr "Protrhávání bouřky"
-
-#: ../panel-plugin/weather-translate.c:147
-msgid "Showers"
-msgstr "Dešťové přeháňky"
-
-#: ../panel-plugin/weather-translate.c:148
-msgid "Showers / Wind"
-msgstr "Dešťové přeháňky, vítr"
-
-#: ../panel-plugin/weather-translate.c:149
-msgid "Showers Early"
-msgstr "Brzké přeháňky"
-
-#: ../panel-plugin/weather-translate.c:150
-msgid "Showers in the Vicinity"
-msgstr "Blížící se přeháňky"
-
-#: ../panel-plugin/weather-translate.c:151
-msgid "Showers Late"
-msgstr "Později přeháňky"
-
-#: ../panel-plugin/weather-translate.c:152
-msgid "Sleet and Snow"
-msgstr "Plískanice a sněžení"
-
-#: ../panel-plugin/weather-translate.c:153
-msgid "Smoke"
-msgstr "Kouřmo"
-
-#: ../panel-plugin/weather-translate.c:154
-msgid "Snow"
-msgstr "Sněžení"
-
-#: ../panel-plugin/weather-translate.c:155
-msgid "Snow and Rain"
-msgstr "Déšť se sněhem"
-
-#: ../panel-plugin/weather-translate.c:156
-msgid "Snow or Rain"
-msgstr "Sněžení nebo déšť"
-
-#: ../panel-plugin/weather-translate.c:157
-msgid "Snow Shower"
-msgstr "Sněhové přeháňky"
-
-#: ../panel-plugin/weather-translate.c:158
-msgid "Light Snow Shower"
-msgstr "Slabé sněhové přeháňky"
-
-#: ../panel-plugin/weather-translate.c:159
-msgid "Snow Shower / Wind"
-msgstr "Sněhové přeháňky, vítr"
-
-#: ../panel-plugin/weather-translate.c:160
-msgid "Snow Showers Early"
-msgstr "Brzké sněhové přeháňky"
-
-#: ../panel-plugin/weather-translate.c:161
-msgid "Snow Showers early"
-msgstr "Brzké sněhové přeháňky"
-
-#: ../panel-plugin/weather-translate.c:162
-msgid "Snow Showers Late"
-msgstr "Později sněhové přeháňky"
-
-#: ../panel-plugin/weather-translate.c:163
-msgid "Snow to Rain"
-msgstr "Déšť se sněhem"
-
-#: ../panel-plugin/weather-translate.c:164
-msgid "Sunny"
-msgstr "Slunečno"
-
-#: ../panel-plugin/weather-translate.c:165
-msgid "Sunny / Wind"
-msgstr "Slunečno, vítr"
-
-#: ../panel-plugin/weather-translate.c:166
-msgid "T-Showers"
-msgstr "Dešťové přeháňky s bouřkou"
-
-#: ../panel-plugin/weather-translate.c:167
-msgid "T-Storm"
-msgstr "Bouřka"
-
-#: ../panel-plugin/weather-translate.c:168
-msgid "T-Storms"
-msgstr "Bouřky"
-
-#: ../panel-plugin/weather-translate.c:169
-msgid "T-Storms / Wind"
-msgstr "Bouřka, vítr"
-
-#: ../panel-plugin/weather-translate.c:170
-msgid "T-Storms Early"
-msgstr "Brzká bouřka"
-
-#: ../panel-plugin/weather-translate.c:171
-msgid "Thunder"
-msgstr "Bouřka"
-
-#: ../panel-plugin/weather-translate.c:172
-msgid "Thunder in the Vicinity"
-msgstr "Blížící se bouřka"
-
-#: ../panel-plugin/weather-translate.c:173
-msgid "Thunder in the Vincinity"
-msgstr "Blížící se bouřka"
-
-#: ../panel-plugin/weather-translate.c:174
-msgid "Variable Cloudiness"
-msgstr "Vývoj oblačnosti"
-
-#: ../panel-plugin/weather-translate.c:175
-msgid "Variable Clouds"
-msgstr "Vývoj oblaků"
-
-#: ../panel-plugin/weather-translate.c:176
-msgid "Windy/Rain"
-msgstr "Větrno, déšť"
-
-#: ../panel-plugin/weather-translate.c:177
-msgid "Windy/Snow"
-msgstr "Větrno, sněžení"
-
-#: ../panel-plugin/weather-translate.c:178
-msgid "Wintry Mix"
-msgstr "Zimní počasí"
-
-#: ../panel-plugin/weather-translate.c:185
-msgid "rising"
-msgstr "vzestup"
-
-#: ../panel-plugin/weather-translate.c:186
-msgid "steady"
-msgstr "setrvalý stav"
-
-#: ../panel-plugin/weather-translate.c:187
-msgid "falling"
-msgstr "pokles"
-
-#: ../panel-plugin/weather-translate.c:194
-msgid "Low"
-msgstr "Nízký"
-
-#: ../panel-plugin/weather-translate.c:195
-msgid "Moderate"
-msgstr "Střední"
-
-#: ../panel-plugin/weather-translate.c:196
-msgid "High"
-msgstr "Vysoký"
-
-#: ../panel-plugin/weather-translate.c:197
-msgid "Very High"
-msgstr "Velmi vysoký"
-
-#: ../panel-plugin/weather-translate.c:198
-msgid "Extreme"
-msgstr "Extrémní"
-
-#: ../panel-plugin/weather-translate.c:205
+#: ../panel-plugin/weather-translate.c:34
 msgid "S"
 msgstr "J"
 
-#: ../panel-plugin/weather-translate.c:206
+#: ../panel-plugin/weather-translate.c:35
 msgid "SSW"
 msgstr "JJZ"
 
-#: ../panel-plugin/weather-translate.c:207
+#: ../panel-plugin/weather-translate.c:36
 msgid "SW"
 msgstr "JZSW"
 
-#: ../panel-plugin/weather-translate.c:208
+#: ../panel-plugin/weather-translate.c:37
 msgid "WSW"
 msgstr "ZJZ"
 
-#: ../panel-plugin/weather-translate.c:209
+#: ../panel-plugin/weather-translate.c:38
 msgid "W"
 msgstr "Z"
 
-#: ../panel-plugin/weather-translate.c:210
+#: ../panel-plugin/weather-translate.c:39
 msgid "WNW"
 msgstr "ZSZ"
 
-#: ../panel-plugin/weather-translate.c:211
+#: ../panel-plugin/weather-translate.c:40
 msgid "NW"
 msgstr "SZ"
 
-#: ../panel-plugin/weather-translate.c:212
+#: ../panel-plugin/weather-translate.c:41
 msgid "NNW"
 msgstr "SSZ"
 
-#: ../panel-plugin/weather-translate.c:213
+#: ../panel-plugin/weather-translate.c:42
 msgid "N"
 msgstr "S"
 
-#: ../panel-plugin/weather-translate.c:214
+#: ../panel-plugin/weather-translate.c:43
 msgid "NNE"
 msgstr "SSV"
 
-#: ../panel-plugin/weather-translate.c:215
+#: ../panel-plugin/weather-translate.c:44
 msgid "NE"
 msgstr "SV"
 
-#: ../panel-plugin/weather-translate.c:216
+#: ../panel-plugin/weather-translate.c:45
 msgid "ENE"
 msgstr "VSV"
 
-#: ../panel-plugin/weather-translate.c:217
+#: ../panel-plugin/weather-translate.c:46
 msgid "E"
 msgstr "V"
 
-#: ../panel-plugin/weather-translate.c:218
+#: ../panel-plugin/weather-translate.c:47
 msgid "ESE"
 msgstr "VJV"
 
-#: ../panel-plugin/weather-translate.c:219
+#: ../panel-plugin/weather-translate.c:48
 msgid "SE"
 msgstr "JV"
 
-#: ../panel-plugin/weather-translate.c:220
+#: ../panel-plugin/weather-translate.c:49
 msgid "SSE"
 msgstr "JJV"
 
-#: ../panel-plugin/weather-translate.c:221
+#: ../panel-plugin/weather-translate.c:50
 msgid "CALM"
 msgstr "CALM"
 
-#: ../panel-plugin/weather-translate.c:341
-#, c-format
-msgid "%x at %X Local Time"
-msgstr "%x v %X místního času"
+#: ../panel-plugin/weather-translate.c:95
+#: ../panel-plugin/weather-translate.c:111
+msgid "Sunny"
+msgstr "Slunečno"
 
-#: ../panel-plugin/weather-translate.c:447
+#: ../panel-plugin/weather-translate.c:95
+#: ../panel-plugin/weather-translate.c:111
+msgid "Clear"
+msgstr "Jasno"
+
+#: ../panel-plugin/weather-translate.c:96
+#: ../panel-plugin/weather-translate.c:112
+#, fuzzy
+msgid "Lightly cloudy"
+msgstr "Oblačno"
+
+#: ../panel-plugin/weather-translate.c:97
+#, fuzzy
+msgid "Partly cloudy"
+msgstr "Polojasno"
+
+#: ../panel-plugin/weather-translate.c:98
+msgid "Cloudy"
+msgstr "Oblačno"
+
+#: ../panel-plugin/weather-translate.c:99
+#: ../panel-plugin/weather-translate.c:113
+#, fuzzy
+msgid "Sunny, rain showers"
+msgstr "Silné dešťové přeháňky"
+
+#: ../panel-plugin/weather-translate.c:99
+#: ../panel-plugin/weather-translate.c:113
+#, fuzzy
+msgid "Clear, rain showers"
+msgstr "Silné dešťové přeháňky"
+
+#: ../panel-plugin/weather-translate.c:100
+msgid "Sunny, rain showers with thunder"
+msgstr ""
+
+#: ../panel-plugin/weather-translate.c:101
+msgid "Clear, rain showers with thunder"
+msgstr ""
+
+#: ../panel-plugin/weather-translate.c:102
+msgid "Sunny, sleet"
+msgstr ""
+
+#: ../panel-plugin/weather-translate.c:102
+msgid "Clear, sleet"
+msgstr ""
+
+#: ../panel-plugin/weather-translate.c:103
+#, fuzzy
+msgid "Sunny, snow"
+msgstr "Slunečno"
+
+#: ../panel-plugin/weather-translate.c:103
+#, fuzzy
+msgid "Clear, snow"
+msgstr "Vyjasňování"
+
+#: ../panel-plugin/weather-translate.c:104
+#, fuzzy
+msgid "Rain showers"
+msgstr "Dešťové přeháňky"
+
+#: ../panel-plugin/weather-translate.c:105
+msgid "Rain"
+msgstr "Déšť"
+
+#: ../panel-plugin/weather-translate.c:106
+#, fuzzy
+msgid "Rain with thunder"
+msgstr "Déšť, bouřka"
+
+#: ../panel-plugin/weather-translate.c:107
+msgid "Sleet"
+msgstr "Plískanice"
+
+#: ../panel-plugin/weather-translate.c:108
+msgid "Snow"
+msgstr "Sněžení"
+
+#: ../panel-plugin/weather-translate.c:109
+msgid "Snow with thunder"
+msgstr ""
+
+#: ../panel-plugin/weather-translate.c:114
+#, fuzzy
+msgid "Sunny, Snow"
+msgstr "Slunečno"
+
+#: ../panel-plugin/weather-translate.c:114
+#, fuzzy
+msgid "Clear, Snow"
+msgstr "Vydatné sněžení"
+
+#: ../panel-plugin/weather-translate.c:115
+msgid "Sunny, Sleet and thunder"
+msgstr ""
+
+#: ../panel-plugin/weather-translate.c:115
+msgid "Clear, sleet and thunder"
+msgstr ""
+
+#: ../panel-plugin/weather-translate.c:116
+msgid "Sunny, Snow and thunder"
+msgstr ""
+
+#: ../panel-plugin/weather-translate.c:116
+msgid "Clear, snow and thunder"
+msgstr ""
+
+#: ../panel-plugin/weather-translate.c:117
+#, fuzzy
+msgid "Rain showers with thunder"
+msgstr "Déšť, bouřka"
+
+#: ../panel-plugin/weather-translate.c:118
+#, fuzzy
+msgid "Sleet and thunder"
+msgstr "Plískanice a sněžení"
+
+#: ../panel-plugin/weather-translate.c:215
 msgid "calm"
 msgstr "bezvětří"
 
-#: ../panel-plugin/weather-translate.c:449
+#: ../panel-plugin/weather-translate.c:217
 msgid "N/A"
 msgstr "Nedostupné"
 
-#: ../panel-plugin/weather-translate.c:504
-msgid "Unlimited"
-msgstr "Neomezeno"
-
-#: ../panel-plugin/weather.desktop.in.in.h:1
+#: ../panel-plugin/weather.desktop.in.in.h:2
 msgid "Show current weather conditions"
 msgstr "Sleduje aktuální počasí a předpovědi"
+
+#~ msgid "V"
+#~ msgstr "V"
+
+#~ msgid "U"
+#~ msgstr "U"
+
+#~ msgid "D"
+#~ msgstr "D"
+
+#~ msgid "WG"
+#~ msgstr "NV"
+
+#~ msgid "Windchill (F)"
+#~ msgstr "Teplota větru (F)"
+
+#~ msgid "Atmosphere state (P)"
+#~ msgstr "Tlaková tendence (P)"
+
+#~ msgid "Wind gust (WG)"
+#~ msgstr "Nárazy větru (WG)"
+
+#~ msgid "Visibility (V)"
+#~ msgstr "Viditelnost (V)"
+
+#~ msgid "UV Index (UV)"
+#~ msgstr "Index UV záření (UV)"
+
+#~ msgid "Dewpoint (DP)"
+#~ msgstr "Rosný bod (DP)"
+
+#~ msgid "mi"
+#~ msgstr "mi"
+
+#~ msgid ""
+#~ "Observation station located in %s\n"
+#~ "Last update: %s.\n"
+#~ msgstr ""
+#~ "Pozorovací stanice: %s\n"
+#~ "Poslední aktualizace: %s.\n"
+
+#~ msgid "Windchill"
+#~ msgstr "Teplota větru"
+
+#~ msgid "Description"
+#~ msgstr "Popis"
+
+#~ msgid "Dew point"
+#~ msgstr "Rosný bod"
+
+#~ msgid "Gusts"
+#~ msgstr "Nárazy"
+
+#~ msgid ""
+#~ "\n"
+#~ "UV\n"
+#~ msgstr ""
+#~ "\n"
+#~ "UV záření\n"
+
+#~ msgid "Index"
+#~ msgstr "Index"
+
+#~ msgid "Risk"
+#~ msgstr "Riziko"
+
+#~ msgid "State"
+#~ msgstr "Tendence"
+
+#~ msgid ""
+#~ "\n"
+#~ "Sun\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Slunce\n"
+
+#~ msgid "Rise"
+#~ msgstr "Východ"
+
+#~ msgid "Set"
+#~ msgstr "Západ"
+
+#~ msgid ""
+#~ "\n"
+#~ "Other\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Ostatní\n"
+
+#~ msgid "Visibility"
+#~ msgstr "Viditelnost"
+
+#~ msgid ""
+#~ "\n"
+#~ "More on weather.com\n"
+#~ msgstr ""
+#~ "\n"
+#~ "Více na weather.com\n"
+
+#~ msgid "Day: %s"
+#~ msgstr "Přes den: %s"
+
+#~ msgid "<b>Temperature</b>"
+#~ msgstr "<b>Teplota</b>"
+
+#~ msgid "<b>Wind</b>"
+#~ msgstr "<b>Vítr</b>"
+
+#~ msgid "Forecast"
+#~ msgstr "Předpověď počasí"
+
+#~ msgid "AM Clouds / PM Sun"
+#~ msgstr "Dopoledne oblačno, odpoledne slunečno"
+
+#~ msgid "AM Light Rain"
+#~ msgstr "Ráno slabé přeháňky"
+
+#~ msgid "AM Light Snow"
+#~ msgstr "Ráno slabé sněžení"
+
+#~ msgid "AM Rain / Snow Showers"
+#~ msgstr "Ráno dešťové a sněhové přeháňky"
+
+#~ msgid "AM Rain / Wind"
+#~ msgstr "Ráno déšť, vítr"
+
+#~ msgid "AM Showers"
+#~ msgstr "Ráno přeháňky"
+
+#~ msgid "AM Showers / Wind"
+#~ msgstr "Ráno přeháňky, vítr"
+
+#~ msgid "AM Snow Showers"
+#~ msgstr "Ráno sněhové přeháňky"
+
+#~ msgid "AM Snow Showers / Wind"
+#~ msgstr "Ráno sněhové přeháňky, vítr"
+
+#~ msgid "AM T-Storms"
+#~ msgstr "Ráno bouřky"
+
+#~ msgid "Becoming Cloudy"
+#~ msgstr "Místy zataženo"
+
+#~ msgid "Blizzard"
+#~ msgstr "Blizard"
+
+#~ msgid "Blizzard Conditions"
+#~ msgstr "Podmínky blizardu"
+
+#~ msgid "Blowing Snow"
+#~ msgstr "Navátý sníh"
+
+#~ msgid "Chance of Rain"
+#~ msgstr "Srážky"
+
+#~ msgid "Chance of Rain/Snow"
+#~ msgstr "Dešťové přeháňky se sněhem"
+
+#~ msgid "Chance of Showers"
+#~ msgstr "Dešťové přeháňky"
+
+#~ msgid "Chance of Snow"
+#~ msgstr "Sněžení"
+
+#~ msgid "Chance of Snow/Rain"
+#~ msgstr "Sněhové přeháňky přecházející v dešťové"
+
+#~ msgid "Chance of T-Storm"
+#~ msgstr "Bouřka"
+
+#~ msgid "Clouds Early / Clearing Late"
+#~ msgstr "Oblačno, později vyjasňování"
+
+#~ msgid "Cloudy / Wind"
+#~ msgstr "Oblačno, vítr"
+
+#~ msgid "Cloudy Periods"
+#~ msgstr "Místy zataženo"
+
+#~ msgid "Continued Hot"
+#~ msgstr "Dlouhotrvající horko"
+
+#~ msgid "Cumulonimbus Clouds Observed"
+#~ msgstr "Zpozorovány bouřkové mraky"
+
+#~ msgid "Drifting Snow"
+#~ msgstr "Ustupující sníh"
+
+#~ msgid "Drifting Snow and Windy"
+#~ msgstr "Ustupující sníh, vítr"
+
+#~ msgid "Drizzle"
+#~ msgstr "Mrholení"
+
+#~ msgid "Dry"
+#~ msgstr "Sucho"
+
+#~ msgid "Dust"
+#~ msgstr "Prach"
+
+#~ msgid "Fair"
+#~ msgstr "Hezky"
+
+#~ msgid "Few Showers"
+#~ msgstr "Několik přeháněk"
+
+#~ msgid "Few Snow Showers"
+#~ msgstr "Několik sněhových přeháněk"
+
+#~ msgid "Freezing Drizzle"
+#~ msgstr "Mrznoucí mrholení"
+
+#~ msgid "Freezing Rain"
+#~ msgstr "Mrznoucí déšť"
+
+#~ msgid "Freezing Rain/Snow"
+#~ msgstr "Namrzající déšť se sněhem"
+
+#~ msgid "Frigid"
+#~ msgstr "Velmi chladno"
+
+#~ msgid "Frozen Precip"
+#~ msgstr "Očekávaný mráz"
+
+#~ msgid "Hail"
+#~ msgstr "Přívalový déšť"
+
+#~ msgid "Haze"
+#~ msgstr "Mlhavo"
+
+#~ msgid "Hazy"
+#~ msgstr "Mlhavo"
+
+#~ msgid "Heavy Rain"
+#~ msgstr "Vydatný déšť"
+
+#~ msgid "Hot And Humid"
+#~ msgstr "Velmi horko a vlhko"
+
+#~ msgid "Hot!"
+#~ msgstr "Horko!"
+
+#~ msgid "Ice Crystals"
+#~ msgstr "Ledové krystalky"
+
+#~ msgid "Ice/Snow Mixture"
+#~ msgstr "Ledové krystalky a sněžení"
+
+#~ msgid "Increasing Clouds"
+#~ msgstr "Oblačno"
+
+#~ msgid "Isolated Showers"
+#~ msgstr "Místy dešťové přeháňky"
+
+#~ msgid "Isolated T-Storms"
+#~ msgstr "Místy bouřky"
+
+#~ msgid "Light Drizzle"
+#~ msgstr "Lehké mrholení"
+
+#~ msgid "Light Drizzle and Windy"
+#~ msgstr "Slabé mrholení s větrem"
+
+#~ msgid "Light Rain"
+#~ msgstr "Slabý déšť"
+
+#~ msgid "Light Rain / Wind"
+#~ msgstr "Slabé přeháňky s přechodně zesilujícím větrem"
+
+#~ msgid "Light rain late"
+#~ msgstr "Později slabý déšť"
+
+#~ msgid "Light Rain Shower"
+#~ msgstr "Slabé přeháňky"
+
+#~ msgid "Light Snow"
+#~ msgstr "Slabé sněžení"
+
+#~ msgid "Lightning Observed"
+#~ msgstr "Zpozorovány blesky"
+
+#~ msgid "Mild and Breezy"
+#~ msgstr "Bezvětří nebo slabý vánek"
+
+#~ msgid "Mist"
+#~ msgstr "Mlha"
+
+#~ msgid "Mostly Clear"
+#~ msgstr "Skoro jasno"
+
+#~ msgid "Mostly Cloudy / Wind"
+#~ msgstr "Oblačno, vítr"
+
+#~ msgid "Mostly Cloudy and Windy"
+#~ msgstr "Oblačno s větrem"
+
+#~ msgid "Mostly Sunny"
+#~ msgstr "Polojasno"
+
+#~ msgid "Mostly Sunny / Wind"
+#~ msgstr "Polojasno, vítr"
+
+#~ msgid "N/A Not Available"
+#~ msgstr "N/A Nedostupný"
+
+#~ msgid "Occasional Sunshine"
+#~ msgstr "Příležitostný svit slunce"
+
+#~ msgid "Overcast"
+#~ msgstr "Zataženo"
+
+#~ msgid "Partial Clearing"
+#~ msgstr "Protrhávání oblačnosti"
+
+#~ msgid "Partial Fog"
+#~ msgstr "Slabá mlha"
+
+#~ msgid "Partial Sunshine"
+#~ msgstr "Polojasno až skoro jasno"
+
+#~ msgid "Partly Cloudy / Wind"
+#~ msgstr "Polojasno s větrem"
+
+#~ msgid "Partly Cloudy and Windy"
+#~ msgstr "Polojasno s větrem"
+
+#~ msgid "Partly Sunny"
+#~ msgstr "Oblačno až polojasno"
+
+#~ msgid "PM Light Rain"
+#~ msgstr "Odpoledne slabé přeháňky"
+
+#~ msgid "PM Light Snow"
+#~ msgstr "Odpoledne slabé sněžení"
+
+#~ msgid "PM Rain / Wind"
+#~ msgstr "Odpoledne déšť, vítr"
+
+#~ msgid "PM Rain / Snow Showers"
+#~ msgstr "Odpolední dešťové nebo sněhové přeháňky"
+
+#~ msgid "PM Showers"
+#~ msgstr "Odpoledne přeháňky"
+
+#~ msgid "PM Snow Showers"
+#~ msgstr "Odpoledne sněhové přeháňky"
+
+#~ msgid "PM T-Storms"
+#~ msgstr "Odpoledne bouřky"
+
+#~ msgid "Rain / Snow"
+#~ msgstr "Déšť se sněhem"
+
+#~ msgid "Rain / Snow / Wind"
+#~ msgstr "Déšť se sněhem, vítr"
+
+#~ msgid "Rain / Snow Late"
+#~ msgstr "Déšť se sněhem"
+
+#~ msgid "Rain / Snow Showers"
+#~ msgstr "Dešťové a sněhové přeháňky"
+
+#~ msgid "Rain / Snow Showers Early"
+#~ msgstr "Dešťové nebo sněhové přeháňky"
+
+#~ msgid "Rain / Wind"
+#~ msgstr "Déšť, vítr"
+
+#~ msgid "Rain and Sleet"
+#~ msgstr "Déšť a plískanice"
+
+#~ msgid "Rain and Snow"
+#~ msgstr "Déšť se sněhem"
+
+#~ msgid "Rain or Snow"
+#~ msgstr "Déšť nebo sněžení"
+
+#~ msgid "Rain Shower and Windy"
+#~ msgstr "Dešťové přeháňky, větrno"
+
+#~ msgid "Rain to snow"
+#~ msgstr "Sněžení přecházející v déšť"
+
+#~ msgid "Rain/Lightning"
+#~ msgstr "Déšt, bouřka"
+
+#~ msgid "Scattered Showers"
+#~ msgstr "Protrhávání oblačnosti s přeháňkou"
+
+#~ msgid "Scattered Snow Showers"
+#~ msgstr "Protrhávání sněhové přeháňky"
+
+#~ msgid "Scattered Snow Showers / Wind"
+#~ msgstr "Protrhávání sněhové přeháňky, vítr"
+
+#~ msgid "Scattered T-Storms"
+#~ msgstr "Protrhávání bouřky"
+
+#~ msgid "Showers"
+#~ msgstr "Dešťové přeháňky"
+
+#~ msgid "Showers / Wind"
+#~ msgstr "Dešťové přeháňky, vítr"
+
+#~ msgid "Showers Early"
+#~ msgstr "Brzké přeháňky"
+
+#~ msgid "Showers in the Vicinity"
+#~ msgstr "Blížící se přeháňky"
+
+#~ msgid "Showers Late"
+#~ msgstr "Později přeháňky"
+
+#~ msgid "Smoke"
+#~ msgstr "Kouřmo"
+
+#~ msgid "Snow and Rain"
+#~ msgstr "Déšť se sněhem"
+
+#~ msgid "Snow or Rain"
+#~ msgstr "Sněžení nebo déšť"
+
+#~ msgid "Snow Shower"
+#~ msgstr "Sněhové přeháňky"
+
+#~ msgid "Light Snow Shower"
+#~ msgstr "Slabé sněhové přeháňky"
+
+#~ msgid "Snow Shower / Wind"
+#~ msgstr "Sněhové přeháňky, vítr"
+
+#~ msgid "Snow Showers Early"
+#~ msgstr "Brzké sněhové přeháňky"
+
+#~ msgid "Snow Showers early"
+#~ msgstr "Brzké sněhové přeháňky"
+
+#~ msgid "Snow Showers Late"
+#~ msgstr "Později sněhové přeháňky"
+
+#~ msgid "Snow to Rain"
+#~ msgstr "Déšť se sněhem"
+
+#~ msgid "Sunny / Wind"
+#~ msgstr "Slunečno, vítr"
+
+#~ msgid "T-Showers"
+#~ msgstr "Dešťové přeháňky s bouřkou"
+
+#~ msgid "T-Storm"
+#~ msgstr "Bouřka"
+
+#~ msgid "T-Storms"
+#~ msgstr "Bouřky"
+
+#~ msgid "T-Storms / Wind"
+#~ msgstr "Bouřka, vítr"
+
+#~ msgid "T-Storms Early"
+#~ msgstr "Brzká bouřka"
+
+#~ msgid "Thunder"
+#~ msgstr "Bouřka"
+
+#~ msgid "Thunder in the Vicinity"
+#~ msgstr "Blížící se bouřka"
+
+#~ msgid "Thunder in the Vincinity"
+#~ msgstr "Blížící se bouřka"
+
+#~ msgid "Variable Clouds"
+#~ msgstr "Vývoj oblaků"
+
+#~ msgid "Windy/Rain"
+#~ msgstr "Větrno, déšť"
+
+#~ msgid "Windy/Snow"
+#~ msgstr "Větrno, sněžení"
+
+#~ msgid "Wintry Mix"
+#~ msgstr "Zimní počasí"
+
+#~ msgid "rising"
+#~ msgstr "vzestup"
+
+#~ msgid "steady"
+#~ msgstr "setrvalý stav"
+
+#~ msgid "falling"
+#~ msgstr "pokles"
+
+#~ msgid "Low"
+#~ msgstr "Nízký"
+
+#~ msgid "Moderate"
+#~ msgstr "Střední"
+
+#~ msgid "High"
+#~ msgstr "Vysoký"
+
+#~ msgid "Very High"
+#~ msgstr "Velmi vysoký"
+
+#~ msgid "Extreme"
+#~ msgstr "Extrémní"
+
+#~ msgid "%x at %X Local Time"
+#~ msgstr "%x v %X místního času"
+
+#~ msgid "Unlimited"
+#~ msgstr "Neomezeno"
 
 #~ msgid "Summary"
 #~ msgstr "Souhrn"
@@ -1126,9 +1240,6 @@ msgstr "Sleduje aktuální počasí a předpovědi"
 
 #~ msgid "Flurries"
 #~ msgstr "Nárazy větru"
-
-#~ msgid "Sleet"
-#~ msgstr "Plískanice"
 
 #~ msgid "Thunder storms"
 #~ msgstr "Bouřky"
