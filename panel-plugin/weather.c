@@ -1018,6 +1018,7 @@ xfceweather_free (XfcePanelPlugin  *plugin,
   g_free (data->lat);
   g_free (data->lon);
   g_free (data->location_name);
+  g_free (data->location_name_short);
   g_free (data->proxy_host);
 
   /* Free Array */
