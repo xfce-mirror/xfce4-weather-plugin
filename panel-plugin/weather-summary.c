@@ -508,6 +508,8 @@ make_forecast (xfceweather_data *data)
                     label = gtk_label_new(value);
                     gtk_box_pack_start(GTK_BOX(forecast_box), label, TRUE, TRUE, 0);
                     g_free(value);
+
+                    gtk_widget_set_size_request(GTK_WIDGET(forecast_box), 150, -1);
                 }
                 xml_time_free(fcdata);
             }
@@ -524,7 +526,7 @@ make_forecast (xfceweather_data *data)
 static GtkWidget *
 create_forecast_tab (xfceweather_data *data, GtkWidget *window)
 {
-    GtkWidget   *align, *hbox, *scrolled, *table;
+    GtkWidget   *ebox, *align, *hbox, *scrolled, *table;
     GdkWindow   *win;
     GdkScreen   *screen;
     GdkRectangle rect;
@@ -566,8 +568,14 @@ create_forecast_tab (xfceweather_data *data, GtkWidget *window)
         gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(scrolled), align);
         gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled),
                                        GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
-        gtk_widget_set_size_request(GTK_WIDGET(scrolled), 550, height_max);
-        return scrolled;
+        if (rect.width <= 720)
+            gtk_widget_set_size_request(GTK_WIDGET(scrolled), 650, height_max);
+        else
+            gtk_widget_set_size_request(GTK_WIDGET(scrolled), 700, height_max);
+        ebox = gtk_event_box_new();
+        gtk_event_box_set_visible_window(ebox, TRUE);
+        gtk_container_add(GTK_CONTAINER(ebox), GTK_WIDGET(scrolled));
+        return ebox;
     }
 }
 
