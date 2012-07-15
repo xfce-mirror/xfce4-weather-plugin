@@ -4,12 +4,15 @@
 # Yuko Iwamatsu <nigauri@gmail.org>, 2008
 # Nobuhiro Iwamatsu <iwamatsu@nigauri.org>, 2008.
 #
+# 翻訳メモ:
+# Sunny (日中の晴れ), Clear (夜間の晴れ)
+#
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce-weather-plugin 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-13 16:43+0200\n"
-"PO-Revision-Date: 2011-01-16 00:53+0900\n"
+"POT-Creation-Date: 2012-07-15 22:25+0900\n"
+"PO-Revision-Date: 2012-07-15 22:25+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <xfce-i18n@xfce.org>\n"
 "Language: ja\n"
@@ -34,56 +37,58 @@ msgid "WD"
 msgstr "風向"
 
 #: ../panel-plugin/weather.c:139
+#, fuzzy
+msgid "WDD"
+msgstr "風向"
+
+#: ../panel-plugin/weather.c:142
 msgid "H"
 msgstr "湿度"
 
-#: ../panel-plugin/weather.c:142
-#, fuzzy
-msgid "CL"
-msgstr "無風"
-
 #: ../panel-plugin/weather.c:145
-#, fuzzy
-msgid "CM"
-msgstr "無風"
+msgid "CL"
+msgstr "下層雲"
 
 #: ../panel-plugin/weather.c:148
-#, fuzzy
-msgid "CH"
-msgstr "湿度"
+msgid "CM"
+msgstr "中層雲"
 
 #: ../panel-plugin/weather.c:151
-msgid "C"
-msgstr ""
+msgid "CH"
+msgstr "上層雲"
 
 #: ../panel-plugin/weather.c:154
-msgid "F"
-msgstr "体感"
+msgid "C"
+msgstr "雲量"
 
 #: ../panel-plugin/weather.c:157
+msgid "F"
+msgstr "霧"
+
+#: ../panel-plugin/weather.c:160
 msgid "R"
-msgstr ""
+msgstr "降水量"
 
-#: ../panel-plugin/weather.c:233
+#: ../panel-plugin/weather.c:236
 msgid "No Data"
-msgstr ""
+msgstr "データ無し"
 
-#: ../panel-plugin/weather.c:260 ../panel-plugin/weather.c:871
+#: ../panel-plugin/weather.c:263 ../panel-plugin/weather.c:874
 msgid "Cannot update weather data"
 msgstr "気象データを更新できません"
 
-#: ../panel-plugin/weather.c:801
+#: ../panel-plugin/weather.c:804
 #, c-format
 msgid "Unable to open the following url: %s"
 msgstr "次の URL を開くことができません: %s"
 
-#: ../panel-plugin/weather.c:829 ../panel-plugin/weather-summary.c:593
+#: ../panel-plugin/weather.c:832 ../panel-plugin/weather-summary.c:593
 #: ../panel-plugin/weather.desktop.in.in.h:1
 msgid "Weather Update"
 msgstr "現在のお天気"
 
 #. add refresh button to right click menu, for people who missed the middle mouse click feature
-#: ../panel-plugin/weather.c:960 ../panel-plugin/weather-summary.c:638
+#: ../panel-plugin/weather.c:963 ../panel-plugin/weather-summary.c:638
 msgid "_Forecast"
 msgstr "予報(_F)"
 
@@ -101,16 +106,15 @@ msgstr "風速 (WS)"
 
 #: ../panel-plugin/weather-config.c:40
 msgid "Wind speed - Beaufort scale (WB)"
-msgstr ""
+msgstr "風速・ビューフォート階級 (WB)"
 
 #: ../panel-plugin/weather-config.c:41
 msgid "Wind direction (WD)"
 msgstr "風向 (WD)"
 
 #: ../panel-plugin/weather-config.c:42
-#, fuzzy
 msgid "Wind direction in degrees (WD)"
-msgstr "風向 (WD)"
+msgstr "風向・角度 (WD)"
 
 #: ../panel-plugin/weather-config.c:43
 msgid "Humidity (H)"
@@ -118,29 +122,27 @@ msgstr "湿度 (H)"
 
 #: ../panel-plugin/weather-config.c:44
 msgid "Low cloudiness (CL)"
-msgstr ""
+msgstr "下層雲量 (CL)"
 
 #: ../panel-plugin/weather-config.c:45
 msgid "Medium cloudiness (CM)"
-msgstr ""
+msgstr "中層雲量 (CM)"
 
 #: ../panel-plugin/weather-config.c:46
 msgid "High cloudiness (CH)"
-msgstr ""
+msgstr "上層雲量 (CH)"
 
 #: ../panel-plugin/weather-config.c:47
-#, fuzzy
 msgid "Overall cloudiness (C)"
-msgstr "変わりやすい曇り"
+msgstr "全雲量 (C)"
 
 #: ../panel-plugin/weather-config.c:48
 msgid "Fog (F)"
-msgstr ""
+msgstr "霧 (F)"
 
 #: ../panel-plugin/weather-config.c:49
-#, fuzzy
 msgid "Precipitations (R)"
-msgstr "<b>降水確率</b>"
+msgstr "降水量 (R)"
 
 #: ../panel-plugin/weather-config.c:259
 msgid "Please enter proxy settings"
@@ -155,9 +157,8 @@ msgid "Detecting..."
 msgstr "検出しています..."
 
 #: ../panel-plugin/weather-config.c:379
-#, fuzzy
 msgid "System of _Measurement:"
-msgstr "測定単位:"
+msgstr "測定単位(_M):"
 
 #: ../panel-plugin/weather-config.c:384
 msgid "Imperial"
@@ -172,60 +173,54 @@ msgid "Location:"
 msgstr "地域:"
 
 #: ../panel-plugin/weather-config.c:431
-#, fuzzy
 msgid "Chan_ge..."
-msgstr "変更..."
+msgstr "変更(_G)..."
 
 #. proxy
 #: ../panel-plugin/weather-config.c:444
 msgid "Proxy server:"
-msgstr "プロキシサーバ:"
+msgstr "プロキシサーバー:"
 
 #: ../panel-plugin/weather-config.c:447
-#, fuzzy
 msgid "_Use proxy server"
-msgstr "プロキシサーバを使用する"
+msgstr "プロキシサーバーを使用する(_U)"
 
 #: ../panel-plugin/weather-config.c:449
-#, fuzzy
 msgid "Auto-detect from _environment"
-msgstr "環境から自動検出する"
+msgstr "環境から自動検出する(_E)"
 
 #. number of days shown in forecast
 #: ../panel-plugin/weather-config.c:514
 msgid "Number of _forecast days:"
-msgstr ""
+msgstr "予報日数(_F):"
 
 #: ../panel-plugin/weather-config.c:536
-#, fuzzy
 msgid "_Labels to display"
-msgstr "表示するラベル"
+msgstr "表示するラベル(_L)"
 
 #: ../panel-plugin/weather-config.c:585
-#, fuzzy
 msgid "_Animate transitions between labels"
-msgstr "ラベルの切り換えをアニメーションで行う"
+msgstr "ラベルの切り換えをアニメーションで行う(_A)"
 
 #: ../panel-plugin/weather-data.c:131
 msgid "ft"
-msgstr ""
+msgstr "ft"
 
 #: ../panel-plugin/weather-data.c:131
-#, fuzzy
 msgid "m"
-msgstr "km"
+msgstr "m"
 
 #: ../panel-plugin/weather-data.c:133
 msgid "°F"
-msgstr ""
+msgstr "°F"
 
 #: ../panel-plugin/weather-data.c:133
 msgid "°C"
-msgstr ""
+msgstr "°C"
 
 #: ../panel-plugin/weather-data.c:135
 msgid "psi"
-msgstr ""
+msgstr "psi"
 
 #: ../panel-plugin/weather-data.c:135
 msgid "hPa"
@@ -241,11 +236,11 @@ msgstr "km/h"
 
 #: ../panel-plugin/weather-data.c:150
 msgid "in"
-msgstr "インチ"
+msgstr "in"
 
 #: ../panel-plugin/weather-data.c:150
 msgid "mm"
-msgstr ""
+msgstr "mm"
 
 #. display error
 #: ../panel-plugin/weather-http.c:203
@@ -318,25 +313,27 @@ msgstr ""
 
 #: ../panel-plugin/weather-summary.c:278
 msgid "Coordinates\n"
-msgstr ""
+msgstr "位置\n"
 
 #: ../panel-plugin/weather-summary.c:279
 msgid "Altitude"
-msgstr ""
+msgstr "海抜"
 
 #: ../panel-plugin/weather-summary.c:280
 msgid "Latitude"
-msgstr ""
+msgstr "緯度"
 
 #: ../panel-plugin/weather-summary.c:281
 msgid "Longitude"
-msgstr ""
+msgstr "経度"
 
 #: ../panel-plugin/weather-summary.c:283
 msgid ""
 "\n"
 "Time\n"
 msgstr ""
+"\n"
+"日時\n"
 
 #: ../panel-plugin/weather-summary.c:286
 #, c-format
@@ -344,6 +341,8 @@ msgid ""
 "\tPoint data applies to:\n"
 "\t%s\n"
 msgstr ""
+"\t予報日時:\n"
+"\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:293
 #, c-format
@@ -353,6 +352,10 @@ msgid ""
 "\tStart:\t%s\n"
 "\tEnd:\t%s\n"
 msgstr ""
+"\n"
+"\t予報期間:\n"
+"\t開始:\t%s\n"
+"\t終了:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:298
 #, c-format
@@ -361,6 +364,9 @@ msgid ""
 "\tInterval data provides icon, description and precipitation,\n"
 "\twhile the remaining information originates from point data.\n"
 msgstr ""
+"\n"
+"\tパネルに表示される天気のアイコン、説明、及び降水量は、予報日時\n"
+"\tまでの情報です。\n"
 
 #. Temperature
 #: ../panel-plugin/weather-summary.c:304
@@ -373,7 +379,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-summary.c:305
 msgid "Temperature"
-msgstr "温度"
+msgstr "気温"
 
 #. Wind
 #: ../panel-plugin/weather-summary.c:308
@@ -387,38 +393,37 @@ msgstr ""
 #: ../panel-plugin/weather-summary.c:313
 #, c-format
 msgid "\t%s: %s (%s on the Beaufort scale)\n"
-msgstr ""
+msgstr "\t%s: %s (ビューフォート階級 %s)\n"
 
 #: ../panel-plugin/weather-summary.c:313
 msgid "Speed"
-msgstr "速度"
+msgstr "風速"
 
 #: ../panel-plugin/weather-summary.c:322
 msgid "Direction"
-msgstr "方向"
+msgstr "風向"
 
 #. Precipitation
 #: ../panel-plugin/weather-summary.c:330
-#, fuzzy
 msgid ""
 "\n"
 "Precipitations\n"
-msgstr "<b>降水確率</b>"
+msgstr ""
+"\n"
+"降水\n"
 
 #: ../panel-plugin/weather-summary.c:331
-#, fuzzy
 msgid "Precipitations amount"
-msgstr "<b>降水確率</b>"
+msgstr "降水量"
 
 #. Atmosphere
 #: ../panel-plugin/weather-summary.c:334
-#, fuzzy
 msgid ""
 "\n"
 "Atmosphere\n"
 msgstr ""
 "\n"
-"気圧\n"
+"大気\n"
 
 #: ../panel-plugin/weather-summary.c:335
 msgid "Pressure"
@@ -430,71 +435,71 @@ msgstr "湿度"
 
 #. Clouds
 #: ../panel-plugin/weather-summary.c:339
-#, fuzzy
 msgid ""
 "\n"
 "Clouds\n"
-msgstr "雲"
+msgstr ""
+"\n"
+"雲\n"
 
 #: ../panel-plugin/weather-summary.c:340
 #: ../panel-plugin/weather-translate.c:110
 msgid "Fog"
-msgstr "濃霧"
+msgstr "霧"
 
 #: ../panel-plugin/weather-summary.c:341
-#, fuzzy
 msgid "Low clouds"
-msgstr "雲"
+msgstr "下層雲"
 
 #: ../panel-plugin/weather-summary.c:342
 msgid "Medium clouds"
-msgstr ""
+msgstr "中層雲"
 
 #: ../panel-plugin/weather-summary.c:343
 msgid "High clouds"
-msgstr ""
+msgstr "上層雲"
 
 #: ../panel-plugin/weather-summary.c:344
-#, fuzzy
 msgid "Cloudiness"
-msgstr "雲"
+msgstr "全雲量"
 
 #: ../panel-plugin/weather-summary.c:346
 msgid ""
 "\n"
 "Data from The Norwegian Meteorological Institute\n"
 msgstr ""
+"\n"
+"情報提供: ノルウェー気象研究所\n"
 
 #: ../panel-plugin/weather-summary.c:347
 msgid "Thanks to met.no"
-msgstr ""
+msgstr "Thanks to met.no"
 
 #: ../panel-plugin/weather-summary.c:424
 msgid "Morning"
-msgstr ""
+msgstr "朝"
 
 #: ../panel-plugin/weather-summary.c:427
 msgid "Afternoon"
-msgstr ""
+msgstr "日中"
 
 #: ../panel-plugin/weather-summary.c:430
 msgid "Evening"
-msgstr ""
+msgstr "夕方"
 
 #: ../panel-plugin/weather-summary.c:433
-#, fuzzy
 msgid "Night"
-msgstr "夜: %s"
+msgstr "夜"
 
 #: ../panel-plugin/weather-summary.c:442
 #, c-format
 msgid "Today"
-msgstr ""
+msgstr "今日"
 
 #: ../panel-plugin/weather-summary.c:444
 #, c-format
 msgid "Tomorrow"
-msgstr ""
+msgstr "明日"
 
 #: ../panel-plugin/weather-summary.c:601
 #, c-format
@@ -502,18 +507,16 @@ msgid "Weather report for: %s"
 msgstr "天気情報: %s"
 
 #: ../panel-plugin/weather-summary.c:624
-#, fuzzy
 msgid "Please set a location in the plugin settings."
-msgstr "プロキシ設定を入力してください"
+msgstr "プラグイン設定の場所を入力してください"
 
 #: ../panel-plugin/weather-summary.c:626
 msgid "Currently no data available."
-msgstr ""
+msgstr "現在利用可能なデータがありません。"
 
 #: ../panel-plugin/weather-summary.c:641
-#, fuzzy
 msgid "_Details"
-msgstr "詳細"
+msgstr "詳細(_D)"
 
 #: ../panel-plugin/weather-translate.c:34
 msgid "S"
@@ -586,8 +589,9 @@ msgstr "無風"
 #: ../panel-plugin/weather-translate.c:95
 #: ../panel-plugin/weather-translate.c:111
 msgid "Sunny"
-msgstr "晴天"
+msgstr "晴れ"
 
+# Sunny night
 #: ../panel-plugin/weather-translate.c:95
 #: ../panel-plugin/weather-translate.c:111
 msgid "Clear"
@@ -595,14 +599,12 @@ msgstr "晴れ"
 
 #: ../panel-plugin/weather-translate.c:96
 #: ../panel-plugin/weather-translate.c:112
-#, fuzzy
 msgid "Lightly cloudy"
-msgstr "曇り時々晴れ"
+msgstr "晴れ (軽度の雲り)"
 
 #: ../panel-plugin/weather-translate.c:97
-#, fuzzy
 msgid "Partly cloudy"
-msgstr "所により曇り"
+msgstr "晴れ (部分的に雲り)"
 
 #: ../panel-plugin/weather-translate.c:98
 msgid "Cloudy"
@@ -610,44 +612,40 @@ msgstr "曇り"
 
 #: ../panel-plugin/weather-translate.c:99
 #: ../panel-plugin/weather-translate.c:113
-#, fuzzy
 msgid "Sunny, rain showers"
-msgstr "激しいにわか雨"
+msgstr "晴れ時々にわか雨"
 
+# night
 #: ../panel-plugin/weather-translate.c:99
 #: ../panel-plugin/weather-translate.c:113
-#, fuzzy
 msgid "Clear, rain showers"
-msgstr "激しいにわか雨"
+msgstr "晴れ時々にわか雨"
 
 #: ../panel-plugin/weather-translate.c:100
 msgid "Sunny, rain showers with thunder"
-msgstr ""
+msgstr "晴れ時々雷を伴うにわか雨"
 
 #: ../panel-plugin/weather-translate.c:101
 msgid "Clear, rain showers with thunder"
-msgstr ""
+msgstr "晴れ時々雷を伴うにわか雨"
 
 #: ../panel-plugin/weather-translate.c:102
 msgid "Sunny, sleet"
-msgstr ""
+msgstr "晴れ時々みぞれ"
 
 #: ../panel-plugin/weather-translate.c:102
 msgid "Clear, sleet"
-msgstr ""
+msgstr "晴れ時々みぞれ"
 
 #: ../panel-plugin/weather-translate.c:103
-#, fuzzy
 msgid "Sunny, snow"
-msgstr "晴天"
+msgstr "晴れ時々雪"
 
 #: ../panel-plugin/weather-translate.c:103
-#, fuzzy
 msgid "Clear, snow"
-msgstr "晴れ間"
+msgstr "晴れ時々雪"
 
 #: ../panel-plugin/weather-translate.c:104
-#, fuzzy
 msgid "Rain showers"
 msgstr "にわか雨"
 
@@ -656,13 +654,12 @@ msgid "Rain"
 msgstr "雨"
 
 #: ../panel-plugin/weather-translate.c:106
-#, fuzzy
 msgid "Rain with thunder"
-msgstr "雨 / 雷"
+msgstr "雷雨"
 
 #: ../panel-plugin/weather-translate.c:107
 msgid "Sleet"
-msgstr ""
+msgstr "みぞれ"
 
 #: ../panel-plugin/weather-translate.c:108
 msgid "Snow"
@@ -670,43 +667,39 @@ msgstr "雪"
 
 #: ../panel-plugin/weather-translate.c:109
 msgid "Snow with thunder"
-msgstr ""
+msgstr "雷を伴う雪"
 
 #: ../panel-plugin/weather-translate.c:114
-#, fuzzy
 msgid "Sunny, Snow"
-msgstr "晴天"
+msgstr "晴れ時々雪"
 
 #: ../panel-plugin/weather-translate.c:114
-#, fuzzy
 msgid "Clear, Snow"
-msgstr "大雪"
+msgstr "晴れ時々大雪"
 
 #: ../panel-plugin/weather-translate.c:115
 msgid "Sunny, Sleet and thunder"
-msgstr ""
+msgstr "晴れ時々雷を伴うみぞれ"
 
 #: ../panel-plugin/weather-translate.c:115
 msgid "Clear, sleet and thunder"
-msgstr ""
+msgstr "晴れ時々雷を伴うみぞれ"
 
 #: ../panel-plugin/weather-translate.c:116
 msgid "Sunny, Snow and thunder"
-msgstr ""
+msgstr "晴れ時々雷を伴う雪"
 
 #: ../panel-plugin/weather-translate.c:116
 msgid "Clear, snow and thunder"
-msgstr ""
+msgstr "晴れ時々雷を伴う雪"
 
 #: ../panel-plugin/weather-translate.c:117
-#, fuzzy
 msgid "Rain showers with thunder"
-msgstr "雨 / 雷"
+msgstr "雷を伴うにわか雨"
 
 #: ../panel-plugin/weather-translate.c:118
-#, fuzzy
 msgid "Sleet and thunder"
-msgstr "みぞれと雪"
+msgstr "雷とみぞれ"
 
 #: ../panel-plugin/weather-translate.c:215
 msgid "calm"
