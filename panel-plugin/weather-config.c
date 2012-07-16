@@ -632,12 +632,12 @@ create_config_dialog (xfceweather_data *data,
   gtk_button_set_image (GTK_BUTTON (button_del), image);
   gtk_size_group_add_widget (sg_buttons, button_del);
 
-  button_up = gtk_button_new_with_mnemonic (_("Move _up"));
+  button_up = gtk_button_new_with_mnemonic (_("Move _Up"));
   image = gtk_image_new_from_stock (GTK_STOCK_GO_UP, GTK_ICON_SIZE_BUTTON);
   gtk_button_set_image (GTK_BUTTON (button_up), image);
   gtk_size_group_add_widget (sg_buttons, button_up);
 
-  button_down = gtk_button_new_with_mnemonic (_("Move d_own"));
+  button_down = gtk_button_new_with_mnemonic (_("Move D_own"));
   image = gtk_image_new_from_stock (GTK_STOCK_GO_DOWN, GTK_ICON_SIZE_BUTTON);
   gtk_button_set_image (GTK_BUTTON (button_down), image);
   gtk_size_group_add_widget (sg_buttons, button_down);
