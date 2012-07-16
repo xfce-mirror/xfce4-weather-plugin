@@ -515,10 +515,12 @@ create_config_dialog (xfceweather_data *data,
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
   /* proxy */
-  label = gtk_label_new (_("Proxy server:"));
+  label = gtk_label_new_with_mnemonic (_("_Proxy server:"));
   dialog->txt_proxy_host = gtk_entry_new ();
+  gtk_label_set_mnemonic_widget(GTK_LABEL (label),
+                                GTK_WIDGET (dialog->txt_proxy_host));
   dialog->chk_proxy_use =
-    gtk_check_button_new_with_mnemonic (_("_Use proxy server"));
+    gtk_check_button_new_with_mnemonic (_("Use proxy _server"));
   dialog->chk_proxy_fromenv =
     gtk_check_button_new_with_mnemonic (_("Auto-detect from _environment"));
   dialog->txt_proxy_port = gtk_spin_button_new_with_range (0, 65536, 1);
@@ -611,7 +613,7 @@ create_config_dialog (xfceweather_data *data,
                                               renderer, "text", 0, NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (dialog->lst_xmloption), column);
 
-  button_add = gtk_button_new_with_mnemonic (_("A_dd"));
+  button_add = gtk_button_new_with_mnemonic (_("_Add"));
   image = gtk_image_new_from_stock (GTK_STOCK_ADD, GTK_ICON_SIZE_BUTTON);
   gtk_button_set_image (GTK_BUTTON (button_add), image);
   gtk_size_group_add_widget (sg_buttons, button_add);
@@ -637,7 +639,7 @@ create_config_dialog (xfceweather_data *data,
   gtk_button_set_image (GTK_BUTTON (button_up), image);
   gtk_size_group_add_widget (sg_buttons, button_up);
 
-  button_down = gtk_button_new_with_mnemonic (_("Move D_own"));
+  button_down = gtk_button_new_with_mnemonic (_("Move _Down"));
   image = gtk_image_new_from_stock (GTK_STOCK_GO_DOWN, GTK_ICON_SIZE_BUTTON);
   gtk_button_set_image (GTK_BUTTON (button_down), image);
   gtk_size_group_add_widget (sg_buttons, button_down);
@@ -675,7 +677,7 @@ create_config_dialog (xfceweather_data *data,
                     G_CALLBACK (cb_downoption), dialog);
 
   dialog->chk_animate_transition =
-    gtk_check_button_new_with_mnemonic (_("_Animate transitions between labels"));
+    gtk_check_button_new_with_mnemonic (_("Animate _transitions between labels"));
   gtk_toggle_button_set_active (GTK_TOGGLE_BUTTON
 	 (dialog->chk_animate_transition), dialog->wd->animation_transitions);
   gtk_box_pack_start (GTK_BOX (vbox), dialog->chk_animate_transition, FALSE, FALSE, 0);
