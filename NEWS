@@ -1,3 +1,33 @@
+0.8.0
+=====
+- Migrate to libxfce4ui (bug #7956).
+- Better handling of vertical and deskbar modes (bug #8560).
+- Fix adjusting label text size to panel size.
+- Fix scrollbox scroll direction in vertical mode.
+- Major rewrite: Migrate to yr.no API instead of weather.com (bug #8105)
+  The plugin now uses data from the Norwegian Meteorological Institute,
+  which is a bit different now and forced a redesign of the summary
+  window and more logic for computing the values.
+  This rewrite means the hassle with the expiring license keys is finally
+  gone, and the plugin shouldn't stop working suddenly, as API changes
+  are announced quite some time before they become active.
+  Forecasts for up to 10 days are provided, depending on the location.
+  The location is defined by latitude and longitude, the actual name
+  is only used for presentation.
+- Fix wrong location search results (bug #8832).
+- Enlarge the search dialog. It's now capable of showing 10 or more
+  results instead of only 2 or 3.
+- Nice error message in summary window when no location was set or
+  when there's no data available.
+- Make left click toggle the forecast window (bug #8805)
+- Optimized update intervals (downloading data and presentation).
+  This should also fix update issues after suspend/resume.
+- Add move label up/down buttons to config dialog.
+- Add shortcuts to the widgets in the config dialog.
+- Add shortcuts for accessing the notebook pages in the forecast window.
+- Fix compilation warnings, possible null pointer errors, memory leaks,
+  hardcoded values, make more strings translatable.
+
 0.7.4
 =====
 - Add location detection based on archive.xfce.org/geolocation.
