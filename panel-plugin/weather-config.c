@@ -89,13 +89,63 @@ cb_deloption (GtkWidget *widget,
               gpointer   data)
 {
   xfceweather_dialog *dialog = (xfceweather_dialog *) data;
+  GtkTreeSelection   *selection;
   GtkTreeIter         iter;
-  GtkTreeSelection    *selection;
 
   selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->lst_xmloption));
 
   if (gtk_tree_selection_get_selected (selection, NULL, &iter))
     gtk_list_store_remove (GTK_LIST_STORE (dialog->mdl_xmloption), &iter);
+
+  return FALSE;
+}
+
+
+
+static gboolean
+cb_upoption (GtkWidget *widget,
+              gpointer   data)
+{
+  xfceweather_dialog *dialog = (xfceweather_dialog *) data;
+  GtkTreeSelection   *selection;
+  GtkTreeIter         iter, prev;
+  GtkTreePath        *path;
+
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->lst_xmloption));
+
+  if (gtk_tree_selection_get_selected (selection, NULL, &iter))
+    {
+      path = gtk_tree_model_get_path (GTK_TREE_MODEL (dialog->mdl_xmloption), &iter);
+      if (gtk_tree_path_prev (path))
+        {
+          if (gtk_tree_model_get_iter (GTK_TREE_MODEL (dialog->mdl_xmloption), &prev, path))
+            gtk_list_store_move_before (GTK_LIST_STORE (dialog->mdl_xmloption), &iter, &prev);
+
+          gtk_tree_path_free(path);
+        }
+    }
+
+  return FALSE;
+}
+
+
+
+static gboolean
+cb_downoption (GtkWidget *widget,
+               gpointer   data)
+{
+  xfceweather_dialog *dialog = (xfceweather_dialog *) data;
+  GtkTreeIter         iter, next;
+  GtkTreeSelection    *selection;
+
+  selection = gtk_tree_view_get_selection (GTK_TREE_VIEW (dialog->lst_xmloption));
+
+  if (gtk_tree_selection_get_selected (selection, NULL, &iter))
+    {
+      next = iter;
+      if (gtk_tree_model_iter_next (GTK_TREE_MODEL (dialog->mdl_xmloption), &next))
+        gtk_list_store_move_after (GTK_LIST_STORE (dialog->mdl_xmloption), &iter, &next);
+    }
 
   return FALSE;
 }
@@ -383,7 +433,8 @@ create_config_dialog (xfceweather_data *data,
 {
   xfceweather_dialog *dialog;
   GtkWidget          *vbox2, *vbox3, *hbox, *hbox2, *label,
-                     *button_add, *button_del, *image, *button, *scroll;
+                     *button_add, *button_del, *button_up, *button_down,
+                     *image, *button, *scroll;
   GtkSizeGroup       *sg, *sg_buttons;
   GtkTreeViewColumn  *column;
   GtkCellRenderer    *renderer;
@@ -560,15 +611,15 @@ create_config_dialog (xfceweather_data *data,
                                               renderer, "text", 0, NULL);
   gtk_tree_view_append_column (GTK_TREE_VIEW (dialog->lst_xmloption), column);
 
-  button_add = gtk_button_new_from_stock (GTK_STOCK_ADD);
+  button_add = gtk_button_new_with_mnemonic (_("A_dd"));
+  image = gtk_image_new_from_stock (GTK_STOCK_ADD, GTK_ICON_SIZE_BUTTON);
+  gtk_button_set_image (GTK_BUTTON (button_add), image);
   gtk_size_group_add_widget (sg_buttons, button_add);
   hbox = gtk_hbox_new (FALSE, BORDER);
   gtk_box_pack_start (GTK_BOX (hbox), dialog->opt_xmloption, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (hbox), button_add, FALSE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
 
-  button_del = gtk_button_new_from_stock (GTK_STOCK_REMOVE);
-  gtk_size_group_add_widget (sg_buttons, button_del);
   hbox = gtk_hbox_new (FALSE, BORDER);
   scroll = gtk_scrolled_window_new (NULL, NULL);
   gtk_scrolled_window_set_policy (GTK_SCROLLED_WINDOW (scroll),
@@ -576,8 +627,25 @@ create_config_dialog (xfceweather_data *data,
   gtk_container_add (GTK_CONTAINER (scroll), dialog->lst_xmloption);
   gtk_box_pack_start (GTK_BOX (hbox), scroll, TRUE, TRUE, 0);
 
+  button_del = gtk_button_new_with_mnemonic (_("_Remove"));
+  image = gtk_image_new_from_stock (GTK_STOCK_REMOVE, GTK_ICON_SIZE_BUTTON);
+  gtk_button_set_image (GTK_BUTTON (button_del), image);
+  gtk_size_group_add_widget (sg_buttons, button_del);
+
+  button_up = gtk_button_new_with_mnemonic (_("Move _up"));
+  image = gtk_image_new_from_stock (GTK_STOCK_GO_UP, GTK_ICON_SIZE_BUTTON);
+  gtk_button_set_image (GTK_BUTTON (button_up), image);
+  gtk_size_group_add_widget (sg_buttons, button_up);
+
+  button_down = gtk_button_new_with_mnemonic (_("Move d_own"));
+  image = gtk_image_new_from_stock (GTK_STOCK_GO_DOWN, GTK_ICON_SIZE_BUTTON);
+  gtk_button_set_image (GTK_BUTTON (button_down), image);
+  gtk_size_group_add_widget (sg_buttons, button_down);
+
   vbox2 = gtk_vbox_new (FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox2), button_del, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), button_up, FALSE, FALSE, 0);
+  gtk_box_pack_start (GTK_BOX (vbox2), button_down, FALSE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (hbox), vbox2, FALSE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, TRUE, TRUE, 0);
   gtk_widget_set_size_request (dialog->lst_xmloption, -1, 120);
@@ -601,8 +669,10 @@ create_config_dialog (xfceweather_data *data,
                     G_CALLBACK (cb_addoption), dialog);
   g_signal_connect (G_OBJECT (button_del), "clicked",
                     G_CALLBACK (cb_deloption), dialog);
-
-
+  g_signal_connect (G_OBJECT (button_up), "clicked",
+                    G_CALLBACK (cb_upoption), dialog);
+  g_signal_connect (G_OBJECT (button_down), "clicked",
+                    G_CALLBACK (cb_downoption), dialog);
 
   dialog->chk_animate_transition =
     gtk_check_button_new_with_mnemonic (_("_Animate transitions between labels"));
