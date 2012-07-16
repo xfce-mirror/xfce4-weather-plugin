@@ -573,7 +573,7 @@ create_forecast_tab (xfceweather_data *data, GtkWidget *window)
         else
             gtk_widget_set_size_request(GTK_WIDGET(scrolled), 700, height_max);
         ebox = gtk_event_box_new();
-        gtk_event_box_set_visible_window(ebox, TRUE);
+        gtk_event_box_set_visible_window(GTK_EVENT_BOX(ebox), TRUE);
         gtk_container_add(GTK_CONTAINER(ebox), GTK_WIDGET(scrolled));
         return ebox;
     }
