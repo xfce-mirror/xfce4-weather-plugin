@@ -64,11 +64,11 @@ get_data (xml_time *timeslice, unit_systems unit_system, datas type)
 	case TEMPERATURE:
 		val = g_ascii_strtod(loc->temperature_value, NULL);
 		if (unit_system == IMPERIAL
-			&& (strcmp(loc->temperature_unit, "celcius") == 0
-				|| strcmp(loc->temperature_unit, "celsius" == 0)))
+			&& (! strcmp(loc->temperature_unit, "celcius")
+				|| ! strcmp(loc->temperature_unit, "celsius")))
 			val = val * 9.0 / 5.0 + 32.0;
 		else if (unit_system == METRIC
-				 && strcmp(loc->temperature_unit, "fahrenheit") == 0)
+				 && ! strcmp(loc->temperature_unit, "fahrenheit"))
 			val = (val - 32.0) * 5.0 / 9.0;
 		return g_strdup_printf ("%.1f", val);
 	case PRESSURE:
