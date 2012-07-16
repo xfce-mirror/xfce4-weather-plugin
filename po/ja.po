@@ -3,6 +3,7 @@
 # This file is distributed under the same license as the xfce-weather-plugin package..
 # Yuko Iwamatsu <nigauri@gmail.org>, 2008
 # Nobuhiro Iwamatsu <iwamatsu@nigauri.org>, 2008.
+# Masato Hashimoto <cabezon.hashimoto@gmail.com>, 2011,2012.
 #
 # 翻訳メモ:
 # Sunny (日中の晴れ), Clear (夜間の晴れ)
@@ -11,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce-weather-plugin 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-15 22:28+0900\n"
-"PO-Revision-Date: 2012-07-15 22:25+0900\n"
+"POT-Creation-Date: 2012-07-16 17:58+0900\n"
+"PO-Revision-Date: 2012-07-16 17:57+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <xfce-i18n@xfce.org>\n"
 "Language: ja\n"
@@ -77,13 +78,13 @@ msgstr "気象データを更新できません"
 msgid "Unable to open the following url: %s"
 msgstr "次の URL を開くことができません: %s"
 
-#: ../panel-plugin/weather.c:829 ../panel-plugin/weather-summary.c:593
+#: ../panel-plugin/weather.c:829 ../panel-plugin/weather-summary.c:601
 #: ../panel-plugin/weather.desktop.in.in.h:1
 msgid "Weather Update"
-msgstr "現在のお天気"
+msgstr "最新の気象情報"
 
 #. add refresh button to right click menu, for people who missed the middle mouse click feature
-#: ../panel-plugin/weather.c:960 ../panel-plugin/weather-summary.c:638
+#: ../panel-plugin/weather.c:960 ../panel-plugin/weather-summary.c:646
 msgid "_Forecast"
 msgstr "予報(_F)"
 
@@ -101,7 +102,7 @@ msgstr "風速 (WS)"
 
 #: ../panel-plugin/weather-config.c:40
 msgid "Wind speed - Beaufort scale (WB)"
-msgstr "風速・ビューフォート階級 (WB)"
+msgstr "風力 (WB)"
 
 #: ../panel-plugin/weather-config.c:41
 msgid "Wind direction (WD)"
@@ -303,7 +304,7 @@ msgid ""
 "Weather report for: %s.\n"
 "\n"
 msgstr ""
-"%s の天気情報です。\n"
+"%s の気象情報です。\n"
 "\n"
 
 #: ../panel-plugin/weather-summary.c:278
@@ -328,7 +329,7 @@ msgid ""
 "Time\n"
 msgstr ""
 "\n"
-"日時\n"
+"時間\n"
 
 #: ../panel-plugin/weather-summary.c:286
 #, c-format
@@ -336,7 +337,7 @@ msgid ""
 "\tPoint data applies to:\n"
 "\t%s\n"
 msgstr ""
-"\t予報日時:\n"
+"\t予報時刻:\n"
 "\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:293
@@ -348,9 +349,9 @@ msgid ""
 "\tEnd:\t%s\n"
 msgstr ""
 "\n"
-"\t予報期間:\n"
-"\t開始:\t%s\n"
-"\t終了:\t%s\n"
+"\t予報時間帯:\n"
+"\t%s から\n"
+"\t%s まで\n"
 
 #: ../panel-plugin/weather-summary.c:298
 #, c-format
@@ -360,8 +361,8 @@ msgid ""
 "\twhile the remaining information originates from point data.\n"
 msgstr ""
 "\n"
-"\tパネルに表示される天気のアイコン、説明、及び降水量は、予報日時\n"
-"\tまでの情報です。\n"
+"\tパネルに表示される天気のアイコン、説明、及び降水量は予報時間帯の、\n"
+"\tその他は予報時刻の情報です。\n"
 
 #. Temperature
 #: ../panel-plugin/weather-summary.c:304
@@ -388,7 +389,7 @@ msgstr ""
 #: ../panel-plugin/weather-summary.c:313
 #, c-format
 msgid "\t%s: %s (%s on the Beaufort scale)\n"
-msgstr "\t%s: %s (ビューフォート階級 %s)\n"
+msgstr "\t%s: %s (風力 %s)\n"
 
 #: ../panel-plugin/weather-summary.c:313
 msgid "Speed"
@@ -496,20 +497,20 @@ msgstr "今日"
 msgid "Tomorrow"
 msgstr "明日"
 
-#: ../panel-plugin/weather-summary.c:601
+#: ../panel-plugin/weather-summary.c:609
 #, c-format
 msgid "Weather report for: %s"
 msgstr "天気情報: %s"
 
-#: ../panel-plugin/weather-summary.c:624
+#: ../panel-plugin/weather-summary.c:632
 msgid "Please set a location in the plugin settings."
 msgstr "プラグイン設定の場所を入力してください"
 
-#: ../panel-plugin/weather-summary.c:626
+#: ../panel-plugin/weather-summary.c:634
 msgid "Currently no data available."
 msgstr "現在利用可能なデータがありません。"
 
-#: ../panel-plugin/weather-summary.c:641
+#: ../panel-plugin/weather-summary.c:649
 msgid "_Details"
 msgstr "詳細(_D)"
 
@@ -595,11 +596,11 @@ msgstr "晴れ"
 #: ../panel-plugin/weather-translate.c:96
 #: ../panel-plugin/weather-translate.c:112
 msgid "Lightly cloudy"
-msgstr "晴れ (軽度の雲り)"
+msgstr "晴れ (薄曇り)"
 
 #: ../panel-plugin/weather-translate.c:97
 msgid "Partly cloudy"
-msgstr "晴れ (部分的に雲り)"
+msgstr "晴れ時々曇り"
 
 #: ../panel-plugin/weather-translate.c:98
 msgid "Cloudy"
@@ -608,21 +609,21 @@ msgstr "曇り"
 #: ../panel-plugin/weather-translate.c:99
 #: ../panel-plugin/weather-translate.c:113
 msgid "Sunny, rain showers"
-msgstr "晴れ時々にわか雨"
+msgstr "晴れ時々雨"
 
 # night
 #: ../panel-plugin/weather-translate.c:99
 #: ../panel-plugin/weather-translate.c:113
 msgid "Clear, rain showers"
-msgstr "晴れ時々にわか雨"
+msgstr "晴れ時々雨"
 
 #: ../panel-plugin/weather-translate.c:100
 msgid "Sunny, rain showers with thunder"
-msgstr "晴れ時々雷を伴うにわか雨"
+msgstr "晴れ時々雷雨"
 
 #: ../panel-plugin/weather-translate.c:101
 msgid "Clear, rain showers with thunder"
-msgstr "晴れ時々雷を伴うにわか雨"
+msgstr "晴れ時々雷雨"
 
 #: ../panel-plugin/weather-translate.c:102
 msgid "Sunny, sleet"
@@ -642,7 +643,7 @@ msgstr "晴れ時々雪"
 
 #: ../panel-plugin/weather-translate.c:104
 msgid "Rain showers"
-msgstr "にわか雨"
+msgstr "曇り時々雨"
 
 #: ../panel-plugin/weather-translate.c:105
 msgid "Rain"
@@ -670,7 +671,7 @@ msgstr "晴れ時々雪"
 
 #: ../panel-plugin/weather-translate.c:114
 msgid "Clear, Snow"
-msgstr "晴れ時々大雪"
+msgstr "晴れ時々雪"
 
 #: ../panel-plugin/weather-translate.c:115
 msgid "Sunny, Sleet and thunder"
@@ -690,7 +691,7 @@ msgstr "晴れ時々雷を伴う雪"
 
 #: ../panel-plugin/weather-translate.c:117
 msgid "Rain showers with thunder"
-msgstr "雷を伴うにわか雨"
+msgstr "曇り時々雷雨"
 
 #: ../panel-plugin/weather-translate.c:118
 msgid "Sleet and thunder"
@@ -706,7 +707,7 @@ msgstr "不明"
 
 #: ../panel-plugin/weather.desktop.in.in.h:2
 msgid "Show current weather conditions"
-msgstr "現在の天候の状態を表示します。"
+msgstr "現在の天気状況を表示します。"
 
 #, fuzzy
 #~ msgid "WDD"
