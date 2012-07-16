@@ -15,13 +15,14 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
+#define _XOPEN_SOURCE
+
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
 
 #include "weather-parsers.h"
 #include <libxfce4panel/libxfce4panel.h>
-#define _XOPEN_SOURCE
 #include <time.h>
 #include <stdlib.h>
 
