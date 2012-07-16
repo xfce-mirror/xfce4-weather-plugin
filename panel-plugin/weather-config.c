@@ -417,7 +417,7 @@ create_config_dialog (xfceweather_data *data,
   gtk_box_pack_start (GTK_BOX (hbox), label, FALSE, FALSE, 0);
   gtk_box_pack_start (GTK_BOX (hbox), dialog->combo_unit_system, TRUE, TRUE, 0);
   gtk_box_pack_start (GTK_BOX (vbox), hbox, FALSE, FALSE, 0);
-
+  gtk_size_group_add_widget (sg, label);
 
   label = gtk_label_new_with_mnemonic (_("L_ocation:"));
   dialog->txt_lat = gtk_entry_new ();
