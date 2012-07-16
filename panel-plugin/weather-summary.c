@@ -605,8 +605,8 @@ create_summary_window (xfceweather_data *data)
 						GTK_RESPONSE_HELP,
                                                 GTK_STOCK_CLOSE,
                                                 GTK_RESPONSE_ACCEPT, NULL);
-  if (data->location_name_short != NULL) {
-    title = g_strdup_printf (_("Weather report for: %s"), data->location_name_short);
+  if (data->location_name != NULL) {
+    title = g_strdup_printf (_("Weather report for: %s"), data->location_name);
     xfce_titled_dialog_set_subtitle (XFCE_TITLED_DIALOG (window), title);
     g_free (title);
   }
