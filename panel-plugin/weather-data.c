@@ -470,7 +470,7 @@ make_forecast_data(xml_weather *data, int day, daytime dt)
 		if (interval_data != NULL)
 			break;
 		end_t = time_calc_hour(end_tm, -1);
-		end_tm = *localtime(&end_tm);
+		end_tm = *localtime(&end_t);
 	}
 	if (interval_data == NULL)
 		return NULL;
