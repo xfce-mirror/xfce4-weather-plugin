@@ -132,7 +132,13 @@ make_label (xfceweather_data *data,
     case WIND_SPEED:
       lbl = _("WS");
       break;
+    case WIND_BEAUFORT:
+      lbl = _("WB");
+      break;
     case WIND_DIRECTION:
+      lbl = _("WD");
+      break;
+    case WIND_DIRECTION_DEG:
       lbl = _("WD");
       break;
     case HUMIDITY:
