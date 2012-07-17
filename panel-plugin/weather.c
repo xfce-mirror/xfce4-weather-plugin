@@ -119,7 +119,7 @@ make_label (xfceweather_data *data,
 {
   gchar       *str, *value, *rawvalue;
   xml_time    *conditions;
-  const gchar *lbl, *txtsize;
+  const gchar *lbl, *txtsize, *unit;
 
   switch (opt)
     {
@@ -189,26 +189,30 @@ make_label (xfceweather_data *data,
   if (data->labels->len > 1) {
     if (value != NULL)
       {
-	str = g_strdup_printf ("<span size=\"%s\">%s: %s</span>",
+        str = g_strdup_printf ("<span size=\"%s\">%s: %s</span>",
                                txtsize, lbl, value);
-	g_free (value);
+        g_free (value);
       }
     else
       {
-	str = g_strdup_printf ("<span size=\"%s\">%s: %s %s</span>",
-                               txtsize, lbl, rawvalue, get_unit (conditions, data->unit_system, opt));
+        unit = get_unit (conditions, data->unit_system, opt);
+        str = g_strdup_printf ("<span size=\"%s\">%s: %s%s%s</span>",
+                               txtsize, lbl, rawvalue,
+                               strcmp(unit, "°") ? " " : "", unit);
       }
   } else {
     if (value != NULL)
       {
-	str = g_strdup_printf ("<span size=\"%s\">%s</span>",
-                               txtsize, value);
-	g_free (value);
+          str = g_strdup_printf ("<span size=\"%s\">%s</span>",
+                                 txtsize, value);
+          g_free (value);
       }
     else
       {
-	str = g_strdup_printf ("<span size=\"%s\">%s %s</span>",
-                               txtsize, rawvalue, get_unit (conditions, data->unit_system, opt));
+        unit = get_unit (conditions, data->unit_system, opt);
+        str = g_strdup_printf ("<span size=\"%s\">%s%s%s</span>",
+                               txtsize, rawvalue,
+                               strcmp(unit, "°") ? " " : "", unit);
       }
   }
   g_free (rawvalue);
