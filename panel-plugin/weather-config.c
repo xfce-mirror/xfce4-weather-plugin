@@ -498,7 +498,8 @@ create_config_dialog (xfceweather_data *data,
                                gtk_entry_get_text (GTK_ENTRY (dialog->txt_loc_name)));
 #endif
 
-  if (dialog->wd->lat == NULL || dialog->wd->lon == NULL) {
+  if ((dialog->wd->lat == NULL || dialog->wd->lon == NULL)
+      || (! strlen(dialog->wd->lat) || ! strlen(dialog->wd->lon))) {
     start_auto_locate(dialog);
   }
   gtk_size_group_add_widget (sg, label);
