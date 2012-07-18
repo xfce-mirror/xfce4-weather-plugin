@@ -267,11 +267,13 @@ weather_http_receive_data_idle (gpointer user_data)
   if (connection->proxy_host)
     request = g_strdup_printf ("GET http://%s%s HTTP/1.0\r\n\r\n", connection->hostname, connection->url);
   else
-    request = g_strdup_printf ("GET %s HTTP/1.1\r\n"
-    				"Host: %s\r\n"
-				"Connection: close\r\n"
-				"\r\n",
-				connection->url, connection->hostname);
+    request = g_strdup_printf ("GET %s HTTP/1.%d\r\n"
+                               "Host: %s\r\n"
+                               "Connection: close\r\n"
+                               "\r\n",
+                               connection->url,
+                               strcmp(connection->hostname, "geoip.xfce.org") ? 1 : 0,
+                               connection->hostname);
 
   /* send the request */
   for (m = 0, n = strlen (request); m < n;)

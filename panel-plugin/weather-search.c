@@ -550,9 +550,7 @@ void weather_search_by_ip(
   data->proxy_host = proxy_host;
   data->proxy_port = proxy_port;
 
-  /* archive.xfce.org is our download server that runs mod_geoip
-   * with the www.maxmind.com database */
-  weather_http_receive_data ("archive.xfce.org", "/geolocation",
+  weather_http_receive_data ("geoip.xfce.org", "/",
                              proxy_host, proxy_port,
                              cb_geolocation, data);
   return;
