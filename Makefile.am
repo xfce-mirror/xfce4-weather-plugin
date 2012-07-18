@@ -2,9 +2,12 @@ SUBDIRS =								\
 	panel-plugin							\
 	po								\
 	icons
-	
+
 distclean-local:
 	rm -rf *.cache *~
+
+distuninstallcheck_listfiles = \
+	find . -type f -print | grep -v ./share/icons/hicolor/icon-theme.cache
 
 rpm: dist
 	rpmbuild -ta $(PACKAGE)-$(VERSION).tar.gz
