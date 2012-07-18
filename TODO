@@ -1,20 +1,42 @@
-* Get sunrise/sunset times via webservice
-  - get rid of the hardcoded values
-* Fetch logo from website (code is still there)
+Here is a collection of ideas and tasks for future releases, listed in
+categories, but not prioritized.
+
+Panel widget
+======================================================================
 * More information in tooltip
   - currently only location and description are shown
   - could optionally replace scrollbox
-* Better tooltips in config dialog
-* Better organisation of options in config dialog
-  - it's already too large for netbooks
-* Apply options immediately, like in most xfce apps
-* Don't complain about proxy settings on closing the config
-  dialog when none are entered
-* Further reduce calls to download data
+* Use multiple lines in scrollbox
+* Use the Xfce hvbox (maybe, need to check)
+
+Data
+======================================================================
+* Get sunrise/sunset times via webservice
+  - get rid of the hardcoded values
+  - maybe met.no provides an API for it too
+* Use met.no RSS feed to warn in time about API changes
+* Further reduce HTTP requests fetching data
   - maybe use data in XML to schedule downloads?
+* How about a "follow-me" mode: Auto-determine location
+  based on IP address and adapt to any changes?
+
+Forecast tab
+======================================================================
 * More details in forecast window
   - maybe tooltips for each entry?
   - somehow indicate amount of precipitation
-* Use the Xfce hvbox (maybe, need to check)
-* Use multiple lines in scrollbox
-* Use met.no RSS feed to warn in time about API changes
+
+Details tab
+======================================================================
+* Fetch logo from website (code is still there)
+
+Configuration dialog
+======================================================================
+* Show longitude and latitude, allow entering them
+* Add tooltips where necessary and make the existing ones more
+  descriptive
+* Reorganize options, the window's already to large
+  for the small screen size of netbooks
+* Apply options immediately, like in most xfce apps
+* Don't complain about proxy settings on closing the dialog window
+  when none are entered
