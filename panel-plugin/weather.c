@@ -439,7 +439,8 @@ static gboolean
 update_weatherdata (xfceweather_data *data)
 {
   gchar *url;
-  if (!data->lat || !data->lon)
+  if ((!data->lat || !data->lon)
+      || strlen(data->lat) == 0 || strlen(data->lon) == 0)
     {
       gtk_scrollbox_clear (GTK_SCROLLBOX (data->scrollbox));
       set_icon_error (data);
