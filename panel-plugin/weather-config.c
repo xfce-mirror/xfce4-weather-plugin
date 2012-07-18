@@ -368,15 +368,11 @@ option_i (datas opt)
 static void auto_locate_cb(const gchar *loc_name, const gchar *lat, const gchar *lon, gpointer user_data)
 {
   xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-  gchar *sane_loc_name;
 
   if (lat && lon && loc_name) {
     gtk_entry_set_text (GTK_ENTRY (dialog->txt_lat), lat);
     gtk_entry_set_text (GTK_ENTRY (dialog->txt_lon), lon);
     gtk_entry_set_text (GTK_ENTRY (dialog->txt_loc_name), loc_name);
-    sane_loc_name = sanitize_location_name(loc_name);
-    gtk_entry_set_text (GTK_ENTRY (dialog->txt_loc_name), sane_loc_name);
-    g_free(sane_loc_name);
     gtk_widget_set_sensitive(dialog->txt_loc_name, TRUE);
 #if GTK_CHECK_VERSION(2,12,0)
     gtk_widget_set_tooltip_text(dialog->txt_loc_name,loc_name);
