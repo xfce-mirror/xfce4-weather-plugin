@@ -381,7 +381,7 @@ static void auto_locate_cb(const gchar *loc_name, const gchar *lat, const gchar 
     gtk_entry_set_text (GTK_ENTRY (dialog->txt_lat), "");
     gtk_entry_set_text (GTK_ENTRY (dialog->txt_lon), "");
     gtk_entry_set_text (GTK_ENTRY (dialog->txt_loc_name), _("Unset"));
-    gtk_widget_set_sensitive(dialog->txt_loc_name, TRUE);
+    gtk_widget_set_sensitive(dialog->txt_loc_name, FALSE);
   }
 }
 
@@ -474,12 +474,17 @@ create_config_dialog (xfceweather_data *data,
   gtk_misc_set_alignment (GTK_MISC (label), 0, 0.5);
   gtk_label_set_mnemonic_widget (GTK_LABEL (label), GTK_WIDGET (dialog->txt_loc_name));
 
-  if (dialog->wd->lat != NULL)
+  if (dialog->wd->lat != NULL && strlen(dialog->wd->lat) > 0)
     gtk_entry_set_text (GTK_ENTRY (dialog->txt_lat),
                         dialog->wd->lat);
-  if (dialog->wd->lon != NULL)
+  else
+    gtk_widget_set_sensitive(dialog->txt_loc_name, FALSE);
+
+  if (dialog->wd->lon != NULL && strlen(dialog->wd->lon) > 0)
     gtk_entry_set_text (GTK_ENTRY (dialog->txt_lon),
                         dialog->wd->lon);
+  else
+    gtk_widget_set_sensitive(dialog->txt_loc_name, FALSE);
 
   if (dialog->wd->location_name != NULL)
     gtk_entry_set_text (GTK_ENTRY (dialog->txt_loc_name),
