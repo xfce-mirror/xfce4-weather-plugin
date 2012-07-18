@@ -21,12 +21,12 @@ dnl ***************************
 AC_COPYRIGHT([Copyright (c) 2006-2007
         The Xfce development team. All rights reserved.])
 AC_INIT([xfce4-weather-plugin], [weather_version], [http://bugzilla.xfce.org/], [xfce4-weather-plugin])
-AC_PREREQ([2.50])
+AC_PREREQ([2.60])
 
 dnl ***************************
 dnl *** Initialize automake ***
 dnl ***************************
-AM_INIT_AUTOMAKE([1.8 dist-bzip2 tar-ustar])
+AM_INIT_AUTOMAKE([1.9 dist-bzip2 tar-ustar])
 AM_CONFIG_HEADER([config.h])
 AM_MAINTAINER_MODE()
 
@@ -37,7 +37,8 @@ AC_PROG_CC()
 AC_PROG_LD()
 AC_PROG_INSTALL()
 AC_PROG_INTLTOOL()
-AC_PROG_LIBTOOL()
+LT_PREREQ([2.2.6])
+LT_INIT([disable-static])
 AM_PROG_CC_C_O()
 
 dnl **********************************
