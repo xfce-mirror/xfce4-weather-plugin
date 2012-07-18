@@ -343,13 +343,36 @@ free_search_dialog (search_dialog * dialog)
   g_slice_free (search_dialog, dialog);
 }
 
+
+
 typedef struct {
   const gchar *proxy_host;
   gint proxy_port;
-  void (*cb)(const gchar *loc_name, const gchar *lat, const gchar *lon, gpointer user_data);
+  void (*cb)(const gchar *loc_name, const gchar *lat, const gchar *lon,
+             const unit_systems unit_system, gpointer user_data);
   gpointer user_data;
 }
 geolocation_data;
+
+
+
+static unit_systems
+get_preferred_unit_system (const gchar *country_code)
+{
+  /* List gathered from http://www.maxmind.com/app/iso3166 */
+  if (country_code == NULL)
+    return METRIC;
+  else if (!strcmp (country_code, "US"))  /* United States */
+    return IMPERIAL;
+  else if (!strcmp (country_code, "GB"))  /* United Kingdom */
+    return IMPERIAL;
+  else if (!strcmp (country_code, "LR"))  /* Liberia */
+    return IMPERIAL;
+  else if (!strcmp (country_code, "MM"))  /* Myanmar (Burma) */
+    return IMPERIAL;
+  return METRIC;
+}
+
 
 
 static void
@@ -365,11 +388,12 @@ cb_geolocation (gboolean  succeed,
   gchar         *country_code = NULL, *region = NULL;
   gchar         *latitude = NULL, *longitude = NULL;
   gchar         *full_loc;
+  unit_systems   unit_system;
   gsize          length;
   gchar         *p;
 
   if (!succeed || received == NULL) {
-    data->cb(NULL, NULL, NULL, data->user_data);
+    data->cb(NULL, NULL, NULL, METRIC, data->user_data);
     g_free(data);
     return;
   }
@@ -390,7 +414,7 @@ cb_geolocation (gboolean  succeed,
   g_free (received);
 
   if (!doc) {
-    data->cb(NULL, NULL, NULL, data->user_data);
+    data->cb(NULL, NULL, NULL, METRIC, data->user_data);
     g_free(data);
     return;
   }
@@ -448,6 +472,8 @@ cb_geolocation (gboolean  succeed,
       full_loc = NULL;
     }
 
+  unit_system = get_preferred_unit_system(country_code);
+
   g_free (country_code);
   g_free (region);
   g_free (country);
@@ -455,7 +481,7 @@ cb_geolocation (gboolean  succeed,
 
   xmlFreeDoc (doc);
 
-  data->cb(full_loc, latitude, longitude, data->user_data);
+  data->cb(full_loc, latitude, longitude, unit_system, data->user_data);
   g_free (latitude);
   g_free (longitude);
   g_free (full_loc);
@@ -464,10 +490,13 @@ cb_geolocation (gboolean  succeed,
 
 
 
-void weather_search_by_ip(
-	const gchar *proxy_host, gint proxy_port,
-        void (*gui_cb)(const gchar *loc_name, const gchar *lat, const gchar *lon, gpointer user_data),
-	gpointer user_data)
+void weather_search_by_ip(const gchar *proxy_host, gint proxy_port,
+                          void (*gui_cb)(const gchar *loc_name,
+                                         const gchar *lat,
+                                         const gchar *lon,
+                                         const unit_systems unit_system,
+                                         gpointer user_data),
+                          gpointer user_data)
 {
   geolocation_data *data;
 

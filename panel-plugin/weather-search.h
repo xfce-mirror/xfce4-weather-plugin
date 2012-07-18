@@ -49,8 +49,9 @@ search_dialog *create_search_dialog (GtkWindow *, gchar *, gint);
 gboolean run_search_dialog (search_dialog * dialog);
 
 void weather_search_by_ip(const gchar *proxy_host, gint proxy_port,
-	void (*gui_cb)(const gchar *loc_name, const gchar *lat, const gchar *lon, gpointer user_data),
-	gpointer user_data);
+    void (*gui_cb)(const gchar *loc_name, const gchar *lat, const gchar *lon,
+                   const unit_systems unit_system, gpointer user_data),
+    gpointer user_data);
 
 void free_search_dialog (search_dialog * dialog);
 

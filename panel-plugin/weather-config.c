@@ -365,7 +365,7 @@ option_i (datas opt)
   return -1;
 }
 
-static void auto_locate_cb(const gchar *loc_name, const gchar *lat, const gchar *lon, gpointer user_data)
+static void auto_locate_cb(const gchar *loc_name, const gchar *lat, const gchar *lon, unit_systems unit_system, gpointer user_data)
 {
   xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
 
@@ -383,6 +383,7 @@ static void auto_locate_cb(const gchar *loc_name, const gchar *lat, const gchar 
     gtk_entry_set_text (GTK_ENTRY (dialog->txt_loc_name), _("Unset"));
     gtk_widget_set_sensitive(dialog->txt_loc_name, FALSE);
   }
+  gtk_combo_box_set_active (GTK_COMBO_BOX (dialog->combo_unit_system), unit_system);
 }
 
 static void start_auto_locate(xfceweather_dialog *dialog)
