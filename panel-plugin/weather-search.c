@@ -442,7 +442,7 @@ cb_geolocation (gboolean  succeed,
     return;
   }
 
-  /* hack for archive.xfce.org, which return no content-length */
+  /* hack for geoip.xfce.org, which return no content-length */
   p = strstr (received, "</Response>");
   if (p != NULL)
     length = p - received + strlen ("</Response>");

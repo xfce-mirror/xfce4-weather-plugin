@@ -382,7 +382,7 @@ weather_http_receive_data_idle (gpointer user_data)
         }
       else
         {
-          /* hack for archive.xfce.org, which return no content-length */
+          /* hack for geoip.xfce.org, which return no content-length */
           p = strstr ((char *)connection->received, "<Response>");
           if (G_LIKELY (p))
             cts_len = connection->received_len - (p - connection->received);
