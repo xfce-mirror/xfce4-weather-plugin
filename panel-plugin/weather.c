@@ -599,8 +599,8 @@ xfceweather_read_config (XfcePanelPlugin  *plugin,
       data->proxy_port = data->saved_proxy_port;
     }
 
-  val = xfce_rc_read_int_entry (rc, "forecast_days", 5);
-  data->forecast_days = (val > 0 && val <= MAX_FORECAST_DAYS) ? val : 5;
+  val = xfce_rc_read_int_entry (rc, "forecast_days", DEFAULT_FORECAST_DAYS);
+  data->forecast_days = (val > 0 && val <= MAX_FORECAST_DAYS) ? val : DEFAULT_FORECAST_DAYS;
 
   data->animation_transitions = xfce_rc_read_bool_entry (rc,
   		"animation_transitions", TRUE);
@@ -898,7 +898,19 @@ xfceweather_create_control (XfcePanelPlugin *plugin)
   datas             lbl;
   GdkPixbuf        *icon = NULL;
 
+  /* Initialize with sane default values */
   data->plugin = plugin;
+  data->lat = NULL;
+  data->lon = NULL;
+  data->location_name = NULL;
+  data->unit_system = METRIC;
+  data->weatherdata = NULL;
+  data->proxy_host = NULL;
+  data->proxy_port = 0;
+  data->saved_proxy_host = NULL;
+  data->saved_proxy_port = 0;
+  data->animation_transitions = FALSE;
+  data->forecast_days = DEFAULT_FORECAST_DAYS;
 
 #if !GTK_CHECK_VERSION(2,12,0)
   data->tooltips = gtk_tooltips_new ();
