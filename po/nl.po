@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-weather-plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-16 22:16+0200\n"
+"POT-Creation-Date: 2012-07-18 11:05+0200\n"
 "PO-Revision-Date: 2011-09-09 13:07+0200\n"
 "Last-Translator: Pjotr\n"
 "Language-Team: Dutch (Flemish)\n"
@@ -31,57 +31,62 @@ msgid "WS"
 msgstr "WS"
 
 #: ../panel-plugin/weather.c:136
+#, fuzzy
+msgid "WB"
+msgstr "W"
+
+#: ../panel-plugin/weather.c:139 ../panel-plugin/weather.c:142
 msgid "WD"
 msgstr "WR"
 
-#: ../panel-plugin/weather.c:139
+#: ../panel-plugin/weather.c:145
 msgid "H"
 msgstr "V"
 
-#: ../panel-plugin/weather.c:142
+#: ../panel-plugin/weather.c:148
 msgid "CL"
 msgstr "NB"
 
-#: ../panel-plugin/weather.c:145
+#: ../panel-plugin/weather.c:151
 msgid "CM"
 msgstr "MB"
 
-#: ../panel-plugin/weather.c:148
+#: ../panel-plugin/weather.c:154
 msgid "CH"
 msgstr "ZB"
 
-#: ../panel-plugin/weather.c:151
+#: ../panel-plugin/weather.c:157
 msgid "C"
 msgstr "VB"
 
-#: ../panel-plugin/weather.c:154
+#: ../panel-plugin/weather.c:160
 msgid "F"
 msgstr "G"
 
-#: ../panel-plugin/weather.c:157
+#: ../panel-plugin/weather.c:163
 msgid "R"
 msgstr "R"
 
-#: ../panel-plugin/weather.c:233
+#: ../panel-plugin/weather.c:243
 msgid "No Data"
 msgstr "Geen gegevens"
 
-#: ../panel-plugin/weather.c:260 ../panel-plugin/weather.c:858
+#: ../panel-plugin/weather.c:270 ../panel-plugin/weather.c:868
 msgid "Cannot update weather data"
 msgstr "Kan weerinformatie niet bijwerken"
 
-#: ../panel-plugin/weather.c:788
+#: ../panel-plugin/weather.c:798
 #, c-format
 msgid "Unable to open the following url: %s"
 msgstr "Kon de volgende URL niet openen: %s"
 
-#: ../panel-plugin/weather.c:816 ../panel-plugin/weather-summary.c:601
+#: ../panel-plugin/weather.c:826 ../panel-plugin/weather-summary.c:601
 #: ../panel-plugin/weather.desktop.in.in.h:1
 msgid "Weather Update"
 msgstr "Weerbericht"
 
 #. add refresh button to right click menu, for people who missed the middle mouse click feature
-#: ../panel-plugin/weather.c:947 ../panel-plugin/weather-summary.c:646
+#: ../panel-plugin/weather.c:957 ../panel-plugin/weather-summary.c:646
 msgid "_Forecast"
 msgstr "_Verwachting"
 
@@ -114,20 +119,24 @@ msgid "Humidity (H)"
 msgstr "Luchtvochtigheid (V)"
 
 #: ../panel-plugin/weather-config.c:45
-msgid "Low cloudiness (CL)"
+#, fuzzy
+msgid "Low clouds (CL)"
 msgstr "Nauwelijks bewolkt (NB)"
 
 #: ../panel-plugin/weather-config.c:46
-msgid "Medium cloudiness (CM)"
+#, fuzzy
+msgid "Medium clouds (CM)"
 msgstr "Middelmatig bewolkt (MB)"
 
 #: ../panel-plugin/weather-config.c:47
-msgid "High cloudiness (CH)"
+#, fuzzy
+msgid "High clouds (CH)"
 msgstr "Zeer bewolkt (ZB)"
 
 #: ../panel-plugin/weather-config.c:48
-msgid "Overall cloudiness (C)"
-msgstr "Volledig bewolkt (VB)"
+#, fuzzy
+msgid "Cloudiness (C)"
+msgstr "Bewolking"
 
 #: ../panel-plugin/weather-config.c:49
 msgid "Fog (F)"
@@ -137,8 +146,8 @@ msgstr "Mist (M)"
 msgid "Precipitations (R)"
 msgstr "Neerslag (R)"
 
-#: ../panel-plugin/weather-config.c:229 ../panel-plugin/weather-config.c:387
-#: ../panel-plugin/weather-config.c:492
+#: ../panel-plugin/weather-config.c:229 ../panel-plugin/weather-config.c:383
+#: ../panel-plugin/weather-config.c:488
 msgid "Unset"
 msgstr "Niet ingesteld"
 
@@ -146,72 +155,72 @@ msgstr "Niet ingesteld"
 msgid "Please enter proxy settings"
 msgstr "Proxy-gegevens invoeren"
 
-#: ../panel-plugin/weather-config.c:395
+#: ../panel-plugin/weather-config.c:391
 msgid "Detecting..."
 msgstr "Aan het detecteren..."
 
-#: ../panel-plugin/weather-config.c:453
+#: ../panel-plugin/weather-config.c:449
 msgid "System of _Measurement:"
 msgstr "Meetsysteem:"
 
-#: ../panel-plugin/weather-config.c:458
+#: ../panel-plugin/weather-config.c:454
 msgid "Imperial"
 msgstr "Imperial"
 
-#: ../panel-plugin/weather-config.c:460
+#: ../panel-plugin/weather-config.c:456
 msgid "Metric"
 msgstr "Metrisch"
 
-#: ../panel-plugin/weather-config.c:473
+#: ../panel-plugin/weather-config.c:469
 #, fuzzy
 msgid "L_ocation:"
 msgstr "Locatie:"
 
-#: ../panel-plugin/weather-config.c:505
+#: ../panel-plugin/weather-config.c:501
 msgid "Chan_ge..."
 msgstr "Veranderen..."
 
 #. proxy
-#: ../panel-plugin/weather-config.c:518
+#: ../panel-plugin/weather-config.c:514
 #, fuzzy
 msgid "_Proxy server:"
 msgstr "Proxy-server:"
 
-#: ../panel-plugin/weather-config.c:523
+#: ../panel-plugin/weather-config.c:519
 #, fuzzy
 msgid "Use proxy _server"
 msgstr "Proxy-server gebruiken"
 
-#: ../panel-plugin/weather-config.c:525
+#: ../panel-plugin/weather-config.c:521
 msgid "Auto-detect from _environment"
 msgstr "Automatisch detecteren vanuit omgeving"
 
 #. number of days shown in forecast
-#: ../panel-plugin/weather-config.c:590
+#: ../panel-plugin/weather-config.c:586
 msgid "Number of _forecast days:"
 msgstr "Aantal voorspelde dagen:"
 
-#: ../panel-plugin/weather-config.c:612
+#: ../panel-plugin/weather-config.c:608
 msgid "_Labels to display"
 msgstr "Te tonen etiketten"
 
-#: ../panel-plugin/weather-config.c:616
+#: ../panel-plugin/weather-config.c:612
 msgid "_Add"
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:632
+#: ../panel-plugin/weather-config.c:628
 msgid "_Remove"
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:637
+#: ../panel-plugin/weather-config.c:633
 msgid "Move _Up"
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:642
+#: ../panel-plugin/weather-config.c:638
 msgid "Move _Down"
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:680
+#: ../panel-plugin/weather-config.c:676
 #, fuzzy
 msgid "Animate _transitions between labels"
 msgstr "Animeer de overgangen tussen etiketten"
@@ -725,6 +734,9 @@ msgstr "N/B"
 #: ../panel-plugin/weather.desktop.in.in.h:2
 msgid "Show current weather conditions"
 msgstr "Toon huidige weersomstandigheden"
+
+#~ msgid "Overall cloudiness (C)"
+#~ msgstr "Volledig bewolkt (VB)"
 
 #~ msgid "V"
 #~ msgstr "Z"

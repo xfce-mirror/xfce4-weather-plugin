@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce-weather-plugin.master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-16 22:16+0200\n"
+"POT-Creation-Date: 2012-07-18 11:05+0200\n"
 "PO-Revision-Date: 2012-02-28 07:04+0900\n"
 "Last-Translator: Seong-ho, Cho <darkcircle.0426@gmail.com>\n"
 "Language-Team: xfce4-users-kr-i18n <xfce4-users-kr-i18n@lists.sourceforge."
@@ -31,60 +31,65 @@ msgid "WS"
 msgstr "풍속"
 
 #: ../panel-plugin/weather.c:136
+#, fuzzy
+msgid "WB"
+msgstr "서"
+
+#: ../panel-plugin/weather.c:139 ../panel-plugin/weather.c:142
 msgid "WD"
 msgstr "풍향"
 
-#: ../panel-plugin/weather.c:139
+#: ../panel-plugin/weather.c:145
 msgid "H"
 msgstr "습도"
 
-#: ../panel-plugin/weather.c:142
+#: ../panel-plugin/weather.c:148
 #, fuzzy
 msgid "CL"
 msgstr "무풍"
 
-#: ../panel-plugin/weather.c:145
+#: ../panel-plugin/weather.c:151
 #, fuzzy
 msgid "CM"
 msgstr "무풍"
 
-#: ../panel-plugin/weather.c:148
+#: ../panel-plugin/weather.c:154
 #, fuzzy
 msgid "CH"
 msgstr "습도"
 
-#: ../panel-plugin/weather.c:151
+#: ../panel-plugin/weather.c:157
 msgid "C"
 msgstr ""
 
-#: ../panel-plugin/weather.c:154
+#: ../panel-plugin/weather.c:160
 msgid "F"
 msgstr "체감온도"
 
-#: ../panel-plugin/weather.c:157
+#: ../panel-plugin/weather.c:163
 msgid "R"
 msgstr ""
 
-#: ../panel-plugin/weather.c:233
+#: ../panel-plugin/weather.c:243
 msgid "No Data"
 msgstr ""
 
-#: ../panel-plugin/weather.c:260 ../panel-plugin/weather.c:858
+#: ../panel-plugin/weather.c:270 ../panel-plugin/weather.c:868
 msgid "Cannot update weather data"
 msgstr "날씨 정보를 업데이트할 수 없습니다"
 
-#: ../panel-plugin/weather.c:788
+#: ../panel-plugin/weather.c:798
 #, c-format
 msgid "Unable to open the following url: %s"
 msgstr "다음 URL을 열 수 없습니다: %s"
 
-#: ../panel-plugin/weather.c:816 ../panel-plugin/weather-summary.c:601
+#: ../panel-plugin/weather.c:826 ../panel-plugin/weather-summary.c:601
 #: ../panel-plugin/weather.desktop.in.in.h:1
 msgid "Weather Update"
 msgstr "날씨 업데이트"
 
 #. add refresh button to right click menu, for people who missed the middle mouse click feature
-#: ../panel-plugin/weather.c:947 ../panel-plugin/weather-summary.c:646
+#: ../panel-plugin/weather.c:957 ../panel-plugin/weather-summary.c:646
 msgid "_Forecast"
 msgstr "예보(_F)"
 
@@ -119,21 +124,24 @@ msgid "Humidity (H)"
 msgstr "습도 (H)"
 
 #: ../panel-plugin/weather-config.c:45
-msgid "Low cloudiness (CL)"
-msgstr ""
+#, fuzzy
+msgid "Low clouds (CL)"
+msgstr "구름"
 
 #: ../panel-plugin/weather-config.c:46
-msgid "Medium cloudiness (CM)"
-msgstr ""
+#, fuzzy
+msgid "Medium clouds (CM)"
+msgstr "변동이 심한 구름"
 
 #: ../panel-plugin/weather-config.c:47
-msgid "High cloudiness (CH)"
-msgstr ""
+#, fuzzy
+msgid "High clouds (CH)"
+msgstr "대체로 흐림"
 
 #: ../panel-plugin/weather-config.c:48
 #, fuzzy
-msgid "Overall cloudiness (C)"
-msgstr "변동이 심한 구름"
+msgid "Cloudiness (C)"
+msgstr "구름"
 
 #: ../panel-plugin/weather-config.c:49
 msgid "Fog (F)"
@@ -144,8 +152,8 @@ msgstr ""
 msgid "Precipitations (R)"
 msgstr "<b>강수 률</b>"
 
-#: ../panel-plugin/weather-config.c:229 ../panel-plugin/weather-config.c:387
-#: ../panel-plugin/weather-config.c:492
+#: ../panel-plugin/weather-config.c:229 ../panel-plugin/weather-config.c:383
+#: ../panel-plugin/weather-config.c:488
 msgid "Unset"
 msgstr "해제"
 
@@ -153,76 +161,76 @@ msgstr "해제"
 msgid "Please enter proxy settings"
 msgstr "프록시 설정을 입력하여주십시오"
 
-#: ../panel-plugin/weather-config.c:395
+#: ../panel-plugin/weather-config.c:391
 msgid "Detecting..."
 msgstr "감지중..."
 
-#: ../panel-plugin/weather-config.c:453
+#: ../panel-plugin/weather-config.c:449
 #, fuzzy
 msgid "System of _Measurement:"
 msgstr "측정단위:"
 
-#: ../panel-plugin/weather-config.c:458
+#: ../panel-plugin/weather-config.c:454
 msgid "Imperial"
 msgstr "야드-파운드"
 
-#: ../panel-plugin/weather-config.c:460
+#: ../panel-plugin/weather-config.c:456
 msgid "Metric"
 msgstr "단위법"
 
-#: ../panel-plugin/weather-config.c:473
+#: ../panel-plugin/weather-config.c:469
 #, fuzzy
 msgid "L_ocation:"
 msgstr "지역:"
 
-#: ../panel-plugin/weather-config.c:505
+#: ../panel-plugin/weather-config.c:501
 #, fuzzy
 msgid "Chan_ge..."
 msgstr "바꾸기..."
 
 #. proxy
-#: ../panel-plugin/weather-config.c:518
+#: ../panel-plugin/weather-config.c:514
 #, fuzzy
 msgid "_Proxy server:"
 msgstr "프록시 서버:"
 
-#: ../panel-plugin/weather-config.c:523
+#: ../panel-plugin/weather-config.c:519
 #, fuzzy
 msgid "Use proxy _server"
 msgstr "프록시 서버 사용"
 
-#: ../panel-plugin/weather-config.c:525
+#: ../panel-plugin/weather-config.c:521
 #, fuzzy
 msgid "Auto-detect from _environment"
 msgstr "환경 자동감지"
 
 #. number of days shown in forecast
-#: ../panel-plugin/weather-config.c:590
+#: ../panel-plugin/weather-config.c:586
 msgid "Number of _forecast days:"
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:612
+#: ../panel-plugin/weather-config.c:608
 #, fuzzy
 msgid "_Labels to display"
 msgstr "레이블 표시"
 
-#: ../panel-plugin/weather-config.c:616
+#: ../panel-plugin/weather-config.c:612
 msgid "_Add"
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:632
+#: ../panel-plugin/weather-config.c:628
 msgid "_Remove"
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:637
+#: ../panel-plugin/weather-config.c:633
 msgid "Move _Up"
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:642
+#: ../panel-plugin/weather-config.c:638
 msgid "Move _Down"
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:680
+#: ../panel-plugin/weather-config.c:676
 #, fuzzy
 msgid "Animate _transitions between labels"
 msgstr "레이블간 애니메이션 전환"
@@ -740,6 +748,10 @@ msgstr "알 수 없음"
 #: ../panel-plugin/weather.desktop.in.in.h:2
 msgid "Show current weather conditions"
 msgstr "현재 날씨 상태를 보입니다."
+
+#, fuzzy
+#~ msgid "Overall cloudiness (C)"
+#~ msgstr "변동이 심한 구름"
 
 #~ msgid "V"
 #~ msgstr "시정"

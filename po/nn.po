@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-weather-plugin 0.6.0svn-r2842\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-16 22:16+0200\n"
+"POT-Creation-Date: 2012-07-18 11:05+0200\n"
 "PO-Revision-Date: 2012-01-15 17:11+0100\n"
 "Last-Translator: Kevin Brubeck Unhammer <unhammer@fsfe.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nb@lister.ping.uio.no>\n"
@@ -28,60 +28,65 @@ msgid "WS"
 msgstr "VF"
 
 #: ../panel-plugin/weather.c:136
+#, fuzzy
+msgid "WB"
+msgstr "V"
+
+#: ../panel-plugin/weather.c:139 ../panel-plugin/weather.c:142
 msgid "WD"
 msgstr "VR"
 
-#: ../panel-plugin/weather.c:139
+#: ../panel-plugin/weather.c:145
 msgid "H"
 msgstr "F"
 
-#: ../panel-plugin/weather.c:142
+#: ../panel-plugin/weather.c:148
 #, fuzzy
 msgid "CL"
 msgstr "Roleg"
 
-#: ../panel-plugin/weather.c:145
+#: ../panel-plugin/weather.c:151
 #, fuzzy
 msgid "CM"
 msgstr "Roleg"
 
-#: ../panel-plugin/weather.c:148
+#: ../panel-plugin/weather.c:154
 #, fuzzy
 msgid "CH"
 msgstr "F"
 
-#: ../panel-plugin/weather.c:151
+#: ../panel-plugin/weather.c:157
 msgid "C"
 msgstr ""
 
-#: ../panel-plugin/weather.c:154
+#: ../panel-plugin/weather.c:160
 msgid "F"
 msgstr "OT"
 
-#: ../panel-plugin/weather.c:157
+#: ../panel-plugin/weather.c:163
 msgid "R"
 msgstr ""
 
-#: ../panel-plugin/weather.c:233
+#: ../panel-plugin/weather.c:243
 msgid "No Data"
 msgstr ""
 
-#: ../panel-plugin/weather.c:260 ../panel-plugin/weather.c:858
+#: ../panel-plugin/weather.c:270 ../panel-plugin/weather.c:868
 msgid "Cannot update weather data"
 msgstr "Klarte ikkje oppdatera vinddata"
 
-#: ../panel-plugin/weather.c:788
+#: ../panel-plugin/weather.c:798
 #, c-format
 msgid "Unable to open the following url: %s"
 msgstr "Klarte ikkje opna url: %s"
 
-#: ../panel-plugin/weather.c:816 ../panel-plugin/weather-summary.c:601
+#: ../panel-plugin/weather.c:826 ../panel-plugin/weather-summary.c:601
 #: ../panel-plugin/weather.desktop.in.in.h:1
 msgid "Weather Update"
 msgstr "Vêroppdatering"
 
 #. add refresh button to right click menu, for people who missed the middle mouse click feature
-#: ../panel-plugin/weather.c:947 ../panel-plugin/weather-summary.c:646
+#: ../panel-plugin/weather.c:957 ../panel-plugin/weather-summary.c:646
 msgid "_Forecast"
 msgstr "_vêrvarsel"
 
@@ -115,21 +120,24 @@ msgid "Humidity (H)"
 msgstr "Fukt (F)"
 
 #: ../panel-plugin/weather-config.c:45
-msgid "Low cloudiness (CL)"
-msgstr ""
+#, fuzzy
+msgid "Low clouds (CL)"
+msgstr "Skyer"
 
 #: ../panel-plugin/weather-config.c:46
-msgid "Medium cloudiness (CM)"
-msgstr ""
+#, fuzzy
+msgid "Medium clouds (CM)"
+msgstr "Variabelt skydekke"
 
 #: ../panel-plugin/weather-config.c:47
-msgid "High cloudiness (CH)"
-msgstr ""
+#, fuzzy
+msgid "High clouds (CH)"
+msgstr "For det meste skya"
 
 #: ../panel-plugin/weather-config.c:48
 #, fuzzy
-msgid "Overall cloudiness (C)"
-msgstr "Variabelt skydekke"
+msgid "Cloudiness (C)"
+msgstr "Skyer"
 
 #: ../panel-plugin/weather-config.c:49
 msgid "Fog (F)"
@@ -140,8 +148,8 @@ msgstr ""
 msgid "Precipitations (R)"
 msgstr "<b>Bøyer</b>"
 
-#: ../panel-plugin/weather-config.c:229 ../panel-plugin/weather-config.c:387
-#: ../panel-plugin/weather-config.c:492
+#: ../panel-plugin/weather-config.c:229 ../panel-plugin/weather-config.c:383
+#: ../panel-plugin/weather-config.c:488
 msgid "Unset"
 msgstr "Ikkje sett"
 
@@ -149,76 +157,76 @@ msgstr "Ikkje sett"
 msgid "Please enter proxy settings"
 msgstr "Skriv inn mellomtenarinnstillingar"
 
-#: ../panel-plugin/weather-config.c:395
+#: ../panel-plugin/weather-config.c:391
 msgid "Detecting..."
 msgstr "Oppdagar …"
 
-#: ../panel-plugin/weather-config.c:453
+#: ../panel-plugin/weather-config.c:449
 #, fuzzy
 msgid "System of _Measurement:"
 msgstr "Måleeining:"
 
-#: ../panel-plugin/weather-config.c:458
+#: ../panel-plugin/weather-config.c:454
 msgid "Imperial"
 msgstr "Britisk imperial"
 
-#: ../panel-plugin/weather-config.c:460
+#: ../panel-plugin/weather-config.c:456
 msgid "Metric"
 msgstr "Metrisk"
 
-#: ../panel-plugin/weather-config.c:473
+#: ../panel-plugin/weather-config.c:469
 #, fuzzy
 msgid "L_ocation:"
 msgstr "Stad:"
 
-#: ../panel-plugin/weather-config.c:505
+#: ../panel-plugin/weather-config.c:501
 #, fuzzy
 msgid "Chan_ge..."
 msgstr "Endra …"
 
 #. proxy
-#: ../panel-plugin/weather-config.c:518
+#: ../panel-plugin/weather-config.c:514
 #, fuzzy
 msgid "_Proxy server:"
 msgstr "Mellomtenar:"
 
-#: ../panel-plugin/weather-config.c:523
+#: ../panel-plugin/weather-config.c:519
 #, fuzzy
 msgid "Use proxy _server"
 msgstr "Nytt mellomtenar"
 
-#: ../panel-plugin/weather-config.c:525
+#: ../panel-plugin/weather-config.c:521
 #, fuzzy
 msgid "Auto-detect from _environment"
 msgstr "Automatisk oppdaging"
 
 #. number of days shown in forecast
-#: ../panel-plugin/weather-config.c:590
+#: ../panel-plugin/weather-config.c:586
 msgid "Number of _forecast days:"
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:612
+#: ../panel-plugin/weather-config.c:608
 #, fuzzy
 msgid "_Labels to display"
 msgstr "Etikettar å visa"
 
-#: ../panel-plugin/weather-config.c:616
+#: ../panel-plugin/weather-config.c:612
 msgid "_Add"
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:632
+#: ../panel-plugin/weather-config.c:628
 msgid "_Remove"
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:637
+#: ../panel-plugin/weather-config.c:633
 msgid "Move _Up"
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:642
+#: ../panel-plugin/weather-config.c:638
 msgid "Move _Down"
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:680
+#: ../panel-plugin/weather-config.c:676
 #, fuzzy
 msgid "Animate _transitions between labels"
 msgstr "Animer overgangen mellom etikettar"
@@ -736,6 +744,10 @@ msgstr "I/T"
 #: ../panel-plugin/weather.desktop.in.in.h:2
 msgid "Show current weather conditions"
 msgstr "Vis gjeldande vêrforhold"
+
+#, fuzzy
+#~ msgid "Overall cloudiness (C)"
+#~ msgstr "Variabelt skydekke"
 
 #~ msgid "V"
 #~ msgstr "S"

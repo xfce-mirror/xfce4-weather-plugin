@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-weather-plugin 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-16 22:16+0200\n"
+"POT-Creation-Date: 2012-07-18 11:05+0200\n"
 "PO-Revision-Date: 2011-06-01 10:23+0100\n"
 "Last-Translator: Tomáš Vadina <kyberdev@gmail.com>\n"
 "Language-Team: Slovak <sk-i18n@lists.linux.sk>\n"
@@ -33,60 +33,65 @@ msgid "WS"
 msgstr "RV"
 
 #: ../panel-plugin/weather.c:136
+#, fuzzy
+msgid "WB"
+msgstr "Z"
+
+#: ../panel-plugin/weather.c:139 ../panel-plugin/weather.c:142
 msgid "WD"
 msgstr "SV"
 
-#: ../panel-plugin/weather.c:139
+#: ../panel-plugin/weather.c:145
 msgid "H"
 msgstr "H"
 
-#: ../panel-plugin/weather.c:142
+#: ../panel-plugin/weather.c:148
 #, fuzzy
 msgid "CL"
 msgstr "BEZVETRIE"
 
-#: ../panel-plugin/weather.c:145
+#: ../panel-plugin/weather.c:151
 #, fuzzy
 msgid "CM"
 msgstr "BEZVETRIE"
 
-#: ../panel-plugin/weather.c:148
+#: ../panel-plugin/weather.c:154
 #, fuzzy
 msgid "CH"
 msgstr "H"
 
-#: ../panel-plugin/weather.c:151
+#: ../panel-plugin/weather.c:157
 msgid "C"
 msgstr ""
 
-#: ../panel-plugin/weather.c:154
+#: ../panel-plugin/weather.c:160
 msgid "F"
 msgstr "F"
 
-#: ../panel-plugin/weather.c:157
+#: ../panel-plugin/weather.c:163
 msgid "R"
 msgstr ""
 
-#: ../panel-plugin/weather.c:233
+#: ../panel-plugin/weather.c:243
 msgid "No Data"
 msgstr ""
 
-#: ../panel-plugin/weather.c:260 ../panel-plugin/weather.c:858
+#: ../panel-plugin/weather.c:270 ../panel-plugin/weather.c:868
 msgid "Cannot update weather data"
 msgstr "Nie je možné aktualizovať informácie o počasí"
 
-#: ../panel-plugin/weather.c:788
+#: ../panel-plugin/weather.c:798
 #, c-format
 msgid "Unable to open the following url: %s"
 msgstr "Nedá sa otvoriť nasledujúca url adresa: %s"
 
-#: ../panel-plugin/weather.c:816 ../panel-plugin/weather-summary.c:601
+#: ../panel-plugin/weather.c:826 ../panel-plugin/weather-summary.c:601
 #: ../panel-plugin/weather.desktop.in.in.h:1
 msgid "Weather Update"
 msgstr "Aktuálny stav počasia"
 
 #. add refresh button to right click menu, for people who missed the middle mouse click feature
-#: ../panel-plugin/weather.c:947 ../panel-plugin/weather-summary.c:646
+#: ../panel-plugin/weather.c:957 ../panel-plugin/weather-summary.c:646
 msgid "_Forecast"
 msgstr "_Predpoveď počasia"
 
@@ -120,21 +125,24 @@ msgid "Humidity (H)"
 msgstr "Vlhkosť (H)"
 
 #: ../panel-plugin/weather-config.c:45
-msgid "Low cloudiness (CL)"
-msgstr ""
+#, fuzzy
+msgid "Low clouds (CL)"
+msgstr "Oblaky"
 
 #: ../panel-plugin/weather-config.c:46
-msgid "Medium cloudiness (CM)"
-msgstr ""
+#, fuzzy
+msgid "Medium clouds (CM)"
+msgstr "Premenlivá oblačnosť"
 
 #: ../panel-plugin/weather-config.c:47
-msgid "High cloudiness (CH)"
-msgstr ""
+#, fuzzy
+msgid "High clouds (CH)"
+msgstr "Zväčša zamračené"
 
 #: ../panel-plugin/weather-config.c:48
 #, fuzzy
-msgid "Overall cloudiness (C)"
-msgstr "Premenlivá oblačnosť"
+msgid "Cloudiness (C)"
+msgstr "Oblaky"
 
 #: ../panel-plugin/weather-config.c:49
 msgid "Fog (F)"
@@ -145,8 +153,8 @@ msgstr ""
 msgid "Precipitations (R)"
 msgstr "<b>Zrážky</b>"
 
-#: ../panel-plugin/weather-config.c:229 ../panel-plugin/weather-config.c:387
-#: ../panel-plugin/weather-config.c:492
+#: ../panel-plugin/weather-config.c:229 ../panel-plugin/weather-config.c:383
+#: ../panel-plugin/weather-config.c:488
 msgid "Unset"
 msgstr "Nenastavené"
 
@@ -154,76 +162,76 @@ msgstr "Nenastavené"
 msgid "Please enter proxy settings"
 msgstr "Prosím zadajte nastavenia proxy servera"
 
-#: ../panel-plugin/weather-config.c:395
+#: ../panel-plugin/weather-config.c:391
 msgid "Detecting..."
 msgstr "Zisťuje sa..."
 
-#: ../panel-plugin/weather-config.c:453
+#: ../panel-plugin/weather-config.c:449
 #, fuzzy
 msgid "System of _Measurement:"
 msgstr "Voliteľná jednotka:"
 
-#: ../panel-plugin/weather-config.c:458
+#: ../panel-plugin/weather-config.c:454
 msgid "Imperial"
 msgstr "Britská"
 
-#: ../panel-plugin/weather-config.c:460
+#: ../panel-plugin/weather-config.c:456
 msgid "Metric"
 msgstr "Metrická"
 
-#: ../panel-plugin/weather-config.c:473
+#: ../panel-plugin/weather-config.c:469
 #, fuzzy
 msgid "L_ocation:"
 msgstr "Umiestnenie:"
 
-#: ../panel-plugin/weather-config.c:505
+#: ../panel-plugin/weather-config.c:501
 #, fuzzy
 msgid "Chan_ge..."
 msgstr "Zmeniť..."
 
 #. proxy
-#: ../panel-plugin/weather-config.c:518
+#: ../panel-plugin/weather-config.c:514
 #, fuzzy
 msgid "_Proxy server:"
 msgstr "Proxy server:"
 
-#: ../panel-plugin/weather-config.c:523
+#: ../panel-plugin/weather-config.c:519
 #, fuzzy
 msgid "Use proxy _server"
 msgstr "Použiť proxy server"
 
-#: ../panel-plugin/weather-config.c:525
+#: ../panel-plugin/weather-config.c:521
 #, fuzzy
 msgid "Auto-detect from _environment"
 msgstr "Automatické zistenie z prostredia"
 
 #. number of days shown in forecast
-#: ../panel-plugin/weather-config.c:590
+#: ../panel-plugin/weather-config.c:586
 msgid "Number of _forecast days:"
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:612
+#: ../panel-plugin/weather-config.c:608
 #, fuzzy
 msgid "_Labels to display"
 msgstr "Zobraziť štítky"
 
-#: ../panel-plugin/weather-config.c:616
+#: ../panel-plugin/weather-config.c:612
 msgid "_Add"
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:632
+#: ../panel-plugin/weather-config.c:628
 msgid "_Remove"
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:637
+#: ../panel-plugin/weather-config.c:633
 msgid "Move _Up"
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:642
+#: ../panel-plugin/weather-config.c:638
 msgid "Move _Down"
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:680
+#: ../panel-plugin/weather-config.c:676
 #, fuzzy
 msgid "Animate _transitions between labels"
 msgstr "Animovať prechody medzi štítkami"
@@ -741,6 +749,10 @@ msgstr "Nie je k dispozícii"
 #: ../panel-plugin/weather.desktop.in.in.h:2
 msgid "Show current weather conditions"
 msgstr "Zobraziť aktuálne počasie"
+
+#, fuzzy
+#~ msgid "Overall cloudiness (C)"
+#~ msgstr "Premenlivá oblačnosť"
 
 #~ msgid "V"
 #~ msgstr "V"
