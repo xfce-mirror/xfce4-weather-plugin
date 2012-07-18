@@ -208,24 +208,24 @@ void parse_location (xmlNode * cur_node, xml_location *loc)
 			loc->pressure_value = PROP(child_node, "value");
 		}
 		if (NODE_IS_TYPE (child_node, "cloudiness")) {
-			g_free(loc->cloudiness_percent[CLOUD_OVERALL]);
-			loc->cloudiness_percent[CLOUD_OVERALL] = PROP(child_node, "percent");
+			g_free(loc->clouds_percent[CLOUDS_PERC_CLOUDINESS]);
+			loc->clouds_percent[CLOUDS_PERC_CLOUDINESS] = PROP(child_node, "percent");
 		}
 		if (NODE_IS_TYPE (child_node, "fog")) {
 			g_free(loc->fog_percent);
 			loc->fog_percent = PROP(child_node, "percent");
 		}
 		if (NODE_IS_TYPE (child_node, "lowClouds")) {
-			g_free(loc->cloudiness_percent[CLOUD_LOW]);
-			loc->cloudiness_percent[CLOUD_LOW] = PROP(child_node, "percent");
+			g_free(loc->clouds_percent[CLOUDS_PERC_LOW]);
+			loc->clouds_percent[CLOUDS_PERC_LOW] = PROP(child_node, "percent");
 		}
 		if (NODE_IS_TYPE (child_node, "mediumClouds")) {
-			g_free(loc->cloudiness_percent[CLOUD_MED]);
-			loc->cloudiness_percent[CLOUD_MED] = PROP(child_node, "percent");
+			g_free(loc->clouds_percent[CLOUDS_PERC_MED]);
+			loc->clouds_percent[CLOUDS_PERC_MED] = PROP(child_node, "percent");
 		}
 		if (NODE_IS_TYPE (child_node, "highClouds")) {
-			g_free(loc->cloudiness_percent[CLOUD_HIGH]);
-			loc->cloudiness_percent[CLOUD_HIGH] = PROP(child_node, "percent");
+			g_free(loc->clouds_percent[CLOUDS_PERC_HIGH]);
+			loc->clouds_percent[CLOUDS_PERC_HIGH] = PROP(child_node, "percent");
 		}
 		if (NODE_IS_TYPE (child_node, "precipitation")) {
 			g_free(loc->precipitation_unit);
@@ -254,9 +254,9 @@ static void xml_location_free(xml_location *loc)
 	g_free(loc->pressure_unit);
 	g_free(loc->pressure_value);
 	g_free(loc->fog_percent);
-	g_free(loc->cloudiness_percent[CLOUD_LOW]);
-	g_free(loc->cloudiness_percent[CLOUD_MED]);
-	g_free(loc->cloudiness_percent[CLOUD_HIGH]);
+	g_free(loc->clouds_percent[CLOUDS_PERC_LOW]);
+	g_free(loc->clouds_percent[CLOUDS_PERC_MED]);
+	g_free(loc->clouds_percent[CLOUDS_PERC_HIGH]);
 	g_free(loc->precipitation_unit);
 	g_free(loc->precipitation_value);
 	g_free(loc->symbol);

@@ -144,16 +144,16 @@ make_label (xfceweather_data *data,
     case HUMIDITY:
       lbl = _("H");
       break;
-    case CLOUDINESS_LOW:
+    case CLOUDS_LOW:
       lbl = _("CL");
       break;
-    case CLOUDINESS_MED:
+    case CLOUDS_MED:
       lbl = _("CM");
       break;
-    case CLOUDINESS_HIGH:
+    case CLOUDS_HIGH:
       lbl = _("CH");
       break;
-    case CLOUDINESS_OVERALL:
+    case CLOUDINESS:
       lbl = _("C");
       break;
     case FOG:

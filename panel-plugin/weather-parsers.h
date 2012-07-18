@@ -30,11 +30,11 @@ G_BEGIN_DECLS
 
 enum
 {
-	CLOUD_LOW = 0,
-	CLOUD_MED,
-	CLOUD_HIGH,
-	CLOUD_OVERALL,
-	NUM_CLOUDINESS
+	CLOUDS_PERC_LOW = 0,
+	CLOUDS_PERC_MED,
+	CLOUDS_PERC_HIGH,
+	CLOUDS_PERC_CLOUDINESS,
+	CLOUDS_PERC_NUM
 };
 
 typedef struct
@@ -57,7 +57,7 @@ typedef struct
 	gchar *pressure_value;
 	gchar *pressure_unit;
 	
-	gchar *cloudiness_percent[NUM_CLOUDINESS];
+	gchar *clouds_percent[CLOUDS_PERC_NUM];
 	gchar *fog_percent;
 	
 	gchar *precipitation_value;

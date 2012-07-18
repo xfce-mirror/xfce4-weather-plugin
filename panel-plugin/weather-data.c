@@ -93,14 +93,14 @@ get_data (xml_time *timeslice, unit_systems unit_system, datas type)
 		return LOCALE_DOUBLE(loc->wind_dir_deg, "%.1f");
 	case HUMIDITY:
 		return LOCALE_DOUBLE(loc->humidity_value, "%.1f");
-	case CLOUDINESS_LOW:
-		return LOCALE_DOUBLE(loc->cloudiness_percent[CLOUD_LOW], "%.1f");
-	case CLOUDINESS_MED:
-		return LOCALE_DOUBLE(loc->cloudiness_percent[CLOUD_MED], "%.1f");
-	case CLOUDINESS_HIGH:
-		return LOCALE_DOUBLE(loc->cloudiness_percent[CLOUD_HIGH], "%.1f");
-	case CLOUDINESS_OVERALL:
-		return LOCALE_DOUBLE(loc->cloudiness_percent[CLOUD_OVERALL], "%.1f");
+	case CLOUDS_LOW:
+		return LOCALE_DOUBLE(loc->clouds_percent[CLOUDS_PERC_LOW], "%.1f");
+	case CLOUDS_MED:
+		return LOCALE_DOUBLE(loc->clouds_percent[CLOUDS_PERC_MED], "%.1f");
+	case CLOUDS_HIGH:
+		return LOCALE_DOUBLE(loc->clouds_percent[CLOUDS_PERC_HIGH], "%.1f");
+	case CLOUDINESS:
+		return LOCALE_DOUBLE(loc->clouds_percent[CLOUDS_PERC_CLOUDINESS], "%.1f");
 	case FOG:
 		return LOCALE_DOUBLE(loc->fog_percent, "%.1f");
 	case PRECIPITATIONS:
@@ -140,10 +140,10 @@ get_unit (xml_time *timeslice, unit_systems unit_system, datas type)
 	case LONGITUDE:
 		return "°";
 	case HUMIDITY:
-	case CLOUDINESS_LOW:
-	case CLOUDINESS_MED:
-	case CLOUDINESS_HIGH:
-	case CLOUDINESS_OVERALL:
+	case CLOUDS_LOW:
+	case CLOUDS_MED:
+	case CLOUDS_HIGH:
+	case CLOUDINESS:
 	case FOG:
 		return "%";
 	case PRECIPITATIONS:
@@ -375,8 +375,8 @@ make_combined_timeslice(xml_time *point, xml_time *interval)
     loc->pressure_value = g_strdup(point->location->pressure_value);
     loc->pressure_unit = g_strdup(point->location->pressure_unit);
 
-    for (i = 0; i < NUM_CLOUDINESS; i++)
-        loc->cloudiness_percent[i] = g_strdup(point->location->cloudiness_percent[i]);
+    for (i = 0; i < CLOUDS_PERC_NUM; i++)
+        loc->clouds_percent[i] = g_strdup(point->location->clouds_percent[i]);
 
     loc->fog_percent = g_strdup(point->location->fog_percent);
 
