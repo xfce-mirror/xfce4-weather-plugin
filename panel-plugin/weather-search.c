@@ -351,80 +351,11 @@ typedef struct {
 }
 geolocation_data;
 
-static void
-cb_geo_searchdone (gboolean  succeed,
-               gchar    *received,
-	       size_t    len,
-               gpointer  user_data)
-{
-  geolocation_data *data = (geolocation_data *) user_data;
-  xmlDoc        *doc;
-  xmlNode       *cur_node;
-  gchar         *lat, *lon, *city;
-
-  if (!succeed || received == NULL) {
-    data->cb(NULL, NULL, NULL, data->user_data);
-    g_free(data);
-    return;
-  }
-
-  if (g_utf8_validate(received, -1, NULL)) {
-    /* force parsing as UTF-8, the XML encoding header may lie */
-    doc = xmlReadMemory (received, strlen (received), NULL, "UTF-8", 0);
-  } else {
-    doc = xmlParseMemory (received, strlen(received));
-  }
-  g_free (received);
-
-  if (!doc) {
-    data->cb(NULL, NULL, NULL, data->user_data);
-    g_free(data);
-    return;
-  }
-
-  cur_node = xmlDocGetRootElement (doc);
-
-  if (cur_node)
-    {
-      for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next)
-        {
-          if (NODE_IS_TYPE (cur_node, "place"))
-            {
-              lat = (gchar *) xmlGetProp (cur_node, (const xmlChar *) "lat");
-	      if (!lat)
-		continue;
-              lon = (gchar *) xmlGetProp (cur_node, (const xmlChar *) "lon");
-	      if (!lon) {
-	        g_free(lat);
-		continue;
-	      }
-
-              city = (gchar *) xmlGetProp (cur_node, (const xmlChar *) "display_name");
-
-              if (!city)
-                {
-	        g_free(lat);
-	        g_free(lon);
-                  continue;
-                }
-
-              data->cb(city, lat, lon, data->user_data);
-              g_free (lat);
-              g_free (lon);
-              g_free (city);
-	      break;
-            }
-        }
-    }
-
-  g_free(data);
-  xmlFreeDoc (doc);
-}
 
 static void
 cb_geolocation (gboolean  succeed,
                 gchar    *received,
-		size_t    len,
+                size_t    len,
                 gpointer  user_data)
 {
   geolocation_data *data = (geolocation_data *) user_data;
@@ -432,6 +363,7 @@ cb_geolocation (gboolean  succeed,
   xmlNode       *cur_node;
   gchar         *city = NULL, *country = NULL;
   gchar         *country_code = NULL, *region = NULL;
+  gchar         *latitude = NULL, *longitude = NULL;
   gchar         *full_loc;
   gsize          length;
   gchar         *p;
@@ -485,6 +417,14 @@ cb_geolocation (gboolean  succeed,
             {
               region = DATA (cur_node);
             }
+          if (NODE_IS_TYPE (cur_node, "Latitude"))
+            {
+              latitude = DATA (cur_node);
+            }
+          if (NODE_IS_TYPE (cur_node, "Longitude"))
+            {
+              longitude = DATA (cur_node);
+            }
         }
     }
 
@@ -499,6 +439,10 @@ cb_geolocation (gboolean  succeed,
     {
       full_loc = g_strdup (country);
     }
+  else if (latitude && longitude)
+    {
+      full_loc = g_strdup (_("Untitled"));
+    }
   else
     {
       full_loc = NULL;
@@ -511,25 +455,11 @@ cb_geolocation (gboolean  succeed,
 
   xmlFreeDoc (doc);
 
-  if (full_loc) {
-     gchar *url, *sane_str;
-
-     if ((sane_str = sanitize_str (full_loc)) == NULL) {
-       data->cb(NULL, NULL, NULL, data->user_data);
-       g_free(data);
-       g_free(full_loc);
-       return;
-     }
-     g_free(full_loc);
-
-     url = g_strdup_printf ("/search?q=%s&format=xml", sane_str);
-     g_free (sane_str);
-
-     weather_http_receive_data ("nominatim.openstreetmap.org", url,
-                        	data->proxy_host, data->proxy_port,
-                        	cb_geo_searchdone, data);
-     g_free(url);
-  }
+  data->cb(full_loc, latitude, longitude, data->user_data);
+  g_free (latitude);
+  g_free (longitude);
+  g_free (full_loc);
+  g_free (data);
 }
 
 
