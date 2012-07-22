@@ -34,7 +34,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-weather-plugin 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-18 17:29+0200\n"
+"POT-Creation-Date: 2012-07-22 20:29+0200\n"
 "PO-Revision-Date: 2012-07-19 21:49+0800\n"
 "Last-Translator: Cheng-Chia Tseng <pswo10680@gmail.com>\n"
 "Language-Team: Chinese (Traditional) <xfce-i18n@xfce.org>\n"
@@ -60,8 +60,7 @@ msgstr "風速"
 msgid "WB"
 msgstr "西"
 
-#: ../panel-plugin/weather.c:139
-#: ../panel-plugin/weather.c:142
+#: ../panel-plugin/weather.c:139 ../panel-plugin/weather.c:142
 msgid "WD"
 msgstr "風向"
 
@@ -100,8 +99,7 @@ msgstr ""
 msgid "No Data"
 msgstr "無資料"
 
-#: ../panel-plugin/weather.c:270
-#: ../panel-plugin/weather.c:869
+#: ../panel-plugin/weather.c:270 ../panel-plugin/weather.c:869
 msgid "Cannot update weather data"
 msgstr "無法更新天氣資料"
 
@@ -110,15 +108,13 @@ msgstr "無法更新天氣資料"
 msgid "Unable to open the following url: %s"
 msgstr "無法開啟下列網址：%s"
 
-#: ../panel-plugin/weather.c:827
-#: ../panel-plugin/weather-summary.c:601
+#: ../panel-plugin/weather.c:827 ../panel-plugin/weather-summary.c:625
 #: ../panel-plugin/weather.desktop.in.in.h:1
 msgid "Weather Update"
 msgstr "天氣報告"
 
 #. add refresh button to right click menu, for people who missed the middle mouse click feature
-#: ../panel-plugin/weather.c:970
-#: ../panel-plugin/weather-summary.c:646
+#: ../panel-plugin/weather.c:970 ../panel-plugin/weather-summary.c:670
 msgid "_Forecast"
 msgstr "天氣預報(_F)"
 
@@ -188,8 +184,7 @@ msgstr ""
 msgid "Precipitations (R)"
 msgstr "<b>降水機率</b>"
 
-#: ../panel-plugin/weather-config.c:229
-#: ../panel-plugin/weather-config.c:383
+#: ../panel-plugin/weather-config.c:229 ../panel-plugin/weather-config.c:383
 #: ../panel-plugin/weather-config.c:494
 msgid "Unset"
 msgstr "取消設定"
@@ -351,8 +346,7 @@ msgstr "無法偵測內容長度。"
 msgid "No content received."
 msgstr "未接收到內容。"
 
-#: ../panel-plugin/weather-search.c:148
-#: ../panel-plugin/weather-search.c:280
+#: ../panel-plugin/weather-search.c:148 ../panel-plugin/weather-search.c:280
 msgid "Results"
 msgstr "搜尋結果"
 
@@ -374,7 +368,7 @@ msgid "Untitled"
 msgstr "無標題"
 
 #. head
-#: ../panel-plugin/weather-summary.c:273
+#: ../panel-plugin/weather-summary.c:274
 #, c-format
 msgid ""
 "Weather report for: %s.\n"
@@ -383,23 +377,23 @@ msgstr ""
 "%s 天氣報告：\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:278
+#: ../panel-plugin/weather-summary.c:279
 msgid "Coordinates\n"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:279
+#: ../panel-plugin/weather-summary.c:280
 msgid "Altitude"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:280
+#: ../panel-plugin/weather-summary.c:281
 msgid "Latitude"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:281
+#: ../panel-plugin/weather-summary.c:282
 msgid "Longitude"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:283
+#: ../panel-plugin/weather-summary.c:284
 msgid ""
 "\n"
 "Time\n"
@@ -407,32 +401,25 @@ msgstr ""
 "\n"
 "時間\n"
 
-#: ../panel-plugin/weather-summary.c:286
+#: ../panel-plugin/weather-summary.c:287
 #, c-format
 msgid ""
-"\tPoint data applies to:\n"
+"\tTemperature, wind, atmosphere and cloud data apply to:\n"
 "\t%s\n"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:293
+#: ../panel-plugin/weather-summary.c:294
 #, c-format
 msgid ""
 "\n"
-"\tInterval data applies to:\n"
+"\tPrecipitation and the weather symbol have been calculated\n"
+"\tfor the following time interval:\n"
 "\tStart:\t%s\n"
 "\tEnd:\t%s\n"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:298
-#, c-format
-msgid ""
-"\n"
-"\tInterval data provides icon, description and precipitation,\n"
-"\twhile the remaining information originates from point data.\n"
-msgstr ""
-
 #. Temperature
-#: ../panel-plugin/weather-summary.c:304
+#: ../panel-plugin/weather-summary.c:300
 msgid ""
 "\n"
 "Temperature\n"
@@ -440,12 +427,12 @@ msgstr ""
 "\n"
 "溫度\n"
 
-#: ../panel-plugin/weather-summary.c:305
+#: ../panel-plugin/weather-summary.c:301
 msgid "Temperature"
 msgstr "溫度"
 
 #. Wind
-#: ../panel-plugin/weather-summary.c:308
+#: ../panel-plugin/weather-summary.c:304
 msgid ""
 "\n"
 "Wind\n"
@@ -453,22 +440,22 @@ msgstr ""
 "\n"
 "風勢\n"
 
-#: ../panel-plugin/weather-summary.c:313
+#: ../panel-plugin/weather-summary.c:309
 #, c-format
 msgid "\t%s: %s (%s on the Beaufort scale)\n"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:313
+#: ../panel-plugin/weather-summary.c:309
 msgid "Speed"
 msgstr "風速"
 
-#: ../panel-plugin/weather-summary.c:322
+#: ../panel-plugin/weather-summary.c:318
 msgid "Direction"
 msgstr "風向"
 
 #  NOTE cwb.gov.tw translation; Japanese equivalent is "降水確率" which seems to be also possible but much rarer
 #. Precipitation
-#: ../panel-plugin/weather-summary.c:330
+#: ../panel-plugin/weather-summary.c:326
 #, fuzzy
 msgid ""
 "\n"
@@ -476,13 +463,13 @@ msgid ""
 msgstr "<b>降水機率</b>"
 
 #  NOTE cwb.gov.tw translation; Japanese equivalent is "降水確率" which seems to be also possible but much rarer
-#: ../panel-plugin/weather-summary.c:331
+#: ../panel-plugin/weather-summary.c:327
 #, fuzzy
 msgid "Precipitations amount"
 msgstr "<b>降水機率</b>"
 
 #. Atmosphere
-#: ../panel-plugin/weather-summary.c:334
+#: ../panel-plugin/weather-summary.c:330
 #, fuzzy
 msgid ""
 "\n"
@@ -491,99 +478,99 @@ msgstr ""
 "\n"
 "大氣壓力\n"
 
-#: ../panel-plugin/weather-summary.c:335
+#: ../panel-plugin/weather-summary.c:331
 msgid "Pressure"
 msgstr "氣壓"
 
-#: ../panel-plugin/weather-summary.c:336
+#: ../panel-plugin/weather-summary.c:332
 msgid "Humidity"
 msgstr "相對濕度"
 
 #  XXX
 #. Clouds
-#: ../panel-plugin/weather-summary.c:339
+#: ../panel-plugin/weather-summary.c:335
 #, fuzzy
 msgid ""
 "\n"
 "Clouds\n"
 msgstr "有雲"
 
-#: ../panel-plugin/weather-summary.c:340
+#: ../panel-plugin/weather-summary.c:336
 #: ../panel-plugin/weather-translate.c:110
 msgid "Fog"
 msgstr "有霧"
 
 #  XXX
-#: ../panel-plugin/weather-summary.c:341
+#: ../panel-plugin/weather-summary.c:337
 #, fuzzy
 msgid "Low clouds"
 msgstr "有雲"
 
-#: ../panel-plugin/weather-summary.c:342
+#: ../panel-plugin/weather-summary.c:338
 msgid "Medium clouds"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:343
+#: ../panel-plugin/weather-summary.c:339
 msgid "High clouds"
 msgstr ""
 
 #  XXX
-#: ../panel-plugin/weather-summary.c:344
+#: ../panel-plugin/weather-summary.c:340
 #, fuzzy
 msgid "Cloudiness"
 msgstr "有雲"
 
-#: ../panel-plugin/weather-summary.c:346
+#: ../panel-plugin/weather-summary.c:342
 msgid ""
 "\n"
 "Data from The Norwegian Meteorological Institute\n"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:347
+#: ../panel-plugin/weather-summary.c:345
 msgid "Thanks to met.no"
 msgstr "感謝 met.no"
 
-#: ../panel-plugin/weather-summary.c:424
+#: ../panel-plugin/weather-summary.c:448
 msgid "Morning"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:427
+#: ../panel-plugin/weather-summary.c:451
 msgid "Afternoon"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:430
+#: ../panel-plugin/weather-summary.c:454
 msgid "Evening"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:433
+#: ../panel-plugin/weather-summary.c:457
 #, fuzzy
 msgid "Night"
 msgstr "晚間：%s"
 
-#: ../panel-plugin/weather-summary.c:442
+#: ../panel-plugin/weather-summary.c:466
 #, c-format
 msgid "Today"
 msgstr "今日"
 
-#: ../panel-plugin/weather-summary.c:444
+#: ../panel-plugin/weather-summary.c:468
 #, c-format
 msgid "Tomorrow"
 msgstr "明日"
 
-#: ../panel-plugin/weather-summary.c:609
+#: ../panel-plugin/weather-summary.c:633
 #, c-format
 msgid "Weather report for: %s"
 msgstr "%s 天氣報告"
 
-#: ../panel-plugin/weather-summary.c:632
+#: ../panel-plugin/weather-summary.c:656
 msgid "Please set a location in the plugin settings."
 msgstr "請在插件設定中設定位置。"
 
-#: ../panel-plugin/weather-summary.c:634
+#: ../panel-plugin/weather-summary.c:658
 msgid "Currently no data available."
 msgstr "目前尚未有資料。"
 
-#: ../panel-plugin/weather-summary.c:649
+#: ../panel-plugin/weather-summary.c:673
 msgid "_Details"
 msgstr "詳細資料(_D)"
 
@@ -832,445 +819,606 @@ msgstr "顯示目前天氣狀況"
 #  NOTE The non-Canadian term is not used here even though it has been spotted in other hk/tw sites; it is just not familiar to people who would be affected by this weather condition
 #~ msgid "Windchill (F)"
 #~ msgstr "風凍/風寒"
+
 #  XXX Whether pressure is rising/steady/falling
 #~ msgid "Atmosphere state (P)"
 #~ msgstr "氣壓狀況（氣壓）"
+
 #~ msgid "Wind gust (WG)"
 #~ msgstr "陣風"
+
 #~ msgid "Visibility (V)"
 #~ msgstr "能見度（能見）"
+
 #~ msgid "UV Index (UV)"
 #~ msgstr "紫外線指數 (UV)"
+
 #~ msgid "Dewpoint (DP)"
 #~ msgstr "露點"
+
 #~ msgid "mi"
 #~ msgstr "哩"
+
 #~ msgid ""
 #~ "Observation station located in %s\n"
 #~ "Last update: %s.\n"
 #~ msgstr ""
 #~ "觀測站位於 %s\n"
 #~ "最近更新：%s.\n"
+
 #  NOTE weather.com.hk translation "風寒", but Canadian idiom is "風凍"
 #~ msgid "Windchill"
 #~ msgstr "風凍"
+
 #  XXX "Description"?
 #~ msgid "Description"
 #~ msgstr "狀況"
+
 #~ msgid "Dew point"
 #~ msgstr "露點"
+
 #~ msgid "Gusts"
 #~ msgstr "陣風"
+
 #~ msgid ""
 #~ "\n"
 #~ "UV\n"
 #~ msgstr ""
 #~ "\n"
 #~ "紫外線\n"
+
 #~ msgid "Index"
 #~ msgstr "指數"
+
 #  FIXME "Risk" is of course not "強度" (strength) but "風險";
 #  FIXME however, this is how the "risk" is actually labelled at hko.gov.hk
 #~ msgid "Risk"
 #~ msgstr "風險"
+
 #~ msgid "State"
 #~ msgstr "狀況"
+
 #~ msgid ""
 #~ "\n"
 #~ "Sun\n"
 #~ msgstr ""
 #~ "\n"
 #~ "日出及日落時間\n"
+
 #~ msgid "Rise"
 #~ msgstr "日出"
+
 #~ msgid "Set"
 #~ msgstr "日落"
+
 #~ msgid ""
 #~ "\n"
 #~ "Other\n"
 #~ msgstr ""
 #~ "\n"
 #~ "其他\n"
+
 #~ msgid "Visibility"
 #~ msgstr "能見度"
+
 #~ msgid ""
 #~ "\n"
 #~ "More on weather.com\n"
 #~ msgstr ""
 #~ "\n"
 #~ "詳細請見 weather.com\n"
+
 #~ msgid "Day: %s"
 #~ msgstr "日間：%s"
+
 #  NOTE forecasted temperature, refers to actual temperature only
 #~ msgid "<b>Temperature</b>"
 #~ msgstr "<b>溫度</b>"
+
 #  XXX
 #~ msgid "<b>Wind</b>"
 #~ msgstr "<b>風勢</b>"
+
 #~ msgid "Forecast"
 #~ msgstr "天氣預報"
+
 #~ msgid "AM Clouds / PM Sun"
 #~ msgstr "上午烏雲 / 下午放晴"
+
 #~ msgid "AM Light Rain"
 #~ msgstr "上午微雨"
+
 #  XXX Cf http://photino.cwb.gov.tw/rdcweb/lib/h/h_000450.htm
 #~ msgid "AM Light Snow"
 #~ msgstr "上午微雪"
+
 #  XXX
 #~ msgid "AM Rain / Snow Showers"
 #~ msgstr "上午有雨 / 陣雪"
+
 #  XXX
 #~ msgid "AM Rain / Wind"
 #~ msgstr "上午有雨 / 風"
+
 #  XXX
 #~ msgid "AM Showers"
 #~ msgstr "上午陣雪"
+
 #  XXX
 #~ msgid "AM Showers / Wind"
 #~ msgstr "上午陣雨 / 風"
+
 #  XXX never heard of "Snow Showers"
 #~ msgid "AM Snow Showers"
 #~ msgstr "上午陣雪"
+
 #  XXX never heard of "Snow Showers"
 #~ msgid "AM Snow Showers / Wind"
 #~ msgstr "上午陣雪 / 風"
+
 #  XXX
 #~ msgid "AM T-Storms"
 #~ msgstr "上午雷暴或雷雨"
+
 #  XXX
 #~ msgid "Becoming Cloudy"
 #~ msgstr "轉趨多雲"
+
 #  XXX cwb.gov.tw translation is "雪暴風", which is unheard of in Canada
 #~ msgid "Blizzard"
 #~ msgstr "雪暴"
+
 #  XXX
 #~ msgid "Blizzard Conditions"
 #~ msgstr "雪暴狀況"
+
 #  NOTE cwb.gov.tw translation
 #~ msgid "Blowing Snow"
 #~ msgstr "高吹雪"
+
 #  XXX
 #~ msgid "Chance of Rain"
 #~ msgstr "可能有雨"
+
 #  XXX
 #~ msgid "Chance of Rain/Snow"
 #~ msgstr "可能有雨/雪"
+
 #  XXX
 #~ msgid "Chance of Showers"
 #~ msgstr "可能有陣雪"
+
 #  XXX
 #~ msgid "Chance of Snow"
 #~ msgstr "可能有雪"
+
 #  XXX
 #~ msgid "Chance of Snow/Rain"
 #~ msgstr "可能有雪/雨"
+
 #  XXX
 #~ msgid "Chance of T-Storm"
 #~ msgstr "可能有雷暴或雷雨"
+
 #  XXX
 #~ msgid "Clouds Early / Clearing Late"
 #~ msgstr "稍早有雲 / 稍晚轉趨明朗"
+
 #~ msgid "Cloudy / Wind"
 #~ msgstr "多雲 / 風"
+
 #~ msgid "Cloudy Periods"
 #~ msgstr "間中多雲"
+
 #  XXX
 #~ msgid "Continued Hot"
 #~ msgstr "持續炎熱"
+
 #  XXX
 #~ msgid "Cumulonimbus Clouds Observed"
 #~ msgstr "觀測到有積雨雲"
+
 #  NOTE cwb.gov.tw translation
 #~ msgid "Drifting Snow"
 #~ msgstr "低吹雪"
+
 #  NOTE cwb.gov.tw translation
 #~ msgid "Drifting Snow and Windy"
 #~ msgstr "低吹雪且刮風"
+
 #~ msgid "Drizzle"
 #~ msgstr "毛雨"
+
 #~ msgid "Dry"
 #~ msgstr "乾燥"
+
 #~ msgid "Dust"
 #~ msgstr "塵"
+
 #~ msgid "Fair"
 #~ msgstr "天氣良好"
+
 #  XXX
 #~ msgid "Few Showers"
 #~ msgstr "有幾陣雨"
+
 #  XXX never heard of "Snow Showers"
 #~ msgid "Few Snow Showers"
 #~ msgstr "有幾陣陣雪"
+
 #  NOTE cwb.gov.tw translation; this might not be the most appropriate
 #~ msgid "Freezing Drizzle"
 #~ msgstr "凍毛雨"
+
 #  XXX cwb.gov.tw translation "凍雨"; usual Canadian idiom is "冰雨"
 #~ msgid "Freezing Rain"
 #~ msgstr "凍雨（冰雨）"
+
 #  XXX see note on "Freezing Rain"
 #~ msgid "Freezing Rain/Snow"
 #~ msgstr "凍雨（冰雨）或雪"
+
 #~ msgid "Frigid"
 #~ msgstr "嚴寒"
+
 #  NOTE cwb.gov.tw translation
 #~ msgid "Frozen Precip"
 #~ msgstr "固態降水"
+
 #~ msgid "Hail"
 #~ msgstr "雹"
+
 #~ msgid "Haze"
 #~ msgstr "霾"
+
 #~ msgid "Hazy"
 #~ msgstr "有霾"
+
 #  NOTE This might also be "豪雨"; impossile to disambiguate
 #~ msgid "Heavy Rain"
 #~ msgstr "大雨"
+
 #~ msgid "Hot And Humid"
 #~ msgstr "炎熱且潮濕"
+
 #~ msgid "Hot!"
 #~ msgstr "炎熱！"
+
 #  NOTE cwb.gov.tw translation
 #~ msgid "Ice Crystals"
 #~ msgstr "飄落冰晶"
+
 #  XXX This might be zh-CN'ism, but unable to find proper translation
 #~ msgid "Ice/Snow Mixture"
 #~ msgstr "冰夾雪"
+
 #~ msgid "Increasing Clouds"
 #~ msgstr "逐漸多雲"
+
 #~ msgid "Isolated Showers"
 #~ msgstr "局部地區性陣雨"
+
 #~ msgid "Isolated T-Storms"
 #~ msgstr "局部地區性雷暴或雷雨"
+
 #  NOTE this is the expected translation, spotted actual use at hko.gov.hk
 #~ msgid "Light Drizzle"
 #~ msgstr "微毛雨"
+
 #  XXX see note for "Light Drizzle"
 #~ msgid "Light Drizzle and Windy"
 #~ msgstr "微毛雨且刮風"
+
 #~ msgid "Light Rain"
 #~ msgstr "微雨"
+
 #  XXX
 #~ msgid "Light Rain / Wind"
 #~ msgstr "微雨 / 風"
+
 #~ msgid "Light rain late"
 #~ msgstr "稍晚微雨"
+
 #  XXX
 #~ msgid "Light Rain Shower"
 #~ msgstr "微陣雨"
+
 #  XXX Cf http://photino.cwb.gov.tw/rdcweb/lib/h/h_000450.htm
 #~ msgid "Light Snow"
 #~ msgstr "微雪"
+
 #  XXX
 #~ msgid "Lightning Observed"
 #~ msgstr "觀測到有閃電"
+
 #~ msgid "Mild and Breezy"
 #~ msgstr "和暖且微風"
+
 #~ msgid "Mist"
 #~ msgstr "薄霧"
+
 #  NOTE according to wrh.noaa.gov, "Mostly Clear" = "Mostly Sunny" but at night
 #  NOTE 1/8–2/8 cloud cover (NOAA)
 #  XXX
 #~ msgid "Mostly Clear"
 #~ msgstr "大致明朗"
+
 #  XXX
 #~ msgid "Mostly Cloudy / Wind"
 #~ msgstr "大致有雲 / 風"
+
 #  XXX
 #~ msgid "Mostly Cloudy and Windy"
 #~ msgstr "大致有雲且括風"
+
 #  NOTE according to wrh.noaa.gov, "Mostly Sunny" = "Mostly Clear" but in daytime
 #  NOTE 1/8–2/8 cloud cover (NOAA)
 #  XXX
 #~ msgid "Mostly Sunny"
 #~ msgstr "大致陽光普照"
+
 #  NOTE according to wrh.noaa.gov, "Mostly Sunny" = "Mostly Clear" but in daytime
 #  NOTE 1/8–2/8 cloud cover (NOAA)
 #  XXX
 #~ msgid "Mostly Sunny / Wind"
 #~ msgstr "大致陽光普照 / 風"
+
 #~ msgid "N/A Not Available"
 #~ msgstr "N/A 不適用"
+
 #  XXX cf. "sunny interval" (but is this closer to "sunny periods"?)
 #~ msgid "Occasional Sunshine"
 #~ msgstr "偶爾有陽光"
+
 #  NOTE 8/8 cloud cover (HKO)
 #~ msgid "Overcast"
 #~ msgstr "天陰"
+
 #  NOTE Cf. http://www.maltaweather.com/glossary.shtml
 #  NOTE This seems to mean the same as "Clearing" but at a slower pace
 #~ msgid "Partial Clearing"
 #~ msgstr "局部明朗"
+
 #~ msgid "Partial Fog"
 #~ msgstr "局部有霧"
+
 #~ msgid "Partial Sunshine"
 #~ msgstr "局部有陽光"
+
 #  NOTE See note for "Partly Cloudy"
 #~ msgid "Partly Cloudy / Wind"
 #~ msgstr "疏雲 / 風"
+
 #  NOTE See note for "Partly Cloudy"
 #~ msgid "Partly Cloudy and Windy"
 #~ msgstr "疏雲且刮風"
+
 #  NOTE cwb.gov.tw translation, crosschecked from fishery weather reports for 2005/02/27
 #  NOTE 3/8–5/8 cloud cover (NOAA), "Partly Sunny" = "Partly Cloudy" but must be in the day
 #~ msgid "Partly Sunny"
 #~ msgstr "多雲時晴"
+
 #  XXX
 #~ msgid "PM Light Rain"
 #~ msgstr "下午微雨"
+
 #  XXX Cf http://photino.cwb.gov.tw/rdcweb/lib/h/h_000450.htm
 #~ msgid "PM Light Snow"
 #~ msgstr "下午微雪"
+
 #  XXX
 #~ msgid "PM Rain / Wind"
 #~ msgstr "下午雨 / 風"
+
 #  XXX
 #~ msgid "PM Rain / Snow Showers"
 #~ msgstr "下午雨 / 陣雪"
+
 #  XXX
 #~ msgid "PM Showers"
 #~ msgstr "下午陣雨"
+
 #  XXX never heard of "Snow Showers"
 #~ msgid "PM Snow Showers"
 #~ msgstr "下午陣雪"
+
 #  XXX
 #~ msgid "PM T-Storms"
 #~ msgstr "下午雷暴或雷雨"
+
 #~ msgid "Rain / Snow"
 #~ msgstr "雨 / 雪"
+
 #~ msgid "Rain / Snow / Wind"
 #~ msgstr "雨 / 雪/ 風"
+
 #~ msgid "Rain / Snow Late"
 #~ msgstr "雨 / 稍晚雪"
+
 #  XXX
 #~ msgid "Rain / Snow Showers"
 #~ msgstr "雨 / 陣雪"
+
 #  XXX
 #~ msgid "Rain / Snow Showers Early"
 #~ msgstr "雨 / 稍早陣雪"
+
 #  XXX
 #~ msgid "Rain / Wind"
 #~ msgstr "雨 / 風"
+
 #  NOTE cwb.gov.tw translation
 #~ msgid "Rain and Sleet"
 #~ msgstr "雨和霰"
+
 #~ msgid "Rain and Snow"
 #~ msgstr "雨和雪"
+
 #~ msgid "Rain or Snow"
 #~ msgstr "雨或雪"
+
 #  XXX what is the difference between this and just "Showers"?
 #~ msgid "Rain Shower and Windy"
 #~ msgstr "陣雨且括風"
+
 #~ msgid "Rain to snow"
 #~ msgstr "雨轉雪"
+
 #~ msgid "Rain/Lightning"
 #~ msgstr "雨/閃電"
+
 #~ msgid "Scattered Showers"
 #~ msgstr "零散陣雨"
+
 #~ msgid "Scattered Snow Showers"
 #~ msgstr "零散陣雪"
+
 #~ msgid "Scattered Snow Showers / Wind"
 #~ msgstr "零散陣雪 / 風"
+
 #~ msgid "Scattered T-Storms"
 #~ msgstr "零散雷暴或雷雨"
+
 #  NOTE synonym: "陣雨"
 #~ msgid "Showers"
 #~ msgstr "陣雨"
+
 #  NOTE synonym: "陣雨"
 #~ msgid "Showers / Wind"
 #~ msgstr "陣雨 / 風"
+
 #  XXX never heard of "Snow Showers"
 #~ msgid "Showers Early"
 #~ msgstr "稍早陣雨"
+
 #  XXX
 #~ msgid "Showers in the Vicinity"
 #~ msgstr "附近地方有陣雨"
+
 #  XXX
 #~ msgid "Showers Late"
 #~ msgstr "稍晚陣雨"
+
 #~ msgid "Smoke"
 #~ msgstr "煙"
+
 #~ msgid "Snow and Rain"
 #~ msgstr "雪和雨"
+
 #~ msgid "Snow or Rain"
 #~ msgstr "雪或雨"
+
 #  XXX never heard of "Snow Showers"
 #~ msgid "Snow Shower"
 #~ msgstr "陣雪"
+
 #  XXX
 #~ msgid "Light Snow Shower"
 #~ msgstr "輕微陣雪"
+
 #  XXX never heard of "Snow Showers"
 #~ msgid "Snow Shower / Wind"
 #~ msgstr "陣雪 / 風"
+
 #  XXX never heard of "Snow Showers"
 #~ msgid "Snow Showers Early"
 #~ msgstr "稍早陣雪"
+
 #  XXX never heard of "Snow Showers"
 #~ msgid "Snow Showers early"
 #~ msgstr "稍早陣雪"
+
 #  XXX
 #~ msgid "Snow Showers Late"
 #~ msgstr "稍晚陣雪"
+
 #~ msgid "Snow to Rain"
 #~ msgstr "雪轉雨"
+
 #~ msgid "Sunny / Wind"
 #~ msgstr "陽光普照 / 風"
+
 #  NOTE synonym: "陣雨"
 #~ msgid "T-Showers"
 #~ msgstr "雷雨"
+
 #~ msgid "T-Storm"
 #~ msgstr "雷暴或雷雨"
+
 #  XXX
 #~ msgid "T-Storms"
 #~ msgstr "雷暴或雷雨"
+
 #~ msgid "T-Storms / Wind"
 #~ msgstr "雷暴或雷雨 / 風"
+
 #  XXX never heard of "Snow Showers"
 #~ msgid "T-Storms Early"
 #~ msgstr "稍早雷暴或雷雨"
+
 #~ msgid "Thunder"
 #~ msgstr "雷"
+
 #  XXX
 #~ msgid "Thunder in the Vicinity"
 #~ msgstr "附近地方有雷"
+
 #  XXX
 #~ msgid "Thunder in the Vincinity"
 #~ msgstr "附近地方有雷"
+
 #  NOTE According to wrh.noaa.gov, "Variable Cloudiness" = "Variable Clouds"
 #  XXX
 #~ msgid "Variable Clouds"
 #~ msgstr "雲量不定"
+
 #  XXX
 #~ msgid "Windy/Rain"
 #~ msgstr "刮風/雨"
+
 #  XXX
 #~ msgid "Windy/Snow"
 #~ msgstr "刮風/雪"
+
 #~ msgid "Wintry Mix"
 #~ msgstr "雨雪交加"
+
 #~ msgid "rising"
 #~ msgstr "上升中"
+
 #  XXX
 #~ msgid "steady"
 #~ msgstr "穩定"
+
 #~ msgid "falling"
 #~ msgstr "下降中"
+
 #  NOTE Cf: http://www.hko.gov.hk/wxinfo/uvindex/chinese/cuvtoday.htm
 #~ msgid "Low"
 #~ msgstr "低"
+
 #~ msgid "Moderate"
 #~ msgstr "中等"
+
 #~ msgid "High"
 #~ msgstr "高"
+
 #~ msgid "Very High"
 #~ msgstr "甚高"
+
 #~ msgid "Extreme"
 #~ msgstr "極高"
+
 #~ msgid "%x at %X Local Time"
 #~ msgstr "當地時間%x%X"
+
 #  NOTE cwb.gov.tw translation
 #~ msgid "Unlimited"
 #~ msgstr "無限"
+
 #~ msgid "Summary"
 #~ msgstr "天氣概況"
+
 #  XXX
 #, fuzzy
 #~ msgid "Showers in the Vincinity"

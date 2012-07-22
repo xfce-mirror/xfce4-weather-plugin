@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce-weather-plugin 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-19 19:26+0900\n"
+"POT-Creation-Date: 2012-07-22 20:29+0200\n"
 "PO-Revision-Date: 2012-07-19 19:26+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <xfce-i18n@xfce.org>\n"
@@ -82,13 +82,13 @@ msgstr "気象データを更新できません"
 msgid "Unable to open the following url: %s"
 msgstr "次の URL を開くことができません: %s"
 
-#: ../panel-plugin/weather.c:827 ../panel-plugin/weather-summary.c:601
+#: ../panel-plugin/weather.c:827 ../panel-plugin/weather-summary.c:625
 #: ../panel-plugin/weather.desktop.in.in.h:1
 msgid "Weather Update"
 msgstr "最新の天気"
 
 #. add refresh button to right click menu, for people who missed the middle mouse click feature
-#: ../panel-plugin/weather.c:970 ../panel-plugin/weather-summary.c:646
+#: ../panel-plugin/weather.c:970 ../panel-plugin/weather-summary.c:670
 msgid "_Forecast"
 msgstr "予報(_F)"
 
@@ -323,7 +323,7 @@ msgid "Untitled"
 msgstr "名前無し"
 
 #. head
-#: ../panel-plugin/weather-summary.c:273
+#: ../panel-plugin/weather-summary.c:274
 #, c-format
 msgid ""
 "Weather report for: %s.\n"
@@ -332,23 +332,23 @@ msgstr ""
 "%s の詳しい天気情報です。\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:278
+#: ../panel-plugin/weather-summary.c:279
 msgid "Coordinates\n"
 msgstr "位置\n"
 
-#: ../panel-plugin/weather-summary.c:279
+#: ../panel-plugin/weather-summary.c:280
 msgid "Altitude"
 msgstr "海抜"
 
-#: ../panel-plugin/weather-summary.c:280
+#: ../panel-plugin/weather-summary.c:281
 msgid "Latitude"
 msgstr "緯度"
 
-#: ../panel-plugin/weather-summary.c:281
+#: ../panel-plugin/weather-summary.c:282
 msgid "Longitude"
 msgstr "経度"
 
-#: ../panel-plugin/weather-summary.c:283
+#: ../panel-plugin/weather-summary.c:284
 msgid ""
 "\n"
 "Time\n"
@@ -356,41 +356,25 @@ msgstr ""
 "\n"
 "時間\n"
 
-#: ../panel-plugin/weather-summary.c:286
+#: ../panel-plugin/weather-summary.c:287
 #, c-format
 msgid ""
-"\tPoint data applies to:\n"
+"\tTemperature, wind, atmosphere and cloud data apply to:\n"
 "\t%s\n"
 msgstr ""
-"\t予報時刻:\n"
-"\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:293
+#: ../panel-plugin/weather-summary.c:294
 #, c-format
 msgid ""
 "\n"
-"\tInterval data applies to:\n"
+"\tPrecipitation and the weather symbol have been calculated\n"
+"\tfor the following time interval:\n"
 "\tStart:\t%s\n"
 "\tEnd:\t%s\n"
 msgstr ""
-"\n"
-"\t予報時間帯:\n"
-"\t%s から\n"
-"\t%s まで\n"
-
-#: ../panel-plugin/weather-summary.c:298
-#, c-format
-msgid ""
-"\n"
-"\tInterval data provides icon, description and precipitation,\n"
-"\twhile the remaining information originates from point data.\n"
-msgstr ""
-"\n"
-"\tパネルに表示される天気のアイコン、説明、および降水量は予報時間帯の、\n"
-"\tその他は予報時刻の情報です。\n"
 
 #. Temperature
-#: ../panel-plugin/weather-summary.c:304
+#: ../panel-plugin/weather-summary.c:300
 msgid ""
 "\n"
 "Temperature\n"
@@ -398,12 +382,12 @@ msgstr ""
 "\n"
 "気温\n"
 
-#: ../panel-plugin/weather-summary.c:305
+#: ../panel-plugin/weather-summary.c:301
 msgid "Temperature"
 msgstr "気温"
 
 #. Wind
-#: ../panel-plugin/weather-summary.c:308
+#: ../panel-plugin/weather-summary.c:304
 msgid ""
 "\n"
 "Wind\n"
@@ -411,21 +395,21 @@ msgstr ""
 "\n"
 "風\n"
 
-#: ../panel-plugin/weather-summary.c:313
+#: ../panel-plugin/weather-summary.c:309
 #, c-format
 msgid "\t%s: %s (%s on the Beaufort scale)\n"
 msgstr "\t%s: %s (風力 %s)\n"
 
-#: ../panel-plugin/weather-summary.c:313
+#: ../panel-plugin/weather-summary.c:309
 msgid "Speed"
 msgstr "風速"
 
-#: ../panel-plugin/weather-summary.c:322
+#: ../panel-plugin/weather-summary.c:318
 msgid "Direction"
 msgstr "風向"
 
 #. Precipitation
-#: ../panel-plugin/weather-summary.c:330
+#: ../panel-plugin/weather-summary.c:326
 msgid ""
 "\n"
 "Precipitations\n"
@@ -433,12 +417,12 @@ msgstr ""
 "\n"
 "降水\n"
 
-#: ../panel-plugin/weather-summary.c:331
+#: ../panel-plugin/weather-summary.c:327
 msgid "Precipitations amount"
 msgstr "降水量"
 
 #. Atmosphere
-#: ../panel-plugin/weather-summary.c:334
+#: ../panel-plugin/weather-summary.c:330
 msgid ""
 "\n"
 "Atmosphere\n"
@@ -446,16 +430,16 @@ msgstr ""
 "\n"
 "大気\n"
 
-#: ../panel-plugin/weather-summary.c:335
+#: ../panel-plugin/weather-summary.c:331
 msgid "Pressure"
 msgstr "気圧"
 
-#: ../panel-plugin/weather-summary.c:336
+#: ../panel-plugin/weather-summary.c:332
 msgid "Humidity"
 msgstr "湿度"
 
 #. Clouds
-#: ../panel-plugin/weather-summary.c:339
+#: ../panel-plugin/weather-summary.c:335
 msgid ""
 "\n"
 "Clouds\n"
@@ -463,28 +447,28 @@ msgstr ""
 "\n"
 "雲\n"
 
-#: ../panel-plugin/weather-summary.c:340
+#: ../panel-plugin/weather-summary.c:336
 #: ../panel-plugin/weather-translate.c:110
 msgid "Fog"
 msgstr "霧"
 
-#: ../panel-plugin/weather-summary.c:341
+#: ../panel-plugin/weather-summary.c:337
 msgid "Low clouds"
 msgstr "下層雲"
 
-#: ../panel-plugin/weather-summary.c:342
+#: ../panel-plugin/weather-summary.c:338
 msgid "Medium clouds"
 msgstr "中層雲"
 
-#: ../panel-plugin/weather-summary.c:343
+#: ../panel-plugin/weather-summary.c:339
 msgid "High clouds"
 msgstr "上層雲"
 
-#: ../panel-plugin/weather-summary.c:344
+#: ../panel-plugin/weather-summary.c:340
 msgid "Cloudiness"
 msgstr "全雲量"
 
-#: ../panel-plugin/weather-summary.c:346
+#: ../panel-plugin/weather-summary.c:342
 msgid ""
 "\n"
 "Data from The Norwegian Meteorological Institute\n"
@@ -492,50 +476,50 @@ msgstr ""
 "\n"
 "情報提供: ノルウェー気象研究所\n"
 
-#: ../panel-plugin/weather-summary.c:347
+#: ../panel-plugin/weather-summary.c:345
 msgid "Thanks to met.no"
 msgstr "Thanks to met.no"
 
-#: ../panel-plugin/weather-summary.c:424
+#: ../panel-plugin/weather-summary.c:448
 msgid "Morning"
 msgstr "朝"
 
-#: ../panel-plugin/weather-summary.c:427
+#: ../panel-plugin/weather-summary.c:451
 msgid "Afternoon"
 msgstr "日中"
 
-#: ../panel-plugin/weather-summary.c:430
+#: ../panel-plugin/weather-summary.c:454
 msgid "Evening"
 msgstr "夕方"
 
-#: ../panel-plugin/weather-summary.c:433
+#: ../panel-plugin/weather-summary.c:457
 msgid "Night"
 msgstr "夜"
 
-#: ../panel-plugin/weather-summary.c:442
+#: ../panel-plugin/weather-summary.c:466
 #, c-format
 msgid "Today"
 msgstr "今日"
 
-#: ../panel-plugin/weather-summary.c:444
+#: ../panel-plugin/weather-summary.c:468
 #, c-format
 msgid "Tomorrow"
 msgstr "明日"
 
-#: ../panel-plugin/weather-summary.c:609
+#: ../panel-plugin/weather-summary.c:633
 #, c-format
 msgid "Weather report for: %s"
 msgstr "%s の天気情報"
 
-#: ../panel-plugin/weather-summary.c:632
+#: ../panel-plugin/weather-summary.c:656
 msgid "Please set a location in the plugin settings."
 msgstr "プラグイン設定の場所を入力してください"
 
-#: ../panel-plugin/weather-summary.c:634
+#: ../panel-plugin/weather-summary.c:658
 msgid "Currently no data available."
 msgstr "現在利用可能なデータがありません。"
 
-#: ../panel-plugin/weather-summary.c:649
+#: ../panel-plugin/weather-summary.c:673
 msgid "_Details"
 msgstr "詳細(_D)"
 
@@ -733,6 +717,33 @@ msgstr "不明"
 #: ../panel-plugin/weather.desktop.in.in.h:2
 msgid "Show current weather conditions"
 msgstr "現在の天気状況を表示します。"
+
+#~ msgid ""
+#~ "\tPoint data applies to:\n"
+#~ "\t%s\n"
+#~ msgstr ""
+#~ "\t予報時刻:\n"
+#~ "\t%s\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "\tInterval data applies to:\n"
+#~ "\tStart:\t%s\n"
+#~ "\tEnd:\t%s\n"
+#~ msgstr ""
+#~ "\n"
+#~ "\t予報時間帯:\n"
+#~ "\t%s から\n"
+#~ "\t%s まで\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "\tInterval data provides icon, description and precipitation,\n"
+#~ "\twhile the remaining information originates from point data.\n"
+#~ msgstr ""
+#~ "\n"
+#~ "\tパネルに表示される天気のアイコン、説明、および降水量は予報時間帯の、\n"
+#~ "\tその他は予報時刻の情報です。\n"
 
 #~ msgid "Overall cloudiness (C)"
 #~ msgstr "全雲量 (C)"

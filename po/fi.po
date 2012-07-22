@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-weather-plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-18 17:29+0200\n"
+"POT-Creation-Date: 2012-07-22 20:29+0200\n"
 "PO-Revision-Date: 2012-04-27 15:05+0300\n"
 "Last-Translator: Jari Rahkonen <jari.rahkonen@pp1.inet.fi>\n"
 "Language-Team: Finnish <xfce-i18n@xfce.org>\n"
@@ -81,13 +81,13 @@ msgstr "Säätietoja ei voi päivittää"
 msgid "Unable to open the following url: %s"
 msgstr "URL:ia ei voi avata: %s"
 
-#: ../panel-plugin/weather.c:827 ../panel-plugin/weather-summary.c:601
+#: ../panel-plugin/weather.c:827 ../panel-plugin/weather-summary.c:625
 #: ../panel-plugin/weather.desktop.in.in.h:1
 msgid "Weather Update"
 msgstr "Sääpäivitys"
 
 #. add refresh button to right click menu, for people who missed the middle mouse click feature
-#: ../panel-plugin/weather.c:970 ../panel-plugin/weather-summary.c:646
+#: ../panel-plugin/weather.c:970 ../panel-plugin/weather-summary.c:670
 msgid "_Forecast"
 msgstr "_Ennuste"
 
@@ -337,7 +337,7 @@ msgid "Untitled"
 msgstr ""
 
 #. head
-#: ../panel-plugin/weather-summary.c:273
+#: ../panel-plugin/weather-summary.c:274
 #, c-format
 msgid ""
 "Weather report for: %s.\n"
@@ -346,54 +346,47 @@ msgstr ""
 "Säätiedotus alueelle %s.\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:278
+#: ../panel-plugin/weather-summary.c:279
 msgid "Coordinates\n"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:279
+#: ../panel-plugin/weather-summary.c:280
 msgid "Altitude"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:280
+#: ../panel-plugin/weather-summary.c:281
 msgid "Latitude"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:281
+#: ../panel-plugin/weather-summary.c:282
 msgid "Longitude"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:283
+#: ../panel-plugin/weather-summary.c:284
 msgid ""
 "\n"
 "Time\n"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:286
+#: ../panel-plugin/weather-summary.c:287
 #, c-format
 msgid ""
-"\tPoint data applies to:\n"
+"\tTemperature, wind, atmosphere and cloud data apply to:\n"
 "\t%s\n"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:293
+#: ../panel-plugin/weather-summary.c:294
 #, c-format
 msgid ""
 "\n"
-"\tInterval data applies to:\n"
+"\tPrecipitation and the weather symbol have been calculated\n"
+"\tfor the following time interval:\n"
 "\tStart:\t%s\n"
 "\tEnd:\t%s\n"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:298
-#, c-format
-msgid ""
-"\n"
-"\tInterval data provides icon, description and precipitation,\n"
-"\twhile the remaining information originates from point data.\n"
-msgstr ""
-
 #. Temperature
-#: ../panel-plugin/weather-summary.c:304
+#: ../panel-plugin/weather-summary.c:300
 msgid ""
 "\n"
 "Temperature\n"
@@ -401,12 +394,12 @@ msgstr ""
 "\n"
 "Lämpötila\n"
 
-#: ../panel-plugin/weather-summary.c:305
+#: ../panel-plugin/weather-summary.c:301
 msgid "Temperature"
 msgstr "Lämpötila"
 
 #. Wind
-#: ../panel-plugin/weather-summary.c:308
+#: ../panel-plugin/weather-summary.c:304
 msgid ""
 "\n"
 "Wind\n"
@@ -414,34 +407,34 @@ msgstr ""
 "\n"
 "Tuuli\n"
 
-#: ../panel-plugin/weather-summary.c:313
+#: ../panel-plugin/weather-summary.c:309
 #, c-format
 msgid "\t%s: %s (%s on the Beaufort scale)\n"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:313
+#: ../panel-plugin/weather-summary.c:309
 msgid "Speed"
 msgstr "Nopeus"
 
-#: ../panel-plugin/weather-summary.c:322
+#: ../panel-plugin/weather-summary.c:318
 msgid "Direction"
 msgstr "Suunta"
 
 #. Precipitation
-#: ../panel-plugin/weather-summary.c:330
+#: ../panel-plugin/weather-summary.c:326
 #, fuzzy
 msgid ""
 "\n"
 "Precipitations\n"
 msgstr "<b>Sademäärä</b>"
 
-#: ../panel-plugin/weather-summary.c:331
+#: ../panel-plugin/weather-summary.c:327
 #, fuzzy
 msgid "Precipitations amount"
 msgstr "<b>Sademäärä</b>"
 
 #. Atmosphere
-#: ../panel-plugin/weather-summary.c:334
+#: ../panel-plugin/weather-summary.c:330
 #, fuzzy
 msgid ""
 "\n"
@@ -450,97 +443,97 @@ msgstr ""
 "\n"
 "Ilmanpaine\n"
 
-#: ../panel-plugin/weather-summary.c:335
+#: ../panel-plugin/weather-summary.c:331
 msgid "Pressure"
 msgstr "Paine"
 
-#: ../panel-plugin/weather-summary.c:336
+#: ../panel-plugin/weather-summary.c:332
 msgid "Humidity"
 msgstr "Ilmankosteus"
 
 #. Clouds
-#: ../panel-plugin/weather-summary.c:339
+#: ../panel-plugin/weather-summary.c:335
 #, fuzzy
 msgid ""
 "\n"
 "Clouds\n"
 msgstr "Pilviä"
 
-#: ../panel-plugin/weather-summary.c:340
+#: ../panel-plugin/weather-summary.c:336
 #: ../panel-plugin/weather-translate.c:110
 msgid "Fog"
 msgstr "Sumuista"
 
-#: ../panel-plugin/weather-summary.c:341
+#: ../panel-plugin/weather-summary.c:337
 #, fuzzy
 msgid "Low clouds"
 msgstr "Pilviä"
 
-#: ../panel-plugin/weather-summary.c:342
+#: ../panel-plugin/weather-summary.c:338
 msgid "Medium clouds"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:343
+#: ../panel-plugin/weather-summary.c:339
 msgid "High clouds"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:344
+#: ../panel-plugin/weather-summary.c:340
 #, fuzzy
 msgid "Cloudiness"
 msgstr "Pilviä"
 
-#: ../panel-plugin/weather-summary.c:346
+#: ../panel-plugin/weather-summary.c:342
 msgid ""
 "\n"
 "Data from The Norwegian Meteorological Institute\n"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:347
+#: ../panel-plugin/weather-summary.c:345
 msgid "Thanks to met.no"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:424
+#: ../panel-plugin/weather-summary.c:448
 msgid "Morning"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:427
+#: ../panel-plugin/weather-summary.c:451
 msgid "Afternoon"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:430
+#: ../panel-plugin/weather-summary.c:454
 msgid "Evening"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:433
+#: ../panel-plugin/weather-summary.c:457
 #, fuzzy
 msgid "Night"
 msgstr "Yö: %s"
 
-#: ../panel-plugin/weather-summary.c:442
+#: ../panel-plugin/weather-summary.c:466
 #, c-format
 msgid "Today"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:444
+#: ../panel-plugin/weather-summary.c:468
 #, c-format
 msgid "Tomorrow"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:609
+#: ../panel-plugin/weather-summary.c:633
 #, c-format
 msgid "Weather report for: %s"
 msgstr "Säätiedotus alueelle: %s."
 
-#: ../panel-plugin/weather-summary.c:632
+#: ../panel-plugin/weather-summary.c:656
 #, fuzzy
 msgid "Please set a location in the plugin settings."
 msgstr "Syötä välityspalvelimen tiedot"
 
-#: ../panel-plugin/weather-summary.c:634
+#: ../panel-plugin/weather-summary.c:658
 msgid "Currently no data available."
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:649
+#: ../panel-plugin/weather-summary.c:673
 #, fuzzy
 msgid "_Details"
 msgstr "Lisätietoja"

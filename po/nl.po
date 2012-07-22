@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-weather-plugin\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-07-18 17:29+0200\n"
+"POT-Creation-Date: 2012-07-22 20:29+0200\n"
 "PO-Revision-Date: 2011-09-09 13:07+0200\n"
 "Last-Translator: Pjotr\n"
 "Language-Team: Dutch (Flemish)\n"
@@ -79,13 +79,13 @@ msgstr "Kan weerinformatie niet bijwerken"
 msgid "Unable to open the following url: %s"
 msgstr "Kon het volgende webadres niet openen: %s"
 
-#: ../panel-plugin/weather.c:827 ../panel-plugin/weather-summary.c:601
+#: ../panel-plugin/weather.c:827 ../panel-plugin/weather-summary.c:625
 #: ../panel-plugin/weather.desktop.in.in.h:1
 msgid "Weather Update"
 msgstr "Weerbericht"
 
 #. add refresh button to right click menu, for people who missed the middle mouse click feature
-#: ../panel-plugin/weather.c:970 ../panel-plugin/weather-summary.c:646
+#: ../panel-plugin/weather.c:970 ../panel-plugin/weather-summary.c:670
 msgid "_Forecast"
 msgstr "_Verwachting"
 
@@ -320,7 +320,7 @@ msgid "Untitled"
 msgstr "Zonder titel"
 
 #. head
-#: ../panel-plugin/weather-summary.c:273
+#: ../panel-plugin/weather-summary.c:274
 #, c-format
 msgid ""
 "Weather report for: %s.\n"
@@ -329,23 +329,23 @@ msgstr ""
 "Weerbericht voor: %s.\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:278
+#: ../panel-plugin/weather-summary.c:279
 msgid "Coordinates\n"
 msgstr "Coördinaten\n"
 
-#: ../panel-plugin/weather-summary.c:279
+#: ../panel-plugin/weather-summary.c:280
 msgid "Altitude"
 msgstr "Hoogte"
 
-#: ../panel-plugin/weather-summary.c:280
+#: ../panel-plugin/weather-summary.c:281
 msgid "Latitude"
 msgstr "Breedtegraad"
 
-#: ../panel-plugin/weather-summary.c:281
+#: ../panel-plugin/weather-summary.c:282
 msgid "Longitude"
 msgstr "Lengtegraad"
 
-#: ../panel-plugin/weather-summary.c:283
+#: ../panel-plugin/weather-summary.c:284
 msgid ""
 "\n"
 "Time\n"
@@ -353,41 +353,25 @@ msgstr ""
 "\n"
 "Tijd\n"
 
-#: ../panel-plugin/weather-summary.c:286
+#: ../panel-plugin/weather-summary.c:287
 #, c-format
 msgid ""
-"\tPoint data applies to:\n"
+"\tTemperature, wind, atmosphere and cloud data apply to:\n"
 "\t%s\n"
 msgstr ""
-"\tPuntgegevens zijn van toepassing op:\n"
-"\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:293
+#: ../panel-plugin/weather-summary.c:294
 #, c-format
 msgid ""
 "\n"
-"\tInterval data applies to:\n"
+"\tPrecipitation and the weather symbol have been calculated\n"
+"\tfor the following time interval:\n"
 "\tStart:\t%s\n"
 "\tEnd:\t%s\n"
 msgstr ""
-"\n"
-"\tTussenpoze-gegevens zijn van toepassing op:\n"
-"\tBegin:\t%s\n"
-"\tEinde:\t%s\n"
-
-#: ../panel-plugin/weather-summary.c:298
-#, c-format
-msgid ""
-"\n"
-"\tInterval data provides icon, description and precipitation,\n"
-"\twhile the remaining information originates from point data.\n"
-msgstr ""
-"\n"
-"\tTussenpoze-gegevens leveren pictogram, beschrijving en neerslag,\n"
-"\tterwijl de overige informatie komt vanuit de puntgegevens.\n"
 
 #. Temperature
-#: ../panel-plugin/weather-summary.c:304
+#: ../panel-plugin/weather-summary.c:300
 msgid ""
 "\n"
 "Temperature\n"
@@ -395,12 +379,12 @@ msgstr ""
 "\n"
 "Temperatuur\n"
 
-#: ../panel-plugin/weather-summary.c:305
+#: ../panel-plugin/weather-summary.c:301
 msgid "Temperature"
 msgstr "Temperatuur"
 
 #. Wind
-#: ../panel-plugin/weather-summary.c:308
+#: ../panel-plugin/weather-summary.c:304
 msgid ""
 "\n"
 "Wind\n"
@@ -408,21 +392,21 @@ msgstr ""
 "\n"
 "Wind\n"
 
-#: ../panel-plugin/weather-summary.c:313
+#: ../panel-plugin/weather-summary.c:309
 #, c-format
 msgid "\t%s: %s (%s on the Beaufort scale)\n"
 msgstr "\t%s: %s (%s op de schaal van Beaufort)\n"
 
-#: ../panel-plugin/weather-summary.c:313
+#: ../panel-plugin/weather-summary.c:309
 msgid "Speed"
 msgstr "Snelheid"
 
-#: ../panel-plugin/weather-summary.c:322
+#: ../panel-plugin/weather-summary.c:318
 msgid "Direction"
 msgstr "Richting"
 
 #. Precipitation
-#: ../panel-plugin/weather-summary.c:330
+#: ../panel-plugin/weather-summary.c:326
 msgid ""
 "\n"
 "Precipitations\n"
@@ -430,12 +414,12 @@ msgstr ""
 "\n"
 "Neerslag\n"
 
-#: ../panel-plugin/weather-summary.c:331
+#: ../panel-plugin/weather-summary.c:327
 msgid "Precipitations amount"
 msgstr "Hoeveelheid neerslag"
 
 #. Atmosphere
-#: ../panel-plugin/weather-summary.c:334
+#: ../panel-plugin/weather-summary.c:330
 msgid ""
 "\n"
 "Atmosphere\n"
@@ -443,16 +427,16 @@ msgstr ""
 "\n"
 "Luchtdruk\n"
 
-#: ../panel-plugin/weather-summary.c:335
+#: ../panel-plugin/weather-summary.c:331
 msgid "Pressure"
 msgstr "Druk"
 
-#: ../panel-plugin/weather-summary.c:336
+#: ../panel-plugin/weather-summary.c:332
 msgid "Humidity"
 msgstr "Luchtvochtigheid"
 
 #. Clouds
-#: ../panel-plugin/weather-summary.c:339
+#: ../panel-plugin/weather-summary.c:335
 msgid ""
 "\n"
 "Clouds\n"
@@ -460,28 +444,28 @@ msgstr ""
 "\n"
 "Wolken\n"
 
-#: ../panel-plugin/weather-summary.c:340
+#: ../panel-plugin/weather-summary.c:336
 #: ../panel-plugin/weather-translate.c:110
 msgid "Fog"
 msgstr "Mist"
 
-#: ../panel-plugin/weather-summary.c:341
+#: ../panel-plugin/weather-summary.c:337
 msgid "Low clouds"
 msgstr "Laaghangende wolken"
 
-#: ../panel-plugin/weather-summary.c:342
+#: ../panel-plugin/weather-summary.c:338
 msgid "Medium clouds"
 msgstr "Gemiddelde wolken"
 
-#: ../panel-plugin/weather-summary.c:343
+#: ../panel-plugin/weather-summary.c:339
 msgid "High clouds"
 msgstr "Hoge wolken"
 
-#: ../panel-plugin/weather-summary.c:344
+#: ../panel-plugin/weather-summary.c:340
 msgid "Cloudiness"
 msgstr "Bewolking"
 
-#: ../panel-plugin/weather-summary.c:346
+#: ../panel-plugin/weather-summary.c:342
 msgid ""
 "\n"
 "Data from The Norwegian Meteorological Institute\n"
@@ -489,51 +473,51 @@ msgstr ""
 "\n"
 "Gegevens van het Noorse Meteorologische Instituut\n"
 
-#: ../panel-plugin/weather-summary.c:347
+#: ../panel-plugin/weather-summary.c:345
 msgid "Thanks to met.no"
 msgstr "met dank aan met.no"
 
-#: ../panel-plugin/weather-summary.c:424
+#: ../panel-plugin/weather-summary.c:448
 msgid "Morning"
 msgstr "Ochtend"
 
-#: ../panel-plugin/weather-summary.c:427
+#: ../panel-plugin/weather-summary.c:451
 msgid "Afternoon"
 msgstr "Middag"
 
-#: ../panel-plugin/weather-summary.c:430
+#: ../panel-plugin/weather-summary.c:454
 msgid "Evening"
 msgstr "Avond"
 
-#: ../panel-plugin/weather-summary.c:433
+#: ../panel-plugin/weather-summary.c:457
 msgid "Night"
 msgstr "Nacht"
 
-#: ../panel-plugin/weather-summary.c:442
+#: ../panel-plugin/weather-summary.c:466
 #, c-format
 msgid "Today"
 msgstr "Vandaag"
 
-#: ../panel-plugin/weather-summary.c:444
+#: ../panel-plugin/weather-summary.c:468
 #, c-format
 msgid "Tomorrow"
 msgstr "Morgen"
 
-#: ../panel-plugin/weather-summary.c:609
+#: ../panel-plugin/weather-summary.c:633
 #, c-format
 msgid "Weather report for: %s"
 msgstr "Weerbericht voor: %s"
 
-#: ../panel-plugin/weather-summary.c:632
+#: ../panel-plugin/weather-summary.c:656
 msgid "Please set a location in the plugin settings."
 msgstr ""
 "Stel a.u.b. in de instellingen van de invoegtoepassing, een locatie in."
 
-#: ../panel-plugin/weather-summary.c:634
+#: ../panel-plugin/weather-summary.c:658
 msgid "Currently no data available."
 msgstr "Thans geen gegevens beschikbaar."
 
-#: ../panel-plugin/weather-summary.c:649
+#: ../panel-plugin/weather-summary.c:673
 msgid "_Details"
 msgstr "_Details"
 
@@ -729,6 +713,33 @@ msgstr "N/B"
 #: ../panel-plugin/weather.desktop.in.in.h:2
 msgid "Show current weather conditions"
 msgstr "Toon huidige weersomstandigheden"
+
+#~ msgid ""
+#~ "\tPoint data applies to:\n"
+#~ "\t%s\n"
+#~ msgstr ""
+#~ "\tPuntgegevens zijn van toepassing op:\n"
+#~ "\t%s\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "\tInterval data applies to:\n"
+#~ "\tStart:\t%s\n"
+#~ "\tEnd:\t%s\n"
+#~ msgstr ""
+#~ "\n"
+#~ "\tTussenpoze-gegevens zijn van toepassing op:\n"
+#~ "\tBegin:\t%s\n"
+#~ "\tEinde:\t%s\n"
+
+#~ msgid ""
+#~ "\n"
+#~ "\tInterval data provides icon, description and precipitation,\n"
+#~ "\twhile the remaining information originates from point data.\n"
+#~ msgstr ""
+#~ "\n"
+#~ "\tTussenpoze-gegevens leveren pictogram, beschrijving en neerslag,\n"
+#~ "\tterwijl de overige informatie komt vanuit de puntgegevens.\n"
 
 #~ msgid "Overall cloudiness (C)"
 #~ msgstr "Volledig bewolkt (VB)"
