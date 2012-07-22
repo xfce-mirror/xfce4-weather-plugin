@@ -242,7 +242,7 @@ create_summary_tab (xfceweather_data *data)
   GtkAdjustment *adj;
   GtkWidget     *weather_channel_icon;
   xml_time      *conditions;
-  struct tm     *start, *end, *point_tm;
+  struct tm     *start_tm, *end_tm, *point_tm;
   char           interval_start[80], interval_end[80], point[80];
 
   view = gtk_text_view_new ();
@@ -287,10 +287,10 @@ create_summary_tab (xfceweather_data *data)
   value = g_strdup_printf (_("\tPoint data applies to:\n\t%s\n"), point);
   APPEND_TEXT_ITEM_REAL (value);
 
-  start = localtime(&conditions->start);
-  strftime (interval_start, 80, "%c", start);
-  end = localtime(&conditions->end);
-  strftime (interval_end, 80, "%c", end);
+  start_tm = localtime(&conditions->start);
+  strftime (interval_start, 80, "%c", start_tm);
+  end_tm = localtime(&conditions->end);
+  strftime (interval_end, 80, "%c", end_tm);
   value = g_strdup_printf (_("\n\tInterval data applies to:\n\tStart:\t%s\n\tEnd:\t%s\n"),
                            interval_start,
                            interval_end);
