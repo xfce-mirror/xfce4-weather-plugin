@@ -284,22 +284,17 @@ create_summary_tab (xfceweather_data *data)
   APPEND_BTEXT(_("\nTime\n"));
   point_tm = localtime(&conditions->point);
   strftime (point, 80, "%c", point_tm);
-  value = g_strdup_printf (_("\tPoint data applies to:\n\t%s\n"), point);
+  value = g_strdup_printf (_("\tTemperature, wind, atmosphere and cloud data apply to:\n\t%s\n"), point);
   APPEND_TEXT_ITEM_REAL (value);
 
   start_tm = localtime(&conditions->start);
   strftime (interval_start, 80, "%c", start_tm);
   end_tm = localtime(&conditions->end);
   strftime (interval_end, 80, "%c", end_tm);
-  value = g_strdup_printf (_("\n\tInterval data applies to:\n\tStart:\t%s\n\tEnd:\t%s\n"),
+  value = g_strdup_printf (_("\n\tPrecipitation and the weather symbol have been calculated\n\tfor the following time interval:\n\tStart:\t%s\n\tEnd:\t%s\n"),
                            interval_start,
                            interval_end);
   APPEND_TEXT_ITEM_REAL (value);
-
-  value = g_strdup_printf (_("\n\tInterval data provides icon, description and precipitation,"
-                             "\n\twhile the remaining information originates from point data.\n"));
-  APPEND_TEXT_ITEM_REAL (value);
-
 
   /* Temperature */
   APPEND_BTEXT (_("\nTemperature\n"));
