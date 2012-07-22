@@ -153,8 +153,8 @@ static void view_scrolled_cb (GtkAdjustment *adj, GtkWidget *view)
 {
   if (weather_channel_evt) {
     gint x, y, x1, y1;
-    x1 = view->allocation.width - 73 - 5;
-    y1 = view->requisition.height - 55 - 5;
+    x1 = view->allocation.width - 191 - 15;
+    y1 = view->requisition.height - 60 - 15;
     gtk_text_view_buffer_to_window_coords(
 			GTK_TEXT_VIEW(view),
 			GTK_TEXT_WINDOW_TEXT, x1, y1, &x, &y);
@@ -180,7 +180,7 @@ static gchar *get_logo_path (void)
 
 	return g_strconcat(g_get_user_cache_dir(), G_DIR_SEPARATOR_S,
 				"xfce4", G_DIR_SEPARATOR_S, "weather-plugin",
-				G_DIR_SEPARATOR_S, "weather_logo.jpg", NULL);
+				G_DIR_SEPARATOR_S, "weather_logo.gif", NULL);
 }
 
 static void
@@ -219,7 +219,7 @@ static GtkWidget *weather_summary_get_logo(xfceweather_data *data)
 	pixbuf = gdk_pixbuf_new_from_file(path, NULL);
 	g_free(path);
 	if (pixbuf == NULL) {
-		weather_http_receive_data ("xoap.weather.com", "/web/common/twc/logos/web_73x55.jpg",
+		weather_http_receive_data ("met.no", "/filestore/met.no-logo.gif",
 			data->proxy_host, data->proxy_port, logo_fetched, image);
 	} else {
 		gtk_image_set_from_pixbuf(GTK_IMAGE(image), pixbuf);
@@ -234,7 +234,7 @@ create_summary_tab (xfceweather_data *data)
 {
   GtkTextBuffer *buffer;
   GtkTextIter    iter;
-  GtkTextTag    *btag, *ltag1;
+  GtkTextTag    *btag, *ltag0, *ltag1;
   gchar         *value, *wind, *sun_val, *vis, *rawvalue;
   const gchar   *unit;
   GtkWidget     *view, *frame, *scrolled;
@@ -267,6 +267,7 @@ create_summary_tab (xfceweather_data *data)
                                 NULL);
 
   gdk_color_parse("#0000ff", &lnk_color);
+  ltag0 = gtk_text_buffer_create_tag(buffer, "lnk0", "foreground-gdk", &lnk_color, NULL);
   ltag1 = gtk_text_buffer_create_tag(buffer, "lnk1", "foreground-gdk", &lnk_color, NULL);
 
   /* head */
@@ -344,6 +345,8 @@ create_summary_tab (xfceweather_data *data)
   APPEND_TEXT_ITEM (_("Cloudiness"), CLOUDINESS);
 
   APPEND_BTEXT (_("\nData from The Norwegian Meteorological Institute\n"));
+  value = g_strdup ("http://met.no");
+  g_object_set_data_full(G_OBJECT(ltag0), "url", value, g_free);
   APPEND_LINK_ITEM ("\t", _("Thanks to met.no"), "http://met.no/", ltag1);
 
   g_signal_connect(G_OBJECT(view), "motion-notify-event",
@@ -351,6 +354,32 @@ create_summary_tab (xfceweather_data *data)
   g_signal_connect(G_OBJECT(view), "leave-notify-event",
                    G_CALLBACK(view_leave_notify), view);
 
+  weather_channel_icon = weather_summary_get_logo(data);
+
+  if (weather_channel_icon) {
+    weather_channel_evt = gtk_event_box_new();
+    gtk_container_add(GTK_CONTAINER(weather_channel_evt), weather_channel_icon);
+    gtk_text_view_add_child_in_window(GTK_TEXT_VIEW(view), weather_channel_evt,
+                                      GTK_TEXT_WINDOW_TEXT, 0, 0);
+    gtk_widget_show_all(weather_channel_evt);
+    adj = gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(scrolled));
+    g_signal_connect(G_OBJECT(adj), "value-changed",
+		     G_CALLBACK(view_scrolled_cb), view);
+    g_signal_connect(G_OBJECT(view), "size_allocate",
+		     G_CALLBACK(view_size_allocate_cb),
+		     view);
+    g_signal_connect(G_OBJECT(weather_channel_evt), "button-release-event",
+		     G_CALLBACK(icon_clicked),
+		     ltag0);
+    g_signal_connect(G_OBJECT(weather_channel_evt), "enter-notify-event",
+		     G_CALLBACK(icon_motion_notify), view);
+    g_signal_connect(G_OBJECT(weather_channel_evt), "visibility-notify-event",
+		     G_CALLBACK(icon_motion_notify), view);
+    g_signal_connect(G_OBJECT(weather_channel_evt), "motion-notify-event",
+		     G_CALLBACK(icon_motion_notify), view);
+    g_signal_connect(G_OBJECT(weather_channel_evt), "leave-notify-event",
+		     G_CALLBACK(view_leave_notify), view);
+  }
   if (hand_cursor == NULL)
     hand_cursor = gdk_cursor_new(GDK_HAND2);
   if (text_cursor == NULL)
