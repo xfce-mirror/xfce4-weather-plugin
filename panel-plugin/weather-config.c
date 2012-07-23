@@ -209,19 +209,29 @@ make_label (void)
 gchar *
 sanitize_location_name(const gchar *location_name)
 {
-  gchar *pos;
-  long   len;
+  gchar *pos, sane[LOC_NAME_MAX_LEN * 4];
+  glong  len, offset;
 
   pos = g_utf8_strchr (location_name, -1, ',');
   if (pos != NULL)
-    return g_utf8_substring (location_name, 0,
-                             g_utf8_pointer_to_offset (location_name, pos));
+    {
+      offset = g_utf8_pointer_to_offset (location_name, pos);
+      if (offset > LOC_NAME_MAX_LEN)
+        offset = LOC_NAME_MAX_LEN;
+      pos = g_utf8_strncpy (sane, location_name, offset);
+      sane[LOC_NAME_MAX_LEN * 4 - 1] = '\0';
+      return g_strdup (sane);
+    }
   else
     {
       len = g_utf8_strlen(location_name, LOC_NAME_MAX_LEN);
 
       if (len >= LOC_NAME_MAX_LEN)
-        return g_utf8_substring (location_name, 0, len);
+        {
+          pos = g_utf8_strncpy (sane, location_name, len);
+          sane[LOC_NAME_MAX_LEN * 4 - 1] = '\0';
+          return g_strdup (sane);
+        }
 
       if (len > 0)
         return g_strdup(location_name);
