@@ -161,19 +161,15 @@ xml_time *get_timeslice(xml_weather *data, time_t start_t, time_t end_t)
 void parse_location (xmlNode * cur_node, xml_location *loc)
 {
 	xmlNode *child_node;
-	gchar *altitude, *latitude, *longitude;
 
 	g_free(loc->altitude);
 	loc->altitude = PROP(cur_node, "altitude");
-	xmlFree(altitude);
 
 	g_free(loc->latitude);
 	loc->latitude = PROP(cur_node, "latitude");
-	xmlFree(latitude);
 
 	g_free(loc->longitude);
 	loc->longitude = PROP(cur_node, "longitude");
-	xmlFree(longitude);
 
 	for (child_node = cur_node->children; child_node;
 	     child_node = child_node->next) {
