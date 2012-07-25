@@ -28,6 +28,7 @@
 #include <libxfce4panel/libxfce4panel.h>
 #include <time.h>
 #include <stdlib.h>
+#include <string.h>
 
 static time_t my_timegm(struct tm *tm)
 {
@@ -97,6 +98,11 @@ void parse_time (xmlNode * cur_node, xml_weather * data) {
 	time_t start_t, end_t;
 	xml_time *timeslice;
 	xmlNode *child_node;
+
+    memset(&start_tm, 0, sizeof(struct tm));
+    memset(&end_tm, 0, sizeof(struct tm));
+    start_tm.tm_isdst = -1;
+    end_tm.tm_isdst = -1;
 
 	if (xmlStrcasecmp(datatype, "forecast")) {
 		xmlFree(datatype);
