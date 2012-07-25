@@ -42,7 +42,7 @@ static gboolean lnk_clicked (GtkTextTag *tag, GObject *obj,
                                                                 &iter, text, -1);\
                                          g_free (value);
 #define APPEND_TEXT_ITEM(text, item)     rawvalue = get_data(conditions, data->unit_system, item); \
-                                         unit = get_unit(conditions, data->unit_system, item); \
+                                         unit = get_unit(data->unit_system, item); \
                                          value = g_strdup_printf("\t%s%s%s%s%s\n", \
                                                                  text, text ? ": " : "", \
                                                                  rawvalue, \
@@ -313,7 +313,7 @@ create_summary_tab (xfceweather_data *data)
   rawvalue = get_data (conditions, data->unit_system, WIND_DIRECTION_DEG);
   value = g_strdup_printf ("\t%s: %s (%s%s)\n", _("Direction"),
                            wind, rawvalue,
-                           get_unit (conditions, data->unit_system, WIND_DIRECTION_DEG));
+                           get_unit (data->unit_system, WIND_DIRECTION_DEG));
   g_free (rawvalue);
   g_free (wind);
   APPEND_TEXT_ITEM_REAL (value);
@@ -508,7 +508,7 @@ make_forecast (xfceweather_data *data)
                     rawvalue = get_data(fcdata, data->unit_system, TEMPERATURE);
                     value = g_strdup_printf("%s %s",
                                             rawvalue,
-                                            get_unit(fcdata, data->unit_system, TEMPERATURE));
+                                            get_unit(data->unit_system, TEMPERATURE));
                     g_free(rawvalue);
                     label = gtk_label_new(value);
                     gtk_box_pack_start(GTK_BOX(forecast_box), GTK_WIDGET(label),
@@ -521,7 +521,7 @@ make_forecast (xfceweather_data *data)
                     value = g_strdup_printf("%s %s %s",
                                             wind_direction,
                                             wind_speed,
-                                            get_unit(fcdata, data->unit_system, WIND_SPEED));
+                                            get_unit(data->unit_system, WIND_SPEED));
                     g_free(wind_speed);
                     g_free(wind_direction);
                     g_free(rawvalue);

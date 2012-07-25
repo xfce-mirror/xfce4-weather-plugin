@@ -55,7 +55,7 @@ typedef enum {
 gchar *
 get_data (xml_time *timeslice, unit_systems unit_system, datas type);
 const gchar *
-get_unit (xml_time *timeslice, unit_systems unit_system, datas type);
+get_unit (unit_systems unit_system, datas type);
 gboolean
 is_night_time();
 time_t

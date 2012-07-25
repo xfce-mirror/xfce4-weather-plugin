@@ -193,7 +193,7 @@ make_label (xfceweather_data *data,
       }
     else
       {
-        unit = get_unit (conditions, data->unit_system, opt);
+        unit = get_unit (data->unit_system, opt);
         str = g_strdup_printf ("<span size=\"%s\">%s: %s%s%s</span>",
                                txtsize, lbl, rawvalue,
                                strcmp(unit, "°") ? " " : "", unit);
@@ -207,7 +207,7 @@ make_label (xfceweather_data *data,
       }
     else
       {
-        unit = get_unit (conditions, data->unit_system, opt);
+        unit = get_unit (data->unit_system, opt);
         str = g_strdup_printf ("<span size=\"%s\">%s%s%s</span>",
                                txtsize, rawvalue,
                                strcmp(unit, "°") ? " " : "", unit);
