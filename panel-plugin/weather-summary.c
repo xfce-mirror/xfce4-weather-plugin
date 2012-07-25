@@ -97,10 +97,6 @@ static gboolean view_motion_notify(GtkWidget *widget,
 				   GdkEventMotion *event,
 				   GtkWidget *view)
 {
-  GtkTextBuffer *buffer;
-
-  buffer = gtk_text_view_get_buffer(GTK_TEXT_VIEW(view));
-
   if (event->x != -1 && event->y != -1) {
     gint bx, by;
     GtkTextIter iter;

@@ -218,7 +218,7 @@ sanitize_location_name(const gchar *location_name)
       offset = g_utf8_pointer_to_offset (location_name, pos);
       if (offset > LOC_NAME_MAX_LEN)
         offset = LOC_NAME_MAX_LEN;
-      pos = g_utf8_strncpy (sane, location_name, offset);
+      (void) g_utf8_strncpy (sane, location_name, offset);
       sane[LOC_NAME_MAX_LEN * 4 - 1] = '\0';
       return g_strdup (sane);
     }
@@ -228,7 +228,7 @@ sanitize_location_name(const gchar *location_name)
 
       if (len >= LOC_NAME_MAX_LEN)
         {
-          pos = g_utf8_strncpy (sane, location_name, len);
+          (void) g_utf8_strncpy (sane, location_name, len);
           sane[LOC_NAME_MAX_LEN * 4 - 1] = '\0';
           return g_strdup (sane);
         }

@@ -61,9 +61,7 @@ check_envproxy (gchar **proxy_host,
 
   tmp = strstr (env_proxy, "://");
 
-  if (!tmp)
-    tmp = env_proxy;
-  else if (strlen (tmp) >= 3)
+  if (tmp && strlen (tmp) >= 3)
     env_proxy = tmp + 3;
   else
     return FALSE;
@@ -226,11 +224,8 @@ set_icon_error (xfceweather_data *data)
 {
   GdkPixbuf   *icon;
   gint         height;
-  gint         size;
   gchar       *str;
   const gchar *txtsize;
-
-  size = data->panel_size;
 
   if (data->weatherdata)
     {

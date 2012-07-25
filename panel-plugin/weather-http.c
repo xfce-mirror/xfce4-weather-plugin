@@ -145,7 +145,7 @@ weather_http_receive_data_idle (gpointer user_data)
 {
   WeatherConnection  *connection = user_data;
   gchar               buffer[1024];
-  gint                bytes, n, m;
+  gint                bytes = 0, n, m = 0;
   gchar              *request;
   fd_set              fds;
   struct timeval      select_timeout;
@@ -216,10 +216,8 @@ weather_http_receive_data_idle (gpointer user_data)
 
   for (a = r; a != NULL; a = a->ai_next) {
     connection->fd = socket (a->ai_family, a->ai_socktype, a->ai_protocol);
-    if (connection->fd < 0) {
-      err = errno;
+    if (connection->fd < 0)
       continue;
-    }
 #ifdef G_OS_UNIX
     signal(SIGALRM, timeout_handler);
     alarm(WEATHER_MAX_CONN_TIMEOUT);
@@ -231,8 +229,6 @@ weather_http_receive_data_idle (gpointer user_data)
 #endif
     if (m == 0)
       break;
-    else
-      err = errno;
 
     if (weather_http_receive_data_check (connection, timeout))
       break;

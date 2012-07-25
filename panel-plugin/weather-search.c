@@ -215,7 +215,7 @@ create_search_dialog (GtkWindow *parent,
   GtkWidget         *vbox, *hbox, *scroll, *frame;
   GtkCellRenderer   *renderer = gtk_cell_renderer_text_new ();
   search_dialog     *dialog;
-  GtkWidget         *dialog_vbox, *dialog_action;
+  GtkWidget         *dialog_vbox;
 
   dialog = g_slice_new0 (search_dialog);
 
@@ -238,10 +238,8 @@ create_search_dialog (GtkWindow *parent,
 
 #if GTK_CHECK_VERSION(2,14,0)
   dialog_vbox = gtk_dialog_get_content_area(GTK_DIALOG(dialog->dialog));
-  dialog_action = gtk_dialog_get_action_area(GTK_DIALOG(dialog->dialog));
 #else
   dialog_vbox = GTK_DIALOG (dialog->dialog)->vbox;
-  dialog_action = GTK_DIALOG (dialog->dialog)->action_area;
 #endif
 
   vbox = gtk_vbox_new (FALSE, BORDER);

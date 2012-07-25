@@ -119,13 +119,6 @@ get_data (xml_time *timeslice, unit_systems unit_system, datas type)
 const gchar *
 get_unit (xml_time *timeslice, unit_systems unit_system, datas type)
 {
-	const xml_location *loc = NULL;
-
-	if (timeslice == NULL)
-		return "";
-
-	loc = timeslice->location;
-
 	switch(type) {
 	case ALTITUDE:
 		return (unit_system == IMPERIAL) ? _("ft") : _("m");
@@ -411,7 +404,6 @@ xml_time *make_current_conditions(xml_weather *data)
     /* now search for the nearest and shortest interval data
      * available, using a maximum interval of 6 hours */
     end_tm = start_tm = now_tm;
-    start_t = mktime(&start_tm);
 
     /* set interval to 1 hour as minimum, we don't want to retrieve point data */
     end_t = time_calc_hour(end_tm, 1);
@@ -441,7 +433,7 @@ xml_time *make_current_conditions(xml_weather *data)
 xml_time *
 make_forecast_data(xml_weather *data, int day, daytime dt)
 {
-	xml_time *forecast, *point_data, *interval_data;
+	xml_time *forecast = NULL, *point_data = NULL, *interval_data = NULL;
 	struct tm now_tm, start_tm, end_tm;
 	time_t now_t, start_t, end_t;
 	gint interval;
