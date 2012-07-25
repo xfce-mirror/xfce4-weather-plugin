@@ -15,12 +15,15 @@
  *  Foundation, Inc., 59 Temple Place - Suite 330, Boston, MA 02111-1307, USA.
  */
 
-#define _XOPEN_SOURCE
-
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
 
+/* The following two defines fix compile warnings and need to be
+ * before time.h and libxfce4panel.h (which includes glib.h).
+ * Otherwise, they will be ignored. */
+#define _XOPEN_SOURCE
+#define _XOPEN_SOURCE_EXTENDED 1
 #include "weather-parsers.h"
 #include <libxfce4panel/libxfce4panel.h>
 #include <time.h>
