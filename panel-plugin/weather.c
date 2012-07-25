@@ -1188,4 +1188,4 @@ weather_construct (XfcePanelPlugin *plugin)
   update_weatherdata (data);
 }
 
-XFCE_PANEL_PLUGIN_REGISTER_EXTERNAL (weather_construct);
+XFCE_PANEL_PLUGIN_REGISTER (weather_construct);
