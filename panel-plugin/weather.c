@@ -1005,6 +1005,7 @@ static void
 xfceweather_free (XfcePanelPlugin  *plugin,
                   xfceweather_data *data)
 {
+  g_assert(data != NULL);
   weather_http_cleanup_qeue ();
 
   if (data->weatherdata)
@@ -1035,6 +1036,7 @@ xfceweather_free (XfcePanelPlugin  *plugin,
   g_array_free (data->labels, TRUE);
 
   g_slice_free (xfceweather_data, data);
+  data = NULL;
 }
 
 

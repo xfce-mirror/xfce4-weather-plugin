@@ -239,6 +239,9 @@ void parse_location (xmlNode * cur_node, xml_location *loc)
 
 static void xml_location_free(xml_location *loc)
 {
+	g_assert(loc != NULL);
+	if (G_UNLIKELY(loc == NULL))
+		return;
 	g_free(loc->altitude);
 	g_free(loc->latitude);
 	g_free(loc->longitude);
@@ -261,21 +264,30 @@ static void xml_location_free(xml_location *loc)
 	g_free(loc->precipitation_unit);
 	g_free(loc->symbol);
 	g_slice_free (xml_location, loc);
+	loc = NULL;
 }
 
 void xml_time_free(xml_time *timeslice)
 {
+  g_assert(timeslice != NULL);
+  if (G_UNLIKELY(timeslice == NULL))
+    return;
   xml_location_free(timeslice->location);
   g_slice_free (xml_time, timeslice);
+  timeslice = NULL;
 }
 
 void xml_weather_free (xml_weather *data)
 {
   guint i;
 
+  g_assert(data != NULL);
+  if (G_UNLIKELY(data == NULL))
+    return;
   for (i = 0; i < data->num_timeslices; i++) {
     xml_time_free(data->timeslice[i]);
   }
   xml_time_free(data->current_conditions);
   g_slice_free (xml_weather, data);
+  data = NULL;
 }
