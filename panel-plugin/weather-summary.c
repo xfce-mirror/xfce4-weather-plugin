@@ -476,6 +476,7 @@ make_forecast(xfceweather_data *data)
     GtkWidget *table, *ebox, *box, *align;
     GtkWidget *forecast_box, *label, *image;
     GdkPixbuf *icon;
+    GdkColor black = {0, 0x0000, 0x0000, 0x0000};
     GdkColor lightbg = {0, 0xeaea, 0xeaea, 0xeaea};
     GdkColor darkbg = {0, 0x6666, 0x6666, 0x6666};
     gint i, weekday, daytime;
@@ -556,6 +557,9 @@ make_forecast(xfceweather_data *data)
                     g_free(rawvalue);
                     label = gtk_label_new(NULL);
                     gtk_label_set_markup(GTK_LABEL(label), value);
+                    if (!(i % 2))
+                        gtk_widget_modify_fg(GTK_WIDGET(label),
+                                             GTK_STATE_NORMAL, &black);
                     gtk_box_pack_start(GTK_BOX(forecast_box), GTK_WIDGET(label),
                                        TRUE, TRUE, 0);
                     g_free(value);
@@ -567,6 +571,9 @@ make_forecast(xfceweather_data *data)
                                                      TEMPERATURE));
                     g_free(rawvalue);
                     label = gtk_label_new(value);
+                    if (!(i % 2))
+                        gtk_widget_modify_fg(GTK_WIDGET(label),
+                                             GTK_STATE_NORMAL, &black);
                     gtk_box_pack_start(GTK_BOX(forecast_box), GTK_WIDGET(label),
                                        TRUE, TRUE, 0);
                     g_free(value);
@@ -584,6 +591,9 @@ make_forecast(xfceweather_data *data)
                     g_free(wind_direction);
                     g_free(rawvalue);
                     label = gtk_label_new(value);
+                    if (!(i % 2))
+                        gtk_widget_modify_fg(GTK_WIDGET(label),
+                                             GTK_STATE_NORMAL, &black);
                     gtk_box_pack_start(GTK_BOX(forecast_box), label,
                                        TRUE, TRUE, 0);
                     g_free(value);
