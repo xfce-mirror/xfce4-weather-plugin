@@ -20,16 +20,20 @@
 
 G_BEGIN_DECLS
 
-typedef void   (*WeatherFunc) (gboolean succeed, gchar *received, size_t len, gpointer user_data);
+typedef void (*WeatherFunc) (gboolean succeed,
+                             gchar *received,
+                             size_t len,
+                             gpointer user_data);
 
-void weather_http_cleanup_qeue (void);
 
-void weather_http_receive_data (const gchar  *hostname,
-                                const gchar  *url,
-                                const gchar  *proxy_host,
-                                gint          proxy_port,
-                                WeatherFunc   cb_func,
-                                gpointer      user_data);
+void weather_http_cleanup_qeue(void);
+
+void weather_http_receive_data(const gchar *hostname,
+                               const gchar *url,
+                               const gchar *proxy_host,
+                               gint proxy_port,
+                               WeatherFunc cb_func,
+                               gpointer user_data);
 
 G_END_DECLS
 
