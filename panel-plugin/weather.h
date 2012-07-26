@@ -20,61 +20,60 @@
 
 #include <libxfce4panel/libxfce4panel.h>
 #include <libxfce4util/libxfce4util.h>
-#define PLUGIN_WEBSITE   "http://goodies.xfce.org/projects/panel-plugins/xfce4-weather-plugin"
+#define PLUGIN_WEBSITE "http://goodies.xfce.org/projects/panel-plugins/xfce4-weather-plugin"
 #define MAX_FORECAST_DAYS 10
 #define DEFAULT_FORECAST_DAYS 5
 
 G_BEGIN_DECLS
 
-typedef struct
-{
-  XfcePanelPlugin *plugin;
+typedef struct {
+    XfcePanelPlugin *plugin;
 
 #if !GTK_CHECK_VERSION(2,12,0)
-  GtkTooltips     *tooltips;
+    GtkTooltips *tooltips;
 #endif
 
-  GtkWidget       *top_vbox;
-  GtkWidget       *top_hbox;
-  GtkWidget       *vbox_center_scrollbox;
-  GtkWidget       *scrollbox;
-  GtkWidget       *iconimage;
-  GtkWidget       *tooltipbox;
+    GtkWidget *top_vbox;
+    GtkWidget *top_hbox;
+    GtkWidget *vbox_center_scrollbox;
+    GtkWidget *scrollbox;
+    GtkWidget *iconimage;
+    GtkWidget *tooltipbox;
 
-  GtkWidget       *summary_window;
+    GtkWidget *summary_window;
 
-  GArray          *labels;
+    GArray *labels;
 
-  gint             panel_size;
-  gint             size;
-  GtkOrientation   orientation;
-  GtkOrientation   panel_orientation;
-  gint             updatetimeout;
-  time_t           last_data_update;
-  time_t           last_conditions_update;
+    gint panel_size;
+    gint size;
+    GtkOrientation orientation;
+    GtkOrientation panel_orientation;
+    gint updatetimeout;
+    time_t last_data_update;
+    time_t last_conditions_update;
 
-  gchar           *lat;
-  gchar           *lon;
-  gchar           *location_name;
-  unit_systems     unit_system;
+    gchar *lat;
+    gchar *lon;
+    gchar *location_name;
+    unit_systems unit_system;
 
-  xml_weather     *weatherdata;
+    xml_weather *weatherdata;
 
-  gchar           *proxy_host;
-  gint             proxy_port;
+    gchar *proxy_host;
+    gint proxy_port;
+    gboolean proxy_fromenv;
 
-  gboolean         proxy_fromenv;
-  /* used for storing the configured
-   * but not active proxy setttings */
-  gchar           *saved_proxy_host;
-  gint             saved_proxy_port;
+    /* used for storing the configured but not active proxy settings */
+    gchar *saved_proxy_host;
+    gint saved_proxy_port;
   
-  gboolean         animation_transitions;
-  gint             forecast_days;
-}
-xfceweather_data;
+    gboolean animation_transitions;
+    gint forecast_days;
+} xfceweather_data;
 
-gboolean check_envproxy (gchar ** proxy_host, gint * proxy_port);
+
+gboolean check_envproxy(gchar **proxy_host,
+                        gint *proxy_port);
 
 G_END_DECLS
 
