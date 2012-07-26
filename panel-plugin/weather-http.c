@@ -52,7 +52,7 @@
 
 
 /* global */
-static GSList *qeued_transfers = NULL;
+static GSList *queued_transfers = NULL;
 
 enum {
     STATUS_NOT_EXECUTED,
@@ -437,7 +437,7 @@ weather_http_receive_data_destroyed(gpointer user_data)
     }
 
     /* remove from the list */
-    qeued_transfers = g_slist_remove(qeued_transfers, connection);
+    queued_transfers = g_slist_remove(queued_transfers, connection);
 
     /* free other data */
     g_free(connection->hostname);
@@ -483,17 +483,17 @@ weather_http_receive_data(const gchar *hostname,
                                      weather_http_receive_data_destroyed);
 
     /* add the idle function to the running tasks list */
-    qeued_transfers = g_slist_prepend(qeued_transfers, connection);
+    queued_transfers = g_slist_prepend(queued_transfers, connection);
 }
 
 
 void
-weather_http_cleanup_qeue(void)
+weather_http_cleanup_queue(void)
 {
     GSList *li;
     WeatherConnection *connection;
 
-    for (li = qeued_transfers; li; li = li->next) {
+    for (li = queued_transfers; li; li = li->next) {
         connection = li->data;
 
         if (connection->status == STATUS_RUNNING) {

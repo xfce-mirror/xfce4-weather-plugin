@@ -26,7 +26,7 @@ typedef void (*WeatherFunc) (gboolean succeed,
                              gpointer user_data);
 
 
-void weather_http_cleanup_qeue(void);
+void weather_http_cleanup_queue(void);
 
 void weather_http_receive_data(const gchar *hostname,
                                const gchar *url,
