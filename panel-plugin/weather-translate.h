@@ -1,5 +1,5 @@
 /*  Copyright (c) 2003-2007 Xfce Development Team
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -23,14 +23,17 @@
 
 G_BEGIN_DECLS
 
-const gchar *translate_desc (const gchar *, gboolean);
+const gchar *translate_desc(const gchar *desc,
+                            gboolean nighttime);
 
 /* these return a newly allocated string, that should be freed */
-gchar *translate_day (gint);
+gchar *translate_day(gint weekday);
 
-gchar *translate_wind_direction (const gchar *);
+gchar *translate_wind_direction(const gchar *wdir);
 
-gchar *translate_wind_speed (xml_time *, const gchar *, unit_systems);
+gchar *translate_wind_speed(xml_time *timeslice,
+                            const gchar *wspeed,
+                            unit_systems unit_system);
 
 G_END_DECLS
 
