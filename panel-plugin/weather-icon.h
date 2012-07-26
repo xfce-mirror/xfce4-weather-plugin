@@ -1,5 +1,5 @@
 /*  Copyright (c) 2003-2007 Xfce Development Team
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -20,7 +20,9 @@
 
 G_BEGIN_DECLS
 
-GdkPixbuf *get_icon (const gchar * icon, gint size, gboolean night);
+GdkPixbuf *get_icon(const gchar *icon,
+                    gint size,
+                    gboolean night);
 
 G_END_DECLS
 

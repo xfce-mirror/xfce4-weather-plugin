@@ -28,59 +28,64 @@
 #define DEFAULT_W_THEME "liquid"
 #define NODATA "NODATA"
 
+
 const gchar *night_symbols[] = {
-  "CLOUD",
-  "LIGHTCLOUD",
-  "LIGHTRAINSUN",
-  "LIGHTRAINTHUNDERSUN",
-  "PARTLYCLOUD",
-  "SNOWSUN",
-  "SUN",
-  NULL
+    "CLOUD",
+    "LIGHTCLOUD",
+    "LIGHTRAINSUN",
+    "LIGHTRAINTHUNDERSUN",
+    "PARTLYCLOUD",
+    "SNOWSUN",
+    "SUN",
+    NULL
 };
 
+
 GdkPixbuf *
-get_icon (const gchar *number,
-          gint         size,
-          gboolean     night)
+get_icon(const gchar *number,
+         gint size,
+         gboolean night)
 {
-  GdkPixbuf *image = NULL;
-  gchar     *filename, *night_suffix = "";
-  gint       number_len, night_symbol_len;
-  guint      i;
+    GdkPixbuf *image = NULL;
+    gchar *filename, *night_suffix = "";
+    gint number_len, night_symbol_len;
+    guint i;
 
-  if (number == NULL || strlen(number) == 0)
-    number = NODATA;
-  else if (night)
-    {
-      number_len = strlen(number);
-      for (i = 0; night_symbols[i] != NULL; i++)
-        {
-          night_symbol_len = strlen(night_symbols[i]);
-          if (number_len != night_symbol_len)
-            continue;
+    if (number == NULL || strlen(number) == 0)
+        number = NODATA;
+    else if (night) {
+        number_len = strlen(number);
+        for (i = 0; night_symbols[i] != NULL; i++) {
+            night_symbol_len = strlen(night_symbols[i]);
+            if (number_len != night_symbol_len)
+                continue;
 
-          if (number[0] != night_symbols[i][0])
-            continue;
+            if (number[0] != night_symbols[i][0])
+                continue;
 
-          if (!g_ascii_strncasecmp (night_symbols[i], number, number_len))
-            night_suffix = "-night";
+            if (!g_ascii_strncasecmp(night_symbols[i], number, number_len))
+                night_suffix = "-night";
         }
     }
 
-  filename = g_strdup_printf ("%s" G_DIR_SEPARATOR_S "%s" G_DIR_SEPARATOR_S "%s%s.png",
-                              THEMESDIR, DEFAULT_W_THEME, number, night_suffix);
+    filename = g_strdup_printf("%s" G_DIR_SEPARATOR_S
+                               "%s" G_DIR_SEPARATOR_S
+                               "%s%s.png",
+                               THEMESDIR,
+                               DEFAULT_W_THEME,
+                               number,
+                               night_suffix);
 
-  image = gdk_pixbuf_new_from_file_at_scale (filename, size, size, TRUE, NULL);
+    image = gdk_pixbuf_new_from_file_at_scale(filename, size, size, TRUE, NULL);
 
-  if (G_UNLIKELY (!image)) {
-    g_warning ("Unable to open image: %s", filename);
-    if (number && strcmp(number, NODATA)) {
-      g_free(filename);
-      return get_icon(NULL, size, FALSE);
+    if (G_UNLIKELY(!image)) {
+        g_warning("Unable to open image: %s", filename);
+        if (number && strcmp(number, NODATA)) {
+            g_free(filename);
+            return get_icon(NULL, size, FALSE);
+        }
     }
-  }
-  g_free (filename);
+    g_free(filename);
 
-  return image;
+    return image;
 }
