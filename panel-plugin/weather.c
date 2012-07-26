@@ -477,7 +477,7 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
     const gchar *value;
     gchar *file;
     gchar label[10];
-    guint i;
+    guint label_count = 0;
     gint val;
 
     if (!(file = xfce_panel_plugin_lookup_rc_file(plugin)))
@@ -547,14 +547,13 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
                               data->animation_transitions);
 
     data->labels = labels_clear(data->labels);
-    for (i = 0; i < 100 /* arbitrary */ ; ++i) {
-        g_snprintf(label, 10, "label%d", i);
+    val = 0;
+    while (val != -1) {
+        g_snprintf(label, 10, "label%d", label_count++);
 
         val = xfce_rc_read_int_entry(rc, label, -1);
         if (val >= 0)
             g_array_append_val(data->labels, val);
-        else
-            break;
     }
 
     xfce_rc_close(rc);
