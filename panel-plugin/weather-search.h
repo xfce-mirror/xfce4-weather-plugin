@@ -24,36 +24,41 @@
 
 G_BEGIN_DECLS
 
-typedef struct
-{
-  GtkWidget    *dialog;
-  GtkWidget    *search_entry;
-  GtkWidget    *result_list;
-  GtkWidget    *find_button;
-  GtkListStore *result_mdl;
-  GtkTreeViewColumn *column;
+typedef struct {
+    GtkWidget *dialog;
+    GtkWidget *search_entry;
+    GtkWidget *result_list;
+    GtkWidget *find_button;
+    GtkListStore *result_mdl;
+    GtkTreeViewColumn *column;
 
-  gchar        *result_lat;
-  gchar        *result_lon;
-  gchar        *result_name;
+    gchar *result_lat;
+    gchar *result_lon;
+    gchar *result_name;
 
-  gchar        *proxy_host;
-  gint          proxy_port;
-  
-  gchar        *last_search;
-}
-search_dialog;
+    gchar *proxy_host;
+    gint proxy_port;
 
-search_dialog *create_search_dialog (GtkWindow *, gchar *, gint);
+    gchar *last_search;
+} search_dialog;
 
-gboolean run_search_dialog (search_dialog * dialog);
 
-void weather_search_by_ip(const gchar *proxy_host, gint proxy_port,
-    void (*gui_cb)(const gchar *loc_name, const gchar *lat, const gchar *lon,
-                   const unit_systems unit_system, gpointer user_data),
-    gpointer user_data);
+search_dialog *create_search_dialog(GtkWindow *parent,
+                                    gchar *proxy_host,
+                                    gint proxy_port);
 
-void free_search_dialog (search_dialog * dialog);
+gboolean run_search_dialog(search_dialog *dialog);
+
+void weather_search_by_ip(const gchar *proxy_host,
+                          gint proxy_port,
+                          void (*gui_cb) (const gchar *loc_name,
+                                          const gchar *lat,
+                                          const gchar *lon,
+                                          const unit_systems unit_system,
+                                          gpointer user_data),
+                          gpointer user_data);
+
+void free_search_dialog(search_dialog *dialog);
 
 G_END_DECLS
 
