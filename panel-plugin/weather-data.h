@@ -52,24 +52,38 @@ typedef enum {
 	NIGHT
 } daytime;
 
-gchar *
-get_data (xml_time *timeslice, unit_systems unit_system, datas type);
-const gchar *
-get_unit (unit_systems unit_system, datas type);
-gboolean
-is_night_time();
-time_t
-time_calc(struct tm time_tm, gint year, gint mon, gint day, gint hour, gint min, gint sec);
-time_t
-time_calc_hour(struct tm time_tm, gint hours);
-time_t
-time_calc_day(struct tm time_tm, gint days);
-xml_time *
-get_current_conditions(xml_weather *data);
-xml_time *
-make_current_conditions(xml_weather *data);
-xml_time *
-make_forecast_data(xml_weather *data, int day, daytime dt);
+
+gchar *get_data(xml_time *timeslice,
+                unit_systems unit_system,
+                datas type);
+
+const gchar *get_unit(unit_systems unit_system,
+                      datas type);
+
+gboolean is_night_time();
+
+time_t time_calc(struct tm time_tm,
+                 gint year,
+                 gint mon,
+                 gint day,
+                 gint hour,
+                 gint min,
+                 gint sec);
+
+time_t time_calc_hour(struct tm time_tm,
+                      gint hours);
+
+time_t time_calc_day(struct tm time_tm,
+                     gint days);
+
+xml_time *get_current_conditions(xml_weather *data);
+
+xml_time *make_current_conditions(xml_weather *data);
+
+xml_time *make_forecast_data(xml_weather *data,
+                             int day,
+                             daytime dt);
+
 G_END_DECLS
 
 #endif
