@@ -20,47 +20,43 @@
 
 G_BEGIN_DECLS
 
-typedef struct
-{
-  gchar *name;
-  datas  number;
-}
-labeloption;
+typedef struct {
+    gchar *name;
+    datas  number;
+} labeloption;
 
-typedef struct
-{
-  GtkWidget        *dialog;
-  GtkWidget        *combo_unit_system;
-  GtkWidget        *txt_lat;
-  GtkWidget        *txt_lon;
-  GtkWidget        *txt_loc_name;
-  GtkWidget        *txt_proxy_host;
-  GtkWidget        *txt_proxy_port;
-  GtkWidget        *chk_proxy_use;
-  GtkWidget        *chk_proxy_fromenv;
-  GtkWidget        *spin_forecast_days;
+typedef struct {
+    GtkWidget *dialog;
+    GtkWidget *combo_unit_system;
+    GtkWidget *txt_lat;
+    GtkWidget *txt_lon;
+    GtkWidget *txt_loc_name;
+    GtkWidget *txt_proxy_host;
+    GtkWidget *txt_proxy_port;
+    GtkWidget *chk_proxy_use;
+    GtkWidget *chk_proxy_fromenv;
+    GtkWidget *spin_forecast_days;
 
-  GtkWidget        *tooltip_yes;
-  GtkWidget        *tooltip_no;
+    GtkWidget *tooltip_yes;
+    GtkWidget *tooltip_no;
 
-  GtkWidget        *opt_xmloption;
-  GtkWidget        *lst_xmloption;
-  GtkListStore     *mdl_xmloption;
+    GtkWidget *opt_xmloption;
+    GtkWidget *lst_xmloption;
+    GtkListStore *mdl_xmloption;
 
-  GtkWidget        *chk_animate_transition;
+    GtkWidget *chk_animate_transition;
 
-  xfceweather_data *wd;
-}
-xfceweather_dialog;
+    xfceweather_data *wd;
+} xfceweather_dialog;
 
-xfceweather_dialog *create_config_dialog (xfceweather_data * data,
-                                          GtkWidget * vbox);
 
-void
-set_callback_config_dialog (xfceweather_dialog * dialog,
-                            void (cb) (xfceweather_data *));
+xfceweather_dialog *create_config_dialog(xfceweather_data *data,
+                                         GtkWidget *vbox);
 
-void apply_options (xfceweather_dialog * dialog);
+void set_callback_config_dialog(xfceweather_dialog *dialog,
+                                void (cb) (xfceweather_data *data));
+
+void apply_options(xfceweather_dialog *dialog);
 
 G_END_DECLS
 
