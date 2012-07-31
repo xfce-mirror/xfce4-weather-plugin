@@ -26,6 +26,8 @@ G_BEGIN_DECLS
 const gchar *translate_desc(const gchar *desc,
                             gboolean nighttime);
 
+const gchar *translate_moon_phase(const gchar *moon_phase);
+
 /* these return a newly allocated string, that should be freed */
 gchar *translate_day(gint weekday);
 

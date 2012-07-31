@@ -51,6 +51,18 @@ static const gchar *wdirs[] = {
     NULL
 };
 
+static const gchar *moon_phases[] = {
+    N_("New moon"),
+    N_("Waxing crescent"),
+    N_("First quarter"),
+    N_("Waxing gibbous"),
+    N_("Full moon"),
+    N_("Waning gibbous"),
+    N_("Third quarter"),
+    N_("Waning crescent"),
+    NULL
+};
+#define NUM_MOON_PHASES (sizeof(moon_phases) / sizeof(gchar *))
 
 static const gchar *
 translate_str(const gchar **loc_strings,
@@ -134,6 +146,17 @@ translate_desc(const gchar *desc,
                 return _(symbol_to_desc[i].desc);
     }
     return desc;
+}
+
+
+const gchar *
+translate_moon_phase(const gchar *moon_phase)
+{
+    guint i;
+    for (i = 0; i < NUM_MOON_PHASES; i++)
+        if (!strcmp(moon_phase, moon_phases[i]))
+            return _(moon_phases[i]);
+    return moon_phase;
 }
 
 
