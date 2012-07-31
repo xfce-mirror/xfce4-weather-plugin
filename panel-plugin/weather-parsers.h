@@ -24,11 +24,11 @@
 
 G_BEGIN_DECLS
 
-#define DATA(node) \
+#define DATA(node)                                                  \
     ((gchar *) xmlNodeListGetString(node->doc, node->children, 1))
-#define PROP(node, prop) \
+#define PROP(node, prop)                                        \
     ((gchar *) xmlGetProp((node), (const xmlChar *) (prop)))
-#define NODE_IS_TYPE(node, type) \
+#define NODE_IS_TYPE(node, type)                        \
     (xmlStrEqual(node->name, (const xmlChar *) type))
 
 #define MAX_TIMESLICE 500
@@ -83,8 +83,23 @@ typedef struct {
     xml_time *current_conditions;
 } xml_weather;
 
+typedef struct {
+    time_t sunrise;
+    time_t sunset;
+    gboolean sun_never_rises;
+    gboolean sun_never_sets;
+
+    time_t moonrise;
+    time_t moonset;
+    gboolean moon_never_rises;
+    gboolean moon_never_sets;
+    gchar *moon_phase;
+} xml_astro;
+
 
 xml_weather *parse_weather(xmlNode *cur_node);
+
+xml_astro *parse_astro(xmlNode *cur_node);
 
 void parse_time(xmlNode *cur_node,
                 xml_weather *data);
@@ -99,6 +114,8 @@ xml_time *get_timeslice(xml_weather *data,
 void xml_time_free(xml_time *timeslice);
 
 void xml_weather_free(xml_weather *data);
+
+void xml_astro_free(xml_astro *astro);
 
 G_END_DECLS
 

@@ -92,6 +92,132 @@ parse_weather(xmlNode *cur_node)
 }
 
 
+time_t
+parse_xml_timestring(gchar* ts, gchar* format) {
+    time_t t;
+    struct tm tm;
+
+    memset(&t, 0, sizeof(time_t));
+    if (ts == NULL)
+        return t;
+
+    /* standard format */
+    if (format == NULL)
+        format = "%Y-%m-%dT%H:%M:%SZ";
+
+    memset(&tm, 0, sizeof(struct tm));
+    tm.tm_isdst = -1;
+
+    if (strptime(ts, format, &tm) == NULL)
+        return t;
+
+    t = my_timegm(&tm);
+    return t;
+}
+
+
+void
+parse_astro_location(xmlNode *cur_node,
+                     xml_astro *astro)
+{
+    xmlNode *child_node;
+    time_t sunrise_t, sunset_t, moonrise_t, moonset_t;
+    gchar *sunrise, *sunset, *moonrise, *moonset;
+    gchar *never_rises, *never_sets;
+
+    for (child_node = cur_node->children; child_node;
+         child_node = child_node->next) {
+        if (NODE_IS_TYPE(child_node, "sun")) {
+            never_rises = PROP(child_node, "never_rise");
+            if (never_rises &&
+                (!strcmp(never_rises, "true") ||
+                 !strcmp(never_rises, "1")))
+                astro->sun_never_rises = TRUE;
+            else
+                astro->sun_never_rises = FALSE;
+            xmlFree(never_rises);
+
+            never_sets = PROP(child_node, "never_set");
+            if (never_sets &&
+                (!strcmp(never_sets, "true") ||
+                 !strcmp(never_sets, "1")))
+                astro->sun_never_sets = TRUE;
+            else
+                astro->sun_never_sets = FALSE;
+            xmlFree(never_sets);
+
+            sunrise = PROP(child_node, "rise");
+            astro->sunrise = parse_xml_timestring(sunrise, NULL);
+            xmlFree(sunrise);
+
+            sunset = PROP(child_node, "set");
+            astro->sunset = parse_xml_timestring(sunset, NULL);
+            xmlFree(sunset);
+        }
+
+        if (NODE_IS_TYPE(child_node, "moon")) {
+            never_rises = PROP(child_node, "never_rise");
+            if (never_rises &&
+                (!strcmp(never_rises, "true") ||
+                 !strcmp(never_rises, "1")))
+                astro->moon_never_rises = TRUE;
+            else
+                astro->moon_never_rises = FALSE;
+            xmlFree(never_rises);
+
+            never_sets = PROP(child_node, "never_set");
+            if (never_sets &&
+                (!strcmp(never_sets, "true") ||
+                 !strcmp(never_sets, "1")))
+                astro->moon_never_sets = TRUE;
+            else
+                astro->moon_never_sets = FALSE;
+            xmlFree(never_sets);
+
+            moonrise = PROP(child_node, "rise");
+            astro->moonrise = parse_xml_timestring(moonrise, NULL);
+            xmlFree(moonrise);
+
+            moonset = PROP(child_node, "set");
+            astro->moonset = parse_xml_timestring(moonset, NULL);
+            xmlFree(moonset);
+
+            astro->moon_phase = PROP(child_node, "phase");
+        }
+    }
+}
+
+
+/*
+ * Look at http://api.yr.no/weatherapi/sunrise/1.0/schema for information
+ * of elements and attributes to expect.
+ */
+xml_astro *
+parse_astro(xmlNode *cur_node)
+{
+    xmlNode *child_node, *time_node = NULL, *location_node = NULL;
+    xml_astro *astro = g_slice_new0(xml_astro);
+    guint i = 0;
+
+    if (G_UNLIKELY(astro == NULL))
+        return NULL;
+
+    for (child_node = cur_node->children; child_node;
+         child_node = child_node->next)
+        if (NODE_IS_TYPE (child_node, "time")) {
+            time_node = child_node;
+            break;
+        }
+
+    if (G_LIKELY(time_node))
+        for (child_node = time_node->children; child_node;
+             child_node = child_node->next)
+            if (NODE_IS_TYPE (child_node, "location"))
+                parse_astro_location(child_node, astro);
+    return astro;
+}
+
+
 void
 parse_time(xmlNode * cur_node,
            xml_weather * data)
@@ -316,4 +442,15 @@ xml_weather_free(xml_weather *data)
     xml_time_free(data->current_conditions);
     g_slice_free(xml_weather, data);
     data = NULL;
+}
+
+void
+xml_astro_free(xml_astro *astro)
+{
+    g_assert(astro != NULL);
+    if (G_UNLIKELY(astro == NULL))
+        return;
+    g_free(astro->moon_phase);
+    g_slice_free(xml_astro, astro);
+    astro = NULL;
 }
