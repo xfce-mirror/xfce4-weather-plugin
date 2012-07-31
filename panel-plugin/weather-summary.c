@@ -277,8 +277,10 @@ create_summary_tab(xfceweather_data *data)
     xml_time *conditions;
     const gchar *unit;
     struct tm *start_tm, *end_tm, *point_tm;
+    struct tm *sunrise_tm, *sunset_tm, *moonrise_tm, *moonset_tm;
     gchar *value, *wind, *sun_val, *vis, *rawvalue;
-    char interval_start[80], interval_end[80], point[80];
+    gchar interval_start[80], interval_end[80], point[80];
+    gchar sunrise[80], sunset[80], moonrise[80], moonset[80];
 
     view = gtk_text_view_new();
     gtk_text_view_set_editable(GTK_TEXT_VIEW(view), FALSE);
@@ -335,6 +337,58 @@ create_summary_tab(xfceweather_data *data)
          interval_start,
          interval_end);
     APPEND_TEXT_ITEM_REAL(value);
+
+    /* sun and moon */
+    APPEND_BTEXT(_("\nAstrological Data\n"));
+    if (data->astrodata) {
+        if (data->astrodata->sun_never_rises) {
+            value = g_strdup(_("\tSunrise:\t\tThe sun never rises today.\n"));
+            APPEND_TEXT_ITEM_REAL(value);
+        } else if (data->astrodata->sun_never_sets) {
+            value = g_strdup(_("\tSunset:\t\tThe sun never sets today.\n"));
+            APPEND_TEXT_ITEM_REAL(value);
+        } else {
+            sunrise_tm = localtime(&data->astrodata->sunrise);
+            strftime(sunrise, 80, "%c", sunrise_tm);
+            value = g_strdup_printf(_("\tSunrise:\t\t%s\n"), sunrise);
+            APPEND_TEXT_ITEM_REAL(value);
+
+            sunset_tm = localtime(&data->astrodata->sunset);
+            strftime(sunset, 80, "%c", sunset_tm);
+            value = g_strdup_printf(_("\tSunset:\t\t%s\n\n"), sunset);
+            APPEND_TEXT_ITEM_REAL(value);
+        }
+
+        if (data->astrodata->moon_phase)
+            value = g_strdup_printf(_("\tMoon phase:\t%s\n"),
+                                    translate_moon_phase
+                                    (data->astrodata->moon_phase));
+        else
+            value = g_strdup(_("\tMoon phase:\tUnknown\n"));
+        APPEND_TEXT_ITEM_REAL(value);
+
+        if (data->astrodata->moon_never_rises) {
+            value = g_strdup(_("\tMoonrise:\tThe moon never rises today.\n"));
+            APPEND_TEXT_ITEM_REAL(value);
+        } else if (data->astrodata->moon_never_sets) {
+            value = g_strdup(_("\tMoonset:\tThe moon never sets today.\n"));
+            APPEND_TEXT_ITEM_REAL(value);
+        } else {
+            moonrise_tm = localtime(&data->astrodata->moonrise);
+            strftime(moonrise, 80, "%c", moonrise_tm);
+            value = g_strdup_printf(_("\tMoonrise:\t%s\n"), moonrise);
+            APPEND_TEXT_ITEM_REAL(value);
+
+            moonset_tm = localtime(&data->astrodata->moonset);
+            strftime(moonset, 80, "%c", moonset_tm);
+            value = g_strdup_printf(_("\tMoonset:\t%s\n"), moonset);
+            APPEND_TEXT_ITEM_REAL(value);
+        }
+    } else {
+        value = g_strdup(_("\tData not available, will use sane "
+                           "default values for night and day.\n"));
+        APPEND_TEXT_ITEM_REAL(value);
+    }
 
     /* temperature */
     APPEND_BTEXT(_("\nTemperature\n"));
