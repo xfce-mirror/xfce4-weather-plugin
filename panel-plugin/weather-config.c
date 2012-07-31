@@ -155,6 +155,7 @@ cb_toggle(GtkWidget *widget,
           gpointer data)
 {
     GtkWidget *target = (GtkWidget *) data;
+
     gtk_widget_set_sensitive(target,
                              gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON
                                                           (widget)));
@@ -167,6 +168,7 @@ cb_not_toggle(GtkWidget *widget,
               gpointer data)
 {
     GtkWidget *target = (GtkWidget *) data;
+
     gtk_widget_set_sensitive(target,
                              !gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON
                                                            (widget)));

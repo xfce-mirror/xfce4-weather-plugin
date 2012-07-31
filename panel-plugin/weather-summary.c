@@ -31,6 +31,13 @@
 #include "weather-icon.h"
 
 
+static GdkCursor *hand_cursor = NULL;
+static GdkCursor *text_cursor = NULL;
+static gboolean on_icon = FALSE;
+static GtkWidget *weather_channel_evt = NULL;
+static GtkTooltips *tooltips = NULL;
+
+
 static gboolean
 lnk_clicked(GtkTextTag *tag,
             GObject *obj,
@@ -73,9 +80,6 @@ lnk_clicked(GtkTextTag *tag,
                      G_CALLBACK(lnk_clicked), NULL);
 
 
-static GtkTooltips *tooltips = NULL;
-
-
 static gboolean
 lnk_clicked(GtkTextTag *tag,
             GObject *obj,
@@ -108,20 +112,18 @@ icon_clicked (GtkWidget *widget,
 }
 
 
-static GdkCursor *hand_cursor = NULL;
-static GdkCursor *text_cursor = NULL;
-static gboolean on_icon = FALSE;
 static gboolean
 view_motion_notify(GtkWidget *widget,
                    GdkEventMotion *event,
                    GtkWidget *view)
 {
-    if (event->x != -1 && event->y != -1) {
-        gint bx, by;
-        GtkTextIter iter;
-        GSList *tags;
-        GSList *cur;
+    GtkTextIter iter;
+    GtkTextTag *tag;
+    GSList *tags;
+    GSList *cur;
+    gint bx, by;
 
+    if (event->x != -1 && event->y != -1) {
         gtk_text_view_window_to_buffer_coords(GTK_TEXT_VIEW(view),
                                               GTK_TEXT_WINDOW_WIDGET,
                                               event->x, event->y, &bx, &by);
@@ -129,7 +131,7 @@ view_motion_notify(GtkWidget *widget,
                                            &iter, bx, by);
         tags = gtk_text_iter_get_tags(&iter);
         for (cur = tags; cur != NULL; cur = cur->next) {
-            GtkTextTag *tag = cur->data;
+            tag = cur->data;
             if (g_object_get_data(G_OBJECT(tag), "url")) {
                 gdk_window_set_cursor(gtk_text_view_get_window
                                       (GTK_TEXT_VIEW(view),
@@ -172,13 +174,13 @@ view_leave_notify(GtkWidget *widget,
 }
 
 
-static GtkWidget *weather_channel_evt = NULL;
 static void
 view_scrolled_cb(GtkAdjustment *adj,
                  GtkWidget *view)
 {
+    gint x, y, x1, y1;
+
     if (weather_channel_evt) {
-        gint x, y, x1, y1;
         x1 = view->allocation.width - 191 - 15;
         y1 = view->requisition.height - 60 - 15;
         gtk_text_view_buffer_to_window_coords(GTK_TEXT_VIEW(view),
@@ -208,7 +210,6 @@ get_logo_path(void)
 
     g_mkdir_with_parents(dir, 0755);
     g_free(dir);
-
     return g_strconcat(g_get_user_cache_dir(), G_DIR_SEPARATOR_S,
                        "xfce4", G_DIR_SEPARATOR_S, "weather-plugin",
                        G_DIR_SEPARATOR_S, "weather_logo.gif", NULL);
@@ -260,7 +261,6 @@ weather_summary_get_logo(xfceweather_data *data)
         gtk_image_set_from_pixbuf(GTK_IMAGE(image), pixbuf);
         g_object_unref(pixbuf);
     }
-
     return image;
 }
 
@@ -278,7 +278,7 @@ create_summary_tab(xfceweather_data *data)
     const gchar *unit;
     struct tm *start_tm, *end_tm, *point_tm;
     struct tm *sunrise_tm, *sunset_tm, *moonrise_tm, *moonset_tm;
-    gchar *value, *wind, *sun_val, *vis, *rawvalue;
+    gchar *value, *rawvalue, *wind;
     gchar interval_start[80], interval_end[80], point[80];
     gchar sunrise[80], sunset[80], moonrise[80], moonset[80];
 
@@ -333,7 +333,10 @@ create_summary_tab(xfceweather_data *data)
     end_tm = localtime(&conditions->end);
     strftime(interval_end, 80, "%c", end_tm);
     value = g_strdup_printf
-        (_("\n\tPrecipitation and the weather symbol have been calculated\n\tfor the following time interval:\n\tStart:\t%s\n\tEnd:\t%s\n"),
+        (_("\n\tPrecipitation and the weather symbol have been calculated\n"
+           "\tfor the following time interval:\n"
+           "\tStart:\t%s\n"
+           "\tEnd:\t%s\n"),
          interval_start,
          interval_end);
     APPEND_TEXT_ITEM_REAL(value);
@@ -477,7 +480,6 @@ create_summary_tab(xfceweather_data *data)
         hand_cursor = gdk_cursor_new(GDK_HAND2);
     if (text_cursor == NULL)
         text_cursor = gdk_cursor_new(GDK_XTERM);
-
     return frame;
 }
 
@@ -487,6 +489,7 @@ add_forecast_cell(GtkWidget *widget,
                   GdkColor *color)
 {
     GtkWidget *ebox;
+
     ebox = gtk_event_box_new();
     if (color == NULL)
         gtk_event_box_set_visible_window(GTK_EVENT_BOX(ebox), FALSE);
@@ -519,7 +522,6 @@ add_forecast_header(gchar *text,
     gtk_label_set_markup(GTK_LABEL(label), str);
     g_free(str);
     gtk_container_add(GTK_CONTAINER(align), GTK_WIDGET(label));
-
     return add_forecast_cell(align, color);
 }
 
@@ -734,7 +736,8 @@ summary_dialog_response(GtkWidget *dlg,
     if (response == GTK_RESPONSE_ACCEPT)
         gtk_widget_destroy(window);
     else if (response == GTK_RESPONSE_HELP)
-        g_spawn_command_line_async ("exo-open --launch WebBrowser " PLUGIN_WEBSITE, NULL);
+        g_spawn_command_line_async ("exo-open --launch WebBrowser "
+                                    PLUGIN_WEBSITE, NULL);
 }
 
 
@@ -742,7 +745,7 @@ GtkWidget *
 create_summary_window (xfceweather_data *data)
 {
     GtkWidget *window, *notebook, *vbox, *hbox, *label;
-    gchar *title, *rawvalue;
+    gchar *title, *symbol;
     GdkPixbuf *icon;
     xml_time *conditions;
 
@@ -761,14 +764,13 @@ create_summary_window (xfceweather_data *data)
     }
 
     vbox = gtk_vbox_new(FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(GTK_DIALOG(window)->vbox), vbox, TRUE, TRUE,
-                       0);
+    gtk_box_pack_start(GTK_BOX(GTK_DIALOG(window)->vbox), vbox, TRUE, TRUE, 0);
 
     conditions = get_current_conditions(data->weatherdata);
 
-    rawvalue = get_data(conditions, data->unit_system, SYMBOL);
-    icon = get_icon(rawvalue, 48, data->night_time);
-    g_free(rawvalue);
+    symbol = get_data(conditions, data->unit_system, SYMBOL);
+    icon = get_icon(symbol, 48, data->night_time);
+    g_free(symbol);
 
     gtk_window_set_icon(GTK_WINDOW(window), icon);
 

@@ -31,6 +31,7 @@
 
 
 #define CHK_NULL(s) ((s) ? g_strdup(s) : g_strdup(""))
+
 #define LOCALE_DOUBLE(value,                                            \
                       format) (g_strdup_printf(format,                  \
                                                g_ascii_strtod(value, NULL)))
@@ -42,6 +43,7 @@ has_timeslice(xml_weather *data,
               time_t end_t)
 {
     int i = 0;
+
     for (i = 0; i < data->num_timeslices; i++)
         if (data->timeslice[i]->start == start_t &&
             data->timeslice[i]->end == end_t)
@@ -58,7 +60,7 @@ get_data(xml_time *timeslice,
     const xml_location *loc = NULL;
     double val;
 
-    if (timeslice == NULL)
+    if (timeslice == NULL || timeslice->location == NULL)
         return g_strdup("");
 
     loc = timeslice->location;
@@ -388,7 +390,6 @@ find_shortest_timeslice(xml_weather *data,
         start_tm = *localtime(&start_t);
         end_tm = *localtime(&end_t);
     }
-
     return NULL;
 }
 

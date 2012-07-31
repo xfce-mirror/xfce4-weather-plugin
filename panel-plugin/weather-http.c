@@ -148,7 +148,7 @@ weather_http_receive_data_idle(gpointer user_data)
     struct addrinfo h, *r, *a;
     const gchar *p;
     gchar buffer[1024], *request, *port = NULL;
-    gint bytes = 0, n, m = 0, err;
+    gint bytes = 0, n, m = 0, err, cts_len;
     fd_set fds;
     GTimeVal timeout;
 
@@ -211,7 +211,6 @@ weather_http_receive_data_idle(gpointer user_data)
         return FALSE;
 
     /* open the socket */
-
     for (a = r; a != NULL; a = a->ai_next) {
         connection->fd = socket(a->ai_family, a->ai_socktype, a->ai_protocol);
         if (connection->fd < 0)
@@ -339,7 +338,7 @@ weather_http_receive_data_idle(gpointer user_data)
 
     if (G_LIKELY(connection->received_len > 0)) {
         /* get the pointer to the content-length */
-        int cts_len = -1;
+        cts_len = -1;
         p = strstr((char *) connection->received, "Content-Length:");
         if (G_LIKELY(p)) {
             /* advance the pointer */

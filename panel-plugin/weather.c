@@ -354,15 +354,12 @@ cb_astro_update(gboolean succeed,
             doc = xmlReadMemory(result, strlen(result), NULL, "UTF-8", 0);
         } else
             doc = xmlParseMemory(result, strlen(result));
-
         g_free(result);
 
         if (G_LIKELY(doc)) {
             cur_node = xmlDocGetRootElement(doc);
-
             if (G_LIKELY(cur_node))
                 astro = parse_astro(cur_node);
-
             xmlFreeDoc(doc);
         }
     }
@@ -393,21 +390,17 @@ cb_update(gboolean succeed,
             doc = xmlReadMemory(result, strlen(result), NULL, "UTF-8", 0);
         } else
             doc = xmlParseMemory(result, strlen(result));
-
         g_free(result);
 
         if (G_LIKELY(doc)) {
             cur_node = xmlDocGetRootElement(doc);
-
             if (cur_node)
                 weather = parse_weather(cur_node);
-
             xmlFreeDoc(doc);
         }
     }
 
     gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
-
 
     if (weather) {
         data->weatherdata = weather;
@@ -479,6 +472,8 @@ update_weatherdata(xfceweather_data *data)
 {
     gchar *url;
     gboolean night_time;
+    time_t now_t;
+    struct tm now_tm;
 
     g_assert(data != NULL);
     if (G_UNLIKELY(data == NULL))
@@ -493,8 +488,8 @@ update_weatherdata(xfceweather_data *data)
 
     /* fetch astrological data */
     if (need_astro_update(data)) {
-        time_t now_t = time(NULL);
-        struct tm now_tm = *localtime(&now_t);
+        now_t = time(NULL);
+        now_tm = *localtime(&now_t);
 
         /* build url */
         url = g_strdup_printf("/weatherapi/sunrise/1.0/?"
@@ -743,6 +738,7 @@ close_summary(GtkWidget *widget,
               gpointer *user_data)
 {
     xfceweather_data *data = (xfceweather_data *) user_data;
+
     data->summary_window = NULL;
 }
 
@@ -800,6 +796,7 @@ mi_click(GtkWidget *widget,
          gpointer user_data)
 {
     xfceweather_data *data = (xfceweather_data *) user_data;
+
     update_weatherdata_with_reset(data);
 }
 

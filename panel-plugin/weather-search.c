@@ -34,6 +34,18 @@
 #define BORDER 8
 
 
+typedef struct {
+    const gchar *proxy_host;
+    gint proxy_port;
+    void (*cb) (const gchar *loc_name,
+                const gchar *lat,
+                const gchar *lon,
+                const unit_systems unit_system,
+                gpointer user_data);
+    gpointer user_data;
+} geolocation_data;
+
+
 static void
 append_result(GtkListStore *mdl,
               gchar *lat,
@@ -59,11 +71,8 @@ sanitize_str(const gchar *str)
         else
             g_string_append_c(retstr, c);
     }
-
     realstr = retstr->str;
-
     g_string_free(retstr, FALSE);
-
     return realstr;
 }
 
@@ -337,18 +346,6 @@ free_search_dialog(search_dialog *dialog)
 }
 
 
-typedef struct {
-    const gchar *proxy_host;
-    gint proxy_port;
-    void (*cb) (const gchar *loc_name,
-                const gchar *lat,
-                const gchar *lon,
-                const unit_systems unit_system,
-                gpointer user_data);
-    gpointer user_data;
-} geolocation_data;
-
-
 static unit_systems
 get_preferred_unit_system(const gchar *country_code)
 {
@@ -379,10 +376,9 @@ cb_geolocation(gboolean succeed,
     gchar *city = NULL, *country = NULL;
     gchar *country_code = NULL, *region = NULL;
     gchar *latitude = NULL, *longitude = NULL;
-    gchar *full_loc;
+    gchar *full_loc, *p;
     unit_systems unit_system;
     gsize length;
-    gchar *p;
 
     if (!succeed || received == NULL) {
         data->cb(NULL, NULL, NULL, METRIC, data->user_data);

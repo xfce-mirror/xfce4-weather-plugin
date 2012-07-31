@@ -91,7 +91,6 @@ translate_str(const gchar **loc_strings,
         if (!g_ascii_strncasecmp(loc_strings[i], str, str_len))
             return _(loc_strings[i]);
     }
-
     return str;
 }
 
@@ -101,9 +100,9 @@ typedef struct {
     gchar *symbol;
     gchar *desc;
     gchar *night_desc;
-} SymbolToDesc;
+} symbol_desc;
 
-static const SymbolToDesc symbol_to_desc[] = {
+static const symbol_desc symbol_to_desc[] = {
     { 1, "SUN",                 N_("Sunny"),                     N_("Clear")		},
     { 2, "LIGHTCLOUD",          N_("Lightly cloudy"),            N_("Lightly cloudy")	},
     { 3, "PARTLYCLOUD",         N_("Partly cloudy"),             N_("Partly cloudy")	},
@@ -137,14 +136,14 @@ const gchar *
 translate_desc(const gchar *desc,
                gboolean nighttime)
 {
-    int i;
-    for (i = 0; i < NUM_SYMBOLS; i++) {
+    guint i;
+
+    for (i = 0; i < NUM_SYMBOLS; i++)
         if (!strcmp(desc, symbol_to_desc[i].symbol))
             if (nighttime)
                 return _(symbol_to_desc[i].night_desc);
             else
                 return _(symbol_to_desc[i].desc);
-    }
     return desc;
 }
 
@@ -153,6 +152,7 @@ const gchar *
 translate_moon_phase(const gchar *moon_phase)
 {
     guint i;
+
     for (i = 0; i < NUM_MOON_PHASES; i++)
         if (!strcmp(moon_phase, moon_phases[i]))
             return _(moon_phases[i]);
@@ -190,8 +190,8 @@ gchar *
 translate_wind_direction(const gchar *wdir)
 {
     gint wdir_len;
-    guint i;
     gchar *wdir_loc, *tmp, wdir_i[2];
+    guint i;
 
     if (wdir == NULL || (wdir_len = strlen(wdir)) < 1)
         return NULL;
@@ -220,7 +220,6 @@ translate_wind_direction(const gchar *wdir)
         }
 
     }
-
     return wdir_loc;
 }
 
@@ -241,6 +240,5 @@ translate_wind_speed(xml_time *timeslice,
         wspeed_loc =
             g_strdup_printf("%s %s", wspeed, get_unit(unit_system, WIND_SPEED));
     }
-
     return wspeed_loc;
 }

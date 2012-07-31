@@ -71,7 +71,6 @@ gtk_scrollbox_init(GtkScrollbox *self)
 }
 
 
-
 static void
 gtk_scrollbox_finalize(GObject *object)
 {
@@ -87,7 +86,6 @@ gtk_scrollbox_finalize(GObject *object)
 
     G_OBJECT_CLASS(gtk_scrollbox_parent_class)->finalize(object);
 }
-
 
 
 static void
@@ -176,6 +174,7 @@ static gboolean
 gtk_scrollbox_sleep(gpointer user_data)
 {
     GtkScrollbox *self = GTK_SCROLLBOX(user_data);
+
     self->timeout_id = g_timeout_add(LABEL_SPEED, gtk_scrollbox_fade_out, self);
     return FALSE;
 }
@@ -199,7 +198,6 @@ gtk_scrollbox_fade_in(gpointer user_data)
         return TRUE;
 
     self->timeout_id = g_timeout_add(LABEL_REFRESH, gtk_scrollbox_sleep, self);
-
     return FALSE;
 }
 
