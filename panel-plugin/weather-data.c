@@ -25,9 +25,14 @@
 #include "weather-data.h"
 #include "weather.h"
 
+/* fallback values when astrodata is unavailable */
+#define NIGHT_TIME_START 21
+#define NIGHT_TIME_END 5
+
+
 #define CHK_NULL(s) ((s) ? g_strdup(s) : g_strdup(""))
-#define LOCALE_DOUBLE(value, \
-                      format) (g_strdup_printf(format, \
+#define LOCALE_DOUBLE(value,                                            \
+                      format) (g_strdup_printf(format,                  \
                                                g_ascii_strtod(value, NULL)))
 
 
@@ -162,6 +167,46 @@ get_unit(unit_systems unit_system,
 
 
 /*
+ * Find out whether it's night or day.
+ *
+ * Either use the exact times for sunrise and sunset if
+ * available, or fallback to reasonable arbitrary values.
+ */
+gboolean
+is_night_time(xml_astro *astro)
+{
+    time_t now_t;
+    struct tm now_tm;
+
+    time(&now_t);
+
+    if (G_LIKELY(astro)) {
+        /* Polar night */
+        if (astro->sun_never_rises)
+            return TRUE;
+
+        /* Polar day */
+        if (astro->sun_never_sets)
+            return FALSE;
+
+        /* Sunrise and sunset are known */
+        if (difftime(astro->sunrise, now_t) >= 0)
+            return TRUE;
+
+        if (difftime(astro->sunset, now_t) <= 0)
+            return TRUE;
+
+        return FALSE;
+    }
+
+    /* no astrodata available, use fallback values */
+    now_tm = *localtime(&now_t);
+    return (now_tm.tm_hour >= NIGHT_TIME_START ||
+            now_tm.tm_hour < NIGHT_TIME_END);
+}
+
+
+/*
  * Calculate start and end of a daytime interval using given dates.
  * We ought to take one of the intervals supplied by the XML feed,
  * which gives the most consistent data and does not force too many
@@ -209,24 +254,6 @@ get_current_conditions(xml_weather *data)
     if (data == NULL)
         return NULL;
     return data->current_conditions;
-}
-
-
-/*
- * Check whether it is night or day.
- *
- * FIXME: Until we have a way to get the exact times for sunrise and
- * sunset, we'll have to use reasonable hardcoded values.
- */
-gboolean
-is_night_time()
-{
-    time_t now_t;
-    struct tm now_tm;
-
-    time(&now_t);
-    now_tm = *localtime(&now_t);
-    return (now_tm.tm_hour >= 21 || now_tm.tm_hour < 5);
 }
 
 

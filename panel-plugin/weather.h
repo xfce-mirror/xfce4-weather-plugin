@@ -60,6 +60,7 @@ typedef struct {
 
     xml_weather *weatherdata;
     xml_astro *astrodata;
+    gboolean night_time;
 
     gchar *proxy_host;
     gint proxy_port;

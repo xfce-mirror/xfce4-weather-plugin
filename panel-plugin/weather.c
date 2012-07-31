@@ -41,6 +41,7 @@
 #define DATA_MAX_AGE (3 * 3600)
 #define BORDER 8
 
+
 #if !GLIB_CHECK_VERSION(2,14,0)
 #define g_timeout_add_seconds(t, c, d) g_timeout_add((t) * 1000, (c), (d))
 #endif
@@ -267,7 +268,6 @@ set_icon_current(xfceweather_data *data)
     datas opt;
     gchar *str;
     gint size, height;
-    gboolean nighttime;
 
     for (i = 0; i < data->labels->len; i++) {
         opt = g_array_index(data->labels, datas, i);
@@ -297,10 +297,9 @@ set_icon_current(xfceweather_data *data)
 
     /* get current weather conditions */
     conditions = get_current_conditions(data->weatherdata);
-    nighttime = is_night_time();
 
     str = get_data(conditions, data->unit_system, SYMBOL);
-    icon = get_icon(str, size, nighttime);
+    icon = get_icon(str, size, data->night_time);
     g_free(str);
 
     gtk_image_set_from_pixbuf(GTK_IMAGE(data->iconimage), icon);
@@ -311,10 +310,30 @@ set_icon_current(xfceweather_data *data)
 #if !GTK_CHECK_VERSION(2,12,0)
     str = get_data(conditions, data->unit_system, SYMBOL);
     gtk_tooltips_set_tip(data->tooltips, data->tooltipbox,
-                         translate_desc(str, nighttime),
+                         translate_desc(str, data->night_time),
                          NULL);
     g_free(str);
 #endif
+}
+
+
+static void
+update_current_conditions(xfceweather_data *data)
+{
+    if (G_UNLIKELY(data == NULL) ||
+        G_UNLIKELY(data->weatherdata == NULL)) {
+        set_icon_error(data);
+        return;
+    }
+
+    if (data->weatherdata->current_conditions)
+        xml_time_free(data->weatherdata->current_conditions);
+
+    data->weatherdata->current_conditions =
+        make_current_conditions(data->weatherdata);
+    data->last_conditions_update = time(NULL);
+    data->night_time = is_night_time(data->astrodata);
+    set_icon_current(data);
 }
 
 
@@ -389,17 +408,12 @@ cb_update(gboolean succeed,
 
     gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
 
-    if (weather) {
-        weather->current_conditions = make_current_conditions(weather);
-        if (data->weatherdata)
-            xml_weather_free(data->weatherdata);
 
+    if (weather) {
         data->weatherdata = weather;
         data->last_data_update = time(NULL);
-        data->last_conditions_update = time(NULL);
-        set_icon_current(data);
-    } else
-        set_icon_error(data);
+    }
+    update_current_conditions(data);
 }
 
 
@@ -428,7 +442,7 @@ need_data_update(xfceweather_data *data)
     time_t now_t;
     gint diff;
 
-    if (! data->updatetimeout || ! data->last_data_update)
+    if (!data->updatetimeout || !data->last_data_update)
         return TRUE;
 
     time(&now_t);
@@ -446,7 +460,7 @@ need_conditions_update(xfceweather_data *data)
     time_t now_t;
     struct tm now_tm, last_tm;
 
-    if (! data->updatetimeout || ! data->last_conditions_update)
+    if (!data->updatetimeout || !data->last_conditions_update)
         return TRUE;
 
     time(&now_t);
@@ -464,6 +478,11 @@ static gboolean
 update_weatherdata(xfceweather_data *data)
 {
     gchar *url;
+    gboolean night_time;
+
+    g_assert(data != NULL);
+    if (G_UNLIKELY(data == NULL))
+        return TRUE;
 
     if ((!data->lat || !data->lon) ||
         strlen(data->lat) == 0 || strlen(data->lon) == 0) {
@@ -490,9 +509,10 @@ update_weatherdata(xfceweather_data *data)
         weather_http_receive_data("api.yr.no", url, data->proxy_host,
                                   data->proxy_port, cb_astro_update, data);
 
+        g_free(url);
     }
 
-    /* fetch newest XML data */
+    /* fetch weather data */
     if (need_data_update(data)) {
         /* build url */
         url =
@@ -506,17 +526,19 @@ update_weatherdata(xfceweather_data *data)
 
         /* cleanup */
         g_free(url);
-    } else if (need_conditions_update(data)) {
-        /* update current conditions, icon and labels */
-        if (data->weatherdata) {
-            if (data->weatherdata->current_conditions)
-                xml_time_free(data->weatherdata->current_conditions);
+    }
 
-            data->weatherdata->current_conditions =
-                make_current_conditions(data->weatherdata);
-            data->last_conditions_update = time(NULL);
+    /* update current conditions, icon and labels */
+    if (need_conditions_update(data))
+        update_current_conditions(data);
+
+    /* update night time status and icon */
+    night_time = is_night_time(data->astrodata);
+    if (data->night_time != night_time) {
+        data->night_time = night_time;
+        if (data->weatherdata)
             set_icon_current(data);
-        } else
+        else
             set_icon_error(data);
     }
 
@@ -860,27 +882,26 @@ static gboolean weather_get_tooltip_cb(GtkWidget *widget,
     GdkPixbuf *icon;
     gchar *markup_text, *rawvalue;
     xml_time *conditions;
-    gboolean nighttime;
 
     conditions = get_current_conditions(data->weatherdata);
-    nighttime = is_night_time();
 
     if (data->weatherdata == NULL)
         gtk_tooltip_set_text(tooltip, _("Cannot update weather data"));
     else {
         rawvalue = get_data(conditions, data->unit_system, SYMBOL);
-        markup_text = g_markup_printf_escaped("<b>%s</b>\n"
-                                              "%s",
-                                              data->location_name,
-                                              translate_desc(rawvalue,
-                                                             nighttime));
+        markup_text =
+            g_markup_printf_escaped("<b>%s</b>\n"
+                                    "%s",
+                                    data->location_name,
+                                    translate_desc(rawvalue,
+                                                   data->night_time));
         g_free(rawvalue);
         gtk_tooltip_set_markup(tooltip, markup_text);
         g_free(markup_text);
     }
 
     rawvalue = get_data(conditions, data->unit_system, SYMBOL);
-    icon = get_icon(rawvalue, 32, nighttime);
+    icon = get_icon(rawvalue, 32, data->night_time);
     g_free(rawvalue);
     gtk_tooltip_set_icon(tooltip, icon);
     g_object_unref(G_OBJECT(icon));

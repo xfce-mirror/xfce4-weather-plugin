@@ -767,7 +767,7 @@ create_summary_window (xfceweather_data *data)
     conditions = get_current_conditions(data->weatherdata);
 
     rawvalue = get_data(conditions, data->unit_system, SYMBOL);
-    icon = get_icon(rawvalue, 48, is_night_time());
+    icon = get_icon(rawvalue, 48, data->night_time);
     g_free(rawvalue);
 
     gtk_window_set_icon(GTK_WINDOW(window), icon);

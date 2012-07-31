@@ -1,5 +1,5 @@
 /*  Copyright (c) 2003-2007 Xfce Development Team
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -21,35 +21,35 @@
 G_BEGIN_DECLS
 
 typedef enum {
-	ALTITUDE,
-	LATITUDE,
-	LONGITUDE,
-	TEMPERATURE,
-	PRESSURE,
-	WIND_SPEED,
-	WIND_BEAUFORT,
-	WIND_DIRECTION,
-	WIND_DIRECTION_DEG,
-	HUMIDITY,
-	CLOUDS_LOW,
-	CLOUDS_MED,
-	CLOUDS_HIGH,
-	CLOUDINESS,
-	FOG,
-	PRECIPITATIONS,
-	SYMBOL
+    ALTITUDE,
+    LATITUDE,
+    LONGITUDE,
+    TEMPERATURE,
+    PRESSURE,
+    WIND_SPEED,
+    WIND_BEAUFORT,
+    WIND_DIRECTION,
+    WIND_DIRECTION_DEG,
+    HUMIDITY,
+    CLOUDS_LOW,
+    CLOUDS_MED,
+    CLOUDS_HIGH,
+    CLOUDINESS,
+    FOG,
+    PRECIPITATIONS,
+    SYMBOL
 } datas;
 
 typedef enum {
-	IMPERIAL,
-	METRIC
+    IMPERIAL,
+    METRIC
 } unit_systems;
 
 typedef enum {
-	MORNING,
-	AFTERNOON,
-	EVENING,
-	NIGHT
+    MORNING,
+    AFTERNOON,
+    EVENING,
+    NIGHT
 } daytime;
 
 
@@ -60,7 +60,7 @@ gchar *get_data(xml_time *timeslice,
 const gchar *get_unit(unit_systems unit_system,
                       datas type);
 
-gboolean is_night_time();
+gboolean is_night_time(xml_astro *astro);
 
 time_t time_calc(struct tm time_tm,
                  gint year,
