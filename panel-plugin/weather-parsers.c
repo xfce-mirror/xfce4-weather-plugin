@@ -62,7 +62,7 @@ parse_weather(xmlNode *cur_node)
     xml_weather *ret;
     xmlNode *child_node;
 
-    if (!NODE_IS_TYPE(cur_node, "weatherdata")) {
+    if (G_UNLIKELY(!NODE_IS_TYPE(cur_node, "weatherdata"))) {
         return NULL;
     }
 
@@ -97,17 +97,19 @@ parse_xml_timestring(gchar *ts, gchar *format) {
     struct tm tm;
 
     memset(&t, 0, sizeof(time_t));
-    if (ts == NULL)
+    if (G_UNLIKELY(ts == NULL))
         return t;
 
     /* standard format */
     if (format == NULL)
         format = "%Y-%m-%dT%H:%M:%SZ";
 
+    /* strptime needs an initialized struct, or unpredictable
+     * behaviour might occur */
     memset(&tm, 0, sizeof(struct tm));
     tm.tm_isdst = -1;
 
-    if (strptime(ts, format, &tm) == NULL)
+    if (G_UNLIKELY(strptime(ts, format, &tm) == NULL))
         return t;
 
     t = my_timegm(&tm);
@@ -195,8 +197,12 @@ xml_astro *
 parse_astro(xmlNode *cur_node)
 {
     xmlNode *child_node, *time_node = NULL, *location_node = NULL;
-    xml_astro *astro = g_slice_new0(xml_astro);
+    xml_astro *astro;
 
+    if (cur_node == NULL || !NODE_IS_TYPE(cur_node, "astrodata"))
+        return NULL;
+
+    astro = g_slice_new0(xml_astro);
     if (G_UNLIKELY(astro == NULL))
         return NULL;
 
@@ -220,57 +226,38 @@ void
 parse_time(xmlNode *cur_node,
            xml_weather *data)
 {
-    gchar *datatype = xmlGetProp(cur_node, (const xmlChar *) "datatype");
-    gchar *start = xmlGetProp(cur_node, (const xmlChar *) "from");
-    gchar *end = xmlGetProp(cur_node, (const xmlChar *) "to");
-    struct tm start_tm, end_tm;
+    gchar *datatype, *from, *to;
     time_t start_t, end_t;
     xml_time *timeslice;
     xmlNode *child_node;
 
-    /* strptime needs an initialized struct, or unpredictable
-     * behaviour might occur */
-    memset(&start_tm, 0, sizeof(struct tm));
-    memset(&end_tm, 0, sizeof(struct tm));
-    start_tm.tm_isdst = -1;
-    end_tm.tm_isdst = -1;
-
+    datatype = PROP(cur_node, "datatype");
     if (xmlStrcasecmp(datatype, "forecast")) {
         xmlFree(datatype);
-        xmlFree(start);
-        xmlFree(end);
         return;
     }
-
     xmlFree(datatype);
 
-    if (strptime(start, "%Y-%m-%dT%H:%M:%SZ", &start_tm) == NULL) {
-        xmlFree(start);
-        xmlFree(end);
+    from = PROP(cur_node, "from");
+    start_t = parse_xml_timestring(from, NULL);
+    xmlFree(from);
+
+    to = PROP(cur_node, "to");
+    end_t = parse_xml_timestring(to, NULL);
+    xmlFree(from);
+
+    if (G_UNLIKELY(!start_t || !end_t))
         return;
-    }
-
-    if (strptime(end, "%Y-%m-%dT%H:%M:%SZ", &end_tm) == NULL) {
-        xmlFree(start);
-        xmlFree(end);
-        return;
-    }
-
-    xmlFree(start);
-    xmlFree(end);
-
-    start_t = my_timegm(&start_tm);
-    end_t = my_timegm(&end_tm);
 
     timeslice = get_timeslice(data, start_t, end_t);
 
-    if (!timeslice) {
+    if (G_UNLIKELY(!timeslice)) {
         g_warning("no timeslice");
         return;
     }
     for (child_node = cur_node->children; child_node;
          child_node = child_node->next)
-        if (NODE_IS_TYPE(child_node, "location")) {
+        if (G_LIKELY(NODE_IS_TYPE(child_node, "location"))) {
             if (timeslice->location == NULL)
                 timeslice->location = g_slice_new0(xml_location);
             parse_location(child_node, timeslice->location);
@@ -290,7 +277,7 @@ get_timeslice(xml_weather *data,
             data->timeslice[i]->end == end_t)
             return data->timeslice[i];
     }
-    if (data->num_timeslices == MAX_TIMESLICE -1)
+    if (data->num_timeslices == MAX_TIMESLICE - 1)
         return NULL;
 
     data->timeslice[data->num_timeslices] = g_slice_new0(xml_time);
