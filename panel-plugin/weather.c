@@ -319,6 +319,45 @@ set_icon_current(xfceweather_data *data)
 
 
 static void
+cb_astro_update(gboolean succeed,
+                gchar *result,
+                size_t len,
+                gpointer user_data)
+{
+    xfceweather_data *data = user_data;
+    xmlDoc *doc;
+    xmlNode *cur_node;
+    xml_astro *astro = NULL;
+
+    if (G_LIKELY(succeed && result)) {
+        if (g_utf8_validate(result, -1, NULL)) {
+            /* force parsing as UTF-8, the XML encoding header may lie */
+            doc = xmlReadMemory(result, strlen(result), NULL, "UTF-8", 0);
+        } else
+            doc = xmlParseMemory(result, strlen(result));
+
+        g_free(result);
+
+        if (G_LIKELY(doc)) {
+            cur_node = xmlDocGetRootElement(doc);
+
+            if (G_LIKELY(cur_node))
+                astro = parse_astro(cur_node);
+
+            xmlFreeDoc(doc);
+        }
+    }
+
+    if (astro) {
+        if (data->astrodata)
+            xml_astro_free(data->astrodata);
+        data->astrodata = astro;
+        data->last_astro_update = time(NULL);
+    }
+}
+
+
+static void
 cb_update(gboolean succeed,
           gchar *result,
           size_t len,
@@ -361,6 +400,25 @@ cb_update(gboolean succeed,
         set_icon_current(data);
     } else
         set_icon_error(data);
+}
+
+
+static gboolean
+need_astro_update(xfceweather_data *data)
+{
+    time_t now_t;
+    struct tm now_tm, last_tm;
+
+    if (!data->updatetimeout || !data->last_astro_update)
+        return TRUE;
+
+    time(&now_t);
+    now_tm = *localtime(&now_t);
+    last_tm = *localtime(&(data->last_astro_update));
+    if (now_tm.tm_mday != last_tm.tm_mday)
+        return TRUE;
+
+    return FALSE;
 }
 
 
@@ -412,6 +470,26 @@ update_weatherdata(xfceweather_data *data)
         gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
         set_icon_error(data);
         return TRUE;
+    }
+
+    /* fetch astrological data */
+    if (need_astro_update(data)) {
+        time_t now_t = time(NULL);
+        struct tm now_tm = *localtime(&now_t);
+
+        /* build url */
+        url = g_strdup_printf("/weatherapi/sunrise/1.0/?"
+                              "lat=%s;lon=%s;date=%04d-%02d-%02d",
+                              data->lat, data->lon,
+                              now_tm.tm_year + 1900,
+                              now_tm.tm_mon + 1,
+                              now_tm.tm_mday);
+
+        /* start receive thread */
+        g_warning("getting http://api.yr.no/%s", url);
+        weather_http_receive_data("api.yr.no", url, data->proxy_host,
+                                  data->proxy_port, cb_astro_update, data);
+
     }
 
     /* fetch newest XML data */
@@ -940,6 +1018,9 @@ xfceweather_free(XfcePanelPlugin *plugin,
 
     if (data->weatherdata)
         xml_weather_free(data->weatherdata);
+
+    if (data->astrodata)
+        xml_astro_free(data->astrodata);
 
     if (data->updatetimeout) {
         g_source_remove(data->updatetimeout);

@@ -1,5 +1,5 @@
 /*  Copyright (c) 2003-2007 Xfce Development Team
- * 
+ *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
  *  the Free Software Foundation; either version 2 of the License, or
@@ -49,6 +49,7 @@ typedef struct {
     GtkOrientation orientation;
     GtkOrientation panel_orientation;
     gint updatetimeout;
+    time_t last_astro_update;
     time_t last_data_update;
     time_t last_conditions_update;
 
@@ -58,6 +59,7 @@ typedef struct {
     unit_systems unit_system;
 
     xml_weather *weatherdata;
+    xml_astro *astrodata;
 
     gchar *proxy_host;
     gint proxy_port;
@@ -66,7 +68,7 @@ typedef struct {
     /* used for storing the configured but not active proxy settings */
     gchar *saved_proxy_host;
     gint saved_proxy_port;
-  
+
     gboolean animation_transitions;
     gint forecast_days;
 } xfceweather_data;
