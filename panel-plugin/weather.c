@@ -1011,7 +1011,7 @@ weather_get_tooltip_cb(GtkWidget *widget,
 
     conditions = get_current_conditions(data->weatherdata);
     rawvalue = get_data(conditions, data->unit_system, SYMBOL);
-    icon = get_icon(rawvalue, 32, data->night_time);
+    icon = get_icon(rawvalue, 128, data->night_time);
     g_free(rawvalue);
     gtk_tooltip_set_icon(tooltip, icon);
     g_object_unref(G_OBJECT(icon));
