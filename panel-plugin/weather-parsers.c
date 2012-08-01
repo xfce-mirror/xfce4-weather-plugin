@@ -34,25 +34,42 @@
 
 
 /*
- * This is a portable replacement for the deprecated timegm(),
- * copied from the man page.
+ * Portable? replacement for the deprecated GNU timegm() only
+ * available on Linux and BSDs. The one recommended by the (Linux!)
+ * man page does not work correctly, it seems threads get stuck in
+ * setenv(TZ).
+ * This one is from http://lists.debian.org/deity/2002/04/msg00082.html
+ * and seems to be rather uncomplicated compared to other solutions.
+ * One problem with it is that it does calculations with time_t, which
+ * is not defined in the standard but works on POSIX-conformant
+ * systems. If anyone uses something different, then this would need
+ * improvement, or an alternative approach needs to be found.
  */
 static time_t
-my_timegm(struct tm *tm)
+my_timegm(struct tm *t)
 {
-    time_t ret;
-    char *tz;
+    time_t tl, tb;
+    struct tm *tg;
 
-    tz = getenv("TZ");
-    setenv("TZ", "", 1);
-    tzset();
-    ret = mktime(tm);
-    if (tz)
-        setenv("TZ", tz, 1);
-    else
-        unsetenv("TZ");
-    tzset();
-    return ret;
+    tl = mktime(t);
+    if (tl == -1) {
+        t->tm_hour--;
+        tl = mktime(t);
+        if (tl == -1)
+            return -1; /* can't deal with output from strptime */
+        tl += 3600;
+    }
+    tg = gmtime(&tl);
+    tg->tm_isdst = 0;
+    tb = mktime(tg);
+    if (tb == -1) {
+        tg->tm_hour--;
+        tb = mktime(tg);
+        if (tb == -1)
+            return -1; /* can't deal with output from gmtime */
+        tb += 3600;
+    }
+    return (tl - (tb - tl));
 }
 
 
@@ -107,7 +124,6 @@ parse_xml_timestring(gchar *ts, gchar *format) {
     /* strptime needs an initialized struct, or unpredictable
      * behaviour might occur */
     memset(&tm, 0, sizeof(struct tm));
-    tm.tm_isdst = -1;
 
     if (G_UNLIKELY(strptime(ts, format, &tm) == NULL))
         return t;
