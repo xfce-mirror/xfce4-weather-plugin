@@ -355,6 +355,30 @@ option_i(datas opt)
 }
 
 
+#if GTK_CHECK_VERSION(2,12,0)
+static void
+set_location_tooltip(xfceweather_dialog *dialog,
+                     const gchar *lat,
+                     const gchar *lon)
+{
+    gchar *text;
+
+    if (lat && lon)
+        text = g_strdup_printf
+            (_("Latitude: %s, Longitude: %s\n\n"
+               "You may edit the location name to your liking.\n"
+               "To choose another location, "
+               "please use the \"Change\" button."),
+             lat, lon);
+    else
+        text = g_strdup(_("Please select a location "
+                          "by using the \"Change\" button."));
+    gtk_widget_set_tooltip_text(dialog->txt_loc_name, text);
+    g_free(text);
+}
+#endif
+
+
 static void
 auto_locate_cb(const gchar *loc_name,
                const gchar *lat,
@@ -370,7 +394,7 @@ auto_locate_cb(const gchar *loc_name,
         gtk_entry_set_text(GTK_ENTRY(dialog->txt_loc_name), loc_name);
         gtk_widget_set_sensitive(dialog->txt_loc_name, TRUE);
 #if GTK_CHECK_VERSION(2,12,0)
-        gtk_widget_set_tooltip_text(dialog->txt_loc_name,loc_name);
+        set_location_tooltip(dialog, lat, lon);
 #endif
     } else {
         gtk_entry_set_text(GTK_ENTRY(dialog->txt_lat), "");
@@ -413,7 +437,7 @@ cb_findlocation(GtkButton *button,
         g_free(loc_name);
         gtk_widget_set_sensitive(dialog->txt_loc_name, TRUE);
 #if GTK_CHECK_VERSION(2,12,0)
-        gtk_widget_set_tooltip_text(dialog->txt_loc_name,sdialog->result_name);
+        set_location_tooltip(dialog, sdialog->result_lat, sdialog->result_lon);
 #endif
     }
     free_search_dialog(sdialog);
@@ -487,9 +511,7 @@ create_config_dialog(xfceweather_data *data,
         gtk_entry_set_text(GTK_ENTRY(dialog->txt_loc_name), _("Unset"));
     gtk_entry_set_max_length(GTK_ENTRY(dialog->txt_loc_name), LOC_NAME_MAX_LEN);
 #if GTK_CHECK_VERSION(2,12,0)
-    gtk_widget_set_tooltip_text(dialog->txt_loc_name,
-                                gtk_entry_get_text(GTK_ENTRY
-                                                   (dialog->txt_loc_name)));
+    set_location_tooltip(dialog, dialog->wd->lat, dialog->wd->lon);
 #endif
     if ((dialog->wd->lat == NULL || dialog->wd->lon == NULL) ||
         (! strlen(dialog->wd->lat) || ! strlen(dialog->wd->lon)))
