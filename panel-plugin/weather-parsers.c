@@ -260,7 +260,7 @@ parse_time(xmlNode *cur_node,
 
     to = PROP(cur_node, "to");
     end_t = parse_xml_timestring(to, NULL);
-    xmlFree(from);
+    xmlFree(to);
 
     if (G_UNLIKELY(!start_t || !end_t))
         return;
