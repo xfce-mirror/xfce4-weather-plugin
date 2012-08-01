@@ -869,34 +869,50 @@ xfceweather_create_options(XfcePanelPlugin *plugin,
 }
 
 
-static gboolean weather_get_tooltip_cb(GtkWidget *widget,
-                                       gint x,
-                                       gint y,
-                                       gboolean keyboard_mode,
-                                       GtkTooltip *tooltip,
-                                       xfceweather_data *data)
+gchar *
+weather_get_tooltip_text(xfceweather_data *data)
 {
-    GdkPixbuf *icon;
-    gchar *markup_text, *rawvalue;
     xml_time *conditions;
+    gchar *text, *rawvalue;
 
     conditions = get_current_conditions(data->weatherdata);
+    if (G_UNLIKELY(conditions == NULL)) {
+        text = g_strdup(_("Current conditions data unavailable"));
+        return text;
+    }
+
+    rawvalue = get_data(conditions, data->unit_system, SYMBOL);
+    text = g_markup_printf_escaped("<b>%s</b>\n"
+                                   "%s",
+                                   data->location_name,
+                                   translate_desc(rawvalue,
+                                                  data->night_time));
+    g_free(rawvalue);
+    return text;
+}
+
+
+static gboolean
+weather_get_tooltip_cb(GtkWidget *widget,
+                       gint x,
+                       gint y,
+                       gboolean keyboard_mode,
+                       GtkTooltip *tooltip,
+                       xfceweather_data *data)
+{
+    GdkPixbuf *icon;
+    xml_time *conditions;
+    gchar *markup_text, *rawvalue;
 
     if (data->weatherdata == NULL)
         gtk_tooltip_set_text(tooltip, _("Cannot update weather data"));
     else {
-        rawvalue = get_data(conditions, data->unit_system, SYMBOL);
-        markup_text =
-            g_markup_printf_escaped("<b>%s</b>\n"
-                                    "%s",
-                                    data->location_name,
-                                    translate_desc(rawvalue,
-                                                   data->night_time));
-        g_free(rawvalue);
+        markup_text = weather_get_tooltip_text(data);
         gtk_tooltip_set_markup(tooltip, markup_text);
         g_free(markup_text);
     }
 
+    conditions = get_current_conditions(data->weatherdata);
     rawvalue = get_data(conditions, data->unit_system, SYMBOL);
     icon = get_icon(rawvalue, 32, data->night_time);
     g_free(rawvalue);
