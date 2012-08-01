@@ -47,6 +47,16 @@
 #endif
 
 
+#define DATA_AND_UNIT(var, item)                            \
+    value = get_data(conditions, data->unit_system, item);  \
+    unit = get_unit(data->unit_system, item);               \
+    var = g_strdup_printf("%s%s%s",                         \
+                          value,                            \
+                          strcmp(unit, "°") ? " " : "",     \
+                          unit);                            \
+    g_free(value);
+
+
 gboolean
 check_envproxy(gchar **proxy_host,
                gint *proxy_port)
@@ -873,7 +883,14 @@ gchar *
 weather_get_tooltip_text(xfceweather_data *data)
 {
     xml_time *conditions;
-    gchar *text, *rawvalue;
+    struct tm *point_tm, *start_tm, *end_tm, *sunrise_tm, *sunset_tm;
+    gchar *text, *sym, *symbol, *alt, *lat, *lon, *temp;
+    gchar *windspeed, *windbeau, *winddir, *winddeg;
+    gchar *pressure, *humidity, *precipitations;
+    gchar *fog, *cloudiness, *sun, *value;
+    gchar sunrise[40], sunset[40];
+    gchar point[40], interval_start[40], interval_end[40];
+    const gchar *unit;
 
     conditions = get_current_conditions(data->weatherdata);
     if (G_UNLIKELY(conditions == NULL)) {
@@ -881,13 +898,93 @@ weather_get_tooltip_text(xfceweather_data *data)
         return text;
     }
 
-    rawvalue = get_data(conditions, data->unit_system, SYMBOL);
-    text = g_markup_printf_escaped("<b>%s</b>\n"
-                                   "%s",
-                                   data->location_name,
-                                   translate_desc(rawvalue,
-                                                  data->night_time));
-    g_free(rawvalue);
+    /* times for forecast and point data */
+    point_tm = localtime(&conditions->point);
+    strftime(point, 40, "%X", point_tm);
+    start_tm = localtime(&conditions->start);
+    strftime(interval_start, 40, "%X", start_tm);
+    end_tm = localtime(&conditions->end);
+    strftime(interval_end, 40, "%X", end_tm);
+
+    /* use sunrise and sunset times if available */
+    if (data->astrodata)
+        if (data->astrodata->sun_never_rises) {
+            sun = g_strdup(_("The sun never rises today."));
+        } else if (data->astrodata->sun_never_sets) {
+            sun = g_strdup(_("The sun never sets today."));
+        } else {
+            sunrise_tm = localtime(&data->astrodata->sunrise);
+            strftime(sunrise, 40, "%X", sunrise_tm);
+            sunset_tm = localtime(&data->astrodata->sunset);
+            strftime(sunset, 40, "%X", sunset_tm);
+            sun = g_strdup_printf(_("The sun rises at %s and sets at %s."),
+                                  sunrise, sunset);
+        }
+    else
+        sun = g_strdup_printf("");
+
+    sym = get_data(conditions, data->unit_system, SYMBOL);
+    DATA_AND_UNIT(symbol, SYMBOL);
+    DATA_AND_UNIT(alt, ALTITUDE);
+    DATA_AND_UNIT(lat, LATITUDE);
+    DATA_AND_UNIT(lon, LONGITUDE);
+    DATA_AND_UNIT(temp, TEMPERATURE);
+    DATA_AND_UNIT(windspeed, WIND_SPEED);
+    DATA_AND_UNIT(windbeau, WIND_BEAUFORT);
+    DATA_AND_UNIT(winddir, WIND_DIRECTION);
+    DATA_AND_UNIT(winddeg, WIND_DIRECTION_DEG);
+    DATA_AND_UNIT(pressure, PRESSURE);
+    DATA_AND_UNIT(humidity, HUMIDITY);
+    DATA_AND_UNIT(precipitations, PRECIPITATIONS);
+    DATA_AND_UNIT(fog, FOG);
+    DATA_AND_UNIT(cloudiness, CLOUDINESS);
+
+    text = g_markup_printf_escaped
+        /*
+         * TRANSLATORS: Re-arrange and align at will, optionally using
+         * abbreviations for labels if desired or necessary. Just take
+         * into account the possible size constraints, the centered
+         * vertical alignment of the icon - which unfortunately cannot
+         * be changed easily - and try to make it compact and look
+         * good!
+         */
+        (_("<b><span size=\"large\">%s</span></b> "
+           "<span size=\"medium\">(%s)</span>\n"
+           "<b><span size=\"large\">%s</span></b>\n"
+           "<span size=\"smaller\">"
+           "from %s to %s, with %s precipitations</span>\n\n"
+           "<b>Temperature:</b> %s\t\t"
+           "<span size=\"smaller\">(values at %s)</span>\n"
+           "<b>Wind:</b> %s (%son the Beaufort scale) from %s(%s)\n"
+           "<b>Pressure:</b> %s    <b>Humidity:</b> %s\n"
+           "<b>Fog:</b> %s    <b>Cloudiness:</b> %s\n\n"
+           "<span size=\"smaller\">%s</span>"),
+         data->location_name,
+         alt,
+         translate_desc(sym, data->night_time),
+         interval_start, interval_end,
+         precipitations,
+         temp, point,
+         windspeed, windbeau, winddir, winddeg,
+         pressure, humidity,
+         fog, cloudiness,
+         sun);
+    g_free(sun);
+    g_free(sym);
+    g_free(symbol);
+    g_free(alt);
+    g_free(lat);
+    g_free(lon);
+    g_free(temp);
+    g_free(windspeed);
+    g_free(windbeau);
+    g_free(winddir);
+    g_free(winddeg);
+    g_free(pressure);
+    g_free(humidity);
+    g_free(precipitations);
+    g_free(fog);
+    g_free(cloudiness);
     return text;
 }
 
