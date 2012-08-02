@@ -436,6 +436,7 @@ cb_findlocation(GtkButton *button,
                                    dialog->wd->proxy_host,
                                    dialog->wd->proxy_port);
 
+    gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
     if (run_search_dialog(sdialog)) {
         gtk_entry_set_text(GTK_ENTRY(dialog->txt_lat), sdialog->result_lat);
         gtk_entry_set_text(GTK_ENTRY(dialog->txt_lon), sdialog->result_lon);
@@ -448,6 +449,7 @@ cb_findlocation(GtkButton *button,
 #endif
     }
     free_search_dialog(sdialog);
+    gtk_widget_set_sensitive(GTK_WIDGET(button), TRUE);
 
     return FALSE;
 }
