@@ -372,10 +372,7 @@ cb_geolocation(const gboolean succeed,
 {
     geolocation_data *data = (geolocation_data *) user_data;
     xmlDoc *doc;
-    xmlNode *cur_node;
-    gchar *city = NULL, *country = NULL;
-    gchar *country_code = NULL, *region = NULL;
-    gchar *latitude = NULL, *longitude = NULL;
+    xml_geolocation *geo;
     gchar *full_loc, *p;
     unit_systems unit_system;
     gsize length;
@@ -406,50 +403,33 @@ cb_geolocation(const gboolean succeed,
         return;
     }
 
-    cur_node = xmlDocGetRootElement(doc);
+    geo = parse_geolocation(xmlDocGetRootElement(doc));
+    xmlFreeDoc(doc);
 
-    if (cur_node) {
-        for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next) {
-            if (NODE_IS_TYPE(cur_node, "City"))
-                city = DATA(cur_node);
-            if (NODE_IS_TYPE(cur_node, "CountryName"))
-                country = DATA(cur_node);
-            if (NODE_IS_TYPE(cur_node, "CountryCode"))
-                country_code = DATA(cur_node);
-            if (NODE_IS_TYPE(cur_node, "RegionName"))
-                region = DATA(cur_node);
-            if (NODE_IS_TYPE(cur_node, "Latitude"))
-                latitude = DATA(cur_node);
-            if (NODE_IS_TYPE(cur_node, "Longitude"))
-                longitude = DATA(cur_node);
-        }
+    if (geo == NULL) {
+        data->cb(NULL, NULL, NULL, METRIC, data->user_data);
+        g_free(data);
+        return;
     }
 
-    if (country && city) {
-        if (country_code && !strcmp(country_code, "US") && region)
-            full_loc = g_strdup_printf("%s, %s", city, region);
+    if (geo->country_name && geo->city) {
+        if (geo->country_code && !strcmp(geo->country_code, "US") &&
+            geo->region_name)
+            full_loc = g_strdup_printf("%s, %s", geo->city, geo->region_name);
         else
-            full_loc = g_strdup_printf("%s, %s", city, country);
-    } else if (country) {
-        full_loc = g_strdup(country);
-    } else if (latitude && longitude) {
+            full_loc = g_strdup_printf("%s, %s", geo->city, geo->country_name);
+    } else if (geo->country_name) {
+        full_loc = g_strdup(geo->country_name);
+    } else if (geo->latitude && geo->longitude) {
         full_loc = g_strdup(_("Untitled"));
     } else {
         full_loc = NULL;
     }
 
-    unit_system = get_preferred_unit_system(country_code);
+    unit_system = get_preferred_unit_system(geo->country_code);
 
-    g_free(country_code);
-    g_free(region);
-    g_free(country);
-    g_free(city);
-
-    xmlFreeDoc(doc);
-
-    data->cb(full_loc, latitude, longitude, unit_system, data->user_data);
-    g_free(latitude);
-    g_free(longitude);
+    data->cb(full_loc, geo->latitude, geo->longitude, unit_system, data->user_data);
+    xml_geolocation_free(geo);
     g_free(full_loc);
     g_free(data);
 }
