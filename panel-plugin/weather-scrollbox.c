@@ -260,7 +260,7 @@ gtk_scrollbox_start_fade(GtkScrollbox *self)
 
 void
 gtk_scrollbox_set_label(GtkScrollbox *self,
-                        gint position,
+                        const gint position,
                         gchar *markup)
 {
     PangoLayout *layout;
@@ -278,7 +278,7 @@ gtk_scrollbox_set_label(GtkScrollbox *self,
 
 void
 gtk_scrollbox_set_orientation(GtkScrollbox *self,
-                              GtkOrientation orientation)
+                              const GtkOrientation orientation)
 {
     g_return_if_fail(GTK_IS_SCROLLBOX(self));
 
@@ -308,7 +308,7 @@ gtk_scrollbox_clear(GtkScrollbox *self)
 
 
 void gtk_scrollbox_set_animate(GtkScrollbox *self,
-                               gboolean animate)
+                               const gboolean animate)
 {
     self->animate = animate;
 }
