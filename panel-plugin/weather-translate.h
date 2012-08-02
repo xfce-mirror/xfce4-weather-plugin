@@ -33,7 +33,7 @@ gchar *translate_day(gint weekday);
 
 gchar *translate_wind_direction(const gchar *wdir);
 
-gchar *translate_wind_speed(xml_time *timeslice,
+gchar *translate_wind_speed(const xml_time *timeslice,
                             const gchar *wspeed,
                             unit_systems unit_system);
 

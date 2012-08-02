@@ -134,7 +134,7 @@ static const symbol_desc symbol_to_desc[] = {
 
 const gchar *
 translate_desc(const gchar *desc,
-               gboolean nighttime)
+               const gboolean nighttime)
 {
     guint i;
 
@@ -161,7 +161,7 @@ translate_moon_phase(const gchar *moon_phase)
 
 
 gchar *
-translate_day(gint weekday)
+translate_day(const gint weekday)
 {
     struct tm time_tm;
     gchar *day_loc;
@@ -226,9 +226,9 @@ translate_wind_direction(const gchar *wdir)
 
 /* Return "calm", "N/A" or a number */
 gchar *
-translate_wind_speed(xml_time *timeslice,
+translate_wind_speed(const xml_time *timeslice,
                      const gchar *wspeed,
-                     unit_systems unit_system)
+                     const unit_systems unit_system)
 {
     gchar *wspeed_loc;
 
