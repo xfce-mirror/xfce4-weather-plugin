@@ -217,9 +217,9 @@ get_logo_path(void)
 
 
 static void
-logo_fetched (gboolean succeed,
+logo_fetched (const gboolean succeed,
               gchar *result,
-              size_t len,
+              const size_t len,
               gpointer user_data)
 {
     if (succeed && result) {
@@ -485,8 +485,8 @@ create_summary_tab(xfceweather_data *data)
 
 
 static GtkWidget *
-add_forecast_cell(GtkWidget *widget,
-                  GdkColor *color)
+add_forecast_cell(const GtkWidget *widget,
+                  const GdkColor *color)
 {
     GtkWidget *ebox;
 
@@ -503,9 +503,9 @@ add_forecast_cell(GtkWidget *widget,
 
 
 static GtkWidget *
-add_forecast_header(gchar *text,
-                    gdouble angle,
-                    GdkColor *color)
+add_forecast_header(const gchar *text,
+                    const gdouble angle,
+                    const GdkColor *color)
 {
     GtkWidget *label, *align;
     gchar *str;
@@ -532,9 +532,9 @@ make_forecast(xfceweather_data *data)
     GtkWidget *table, *ebox, *box, *align;
     GtkWidget *forecast_box, *label, *image;
     GdkPixbuf *icon;
-    GdkColor black = {0, 0x0000, 0x0000, 0x0000};
-    GdkColor lightbg = {0, 0xeaea, 0xeaea, 0xeaea};
-    GdkColor darkbg = {0, 0x6666, 0x6666, 0x6666};
+    const GdkColor black = {0, 0x0000, 0x0000, 0x0000};
+    const GdkColor lightbg = {0, 0xeaea, 0xeaea, 0xeaea};
+    const GdkColor darkbg = {0, 0x6666, 0x6666, 0x6666};
     gint i, weekday, daytime;
     gchar *dayname, *wind_speed, *wind_direction, *value, *rawvalue;
     xml_time *fcdata;
@@ -729,8 +729,8 @@ create_forecast_tab(xfceweather_data *data,
 
 
 static void
-summary_dialog_response(GtkWidget *dlg,
-                        gint response,
+summary_dialog_response(const GtkWidget *dlg,
+                        const gint response,
                         GtkWidget *window)
 {
     if (response == GTK_RESPONSE_ACCEPT)
