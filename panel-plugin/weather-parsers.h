@@ -98,10 +98,21 @@ typedef struct {
     gchar *moon_phase;
 } xml_astro;
 
+typedef struct {
+    gchar *city;
+    gchar *country_name;
+    gchar *country_code;
+    gchar *region_name;
+    gchar *latitude;
+    gchar *longitude;
+} xml_geolocation;
+
 
 xml_weather *parse_weather(xmlNode *cur_node);
 
 xml_astro *parse_astro(xmlNode *cur_node);
+
+xml_geolocation *parse_geolocation(xmlNode *cur_node);
 
 xml_time *get_timeslice(xml_weather *data,
                         const time_t start_t,
@@ -112,6 +123,8 @@ void xml_time_free(xml_time *timeslice);
 void xml_weather_free(xml_weather *data);
 
 void xml_astro_free(xml_astro *astro);
+
+void xml_geolocation_free(xml_geolocation *geo);
 
 G_END_DECLS
 

@@ -372,6 +372,38 @@ parse_astro(xmlNode *cur_node)
 }
 
 
+xml_geolocation *
+parse_geolocation(xmlNode *cur_node)
+{
+    xml_geolocation *geo;
+
+    g_assert(cur_node != NULL);
+    if (G_UNLIKELY(cur_node == NULL))
+        return NULL;
+
+    geo = g_slice_new0(xml_geolocation);
+    if (G_UNLIKELY(geo == NULL))
+        return NULL;
+
+    for (cur_node = cur_node->children; cur_node;
+         cur_node = cur_node->next) {
+        if (NODE_IS_TYPE(cur_node, "City"))
+            geo->city = DATA(cur_node);
+        if (NODE_IS_TYPE(cur_node, "CountryName"))
+            geo->country_name = DATA(cur_node);
+        if (NODE_IS_TYPE(cur_node, "CountryCode"))
+            geo->country_code = DATA(cur_node);
+        if (NODE_IS_TYPE(cur_node, "RegionName"))
+            geo->region_name = DATA(cur_node);
+        if (NODE_IS_TYPE(cur_node, "Latitude"))
+            geo->latitude = DATA(cur_node);
+        if (NODE_IS_TYPE(cur_node, "Longitude"))
+            geo->longitude = DATA(cur_node);
+    }
+    return geo;
+}
+
+
 static void
 xml_location_free(xml_location *loc)
 {
@@ -442,4 +474,19 @@ xml_astro_free(xml_astro *astro)
     g_free(astro->moon_phase);
     g_slice_free(xml_astro, astro);
     astro = NULL;
+}
+
+
+void
+xml_geolocation_free(xml_geolocation *geo)
+{
+    g_assert(geo != NULL);
+    if (G_UNLIKELY(geo == NULL))
+        return;
+    g_free(geo->city);
+    g_free(geo->country_name);
+    g_free(geo->country_code);
+    g_free(geo->region_name);
+    g_free(geo->latitude);
+    g_free(geo->longitude);
 }
