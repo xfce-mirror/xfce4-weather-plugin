@@ -226,8 +226,7 @@ translate_wind_direction(const gchar *wdir)
 
 /* Return "calm", "N/A" or a number */
 gchar *
-translate_wind_speed(const xml_time *timeslice,
-                     const gchar *wspeed,
+translate_wind_speed(const gchar *wspeed,
                      const unit_systems unit_system)
 {
     gchar *wspeed_loc;

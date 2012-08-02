@@ -187,7 +187,7 @@ make_label(xfceweather_data *data,
         value = translate_wind_direction(rawvalue);
         break;
     case WIND_SPEED:
-        value = translate_wind_speed(conditions, rawvalue, data->unit_system);
+        value = translate_wind_speed(rawvalue, data->unit_system);
         break;
     default:
         value = NULL;
