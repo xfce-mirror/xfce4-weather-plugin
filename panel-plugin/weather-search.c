@@ -412,7 +412,7 @@ cb_geolocation(const gboolean succeed,
     } else if (geo->country_name) {
         full_loc = g_strdup(geo->country_name);
     } else if (geo->latitude && geo->longitude) {
-        full_loc = g_strdup(_("Untitled"));
+        full_loc = g_strdup(_("Unnamed place"));
     } else {
         full_loc = NULL;
     }
