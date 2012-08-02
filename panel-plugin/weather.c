@@ -133,6 +133,7 @@ make_label(xfceweather_data *data,
 
     switch (type) {
     case TEMPERATURE:
+        /* TRANSLATORS: Keep in sync with labeloptions in weather-config.c */
         lbl = _("T");
         break;
     case PRESSURE:
@@ -895,7 +896,7 @@ weather_get_tooltip_text(xfceweather_data *data)
 
     conditions = get_current_conditions(data->weatherdata);
     if (G_UNLIKELY(conditions == NULL)) {
-        text = g_strdup(_("Current conditions data unavailable"));
+        text = g_strdup(_("Short-term forecast data unavailable."));
         return text;
     }
 

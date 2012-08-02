@@ -36,6 +36,15 @@
 
 
 static const labeloption labeloptions[OPTIONS_N] = {
+    /*
+     * TRANSLATORS: The abbreviations in parentheses will be shown in
+     * the scrollbox together with the values. Keep them in sync with
+     * those in make_label() in weather.c. Some of them may be
+     * standardized internationally, like CL, CM, CH, and you might
+     * read that up somewhere and decide whether you want to use them
+     * or not. In general, though, you should just try to choose
+     * letter(s) that make sense and don't use up too much space.
+     */
     {N_("Temperature (T)"), TEMPERATURE},
     {N_("Atmosphere pressure (P)"), PRESSURE},
     {N_("Wind speed (WS)"), WIND_SPEED},

@@ -403,19 +403,23 @@ cb_geolocation(const gboolean succeed,
         return;
     }
 
-    if (geo->country_name && geo->city) {
+    if (geo->country_name && geo->city)
         if (geo->country_code && !strcmp(geo->country_code, "US") &&
             geo->region_name)
             full_loc = g_strdup_printf("%s, %s", geo->city, geo->region_name);
         else
             full_loc = g_strdup_printf("%s, %s", geo->city, geo->country_name);
-    } else if (geo->country_name) {
+    else if (geo->country_name)
         full_loc = g_strdup(geo->country_name);
-    } else if (geo->latitude && geo->longitude) {
+    else if (geo->latitude && geo->longitude) {
+        /*
+         * TRANSLATORS: Latitude and longitude are known from the
+         * search results, but not the location name. The user shall
+         * give the place a name.
+         */
         full_loc = g_strdup(_("Unnamed place"));
-    } else {
+    } else
         full_loc = NULL;
-    }
 
     unit_system = get_preferred_unit_system(geo->country_code);
 

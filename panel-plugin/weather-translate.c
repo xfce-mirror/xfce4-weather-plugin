@@ -31,6 +31,7 @@
 
 
 static const gchar *wdirs[] = {
+    /* TRANSLATORS: Wind directions. It's where the wind comes _from_. */
     N_("S"),
     N_("SSW"),
     N_("SW"),
@@ -52,6 +53,7 @@ static const gchar *wdirs[] = {
 };
 
 static const gchar *moon_phases[] = {
+    /* TRANSLATORS: Moon phases */
     N_("New moon"),
     N_("Waxing crescent"),
     N_("First quarter"),
@@ -103,6 +105,15 @@ typedef struct {
 } symbol_desc;
 
 static const symbol_desc symbol_to_desc[] = {
+    /*
+     * TRANSLATORS: Some of these terms seem to contradict
+     * themselves. If I'm not mistaken, this is because the forecasts
+     * are for certain time periods which may be 1, 3 or 6 hours, and
+     * during those periods the weather can alternate between several
+     * states. For more information, you might want to read
+     * http://api.met.no/weatherapi/locationforecastlts/1.1/documentation,
+     * but unfortunately it is not very revealing either.
+     */
     { 1, "SUN",                 N_("Sunny"),                     N_("Clear")		},
     { 2, "LIGHTCLOUD",          N_("Lightly cloudy"),            N_("Lightly cloudy")	},
     { 3, "PARTLYCLOUD",         N_("Partly cloudy"),             N_("Partly cloudy")	},
