@@ -53,14 +53,14 @@ typedef enum {
 } daytime;
 
 
-gchar *get_data(xml_time *timeslice,
+gchar *get_data(const xml_time *timeslice,
                 unit_systems unit_system,
                 datas type);
 
 const gchar *get_unit(unit_systems unit_system,
                       datas type);
 
-gboolean is_night_time(xml_astro *astro);
+gboolean is_night_time(const xml_astro *astro);
 
 time_t time_calc(struct tm time_tm,
                  gint year,
@@ -76,7 +76,7 @@ time_t time_calc_hour(struct tm time_tm,
 time_t time_calc_day(struct tm time_tm,
                      gint days);
 
-xml_time *get_current_conditions(xml_weather *data);
+xml_time *get_current_conditions(const xml_weather *data);
 
 xml_time *make_current_conditions(xml_weather *data);
 

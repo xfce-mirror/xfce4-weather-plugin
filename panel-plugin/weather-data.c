@@ -39,8 +39,8 @@
 
 static gboolean
 has_timeslice(xml_weather *data,
-              time_t start_t,
-              time_t end_t)
+              const time_t start_t,
+              const time_t end_t)
 {
     int i = 0;
 
@@ -53,9 +53,9 @@ has_timeslice(xml_weather *data,
 
 
 gchar *
-get_data(xml_time *timeslice,
-         unit_systems unit_system,
-         datas type)
+get_data(const xml_time *timeslice,
+         const unit_systems unit_system,
+         const datas type)
 {
     const xml_location *loc = NULL;
     double val;
@@ -134,8 +134,8 @@ get_data(xml_time *timeslice,
 
 
 const gchar *
-get_unit(unit_systems unit_system,
-         datas type)
+get_unit(const unit_systems unit_system,
+         const datas type)
 {
     switch (type) {
     case ALTITUDE:
@@ -175,7 +175,7 @@ get_unit(unit_systems unit_system,
  * available, or fallback to reasonable arbitrary values.
  */
 gboolean
-is_night_time(xml_astro *astro)
+is_night_time(const xml_astro *astro)
 {
     time_t now_t;
     struct tm now_tm;
@@ -223,7 +223,7 @@ is_night_time(xml_astro *astro)
 static void
 get_daytime_interval(struct tm *start_tm,
                      struct tm *end_tm,
-                     daytime dt)
+                     const daytime dt)
 {
     start_tm->tm_min = end_tm->tm_min = 0;
     start_tm->tm_sec = end_tm->tm_sec = 0;
@@ -251,7 +251,7 @@ get_daytime_interval(struct tm *start_tm,
 
 /* Return current weather conditions, or NULL if not available. */
 xml_time *
-get_current_conditions(xml_weather *data)
+get_current_conditions(const xml_weather *data)
 {
     if (data == NULL)
         return NULL;
@@ -260,13 +260,13 @@ get_current_conditions(xml_weather *data)
 
 
 time_t
-time_calc(struct tm time_tm,
-          gint year,
-          gint month,
-          gint day,
-          gint hour,
-          gint min,
-          gint sec)
+time_calc(const struct tm time_tm,
+          const gint year,
+          const gint month,
+          const gint day,
+          const gint hour,
+          const gint min,
+          const gint sec)
 {
     time_t result;
     struct tm new_tm;
@@ -291,16 +291,16 @@ time_calc(struct tm time_tm,
 
 
 time_t
-time_calc_hour(struct tm time_tm,
-               gint hours)
+time_calc_hour(const struct tm time_tm,
+               const gint hours)
 {
     return time_calc(time_tm, 0, 0, 0, hours, 0, 0);
 }
 
 
 time_t
-time_calc_day(struct tm time_tm,
-              gint days)
+time_calc_day(const struct tm time_tm,
+              const gint days)
 {
     return time_calc(time_tm, 0, 0, days, 0, 0, 0);
 }
@@ -315,8 +315,8 @@ static xml_time *
 find_timeslice(xml_weather *data,
                struct tm start_tm,
                struct tm end_tm,
-               gint prev_hours_limit,
-               gint next_hours_limit)
+               const gint prev_hours_limit,
+               const gint next_hours_limit)
 {
     time_t start_t, end_t;
     gint hours = 0;
@@ -357,9 +357,9 @@ static xml_time *
 find_shortest_timeslice(xml_weather *data,
                         struct tm start_tm,
                         struct tm end_tm,
-                        gint prev_hours_limit,
-                        gint next_hours_limit,
-                        gint interval_limit)
+                        const gint prev_hours_limit,
+                        const gint next_hours_limit,
+                        const gint interval_limit)
 {
     xml_time *interval_data;
     time_t start_t, end_t;
@@ -399,8 +399,8 @@ find_shortest_timeslice(xml_weather *data,
  * that provides all information needed to present a forecast.
  */
 static xml_time *
-make_combined_timeslice(xml_time *point,
-                        xml_time *interval)
+make_combined_timeslice(const xml_time *point,
+                        const xml_time *interval)
 {
     xml_time *forecast;
     xml_location *loc;
@@ -511,8 +511,8 @@ make_current_conditions(xml_weather *data)
  */
 xml_time *
 make_forecast_data(xml_weather *data,
-                   int day,
-                   daytime dt)
+                   const int day,
+                   const daytime dt)
 {
     xml_time *forecast = NULL, *point_data = NULL, *interval_data = NULL;
     struct tm now_tm, start_tm, end_tm;
