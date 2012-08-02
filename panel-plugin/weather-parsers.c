@@ -404,6 +404,28 @@ parse_geolocation(xmlNode *cur_node)
 }
 
 
+xml_place *
+parse_place(xmlNode *cur_node)
+{
+    xml_place *place;
+
+    g_assert(cur_node != NULL);
+    if (G_UNLIKELY(cur_node == NULL))
+        return NULL;
+
+    if (!NODE_IS_TYPE(cur_node, "place"))
+        return NULL;
+
+    place = g_slice_new0(xml_place);
+    if (G_UNLIKELY(place == NULL))
+        return NULL;
+    place->lat = PROP(cur_node, "lat");
+    place->lon = PROP(cur_node, "lon");
+    place->display_name = PROP(cur_node, "display_name");
+    return place;
+}
+
+
 static void
 xml_location_free(xml_location *loc)
 {
@@ -489,4 +511,16 @@ xml_geolocation_free(xml_geolocation *geo)
     g_free(geo->region_name);
     g_free(geo->latitude);
     g_free(geo->longitude);
+}
+
+
+void
+xml_place_free(xml_place *place)
+{
+    g_assert(place != NULL);
+    if (G_UNLIKELY(place == NULL))
+        return;
+    g_free(place->lat);
+    g_free(place->lon);
+    g_free(place->display_name);
 }

@@ -108,11 +108,20 @@ typedef struct {
 } xml_geolocation;
 
 
+typedef struct {
+    gchar *display_name;
+    gchar *lat;
+    gchar *lon;
+} xml_place;
+
+
 xml_weather *parse_weather(xmlNode *cur_node);
 
 xml_astro *parse_astro(xmlNode *cur_node);
 
 xml_geolocation *parse_geolocation(xmlNode *cur_node);
+
+xml_place *parse_place(xmlNode *cur_node);
 
 xml_time *get_timeslice(xml_weather *data,
                         const time_t start_t,
@@ -125,6 +134,8 @@ void xml_weather_free(xml_weather *data);
 void xml_astro_free(xml_astro *astro);
 
 void xml_geolocation_free(xml_geolocation *geo);
+
+void xml_place_free(xml_place *place);
 
 G_END_DECLS
 
