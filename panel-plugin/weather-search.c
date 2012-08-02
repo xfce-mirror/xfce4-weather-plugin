@@ -86,7 +86,7 @@ cb_searchdone(const gboolean succeed,
     search_dialog *dialog = (search_dialog *) user_data;
     xmlDoc *doc;
     xmlNode *cur_node;
-    gchar *lat, *lon, *city;
+    xml_place *place;
     gint found = 0;
     GtkTreeIter iter;
     GtkTreeSelection *selection;
@@ -110,31 +110,22 @@ cb_searchdone(const gboolean succeed,
     cur_node = xmlDocGetRootElement(doc);
 
     if (cur_node) {
-        for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next)
-            if (NODE_IS_TYPE(cur_node, "place")) {
-                lat = (gchar *) xmlGetProp(cur_node, (const xmlChar *) "lat");
-                if (!lat)
-                    continue;
-                lon = (gchar *) xmlGetProp(cur_node, (const xmlChar *) "lon");
-                if (!lon) {
-                    g_free(lat);
-                    continue;
-                }
-                city = (gchar *) xmlGetProp(cur_node,
-                                            (const xmlChar *) "display_name");
+        for (cur_node = cur_node->children; cur_node;
+             cur_node = cur_node->next) {
+            place = parse_place(cur_node);
 
-                if (!city) {
-                    g_free(lat);
-                    g_free(lon);
-                    continue;
-                }
-
-                append_result(dialog->result_mdl, lat, lon, city);
+            if (place && place->lat && place->lon && place->display_name) {
+                append_result(dialog->result_mdl,
+                              place->lat, place->lon, place->display_name);
                 found++;
-                g_free(lat);
-                g_free(lon);
-                g_free(city);
             }
+
+            if (place) {
+                xml_place_free(place);
+                place = NULL;
+            }
+
+        }
     }
 
     xmlFreeDoc(doc);
