@@ -32,7 +32,7 @@ void weather_http_receive_data(const gchar *hostname,
                                const gchar *url,
                                const gchar *proxy_host,
                                gint proxy_port,
-                               WeatherFunc cb_func,
+                               const WeatherFunc cb_func,
                                gpointer user_data);
 
 G_END_DECLS

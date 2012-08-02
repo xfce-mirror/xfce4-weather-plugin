@@ -96,7 +96,7 @@ struct _WeatherConnection {
 
 static gboolean
 weather_http_receive_data_check(WeatherConnection *connection,
-                                GTimeVal timeout)
+                                const GTimeVal timeout)
 {
     GTimeVal now;
 
@@ -453,8 +453,8 @@ void
 weather_http_receive_data(const gchar *hostname,
                           const gchar *url,
                           const gchar *proxy_host,
-                          gint proxy_port,
-                          WeatherFunc cb_func,
+                          const gint proxy_port,
+                          const WeatherFunc cb_func,
                           gpointer user_data)
 {
     WeatherConnection *connection;
