@@ -58,8 +58,8 @@ my_timegm(struct tm *tm)
 
 xml_time *
 get_timeslice(xml_weather *data,
-              time_t start_t,
-              time_t end_t)
+              const time_t start_t,
+              const time_t end_t)
 {
     guint i;
 
@@ -81,7 +81,7 @@ get_timeslice(xml_weather *data,
 
 
 static time_t
-parse_xml_timestring(gchar *ts,
+parse_xml_timestring(const gchar *ts,
                      gchar *format) {
     time_t t;
     struct tm tm;

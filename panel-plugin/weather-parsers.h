@@ -104,8 +104,8 @@ xml_weather *parse_weather(xmlNode *cur_node);
 xml_astro *parse_astro(xmlNode *cur_node);
 
 xml_time *get_timeslice(xml_weather *data,
-                        time_t start_t,
-                        time_t end_t);
+                        const time_t start_t,
+                        const time_t end_t);
 
 void xml_time_free(xml_time *timeslice);
 
