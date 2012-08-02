@@ -348,9 +348,9 @@ update_current_conditions(xfceweather_data *data)
 
 
 static void
-cb_astro_update(gboolean succeed,
+cb_astro_update(const gboolean succeed,
                 gchar *result,
-                size_t len,
+                const size_t len,
                 gpointer user_data)
 {
     xfceweather_data *data = user_data;
@@ -384,9 +384,9 @@ cb_astro_update(gboolean succeed,
 
 
 static void
-cb_update(gboolean succeed,
+cb_update(const gboolean succeed,
           gchar *result,
-          size_t len,
+          const size_t len,
           gpointer user_data)
 {
     xfceweather_data *data = user_data;
