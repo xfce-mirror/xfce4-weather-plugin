@@ -226,7 +226,7 @@ create_search_dialog(GtkWindow *parent,
     dialog->proxy_port = proxy_port;
 
     dialog->dialog =
-        xfce_titled_dialog_new_with_buttons(_("Search weather location code"),
+        xfce_titled_dialog_new_with_buttons(_("Search location"),
                                             parent,
                                             GTK_DIALOG_MODAL |
                                             GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -251,7 +251,7 @@ create_search_dialog(GtkWindow *parent,
                        TRUE, TRUE, 0);
 
     xfce_titled_dialog_set_subtitle(XFCE_TITLED_DIALOG(dialog->dialog),
-                                    _("Enter a city name or zip code"));
+                                    _("Enter a city name or address"));
 
     hbox = gtk_hbox_new(FALSE, BORDER);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
