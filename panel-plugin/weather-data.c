@@ -55,7 +55,7 @@ has_timeslice(xml_weather *data,
 gchar *
 get_data(const xml_time *timeslice,
          const unit_systems unit_system,
-         const datas type)
+         const data_types type)
 {
     const xml_location *loc = NULL;
     double val;
@@ -135,7 +135,7 @@ get_data(const xml_time *timeslice,
 
 const gchar *
 get_unit(const unit_systems unit_system,
-         const datas type)
+         const data_types type)
 {
     switch (type) {
     case ALTITUDE:

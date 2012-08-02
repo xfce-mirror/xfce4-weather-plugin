@@ -125,13 +125,13 @@ get_label_size(xfceweather_data *data)
 
 static gchar *
 make_label(xfceweather_data *data,
-           datas opt)
+           data_types type)
 {
     xml_time *conditions;
     const gchar *lbl, *txtsize, *unit;
     gchar *str, *value, *rawvalue;
 
-    switch (opt) {
+    switch (type) {
     case TEMPERATURE:
         lbl = _("T");
         break;
@@ -180,9 +180,9 @@ make_label(xfceweather_data *data,
 
     /* get current weather conditions */
     conditions = get_current_conditions(data->weatherdata);
-    rawvalue = get_data(conditions, data->unit_system, opt);
+    rawvalue = get_data(conditions, data->unit_system, type);
 
-    switch (opt) {
+    switch (type) {
     case WIND_DIRECTION:
         value = translate_wind_direction(rawvalue);
         break;
@@ -200,7 +200,7 @@ make_label(xfceweather_data *data,
                                   txtsize, lbl, value);
             g_free(value);
         } else {
-            unit = get_unit(data->unit_system, opt);
+            unit = get_unit(data->unit_system, type);
             str = g_strdup_printf("<span size=\"%s\">%s: %s%s%s</span>",
                                   txtsize, lbl, rawvalue,
                                   strcmp(unit, "°") ? " " : "", unit);
@@ -211,7 +211,7 @@ make_label(xfceweather_data *data,
                                   txtsize, value);
             g_free(value);
         } else {
-            unit = get_unit(data->unit_system, opt);
+            unit = get_unit(data->unit_system, type);
             str = g_strdup_printf("<span size=\"%s\">%s%s%s</span>",
                                   txtsize, rawvalue,
                                   strcmp(unit, "°") ? " " : "", unit);
@@ -275,13 +275,13 @@ set_icon_current(xfceweather_data *data)
     xml_time *conditions;
     guint i;
     GdkPixbuf *icon = NULL;
-    datas opt;
+    data_types type;
     gchar *str;
     gint size, height;
 
     for (i = 0; i < data->labels->len; i++) {
-        opt = g_array_index(data->labels, datas, i);
-        str = make_label(data, opt);
+        type = g_array_index(data->labels, data_types, i);
+        str = make_label(data, type);
         gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox), -1, str);
         g_free(str);
     }
@@ -558,7 +558,7 @@ labels_clear(GArray *array)
     if (!array || array->len > 0) {
         if (array)
             g_array_free(array, TRUE);
-        array = g_array_new(FALSE, TRUE, sizeof(datas));
+        array = g_array_new(FALSE, TRUE, sizeof(data_types));
     }
     return array;
 }
@@ -712,7 +712,8 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
     for (i = 0; i < data->labels->len; i++) {
         g_snprintf(label, 10, "label%d", i);
         xfce_rc_write_int_entry(rc, label,
-                                (gint) g_array_index(data->labels, datas, i));
+                                (gint) g_array_index(data->labels,
+                                                     data_types, i));
     }
 
     xfce_rc_close(rc);
@@ -1025,7 +1026,7 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
 {
     xfceweather_data *data = g_slice_new0(xfceweather_data);
     GtkWidget *refresh, *mi;
-    datas lbl;
+    data_types lbl;
     GdkPixbuf *icon = NULL;
 
     /* Initialize with sane default values */
@@ -1056,7 +1057,7 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     if (G_LIKELY(icon))
         g_object_unref(G_OBJECT(icon));
 
-    data->labels = g_array_new(FALSE, TRUE, sizeof(datas));
+    data->labels = g_array_new(FALSE, TRUE, sizeof(data_types));
 
     data->vbox_center_scrollbox = gtk_vbox_new(FALSE, 0);
     data->top_hbox = gtk_hbox_new(FALSE, 0);

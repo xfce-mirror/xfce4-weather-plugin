@@ -38,7 +38,7 @@ typedef enum {
     FOG,
     PRECIPITATIONS,
     SYMBOL
-} datas;
+} data_types;
 
 typedef enum {
     IMPERIAL,
@@ -55,10 +55,10 @@ typedef enum {
 
 gchar *get_data(const xml_time *timeslice,
                 unit_systems unit_system,
-                datas type);
+                data_types type);
 
 const gchar *get_unit(unit_systems unit_system,
-                      datas type);
+                      data_types type);
 
 gboolean is_night_time(const xml_astro *astro);
 

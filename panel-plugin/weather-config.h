@@ -22,7 +22,7 @@ G_BEGIN_DECLS
 
 typedef struct {
     gchar *name;
-    datas  number;
+    data_types number;
 } labeloption;
 
 typedef struct {

@@ -271,7 +271,7 @@ apply_options(xfceweather_dialog *dialog)
     if (data->labels && data->labels->len > 0)
         g_array_free(data->labels, TRUE);
 
-    data->labels = g_array_new(FALSE, TRUE, sizeof(datas));
+    data->labels = g_array_new(FALSE, TRUE, sizeof(data_types));
     for (hasiter =
              gtk_tree_model_get_iter_first(GTK_TREE_MODEL
                                            (dialog->mdl_xmloption),
@@ -350,7 +350,7 @@ apply_options(xfceweather_dialog *dialog)
 
 
 static int
-option_i(const datas opt)
+option_i(const data_types opt)
 {
     guint i;
 
@@ -466,7 +466,7 @@ create_config_dialog(xfceweather_data *data,
     GtkSizeGroup *sg, *sg_buttons;
     GtkTreeViewColumn *column;
     GtkCellRenderer *renderer;
-    datas opt;
+    data_types type;
     guint i;
     gint n;
 
@@ -668,9 +668,9 @@ create_config_dialog(xfceweather_data *data,
 
     if (data->labels->len > 0) {
         for (i = 0; i < data->labels->len; i++) {
-            opt = g_array_index(data->labels, datas, i);
+            type = g_array_index(data->labels, data_types, i);
 
-            if ((n = option_i(opt)) != -1)
+            if ((n = option_i(type)) != -1)
                 add_mdl_option(dialog->mdl_xmloption, n);
         }
     }
