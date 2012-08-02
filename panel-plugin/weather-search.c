@@ -48,9 +48,9 @@ typedef struct {
 
 static void
 append_result(GtkListStore *mdl,
-              gchar *lat,
-              gchar *lon,
-              gchar *city)
+              const gchar *lat,
+              const gchar *lon,
+              const gchar *city)
 {
     GtkTreeIter iter;
 
@@ -78,9 +78,9 @@ sanitize_str(const gchar *str)
 
 
 static void
-cb_searchdone(gboolean succeed,
+cb_searchdone(const gboolean succeed,
               gchar *received,
-              size_t len,
+              const size_t len,
               gpointer user_data)
 {
     search_dialog *dialog = (search_dialog *) user_data;
@@ -365,9 +365,9 @@ get_preferred_unit_system(const gchar *country_code)
 
 
 static void
-cb_geolocation(gboolean succeed,
+cb_geolocation(const gboolean succeed,
                gchar *received,
-               size_t len,
+               const size_t len,
                gpointer user_data)
 {
     geolocation_data *data = (geolocation_data *) user_data;
