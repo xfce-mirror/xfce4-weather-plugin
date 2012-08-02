@@ -484,7 +484,7 @@ create_summary_tab(xfceweather_data *data)
 }
 
 
-GtkWidget *
+static GtkWidget *
 add_forecast_cell(GtkWidget *widget,
                   GdkColor *color)
 {
@@ -502,7 +502,7 @@ add_forecast_cell(GtkWidget *widget,
 }
 
 
-GtkWidget *
+static GtkWidget *
 add_forecast_header(gchar *text,
                     gdouble angle,
                     GdkColor *color)

@@ -56,6 +56,182 @@ my_timegm(struct tm *tm)
 }
 
 
+xml_time *
+get_timeslice(xml_weather *data,
+              time_t start_t,
+              time_t end_t)
+{
+    guint i;
+
+    for (i = 0; i < data->num_timeslices; i++) {
+        if (data->timeslice[i]->start == start_t &&
+            data->timeslice[i]->end == end_t)
+            return data->timeslice[i];
+    }
+    if (data->num_timeslices == MAX_TIMESLICE - 1)
+        return NULL;
+
+    data->timeslice[data->num_timeslices] = g_slice_new0(xml_time);
+    data->timeslice[data->num_timeslices]->start = start_t;
+    data->timeslice[data->num_timeslices]->end = end_t;
+    data->num_timeslices++;
+
+    return data->timeslice[data->num_timeslices - 1];
+}
+
+
+static time_t
+parse_xml_timestring(gchar *ts,
+                     gchar *format) {
+    time_t t;
+    struct tm tm;
+
+    memset(&t, 0, sizeof(time_t));
+    if (G_UNLIKELY(ts == NULL))
+        return t;
+
+    /* standard format */
+    if (format == NULL)
+        format = "%Y-%m-%dT%H:%M:%SZ";
+
+    /* strptime needs an initialized struct, or unpredictable
+     * behaviour might occur */
+    memset(&tm, 0, sizeof(struct tm));
+    tm.tm_isdst = -1;
+
+    if (G_UNLIKELY(strptime(ts, format, &tm) == NULL))
+        return t;
+
+    t = my_timegm(&tm);
+    return t;
+}
+
+
+static void
+parse_location(xmlNode *cur_node,
+               xml_location *loc)
+{
+    xmlNode *child_node;
+
+    g_free(loc->altitude);
+    loc->altitude = PROP(cur_node, "altitude");
+
+    g_free(loc->latitude);
+    loc->latitude = PROP(cur_node, "latitude");
+
+    g_free(loc->longitude);
+    loc->longitude = PROP(cur_node, "longitude");
+
+    for (child_node = cur_node->children; child_node;
+         child_node = child_node->next) {
+        if (NODE_IS_TYPE(child_node, "temperature")) {
+            g_free(loc->temperature_unit);
+            g_free(loc->temperature_value);
+            loc->temperature_unit = PROP(child_node, "unit");
+            loc->temperature_value = PROP(child_node, "value");
+        }
+        if (NODE_IS_TYPE(child_node, "windDirection")) {
+            g_free(loc->wind_dir_deg);
+            g_free(loc->wind_dir_name);
+            loc->wind_dir_deg = PROP(child_node, "deg");
+            loc->wind_dir_name = PROP(child_node, "name");
+        }
+        if (NODE_IS_TYPE(child_node, "windSpeed")) {
+            g_free(loc->wind_speed_mps);
+            g_free(loc->wind_speed_beaufort);
+            loc->wind_speed_mps = PROP(child_node, "mps");
+            loc->wind_speed_beaufort = PROP(child_node, "beaufort");
+        }
+        if (NODE_IS_TYPE(child_node, "humidity")) {
+            g_free(loc->humidity_unit);
+            g_free(loc->humidity_value);
+            loc->humidity_unit = PROP(child_node, "unit");
+            loc->humidity_value = PROP(child_node, "value");
+        }
+        if (NODE_IS_TYPE(child_node, "pressure")) {
+            g_free(loc->pressure_unit);
+            g_free(loc->pressure_value);
+            loc->pressure_unit = PROP(child_node, "unit");
+            loc->pressure_value = PROP(child_node, "value");
+        }
+        if (NODE_IS_TYPE(child_node, "cloudiness")) {
+            g_free(loc->clouds_percent[CLOUDS_PERC_CLOUDINESS]);
+            loc->clouds_percent[CLOUDS_PERC_CLOUDINESS] = PROP(child_node, "percent");
+        }
+        if (NODE_IS_TYPE(child_node, "fog")) {
+            g_free(loc->fog_percent);
+            loc->fog_percent = PROP(child_node, "percent");
+        }
+        if (NODE_IS_TYPE(child_node, "lowClouds")) {
+            g_free(loc->clouds_percent[CLOUDS_PERC_LOW]);
+            loc->clouds_percent[CLOUDS_PERC_LOW] = PROP(child_node, "percent");
+        }
+        if (NODE_IS_TYPE(child_node, "mediumClouds")) {
+            g_free(loc->clouds_percent[CLOUDS_PERC_MED]);
+            loc->clouds_percent[CLOUDS_PERC_MED] = PROP(child_node, "percent");
+        }
+        if (NODE_IS_TYPE(child_node, "highClouds")) {
+            g_free(loc->clouds_percent[CLOUDS_PERC_HIGH]);
+            loc->clouds_percent[CLOUDS_PERC_HIGH] = PROP(child_node, "percent");
+        }
+        if (NODE_IS_TYPE(child_node, "precipitation")) {
+            g_free(loc->precipitation_unit);
+            g_free(loc->precipitation_value);
+            loc->precipitation_unit = PROP(child_node, "unit");
+            loc->precipitation_value = PROP(child_node, "value");
+        }
+        if (NODE_IS_TYPE(child_node, "symbol")) {
+            g_free(loc->symbol);
+            loc->symbol = PROP(child_node, "id");
+            loc->symbol_id = strtol(PROP(child_node, "number"), NULL, 10);
+        }
+    }
+}
+
+
+static void
+parse_time(xmlNode *cur_node,
+           xml_weather *data)
+{
+    gchar *datatype, *from, *to;
+    time_t start_t, end_t;
+    xml_time *timeslice;
+    xmlNode *child_node;
+
+    datatype = PROP(cur_node, "datatype");
+    if (xmlStrcasecmp(datatype, "forecast")) {
+        xmlFree(datatype);
+        return;
+    }
+    xmlFree(datatype);
+
+    from = PROP(cur_node, "from");
+    start_t = parse_xml_timestring(from, NULL);
+    xmlFree(from);
+
+    to = PROP(cur_node, "to");
+    end_t = parse_xml_timestring(to, NULL);
+    xmlFree(to);
+
+    if (G_UNLIKELY(!start_t || !end_t))
+        return;
+
+    timeslice = get_timeslice(data, start_t, end_t);
+
+    if (G_UNLIKELY(!timeslice)) {
+        g_warning("no timeslice");
+        return;
+    }
+    for (child_node = cur_node->children; child_node;
+         child_node = child_node->next)
+        if (G_LIKELY(NODE_IS_TYPE(child_node, "location"))) {
+            if (timeslice->location == NULL)
+                timeslice->location = g_slice_new0(xml_location);
+            parse_location(child_node, timeslice->location);
+        }
+}
+
+
 xml_weather *
 parse_weather(xmlNode *cur_node)
 {
@@ -91,33 +267,7 @@ parse_weather(xmlNode *cur_node)
 }
 
 
-time_t
-parse_xml_timestring(gchar *ts, gchar *format) {
-    time_t t;
-    struct tm tm;
-
-    memset(&t, 0, sizeof(time_t));
-    if (G_UNLIKELY(ts == NULL))
-        return t;
-
-    /* standard format */
-    if (format == NULL)
-        format = "%Y-%m-%dT%H:%M:%SZ";
-
-    /* strptime needs an initialized struct, or unpredictable
-     * behaviour might occur */
-    memset(&tm, 0, sizeof(struct tm));
-    tm.tm_isdst = -1;
-
-    if (G_UNLIKELY(strptime(ts, format, &tm) == NULL))
-        return t;
-
-    t = my_timegm(&tm);
-    return t;
-}
-
-
-void
+static void
 parse_astro_location(xmlNode *cur_node,
                      xml_astro *astro)
 {
@@ -222,155 +372,6 @@ parse_astro(xmlNode *cur_node)
 }
 
 
-void
-parse_time(xmlNode *cur_node,
-           xml_weather *data)
-{
-    gchar *datatype, *from, *to;
-    time_t start_t, end_t;
-    xml_time *timeslice;
-    xmlNode *child_node;
-
-    datatype = PROP(cur_node, "datatype");
-    if (xmlStrcasecmp(datatype, "forecast")) {
-        xmlFree(datatype);
-        return;
-    }
-    xmlFree(datatype);
-
-    from = PROP(cur_node, "from");
-    start_t = parse_xml_timestring(from, NULL);
-    xmlFree(from);
-
-    to = PROP(cur_node, "to");
-    end_t = parse_xml_timestring(to, NULL);
-    xmlFree(to);
-
-    if (G_UNLIKELY(!start_t || !end_t))
-        return;
-
-    timeslice = get_timeslice(data, start_t, end_t);
-
-    if (G_UNLIKELY(!timeslice)) {
-        g_warning("no timeslice");
-        return;
-    }
-    for (child_node = cur_node->children; child_node;
-         child_node = child_node->next)
-        if (G_LIKELY(NODE_IS_TYPE(child_node, "location"))) {
-            if (timeslice->location == NULL)
-                timeslice->location = g_slice_new0(xml_location);
-            parse_location(child_node, timeslice->location);
-        }
-}
-
-
-xml_time *
-get_timeslice(xml_weather *data,
-              time_t start_t,
-              time_t end_t)
-{
-    guint i;
-
-    for (i = 0; i < data->num_timeslices; i++) {
-        if (data->timeslice[i]->start == start_t &&
-            data->timeslice[i]->end == end_t)
-            return data->timeslice[i];
-    }
-    if (data->num_timeslices == MAX_TIMESLICE - 1)
-        return NULL;
-
-    data->timeslice[data->num_timeslices] = g_slice_new0(xml_time);
-    data->timeslice[data->num_timeslices]->start = start_t;
-    data->timeslice[data->num_timeslices]->end = end_t;
-    data->num_timeslices++;
-
-    return data->timeslice[data->num_timeslices - 1];
-}
-
-
-void
-parse_location(xmlNode *cur_node,
-               xml_location *loc)
-{
-    xmlNode *child_node;
-
-    g_free(loc->altitude);
-    loc->altitude = PROP(cur_node, "altitude");
-
-    g_free(loc->latitude);
-    loc->latitude = PROP(cur_node, "latitude");
-
-    g_free(loc->longitude);
-    loc->longitude = PROP(cur_node, "longitude");
-
-    for (child_node = cur_node->children; child_node;
-         child_node = child_node->next) {
-        if (NODE_IS_TYPE(child_node, "temperature")) {
-            g_free(loc->temperature_unit);
-            g_free(loc->temperature_value);
-            loc->temperature_unit = PROP(child_node, "unit");
-            loc->temperature_value = PROP(child_node, "value");
-        }
-        if (NODE_IS_TYPE(child_node, "windDirection")) {
-            g_free(loc->wind_dir_deg);
-            g_free(loc->wind_dir_name);
-            loc->wind_dir_deg = PROP(child_node, "deg");
-            loc->wind_dir_name = PROP(child_node, "name");
-        }
-        if (NODE_IS_TYPE(child_node, "windSpeed")) {
-            g_free(loc->wind_speed_mps);
-            g_free(loc->wind_speed_beaufort);
-            loc->wind_speed_mps = PROP(child_node, "mps");
-            loc->wind_speed_beaufort = PROP(child_node, "beaufort");
-        }
-        if (NODE_IS_TYPE(child_node, "humidity")) {
-            g_free(loc->humidity_unit);
-            g_free(loc->humidity_value);
-            loc->humidity_unit = PROP(child_node, "unit");
-            loc->humidity_value = PROP(child_node, "value");
-        }
-        if (NODE_IS_TYPE(child_node, "pressure")) {
-            g_free(loc->pressure_unit);
-            g_free(loc->pressure_value);
-            loc->pressure_unit = PROP(child_node, "unit");
-            loc->pressure_value = PROP(child_node, "value");
-        }
-        if (NODE_IS_TYPE(child_node, "cloudiness")) {
-            g_free(loc->clouds_percent[CLOUDS_PERC_CLOUDINESS]);
-            loc->clouds_percent[CLOUDS_PERC_CLOUDINESS] = PROP(child_node, "percent");
-        }
-        if (NODE_IS_TYPE(child_node, "fog")) {
-            g_free(loc->fog_percent);
-            loc->fog_percent = PROP(child_node, "percent");
-        }
-        if (NODE_IS_TYPE(child_node, "lowClouds")) {
-            g_free(loc->clouds_percent[CLOUDS_PERC_LOW]);
-            loc->clouds_percent[CLOUDS_PERC_LOW] = PROP(child_node, "percent");
-        }
-        if (NODE_IS_TYPE(child_node, "mediumClouds")) {
-            g_free(loc->clouds_percent[CLOUDS_PERC_MED]);
-            loc->clouds_percent[CLOUDS_PERC_MED] = PROP(child_node, "percent");
-        }
-        if (NODE_IS_TYPE(child_node, "highClouds")) {
-            g_free(loc->clouds_percent[CLOUDS_PERC_HIGH]);
-            loc->clouds_percent[CLOUDS_PERC_HIGH] = PROP(child_node, "percent");
-        }
-        if (NODE_IS_TYPE(child_node, "precipitation")) {
-            g_free(loc->precipitation_unit);
-            g_free(loc->precipitation_value);
-            loc->precipitation_unit = PROP(child_node, "unit");
-            loc->precipitation_value = PROP(child_node, "value");
-        }
-        if (NODE_IS_TYPE(child_node, "symbol")) {
-            g_free(loc->symbol);
-            loc->symbol = PROP(child_node, "id");
-            loc->symbol_id = strtol(PROP(child_node, "number"), NULL, 10);
-        }
-    }
-}
-
-
 static void
 xml_location_free(xml_location *loc)
 {
@@ -402,6 +403,7 @@ xml_location_free(xml_location *loc)
     loc = NULL;
 }
 
+
 void
 xml_time_free(xml_time *timeslice)
 {
@@ -429,6 +431,7 @@ xml_weather_free(xml_weather *data)
     g_slice_free(xml_weather, data);
     data = NULL;
 }
+
 
 void
 xml_astro_free(xml_astro *astro)

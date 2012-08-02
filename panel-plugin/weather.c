@@ -879,7 +879,7 @@ xfceweather_create_options(XfcePanelPlugin *plugin,
 }
 
 
-gchar *
+static gchar *
 weather_get_tooltip_text(xfceweather_data *data)
 {
     xml_time *conditions;

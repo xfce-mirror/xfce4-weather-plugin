@@ -195,7 +195,7 @@ make_label(void)
 }
 
 
-gchar *
+static gchar *
 sanitize_location_name(const gchar *location_name)
 {
     gchar *pos, *pos2, sane[LOC_NAME_MAX_LEN * 4];

@@ -37,7 +37,7 @@
                                                g_ascii_strtod(value, NULL)))
 
 
-gboolean
+static gboolean
 has_timeslice(xml_weather *data,
               time_t start_t,
               time_t end_t)
@@ -220,7 +220,7 @@ is_night_time(xml_astro *astro)
  *   Evening:   20:00-02:00
  *   Night:     02:00-08:00
  */
-void
+static void
 get_daytime_interval(struct tm *start_tm,
                      struct tm *end_tm,
                      daytime dt)
@@ -311,7 +311,7 @@ time_calc_day(struct tm time_tm,
  * times. Shift maximum prev_hours_limit hours into the past and
  * next_hours_limit hours into the future.
  */
-xml_time *
+static xml_time *
 find_timeslice(xml_weather *data,
                struct tm start_tm,
                struct tm end_tm,
@@ -353,7 +353,7 @@ find_timeslice(xml_weather *data,
  * Find the timeslice with the shortest interval near the given start
  * and end times
  */
-xml_time *
+static xml_time *
 find_shortest_timeslice(xml_weather *data,
                         struct tm start_tm,
                         struct tm end_tm,
@@ -398,7 +398,7 @@ find_shortest_timeslice(xml_weather *data,
  * Take point and interval data and generate one combined timeslice
  * that provides all information needed to present a forecast.
  */
-xml_time *
+static xml_time *
 make_combined_timeslice(xml_time *point,
                         xml_time *interval)
 {
