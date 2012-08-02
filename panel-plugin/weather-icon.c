@@ -43,8 +43,8 @@ const gchar *night_symbols[] = {
 
 GdkPixbuf *
 get_icon(const gchar *number,
-         gint size,
-         gboolean night)
+         const gint size,
+         const gboolean night)
 {
     GdkPixbuf *image = NULL;
     gchar *filename, *night_suffix = "";
