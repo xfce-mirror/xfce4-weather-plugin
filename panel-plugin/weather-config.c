@@ -34,6 +34,7 @@
 #define BORDER 8
 #define LOC_NAME_MAX_LEN 50
 
+
 static const labeloption labeloptions[OPTIONS_N] = {
     {N_("Temperature (T)"), TEMPERATURE},
     {N_("Atmosphere pressure (P)"), PRESSURE},
@@ -56,7 +57,7 @@ static cb_function cb = NULL;
 
 static void
 add_mdl_option(GtkListStore *mdl,
-               gint opt)
+               const gint opt)
 {
     GtkTreeIter iter;
 
@@ -349,7 +350,7 @@ apply_options(xfceweather_dialog *dialog)
 
 
 static int
-option_i(datas opt)
+option_i(const datas opt)
 {
     guint i;
 
@@ -389,7 +390,7 @@ static void
 auto_locate_cb(const gchar *loc_name,
                const gchar *lat,
                const gchar *lon,
-               unit_systems unit_system,
+               const unit_systems unit_system,
                gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
