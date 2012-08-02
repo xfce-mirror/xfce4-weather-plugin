@@ -198,11 +198,17 @@ make_label(void)
 gchar *
 sanitize_location_name(const gchar *location_name)
 {
-    gchar *pos, sane[LOC_NAME_MAX_LEN * 4];
+    gchar *pos, *pos2, sane[LOC_NAME_MAX_LEN * 4];
     glong len, offset;
 
     pos = g_utf8_strchr(location_name, -1, ',');
     if (pos != NULL) {
+        pos2 = pos;
+        while (pos2 = g_utf8_find_next_char(pos2, NULL))
+            if (g_utf8_get_char(pos2) == ',') {
+                pos = pos2;
+                break;
+            }
         offset = g_utf8_pointer_to_offset(location_name, pos);
         if (offset > LOC_NAME_MAX_LEN)
             offset = LOC_NAME_MAX_LEN;
