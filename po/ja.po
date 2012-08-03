@@ -12,8 +12,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce-weather-plugin 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-03 02:00+0200\n"
-"PO-Revision-Date: 2012-07-26 00:02+0900\n"
+"POT-Creation-Date: 2012-08-03 22:06+0900\n"
+"PO-Revision-Date: 2012-08-03 22:06+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <xfce-i18n@xfce.org>\n"
 "Language: ja\n"
@@ -89,22 +89,21 @@ msgid "Weather Update"
 msgstr "最新の天気"
 
 #: ../panel-plugin/weather.c:899
-#, fuzzy
 msgid "Short-term forecast data unavailable."
-msgstr "現在利用可能なデータがありません。"
+msgstr "利用可能な短期予報データがありません。"
 
 #: ../panel-plugin/weather.c:914
 msgid "The sun never rises today."
-msgstr ""
+msgstr "本日太陽は昇りません。"
 
 #: ../panel-plugin/weather.c:916
 msgid "The sun never sets today."
-msgstr ""
+msgstr "本日太陽は沈みません。"
 
 #: ../panel-plugin/weather.c:922
 #, c-format
 msgid "The sun rises at %s and sets at %s."
-msgstr ""
+msgstr "日の出は %s、日の入りは %s です。"
 
 #.
 #. * TRANSLATORS: Re-arrange and align at will, optionally using
@@ -128,6 +127,17 @@ msgid ""
 "\n"
 "<span size=\"smaller\">%s</span>"
 msgstr ""
+"<b><span size=\"large\">%s</span></b> <span size=\"medium\">(海抜 %s)</"
+"span>\n"
+"<b><span size=\"large\">%s</span></b>\n"
+"<span size=\"smaller\">%s から %s まで。降水量は %s。</span>\n"
+"\n"
+"<b>気温:</b> %s\t\t<span size=\"smaller\">(%s の予報)</span>\n"
+"<b>風速:</b> %s (風力 %s)\t<b>風向:</b> %s(%s)\n"
+"<b>気圧:</b> %s\t<b>湿度:</b> %s\n"
+"<b>霧:</b> %s\t<b>雲量:</b> %s\n"
+"\n"
+"<span size=\"smaller\">%s</span>"
 
 #. add forecast window to right click menu, for people who missed
 #. the left mouse click feature
@@ -213,11 +223,14 @@ msgid ""
 "You may edit the location name to your liking.\n"
 "To choose another location, please use the \"Change\" button."
 msgstr ""
+"緯度: %s、経度: %s\n"
+"\n"
+"地名は好きな名前に変更できます。\n"
+"他の地域に変更するには \"変更\" ボタンをクリックしてください。"
 
 #: ../panel-plugin/weather-config.c:390
-#, fuzzy
 msgid "Please select a location by using the \"Change\" button."
-msgstr "プラグイン設定の場所を入力してください"
+msgstr "\"変更\" ボタンで場所を選択してください。"
 
 #: ../panel-plugin/weather-config.c:430
 msgid "Detecting..."
@@ -338,22 +351,22 @@ msgid "Failed to get the hostname %s. Retry in %d seconds."
 msgstr "ホスト名 %s の取得に失敗しました。%d 秒後に再試行してください。"
 
 #: ../panel-plugin/weather-http.c:239
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open the socket(%s)."
 msgstr "ソケットを開くことに失敗しました (%s)。"
 
 #: ../panel-plugin/weather-http.c:245
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to create a connection with the host(%s)."
 msgstr "ホストとの接続の生成に失敗しました (%s)。"
 
 #: ../panel-plugin/weather-http.c:282
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to send the request(%s)."
 msgstr "リクエストの送信に失敗しました (%s)。"
 
 #: ../panel-plugin/weather-http.c:330
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to receive data(%s)"
 msgstr "データの受信に失敗しました (%s)"
 
@@ -378,14 +391,12 @@ msgid "Searching..."
 msgstr "検索しています..."
 
 #: ../panel-plugin/weather-search.c:220
-#, fuzzy
 msgid "Search location"
-msgstr "気象地域コードの検索"
+msgstr "場所の検索"
 
 #: ../panel-plugin/weather-search.c:245
-#, fuzzy
 msgid "Enter a city name or address"
-msgstr "都市名または ZIP コードを入力してください"
+msgstr "都市の名称または緯度と経度を入力してください"
 
 #.
 #. * TRANSLATORS: Latitude and longitude are known from the
@@ -394,7 +405,7 @@ msgstr "都市名または ZIP コードを入力してください"
 #.
 #: ../panel-plugin/weather-search.c:420
 msgid "Unnamed place"
-msgstr ""
+msgstr "無名の地"
 
 #. head
 #: ../panel-plugin/weather-summary.c:312
@@ -459,19 +470,21 @@ msgid ""
 "\n"
 "Astrological Data\n"
 msgstr ""
+"\n"
+"天文情報\n"
 
 #: ../panel-plugin/weather-summary.c:348
 msgid "\tSunrise:\t\tThe sun never rises today.\n"
-msgstr ""
+msgstr "\t日の出:\t本日太陽は昇りません。\n"
 
 #: ../panel-plugin/weather-summary.c:351
 msgid "\tSunset:\t\tThe sun never sets today.\n"
-msgstr ""
+msgstr "\t日の入り:\t本日太陽は沈みません。\n"
 
 #: ../panel-plugin/weather-summary.c:356
 #, c-format
 msgid "\tSunrise:\t\t%s\n"
-msgstr ""
+msgstr "\t日の出:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:361
 #, c-format
@@ -479,37 +492,41 @@ msgid ""
 "\tSunset:\t\t%s\n"
 "\n"
 msgstr ""
+"\t日の入り:\t%s\n"
+"\n"
 
 #: ../panel-plugin/weather-summary.c:366
 #, c-format
 msgid "\tMoon phase:\t%s\n"
-msgstr ""
+msgstr "\t月相:\t\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:370
 msgid "\tMoon phase:\tUnknown\n"
-msgstr ""
+msgstr "\t月相:\t\t不明\n"
 
 #: ../panel-plugin/weather-summary.c:374
 msgid "\tMoonrise:\tThe moon never rises today.\n"
-msgstr ""
+msgstr "\t月の出:\t本日月は昇りません。\n"
 
 #: ../panel-plugin/weather-summary.c:377
 msgid "\tMoonset:\tThe moon never sets today.\n"
-msgstr ""
+msgstr "\t月の入り:\t本日月は沈みません。\n"
 
 #: ../panel-plugin/weather-summary.c:382
 #, c-format
 msgid "\tMoonrise:\t%s\n"
-msgstr ""
+msgstr "\t月の出:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:387
 #, c-format
 msgid "\tMoonset:\t%s\n"
-msgstr ""
+msgstr "\t月の入り:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:391
 msgid "\tData not available, will use sane default values for night and day.\n"
 msgstr ""
+"\tデータが利用できません。昼と夜の情報は妥当と思われるデフォルト値を利用しま"
+"す。\n"
 
 #. temperature
 #: ../panel-plugin/weather-summary.c:397
@@ -733,35 +750,35 @@ msgstr "無風"
 #. TRANSLATORS: Moon phases
 #: ../panel-plugin/weather-translate.c:57
 msgid "New moon"
-msgstr ""
+msgstr "新月"
 
 #: ../panel-plugin/weather-translate.c:58
 msgid "Waxing crescent"
-msgstr ""
+msgstr "新月から上弦の間"
 
 #: ../panel-plugin/weather-translate.c:59
 msgid "First quarter"
-msgstr ""
+msgstr "上弦"
 
 #: ../panel-plugin/weather-translate.c:60
 msgid "Waxing gibbous"
-msgstr ""
+msgstr "上弦から満月の間"
 
 #: ../panel-plugin/weather-translate.c:61
 msgid "Full moon"
-msgstr ""
+msgstr "満月"
 
 #: ../panel-plugin/weather-translate.c:62
 msgid "Waning gibbous"
-msgstr ""
+msgstr "満月から下弦の間"
 
 #: ../panel-plugin/weather-translate.c:63
 msgid "Third quarter"
-msgstr ""
+msgstr "下弦"
 
 #: ../panel-plugin/weather-translate.c:64
 msgid "Waning crescent"
-msgstr ""
+msgstr "下弦から新月の間"
 
 #.
 #. * TRANSLATORS: Some of these terms seem to contradict
@@ -898,6 +915,9 @@ msgstr "不明"
 #: ../panel-plugin/weather.desktop.in.h:2
 msgid "Show current weather conditions"
 msgstr "現在の天気状況を表示します。"
+
+#~ msgid "Current conditions data unavailable"
+#~ msgstr "現在天気情報を利用できません。"
 
 #~ msgid "Untitled"
 #~ msgstr "名前無し"
