@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: xfce-weather-plugin.master\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-08-03 02:00+0200\n"
-"PO-Revision-Date: 2012-07-25 22:30+0900\n"
+"PO-Revision-Date: 2012-08-03 16:19+0900\n"
 "Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
 "Language-Team: xfce-i18n <xfce-i18n@xfce.org>\n"
 "Language: ko\n"
@@ -34,7 +34,8 @@ msgstr "풍속"
 msgid "WB"
 msgstr "보포르 풍속"
 
-#: ../panel-plugin/weather.c:149 ../panel-plugin/weather.c:152
+#: ../panel-plugin/weather.c:149
+#: ../panel-plugin/weather.c:152
 msgid "WD"
 msgstr "풍향"
 
@@ -70,7 +71,8 @@ msgstr "강수율"
 msgid "No Data"
 msgstr "데이터 없음"
 
-#: ../panel-plugin/weather.c:268 ../panel-plugin/weather.c:1007
+#: ../panel-plugin/weather.c:268
+#: ../panel-plugin/weather.c:1007
 msgid "Cannot update weather data"
 msgstr "날씨 정보를 업데이트할 수 없습니다"
 
@@ -79,28 +81,28 @@ msgstr "날씨 정보를 업데이트할 수 없습니다"
 msgid "Unable to open the following url: %s"
 msgstr "다음 URL을 열 수 없습니다: %s"
 
-#: ../panel-plugin/weather.c:856 ../panel-plugin/weather-summary.c:752
+#: ../panel-plugin/weather.c:856
+#: ../panel-plugin/weather-summary.c:752
 #: ../panel-plugin/weather.desktop.in.h:1
 msgid "Weather Update"
 msgstr "날씨 업데이트"
 
 #: ../panel-plugin/weather.c:899
-#, fuzzy
 msgid "Short-term forecast data unavailable."
-msgstr "현재 데이터가 없습니다."
+msgstr "단기예보 데이터가 없습니다."
 
 #: ../panel-plugin/weather.c:914
 msgid "The sun never rises today."
-msgstr ""
+msgstr "오늘은 해가 뜨지 않습니다."
 
 #: ../panel-plugin/weather.c:916
 msgid "The sun never sets today."
-msgstr ""
+msgstr "오늘은 해가 지지 않습니다."
 
 #: ../panel-plugin/weather.c:922
 #, c-format
 msgid "The sun rises at %s and sets at %s."
-msgstr ""
+msgstr "해는 %s에 뜨고 %s에 집니다."
 
 #.
 #. * TRANSLATORS: Re-arrange and align at will, optionally using
@@ -124,10 +126,21 @@ msgid ""
 "\n"
 "<span size=\"smaller\">%s</span>"
 msgstr ""
+"<b><span size=\"large\">%1$s</span></b> <span size=\"medium\">(%2$s)</span>\n"
+"<b><span size=\"large\">%3$s</span></b>\n"
+"<span size=\"smaller\">%4$s부터 %5$s까지, 강수량 %6$s</span>\n"
+"\n"
+"<b>기온:</b> %7$s\t\t<span size=\"smaller\">(%8$s의 값)</span>\n"
+"<b>바람:</b> %11$s(%12$s)에서 %9$s (보포르 규모 단위 %10$s)\n"
+"<b>기압:</b> %13$s    <b>습도:</b> %14$s\n"
+"<b>안개:</b> %15$s    <b>구름:</b> %16$s\n"
+"\n"
+"<span size=\"smaller\">%17$s</span>"
 
 #. add forecast window to right click menu, for people who missed
 #. the left mouse click feature
-#: ../panel-plugin/weather.c:1108 ../panel-plugin/weather-summary.c:797
+#: ../panel-plugin/weather.c:1108
+#: ../panel-plugin/weather-summary.c:797
 msgid "_Forecast"
 msgstr "예보(_F)"
 
@@ -192,7 +205,8 @@ msgstr "안개(F)"
 msgid "Precipitations (R)"
 msgstr "강수율(R)"
 
-#: ../panel-plugin/weather-config.c:240 ../panel-plugin/weather-config.c:418
+#: ../panel-plugin/weather-config.c:240
+#: ../panel-plugin/weather-config.c:418
 #: ../panel-plugin/weather-config.c:529
 msgid "Unset"
 msgstr "해제"
@@ -209,11 +223,14 @@ msgid ""
 "You may edit the location name to your liking.\n"
 "To choose another location, please use the \"Change\" button."
 msgstr ""
+"위도: %s, 경도: %s\n"
+"\n"
+"여러분이 원하는 지역 이름을 편집하십시오.\n"
+"다른 지역을 선택하려면 \"바꾸기\" 단추를 사용하시기 바랍니다."
 
 #: ../panel-plugin/weather-config.c:390
-#, fuzzy
 msgid "Please select a location by using the \"Change\" button."
-msgstr "플러그인 설정에서 지역을 설정해 주시기 바랍니다."
+msgstr "\"바꾸기\"단추를 사용하여 지역을 선택해주시기 바랍니다."
 
 #: ../panel-plugin/weather-config.c:430
 msgid "Detecting..."
@@ -334,22 +351,22 @@ msgid "Failed to get the hostname %s. Retry in %d seconds."
 msgstr "%s 호스트 이름을 가져오는데 실패했습니다. %d초 후 재시도합니다."
 
 #: ../panel-plugin/weather-http.c:239
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open the socket(%s)."
 msgstr "소켓을 여는데 실패했습니다(%s)."
 
 #: ../panel-plugin/weather-http.c:245
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to create a connection with the host(%s)."
 msgstr "호스트와 연결을 수립하는데 실패했습니다(%s)."
 
 #: ../panel-plugin/weather-http.c:282
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to send the request(%s)."
 msgstr "요청을 보내는데 실패했습니다 (%s)."
 
 #: ../panel-plugin/weather-http.c:330
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to receive data(%s)"
 msgstr "데이터를 받는데 실패(%s)"
 
@@ -365,7 +382,8 @@ msgstr "내용의 길이를 파악할 수 없습니다."
 msgid "No content received."
 msgstr "받은 내용이 없습니다."
 
-#: ../panel-plugin/weather-search.c:143 ../panel-plugin/weather-search.c:275
+#: ../panel-plugin/weather-search.c:143
+#: ../panel-plugin/weather-search.c:275
 msgid "Results"
 msgstr "결과"
 
@@ -374,14 +392,12 @@ msgid "Searching..."
 msgstr "검색 중..."
 
 #: ../panel-plugin/weather-search.c:220
-#, fuzzy
 msgid "Search location"
-msgstr "날씨 위치 코드 검색"
+msgstr "지역 검색"
 
 #: ../panel-plugin/weather-search.c:245
-#, fuzzy
 msgid "Enter a city name or address"
-msgstr "도시 명칭 또는 우편번호를 입력하십시오"
+msgstr "도시 명칭 또는 주소를 입력하십시오"
 
 #.
 #. * TRANSLATORS: Latitude and longitude are known from the
@@ -390,7 +406,7 @@ msgstr "도시 명칭 또는 우편번호를 입력하십시오"
 #.
 #: ../panel-plugin/weather-search.c:420
 msgid "Unnamed place"
-msgstr ""
+msgstr "이름 없는 장소"
 
 #. head
 #: ../panel-plugin/weather-summary.c:312
@@ -456,19 +472,21 @@ msgid ""
 "\n"
 "Astrological Data\n"
 msgstr ""
+"\n"
+"점성술 데이터\n"
 
 #: ../panel-plugin/weather-summary.c:348
 msgid "\tSunrise:\t\tThe sun never rises today.\n"
-msgstr ""
+msgstr "\t일출:\t\t오늘은 해가 뜨지 않습니다.\n"
 
 #: ../panel-plugin/weather-summary.c:351
 msgid "\tSunset:\t\tThe sun never sets today.\n"
-msgstr ""
+msgstr "\t일몰:\t\t오늘은 해가 지지 않습니다.\n"
 
 #: ../panel-plugin/weather-summary.c:356
 #, c-format
 msgid "\tSunrise:\t\t%s\n"
-msgstr ""
+msgstr "\t일출:\t\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:361
 #, c-format
@@ -476,37 +494,39 @@ msgid ""
 "\tSunset:\t\t%s\n"
 "\n"
 msgstr ""
+"\t일몰:\t\t%s\n"
+"\n"
 
 #: ../panel-plugin/weather-summary.c:366
 #, c-format
 msgid "\tMoon phase:\t%s\n"
-msgstr ""
+msgstr "\t달의 위상:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:370
 msgid "\tMoon phase:\tUnknown\n"
-msgstr ""
+msgstr "\t달의 위상:\t알 수 없음\n"
 
 #: ../panel-plugin/weather-summary.c:374
 msgid "\tMoonrise:\tThe moon never rises today.\n"
-msgstr ""
+msgstr "\t월출:\t오늘은 달이 뜨지 않습니다.\n"
 
 #: ../panel-plugin/weather-summary.c:377
 msgid "\tMoonset:\tThe moon never sets today.\n"
-msgstr ""
+msgstr "\t월몰:\t오늘은 달이 지지 않습니다.\n"
 
 #: ../panel-plugin/weather-summary.c:382
 #, c-format
 msgid "\tMoonrise:\t%s\n"
-msgstr ""
+msgstr "\t월출:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:387
 #, c-format
 msgid "\tMoonset:\t%s\n"
-msgstr ""
+msgstr "\t월몰:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:391
 msgid "\tData not available, will use sane default values for night and day.\n"
-msgstr ""
+msgstr "\t데이터가 없어서, 밤낮을 위해 온전한 기본값을 사용할 것입니다.\n"
 
 #. temperature
 #: ../panel-plugin/weather-summary.c:397
@@ -730,35 +750,35 @@ msgstr "무풍"
 #. TRANSLATORS: Moon phases
 #: ../panel-plugin/weather-translate.c:57
 msgid "New moon"
-msgstr ""
+msgstr "새 달"
 
 #: ../panel-plugin/weather-translate.c:58
 msgid "Waxing crescent"
-msgstr ""
+msgstr "차 가는 초승달"
 
 #: ../panel-plugin/weather-translate.c:59
 msgid "First quarter"
-msgstr ""
+msgstr "초승달"
 
 #: ../panel-plugin/weather-translate.c:60
 msgid "Waxing gibbous"
-msgstr ""
+msgstr "차 가는달"
 
 #: ../panel-plugin/weather-translate.c:61
 msgid "Full moon"
-msgstr ""
+msgstr "보름달"
 
 #: ../panel-plugin/weather-translate.c:62
 msgid "Waning gibbous"
-msgstr ""
+msgstr "기울어가는 달"
 
 #: ../panel-plugin/weather-translate.c:63
 msgid "Third quarter"
-msgstr ""
+msgstr "그믐달"
 
 #: ../panel-plugin/weather-translate.c:64
 msgid "Waning crescent"
-msgstr ""
+msgstr "기울어가는 그믐달"
 
 #.
 #. * TRANSLATORS: Some of these terms seem to contradict
