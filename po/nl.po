@@ -86,22 +86,21 @@ msgid "Weather Update"
 msgstr "Weerbericht"
 
 #: ../panel-plugin/weather.c:899
-#, fuzzy
 msgid "Short-term forecast data unavailable."
-msgstr "Thans geen gegevens beschikbaar."
+msgstr "Gegevens voor korte-termijnvoorspelling zijn niet beschikbaar."
 
 #: ../panel-plugin/weather.c:914
 msgid "The sun never rises today."
-msgstr ""
+msgstr "De zon zal vandaag nooit opkomen."
 
 #: ../panel-plugin/weather.c:916
 msgid "The sun never sets today."
-msgstr ""
+msgstr "De zon zal vandaag nooit ondergaan."
 
 #: ../panel-plugin/weather.c:922
 #, c-format
 msgid "The sun rises at %s and sets at %s."
-msgstr ""
+msgstr "De zon komt op om %s en gaat onder om %s."
 
 #.
 #. * TRANSLATORS: Re-arrange and align at will, optionally using
@@ -125,6 +124,16 @@ msgid ""
 "\n"
 "<span size=\"smaller\">%s</span>"
 msgstr ""
+"<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
+"<b><span size=\"large\">%s</span></b>\n"
+"<span size=\"smaller\">van %s tot %s, met %s neerslag</span>\n"
+"\n"
+"<b>Temperatuur:</b> %s\t\t<span size=\"smaller\">(waarden op %s)</span>\n"
+"<b>Wind:</b> %s (%sop de schaal van Beaufort) van %s(%s)\n"
+"<b>Luchtdruk:</b> %s    <b>Luchtvochtigheid:</b> %s\n"
+"<b>Nevel:</b> %s    <b>Bewolking:</b> %s\n"
+"\n"
+"<span size=\"smaller\">%s</span>"
 
 #. add forecast window to right click menu, for people who missed
 #. the left mouse click feature
@@ -210,12 +219,15 @@ msgid ""
 "You may edit the location name to your liking.\n"
 "To choose another location, please use the \"Change\" button."
 msgstr ""
+"Breedtegraad: %s, lengtegraad: %s\n"
+"\n"
+"U kunt de locatienaam naar believen bewerken.\n"
+"Gebruik a.u.b. de 'Veranderen'-knop om desgewenst een andere locatie te kiezen."
 
 #: ../panel-plugin/weather-config.c:390
-#, fuzzy
 msgid "Please select a location by using the \"Change\" button."
 msgstr ""
-"Stel a.u.b. in de instellingen van de invoegtoepassing, een locatie in."
+"Kies a.u.b. een locatie door de 'Veranderen'-knop te gebruiken."
 
 #: ../panel-plugin/weather-config.c:430
 msgid "Detecting..."
@@ -336,22 +348,18 @@ msgid "Failed to get the hostname %s. Retry in %d seconds."
 msgstr "Kon de hostnaam %s niet verkrijgen. Probeer opnieuw over %d seconden."
 
 #: ../panel-plugin/weather-http.c:239
-#, fuzzy, c-format
 msgid "Failed to open the socket(%s)."
 msgstr "Kon het contactpunt niet openen (%s)."
 
 #: ../panel-plugin/weather-http.c:245
-#, fuzzy, c-format
 msgid "Failed to create a connection with the host(%s)."
 msgstr "Kon geen verbinding maken met de host (%s)."
 
 #: ../panel-plugin/weather-http.c:282
-#, fuzzy, c-format
 msgid "Failed to send the request(%s)."
 msgstr "Kon het verzoek niet verzenden (%s)."
 
 #: ../panel-plugin/weather-http.c:330
-#, fuzzy, c-format
 msgid "Failed to receive data(%s)"
 msgstr "Kon geen gegevens ontvangen (%s)"
 
@@ -376,14 +384,12 @@ msgid "Searching..."
 msgstr "Aan het zoeken..."
 
 #: ../panel-plugin/weather-search.c:220
-#, fuzzy
 msgid "Search location"
-msgstr "Zoek locatiecode voor het weer"
+msgstr "Zoek locatie"
 
 #: ../panel-plugin/weather-search.c:245
-#, fuzzy
 msgid "Enter a city name or address"
-msgstr "Voer een plaatsnaam of postcode in"
+msgstr "Voer een plaatsnaam of adres in"
 
 #.
 #. * TRANSLATORS: Latitude and longitude are known from the
@@ -392,7 +398,7 @@ msgstr "Voer een plaatsnaam of postcode in"
 #.
 #: ../panel-plugin/weather-search.c:420
 msgid "Unnamed place"
-msgstr ""
+msgstr "Naamloze plaats"
 
 #. head
 #: ../panel-plugin/weather-summary.c:312
@@ -459,19 +465,21 @@ msgid ""
 "\n"
 "Astrological Data\n"
 msgstr ""
+"\n"
+"Astrologische gegevens\n"
 
 #: ../panel-plugin/weather-summary.c:348
 msgid "\tSunrise:\t\tThe sun never rises today.\n"
-msgstr ""
+msgstr "\tZonsopgang:\t\tDe zon komt vandaag nooit op.\n"
 
 #: ../panel-plugin/weather-summary.c:351
 msgid "\tSunset:\t\tThe sun never sets today.\n"
-msgstr ""
+msgstr "\tZonsondergang:\t\tDe zon gaat vandaag nooit onder.\n"
 
 #: ../panel-plugin/weather-summary.c:356
 #, c-format
 msgid "\tSunrise:\t\t%s\n"
-msgstr ""
+msgstr "\tZonsopgang:\t\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:361
 #, c-format
@@ -479,37 +487,39 @@ msgid ""
 "\tSunset:\t\t%s\n"
 "\n"
 msgstr ""
+"\tZonsondergang:\t\t%s\n"
+"\n"
 
 #: ../panel-plugin/weather-summary.c:366
 #, c-format
 msgid "\tMoon phase:\t%s\n"
-msgstr ""
+msgstr "\tSchijngestalten van de maan:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:370
 msgid "\tMoon phase:\tUnknown\n"
-msgstr ""
+msgstr "\tSchijngestalte van de maan:\tOnbekend\n"
 
 #: ../panel-plugin/weather-summary.c:374
 msgid "\tMoonrise:\tThe moon never rises today.\n"
-msgstr ""
+msgstr "\tMaansopgang:\tDe maan komt vandaag nimmer op.\n"
 
 #: ../panel-plugin/weather-summary.c:377
 msgid "\tMoonset:\tThe moon never sets today.\n"
-msgstr ""
+msgstr "\tMaansondergang:\tDe maan gaat vandaag nimmer onder.\n"
 
 #: ../panel-plugin/weather-summary.c:382
 #, c-format
 msgid "\tMoonrise:\t%s\n"
-msgstr ""
+msgstr "\tMaansopkomst:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:387
 #, c-format
 msgid "\tMoonset:\t%s\n"
-msgstr ""
+msgstr "\tMaansondergang:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:391
 msgid "\tData not available, will use sane default values for night and day.\n"
-msgstr ""
+msgstr "\tGegevens niet beschikbaar, zal de redelijke standaardwaarden voor nacht en dag gebruiken.\n"
 
 #. temperature
 #: ../panel-plugin/weather-summary.c:397
@@ -734,35 +744,35 @@ msgstr "RUSTIG"
 #. TRANSLATORS: Moon phases
 #: ../panel-plugin/weather-translate.c:57
 msgid "New moon"
-msgstr ""
+msgstr "Nieuwe maan"
 
 #: ../panel-plugin/weather-translate.c:58
 msgid "Waxing crescent"
-msgstr ""
+msgstr "Wassende maan"
 
 #: ../panel-plugin/weather-translate.c:59
 msgid "First quarter"
-msgstr ""
+msgstr "Eerste kwartier"
 
 #: ../panel-plugin/weather-translate.c:60
 msgid "Waxing gibbous"
-msgstr ""
+msgstr "Wassende maan"
 
 #: ../panel-plugin/weather-translate.c:61
 msgid "Full moon"
-msgstr ""
+msgstr "Volle maan"
 
 #: ../panel-plugin/weather-translate.c:62
 msgid "Waning gibbous"
-msgstr ""
+msgstr "Afnemende maan"
 
 #: ../panel-plugin/weather-translate.c:63
 msgid "Third quarter"
-msgstr ""
+msgstr "Derde kwartier"
 
 #: ../panel-plugin/weather-translate.c:64
 msgid "Waning crescent"
-msgstr ""
+msgstr "Afnemende maan"
 
 #.
 #. * TRANSLATORS: Some of these terms seem to contradict
