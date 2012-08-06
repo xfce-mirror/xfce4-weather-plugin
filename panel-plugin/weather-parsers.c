@@ -33,6 +33,16 @@
 #include <string.h>
 
 
+#define DATA(node)                                                  \
+    ((gchar *) xmlNodeListGetString(node->doc, node->children, 1))
+
+#define PROP(node, prop)                                        \
+    ((gchar *) xmlGetProp((node), (const xmlChar *) (prop)))
+
+#define NODE_IS_TYPE(node, type)                        \
+    (xmlStrEqual(node->name, (const xmlChar *) type))
+
+
 /*
  * This is a portable replacement for the deprecated timegm(),
  * copied from the man page.
