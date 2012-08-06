@@ -251,7 +251,7 @@ parse_weather(xmlNode *cur_node)
             continue;
 
         if (NODE_IS_TYPE(cur_node, "product")) {
-            gchar *class = xmlGetProp(cur_node, (const xmlChar *) "class");
+            gchar *class = PROP(cur_node, "class");
             if (xmlStrcasecmp(class, "pointData")) {
                 xmlFree(class);
                 continue;
