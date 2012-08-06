@@ -1,18 +1,14 @@
 Here is a collection of ideas and tasks for future releases, listed in
-categories, but not prioritized.
+categories, but not prioritized or mandatory.
 
 Panel widget
 ======================================================================
-* More information in tooltip
-  - currently only location and description are shown
-  - could optionally replace scrollbox
+* Optionally hide scrollbox
 * Use multiple lines in scrollbox
 * Use the Xfce hvbox (maybe, need to check)
 
 Data
 ======================================================================
-* Get sunrise/sunset times via met.no webservice
-  - see http://api.yr.no/weatherapi/sunrise/1.0/documentation
 * Use HTTP status codes to warn in time about API changes
 * Further reduce HTTP requests fetching data
   - maybe use data in XML to schedule downloads?
@@ -22,24 +18,29 @@ Data
   when the user chooses a location in a different timezone. It should
   be possible to find the timezone of the chosen location and do some
   math to correct this.
+* Find acceptable provider (regarding availability and license of
+  data) for live values or maybe cache data for "fake" (interpolated)
+  live values?
 
 Forecast tab
 ======================================================================
-* More details in forecast window
+* Show more details for daytime forecasts
   - maybe tooltips for each entry?
-  - somehow indicate amount of precipitation
+  - find a good way to indicate amount of precipitation
 
 Details tab
 ======================================================================
-* Show sunrise and sunset times
+
 
 Configuration dialog
 ======================================================================
 * Show longitude and latitude, allow entering them
-* Add tooltips where necessary and make the existing ones more
-  descriptive
 * Reorganize options, the window's already to large
   for the small screen size of netbooks
 * Apply options immediately, like in most xfce apps
 * Don't complain about proxy settings on closing the dialog window
   when none are entered
+
+New stuff
+======================================================================
+* Graph tab showing hourly break-down of forecast data
