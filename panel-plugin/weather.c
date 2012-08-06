@@ -337,8 +337,10 @@ update_current_conditions(xfceweather_data *data)
         return;
     }
 
-    if (data->weatherdata->current_conditions)
+    if (data->weatherdata->current_conditions) {
         xml_time_free(data->weatherdata->current_conditions);
+        data->weatherdata->current_conditions = NULL;
+    }
 
     data->weatherdata->current_conditions =
         make_current_conditions(data->weatherdata);

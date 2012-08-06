@@ -454,7 +454,6 @@ xml_location_free(xml_location *loc)
     g_free(loc->precipitation_unit);
     g_free(loc->symbol);
     g_slice_free(xml_location, loc);
-    loc = NULL;
 }
 
 
@@ -466,7 +465,6 @@ xml_time_free(xml_time *timeslice)
         return;
     xml_location_free(timeslice->location);
     g_slice_free(xml_time, timeslice);
-    timeslice = NULL;
 }
 
 
@@ -483,7 +481,6 @@ xml_weather_free(xml_weather *data)
     }
     xml_time_free(data->current_conditions);
     g_slice_free(xml_weather, data);
-    data = NULL;
 }
 
 
@@ -495,7 +492,6 @@ xml_astro_free(xml_astro *astro)
         return;
     g_free(astro->moon_phase);
     g_slice_free(xml_astro, astro);
-    astro = NULL;
 }
 
 
