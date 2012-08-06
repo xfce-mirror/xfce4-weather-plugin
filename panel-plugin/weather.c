@@ -100,8 +100,8 @@ check_envproxy(gchar **proxy_host,
 }
 
 
-static gchar *
-get_label_size(xfceweather_data *data)
+static const gchar *
+get_label_size(const xfceweather_data *data)
 {
 #if LIBXFCE4PANEL_CHECK_VERSION (4,9,0)
     /* use small label with low number of columns in deskbar mode */
@@ -124,7 +124,7 @@ get_label_size(xfceweather_data *data)
 
 
 static gchar *
-make_label(xfceweather_data *data,
+make_label(const xfceweather_data *data,
            data_types type)
 {
     xml_time *conditions;
@@ -424,7 +424,7 @@ cb_update(const gboolean succeed,
 
 
 static gboolean
-need_astro_update(xfceweather_data *data)
+need_astro_update(const xfceweather_data *data)
 {
     time_t now_t;
     struct tm now_tm, last_tm;
@@ -443,7 +443,7 @@ need_astro_update(xfceweather_data *data)
 
 
 static gboolean
-need_data_update(xfceweather_data *data)
+need_data_update(const xfceweather_data *data)
 {
     time_t now_t;
     gint diff;
@@ -461,7 +461,7 @@ need_data_update(xfceweather_data *data)
 
 
 static gboolean
-need_conditions_update(xfceweather_data *data)
+need_conditions_update(const xfceweather_data *data)
 {
     time_t now_t;
     struct tm now_tm, last_tm;
@@ -884,7 +884,7 @@ xfceweather_create_options(XfcePanelPlugin *plugin,
 
 
 static gchar *
-weather_get_tooltip_text(xfceweather_data *data)
+weather_get_tooltip_text(const xfceweather_data *data)
 {
     xml_time *conditions;
     struct tm *point_tm, *start_tm, *end_tm, *sunrise_tm, *sunset_tm;
