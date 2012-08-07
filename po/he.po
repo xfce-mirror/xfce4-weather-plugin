@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: xfce4-weather-plugin 0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-08-03 02:00+0200\n"
-"PO-Revision-Date: 2012-07-19 20:00+0200\n"
+"PO-Revision-Date: 2012-08-07 14:30+0200\n"
 "Last-Translator: Isratine Citizen <genghiskhan@gmx.ca>\n"
 "Language-Team:  <xfce-i18n@xfce.org>\n"
 "Language: he\n"
@@ -20,11 +20,11 @@ msgstr ""
 #. TRANSLATORS: Keep in sync with labeloptions in weather-config.c
 #: ../panel-plugin/weather.c:137
 msgid "T"
-msgstr ""
+msgstr "T"
 
 #: ../panel-plugin/weather.c:140
 msgid "P"
-msgstr ""
+msgstr "P"
 
 #: ../panel-plugin/weather.c:143
 msgid "WS"
@@ -32,11 +32,11 @@ msgstr "‏WS"
 
 # מע.
 #: ../panel-plugin/weather.c:146
-#, fuzzy
 msgid "WB"
-msgstr "מערב"
+msgstr "WB"
 
-#: ../panel-plugin/weather.c:149 ../panel-plugin/weather.c:152
+#: ../panel-plugin/weather.c:149
+#: ../panel-plugin/weather.c:152
 msgid "WD"
 msgstr "‏WD"
 
@@ -58,22 +58,23 @@ msgstr "‏CH"
 
 #: ../panel-plugin/weather.c:167
 msgid "C"
-msgstr ""
+msgstr "C"
 
 #: ../panel-plugin/weather.c:170
 msgid "F"
-msgstr ""
+msgstr "F"
 
 #: ../panel-plugin/weather.c:173
 msgid "R"
-msgstr ""
+msgstr "R"
 
 # לא קיים
 #: ../panel-plugin/weather.c:241
 msgid "No Data"
 msgstr "אין מידע"
 
-#: ../panel-plugin/weather.c:268 ../panel-plugin/weather.c:1007
+#: ../panel-plugin/weather.c:268
+#: ../panel-plugin/weather.c:1007
 msgid "Cannot update weather data"
 msgstr "לא ניתן לעדכן מידע מזג אויר"
 
@@ -82,29 +83,30 @@ msgstr "לא ניתן לעדכן מידע מזג אויר"
 msgid "Unable to open the following url: %s"
 msgstr "לא ניתן לפתוח את כתובת ה־URL הבאה: %s"
 
-#: ../panel-plugin/weather.c:856 ../panel-plugin/weather-summary.c:752
+#: ../panel-plugin/weather.c:856
+#: ../panel-plugin/weather-summary.c:752
 #: ../panel-plugin/weather.desktop.in.h:1
 msgid "Weather Update"
 msgstr "עדכון מזג אויר"
 
 #: ../panel-plugin/weather.c:899
-#, fuzzy
 msgid "Short-term forecast data unavailable."
-msgstr "אין מידע זמין כעת"
+msgstr "אין מידע חיזוי זמין לטווח קצר."
 
 #: ../panel-plugin/weather.c:914
 msgid "The sun never rises today."
-msgstr ""
+msgstr "השמש לא שוקעת היום."
 
 #: ../panel-plugin/weather.c:916
 msgid "The sun never sets today."
-msgstr ""
+msgstr "השמש לא זורחת היום."
 
 #: ../panel-plugin/weather.c:922
 #, c-format
 msgid "The sun rises at %s and sets at %s."
-msgstr ""
+msgstr "השמש זורחת בשעה %s ושוקעת בשעה %s."
 
+# Needs to be tested
 #.
 #. * TRANSLATORS: Re-arrange and align at will, optionally using
 #. * abbreviations for labels if desired or necessary. Just take
@@ -114,7 +116,7 @@ msgstr ""
 #. * good!
 #.
 #: ../panel-plugin/weather.c:953
-#, c-format
+#, fuzzy, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
 "<b><span size=\"large\">%s</span></b>\n"
@@ -127,10 +129,21 @@ msgid ""
 "\n"
 "<span size=\"smaller\">%s</span>"
 msgstr ""
+"<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
+"<b><span size=\"large\">%s</span></b>\n"
+"<span size=\"smaller\">מן %s אל %s, עם %s משקעים</span>\n"
+"\n"
+"<b>טמפרטורה:</b> %s\t\t<span size=\"smaller\">(ערכים ב־%s)</span>\n"
+"<b>משב:</b> %s (%son the Beaufort scale) מן %s(%s)\n"
+"<b>לחץ:</b> %s    <b>לחות:</b> %s\n"
+"<b>ערפל:</b> %s    <b>מעוננות:</b> %s\n"
+"\n"
+"<span size=\"smaller\">%s</span>"
 
 #. add forecast window to right click menu, for people who missed
 #. the left mouse click feature
-#: ../panel-plugin/weather.c:1108 ../panel-plugin/weather-summary.c:797
+#: ../panel-plugin/weather.c:1108
+#: ../panel-plugin/weather-summary.c:797
 msgid "_Forecast"
 msgstr "_תחזית"
 
@@ -171,26 +184,23 @@ msgstr "כיוון משב במעלות (WD)"
 msgid "Humidity (H)"
 msgstr "לחות (H)"
 
-# עננות
+# עננות נמוכה
+# עננים נמוכים
 #: ../panel-plugin/weather-config.c:55
-#, fuzzy
 msgid "Low clouds (CL)"
 msgstr "מעוננות נמוכה (CL)"
 
 #: ../panel-plugin/weather-config.c:56
-#, fuzzy
 msgid "Medium clouds (CM)"
 msgstr "מעוננות בינונית (CM)"
 
 #: ../panel-plugin/weather-config.c:57
-#, fuzzy
 msgid "High clouds (CH)"
 msgstr "מעוננות גבוהה (CH)"
 
 #: ../panel-plugin/weather-config.c:58
-#, fuzzy
 msgid "Cloudiness (C)"
-msgstr "מעוננות"
+msgstr "מעוננות (C)"
 
 #: ../panel-plugin/weather-config.c:59
 msgid "Fog (F)"
@@ -202,7 +212,8 @@ msgstr "משקעים (R)"
 
 # לא נקבע/ה
 # לא הוגדר/ה
-#: ../panel-plugin/weather-config.c:240 ../panel-plugin/weather-config.c:418
+#: ../panel-plugin/weather-config.c:240
+#: ../panel-plugin/weather-config.c:418
 #: ../panel-plugin/weather-config.c:529
 msgid "Unset"
 msgstr ""
@@ -219,11 +230,14 @@ msgid ""
 "You may edit the location name to your liking.\n"
 "To choose another location, please use the \"Change\" button."
 msgstr ""
+"קו רוחב: %s, קו אורך: %s\n"
+"\n"
+"ביכולתך להגדיר את שם המיקום כרצונך.\n"
+"כדי לבחור מיקום אחר, נא להשתמש בלחצן \"שינוי\"."
 
 #: ../panel-plugin/weather-config.c:390
-#, fuzzy
 msgid "Please select a location by using the \"Change\" button."
-msgstr "נא להזין מיקום בהגדרות התוסף."
+msgstr "נא לבחור מיקום על ידי שימוש בלחצן \"שינוי\"."
 
 #: ../panel-plugin/weather-config.c:430
 msgid "Detecting..."
@@ -245,9 +259,8 @@ msgstr "מטרית"
 
 #. location
 #: ../panel-plugin/weather-config.c:508
-#, fuzzy
 msgid "L_ocation:"
-msgstr "מיקום:"
+msgstr "_מיקום:"
 
 #: ../panel-plugin/weather-config.c:538
 msgid "Chan_ge..."
@@ -255,14 +268,12 @@ msgstr "_שינוי..."
 
 #. proxy settings
 #: ../panel-plugin/weather-config.c:550
-#, fuzzy
 msgid "_Proxy server:"
-msgstr "שרת מתווך:"
+msgstr "שרת מ_תווך:"
 
 #: ../panel-plugin/weather-config.c:555
-#, fuzzy
 msgid "Use proxy _server"
-msgstr "שימוש בשרת מ_תווך"
+msgstr "שימוש ב_שרת מתווך"
 
 #: ../panel-plugin/weather-config.c:557
 msgid "Auto-detect from _environment"
@@ -281,25 +292,24 @@ msgstr "_תוויות להצגה"
 #. button "add"
 #: ../panel-plugin/weather-config.c:637
 msgid "_Add"
-msgstr ""
+msgstr "הוס_פה"
 
 #. button "remove"
 #: ../panel-plugin/weather-config.c:653
 msgid "_Remove"
-msgstr ""
+msgstr "ה_סרה"
 
 #. button "move up"
 #: ../panel-plugin/weather-config.c:659
 msgid "Move _Up"
-msgstr ""
+msgstr "מ_עלה"
 
 #. button "move down"
 #: ../panel-plugin/weather-config.c:665
 msgid "Move _Down"
-msgstr ""
+msgstr "מ_טה"
 
 #: ../panel-plugin/weather-config.c:700
-#, fuzzy
 msgid "Animate _transitions between labels"
 msgstr "ה_נפשת מעברים בין תוויות"
 
@@ -352,24 +362,24 @@ msgid "Failed to get the hostname %s. Retry in %d seconds."
 msgstr "כשל בקבלת מארח %s. ניסיון חוזר בעוד %d שניות."
 
 #: ../panel-plugin/weather-http.c:239
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open the socket(%s)."
-msgstr "כשל בפתיחת ה־socket ‏(%s)."
+msgstr "כשל בפתיחת ה־socket‏(%s)."
 
 #: ../panel-plugin/weather-http.c:245
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to create a connection with the host(%s)."
-msgstr "כשל ביצירת חיבור עם המארח (%s)."
+msgstr "כשל ביצירת חיבור עם המארח(%s)."
 
 #: ../panel-plugin/weather-http.c:282
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to send the request(%s)."
-msgstr "כשל בשליחת הבקשה (%s)."
+msgstr "כשל בשליחת הבקשה(%s)."
 
 #: ../panel-plugin/weather-http.c:330
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to receive data(%s)"
-msgstr "כשל בקבלת מידע (%s)"
+msgstr "כשל בקבלת מידע(%s)"
 
 #: ../panel-plugin/weather-http.c:349
 msgid "Negative content length"
@@ -383,7 +393,8 @@ msgstr "לא ניתן לאתר את אורך התוכן."
 msgid "No content received."
 msgstr "לא התקבל תוכן."
 
-#: ../panel-plugin/weather-search.c:143 ../panel-plugin/weather-search.c:275
+#: ../panel-plugin/weather-search.c:143
+#: ../panel-plugin/weather-search.c:275
 msgid "Results"
 msgstr "תוצאות"
 
@@ -392,14 +403,12 @@ msgid "Searching..."
 msgstr "מחפש כעת..."
 
 #: ../panel-plugin/weather-search.c:220
-#, fuzzy
 msgid "Search location"
-msgstr "חיפוש מיקוד מקום מזג אויר"
+msgstr "חיפוש מקום"
 
 #: ../panel-plugin/weather-search.c:245
-#, fuzzy
 msgid "Enter a city name or address"
-msgstr "נא להזין שם עיר או מיקוד"
+msgstr "נא להזין שם עיר או כתובת"
 
 #.
 #. * TRANSLATORS: Latitude and longitude are known from the
@@ -408,7 +417,7 @@ msgstr "נא להזין שם עיר או מיקוד"
 #.
 #: ../panel-plugin/weather-search.c:420
 msgid "Unnamed place"
-msgstr ""
+msgstr "מקום ללא שם"
 
 #. head
 #: ../panel-plugin/weather-summary.c:312
@@ -451,6 +460,8 @@ msgid ""
 "\tTemperature, wind, atmosphere and cloud data apply to:\n"
 "\t%s\n"
 msgstr ""
+"\tנתוני טמפרטורה, משב, אטמוספרה ומעוננות חלים אל:\n"
+"\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:336
 #, c-format
@@ -468,19 +479,21 @@ msgid ""
 "\n"
 "Astrological Data\n"
 msgstr ""
+"\n"
+"מידע אסטרולוגי\n"
 
 #: ../panel-plugin/weather-summary.c:348
 msgid "\tSunrise:\t\tThe sun never rises today.\n"
-msgstr ""
+msgstr "\tזריחת השמש:\t\tהשמש לא זורחת היום.\n"
 
 #: ../panel-plugin/weather-summary.c:351
 msgid "\tSunset:\t\tThe sun never sets today.\n"
-msgstr ""
+msgstr "\tשקיעת השמש:\t\tהשמש לא שוקעת תהיום.\n"
 
 #: ../panel-plugin/weather-summary.c:356
 #, c-format
 msgid "\tSunrise:\t\t%s\n"
-msgstr ""
+msgstr "\tזריחת השמש:\t\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:361
 #, c-format
@@ -488,37 +501,39 @@ msgid ""
 "\tSunset:\t\t%s\n"
 "\n"
 msgstr ""
+"\tשקיעת השמש:\t\t%s\n"
+"\n"
 
 #: ../panel-plugin/weather-summary.c:366
 #, c-format
 msgid "\tMoon phase:\t%s\n"
-msgstr ""
+msgstr "\tמופע ירח:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:370
 msgid "\tMoon phase:\tUnknown\n"
-msgstr ""
+msgstr "\tמופע ירח:\tלא ידוע\n"
 
 #: ../panel-plugin/weather-summary.c:374
 msgid "\tMoonrise:\tThe moon never rises today.\n"
-msgstr ""
+msgstr "\tזריחת ירח:\tהירח לא זורחת היום.\n"
 
 #: ../panel-plugin/weather-summary.c:377
 msgid "\tMoonset:\tThe moon never sets today.\n"
-msgstr ""
+msgstr "\tשקיעת ירח:\tהירח לא שוקעת היום.\n"
 
 #: ../panel-plugin/weather-summary.c:382
 #, c-format
 msgid "\tMoonrise:\t%s\n"
-msgstr ""
+msgstr "\tזריחת ירח:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:387
 #, c-format
 msgid "\tMoonset:\t%s\n"
-msgstr ""
+msgstr "\tשקיעת ירח:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:391
 msgid "\tData not available, will use sane default values for night and day.\n"
-msgstr ""
+msgstr "\tאין מידע זמין, ייעשה שימוש בערכים משתמטים שקולים עבור יום וליל.\n"
 
 #. temperature
 #: ../panel-plugin/weather-summary.c:397
@@ -672,123 +687,112 @@ msgstr "אין מידע זמין כעת"
 msgid "_Details"
 msgstr "_פרטים"
 
-# ד.
 #. TRANSLATORS: Wind directions. It's where the wind comes _from_.
 #: ../panel-plugin/weather-translate.c:35
 msgid "S"
-msgstr "דרום"
+msgstr "דר'"
 
-# ד.ד.מע.
 #: ../panel-plugin/weather-translate.c:36
 msgid "SSW"
-msgstr "דרום דרום מערב"
+msgstr "דר' דר' מע'"
 
-# ד.מע.
 #: ../panel-plugin/weather-translate.c:37
 msgid "SW"
-msgstr "דרום מערב"
+msgstr "דר' מע'"
 
-# מע.ד.מע.
 #: ../panel-plugin/weather-translate.c:38
 msgid "WSW"
-msgstr "מערב דרום מערב"
+msgstr "מע' דר' מע'"
 
-# מע.
 #: ../panel-plugin/weather-translate.c:39
 msgid "W"
-msgstr "מערב"
+msgstr "מע'"
 
-# מע.צ.מע.
 #: ../panel-plugin/weather-translate.c:40
 msgid "WNW"
-msgstr "מערב צפון מערב"
+msgstr "מע' צפ' מע'"
 
-# צ.מע.
 #: ../panel-plugin/weather-translate.c:41
 msgid "NW"
-msgstr "צפון מערב"
+msgstr "צפ' מע'"
 
-# צ.צ.מע.
 #: ../panel-plugin/weather-translate.c:42
 msgid "NNW"
-msgstr "צפון צפון מערב"
+msgstr "צפ' צפ' מע'"
 
-# צ.
 #: ../panel-plugin/weather-translate.c:43
 msgid "N"
-msgstr "צפון"
+msgstr "צפ'"
 
-# צ.צ.מז.
 #: ../panel-plugin/weather-translate.c:44
 msgid "NNE"
-msgstr "צפון צפון מזרח"
+msgstr "צפ' צפ' מז'"
 
-# צ.מז.
 #: ../panel-plugin/weather-translate.c:45
 msgid "NE"
-msgstr "צפון מזרח"
+msgstr "צפ' מז'"
 
-# מז.צ.מז.
 #: ../panel-plugin/weather-translate.c:46
 msgid "ENE"
-msgstr "מזרח צפון מזרח"
+msgstr "מז' צפ' מז'"
 
-# מז.
 #: ../panel-plugin/weather-translate.c:47
 msgid "E"
-msgstr "מזרח"
+msgstr "מז'"
 
-# מז.ד.מז.
 #: ../panel-plugin/weather-translate.c:48
 msgid "ESE"
-msgstr "מזרח דרום מזרח"
+msgstr "מז' דר' מז'"
 
-# ד.מז.
 #: ../panel-plugin/weather-translate.c:49
 msgid "SE"
-msgstr "דרום מזרח"
+msgstr "דר' מז'"
 
-# ד.ד.מז.
 #: ../panel-plugin/weather-translate.c:50
 msgid "SSE"
-msgstr "דרום דרום מזרח"
+msgstr "דר' דר' מז'"
 
 #: ../panel-plugin/weather-translate.c:51
 msgid "CALM"
 msgstr "שלו"
 
+# פאזת, צורת
 #. TRANSLATORS: Moon phases
 #: ../panel-plugin/weather-translate.c:57
 msgid "New moon"
-msgstr ""
+msgstr "מופע ירח"
 
+# Waxing Crescent Moon
 #: ../panel-plugin/weather-translate.c:58
 msgid "Waxing crescent"
-msgstr ""
+msgstr "ירח קשתי (מתמלא)"
 
 #: ../panel-plugin/weather-translate.c:59
 msgid "First quarter"
-msgstr ""
+msgstr "רבעון ראשון"
 
+# Waxing Gibbous Moon
 #: ../panel-plugin/weather-translate.c:60
 msgid "Waxing gibbous"
-msgstr ""
+msgstr "ירח מקומר (מתמלא)"
 
 #: ../panel-plugin/weather-translate.c:61
 msgid "Full moon"
-msgstr ""
+msgstr "ירח מלא"
 
+# Waning Gibbous Moon
 #: ../panel-plugin/weather-translate.c:62
 msgid "Waning gibbous"
-msgstr ""
+msgstr "ירח מקומר (מתמעט)"
 
 #: ../panel-plugin/weather-translate.c:63
 msgid "Third quarter"
-msgstr ""
+msgstr "רבעון שלישי"
 
+# Waning Crescent Moon
 #: ../panel-plugin/weather-translate.c:64
 msgid "Waning crescent"
-msgstr ""
+msgstr "ירח קשתי (מתמעט)"
 
 #.
 #. * TRANSLATORS: Some of these terms seem to contradict
