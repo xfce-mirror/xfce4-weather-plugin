@@ -777,7 +777,8 @@ create_summary_window (xfceweather_data *data)
     if (G_LIKELY(icon))
         g_object_unref(G_OBJECT(icon));
 
-    if (data->location_name == NULL || data->weatherdata == NULL) {
+    if (data->location_name == NULL || data->weatherdata == NULL ||
+        data->weatherdata->current_conditions == NULL) {
         hbox = gtk_hbox_new(FALSE, 0);
         if (data->location_name == NULL)
             label = gtk_label_new(_("Please set a location in the plugin settings."));
