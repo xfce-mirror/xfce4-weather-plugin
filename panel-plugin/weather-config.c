@@ -214,7 +214,7 @@ sanitize_location_name(const gchar *location_name)
     pos = g_utf8_strchr(location_name, -1, ',');
     if (pos != NULL) {
         pos2 = pos;
-        while (pos2 = g_utf8_next_char(pos2))
+        while ((pos2 = g_utf8_next_char(pos2)))
             if (g_utf8_get_char(pos2) == ',') {
                 pos = pos2;
                 break;

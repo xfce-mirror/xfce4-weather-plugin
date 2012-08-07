@@ -42,7 +42,7 @@ has_timeslice(xml_weather *data,
               const time_t start_t,
               const time_t end_t)
 {
-    int i = 0;
+    guint i = 0;
 
     for (i = 0; i < data->num_timeslices; i++)
         if (data->timeslice[i]->start == start_t &&
@@ -363,7 +363,7 @@ find_shortest_timeslice(xml_weather *data,
 {
     xml_time *interval_data;
     time_t start_t, end_t;
-    gint hours, interval;
+    gint interval;
 
     /* set start and end times to the exact hour */
     end_tm.tm_min = start_tm.tm_min = 0;
@@ -462,8 +462,7 @@ make_current_conditions(xml_weather *data)
 {
     xml_time *conditions, *point_data, *interval_data;
     struct tm now_tm, start_tm, end_tm;
-    time_t now_t, start_t, end_t;
-    gint interval;
+    time_t now_t, end_t;
 
     /* get the current time */
     time(&now_t);
@@ -515,7 +514,7 @@ make_forecast_data(xml_weather *data,
                    const daytime dt)
 {
     xml_time *forecast = NULL, *point_data = NULL, *interval_data = NULL;
-    struct tm now_tm, start_tm, end_tm;
+    struct tm start_tm, end_tm;
     time_t now_t, start_t, end_t;
     gint interval;
 

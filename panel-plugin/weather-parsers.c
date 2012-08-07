@@ -282,7 +282,6 @@ parse_astro_location(xmlNode *cur_node,
                      xml_astro *astro)
 {
     xmlNode *child_node;
-    time_t sunrise_t, sunset_t, moonrise_t, moonset_t;
     gchar *sunrise, *sunset, *moonrise, *moonset;
     gchar *never_rises, *never_sets;
 
@@ -356,7 +355,7 @@ parse_astro_location(xmlNode *cur_node,
 xml_astro *
 parse_astro(xmlNode *cur_node)
 {
-    xmlNode *child_node, *time_node = NULL, *location_node = NULL;
+    xmlNode *child_node, *time_node = NULL;
     xml_astro *astro;
 
     if (cur_node == NULL || !NODE_IS_TYPE(cur_node, "astrodata"))
