@@ -891,7 +891,7 @@ weather_get_tooltip_text(const xfceweather_data *data)
     gchar *text, *sym, *symbol, *alt, *lat, *lon, *temp;
     gchar *windspeed, *windbeau, *winddir, *winddeg;
     gchar *pressure, *humidity, *precipitations;
-    gchar *fog, *cloudiness, *sun, *value;
+    gchar *fog, *cloudiness, *sunval, *value;
     gchar sunrise[40], sunset[40];
     gchar point[40], interval_start[40], interval_end[40];
     const gchar *unit;
@@ -913,19 +913,19 @@ weather_get_tooltip_text(const xfceweather_data *data)
     /* use sunrise and sunset times if available */
     if (data->astrodata)
         if (data->astrodata->sun_never_rises) {
-            sun = g_strdup(_("The sun never rises today."));
+            sunval = g_strdup(_("The sun never rises today."));
         } else if (data->astrodata->sun_never_sets) {
-            sun = g_strdup(_("The sun never sets today."));
+            sunval = g_strdup(_("The sun never sets today."));
         } else {
             sunrise_tm = localtime(&data->astrodata->sunrise);
             strftime(sunrise, 40, "%X", sunrise_tm);
             sunset_tm = localtime(&data->astrodata->sunset);
             strftime(sunset, 40, "%X", sunset_tm);
-            sun = g_strdup_printf(_("The sun rises at %s and sets at %s."),
+            sunval = g_strdup_printf(_("The sun rises at %s and sets at %s."),
                                   sunrise, sunset);
         }
     else
-        sun = g_strdup_printf("");
+        sunval = g_strdup_printf("");
 
     sym = get_data(conditions, data->unit_system, SYMBOL);
     DATA_AND_UNIT(symbol, SYMBOL);
@@ -972,8 +972,8 @@ weather_get_tooltip_text(const xfceweather_data *data)
          windspeed, windbeau, winddir, winddeg,
          pressure, humidity,
          fog, cloudiness,
-         sun);
-    g_free(sun);
+         sunval);
+    g_free(sunval);
     g_free(sym);
     g_free(symbol);
     g_free(alt);
