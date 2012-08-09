@@ -273,7 +273,7 @@ apply_options(xfceweather_dialog *dialog)
     data->location_name =
         g_strdup(gtk_entry_get_text(GTK_ENTRY(dialog->txt_loc_name)));
 
-    /* force update of astrological data */
+    /* force update of astronomical data */
     memset(&data->last_astro_update, 0, sizeof(data->last_astro_update));
 
     /* call labels_clear() here */

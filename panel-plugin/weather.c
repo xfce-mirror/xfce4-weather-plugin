@@ -499,7 +499,7 @@ update_weatherdata(xfceweather_data *data)
         return TRUE;
     }
 
-    /* fetch astrological data */
+    /* fetch astronomical data */
     if (need_astro_update(data)) {
         now_t = time(NULL);
         now_tm = *localtime(&now_t);

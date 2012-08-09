@@ -342,7 +342,7 @@ create_summary_tab(xfceweather_data *data)
     APPEND_TEXT_ITEM_REAL(value);
 
     /* sun and moon */
-    APPEND_BTEXT(_("\nAstrological Data\n"));
+    APPEND_BTEXT(_("\nAstronomical Data\n"));
     if (data->astrodata) {
         if (data->astrodata->sun_never_rises) {
             value = g_strdup(_("\tSunrise:\t\tThe sun never rises today.\n"));
