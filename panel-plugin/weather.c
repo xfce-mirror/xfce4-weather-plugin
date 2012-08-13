@@ -224,7 +224,6 @@ set_icon_error(xfceweather_data *data)
     GdkPixbuf *icon;
     const gchar *txtsize;
     gchar *str;
-    gint height;
 
     if (data->weatherdata) {
         xml_weather_free(data->weatherdata);
@@ -237,8 +236,6 @@ set_icon_error(xfceweather_data *data)
     gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox), -1, str);
     g_free(str);
 
-    gtk_widget_get_size_request(data->scrollbox, NULL, &height);
-
 #if LIBXFCE4PANEL_CHECK_VERSION(4,9,0)
     /* make icon double-size in deskbar mode */
     if (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_DESKBAR &&
@@ -247,10 +244,7 @@ set_icon_error(xfceweather_data *data)
     else
         icon = get_icon(NULL, data->size, FALSE);
 #else
-    if (data->panel_orientation == GTK_ORIENTATION_VERTICAL)
-        icon = get_icon(NULL, data->size - height - 2, FALSE);
-    else
-        icon = get_icon(NULL, data->size, FALSE);
+    icon = get_icon(NULL, data->size, FALSE);
 #endif
 
     gtk_image_set_from_pixbuf(GTK_IMAGE(data->iconimage), icon);
@@ -268,7 +262,7 @@ set_icon_current(xfceweather_data *data)
     GdkPixbuf *icon = NULL;
     data_types type;
     gchar *str;
-    gint size, height;
+    gint size;
 
     for (i = 0; i < data->labels->len; i++) {
         type = g_array_index(data->labels, data_types, i);
@@ -277,24 +271,16 @@ set_icon_current(xfceweather_data *data)
         g_free(str);
     }
 
-    if (i == 0)
-        size = data->size;
-    else {
-        gtk_widget_get_size_request(data->scrollbox, NULL, &height);
 #if LIBXFCE4PANEL_CHECK_VERSION(4,9,0)
-        /* make icon double-size in deskbar mode */
-        if (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_DESKBAR &&
-            data->size != data->panel_size)
-            size = data->size * 2;
-        else
-            size = data->size;
+    /* make icon double-size in deskbar mode */
+    if (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_DESKBAR &&
+        data->size != data->panel_size)
+        size = data->size * 2;
+    else
+        size = data->size;
 #else
-        if (data->panel_orientation == GTK_ORIENTATION_VERTICAL)
-            size = data->size - height - 2;
-        else
-            size = data->size;
+    size = data->size;
 #endif
-    }
 
     /* get current weather conditions */
     conditions = get_current_conditions(data->weatherdata);
