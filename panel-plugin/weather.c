@@ -537,8 +537,10 @@ update_weatherdata(xfceweather_data *data)
     }
 
     /* update current conditions, icon and labels */
-    if (need_conditions_update(data))
+    if (need_conditions_update(data)) {
+        gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
         update_current_conditions(data);
+    }
 
     /* update night time status and icon */
     night_time = is_night_time(data->astrodata);
