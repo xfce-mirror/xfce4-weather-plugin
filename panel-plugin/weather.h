@@ -29,10 +29,6 @@ G_BEGIN_DECLS
 typedef struct {
     XfcePanelPlugin *plugin;
 
-#if !GTK_CHECK_VERSION(2,12,0)
-    GtkTooltips *tooltips;
-#endif
-
     GtkWidget *top_vbox;
     GtkWidget *top_hbox;
     GtkWidget *vbox_center_scrollbox;

@@ -42,11 +42,6 @@
 #define BORDER 8
 
 
-#if !GLIB_CHECK_VERSION(2,14,0)
-#define g_timeout_add_seconds(t, c, d) g_timeout_add((t) * 1000, (c), (d))
-#endif
-
-
 #define DATA_AND_UNIT(var, item)                            \
     value = get_data(conditions, data->unit_system, item);  \
     unit = get_unit(data->unit_system, item);               \
@@ -103,7 +98,7 @@ check_envproxy(gchar **proxy_host,
 static const gchar *
 get_label_size(const xfceweather_data *data)
 {
-#if LIBXFCE4PANEL_CHECK_VERSION (4,9,0)
+#if LIBXFCE4PANEL_CHECK_VERSION(4,9,0)
     /* use small label with low number of columns in deskbar mode */
     if (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_DESKBAR)
         if (data->panel_size > 99)
@@ -244,7 +239,7 @@ set_icon_error(xfceweather_data *data)
 
     gtk_widget_get_size_request(data->scrollbox, NULL, &height);
 
-#if LIBXFCE4PANEL_CHECK_VERSION (4,9,0)
+#if LIBXFCE4PANEL_CHECK_VERSION(4,9,0)
     /* make icon double-size in deskbar mode */
     if (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_DESKBAR &&
         data->size != data->panel_size)
@@ -262,11 +257,6 @@ set_icon_error(xfceweather_data *data)
 
     if (G_LIKELY(icon))
         g_object_unref(G_OBJECT(icon));
-
-#if !GTK_CHECK_VERSION(2,12,0)
-    gtk_tooltips_set_tip(data->tooltips, data->tooltipbox,
-                         _("Cannot update weather data"), NULL);
-#endif
 }
 
 
@@ -317,14 +307,6 @@ set_icon_current(xfceweather_data *data)
 
     if (G_LIKELY(icon))
         g_object_unref(G_OBJECT(icon));
-
-#if !GTK_CHECK_VERSION(2,12,0)
-    str = get_data(conditions, data->unit_system, SYMBOL);
-    gtk_tooltips_set_tip(data->tooltips, data->tooltipbox,
-                         translate_desc(str, data->night_time),
-                         NULL);
-    g_free(str);
-#endif
 }
 
 
@@ -1048,11 +1030,6 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     data->animation_transitions = FALSE;
     data->forecast_days = DEFAULT_FORECAST_DAYS;
 
-#if !GTK_CHECK_VERSION(2,12,0)
-    data->tooltips = gtk_tooltips_new();
-    g_object_ref(data->tooltips);
-    gtk_object_sink(GTK_OBJECT(data->tooltips));
-#endif
     data->scrollbox = gtk_scrollbox_new();
 
     data->size = xfce_panel_plugin_get_size(plugin);
@@ -1083,12 +1060,10 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     gtk_event_box_set_visible_window(GTK_EVENT_BOX(data->tooltipbox), FALSE);
     gtk_widget_show_all(data->tooltipbox);
 
-#if GTK_CHECK_VERSION(2,12,0)
     g_object_set(G_OBJECT(data->tooltipbox), "has-tooltip", TRUE, NULL);
     g_signal_connect(G_OBJECT(data->tooltipbox), "query-tooltip",
                      G_CALLBACK(weather_get_tooltip_cb),
                      data);
-#endif
     xfce_panel_plugin_add_action_widget(plugin, data->tooltipbox);
 
     g_signal_connect(G_OBJECT(data->tooltipbox), "button-press-event",
@@ -1165,12 +1140,6 @@ xfceweather_free(XfcePanelPlugin *plugin,
     }
 
     xmlCleanupParser();
-
-    /* free tooltip */
-#if !GTK_CHECK_VERSION(2,12,0)
-    gtk_tooltips_set_tip(data->tooltips, data->tooltipbox, NULL, NULL);
-    g_object_unref(G_OBJECT(data->tooltips));
-#endif
 
     /* free chars */
     g_free(data->lat);

@@ -371,7 +371,6 @@ option_i(const data_types opt)
 }
 
 
-#if GTK_CHECK_VERSION(2,12,0)
 static void
 set_location_tooltip(xfceweather_dialog *dialog,
                      const gchar *lat,
@@ -392,7 +391,6 @@ set_location_tooltip(xfceweather_dialog *dialog,
     gtk_widget_set_tooltip_text(dialog->txt_loc_name, text);
     g_free(text);
 }
-#endif
 
 
 static void
@@ -409,9 +407,7 @@ auto_locate_cb(const gchar *loc_name,
         gtk_entry_set_text(GTK_ENTRY(dialog->txt_lon), lon);
         gtk_entry_set_text(GTK_ENTRY(dialog->txt_loc_name), loc_name);
         gtk_widget_set_sensitive(dialog->txt_loc_name, TRUE);
-#if GTK_CHECK_VERSION(2,12,0)
         set_location_tooltip(dialog, lat, lon);
-#endif
     } else {
         gtk_entry_set_text(GTK_ENTRY(dialog->txt_lat), "");
         gtk_entry_set_text(GTK_ENTRY(dialog->txt_lon), "");
@@ -453,9 +449,7 @@ cb_findlocation(GtkButton *button,
         gtk_entry_set_text(GTK_ENTRY(dialog->txt_loc_name), loc_name);
         g_free(loc_name);
         gtk_widget_set_sensitive(dialog->txt_loc_name, TRUE);
-#if GTK_CHECK_VERSION(2,12,0)
         set_location_tooltip(dialog, sdialog->result_lat, sdialog->result_lon);
-#endif
     }
     free_search_dialog(sdialog);
     gtk_widget_set_sensitive(GTK_WIDGET(button), TRUE);
@@ -528,9 +522,7 @@ create_config_dialog(xfceweather_data *data,
     else
         gtk_entry_set_text(GTK_ENTRY(dialog->txt_loc_name), _("Unset"));
     gtk_entry_set_max_length(GTK_ENTRY(dialog->txt_loc_name), LOC_NAME_MAX_LEN);
-#if GTK_CHECK_VERSION(2,12,0)
     set_location_tooltip(dialog, dialog->wd->lat, dialog->wd->lon);
-#endif
     if ((dialog->wd->lat == NULL || dialog->wd->lon == NULL) ||
         (! strlen(dialog->wd->lat) || ! strlen(dialog->wd->lon)))
         start_auto_locate(dialog);

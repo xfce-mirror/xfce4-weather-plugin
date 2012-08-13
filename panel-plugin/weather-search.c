@@ -230,11 +230,7 @@ create_search_dialog(GtkWindow *parent,
                                       GTK_RESPONSE_ACCEPT, FALSE);
     gtk_window_set_icon_name(GTK_WINDOW(dialog->dialog), GTK_STOCK_FIND);
 
-#if GTK_CHECK_VERSION(2,14,0)
     dialog_vbox = gtk_dialog_get_content_area(GTK_DIALOG(dialog->dialog));
-#else
-    dialog_vbox = GTK_DIALOG(dialog->dialog)->vbox;
-#endif
 
     vbox = gtk_vbox_new(FALSE, BORDER);
     gtk_container_set_border_width(GTK_CONTAINER(vbox), 6);
