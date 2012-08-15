@@ -45,22 +45,22 @@
 
 /*
  * This is a portable replacement for the deprecated timegm(),
- * copied from the man page.
+ * copied from the man page and modified to use GLIB functions.
  */
 static time_t
 my_timegm(struct tm *tm)
 {
     time_t ret;
-    char *tz;
+    const char *tz;
 
-    tz = getenv("TZ");
-    setenv("TZ", "", 1);
+    tz = g_getenv("TZ");
+    g_setenv("TZ", "", 1);
     tzset();
     ret = mktime(tm);
     if (tz)
-        setenv("TZ", tz, 1);
+        g_setenv("TZ", tz, 1);
     else
-        unsetenv("TZ");
+        g_unsetenv("TZ");
     tzset();
     return ret;
 }
