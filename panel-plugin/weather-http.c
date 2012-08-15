@@ -20,6 +20,13 @@
 #include <config.h>
 #endif
 
+/* Some GLIBC library functions require the following #defines to
+ * appear before the appropriate #includes, or compilation might
+ * fail. */
+#define _XOPEN_SOURCE
+#define _XOPEN_SOURCE_EXTENDED 1
+#define _BSD_SOURCE
+
 #include <sys/select.h>
 #include <sys/time.h>
 #include <sys/types.h>
