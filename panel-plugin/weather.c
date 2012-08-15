@@ -219,89 +219,65 @@ make_label(const xfceweather_data *data,
 
 
 static void
-set_icon_error(xfceweather_data *data)
+update_icon(xfceweather_data *data)
 {
-    GdkPixbuf *icon;
-    const gchar *txtsize;
+    GdkPixbuf *icon = NULL;
+    xml_time *conditions;
     gchar *str;
+    gint size;
 
-    if (data->weatherdata) {
-        xml_weather_free(data->weatherdata);
-        data->weatherdata = NULL;
-    }
-
-    txtsize = get_label_size(data);
-
-    str = g_strdup_printf("<span size=\"%s\">%s</span>", txtsize, _("No Data"));
-    gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox), -1, str);
-    g_free(str);
-
+    size = data->size;
 #if LIBXFCE4PANEL_CHECK_VERSION(4,9,0)
     /* make icon double-size in deskbar mode */
     if (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_DESKBAR &&
         data->size != data->panel_size)
-        icon = get_icon(NULL, data->size * 2, FALSE);
-    else
-        icon = get_icon(NULL, data->size, FALSE);
-#else
-    icon = get_icon(NULL, data->size, FALSE);
+        size *= 2;
 #endif
 
+    /* set icon according to current weather conditions */
+    conditions = get_current_conditions(data->weatherdata);
+    str = get_data(conditions, data->unit_system, SYMBOL);
+    icon = get_icon(str, size, data->night_time);
+    g_free(str);
     gtk_image_set_from_pixbuf(GTK_IMAGE(data->iconimage), icon);
-
     if (G_LIKELY(icon))
         g_object_unref(G_OBJECT(icon));
 }
 
 
 static void
-set_icon_current(xfceweather_data *data)
+update_scrollbox(xfceweather_data *data)
 {
     xml_time *conditions;
     guint i;
-    GdkPixbuf *icon = NULL;
     data_types type;
+    const gchar *txtsize;
     gchar *str;
     gint size;
 
-    for (i = 0; i < data->labels->len; i++) {
-        type = g_array_index(data->labels, data_types, i);
-        str = make_label(data, type);
+    txtsize = get_label_size(data);
+    gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
+    if (data->weatherdata)
+        for (i = 0; i < data->labels->len; i++) {
+            type = g_array_index(data->labels, data_types, i);
+            str = make_label(data, type);
+            gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox), -1, str);
+            g_free(str);
+        }
+    else {
+        str = g_strdup_printf("<span size=\"%s\">%s</span>", txtsize, _("No Data"));
         gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox), -1, str);
         g_free(str);
     }
-
-#if LIBXFCE4PANEL_CHECK_VERSION(4,9,0)
-    /* make icon double-size in deskbar mode */
-    if (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_DESKBAR &&
-        data->size != data->panel_size)
-        size = data->size * 2;
-    else
-        size = data->size;
-#else
-    size = data->size;
-#endif
-
-    /* get current weather conditions */
-    conditions = get_current_conditions(data->weatherdata);
-
-    str = get_data(conditions, data->unit_system, SYMBOL);
-    icon = get_icon(str, size, data->night_time);
-    g_free(str);
-
-    gtk_image_set_from_pixbuf(GTK_IMAGE(data->iconimage), icon);
-
-    if (G_LIKELY(icon))
-        g_object_unref(G_OBJECT(icon));
 }
 
 
 static void
 update_current_conditions(xfceweather_data *data)
 {
-    if (G_UNLIKELY(data == NULL) ||
-        G_UNLIKELY(data->weatherdata == NULL)) {
-        set_icon_error(data);
+    if (G_UNLIKELY(data->weatherdata == NULL)) {
+        update_icon(data);
+        update_scrollbox(data);
         return;
     }
 
@@ -314,7 +290,8 @@ update_current_conditions(xfceweather_data *data)
         make_current_conditions(data->weatherdata);
     data->last_conditions_update = time(NULL);
     data->night_time = is_night_time(data->astrodata);
-    set_icon_current(data);
+    update_icon(data);
+    update_scrollbox(data);
 }
 
 
@@ -381,9 +358,9 @@ cb_update(const gboolean succeed,
         }
     }
 
-    gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
-
-    if (weather) {
+    if (G_LIKELY(weather)) {
+        if (G_LIKELY(data->weatherdata))
+            xml_weather_free(data->weatherdata);
         data->weatherdata = weather;
         data->last_data_update = time(NULL);
     }
@@ -462,8 +439,8 @@ update_weatherdata(xfceweather_data *data)
 
     if ((!data->lat || !data->lon) ||
         strlen(data->lat) == 0 || strlen(data->lon) == 0) {
-        gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
-        set_icon_error(data);
+        update_icon(data);
+        update_scrollbox(data);
         return TRUE;
     }
 
@@ -505,19 +482,14 @@ update_weatherdata(xfceweather_data *data)
     }
 
     /* update current conditions, icon and labels */
-    if (need_conditions_update(data)) {
-        gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
+    if (need_conditions_update(data))
         update_current_conditions(data);
-    }
 
     /* update night time status and icon */
     night_time = is_night_time(data->astrodata);
     if (data->night_time != night_time) {
         data->night_time = night_time;
-        if (data->weatherdata)
-            set_icon_current(data);
-        else
-            set_icon_error(data);
+        update_icon(data);
     }
 
     /* keep timeout running */
@@ -892,7 +864,7 @@ weather_get_tooltip_text(const xfceweather_data *data)
             sunset_tm = localtime(&data->astrodata->sunset);
             strftime(sunset, 40, "%X", sunset_tm);
             sunval = g_strdup_printf(_("The sun rises at %s and sets at %s."),
-                                  sunrise, sunset);
+                                     sunrise, sunset);
         }
     else
         sunval = g_strdup_printf("");
@@ -1153,12 +1125,8 @@ xfceweather_set_size(XfcePanelPlugin *panel,
 #endif
     data->size = size;
 
-    gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
-
-    if (data->weatherdata)
-        set_icon_current(data);
-    else
-        set_icon_error(data);
+    update_icon(data);
+    update_scrollbox(data);
 
     /* we handled the size */
     return TRUE;
@@ -1193,14 +1161,11 @@ xfceweather_set_mode(XfcePanelPlugin *panel,
     else
         xfce_panel_plugin_set_small(XFCE_PANEL_PLUGIN(panel), TRUE);
 
-    gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
     gtk_scrollbox_set_orientation(GTK_SCROLLBOX(data->scrollbox),
                                   data->orientation);
 
-    if (data->weatherdata)
-        set_icon_current(data);
-    else
-        set_icon_error(data);
+    update_icon(data);
+    update_scrollbox(data);
 
     /* we handled the orientation */
     return TRUE;
@@ -1231,14 +1196,11 @@ xfceweather_set_orientation(XfcePanelPlugin *panel,
                            data->vbox_center_scrollbox, TRUE, FALSE, 0);
     g_object_unref(G_OBJECT(data->vbox_center_scrollbox));
 
-    gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
     gtk_scrollbox_set_orientation(GTK_SCROLLBOX(data->scrollbox),
                                   data->panel_orientation);
 
-    if (data->weatherdata)
-        set_icon_current(data);
-    else
-        set_icon_error(data);
+    update_icon(data);
+    update_scrollbox(data);
 
     /* we handled the orientation */
     return TRUE;
