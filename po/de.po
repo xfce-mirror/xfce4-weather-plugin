@@ -4,7 +4,7 @@
 # Oliver Krieger <oliver@mc5sys.de>, 2005.
 # Enrico Tröger <enrico.troeger@uvena.de>, 2006-2007.
 # Fabian Nowak <timystery@arcor.de>, 2007.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-weather-plugin 0.6.0\n"
@@ -13,12 +13,12 @@ msgstr ""
 "PO-Revision-Date: 2012-08-07 14:39+0100\n"
 "Last-Translator: Raphael Groner <raphgro-at-web.de>\n"
 "Language-Team: German <xfce-i18n@xfce.org>\n"
-"Language: de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: German\n"
 "X-Poedit-Country: GERMANY\n"
+"Language: de\n"
+"X-Poedit-Language: German\n"
 
 #. TRANSLATORS: Keep in sync with labeloptions in weather-config.c
 #: ../panel-plugin/weather.c:137
@@ -37,8 +37,7 @@ msgstr "WG"
 msgid "WB"
 msgstr "WB"
 
-#: ../panel-plugin/weather.c:149
-#: ../panel-plugin/weather.c:152
+#: ../panel-plugin/weather.c:149 ../panel-plugin/weather.c:152
 msgid "WD"
 msgstr "WR"
 
@@ -74,8 +73,7 @@ msgstr "R"
 msgid "No Data"
 msgstr "Keine Daten"
 
-#: ../panel-plugin/weather.c:268
-#: ../panel-plugin/weather.c:1007
+#: ../panel-plugin/weather.c:268 ../panel-plugin/weather.c:1007
 msgid "Cannot update weather data"
 msgstr "Wetterdaten können nicht aktualisiert werden"
 
@@ -84,8 +82,7 @@ msgstr "Wetterdaten können nicht aktualisiert werden"
 msgid "Unable to open the following url: %s"
 msgstr "Folgende Adresse kann nicht geöffnet werden: %s"
 
-#: ../panel-plugin/weather.c:856
-#: ../panel-plugin/weather-summary.c:752
+#: ../panel-plugin/weather.c:856 ../panel-plugin/weather-summary.c:752
 #: ../panel-plugin/weather.desktop.in.h:1
 msgid "Weather Update"
 msgstr "Wetterbericht"
@@ -108,16 +105,15 @@ msgstr "Die Sonne wird heute nicht untergehen."
 #: ../panel-plugin/weather.c:922
 #, fuzzy, c-format
 msgid "The sun rises at %s and sets at %s."
-msgstr "Die Sonne geht um %s auf und um %s unter."
+msgstr "Sonnenaufgang ist um %s und Sonnenuntergang um %s."
 
-#.
 #. * TRANSLATORS: Re-arrange and align at will, optionally using
 #. * abbreviations for labels if desired or necessary. Just take
 #. * into account the possible size constraints, the centered
 #. * vertical alignment of the icon - which unfortunately cannot
 #. * be changed easily - and try to make it compact and look
 #. * good!
-#.
+#. 
 #: ../panel-plugin/weather.c:953
 #, fuzzy, c-format
 msgid ""
@@ -145,12 +141,10 @@ msgstr ""
 
 #. add forecast window to right click menu, for people who missed
 #. the left mouse click feature
-#: ../panel-plugin/weather.c:1108
-#: ../panel-plugin/weather-summary.c:797
+#: ../panel-plugin/weather.c:1108 ../panel-plugin/weather-summary.c:797
 msgid "_Forecast"
 msgstr "Vorhersage"
 
-#.
 #. * TRANSLATORS: The abbreviations in parentheses will be shown in
 #. * the scrollbox together with the values. Keep them in sync with
 #. * those in make_label() in weather.c. Some of them may be
@@ -158,7 +152,7 @@ msgstr "Vorhersage"
 #. * read that up somewhere and decide whether you want to use them
 #. * or not. In general, though, you should just try to choose
 #. * letter(s) that make sense and don't use up too much space.
-#.
+#. 
 #: ../panel-plugin/weather-config.c:48
 msgid "Temperature (T)"
 msgstr "Temperatur (T)"
@@ -211,8 +205,7 @@ msgstr "Nebel (N)"
 msgid "Precipitations (R)"
 msgstr "Niederschlag (R)"
 
-#: ../panel-plugin/weather-config.c:240
-#: ../panel-plugin/weather-config.c:418
+#: ../panel-plugin/weather-config.c:240 ../panel-plugin/weather-config.c:418
 #: ../panel-plugin/weather-config.c:529
 msgid "Unset"
 msgstr "Nicht gesetzt"
@@ -360,7 +353,7 @@ msgstr "Konnte den Hostnamen »%s« nicht ansprechen. Neuer Versuch in %d Sekund
 #: ../panel-plugin/weather-http.c:239
 #, fuzzy, c-format
 msgid "Failed to open the socket(%s)."
-msgstr "Fehler beim Öffnen des Socket (%s)."
+msgstr "Fehler beim Öffnen des Sockets (%s)."
 
 #: ../panel-plugin/weather-http.c:245
 #, fuzzy, c-format
@@ -389,8 +382,7 @@ msgstr "Länge des Inhalts kann nicht bestimmt werden."
 msgid "No content received."
 msgstr "Keine Daten erhalten."
 
-#: ../panel-plugin/weather-search.c:143
-#: ../panel-plugin/weather-search.c:275
+#: ../panel-plugin/weather-search.c:143 ../panel-plugin/weather-search.c:275
 msgid "Results"
 msgstr "Ergebnisse"
 
@@ -408,11 +400,10 @@ msgstr "Wetterstationscode suchen"
 msgid "Enter a city name or address"
 msgstr "Geben Sie eine Stadt oder Postleitzahl an"
 
-#.
 #. * TRANSLATORS: Latitude and longitude are known from the
 #. * search results, but not the location name. The user shall
 #. * give the place a name.
-#.
+#. 
 #: ../panel-plugin/weather-search.c:420
 #, fuzzy
 msgid "Unnamed place"
@@ -528,7 +519,7 @@ msgstr "\tMondaufgang:\tDer Mond ist heute nicht zu sehen.\n"
 #: ../panel-plugin/weather-summary.c:377
 #, fuzzy
 msgid "\tMoonset:\tThe moon never sets today.\n"
-msgstr "\tMonduntergang:\tDer Mond ist heute ganz zu sehen.\n"
+msgstr "\tMonduntergang:\tDer Mond ist heute immer zu sehen.\n"
 
 #: ../panel-plugin/weather-summary.c:382
 #, fuzzy, c-format
@@ -805,7 +796,6 @@ msgstr "Dreiviertel"
 msgid "Waning crescent"
 msgstr "Abnehmende Sichel"
 
-#.
 #. * TRANSLATORS: Some of these terms seem to contradict
 #. * themselves. If I'm not mistaken, this is because the forecasts
 #. * are for certain time periods which may be 1, 3 or 6 hours, and
@@ -813,7 +803,7 @@ msgstr "Abnehmende Sichel"
 #. * states. For more information, you might want to read
 #. * http://api.met.no/weatherapi/locationforecastlts/1.1/documentation,
 #. * but unfortunately it is not very revealing either.
-#.
+#. 
 #: ../panel-plugin/weather-translate.c:117
 #: ../panel-plugin/weather-translate.c:133
 msgid "Sunny"
@@ -948,7 +938,6 @@ msgstr "k.A."
 msgid "Show current weather conditions"
 msgstr "Zeigt das aktuelle Wetter"
 
-#, fuzzy
 #~ msgid "Untitled"
 #~ msgstr "Ohne Titel"
 
