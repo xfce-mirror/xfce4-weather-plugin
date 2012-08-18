@@ -8,3 +8,42 @@ http://api.met.no/license_data.html
 Especially for information about the different types of data, please
 read the FAQ:
 http://api.yr.no/faq.html
+
+
+DEBUGGING AND REPORTING BUGS
+==========================================================================
+Before reporting bugs or asking for new features, please consolidate
+the Xfce bug tracker at https://bugzilla.xfce.org and check the TODO
+file, because your issue or request might have been reported already
+or be in planning. However, feel free to add any information not yet
+mentioned that you find useful.
+
+If you encounter problems like crashes or weird behaviour, it might
+prove insightful to enable panel debugging as follows:
+
+1) Quit the current running panel instance using 'xfce4-panel -q'.
+2) Set the PANEL_DEBUG environment variable to 'weather' or 'all':
+   export PANEL_DEBUG=weather
+3) Start the panel and let it write its output to a file, e.g.:
+   xfce4-panel > panel.log 2>&1 & disown
+4) Watch output using tail -f or less or whatever you like:
+   tail -f panel.log
+
+This will make the plugin explain what it's currently doing and dump
+data it downloaded from the various sources. More information about
+debugging panel plugins can be obtained from several pages of the Xfce
+Wiki at https://wiki.xfce.org.
+
+It's also relatively easy and often very helpful to create a backtrace
+using gdb or any other debugger should the plugin crash:
+
+1) Find the process ID of the weather plugin with something like
+   'pgrep -f libweather.so'. Let's assume the resulting PID is 1234.
+2) Attach the GNU debugger to that process: 'gdb attach 1234'.
+3) The plugin will be frozen now. Tell the debugger to let it continue
+   with the 'cont' command.
+4) Produce the crash if possible, or wait until it crashes.
+5) GDB will detect the crash and freeze the plugin again. Use 'bt' to
+   print a nice backtrace. Report the issue to the Xfce bugtracker at
+   https://bugzilla.xfce.org, providing the backtrace.
+6) 'quit' exits the debugger.
