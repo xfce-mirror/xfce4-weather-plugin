@@ -15,6 +15,8 @@ libweather_la_SOURCES =						\
 	weather-config.h						\
 	weather-data.c							\
 	weather-data.h							\
+	weather-debug.c							\
+	weather-debug.h							\
 	weather-http.c							\
 	weather-http.h							\
 	weather-icon.c							\
