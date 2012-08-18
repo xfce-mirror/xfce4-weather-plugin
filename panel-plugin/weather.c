@@ -468,7 +468,7 @@ update_weatherdata(xfceweather_data *data)
                               now_tm.tm_mday);
 
         /* start receive thread */
-        g_warning("getting http://api.yr.no/%s", url);
+        g_message("getting http://api.yr.no/%s", url);
         weather_http_receive_data("api.yr.no", url, data->proxy_host,
                                   data->proxy_port, cb_astro_update, data);
 
@@ -483,7 +483,7 @@ update_weatherdata(xfceweather_data *data)
                             data->lat, data->lon);
 
         /* start receive thread */
-        g_warning("getting http://api.yr.no/%s", url);
+        g_message("getting http://api.yr.no/%s", url);
         weather_http_receive_data("api.yr.no", url, data->proxy_host,
                                   data->proxy_port, cb_update, data);
 

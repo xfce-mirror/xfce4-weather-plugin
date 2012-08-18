@@ -183,10 +183,10 @@ search_cb(GtkWidget *widget,
     g_free(sane_str);
 
     gtk_tree_view_column_set_title(dialog->column, _("Searching..."));
+    g_message("getting http://nominatim.openstreetmap.org/%s", url);
     weather_http_receive_data("nominatim.openstreetmap.org", url,
                               dialog->proxy_host, dialog->proxy_port,
                               cb_searchdone, dialog);
-
     g_free(url);
 }
 
@@ -449,6 +449,7 @@ void weather_search_by_ip(const gchar *proxy_host,
     data->proxy_host = proxy_host;
     data->proxy_port = proxy_port;
 
+    g_message("getting http://geoip.xfce.org/");
     weather_http_receive_data("geoip.xfce.org", "/", proxy_host, proxy_port,
                               cb_geolocation, data);
     return;
