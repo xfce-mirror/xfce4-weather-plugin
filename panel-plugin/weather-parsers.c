@@ -230,7 +230,8 @@ parse_time(xmlNode *cur_node,
     timeslice = get_timeslice(data, start_t, end_t);
 
     if (G_UNLIKELY(!timeslice)) {
-        g_warning("no timeslice");
+        g_warning("No timeslice found or created. "
+                  "Perhaps maximum of %d slices reached?", MAX_TIMESLICE);
         return;
     }
     for (child_node = cur_node->children; child_node;
