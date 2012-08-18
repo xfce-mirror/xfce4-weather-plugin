@@ -334,6 +334,8 @@ cb_astro_update(const gboolean succeed,
         data->astrodata = astro;
         data->last_astro_update = time(NULL);
     }
+
+    weather_dump(weather_dump_astrodata, data->astrodata);
 }
 
 
@@ -371,6 +373,8 @@ cb_update(const gboolean succeed,
         data->last_data_update = time(NULL);
     }
     update_current_conditions(data);
+
+    weather_dump(weather_dump_weatherdata, data->weatherdata);
 }
 
 
@@ -781,6 +785,7 @@ xfceweather_dialog_response(GtkWidget *dlg,
                       PLUGIN_WEBSITE);
     } else {
         apply_options(dialog);
+        weather_dump(weather_dump_plugindata, data);
 
         gtk_widget_destroy(dlg);
         gtk_list_store_clear(dialog->mdl_xmloption);
@@ -1134,6 +1139,8 @@ xfceweather_set_size(XfcePanelPlugin *panel,
     update_icon(data);
     update_scrollbox(data);
 
+    weather_dump(weather_dump_plugindata, data);
+
     /* we handled the size */
     return TRUE;
 }
@@ -1173,6 +1180,8 @@ xfceweather_set_mode(XfcePanelPlugin *panel,
     update_icon(data);
     update_scrollbox(data);
 
+    weather_dump(weather_dump_plugindata, data);
+
     /* we handled the orientation */
     return TRUE;
 }
@@ -1207,6 +1216,8 @@ xfceweather_set_orientation(XfcePanelPlugin *panel,
 
     update_icon(data);
     update_scrollbox(data);
+
+    weather_dump(weather_dump_plugindata, data);
 
     /* we handled the orientation */
     return TRUE;
@@ -1257,6 +1268,8 @@ weather_construct(XfcePanelPlugin *plugin)
     xfce_panel_plugin_menu_show_configure(plugin);
     g_signal_connect(G_OBJECT(plugin), "configure-plugin",
                      G_CALLBACK(xfceweather_create_options), data);
+
+    weather_dump(weather_dump_plugindata, data);
 
     update_weatherdata(data);
 }

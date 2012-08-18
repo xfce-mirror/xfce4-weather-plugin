@@ -30,7 +30,7 @@
 
 #include "weather-search.h"
 #include "weather-http.h"
-
+#include "weather-debug.h"
 
 #define BORDER 8
 
@@ -114,6 +114,7 @@ cb_searchdone(const gboolean succeed,
         for (cur_node = cur_node->children; cur_node;
              cur_node = cur_node->next) {
             place = parse_place(cur_node);
+            weather_dump(weather_dump_place, place);
 
             if (place && place->lat && place->lon && place->display_name) {
                 append_result(dialog->result_mdl,
@@ -393,6 +394,7 @@ cb_geolocation(const gboolean succeed,
 
     geo = parse_geolocation(xmlDocGetRootElement(doc));
     xmlFreeDoc(doc);
+    weather_dump(weather_dump_geolocation, geo);
 
     if (geo == NULL) {
         data->cb(NULL, NULL, NULL, METRIC, data->user_data);
