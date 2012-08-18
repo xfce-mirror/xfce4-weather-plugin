@@ -141,7 +141,7 @@ weather_dump_geolocation(const xml_geolocation *geo)
                           "  region name: %s\n"
                           "  latitude: %s\n"
                           "  longitude: %s\n"
-                          "  --------------------------------------------\n",
+                          "  --------------------------------------------",
                           CHK_NULL(geo->city),
                           CHK_NULL(geo->country_name),
                           CHK_NULL(geo->country_code),
@@ -165,7 +165,7 @@ weather_dump_place(const xml_place *place)
                           "  display_name: %s\n"
                           "  latitude: %s\n"
                           "  longitude: %s\n"
-                          "  --------------------------------------------\n",
+                          "  --------------------------------------------",
                           CHK_NULL(place->display_name),
                           CHK_NULL(place->lat),
                           CHK_NULL(place->lon));
@@ -198,7 +198,7 @@ weather_dump_astrodata(const xml_astro *astro)
                           "  moon never rises: %s\n"
                           "  moon never sets: %s\n"
                           "  moon phase: %s\n"
-                          "  --------------------------------------------\n",
+                          "  --------------------------------------------",
                           sunrise,
                           sunset,
                           YESNO(astro->sun_never_rises),
@@ -341,7 +341,7 @@ weather_dump_plugindata(const xfceweather_data *data)
                            "  --------------------------------------------\n"
                            "  animation transitions: %s\n"
                            "  forecast days: %d\n"
-                           "  --------------------------------------------\n",
+                           "  --------------------------------------------",
                            data->panel_size,
                            data->size,
                            data->panel_orientation,
@@ -364,10 +364,6 @@ weather_dump_plugindata(const xfceweather_data *data)
     g_free(last_astro_update);
     g_free(last_data_update);
     g_free(last_conditions_update);
-
-    /* Remove trailing newline */
-    if (out->str[out->len - 1] == '\n')
-        out->str[--out->len] = '\0';
 
     /* Free GString only and return its character data */
     result = out->str;
