@@ -36,6 +36,7 @@
 #include "weather-config.h"
 #include "weather-icon.h"
 #include "weather-scrollbox.h"
+#include "weather-debug.h"
 
 #define XFCEWEATHER_ROOT "weather"
 #define UPDATE_INTERVAL 15
@@ -51,6 +52,10 @@
                           strcmp(unit, "°") ? " " : "",     \
                           unit);                            \
     g_free(value);
+
+
+
+gboolean debug_mode = FALSE;
 
 
 gboolean
@@ -1213,6 +1218,14 @@ static void
 weather_construct(XfcePanelPlugin *plugin)
 {
     xfceweather_data *data;
+    const gchar *panel_debug_env;
+
+    /* Enable debug level logging if PANEL_DEBUG contains G_LOG_DOMAIN */
+    panel_debug_env = g_getenv("PANEL_DEBUG");
+    if (panel_debug_env && strstr(panel_debug_env, G_LOG_DOMAIN))
+        debug_mode = TRUE;
+    weather_debug_init(G_LOG_DOMAIN, debug_mode);
+    weather_debug("weather plugin version " VERSION " starting up");
 
     xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
     data = xfceweather_create_control(plugin);

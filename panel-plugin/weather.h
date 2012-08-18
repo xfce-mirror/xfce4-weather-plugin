@@ -72,6 +72,9 @@ typedef struct {
 } xfceweather_data;
 
 
+extern gboolean debug_mode;
+
+
 gboolean check_envproxy(gchar **proxy_host,
                         gint *proxy_port);
 
