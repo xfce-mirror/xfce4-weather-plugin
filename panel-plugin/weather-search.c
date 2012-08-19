@@ -183,7 +183,7 @@ search_cb(GtkWidget *widget,
     g_free(sane_str);
 
     gtk_tree_view_column_set_title(dialog->column, _("Searching..."));
-    g_message("getting http://nominatim.openstreetmap.org/%s", url);
+    g_message("getting http://nominatim.openstreetmap.org%s", url);
     weather_http_receive_data("nominatim.openstreetmap.org", url,
                               dialog->proxy_host, dialog->proxy_port,
                               cb_searchdone, dialog);
