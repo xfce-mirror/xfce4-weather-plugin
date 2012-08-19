@@ -31,8 +31,6 @@
 
 #define INVALID_TIME "INVALID"
 
-#define CHK_NULL(str) ((str) ? str : "")
-
 #define YESNO(bool) ((bool) ? "yes" : "no")
 
 
@@ -142,12 +140,12 @@ weather_dump_geolocation(const xml_geolocation *geo)
                           "  latitude: %s\n"
                           "  longitude: %s\n"
                           "  --------------------------------------------",
-                          CHK_NULL(geo->city),
-                          CHK_NULL(geo->country_name),
-                          CHK_NULL(geo->country_code),
-                          CHK_NULL(geo->region_name),
-                          CHK_NULL(geo->latitude),
-                          CHK_NULL(geo->longitude));
+                          geo->city,
+                          geo->country_name,
+                          geo->country_code,
+                          geo->region_name,
+                          geo->latitude,
+                          geo->longitude);
     return out;
 }
 
@@ -166,9 +164,9 @@ weather_dump_place(const xml_place *place)
                           "  latitude: %s\n"
                           "  longitude: %s\n"
                           "  --------------------------------------------",
-                          CHK_NULL(place->display_name),
-                          CHK_NULL(place->lat),
-                          CHK_NULL(place->lon));
+                          place->display_name,
+                          place->lat,
+                          place->lon);
     return out;
 }
 
@@ -207,7 +205,7 @@ weather_dump_astrodata(const xml_astro *astro)
                           moonset,
                           YESNO(astro->moon_never_rises),
                           YESNO(astro->moon_never_sets),
-                          CHK_NULL(astro->moon_phase));
+                          astro->moon_phase);
     g_free(sunrise);
     g_free(sunset);
     g_free(moonrise);
@@ -229,37 +227,37 @@ weather_dump_location(const xml_location *loc,
         out =
             g_strdup_printf("alt=%s, lat=%s, lon=%s, "
                             "prec=%s %s, symid=%d (%s)",
-                            CHK_NULL(loc->altitude),
-                            CHK_NULL(loc->latitude),
-                            CHK_NULL(loc->longitude),
-                            CHK_NULL(loc->precipitation_value),
-                            CHK_NULL(loc->precipitation_unit),
+                            loc->altitude,
+                            loc->latitude,
+                            loc->longitude,
+                            loc->precipitation_value,
+                            loc->precipitation_unit,
                             loc->symbol_id,
-                            CHK_NULL(loc->symbol));
+                            loc->symbol);
     else
         out =
             g_strdup_printf("alt=%s, lat=%s, lon=%s, temp=%s %s, "
                             "wind=%s %s° %s m/s (%s bf), "
                             "hum=%s %s, press=%s %s, fog=%s, cloudiness=%s, "
                             "cl=%s, cm=%s, ch=%s)",
-                            CHK_NULL(loc->altitude),
-                            CHK_NULL(loc->latitude),
-                            CHK_NULL(loc->longitude),
-                            CHK_NULL(loc->temperature_value),
-                            CHK_NULL(loc->temperature_unit),
-                            CHK_NULL(loc->wind_dir_name),
-                            CHK_NULL(loc->wind_dir_deg),
-                            CHK_NULL(loc->wind_speed_mps),
-                            CHK_NULL(loc->wind_speed_beaufort),
-                            CHK_NULL(loc->humidity_value),
-                            CHK_NULL(loc->humidity_unit),
-                            CHK_NULL(loc->pressure_value),
-                            CHK_NULL(loc->pressure_unit),
-                            CHK_NULL(loc->fog_percent),
-                            CHK_NULL(loc->clouds_percent[CLOUDS_PERC_CLOUDINESS]),
-                            CHK_NULL(loc->clouds_percent[CLOUDS_PERC_LOW]),
-                            CHK_NULL(loc->clouds_percent[CLOUDS_PERC_MED]),
-                            CHK_NULL(loc->clouds_percent[CLOUDS_PERC_HIGH]));
+                            loc->altitude,
+                            loc->latitude,
+                            loc->longitude,
+                            loc->temperature_value,
+                            loc->temperature_unit,
+                            loc->wind_dir_name,
+                            loc->wind_dir_deg,
+                            loc->wind_speed_mps,
+                            loc->wind_speed_beaufort,
+                            loc->humidity_value,
+                            loc->humidity_unit,
+                            loc->pressure_value,
+                            loc->pressure_unit,
+                            loc->fog_percent,
+                            loc->clouds_percent[CLOUDS_PERC_CLOUDINESS],
+                            loc->clouds_percent[CLOUDS_PERC_LOW],
+                            loc->clouds_percent[CLOUDS_PERC_MED],
+                            loc->clouds_percent[CLOUDS_PERC_HIGH]);
     return out;
 }
 
