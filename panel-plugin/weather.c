@@ -499,6 +499,10 @@ update_weatherdata(xfceweather_data *data)
 
         /* cleanup */
         g_free(url);
+
+        /* cb_update will deal with everything that follows this
+         * block, so let's return instead of doing things twice */
+        return TRUE;
     }
 
     /* update current conditions, icon and labels */
