@@ -212,7 +212,7 @@ parse_time(xmlNode *cur_node,
     xmlNode *child_node;
 
     datatype = PROP(cur_node, "datatype");
-    if (xmlStrcasecmp(datatype, "forecast")) {
+    if (xmlStrcasecmp((xmlChar *) datatype, (xmlChar *) "forecast")) {
         xmlFree(datatype);
         return;
     }
@@ -266,7 +266,7 @@ parse_weather(xmlNode *cur_node)
 
         if (NODE_IS_TYPE(cur_node, "product")) {
             gchar *class = PROP(cur_node, "class");
-            if (xmlStrcasecmp(class, "pointData")) {
+            if (xmlStrcasecmp((xmlChar *) class, (xmlChar *) "pointData")) {
                 xmlFree(class);
                 continue;
             }
