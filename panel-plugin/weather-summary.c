@@ -670,21 +670,25 @@ make_forecast(xfceweather_data *data)
 
 
 static GtkWidget *
-create_forecast_tab(xfceweather_data *data,
-                    GtkWidget *window)
+create_forecast_tab(xfceweather_data *data)
 {
     GtkWidget *ebox, *align, *hbox, *scrolled, *table;
-    GdkWindow *win;
+    GdkWindow *window;
     GdkScreen *screen;
     GdkRectangle rect;
-    gint monitor_num, height_needed, height_max;
+    gint monitor_num = 0, height_needed, height_max;
     gdouble factor;
 
-    /* calculate maximum height we may use, subtracting some sane value for safety */
-    screen = gtk_window_get_screen(GTK_WINDOW(window));
-    win = GTK_WIDGET(window)->window;
-    monitor_num = gdk_screen_get_monitor_at_window(GDK_SCREEN(screen), GDK_WINDOW(win));
-    gdk_screen_get_monitor_geometry(GDK_SCREEN(screen), monitor_num, &rect);
+    /* To avoid causing a GDK assertion, determine the monitor
+     * geometry using the weather icon window, which has already been
+     * realized in contrast to the summary window. Then calculate the
+     * maximum height we may use, subtracting some sane value just to
+     * be on the safe side. */
+    window = GDK_WINDOW(gtk_widget_get_window(GTK_WIDGET(data->iconimage)));
+    screen = GDK_SCREEN(gdk_window_get_screen(window));
+    if (G_LIKELY(window && screen))
+        monitor_num = gdk_screen_get_monitor_at_window(screen, window);
+    gdk_screen_get_monitor_geometry(screen, monitor_num, &rect);
 
     /* optimize max height a bit depending on common resolutions */
     if ((rect.height > 600 && rect.height <= 800) || rect.height <= 480)
@@ -795,7 +799,7 @@ create_summary_window (xfceweather_data *data)
         notebook = gtk_notebook_new();
         gtk_container_set_border_width(GTK_CONTAINER(notebook), BORDER);
         gtk_notebook_append_page(GTK_NOTEBOOK(notebook),
-                                 create_forecast_tab(data, window),
+                                 create_forecast_tab(data),
                                  gtk_label_new_with_mnemonic(_("_Forecast")));
         gtk_notebook_append_page(GTK_NOTEBOOK(notebook),
                                  create_summary_tab(data),
