@@ -33,6 +33,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include "weather-debug.h"
+
 
 #define DATA(node)                                                  \
     ((gchar *) xmlNodeListGetString(node->doc, node->children, 1))
@@ -487,10 +489,13 @@ xml_weather_free(xml_weather *data)
     g_assert(data != NULL);
     if (G_UNLIKELY(data == NULL))
         return;
-    for (i = 0; i < data->num_timeslices; i++) {
+    weather_debug("Freeing %u timeslices.", data->num_timeslices);
+    for (i = 0; i < data->num_timeslices; i++)
         xml_time_free(data->timeslice[i]);
+    if (G_LIKELY(data->current_conditions)) {
+        weather_debug("Freeing current conditions.");
+        xml_time_free(data->current_conditions);
     }
-    xml_time_free(data->current_conditions);
     g_slice_free(xml_weather, data);
 }
 

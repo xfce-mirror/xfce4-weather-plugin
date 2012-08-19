@@ -248,6 +248,7 @@ update_icon(xfceweather_data *data)
     gtk_image_set_from_pixbuf(GTK_IMAGE(data->iconimage), icon);
     if (G_LIKELY(icon))
         g_object_unref(G_OBJECT(icon));
+    weather_debug("Updated panel icon.");
 }
 
 
@@ -263,18 +264,23 @@ update_scrollbox(xfceweather_data *data)
 
     txtsize = get_label_size(data);
     gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
-    if (data->weatherdata)
+    if (data->weatherdata) {
         for (i = 0; i < data->labels->len; i++) {
             type = g_array_index(data->labels, data_types, i);
             str = make_label(data, type);
             gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox), -1, str);
             g_free(str);
         }
-    else {
-        str = g_strdup_printf("<span size=\"%s\">%s</span>", txtsize, _("No Data"));
+        weather_debug("Added %u labels to scrollbox.", data->labels->len);
+    } else {
+        str = g_strdup_printf("<span size=\"%s\">%s</span>",
+                              txtsize, _("No Data"));
         gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox), -1, str);
         g_free(str);
+        weather_debug("No weather data available, set single label '%s'.",
+                      _("No Data"));
     }
+    weather_debug("Updated scrollbox.");
 }
 
 
@@ -298,6 +304,7 @@ update_current_conditions(xfceweather_data *data)
     data->night_time = is_night_time(data->astrodata);
     update_icon(data);
     update_scrollbox(data);
+    weather_debug("Updated current conditions.");
 }
 
 
@@ -367,11 +374,14 @@ cb_update(const gboolean succeed,
     }
 
     if (G_LIKELY(weather)) {
-        if (G_LIKELY(data->weatherdata))
+        if (G_LIKELY(data->weatherdata)) {
+            weather_debug("Freeing weather data.");
             xml_weather_free(data->weatherdata);
+        }
         data->weatherdata = weather;
         data->last_data_update = time(NULL);
     }
+    weather_debug("Updating current conditions.");
     update_current_conditions(data);
 
     weather_dump(weather_dump_weatherdata, data->weatherdata);
@@ -492,12 +502,15 @@ update_weatherdata(xfceweather_data *data)
     }
 
     /* update current conditions, icon and labels */
-    if (need_conditions_update(data))
+    if (need_conditions_update(data)) {
+        weather_debug("Updating current conditions.");
         update_current_conditions(data);
+    }
 
     /* update night time status and icon */
     night_time = is_night_time(data->astrodata);
     if (data->night_time != night_time) {
+        weather_debug("Night time status changed, updating icon.");
         data->night_time = night_time;
         update_icon(data);
     }
@@ -617,6 +630,7 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
     }
 
     xfce_rc_close(rc);
+    weather_debug("Config file read.");
 }
 
 
@@ -672,6 +686,7 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
     }
 
     xfce_rc_close(rc);
+    weather_debug("Config file written.");
 }
 
 
@@ -784,6 +799,7 @@ xfceweather_dialog_response(GtkWidget *dlg,
             g_warning(_("Unable to open the following url: %s"),
                       PLUGIN_WEBSITE);
     } else {
+        weather_debug("Applying configuration options.");
         apply_options(dialog);
         weather_dump(weather_dump_plugindata, data);
 
@@ -1086,6 +1102,7 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
                               (GSourceFunc) update_weatherdata,
                               data);
 
+    weather_debug("Plugin widgets set up and ready.");
     return data;
 }
 
@@ -1094,6 +1111,7 @@ static void
 xfceweather_free(XfcePanelPlugin *plugin,
                  xfceweather_data *data)
 {
+    weather_debug("Freeing plugin data.");
     g_assert(data != NULL);
     weather_http_cleanup_queue();
 
