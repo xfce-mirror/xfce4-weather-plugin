@@ -143,7 +143,6 @@ cb_searchdone(const gboolean succeed,
         }
 
     gtk_tree_view_column_set_title(dialog->column, _("Results"));
-    return;
 }
 
 
@@ -452,5 +451,4 @@ void weather_search_by_ip(const gchar *proxy_host,
     g_message("getting http://geoip.xfce.org/");
     weather_http_receive_data("geoip.xfce.org", "/", proxy_host, proxy_port,
                               cb_geolocation, data);
-    return;
 }
