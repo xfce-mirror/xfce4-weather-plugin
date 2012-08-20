@@ -1,17 +1,18 @@
 Here is a collection of ideas and tasks for future releases, listed in
 categories, but not prioritized or mandatory.
 
-Panel widget
+Panel widgets
 ======================================================================
 * Optionally hide scrollbox
 * Use multiple lines in scrollbox
+* Allow choosing a custom text color for the scrollbox widget to
+  prevent unreadable or hardly readable text with some themes
 * Use the Xfce hvbox (maybe, need to check)
+* Support custom icon themes
 
 Data
 ======================================================================
 * Use HTTP status codes to warn in time about API changes
-* Further reduce HTTP requests fetching data
-  - maybe use data in XML to schedule downloads?
 * How about a "follow-me" mode: Auto-determine location
   based on IP address and adapt to any changes?
 * The plugin uses the local time, which results in wrong forecasts
@@ -19,8 +20,15 @@ Data
   be possible to find the timezone of the chosen location and do some
   math to correct this.
 * Find acceptable provider (regarding availability and license of
-  data) for live values or maybe cache data for "fake" (interpolated)
-  live values?
+  data) for live values, or alternatively maybe cache data for "fake"
+  (e.g. interpolated) live values?
+* Optimize data download update intervals. Current update interval is
+  3 hours, but in fact data change more often. Updating data currently
+  deletes point data at the beginning of the nearest available
+  interval (because it is not provided by the XML document), so only
+  temperature at the end of the interval could be shown with a higher
+  update frequency. Caching/special treatment could solve this
+  problem.
 
 Forecast tab
 ======================================================================
@@ -34,12 +42,10 @@ Details tab
 
 Configuration dialog
 ======================================================================
-* Show longitude and latitude, allow entering them
-* Reorganize options, the window's already to large
-  for the small screen size of netbooks
-* Apply options immediately, like in most xfce apps
-* Don't complain about proxy settings on closing the dialog window
-  when none are entered
+* Reorganize options, the window's already too large for the small
+  screen size of netbooks
+* Apply options immediately, like in most Xfce apps
+* Allow editing latitude and longitude
 
 New stuff
 ======================================================================
