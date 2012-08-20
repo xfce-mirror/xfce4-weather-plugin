@@ -1,13 +1,52 @@
-DOCUMENTATION
+XFCE4-WEATHER-PLUGIN
 ==========================================================================
-http://api.yr.no/weatherapi/documentation
-http://api.met.no/weatherapi/locationforecastlts/1.1/documentation
-see http://api.yr.no/weatherapi/sunrise/1.0/documentation
-http://api.met.no/license_data.html
+You can always find up-to-date information at the plugin homepage:
+http://goodies.xfce.org/projects/panel-plugins/xfce4-weather-plugin
 
-Especially for information about the different types of data, please
-read the FAQ:
-http://api.yr.no/faq.html
+
+ABOUT
+==========================================================================
+Originally written by Bob Schlärmann, this panel plugin shows
+information about your local weather in the panel, using forecast data
+provided by met.no.
+
+
+USAGE
+==========================================================================
+The first time you open the configuration dialog, the weather plugin
+automatically configures itself to fetch weather data from a place
+which should be near you - based on your IP address.
+
+You can change this location using the Change... button, and searching
+for the city, country, address, monument etc. you're interested
+in. Only latitude and longitude will be used for the data requests, so
+you can edit the location name to something you like.
+
+In this configuration screen, you can also choose which information
+you want visible in the panel.
+
+On the panel icon, a middle click forces an update, left click brings
+up a forecast and details page. Right-clicking opens the contextual
+menu.
+
+
+MET.NO API DOCUMENTATION
+==========================================================================
+To get a quick overview, please consolidate the met.no API weather
+documentation and especially their FAQ, which answers some questions
+left open by the former:
+
+* General documentation and data licensing
+  http://api.yr.no/weatherapi/documentation
+  http://api.yr.no/faq.html
+  http://api.met.no/license_data.html
+
+* Service-specific documentation
+  http://api.met.no/weatherapi/locationforecastlts/1.1/documentation
+  http://api.yr.no/weatherapi/sunrise/1.0/documentation
+
+For more technical details you might need to study the XML schema
+corresponding to the document in question.
 
 
 DEBUGGING AND REPORTING BUGS
