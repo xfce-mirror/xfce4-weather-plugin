@@ -7,8 +7,8 @@ msgstr ""
 "Project-Id-Version: xfce4-weather-plugin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-08-03 02:00+0200\n"
-"PO-Revision-Date: 2009-07-25 00:19+0300\n"
-"Last-Translator: Jenea Derevyankin <jekader@gmail.com>\n"
+"PO-Revision-Date: 2012-08-22 01:48+1000\n"
+"Last-Translator: Alex 'AdUser' Z <ad_user@lavabit.com>\n"
 "Language-Team: Russian\n"
 "Language: \n"
 "MIME-Version: 1.0\n"
@@ -29,11 +29,11 @@ msgid "WS"
 msgstr "СВ"
 
 #: ../panel-plugin/weather.c:146
-#, fuzzy
 msgid "WB"
-msgstr "З"
+msgstr "WB"
 
-#: ../panel-plugin/weather.c:149 ../panel-plugin/weather.c:152
+#: ../panel-plugin/weather.c:149
+#: ../panel-plugin/weather.c:152
 msgid "WD"
 msgstr "НВ"
 
@@ -42,23 +42,20 @@ msgid "H"
 msgstr "В"
 
 #: ../panel-plugin/weather.c:158
-#, fuzzy
 msgid "CL"
-msgstr "Штиль"
+msgstr "CL"
 
 #: ../panel-plugin/weather.c:161
-#, fuzzy
 msgid "CM"
-msgstr "Штиль"
+msgstr "CM"
 
 #: ../panel-plugin/weather.c:164
-#, fuzzy
 msgid "CH"
-msgstr "В"
+msgstr "CH"
 
 #: ../panel-plugin/weather.c:167
 msgid "C"
-msgstr ""
+msgstr "C"
 
 #: ../panel-plugin/weather.c:170
 msgid "F"
@@ -66,13 +63,14 @@ msgstr "КТ"
 
 #: ../panel-plugin/weather.c:173
 msgid "R"
-msgstr ""
+msgstr "R"
 
 #: ../panel-plugin/weather.c:241
 msgid "No Data"
-msgstr ""
+msgstr "Нет данных"
 
-#: ../panel-plugin/weather.c:268 ../panel-plugin/weather.c:1007
+#: ../panel-plugin/weather.c:268
+#: ../panel-plugin/weather.c:1007
 msgid "Cannot update weather data"
 msgstr "Не удалось обновить данные о погоде"
 
@@ -81,27 +79,28 @@ msgstr "Не удалось обновить данные о погоде"
 msgid "Unable to open the following url: %s"
 msgstr "Невозможно открыть ссылку %s"
 
-#: ../panel-plugin/weather.c:856 ../panel-plugin/weather-summary.c:752
+#: ../panel-plugin/weather.c:856
+#: ../panel-plugin/weather-summary.c:752
 #: ../panel-plugin/weather.desktop.in.h:1
 msgid "Weather Update"
 msgstr "Погода"
 
 #: ../panel-plugin/weather.c:899
 msgid "Short-term forecast data unavailable."
-msgstr ""
+msgstr "Данные краткосрочного прогноза недоступны."
 
 #: ../panel-plugin/weather.c:914
 msgid "The sun never rises today."
-msgstr ""
+msgstr "Сегодня нет восхода солнца."
 
 #: ../panel-plugin/weather.c:916
 msgid "The sun never sets today."
-msgstr ""
+msgstr "Сегодня нет захода солнца."
 
 #: ../panel-plugin/weather.c:922
 #, c-format
 msgid "The sun rises at %s and sets at %s."
-msgstr ""
+msgstr "Восход солнца в %s и заход в %s."
 
 #.
 #. * TRANSLATORS: Re-arrange and align at will, optionally using
@@ -125,10 +124,21 @@ msgid ""
 "\n"
 "<span size=\"smaller\">%s</span>"
 msgstr ""
+"<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
+"<b><span size=\"large\">%s</span></b>\n"
+"<span size=\"smaller\">от %s до %s, c %s осадков</span>\n"
+"\n"
+"<b>Температура:</b> %s\t\t<span size=\"smaller\">(данные на %s)</span>\n"
+"<b>Скорость ветра:</b> %s (%s по шкале Бофорта) с %s(%s)\n"
+"<b>Давление:</b> %s    <b>Влажность:</b> %s\n"
+"<b>Туман:</b> %s   <b>Облачность:</b> %s\n"
+"\n"
+"<span size=\"smaller\">%s</span>"
 
 #. add forecast window to right click menu, for people who missed
 #. the left mouse click feature
-#: ../panel-plugin/weather.c:1108 ../panel-plugin/weather-summary.c:797
+#: ../panel-plugin/weather.c:1108
+#: ../panel-plugin/weather-summary.c:797
 msgid "_Forecast"
 msgstr "_Прогноз"
 
@@ -155,54 +165,49 @@ msgstr "Скорость ветра (СВ)"
 
 #: ../panel-plugin/weather-config.c:51
 msgid "Wind speed - Beaufort scale (WB)"
-msgstr ""
+msgstr "Скорость ветра - шкала Бофорта (СВ)"
 
 #: ../panel-plugin/weather-config.c:52
 msgid "Wind direction (WD)"
 msgstr "Направление ветра (НВ)"
 
 #: ../panel-plugin/weather-config.c:53
-#, fuzzy
 msgid "Wind direction in degrees (WD)"
-msgstr "Направление ветра (НВ)"
+msgstr "Направление ветра в градусах (НВ)"
 
 #: ../panel-plugin/weather-config.c:54
 msgid "Humidity (H)"
 msgstr "Влажность (В)"
 
 #: ../panel-plugin/weather-config.c:55
-#, fuzzy
 msgid "Low clouds (CL)"
-msgstr "Отдельные облака"
+msgstr "Низкая облачность (НО)"
 
 #: ../panel-plugin/weather-config.c:56
-#, fuzzy
 msgid "Medium clouds (CM)"
-msgstr "Переменная облачность"
+msgstr "Средняя облачность (СО)"
 
 #: ../panel-plugin/weather-config.c:57
-#, fuzzy
 msgid "High clouds (CH)"
-msgstr "В основном облачно"
+msgstr "Высокая облачность (ВО)"
 
 #: ../panel-plugin/weather-config.c:58
-#, fuzzy
 msgid "Cloudiness (C)"
-msgstr "Отдельные облака"
+msgstr "Облачность (Ч)"
 
 #: ../panel-plugin/weather-config.c:59
 msgid "Fog (F)"
-msgstr ""
+msgstr "Туман (М)"
 
 #: ../panel-plugin/weather-config.c:60
-#, fuzzy
 msgid "Precipitations (R)"
-msgstr "<b>Осадки</b>"
+msgstr "Осадки (О)"
 
-#: ../panel-plugin/weather-config.c:240 ../panel-plugin/weather-config.c:418
+#: ../panel-plugin/weather-config.c:240
+#: ../panel-plugin/weather-config.c:418
 #: ../panel-plugin/weather-config.c:529
 msgid "Unset"
-msgstr "Неизвестно"
+msgstr "Не задано"
 
 #: ../panel-plugin/weather-config.c:333
 msgid "Please enter proxy settings"
@@ -216,11 +221,14 @@ msgid ""
 "You may edit the location name to your liking.\n"
 "To choose another location, please use the \"Change\" button."
 msgstr ""
+"Широта: %s, Долгота: %s\n"
+"\n"
+"Вы можете изменить название места как вам нравится.\n"
+"Чтобы выбрать другое местоположение, нажмите кнопку \"Изменить\"."
 
 #: ../panel-plugin/weather-config.c:390
-#, fuzzy
 msgid "Please select a location by using the \"Change\" button."
-msgstr "Укажите параметры прокси-сервера"
+msgstr "Выберите местоположение, с помощью кнопки \"Изменить\"."
 
 #: ../panel-plugin/weather-config.c:430
 msgid "Detecting..."
@@ -228,9 +236,8 @@ msgstr "Обнаружение..."
 
 #. system of measurement
 #: ../panel-plugin/weather-config.c:490
-#, fuzzy
 msgid "System of _Measurement:"
-msgstr "Единицы измерения:"
+msgstr "_Единицы измерения:"
 
 #: ../panel-plugin/weather-config.c:494
 msgid "Imperial"
@@ -242,86 +249,78 @@ msgstr "метрические"
 
 #. location
 #: ../panel-plugin/weather-config.c:508
-#, fuzzy
 msgid "L_ocation:"
-msgstr "Месторасположение:"
+msgstr "М_естоположение:"
 
 #: ../panel-plugin/weather-config.c:538
-#, fuzzy
 msgid "Chan_ge..."
-msgstr "Изменить..."
+msgstr "И_зменить..."
 
 #. proxy settings
 #: ../panel-plugin/weather-config.c:550
-#, fuzzy
 msgid "_Proxy server:"
-msgstr "Прокси-сервер:"
+msgstr "П_рокси-сервер:"
 
 #: ../panel-plugin/weather-config.c:555
-#, fuzzy
 msgid "Use proxy _server"
-msgstr "Использовать прокси-сервер"
+msgstr "_Использовать прокси-сервер"
 
 #: ../panel-plugin/weather-config.c:557
-#, fuzzy
 msgid "Auto-detect from _environment"
-msgstr "Определять настройки автоматически"
+msgstr "Определять из переменных окружения"
 
 #. number of days shown in forecast
 #: ../panel-plugin/weather-config.c:610
 msgid "Number of _forecast days:"
-msgstr ""
+msgstr "Количество дней прогноза:"
 
 #: ../panel-plugin/weather-config.c:632
-#, fuzzy
 msgid "_Labels to display"
-msgstr "Отображать показания"
+msgstr "_Показания для отображения"
 
 #. button "add"
 #: ../panel-plugin/weather-config.c:637
 msgid "_Add"
-msgstr ""
+msgstr "_Добавить"
 
 #. button "remove"
 #: ../panel-plugin/weather-config.c:653
 msgid "_Remove"
-msgstr ""
+msgstr "_Удалить"
 
 #. button "move up"
 #: ../panel-plugin/weather-config.c:659
 msgid "Move _Up"
-msgstr ""
+msgstr "Переместить _вниз"
 
 #. button "move down"
 #: ../panel-plugin/weather-config.c:665
 msgid "Move _Down"
-msgstr ""
+msgstr "Переместить вв_ерх"
 
 #: ../panel-plugin/weather-config.c:700
-#, fuzzy
 msgid "Animate _transitions between labels"
 msgstr "Анимировать переходы между показаниями"
 
 #: ../panel-plugin/weather-data.c:142
 msgid "ft"
-msgstr ""
+msgstr "ф."
 
 #: ../panel-plugin/weather-data.c:142
-#, fuzzy
 msgid "m"
-msgstr "км"
+msgstr "м"
 
 #: ../panel-plugin/weather-data.c:144
 msgid "°F"
-msgstr ""
+msgstr "°F"
 
 #: ../panel-plugin/weather-data.c:144
 msgid "°C"
-msgstr ""
+msgstr "°C"
 
 #: ../panel-plugin/weather-data.c:146
 msgid "psi"
-msgstr ""
+msgstr "Па"
 
 #: ../panel-plugin/weather-data.c:146
 msgid "hPa"
@@ -341,7 +340,7 @@ msgstr "в"
 
 #: ../panel-plugin/weather-data.c:161
 msgid "mm"
-msgstr ""
+msgstr "мм"
 
 #. display error
 #: ../panel-plugin/weather-http.c:200
@@ -350,22 +349,22 @@ msgid "Failed to get the hostname %s. Retry in %d seconds."
 msgstr "Не удалось найти имя узла %s. Следующая попытка через %d сек."
 
 #: ../panel-plugin/weather-http.c:239
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to open the socket(%s)."
 msgstr "Невозможно открыть сокет (%s)."
 
 #: ../panel-plugin/weather-http.c:245
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to create a connection with the host(%s)."
 msgstr "Невозможно подключиться к серверу (%s)."
 
 #: ../panel-plugin/weather-http.c:282
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to send the request(%s)."
 msgstr "Невозможно отправить запрос (%s)."
 
 #: ../panel-plugin/weather-http.c:330
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to receive data(%s)"
 msgstr "Невозможно получить данные (%s)"
 
@@ -381,7 +380,8 @@ msgstr "Невозможно определить размер полученн�
 msgid "No content received."
 msgstr "Информация не получена."
 
-#: ../panel-plugin/weather-search.c:143 ../panel-plugin/weather-search.c:275
+#: ../panel-plugin/weather-search.c:143
+#: ../panel-plugin/weather-search.c:275
 msgid "Results"
 msgstr "Результаты"
 
@@ -390,14 +390,12 @@ msgid "Searching..."
 msgstr "Поиск..."
 
 #: ../panel-plugin/weather-search.c:220
-#, fuzzy
 msgid "Search location"
-msgstr "Поиск кода месторасположения"
+msgstr "Поиск местоположения"
 
 #: ../panel-plugin/weather-search.c:245
-#, fuzzy
 msgid "Enter a city name or address"
-msgstr "Введите название города (на английском) или индекс"
+msgstr "Введите название города (на английском) или адрес"
 
 #.
 #. * TRANSLATORS: Latitude and longitude are known from the
@@ -406,7 +404,7 @@ msgstr "Введите название города (на английском)
 #.
 #: ../panel-plugin/weather-search.c:420
 msgid "Unnamed place"
-msgstr ""
+msgstr "Без названия"
 
 #. head
 #: ../panel-plugin/weather-summary.c:312
@@ -420,25 +418,27 @@ msgstr ""
 
 #: ../panel-plugin/weather-summary.c:318
 msgid "Coordinates\n"
-msgstr ""
+msgstr "Координаты\n"
 
 #: ../panel-plugin/weather-summary.c:319
 msgid "Altitude"
-msgstr ""
+msgstr "Высота"
 
 #: ../panel-plugin/weather-summary.c:320
 msgid "Latitude"
-msgstr ""
+msgstr "Широта"
 
 #: ../panel-plugin/weather-summary.c:321
 msgid "Longitude"
-msgstr ""
+msgstr "Долгота"
 
 #: ../panel-plugin/weather-summary.c:323
 msgid ""
 "\n"
 "Time\n"
 msgstr ""
+"\n"
+"Время\n"
 
 #: ../panel-plugin/weather-summary.c:327
 #, c-format
@@ -446,6 +446,8 @@ msgid ""
 "\tTemperature, wind, atmosphere and cloud data apply to:\n"
 "\t%s\n"
 msgstr ""
+"\tТемпература, ветер, атм. давление и облачность для:\n"
+"\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:336
 #, c-format
@@ -456,6 +458,11 @@ msgid ""
 "\tStart:\t%s\n"
 "\tEnd:\t%s\n"
 msgstr ""
+"\n"
+"\tВероятность осадков и символ погоды были рассчитаны\n"
+"\tдля следующего периода времени:\n"
+"\tНачало:\t%s\n"
+"\tКонец:\t%s\n"
 
 #. sun and moon
 #: ../panel-plugin/weather-summary.c:345
@@ -463,19 +470,21 @@ msgid ""
 "\n"
 "Astronomical Data\n"
 msgstr ""
+"\n"
+"Астрономические данные\n"
 
 #: ../panel-plugin/weather-summary.c:348
 msgid "\tSunrise:\t\tThe sun never rises today.\n"
-msgstr ""
+msgstr "\tВосход:\t\tСегодня нет восхода солнца.\n"
 
 #: ../panel-plugin/weather-summary.c:351
 msgid "\tSunset:\t\tThe sun never sets today.\n"
-msgstr ""
+msgstr "\tЗакат:\t\tСегодня нет захода солнца.\n"
 
 #: ../panel-plugin/weather-summary.c:356
 #, c-format
 msgid "\tSunrise:\t\t%s\n"
-msgstr ""
+msgstr "\tВосход:\t\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:361
 #, c-format
@@ -483,37 +492,39 @@ msgid ""
 "\tSunset:\t\t%s\n"
 "\n"
 msgstr ""
+"\tЗакат:\t\t%s\n"
+"\n"
 
 #: ../panel-plugin/weather-summary.c:366
 #, c-format
 msgid "\tMoon phase:\t%s\n"
-msgstr ""
+msgstr "\tФаза луны:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:370
 msgid "\tMoon phase:\tUnknown\n"
-msgstr ""
+msgstr "\tФаза луны:\tнеизвестна\n"
 
 #: ../panel-plugin/weather-summary.c:374
 msgid "\tMoonrise:\tThe moon never rises today.\n"
-msgstr ""
+msgstr "\tВосход луны:\tСегодня нет восхода луны.\n"
 
 #: ../panel-plugin/weather-summary.c:377
 msgid "\tMoonset:\tThe moon never sets today.\n"
-msgstr ""
+msgstr "\tЗаход луны:\tСегодня нет захода луны.\n"
 
 #: ../panel-plugin/weather-summary.c:382
 #, c-format
 msgid "\tMoonrise:\t%s\n"
-msgstr ""
+msgstr "\tВосход луны:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:387
 #, c-format
 msgid "\tMoonset:\t%s\n"
-msgstr ""
+msgstr "\tЗаход луны:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:391
 msgid "\tData not available, will use sane default values for night and day.\n"
-msgstr ""
+msgstr "\tДанные недоступны, будут использованы значения по умолчанию для дня и ночи.\n"
 
 #. temperature
 #: ../panel-plugin/weather-summary.c:397
@@ -540,7 +551,7 @@ msgstr ""
 #: ../panel-plugin/weather-summary.c:406
 #, c-format
 msgid "\t%s: %s (%s on the Beaufort scale)\n"
-msgstr ""
+msgstr "\t%s: %s (%s по шкале Бофорта)\n"
 
 #: ../panel-plugin/weather-summary.c:407
 msgid "Speed"
@@ -552,20 +563,19 @@ msgstr "Направление"
 
 #. precipitation
 #: ../panel-plugin/weather-summary.c:424
-#, fuzzy
 msgid ""
 "\n"
 "Precipitations\n"
-msgstr "<b>Осадки</b>"
+msgstr ""
+"\n"
+"Осадки\n"
 
 #: ../panel-plugin/weather-summary.c:425
-#, fuzzy
 msgid "Precipitations amount"
-msgstr "<b>Осадки</b>"
+msgstr "Количество осадков"
 
 #. atmosphere
 #: ../panel-plugin/weather-summary.c:428
-#, fuzzy
 msgid ""
 "\n"
 "Atmosphere\n"
@@ -583,11 +593,12 @@ msgstr "Влажность"
 
 #. clouds
 #: ../panel-plugin/weather-summary.c:433
-#, fuzzy
 msgid ""
 "\n"
 "Clouds\n"
-msgstr "Отдельные облака"
+msgstr ""
+"\n"
+"Облака\n"
 
 #: ../panel-plugin/weather-summary.c:434
 #: ../panel-plugin/weather-translate.c:132
@@ -595,59 +606,58 @@ msgid "Fog"
 msgstr "Туман"
 
 #: ../panel-plugin/weather-summary.c:435
-#, fuzzy
 msgid "Low clouds"
-msgstr "Отдельные облака"
+msgstr "Низкая облачность"
 
 #: ../panel-plugin/weather-summary.c:436
 msgid "Medium clouds"
-msgstr ""
+msgstr "Средняя облачность"
 
 #: ../panel-plugin/weather-summary.c:437
 msgid "High clouds"
-msgstr ""
+msgstr "Высокая облачность"
 
 #: ../panel-plugin/weather-summary.c:438
-#, fuzzy
 msgid "Cloudiness"
-msgstr "Отдельные облака"
+msgstr "Облачность"
 
 #: ../panel-plugin/weather-summary.c:440
 msgid ""
 "\n"
 "Data from The Norwegian Meteorological Institute\n"
 msgstr ""
+"\n"
+"Данные из Норвежского Метеологического института\n"
 
 #: ../panel-plugin/weather-summary.c:443
 msgid "Thanks to met.no"
-msgstr ""
+msgstr "Спасибо сайту met.no"
 
 #: ../panel-plugin/weather-summary.c:556
 msgid "Morning"
-msgstr ""
+msgstr "Утро"
 
 #: ../panel-plugin/weather-summary.c:559
 msgid "Afternoon"
-msgstr ""
+msgstr "День"
 
 #: ../panel-plugin/weather-summary.c:562
 msgid "Evening"
-msgstr ""
+msgstr "Вечер"
 
 #: ../panel-plugin/weather-summary.c:565
-#, fuzzy
 msgid "Night"
-msgstr "Ночь: %s"
+msgstr "Ночь"
 
 #: ../panel-plugin/weather-summary.c:574
 #, c-format
 msgid "Today"
-msgstr ""
+msgstr "Сегодня"
 
 #: ../panel-plugin/weather-summary.c:576
 #, c-format
 msgid "Tomorrow"
-msgstr ""
+msgstr "Завтра"
 
 #: ../panel-plugin/weather-summary.c:760
 #, c-format
@@ -655,18 +665,16 @@ msgid "Weather report for: %s"
 msgstr "Погода - %s"
 
 #: ../panel-plugin/weather-summary.c:783
-#, fuzzy
 msgid "Please set a location in the plugin settings."
-msgstr "Укажите параметры прокси-сервера"
+msgstr "Укажите в настройках своё местоположение"
 
 #: ../panel-plugin/weather-summary.c:785
 msgid "Currently no data available."
-msgstr ""
+msgstr "Нет доступных данных."
 
 #: ../panel-plugin/weather-summary.c:800
-#, fuzzy
 msgid "_Details"
-msgstr "Подробнее"
+msgstr "_Подробнее"
 
 #. TRANSLATORS: Wind directions. It's where the wind comes _from_.
 #: ../panel-plugin/weather-translate.c:35
@@ -740,35 +748,35 @@ msgstr "Штиль"
 #. TRANSLATORS: Moon phases
 #: ../panel-plugin/weather-translate.c:57
 msgid "New moon"
-msgstr ""
+msgstr "Новолуние"
 
 #: ../panel-plugin/weather-translate.c:58
 msgid "Waxing crescent"
-msgstr ""
+msgstr "Молодая луна"
 
 #: ../panel-plugin/weather-translate.c:59
 msgid "First quarter"
-msgstr ""
+msgstr "Первая четверть"
 
 #: ../panel-plugin/weather-translate.c:60
 msgid "Waxing gibbous"
-msgstr ""
+msgstr "Растущая луна"
 
 #: ../panel-plugin/weather-translate.c:61
 msgid "Full moon"
-msgstr ""
+msgstr "Полнолуние"
 
 #: ../panel-plugin/weather-translate.c:62
 msgid "Waning gibbous"
-msgstr ""
+msgstr "Убывающая луна"
 
 #: ../panel-plugin/weather-translate.c:63
 msgid "Third quarter"
-msgstr ""
+msgstr "Третья четверть"
 
 #: ../panel-plugin/weather-translate.c:64
 msgid "Waning crescent"
-msgstr ""
+msgstr "Старая луна"
 
 #.
 #. * TRANSLATORS: Some of these terms seem to contradict
@@ -791,14 +799,12 @@ msgstr "Ясно"
 
 #: ../panel-plugin/weather-translate.c:118
 #: ../panel-plugin/weather-translate.c:134
-#, fuzzy
 msgid "Lightly cloudy"
-msgstr "В основном облачно"
+msgstr "Небольшая облачность"
 
 #: ../panel-plugin/weather-translate.c:119
-#, fuzzy
 msgid "Partly cloudy"
-msgstr "Временами облачно"
+msgstr "Переменная облачность"
 
 #: ../panel-plugin/weather-translate.c:120
 msgid "Cloudy"
@@ -806,59 +812,53 @@ msgstr "Облачно"
 
 #: ../panel-plugin/weather-translate.c:121
 #: ../panel-plugin/weather-translate.c:135
-#, fuzzy
 msgid "Sunny, rain showers"
-msgstr "Сильный ливень"
+msgstr "Солнечно, временами кратковременный дождь"
 
 #: ../panel-plugin/weather-translate.c:121
 #: ../panel-plugin/weather-translate.c:135
-#, fuzzy
 msgid "Clear, rain showers"
-msgstr "Сильный ливень"
+msgstr "Ясно, временами кратковременный дождь"
 
 #: ../panel-plugin/weather-translate.c:122
 msgid "Sunny, rain showers with thunder"
-msgstr ""
+msgstr "Солнечно, кратковременный дождь с грозой"
 
 #: ../panel-plugin/weather-translate.c:123
 msgid "Clear, rain showers with thunder"
-msgstr ""
+msgstr "Ясно, временами кратковременный дождь с грозой"
 
 #: ../panel-plugin/weather-translate.c:124
 msgid "Sunny, sleet"
-msgstr ""
+msgstr "Солнечно, временами дождь со снегом"
 
 #: ../panel-plugin/weather-translate.c:124
 msgid "Clear, sleet"
-msgstr ""
+msgstr "Ясно, временами дождь со снегом"
 
 #: ../panel-plugin/weather-translate.c:125
-#, fuzzy
 msgid "Sunny, snow"
-msgstr "Солнечно"
+msgstr "Солнечно, временами снег"
 
 #: ../panel-plugin/weather-translate.c:125
-#, fuzzy
 msgid "Clear, snow"
-msgstr "Будет ясно"
+msgstr "Ясно, временами снег"
 
 #: ../panel-plugin/weather-translate.c:126
-#, fuzzy
 msgid "Rain showers"
-msgstr "Ливень"
+msgstr "Кратковременный дождь"
 
 #: ../panel-plugin/weather-translate.c:127
 msgid "Rain"
 msgstr "Дождь"
 
 #: ../panel-plugin/weather-translate.c:128
-#, fuzzy
 msgid "Rain with thunder"
-msgstr "Дождь и гроза"
+msgstr "Дождь с грозой"
 
 #: ../panel-plugin/weather-translate.c:129
 msgid "Sleet"
-msgstr ""
+msgstr "Дождь со снегом"
 
 #: ../panel-plugin/weather-translate.c:130
 msgid "Snow"
@@ -866,43 +866,39 @@ msgstr "Снег"
 
 #: ../panel-plugin/weather-translate.c:131
 msgid "Snow with thunder"
-msgstr ""
+msgstr "Снег с грозой"
 
 #: ../panel-plugin/weather-translate.c:136
-#, fuzzy
 msgid "Sunny, Snow"
-msgstr "Солнечно"
+msgstr "Солнечно, временами снег"
 
 #: ../panel-plugin/weather-translate.c:136
-#, fuzzy
 msgid "Clear, Snow"
-msgstr "Сильный снег"
+msgstr "Ясно, временами снег"
 
 #: ../panel-plugin/weather-translate.c:137
 msgid "Sunny, Sleet and thunder"
-msgstr ""
+msgstr "Солнечно, временами дождь со снегом и грозой"
 
 #: ../panel-plugin/weather-translate.c:137
 msgid "Clear, sleet and thunder"
-msgstr ""
+msgstr "Ясно, временами дождь со снегом и грозой"
 
 #: ../panel-plugin/weather-translate.c:138
 msgid "Sunny, Snow and thunder"
-msgstr ""
+msgstr "Солнечно, временами снег с грозой"
 
 #: ../panel-plugin/weather-translate.c:138
 msgid "Clear, snow and thunder"
-msgstr ""
+msgstr "Ясно, временами снег с грозой"
 
 #: ../panel-plugin/weather-translate.c:139
-#, fuzzy
 msgid "Rain showers with thunder"
-msgstr "Дождь и гроза"
+msgstr "Кратковременный дождь с грозой"
 
 #: ../panel-plugin/weather-translate.c:140
-#, fuzzy
 msgid "Sleet and thunder"
-msgstr "Дождь со снегом, затем снег"
+msgstr "Дождь со снегом, гроза"
 
 #: ../panel-plugin/weather-translate.c:246
 msgid "calm"
