@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce-weather-plugin.master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-08-03 02:00+0200\n"
+"POT-Creation-Date: 2012-08-22 11:40+0200\n"
 "PO-Revision-Date: 2012-08-07 22:01+0900\n"
 "Last-Translator: Seong-ho Cho <darkcircle.0426@gmail.com>\n"
 "Language-Team: xfce-i18n <xfce-i18n@xfce.org>\n"
@@ -18,88 +18,81 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 
 #. TRANSLATORS: Keep in sync with labeloptions in weather-config.c
-#: ../panel-plugin/weather.c:137
+#: ../panel-plugin/weather.c:138
 msgid "T"
 msgstr "기온"
 
-#: ../panel-plugin/weather.c:140
+#: ../panel-plugin/weather.c:141
 msgid "P"
 msgstr "기압"
 
-#: ../panel-plugin/weather.c:143
+#: ../panel-plugin/weather.c:144
 msgid "WS"
 msgstr "풍속"
 
-#: ../panel-plugin/weather.c:146
+#: ../panel-plugin/weather.c:147
 msgid "WB"
 msgstr "보포르 풍속"
 
-#: ../panel-plugin/weather.c:149
-#: ../panel-plugin/weather.c:152
+#: ../panel-plugin/weather.c:150 ../panel-plugin/weather.c:153
 msgid "WD"
 msgstr "풍향"
 
-#: ../panel-plugin/weather.c:155
+#: ../panel-plugin/weather.c:156
 msgid "H"
 msgstr "습도"
 
-#: ../panel-plugin/weather.c:158
+#: ../panel-plugin/weather.c:159
 msgid "CL"
 msgstr "최저 운량"
 
-#: ../panel-plugin/weather.c:161
+#: ../panel-plugin/weather.c:162
 msgid "CM"
 msgstr "보통 운량"
 
-#: ../panel-plugin/weather.c:164
+#: ../panel-plugin/weather.c:165
 msgid "CH"
 msgstr "최대 운량"
 
-#: ../panel-plugin/weather.c:167
+#: ../panel-plugin/weather.c:168
 msgid "C"
 msgstr "운량"
 
-#: ../panel-plugin/weather.c:170
+#: ../panel-plugin/weather.c:171
 msgid "F"
 msgstr "안개"
 
-#: ../panel-plugin/weather.c:173
+#: ../panel-plugin/weather.c:174
 msgid "R"
 msgstr "강수율"
 
-#: ../panel-plugin/weather.c:241
+#: ../panel-plugin/weather.c:277 ../panel-plugin/weather.c:281
 msgid "No Data"
 msgstr "데이터 없음"
 
-#: ../panel-plugin/weather.c:268
-#: ../panel-plugin/weather.c:1007
-msgid "Cannot update weather data"
-msgstr "날씨 정보를 업데이트할 수 없습니다"
-
-#: ../panel-plugin/weather.c:830
+#: ../panel-plugin/weather.c:803
 #, c-format
 msgid "Unable to open the following url: %s"
 msgstr "다음 URL을 열 수 없습니다: %s"
 
-#: ../panel-plugin/weather.c:856
-#: ../panel-plugin/weather-summary.c:752
+#: ../panel-plugin/weather.c:831 ../panel-plugin/weather-summary.c:757
 #: ../panel-plugin/weather.desktop.in.h:1
 msgid "Weather Update"
 msgstr "날씨 업데이트"
 
-#: ../panel-plugin/weather.c:899
+#: ../panel-plugin/weather.c:874
 msgid "Short-term forecast data unavailable."
 msgstr "단기예보 데이터가 없습니다."
 
-#: ../panel-plugin/weather.c:914
+#: ../panel-plugin/weather.c:889
 msgid "The sun never rises today."
 msgstr "오늘은 해가 뜨지 않습니다."
 
-#: ../panel-plugin/weather.c:916
+#: ../panel-plugin/weather.c:891
 msgid "The sun never sets today."
 msgstr "오늘은 해가 지지 않습니다."
 
-#: ../panel-plugin/weather.c:922
+#: ../panel-plugin/weather.c:897
 #, c-format
 msgid "The sun rises at %s and sets at %s."
 msgstr "해는 %s에 뜨고 %s에 집니다."
@@ -112,7 +105,7 @@ msgstr "해는 %s에 뜨고 %s에 집니다."
 #. * be changed easily - and try to make it compact and look
 #. * good!
 #.
-#: ../panel-plugin/weather.c:953
+#: ../panel-plugin/weather.c:928
 #, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
@@ -137,10 +130,13 @@ msgstr ""
 "\n"
 "<span size=\"smaller\">%17$s</span>"
 
+#: ../panel-plugin/weather.c:982
+msgid "Cannot update weather data"
+msgstr "날씨 정보를 업데이트할 수 없습니다"
+
 #. add forecast window to right click menu, for people who missed
 #. the left mouse click feature
-#: ../panel-plugin/weather.c:1108
-#: ../panel-plugin/weather-summary.c:797
+#: ../panel-plugin/weather.c:1076 ../panel-plugin/weather-summary.c:803
 msgid "_Forecast"
 msgstr "예보(_F)"
 
@@ -153,65 +149,64 @@ msgstr "예보(_F)"
 #. * or not. In general, though, you should just try to choose
 #. * letter(s) that make sense and don't use up too much space.
 #.
-#: ../panel-plugin/weather-config.c:48
+#: ../panel-plugin/weather-config.c:49
 msgid "Temperature (T)"
 msgstr "기온(T)"
 
-#: ../panel-plugin/weather-config.c:49
+#: ../panel-plugin/weather-config.c:50
 msgid "Atmosphere pressure (P)"
 msgstr "기압(P)"
 
-#: ../panel-plugin/weather-config.c:50
+#: ../panel-plugin/weather-config.c:51
 msgid "Wind speed (WS)"
 msgstr "풍속(WS)"
 
-#: ../panel-plugin/weather-config.c:51
+#: ../panel-plugin/weather-config.c:52
 msgid "Wind speed - Beaufort scale (WB)"
 msgstr "풍속 - 보포르 규모(WB)"
 
-#: ../panel-plugin/weather-config.c:52
+#: ../panel-plugin/weather-config.c:53
 msgid "Wind direction (WD)"
 msgstr "풍향(WD)"
 
-#: ../panel-plugin/weather-config.c:53
+#: ../panel-plugin/weather-config.c:54
 msgid "Wind direction in degrees (WD)"
 msgstr "도 단위 풍향(WD)"
 
-#: ../panel-plugin/weather-config.c:54
+#: ../panel-plugin/weather-config.c:55
 msgid "Humidity (H)"
 msgstr "습도(H)"
 
-#: ../panel-plugin/weather-config.c:55
+#: ../panel-plugin/weather-config.c:56
 msgid "Low clouds (CL)"
 msgstr "최저 운량(CL)"
 
-#: ../panel-plugin/weather-config.c:56
+#: ../panel-plugin/weather-config.c:57
 msgid "Medium clouds (CM)"
 msgstr "보통 운량(CM)"
 
-#: ../panel-plugin/weather-config.c:57
+#: ../panel-plugin/weather-config.c:58
 msgid "High clouds (CH)"
 msgstr "최대 운량(CH)"
 
-#: ../panel-plugin/weather-config.c:58
+#: ../panel-plugin/weather-config.c:59
 msgid "Cloudiness (C)"
 msgstr "운량(C)"
 
-#: ../panel-plugin/weather-config.c:59
+#: ../panel-plugin/weather-config.c:60
 msgid "Fog (F)"
 msgstr "안개(F)"
 
-#: ../panel-plugin/weather-config.c:60
+#: ../panel-plugin/weather-config.c:61
 msgid "Precipitations (R)"
 msgstr "강수율(R)"
 
-#: ../panel-plugin/weather-config.c:240
-#: ../panel-plugin/weather-config.c:418
-#: ../panel-plugin/weather-config.c:529
+#: ../panel-plugin/weather-config.c:241 ../panel-plugin/weather-config.c:415
+#: ../panel-plugin/weather-config.c:524
 msgid "Unset"
 msgstr "해제"
 
-#: ../panel-plugin/weather-config.c:333
+#: ../panel-plugin/weather-config.c:334
 msgid "Please enter proxy settings"
 msgstr "프록시 설정을 입력하여주십시오"
 
@@ -232,170 +227,169 @@ msgstr ""
 msgid "Please select a location by using the \"Change\" button."
 msgstr "\"바꾸기\"단추를 사용하여 지역을 선택해주시기 바랍니다."
 
-#: ../panel-plugin/weather-config.c:430
+#: ../panel-plugin/weather-config.c:427
 msgid "Detecting..."
 msgstr "감지 중..."
 
 #. system of measurement
-#: ../panel-plugin/weather-config.c:490
+#: ../panel-plugin/weather-config.c:485
 msgid "System of _Measurement:"
 msgstr "측정단위(_M):"
 
-#: ../panel-plugin/weather-config.c:494
+#: ../panel-plugin/weather-config.c:489
 msgid "Imperial"
 msgstr "야드-파운드"
 
-#: ../panel-plugin/weather-config.c:496
+#: ../panel-plugin/weather-config.c:491
 msgid "Metric"
 msgstr "미터법"
 
 #. location
-#: ../panel-plugin/weather-config.c:508
+#: ../panel-plugin/weather-config.c:503
 msgid "L_ocation:"
 msgstr "지역(_O):"
 
-#: ../panel-plugin/weather-config.c:538
+#: ../panel-plugin/weather-config.c:531
 msgid "Chan_ge..."
 msgstr "바꾸기(_G)..."
 
 #. proxy settings
-#: ../panel-plugin/weather-config.c:550
+#: ../panel-plugin/weather-config.c:543
 msgid "_Proxy server:"
 msgstr "프록시 서버(_P):"
 
-#: ../panel-plugin/weather-config.c:555
+#: ../panel-plugin/weather-config.c:548
 msgid "Use proxy _server"
 msgstr "프록시 서버 사용(_S)"
 
-#: ../panel-plugin/weather-config.c:557
+#: ../panel-plugin/weather-config.c:550
 msgid "Auto-detect from _environment"
 msgstr "환경 자동감지(_E)"
 
 #. number of days shown in forecast
-#: ../panel-plugin/weather-config.c:610
+#: ../panel-plugin/weather-config.c:603
 msgid "Number of _forecast days:"
 msgstr "예보일수(_F):"
 
-#: ../panel-plugin/weather-config.c:632
+#: ../panel-plugin/weather-config.c:625
 msgid "_Labels to display"
 msgstr "표시할 레이블(_L)"
 
 #. button "add"
-#: ../panel-plugin/weather-config.c:637
+#: ../panel-plugin/weather-config.c:630
 msgid "_Add"
 msgstr "추가(_A)"
 
 #. button "remove"
-#: ../panel-plugin/weather-config.c:653
+#: ../panel-plugin/weather-config.c:646
 msgid "_Remove"
 msgstr "제거(_R)"
 
 #. button "move up"
-#: ../panel-plugin/weather-config.c:659
+#: ../panel-plugin/weather-config.c:652
 msgid "Move _Up"
 msgstr "위로 옮기기(_U)"
 
 #. button "move down"
-#: ../panel-plugin/weather-config.c:665
+#: ../panel-plugin/weather-config.c:658
 msgid "Move _Down"
 msgstr "아래로 옮기기(_D)"
 
-#: ../panel-plugin/weather-config.c:700
+#: ../panel-plugin/weather-config.c:693
 msgid "Animate _transitions between labels"
 msgstr "레이블 간 애니메이션 전환(_T)"
 
-#: ../panel-plugin/weather-data.c:142
+#: ../panel-plugin/weather-data.c:143
 msgid "ft"
 msgstr "ft"
 
-#: ../panel-plugin/weather-data.c:142
+#: ../panel-plugin/weather-data.c:143
 msgid "m"
 msgstr "m"
 
-#: ../panel-plugin/weather-data.c:144
+#: ../panel-plugin/weather-data.c:145
 msgid "°F"
 msgstr "°F"
 
-#: ../panel-plugin/weather-data.c:144
+#: ../panel-plugin/weather-data.c:145
 msgid "°C"
 msgstr "°C"
 
-#: ../panel-plugin/weather-data.c:146
+#: ../panel-plugin/weather-data.c:147
 msgid "psi"
 msgstr "psi"
 
-#: ../panel-plugin/weather-data.c:146
+#: ../panel-plugin/weather-data.c:147
 msgid "hPa"
 msgstr "hPa"
 
-#: ../panel-plugin/weather-data.c:148
+#: ../panel-plugin/weather-data.c:149
 msgid "mph"
 msgstr "mph"
 
-#: ../panel-plugin/weather-data.c:148
+#: ../panel-plugin/weather-data.c:149
 msgid "km/h"
 msgstr "km/h"
 
-#: ../panel-plugin/weather-data.c:161
+#: ../panel-plugin/weather-data.c:162
 msgid "in"
 msgstr "in"
 
-#: ../panel-plugin/weather-data.c:161
+#: ../panel-plugin/weather-data.c:162
 msgid "mm"
 msgstr "mm"
 
 #. display error
-#: ../panel-plugin/weather-http.c:200
+#: ../panel-plugin/weather-http.c:207
 #, c-format
 msgid "Failed to get the hostname %s. Retry in %d seconds."
 msgstr "%s 호스트 이름을 가져오는데 실패했습니다. %d초 후 재시도합니다."
 
-#: ../panel-plugin/weather-http.c:239
+#: ../panel-plugin/weather-http.c:246
 #, c-format
 msgid "Failed to open the socket(%s)."
 msgstr "소켓을 여는데 실패했습니다(%s)."
 
-#: ../panel-plugin/weather-http.c:245
+#: ../panel-plugin/weather-http.c:252
 #, c-format
 msgid "Failed to create a connection with the host(%s)."
 msgstr "호스트와 연결을 수립하는데 실패했습니다(%s)."
 
-#: ../panel-plugin/weather-http.c:282
+#: ../panel-plugin/weather-http.c:289
 #, c-format
 msgid "Failed to send the request(%s)."
 msgstr "요청을 보내는데 실패했습니다 (%s)."
 
-#: ../panel-plugin/weather-http.c:330
+#: ../panel-plugin/weather-http.c:337
 #, c-format
 msgid "Failed to receive data(%s)"
 msgstr "데이터를 받는데 실패(%s)"
 
-#: ../panel-plugin/weather-http.c:349
+#: ../panel-plugin/weather-http.c:356
 msgid "Negative content length"
 msgstr "내용의 길이가 부족합니다"
 
-#: ../panel-plugin/weather-http.c:375
+#: ../panel-plugin/weather-http.c:382
 msgid "Unable to detect the content length."
 msgstr "내용의 길이를 파악할 수 없습니다."
 
-#: ../panel-plugin/weather-http.c:379
+#: ../panel-plugin/weather-http.c:386
 msgid "No content received."
 msgstr "받은 내용이 없습니다."
 
-#: ../panel-plugin/weather-search.c:143
-#: ../panel-plugin/weather-search.c:275
+#: ../panel-plugin/weather-search.c:145 ../panel-plugin/weather-search.c:272
 msgid "Results"
 msgstr "결과"
 
-#: ../panel-plugin/weather-search.c:183
+#: ../panel-plugin/weather-search.c:184
 msgid "Searching..."
 msgstr "검색 중..."
 
-#: ../panel-plugin/weather-search.c:220
+#: ../panel-plugin/weather-search.c:221
 msgid "Search location"
 msgstr "지역 검색"
 
-#: ../panel-plugin/weather-search.c:245
+#: ../panel-plugin/weather-search.c:242
 msgid "Enter a city name or address"
 msgstr "도시 명칭 또는 주소를 입력하십시오"
 
@@ -404,12 +398,12 @@ msgstr "도시 명칭 또는 주소를 입력하십시오"
 #. * search results, but not the location name. The user shall
 #. * give the place a name.
 #.
-#: ../panel-plugin/weather-search.c:420
+#: ../panel-plugin/weather-search.c:418
 msgid "Unnamed place"
 msgstr "이름 없는 장소"
 
 #. head
-#: ../panel-plugin/weather-summary.c:312
+#: ../panel-plugin/weather-summary.c:313
 #, c-format
 msgid ""
 "Weather report for: %s.\n"
@@ -418,23 +412,23 @@ msgstr ""
 "%s의 날씨정보 입니다.\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:318
+#: ../panel-plugin/weather-summary.c:319
 msgid "Coordinates\n"
 msgstr "좌표\n"
 
-#: ../panel-plugin/weather-summary.c:319
+#: ../panel-plugin/weather-summary.c:320
 msgid "Altitude"
 msgstr "고도"
 
-#: ../panel-plugin/weather-summary.c:320
+#: ../panel-plugin/weather-summary.c:321
 msgid "Latitude"
 msgstr "위도"
 
-#: ../panel-plugin/weather-summary.c:321
+#: ../panel-plugin/weather-summary.c:322
 msgid "Longitude"
 msgstr "경도"
 
-#: ../panel-plugin/weather-summary.c:323
+#: ../panel-plugin/weather-summary.c:324
 msgid ""
 "\n"
 "Time\n"
@@ -442,7 +436,7 @@ msgstr ""
 "\n"
 "시간\n"
 
-#: ../panel-plugin/weather-summary.c:327
+#: ../panel-plugin/weather-summary.c:328
 #, c-format
 msgid ""
 "\tTemperature, wind, atmosphere and cloud data apply to:\n"
@@ -451,7 +445,7 @@ msgstr ""
 "\t온도, 바람, 대기, 구름 데이터를 다음에 적용합니다:\n"
 "\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:336
+#: ../panel-plugin/weather-summary.c:337
 #, c-format
 msgid ""
 "\n"
@@ -467,7 +461,7 @@ msgstr ""
 "\t종료:\t%s\n"
 
 #. sun and moon
-#: ../panel-plugin/weather-summary.c:345
+#: ../panel-plugin/weather-summary.c:346
 msgid ""
 "\n"
 "Astronomical Data\n"
@@ -475,20 +469,20 @@ msgstr ""
 "\n"
 "천문 데이터\n"
 
-#: ../panel-plugin/weather-summary.c:348
+#: ../panel-plugin/weather-summary.c:349
 msgid "\tSunrise:\t\tThe sun never rises today.\n"
 msgstr "\t일출:\t\t오늘은 해가 뜨지 않습니다.\n"
 
-#: ../panel-plugin/weather-summary.c:351
+#: ../panel-plugin/weather-summary.c:352
 msgid "\tSunset:\t\tThe sun never sets today.\n"
 msgstr "\t일몰:\t\t오늘은 해가 지지 않습니다.\n"
 
-#: ../panel-plugin/weather-summary.c:356
+#: ../panel-plugin/weather-summary.c:357
 #, c-format
 msgid "\tSunrise:\t\t%s\n"
 msgstr "\t일출:\t\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:361
+#: ../panel-plugin/weather-summary.c:362
 #, c-format
 msgid ""
 "\tSunset:\t\t%s\n"
@@ -497,39 +491,39 @@ msgstr ""
 "\t일몰:\t\t%s\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:366
+#: ../panel-plugin/weather-summary.c:367
 #, c-format
 msgid "\tMoon phase:\t%s\n"
 msgstr "\t달의 위상:\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:370
+#: ../panel-plugin/weather-summary.c:371
 msgid "\tMoon phase:\tUnknown\n"
 msgstr "\t달의 위상:\t알 수 없음\n"
 
-#: ../panel-plugin/weather-summary.c:374
+#: ../panel-plugin/weather-summary.c:375
 msgid "\tMoonrise:\tThe moon never rises today.\n"
 msgstr "\t월출:\t오늘은 달이 뜨지 않습니다.\n"
 
-#: ../panel-plugin/weather-summary.c:377
+#: ../panel-plugin/weather-summary.c:378
 msgid "\tMoonset:\tThe moon never sets today.\n"
 msgstr "\t월몰:\t오늘은 달이 지지 않습니다.\n"
 
-#: ../panel-plugin/weather-summary.c:382
+#: ../panel-plugin/weather-summary.c:383
 #, c-format
 msgid "\tMoonrise:\t%s\n"
 msgstr "\t월출:\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:387
+#: ../panel-plugin/weather-summary.c:388
 #, c-format
 msgid "\tMoonset:\t%s\n"
 msgstr "\t월몰:\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:391
+#: ../panel-plugin/weather-summary.c:392
 msgid "\tData not available, will use sane default values for night and day.\n"
 msgstr "\t데이터가 없어서, 밤낮을 위해 온전한 기본값을 사용할 것입니다.\n"
 
 #. temperature
-#: ../panel-plugin/weather-summary.c:397
+#: ../panel-plugin/weather-summary.c:398
 msgid ""
 "\n"
 "Temperature\n"
@@ -537,12 +531,12 @@ msgstr ""
 "\n"
 "기온\n"
 
-#: ../panel-plugin/weather-summary.c:398
+#: ../panel-plugin/weather-summary.c:399
 msgid "Temperature"
 msgstr "온도"
 
 #. wind
-#: ../panel-plugin/weather-summary.c:401
+#: ../panel-plugin/weather-summary.c:402
 msgid ""
 "\n"
 "Wind\n"
@@ -550,21 +544,21 @@ msgstr ""
 "\n"
 "바람\n"
 
-#: ../panel-plugin/weather-summary.c:406
+#: ../panel-plugin/weather-summary.c:407
 #, c-format
 msgid "\t%s: %s (%s on the Beaufort scale)\n"
 msgstr "\t%s: %s (보포르 단계 값: %s)\n"
 
-#: ../panel-plugin/weather-summary.c:407
+#: ../panel-plugin/weather-summary.c:408
 msgid "Speed"
 msgstr "속도"
 
-#: ../panel-plugin/weather-summary.c:416
+#: ../panel-plugin/weather-summary.c:417
 msgid "Direction"
 msgstr "방향"
 
 #. precipitation
-#: ../panel-plugin/weather-summary.c:424
+#: ../panel-plugin/weather-summary.c:425
 msgid ""
 "\n"
 "Precipitations\n"
@@ -572,12 +566,12 @@ msgstr ""
 "\n"
 "강수\n"
 
-#: ../panel-plugin/weather-summary.c:425
+#: ../panel-plugin/weather-summary.c:426
 msgid "Precipitations amount"
 msgstr "강수량"
 
 #. atmosphere
-#: ../panel-plugin/weather-summary.c:428
+#: ../panel-plugin/weather-summary.c:429
 msgid ""
 "\n"
 "Atmosphere\n"
@@ -585,16 +579,16 @@ msgstr ""
 "\n"
 "기압\n"
 
-#: ../panel-plugin/weather-summary.c:429
+#: ../panel-plugin/weather-summary.c:430
 msgid "Pressure"
 msgstr "기압"
 
-#: ../panel-plugin/weather-summary.c:430
+#: ../panel-plugin/weather-summary.c:431
 msgid "Humidity"
 msgstr "습도"
 
 #. clouds
-#: ../panel-plugin/weather-summary.c:433
+#: ../panel-plugin/weather-summary.c:434
 msgid ""
 "\n"
 "Clouds\n"
@@ -602,28 +596,28 @@ msgstr ""
 "\n"
 "구름\n"
 
-#: ../panel-plugin/weather-summary.c:434
-#: ../panel-plugin/weather-translate.c:132
+#: ../panel-plugin/weather-summary.c:435
+#: ../panel-plugin/weather-translate.c:168
 msgid "Fog"
 msgstr "짙은 안개"
 
-#: ../panel-plugin/weather-summary.c:435
+#: ../panel-plugin/weather-summary.c:436
 msgid "Low clouds"
 msgstr "구름 조금"
 
-#: ../panel-plugin/weather-summary.c:436
+#: ../panel-plugin/weather-summary.c:437
 msgid "Medium clouds"
 msgstr "구름 적당히"
 
-#: ../panel-plugin/weather-summary.c:437
+#: ../panel-plugin/weather-summary.c:438
 msgid "High clouds"
 msgstr "구름 많음"
 
-#: ../panel-plugin/weather-summary.c:438
+#: ../panel-plugin/weather-summary.c:439
 msgid "Cloudiness"
 msgstr "구름"
 
-#: ../panel-plugin/weather-summary.c:440
+#: ../panel-plugin/weather-summary.c:441
 msgid ""
 "\n"
 "Data from The Norwegian Meteorological Institute\n"
@@ -631,288 +625,342 @@ msgstr ""
 "\n"
 "노르웨이 기상청으로부터 온 데이터입니다\n"
 
-#: ../panel-plugin/weather-summary.c:443
+#: ../panel-plugin/weather-summary.c:444
 msgid "Thanks to met.no"
 msgstr "met.no에게 감사를 표합니다"
 
-#: ../panel-plugin/weather-summary.c:556
+#: ../panel-plugin/weather-summary.c:557
 msgid "Morning"
 msgstr "아침"
 
-#: ../panel-plugin/weather-summary.c:559
+#: ../panel-plugin/weather-summary.c:560
 msgid "Afternoon"
 msgstr "점심"
 
-#: ../panel-plugin/weather-summary.c:562
+#: ../panel-plugin/weather-summary.c:563
 msgid "Evening"
 msgstr "저녁"
 
-#: ../panel-plugin/weather-summary.c:565
+#: ../panel-plugin/weather-summary.c:566
 msgid "Night"
 msgstr "밤"
 
-#: ../panel-plugin/weather-summary.c:574
+#: ../panel-plugin/weather-summary.c:575
 #, c-format
 msgid "Today"
 msgstr "오늘"
 
-#: ../panel-plugin/weather-summary.c:576
+#: ../panel-plugin/weather-summary.c:577
 #, c-format
 msgid "Tomorrow"
 msgstr "내일"
 
-#: ../panel-plugin/weather-summary.c:760
+#: ../panel-plugin/weather-summary.c:765
 #, c-format
 msgid "Weather report for: %s"
 msgstr "%s의 기상정보"
 
-#: ../panel-plugin/weather-summary.c:783
+#: ../panel-plugin/weather-summary.c:789
 msgid "Please set a location in the plugin settings."
 msgstr "플러그인 설정에서 지역을 설정해 주시기 바랍니다."
 
-#: ../panel-plugin/weather-summary.c:785
+#: ../panel-plugin/weather-summary.c:791
 msgid "Currently no data available."
 msgstr "현재 데이터가 없습니다."
 
-#: ../panel-plugin/weather-summary.c:800
+#: ../panel-plugin/weather-summary.c:806
 msgid "_Details"
 msgstr "자세히(_D)"
 
 #. TRANSLATORS: Wind directions. It's where the wind comes _from_.
-#: ../panel-plugin/weather-translate.c:35
+#: ../panel-plugin/weather-translate.c:36
 msgid "S"
 msgstr "남"
 
-#: ../panel-plugin/weather-translate.c:36
+#: ../panel-plugin/weather-translate.c:37
 msgid "SSW"
 msgstr "남남서"
 
-#: ../panel-plugin/weather-translate.c:37
+#: ../panel-plugin/weather-translate.c:38
 msgid "SW"
 msgstr "남서"
 
-#: ../panel-plugin/weather-translate.c:38
+#: ../panel-plugin/weather-translate.c:39
 msgid "WSW"
 msgstr "서남서"
 
-#: ../panel-plugin/weather-translate.c:39
+#: ../panel-plugin/weather-translate.c:40
 msgid "W"
 msgstr "서"
 
-#: ../panel-plugin/weather-translate.c:40
+#: ../panel-plugin/weather-translate.c:41
 msgid "WNW"
 msgstr "서북서"
 
-#: ../panel-plugin/weather-translate.c:41
+#: ../panel-plugin/weather-translate.c:42
 msgid "NW"
 msgstr "북서"
 
-#: ../panel-plugin/weather-translate.c:42
+#: ../panel-plugin/weather-translate.c:43
 msgid "NNW"
 msgstr "북북서"
 
-#: ../panel-plugin/weather-translate.c:43
+#: ../panel-plugin/weather-translate.c:44
 msgid "N"
 msgstr "북"
 
-#: ../panel-plugin/weather-translate.c:44
+#: ../panel-plugin/weather-translate.c:45
 msgid "NNE"
 msgstr "북북동"
 
-#: ../panel-plugin/weather-translate.c:45
+#: ../panel-plugin/weather-translate.c:46
 msgid "NE"
 msgstr "북동"
 
-#: ../panel-plugin/weather-translate.c:46
+#: ../panel-plugin/weather-translate.c:47
 msgid "ENE"
 msgstr "동북동"
 
-#: ../panel-plugin/weather-translate.c:47
+#: ../panel-plugin/weather-translate.c:48
 msgid "E"
 msgstr "동"
 
-#: ../panel-plugin/weather-translate.c:48
+#: ../panel-plugin/weather-translate.c:49
 msgid "ESE"
 msgstr "동남동"
 
-#: ../panel-plugin/weather-translate.c:49
+#: ../panel-plugin/weather-translate.c:50
 msgid "SE"
 msgstr "남동"
 
-#: ../panel-plugin/weather-translate.c:50
+#: ../panel-plugin/weather-translate.c:51
 msgid "SSE"
 msgstr "남남동"
 
-#: ../panel-plugin/weather-translate.c:51
+#: ../panel-plugin/weather-translate.c:52
 msgid "CALM"
 msgstr "무풍"
 
 #. TRANSLATORS: Moon phases
-#: ../panel-plugin/weather-translate.c:57
+#: ../panel-plugin/weather-translate.c:58
 msgid "New moon"
 msgstr "새 달"
 
-#: ../panel-plugin/weather-translate.c:58
+#: ../panel-plugin/weather-translate.c:59
 msgid "Waxing crescent"
 msgstr "차 가는 초승달"
 
-#: ../panel-plugin/weather-translate.c:59
+#: ../panel-plugin/weather-translate.c:60
 msgid "First quarter"
 msgstr "초승달"
 
-#: ../panel-plugin/weather-translate.c:60
+#: ../panel-plugin/weather-translate.c:61
 msgid "Waxing gibbous"
 msgstr "차 가는달"
 
-#: ../panel-plugin/weather-translate.c:61
+#: ../panel-plugin/weather-translate.c:62
 msgid "Full moon"
 msgstr "보름달"
 
-#: ../panel-plugin/weather-translate.c:62
+#: ../panel-plugin/weather-translate.c:63
 msgid "Waning gibbous"
 msgstr "기울어가는 달"
 
-#: ../panel-plugin/weather-translate.c:63
+#: ../panel-plugin/weather-translate.c:64
 msgid "Third quarter"
 msgstr "그믐달"
 
-#: ../panel-plugin/weather-translate.c:64
+#: ../panel-plugin/weather-translate.c:65
 msgid "Waning crescent"
 msgstr "기울어가는 그믐달"
 
 #.
-#. * TRANSLATORS: Some of these terms seem to contradict
-#. * themselves. If I'm not mistaken, this is because the forecasts
-#. * are for certain time periods which may be 1, 3 or 6 hours, and
-#. * during those periods the weather can alternate between several
-#. * states. For more information, you might want to read
-#. * http://api.met.no/weatherapi/locationforecastlts/1.1/documentation,
-#. * but unfortunately it is not very revealing either.
+#. * TRANSLATORS: How these symbols are defined is explained at http://api.yr.no/faq.html#symbols.
+#. * More information can be obtained from the following pages:
+#. * http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index
+#. * http://www.theweathernetwork.com/index.php?product=help&placecode=cabc0164&pagecontent=helpicons
+#. * http://www.mir-co.net/sonstiges/wetterausdruecke.htm
+#. * The latter page is in German, but it contains a symbol table with Norwegian descriptions.
+#. * The ones that are used here are shorter, though, to fit in the tooltip, forecast tab etc.
 #.
-#: ../panel-plugin/weather-translate.c:117
-#: ../panel-plugin/weather-translate.c:133
+#. Symbols 16-19 are used for polar days
+#: ../panel-plugin/weather-translate.c:118
+#: ../panel-plugin/weather-translate.c:171
 msgid "Sunny"
 msgstr "맑음"
 
-#: ../panel-plugin/weather-translate.c:117
-#: ../panel-plugin/weather-translate.c:133
+#: ../panel-plugin/weather-translate.c:118
+#: ../panel-plugin/weather-translate.c:171
 msgid "Clear"
 msgstr "구름 없음"
 
-#: ../panel-plugin/weather-translate.c:118
-#: ../panel-plugin/weather-translate.c:134
+#: ../panel-plugin/weather-translate.c:119
+#: ../panel-plugin/weather-translate.c:172
 msgid "Lightly cloudy"
 msgstr "조금 흐림"
 
-#: ../panel-plugin/weather-translate.c:119
+#: ../panel-plugin/weather-translate.c:120
 msgid "Partly cloudy"
 msgstr "곳에 따라 흐림"
 
-#: ../panel-plugin/weather-translate.c:120
+#: ../panel-plugin/weather-translate.c:121
 msgid "Cloudy"
 msgstr "흐림"
 
-#: ../panel-plugin/weather-translate.c:121
-#: ../panel-plugin/weather-translate.c:135
-msgid "Sunny, rain showers"
-msgstr "맑음, 소나기"
-
-#: ../panel-plugin/weather-translate.c:121
-#: ../panel-plugin/weather-translate.c:135
-msgid "Clear, rain showers"
-msgstr "구름 없음, 소나기"
-
-#: ../panel-plugin/weather-translate.c:122
-msgid "Sunny, rain showers with thunder"
-msgstr "맑음, 천둥번개를 동반한 소나기"
-
-#: ../panel-plugin/weather-translate.c:123
-msgid "Clear, rain showers with thunder"
-msgstr "구름 없음, 천둥번개를 동반한 소나기"
-
-#: ../panel-plugin/weather-translate.c:124
-msgid "Sunny, sleet"
-msgstr "맑음, 진눈깨비"
-
-#: ../panel-plugin/weather-translate.c:124
-msgid "Clear, sleet"
-msgstr "구름 없음, 진눈깨비"
-
-#: ../panel-plugin/weather-translate.c:125
-msgid "Sunny, snow"
-msgstr "맑음, 눈"
-
-#: ../panel-plugin/weather-translate.c:125
-msgid "Clear, snow"
-msgstr "구름 없음, 눈"
-
-#: ../panel-plugin/weather-translate.c:126
+#.
+#. * http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index:
+#. *   "Showers – Some sun is expected, interspersed with showers from
+#. *    time to time. As opposed to rain, showers describe liquid
+#. *    precipitation that can vary greatly in intensity over a short
+#. *    amount of time. [...] Precipitation may be locally heavy for
+#. *    short amounts of time."
+#.
+#: ../panel-plugin/weather-translate.c:131
+#: ../panel-plugin/weather-translate.c:173
 msgid "Rain showers"
 msgstr "소나기"
 
-#: ../panel-plugin/weather-translate.c:127
+#.
+#. * http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index:
+#. *   "Thunder Showers - Intermittent rain showers with thunder and lightning, generally
+#. *    short-lived."
+#.
+#: ../panel-plugin/weather-translate.c:138
+#, fuzzy
+msgid "Thunder showers"
+msgstr "소나기"
+
+#. Analogues to "Rain showers"
+#: ../panel-plugin/weather-translate.c:141
+#, fuzzy
+msgid "Sleet showers"
+msgstr "소나기"
+
+#: ../panel-plugin/weather-translate.c:142
+#: ../panel-plugin/weather-translate.c:174
+#, fuzzy
+msgid "Snow showers"
+msgstr "눈보라"
+
+#. It's raining incessantly, but not heavily.
+#: ../panel-plugin/weather-translate.c:145
+#, fuzzy
+msgid "Light rain"
+msgstr "약간의 비"
+
+#. Heavy, incessant rain
+#: ../panel-plugin/weather-translate.c:148
 msgid "Rain"
 msgstr "비"
 
-#: ../panel-plugin/weather-translate.c:128
+#. A thunderstorm does not necessarily imply rain, but since the symbol claims it will rain
+#. * use "Rain with thunder".
+#: ../panel-plugin/weather-translate.c:152
 msgid "Rain with thunder"
 msgstr "뇌우"
 
-#: ../panel-plugin/weather-translate.c:129
+#. Sleet is a mixture of rain and snow, but it's not hail.
+#: ../panel-plugin/weather-translate.c:155
 msgid "Sleet"
 msgstr "진눈깨비"
 
-#: ../panel-plugin/weather-translate.c:130
+#: ../panel-plugin/weather-translate.c:157
 msgid "Snow"
 msgstr "눈"
 
-#: ../panel-plugin/weather-translate.c:131
-msgid "Snow with thunder"
-msgstr "뇌설"
+#.
+#. * http://en.wikipedia.org/wiki/Thundersnow:
+#. *   "Thundersnow, also known as a winter thunderstorm or a thunder snowstorm, is a relatively
+#. *    rare kind of thunderstorm with snow falling as the primary precipitation instead of
+#. *    rain. It typically falls in regions of strong upward motion within the cold sector of an
+#. *    extratropical cyclone."
+#.
+#: ../panel-plugin/weather-translate.c:166
+#, fuzzy
+msgid "Thundersnow"
+msgstr "번개"
 
-#: ../panel-plugin/weather-translate.c:136
-msgid "Sunny, Snow"
-msgstr "맑음, 눈"
+#. Same as symbols 1-15, but with thunder
+#: ../panel-plugin/weather-translate.c:177
+#, fuzzy
+msgid "Sleet showers with thunder"
+msgstr "소나기와 천둥번개"
 
-#: ../panel-plugin/weather-translate.c:136
-msgid "Clear, Snow"
-msgstr "구름 없음, 눈"
+#: ../panel-plugin/weather-translate.c:178
+#, fuzzy
+msgid "Snow showers with thunder"
+msgstr "소나기와 천둥번개"
 
-#: ../panel-plugin/weather-translate.c:137
-msgid "Sunny, Sleet and thunder"
-msgstr "맑음, 진눈깨비와 천둥번개"
+#: ../panel-plugin/weather-translate.c:179
+#, fuzzy
+msgid "Light rain with thunder"
+msgstr "뇌우"
 
-#: ../panel-plugin/weather-translate.c:137
-msgid "Clear, sleet and thunder"
-msgstr "구름 없음, 진눈깨비와 천둥번개"
-
-#: ../panel-plugin/weather-translate.c:138
-msgid "Sunny, Snow and thunder"
-msgstr "맑음, 눈과 천둥번개"
-
-#: ../panel-plugin/weather-translate.c:138
-msgid "Clear, snow and thunder"
-msgstr "구름 없음, 진눈깨비와 천둥번개"
-
-#: ../panel-plugin/weather-translate.c:139
+#: ../panel-plugin/weather-translate.c:179
 msgid "Rain showers with thunder"
 msgstr "소나기와 천둥번개"
 
-#: ../panel-plugin/weather-translate.c:140
-msgid "Sleet and thunder"
-msgstr "진눈깨비와 천둥번개"
+#: ../panel-plugin/weather-translate.c:180
+#, fuzzy
+msgid "Sleet with thunder"
+msgstr "뇌설"
 
-#: ../panel-plugin/weather-translate.c:246
+#: ../panel-plugin/weather-translate.c:286
 msgid "calm"
 msgstr "무풍"
 
-#: ../panel-plugin/weather-translate.c:248
+#: ../panel-plugin/weather-translate.c:288
 msgid "N/A"
 msgstr "알 수 없음"
 
 #: ../panel-plugin/weather.desktop.in.h:2
 msgid "Show current weather conditions"
 msgstr "현재 날씨 상태를 보입니다"
+
+#~ msgid "Sunny, rain showers"
+#~ msgstr "맑음, 소나기"
+
+#~ msgid "Clear, rain showers"
+#~ msgstr "구름 없음, 소나기"
+
+#~ msgid "Sunny, rain showers with thunder"
+#~ msgstr "맑음, 천둥번개를 동반한 소나기"
+
+#~ msgid "Clear, rain showers with thunder"
+#~ msgstr "구름 없음, 천둥번개를 동반한 소나기"
+
+#~ msgid "Sunny, sleet"
+#~ msgstr "맑음, 진눈깨비"
+
+#~ msgid "Clear, sleet"
+#~ msgstr "구름 없음, 진눈깨비"
+
+#~ msgid "Sunny, snow"
+#~ msgstr "맑음, 눈"
+
+#~ msgid "Clear, snow"
+#~ msgstr "구름 없음, 눈"
+
+#~ msgid "Sunny, Snow"
+#~ msgstr "맑음, 눈"
+
+#~ msgid "Clear, Snow"
+#~ msgstr "구름 없음, 눈"
+
+#~ msgid "Sunny, Sleet and thunder"
+#~ msgstr "맑음, 진눈깨비와 천둥번개"
+
+#~ msgid "Clear, sleet and thunder"
+#~ msgstr "구름 없음, 진눈깨비와 천둥번개"
+
+#~ msgid "Sunny, Snow and thunder"
+#~ msgstr "맑음, 눈과 천둥번개"
+
+#~ msgid "Clear, snow and thunder"
+#~ msgstr "구름 없음, 진눈깨비와 천둥번개"
+
+#~ msgid "Sleet and thunder"
+#~ msgstr "진눈깨비와 천둥번개"
 
 #~ msgid "Untitled"
 #~ msgstr "제목 없음"
@@ -1184,9 +1232,6 @@ msgstr "현재 날씨 상태를 보입니다"
 #~ msgid "Light Drizzle and Windy"
 #~ msgstr "약한 가랑비와 바람"
 
-#~ msgid "Light Rain"
-#~ msgstr "약간의 비"
-
 #~ msgid "Light Rain / Wind"
 #~ msgstr "약간의 비/바람"
 
@@ -1319,9 +1364,6 @@ msgstr "현재 날씨 상태를 보입니다"
 #~ msgid "Scattered T-Storms"
 #~ msgstr "간간히 천둥번개"
 
-#~ msgid "Showers"
-#~ msgstr "소나기"
-
 #~ msgid "Showers / Wind"
 #~ msgstr "소나기 / 바람"
 
@@ -1342,9 +1384,6 @@ msgstr "현재 날씨 상태를 보입니다"
 
 #~ msgid "Snow or Rain"
 #~ msgstr "눈 또는 비"
-
-#~ msgid "Snow Shower"
-#~ msgstr "눈보라"
 
 #~ msgid "Light Snow Shower"
 #~ msgstr "약간의 눈보라"
@@ -1381,9 +1420,6 @@ msgstr "현재 날씨 상태를 보입니다"
 
 #~ msgid "T-Storms Early"
 #~ msgstr "이른 천둥번개"
-
-#~ msgid "Thunder"
-#~ msgstr "번개"
 
 #~ msgid "Thunder in the Vicinity"
 #~ msgstr "인근지역 번개"
