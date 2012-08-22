@@ -107,38 +107,77 @@ typedef struct {
 
 static const symbol_desc symbol_to_desc[] = {
     /*
-     * TRANSLATORS: Some of these terms seem to contradict
-     * themselves. If I'm not mistaken, this is because the forecasts
-     * are for certain time periods which may be 1, 3 or 6 hours, and
-     * during those periods the weather can alternate between several
-     * states. For more information, you might want to read
-     * http://api.met.no/weatherapi/locationforecastlts/1.1/documentation,
-     * but unfortunately it is not very revealing either.
+     * TRANSLATORS: How these symbols are defined is explained at http://api.yr.no/faq.html#symbols.
+     * More information can be obtained from the following pages:
+     * http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index
+     * http://www.theweathernetwork.com/index.php?product=help&placecode=cabc0164&pagecontent=helpicons
+     * http://www.mir-co.net/sonstiges/wetterausdruecke.htm
+     * The latter page is in German, but it contains a symbol table with Norwegian descriptions.
+     * The ones that are used here are shorter, though, to fit in the tooltip, forecast tab etc.
      */
-    { 1, "SUN",                 N_("Sunny"),                     N_("Clear")		},
-    { 2, "LIGHTCLOUD",          N_("Lightly cloudy"),            N_("Lightly cloudy")	},
-    { 3, "PARTLYCLOUD",         N_("Partly cloudy"),             N_("Partly cloudy")	},
-    { 4, "CLOUD",               N_("Cloudy"),                    N_("Cloudy")		},
-    { 5, "LIGHTRAINSUN",        N_("Sunny, rain showers"),       N_("Clear, rain showers") },
-    { 6, "LIGHTRAINTHUNDERSUN", N_("Sunny, rain showers with thunder"),
-      N_("Clear, rain showers with thunder") },
-    { 7, "SLEETSUN",            N_("Sunny, sleet"),              N_("Clear, sleet") },
-    { 8, "SNOWSUN",             N_("Sunny, snow"),               N_("Clear, snow") },
-    { 9, "LIGHTRAIN",           N_("Rain showers"),              N_("Rain showers") },
-    { 10,"RAIN",                N_("Rain"),                      N_("Rain") },
-    { 11,"RAINTHUNDER",         N_("Rain with thunder"),         N_("Rain with thunder") },
-    { 12,"SLEET",               N_("Sleet"),                     N_("Sleet") },
-    { 13,"SNOW",                N_("Snow"),                      N_("Snow") },
-    { 14,"SNOWTHUNDER",         N_("Snow with thunder"),         N_("Snow with thunder") },
-    { 15,"FOG",                 N_("Fog"),                       N_("Fog") },
-    { 16,"SUN",                 N_("Sunny"),                     N_("Clear") },
-    { 17,"LIGHTCLOUD",          N_("Lightly cloudy"),            N_("Lightly cloudy") },
-    { 18,"LIGHTRAINSUN",        N_("Sunny, rain showers"),       N_("Clear, rain showers") },
-    { 19,"SNOWSUN",             N_("Sunny, Snow"),               N_("Clear, Snow") },
-    { 20,"SLEETSUNTHUNDER",     N_("Sunny, Sleet and thunder"),  N_("Clear, sleet and thunder") },
-    { 21,"SNOWSUNTHUNDER",      N_("Sunny, Snow and thunder"),   N_("Clear, snow and thunder") },
-    { 22,"LIGHTRAINTHUNDER",    N_("Rain showers with thunder"), N_("Rain showers with thunder") },
-    { 23,"SLEETTHUNDER",        N_("Sleet and thunder"),         N_("Sleet and thunder") },
+    {  1, "SUN",                 N_("Sunny"),                      N_("Clear")                      },
+    {  2, "LIGHTCLOUD",          N_("Lightly cloudy"),             N_("Lightly cloudy")             },
+    {  3, "PARTLYCLOUD",         N_("Partly cloudy"),              N_("Partly cloudy")              },
+    {  4, "CLOUD",               N_("Cloudy"),                     N_("Cloudy")                     },
+
+    /*
+     * http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index:
+     *   "Showers – Some sun is expected, interspersed with showers from
+     *    time to time. As opposed to rain, showers describe liquid
+     *    precipitation that can vary greatly in intensity over a short
+     *    amount of time. [...] Precipitation may be locally heavy for
+     *    short amounts of time."
+     */
+    {  5, "LIGHTRAINSUN",        N_("Rain showers"),               N_("Rain showers")               },
+
+    /*
+     * http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index:
+     *   "Thunder Showers - Intermittent rain showers with thunder and lightning, generally
+     *    short-lived."
+     */
+    {  6, "LIGHTRAINTHUNDERSUN", N_("Thunder showers"),            N_("Thunder showers")            },
+
+    /* Analogues to "Rain showers" */
+    {  7, "SLEETSUN",            N_("Sleet showers"),              N_("Sleet showers")              },
+    {  8, "SNOWSUN",             N_("Snow showers"),               N_("Snow showers")               },
+
+    /* It's raining incessantly, but not heavily. */
+    {  9, "LIGHTRAIN",           N_("Light rain"),                 N_("Light rain")                 },
+
+    /* Heavy, incessant rain */
+    { 10, "RAIN",                N_("Rain"),                       N_("Rain")                       },
+
+    /* A thunderstorm does not necessarily imply rain, but since the symbol claims it will rain
+     * use "Rain with thunder". */
+    { 11, "RAINTHUNDER",         N_("Rain with thunder"),          N_("Rain with thunder")          },
+
+    /* Sleet is a mixture of rain and snow, but it's not hail. */
+    { 12, "SLEET",               N_("Sleet"),                      N_("Sleet")                      },
+
+    { 13, "SNOW",                N_("Snow"),                       N_("Snow")                       },
+
+    /*
+     * http://en.wikipedia.org/wiki/Thundersnow:
+     *   "Thundersnow, also known as a winter thunderstorm or a thunder snowstorm, is a relatively
+     *    rare kind of thunderstorm with snow falling as the primary precipitation instead of
+     *    rain. It typically falls in regions of strong upward motion within the cold sector of an
+     *    extratropical cyclone."
+     */
+    { 14, "SNOWTHUNDER",         N_("Thundersnow"),                N_("Thundersnow")                },
+
+    { 15, "FOG",                 N_("Fog"),                        N_("Fog")                        },
+
+    /* Symbols 16-19 are used for polar days */
+    { 16, "SUN",                 N_("Sunny"),                      N_("Clear")                      },
+    { 17, "LIGHTCLOUD",          N_("Lightly cloudy"),             N_("Lightly cloudy")             },
+    { 18, "LIGHTRAINSUN",        N_("Rain showers"),               N_("Rain showers")               },
+    { 19, "SNOWSUN",             N_("Snow showers"),               N_("Snow showers")               },
+
+    /* Same as symbols 1-15, but with thunder */
+    { 20, "SLEETSUNTHUNDER",     N_("Sleet showers with thunder"), N_("Sleet showers with thunder") },
+    { 21, "SNOWSUNTHUNDER",      N_("Snow showers with thunder"),  N_("Snow showers with thunder")  },
+    { 22, "LIGHTRAINTHUNDER",    N_("Light rain with thunder"),    N_("Rain showers with thunder")  },
+    { 23, "SLEETTHUNDER",        N_("Sleet with thunder"),         N_("Sleet with thunder")         },
 };
 
 #define NUM_SYMBOLS (sizeof(symbol_to_desc) / sizeof(symbol_to_desc[0]))
