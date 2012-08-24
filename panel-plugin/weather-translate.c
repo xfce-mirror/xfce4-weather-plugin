@@ -176,7 +176,7 @@ static const symbol_desc symbol_to_desc[] = {
     /* Same as symbols 1-15, but with thunder */
     { 20, "SLEETSUNTHUNDER",     N_("Sleet showers with thunder"), N_("Sleet showers with thunder") },
     { 21, "SNOWSUNTHUNDER",      N_("Snow showers with thunder"),  N_("Snow showers with thunder")  },
-    { 22, "LIGHTRAINTHUNDER",    N_("Light rain with thunder"),    N_("Rain showers with thunder")  },
+    { 22, "LIGHTRAINTHUNDER",    N_("Light rain with thunder"),    N_("Light rain with thunder")  },
     { 23, "SLEETTHUNDER",        N_("Sleet with thunder"),         N_("Sleet with thunder")         },
 };
 
