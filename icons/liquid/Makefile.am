@@ -20,12 +20,14 @@ liquid_DATA = NODATA.png			\
 	SNOWSUNTHUNDER.png		\
 	SNOWTHUNDER.png			\
 	SUN.png				\
-	CLOUD-night.png			\
 	LIGHTCLOUD-night.png		\
 	LIGHTRAINSUN-night.png		\
 	LIGHTRAINTHUNDERSUN-night.png	\
 	PARTLYCLOUD-night.png		\
+	SLEETSUN-night.png		\
+	SLEETSUNTHUNDER-night.png	\
 	SNOWSUN-night.png		\
+	SNOWSUNTHUNDER-night.png	\
 	SUN-night.png
 
 EXTRA_DIST =								\
