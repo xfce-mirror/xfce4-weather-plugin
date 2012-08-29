@@ -30,13 +30,16 @@
 #define NODATA "NODATA"
 
 
+/* For these symbols, there will be a separate icon used for night time */
 const gchar *night_symbols[] = {
-    "CLOUD",
     "LIGHTCLOUD",
     "LIGHTRAINSUN",
     "LIGHTRAINTHUNDERSUN",
     "PARTLYCLOUD",
+    "SLEETSUN",
+    "SLEETSUNTHUNDER"
     "SNOWSUN",
+    "SNOWSUNTHUNDER",
     "SUN",
     NULL
 };
