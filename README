@@ -86,3 +86,94 @@ using gdb or any other debugger should the plugin crash:
    print a nice backtrace. Report the issue to the Xfce bugtracker at
    https://bugzilla.xfce.org, providing the backtrace.
 6) 'quit' exits the debugger.
+
+
+ICON THEMES
+==========================================================================
+
+1) Icon theme support
+--------------------------------------------------------------------------
+
+Currently, there is no real icon theme support, but this will be
+worked on in one of the next releases. Until that feature is
+implemented, you can of course replace the liquid weather icons with
+your own, however this will in most cases require root permissions. If
+you want to design your own set, please have a look at the liquid
+theme to get an idea what the icons should look like and at the source
+file weather-translate.c, where you will find references and
+explanations for the weather symbols.
+
+It was suggested (http://mail.xfce.org/pipermail/xfce/2012-August/031180.html)
+to make use of icon themes implementing the freedesktop standardized naming
+scheme, like some KDE and GNOME application do, for reference please see
+http://standards.freedesktop.org/icon-naming-spec/icon-naming-spec-latest.html.
+
+This might not be such a good idea, however, because
+* the standard only provides a limited set of weather icons which will
+  not be enough to represent all possible conditions the weather plugin
+  can show,
+* it is unclear what to do when those icons are missing, and solving
+  this in a good manner will make things unnecessarily complicated for
+  the plugin,
+* with the liquid icon set there already is a good default icon set that
+  suits most users,
+* the deficiences of the liquid theme can be solved more easily with
+  proper theming support and a bit of editing (providing an
+  alternative liquid theme for dark panels).
+
+Of course, you might take any such freedesktop compliant theme as the
+basis for your personal new icon set, so you only have to design or
+assemble the remaining few icons. And finally, with a bit of searching
+you can find lots of free-to-use icons and icon sets on the web!
+
+2) The "liquid" icon theme and its license
+--------------------------------------------------------------------------
+
+In August 2012 a question was raised about the license of the liquid
+icon theme (see http://mail.xfce.org/pipermail/xfce/2012-August/031178.html
+and http://mail.xfce.org/pipermail/xfce/2012-August/031188.html for
+further discussion), so let's elaborate a bit on that.
+
+According to original author of the plugin, Bob Schlärmann, the
+"liquid" icon theme originates from the now abandoned "Liquid Weather"
+package for KDE Superkaramba and has been part of the weather plugin
+since around 2004. While this is not 100% certain, it is supposed to
+be licensed under GPL-2, as is the "Liquid Weather" script.
+
+Unfortunately, the Liquid Weather website at liquidweather.net is no
+more, and so obtaining the script package is a bit difficult and
+requires searching for mirrors. A link that still works at the time of
+this writing is:
+ftp://ftp.wanadoo.nl/pub/mirrors/FreeBSD/ports/distfiles/lwp-15.0.skz
+
+However, trying to contact the developers of Liquid Weather in
+September 2012 for verification about this issue did not yield any
+response.
+
+An archived version of the website which contains information about
+the previously available icon sets and the license is still available at
+http://web.archive.org/web/20100724155753/http://liquidweather.net/icons.php:
+"On this page, you'll find additional iconsets and backgrounds for
+liquid weather ++ - please note that the backgrounds are not easily
+installable with versions earlier than v9.0. With the exception of the
+weather.com, Beginning and Um icons, I believe that these iconsets are
+either GPL or available for redistribution. If I am wrong, please let
+me know and I'll remove them. Please note that the weather.com icons
+are used with permission of the weather.com website, and the Beginning
+and Grzanka icons are used with the permission of their authors. This
+means that these iconsets may not be copied, modified or redistributed
+without permission. The same applies to the Umicons included in the
+core liquid weather tarball."
+
+A further look at http://kde-look.org/content/show.php?content=6384,
+brings forth this bit of information: "License: Everything is GPL,
+EXCEPT FOR some of the icon sets, which are distributed with the
+permission of their authors." Looking at the archived web page above,
+the liquid weather icon set is not to be found in the exceptions list,
+so according to that it should be GPL. Besides, the similarity of the name of both
+the icon set and its containing package also hints to that licensing.
+
+To sum it all up, the icon theme is considered licensed under GPL too,
+though its original author remains unknown. If someone can resolve this,
+please send a mail to the current maintainer of the weather plugin, and
+he/she will give proper credit.
