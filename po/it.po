@@ -3,7 +3,7 @@
 # This file is distributed under the same license as the xfce-weather-plugin package.
 # Fabio Riga <usul@aruba.it>, 2007
 # Cristian Marchi <cri.penta@gmail.com>, 2009.
-#
+# 
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce 4-weather-plugin\n"
@@ -11,12 +11,11 @@ msgstr ""
 "POT-Creation-Date: 2012-08-22 11:40+0200\n"
 "PO-Revision-Date: 2009-12-08 07:54+0100\n"
 "Last-Translator: Cristian Marchi <cri.penta@gmail.com>\n"
-"Language-Team: Italian Translation Team <xfce-it-translators@googlegroups."
-"com>\n"
-"Language: \n"
+"Language-Team: Italian Translation Team <xfce-it-translators@googlegroups.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: \n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. TRANSLATORS: Keep in sync with labeloptions in weather-config.c
@@ -103,14 +102,13 @@ msgstr "Oggi il sole non tramonta mai"
 msgid "The sun rises at %s and sets at %s."
 msgstr "Il sole sorge alle %s e tramonta alle %s."
 
-#.
 #. * TRANSLATORS: Re-arrange and align at will, optionally using
 #. * abbreviations for labels if desired or necessary. Just take
 #. * into account the possible size constraints, the centered
 #. * vertical alignment of the icon - which unfortunately cannot
 #. * be changed easily - and try to make it compact and look
 #. * good!
-#.
+#. 
 #: ../panel-plugin/weather.c:928
 #, c-format
 msgid ""
@@ -125,6 +123,16 @@ msgid ""
 "\n"
 "<span size=\"smaller\">%s</span>"
 msgstr ""
+"<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
+"<b><span size=\"large\">%s</span></b>\n"
+"<span size=\"smaller\">da %s a %s, con %s precipitazioni</span>\n"
+"\n"
+"<b>Temperatura:</b> %s\t\t<span size=\"smaller\">(valore a %s)</span>\n"
+"<b>Vento:</b> %s (%son the Beaufort scale) da %s(%s)\n"
+"<b>Pressione:</b> %s    <b>Umidità:</b> %s\n"
+"<b>Nebbia:</b> %s    <b>Nuvolosità:</b> %s\n"
+"\n"
+"<span size=\"smaller\">%s</span>"
 
 #: ../panel-plugin/weather.c:982
 msgid "Cannot update weather data"
@@ -136,7 +144,6 @@ msgstr "Impossibile aggiornare i dati meteo"
 msgid "_Forecast"
 msgstr "_Previsioni"
 
-#.
 #. * TRANSLATORS: The abbreviations in parentheses will be shown in
 #. * the scrollbox together with the values. Keep them in sync with
 #. * those in make_label() in weather.c. Some of them may be
@@ -144,7 +151,7 @@ msgstr "_Previsioni"
 #. * read that up somewhere and decide whether you want to use them
 #. * or not. In general, though, you should just try to choose
 #. * letter(s) that make sense and don't use up too much space.
-#.
+#. 
 #: ../panel-plugin/weather-config.c:49
 msgid "Temperature (T)"
 msgstr "Temperatura (T)"
@@ -395,11 +402,10 @@ msgstr "Cerca posizione"
 msgid "Enter a city name or address"
 msgstr "Inserire una città o un indirizzo"
 
-#.
 #. * TRANSLATORS: Latitude and longitude are known from the
 #. * search results, but not the location name. The user shall
 #. * give the place a name.
-#.
+#. 
 #: ../panel-plugin/weather-search.c:418
 msgid "Unnamed place"
 msgstr "Posto sconosciuto"
@@ -765,15 +771,19 @@ msgstr "Terzo quarto"
 msgid "Waning crescent"
 msgstr ""
 
-#.
-#. * TRANSLATORS: How these symbols are defined is explained at http://api.yr.no/faq.html#symbols.
+#. * TRANSLATORS: How these symbols are defined is explained at
+#. http://api.yr.no/faq.html#symbols.
 #. * More information can be obtained from the following pages:
-#. * http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index
-#. * http://www.theweathernetwork.com/index.php?product=help&placecode=cabc0164&pagecontent=helpicons
+#. *
+#. http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index
+#. *
+#. http://www.theweathernetwork.com/index.php?product=help&placecode=cabc0164&pagecontent=helpicons
 #. * http://www.mir-co.net/sonstiges/wetterausdruecke.htm
-#. * The latter page is in German, but it contains a symbol table with Norwegian descriptions.
-#. * The ones that are used here are shorter, though, to fit in the tooltip, forecast tab etc.
-#.
+#. * The latter page is in German, but it contains a symbol table with
+#. Norwegian descriptions.
+#. * The ones that are used here are shorter, though, to fit in the tooltip,
+#. forecast tab etc.
+#. 
 #. Symbols 16-19 are used for polar days
 #: ../panel-plugin/weather-translate.c:118
 #: ../panel-plugin/weather-translate.c:171
@@ -800,24 +810,25 @@ msgstr "Parzialmente nuvoloso"
 msgid "Cloudy"
 msgstr "Nuvoloso"
 
-#.
-#. * http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index:
+#. *
+#. http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index:
 #. *   "Showers – Some sun is expected, interspersed with showers from
 #. *    time to time. As opposed to rain, showers describe liquid
 #. *    precipitation that can vary greatly in intensity over a short
 #. *    amount of time. [...] Precipitation may be locally heavy for
 #. *    short amounts of time."
-#.
+#. 
 #: ../panel-plugin/weather-translate.c:131
 #: ../panel-plugin/weather-translate.c:173
 msgid "Rain showers"
 msgstr "Rovesci di pioggia"
 
-#.
-#. * http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index:
-#. *   "Thunder Showers - Intermittent rain showers with thunder and lightning, generally
+#. *
+#. http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index:
+#. *   "Thunder Showers - Intermittent rain showers with thunder and
+#. lightning, generally
 #. *    short-lived."
-#.
+#. 
 #: ../panel-plugin/weather-translate.c:138
 #, fuzzy
 msgid "Thunder showers"
@@ -846,7 +857,8 @@ msgstr "Pioggia leggera"
 msgid "Rain"
 msgstr "Pioggia"
 
-#. A thunderstorm does not necessarily imply rain, but since the symbol claims it will rain
+#. A thunderstorm does not necessarily imply rain, but since the symbol claims
+#. it will rain
 #. * use "Rain with thunder".
 #: ../panel-plugin/weather-translate.c:152
 msgid "Rain with thunder"
@@ -861,13 +873,15 @@ msgstr ""
 msgid "Snow"
 msgstr "Neve"
 
-#.
 #. * http://en.wikipedia.org/wiki/Thundersnow:
-#. *   "Thundersnow, also known as a winter thunderstorm or a thunder snowstorm, is a relatively
-#. *    rare kind of thunderstorm with snow falling as the primary precipitation instead of
-#. *    rain. It typically falls in regions of strong upward motion within the cold sector of an
+#. *   "Thundersnow, also known as a winter thunderstorm or a thunder
+#. snowstorm, is a relatively
+#. *    rare kind of thunderstorm with snow falling as the primary
+#. precipitation instead of
+#. *    rain. It typically falls in regions of strong upward motion within the
+#. cold sector of an
 #. *    extratropical cyclone."
-#.
+#. 
 #: ../panel-plugin/weather-translate.c:166
 #, fuzzy
 msgid "Thundersnow"
@@ -911,26 +925,21 @@ msgstr "N/D"
 msgid "Show current weather conditions"
 msgstr "Mostra le condizioni meteo attuali"
 
-#, fuzzy
 #~ msgid "Sunny, rain showers"
 #~ msgstr "Rovesci intensi"
 
-#, fuzzy
 #~ msgid "Clear, rain showers"
 #~ msgstr "Rovesci intensi"
 
 #~ msgid "Sunny, snow"
 #~ msgstr "Soleggiato, neve"
 
-#, fuzzy
 #~ msgid "Clear, snow"
 #~ msgstr "Schiarite"
 
-#, fuzzy
 #~ msgid "Sunny, Snow"
 #~ msgstr "Soleggiato"
 
-#, fuzzy
 #~ msgid "Clear, Snow"
 #~ msgstr "Forte nevicata"
 
