@@ -3,14 +3,14 @@
 # This file is distributed under the same license as the
 # xfce-weather-plugin package.
 # Pau Ruŀlan Ferragut <paurullan@bulma.net>, 2006.
-# Carles Muñoz Gorriz <carlesmu@internautas.org>, 2008-2009.
+# Carles Muñoz Gorriz <carlesmu@internautas.org>, 2008-2009, 2012.
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-weather-plugin 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2012-08-22 11:40+0200\n"
-"PO-Revision-Date: 2009-07-26 18:50+0100\n"
+"PO-Revision-Date: 2012-11-01 15:01+0100\n"
 "Last-Translator: Carles Muñoz Gorriz <carlesmu@internautas.org>\n"
 "Language-Team: Catalan <xfce-i18n@xfce.org>\n"
 "Language: ca\n"
@@ -18,6 +18,8 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Poedit-Language: Catalan\n"
+"X-Poedit-SourceCharset: utf-8\n"
 
 #. TRANSLATORS: Keep in sync with labeloptions in weather-config.c
 #: ../panel-plugin/weather.c:138
@@ -40,7 +42,8 @@ msgid "WB"
 msgstr "W"
 
 # Abreviatura de direcció del vent (Wind Direction)
-#: ../panel-plugin/weather.c:150 ../panel-plugin/weather.c:153
+#: ../panel-plugin/weather.c:150
+#: ../panel-plugin/weather.c:153
 msgid "WD"
 msgstr "DV"
 
@@ -69,22 +72,24 @@ msgstr ""
 
 #: ../panel-plugin/weather.c:171
 msgid "F"
-msgstr "F"
+msgstr "B"
 
 #: ../panel-plugin/weather.c:174
 msgid "R"
-msgstr ""
+msgstr "R"
 
-#: ../panel-plugin/weather.c:277 ../panel-plugin/weather.c:281
+#: ../panel-plugin/weather.c:277
+#: ../panel-plugin/weather.c:281
 msgid "No Data"
-msgstr ""
+msgstr "Sense dades"
 
 #: ../panel-plugin/weather.c:803
 #, c-format
 msgid "Unable to open the following url: %s"
 msgstr "No s'ha pogut obrir l'url: %s"
 
-#: ../panel-plugin/weather.c:831 ../panel-plugin/weather-summary.c:757
+#: ../panel-plugin/weather.c:831
+#: ../panel-plugin/weather-summary.c:757
 #: ../panel-plugin/weather.desktop.in.h:1
 msgid "Weather Update"
 msgstr "Informació meteorològica"
@@ -135,7 +140,8 @@ msgstr "No s’han pogut actualitzar les dades meteorològiques"
 
 #. add forecast window to right click menu, for people who missed
 #. the left mouse click feature
-#: ../panel-plugin/weather.c:1076 ../panel-plugin/weather-summary.c:803
+#: ../panel-plugin/weather.c:1076
+#: ../panel-plugin/weather-summary.c:803
 msgid "_Forecast"
 msgstr "_Pronòstic"
 
@@ -169,44 +175,39 @@ msgid "Wind direction (WD)"
 msgstr "Direcció del vent (DV)"
 
 #: ../panel-plugin/weather-config.c:54
-#, fuzzy
 msgid "Wind direction in degrees (WD)"
-msgstr "Direcció del vent (DV)"
+msgstr "Direcció del vent en graus (DV)"
 
 #: ../panel-plugin/weather-config.c:55
 msgid "Humidity (H)"
 msgstr "Humitat (H)"
 
 #: ../panel-plugin/weather-config.c:56
-#, fuzzy
 msgid "Low clouds (CL)"
-msgstr "Núvols"
+msgstr "Núvols baixos (NB)"
 
 #: ../panel-plugin/weather-config.c:57
-#, fuzzy
 msgid "Medium clouds (CM)"
-msgstr "Nuvolositat variable"
+msgstr "Núvos alts (NA)"
 
 #: ../panel-plugin/weather-config.c:58
-#, fuzzy
 msgid "High clouds (CH)"
-msgstr "Gaire bé ennuvolat del tot"
+msgstr "Núvols alts (NM)"
 
 #: ../panel-plugin/weather-config.c:59
-#, fuzzy
 msgid "Cloudiness (C)"
-msgstr "Núvols"
+msgstr "Nuvolositat (N)"
 
 #: ../panel-plugin/weather-config.c:60
 msgid "Fog (F)"
-msgstr ""
+msgstr "Boira (B)"
 
 #: ../panel-plugin/weather-config.c:61
-#, fuzzy
 msgid "Precipitations (R)"
-msgstr "<b>Precipitacions</b>"
+msgstr "Precipitacions (R)"
 
-#: ../panel-plugin/weather-config.c:241 ../panel-plugin/weather-config.c:415
+#: ../panel-plugin/weather-config.c:241
+#: ../panel-plugin/weather-config.c:415
 #: ../panel-plugin/weather-config.c:524
 msgid "Unset"
 msgstr "Sense especificar"
@@ -225,9 +226,8 @@ msgid ""
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:390
-#, fuzzy
 msgid "Please select a location by using the \"Change\" button."
-msgstr "Entreu les dades del servidor intermediari"
+msgstr "Seleccioneu la ubicació amb ek botó «Canvia»-"
 
 #: ../panel-plugin/weather-config.c:427
 msgid "Detecting..."
@@ -235,9 +235,8 @@ msgstr "Detectant…"
 
 #. system of measurement
 #: ../panel-plugin/weather-config.c:485
-#, fuzzy
 msgid "System of _Measurement:"
-msgstr "Unitat de mesura:"
+msgstr "Sistema de _mesura:"
 
 #: ../panel-plugin/weather-config.c:489
 msgid "Imperial"
@@ -245,34 +244,29 @@ msgstr "Imperial"
 
 #: ../panel-plugin/weather-config.c:491
 msgid "Metric"
-msgstr "Mètrica"
+msgstr "Mètric"
 
 #. location
 #: ../panel-plugin/weather-config.c:503
-#, fuzzy
 msgid "L_ocation:"
-msgstr "Ubicació:"
+msgstr "_Ubicació:"
 
 #: ../panel-plugin/weather-config.c:531
-#, fuzzy
 msgid "Chan_ge..."
-msgstr "Canvia…"
+msgstr "_Canvia…"
 
 #. proxy settings
 #: ../panel-plugin/weather-config.c:543
-#, fuzzy
 msgid "_Proxy server:"
-msgstr "Servidor intermediari:"
+msgstr "_Servidor intermediari:"
 
 #: ../panel-plugin/weather-config.c:548
-#, fuzzy
 msgid "Use proxy _server"
-msgstr "Empra el servidor intermediari"
+msgstr "Empra el servidor _intermediari"
 
 #: ../panel-plugin/weather-config.c:550
-#, fuzzy
 msgid "Auto-detect from _environment"
-msgstr "Detecció automàtica a partir de l'entorn"
+msgstr "Detecció automàtica a partir de l'_entorn"
 
 #. number of days shown in forecast
 #: ../panel-plugin/weather-config.c:603
@@ -280,51 +274,48 @@ msgid "Number of _forecast days:"
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:625
-#, fuzzy
 msgid "_Labels to display"
-msgstr "Informació a mostrar"
+msgstr "_Informació a mostrar"
 
 #. button "add"
 #: ../panel-plugin/weather-config.c:630
 msgid "_Add"
-msgstr ""
+msgstr "_Afegeix"
 
 #. button "remove"
 #: ../panel-plugin/weather-config.c:646
 msgid "_Remove"
-msgstr ""
+msgstr "_Suprimeix"
 
 #. button "move up"
 #: ../panel-plugin/weather-config.c:652
 msgid "Move _Up"
-msgstr ""
+msgstr "Mou cap a _dalt"
 
 #. button "move down"
 #: ../panel-plugin/weather-config.c:658
 msgid "Move _Down"
-msgstr ""
+msgstr "Mou cap a _vall"
 
 #: ../panel-plugin/weather-config.c:693
-#, fuzzy
 msgid "Animate _transitions between labels"
-msgstr "Anima les transicions entre etiquetes"
+msgstr "Anima les _transicions entre etiquetes"
 
 #: ../panel-plugin/weather-data.c:143
 msgid "ft"
-msgstr ""
+msgstr "ft"
 
 #: ../panel-plugin/weather-data.c:143
-#, fuzzy
 msgid "m"
-msgstr "km"
+msgstr "m"
 
 #: ../panel-plugin/weather-data.c:145
 msgid "°F"
-msgstr ""
+msgstr "°F"
 
 #: ../panel-plugin/weather-data.c:145
 msgid "°C"
-msgstr ""
+msgstr "°C"
 
 #: ../panel-plugin/weather-data.c:147
 msgid "psi"
@@ -348,14 +339,13 @@ msgstr "po"
 
 #: ../panel-plugin/weather-data.c:162
 msgid "mm"
-msgstr ""
+msgstr "mm"
 
 #. display error
 #: ../panel-plugin/weather-http.c:207
 #, c-format
 msgid "Failed to get the hostname %s. Retry in %d seconds."
-msgstr ""
-"No s'ha obtingut el nom de màquina «%s». Es tornarà a provar en %d segons."
+msgstr "No s'ha obtingut el nom de màquina «%s». Es tornarà a provar en %d segons."
 
 #: ../panel-plugin/weather-http.c:246
 #, fuzzy, c-format
@@ -373,9 +363,9 @@ msgid "Failed to send the request(%s)."
 msgstr "No s'ha pogut enviar la soŀlicitud (%s)."
 
 #: ../panel-plugin/weather-http.c:337
-#, fuzzy, c-format
+#, c-format
 msgid "Failed to receive data(%s)"
-msgstr "No s'ha pogut rebre les dades (%s)."
+msgstr "No s'han pogut rebre les dades (%s)."
 
 #: ../panel-plugin/weather-http.c:356
 msgid "Negative content length"
@@ -389,7 +379,8 @@ msgstr "No s'ha pogut detectar la mida del contingut."
 msgid "No content received."
 msgstr "No s'ha rebut el contingut."
 
-#: ../panel-plugin/weather-search.c:145 ../panel-plugin/weather-search.c:272
+#: ../panel-plugin/weather-search.c:145
+#: ../panel-plugin/weather-search.c:272
 msgid "Results"
 msgstr "Resultats"
 
@@ -398,14 +389,12 @@ msgid "Searching..."
 msgstr "Cercant…"
 
 #: ../panel-plugin/weather-search.c:221
-#, fuzzy
 msgid "Search location"
-msgstr "Cerca el codi meteorològic d'un lloc"
+msgstr "Cerca la ubicació"
 
 #: ../panel-plugin/weather-search.c:242
-#, fuzzy
 msgid "Enter a city name or address"
-msgstr "Introduïu el nom de la ciutat o el codi postal"
+msgstr "Introduïu el nom de la ciutat o la direcció"
 
 #.
 #. * TRANSLATORS: Latitude and longitude are known from the
@@ -414,7 +403,7 @@ msgstr "Introduïu el nom de la ciutat o el codi postal"
 #.
 #: ../panel-plugin/weather-search.c:418
 msgid "Unnamed place"
-msgstr ""
+msgstr "Ubicació sense nom"
 
 #. head
 #: ../panel-plugin/weather-summary.c:313
@@ -428,25 +417,27 @@ msgstr ""
 
 #: ../panel-plugin/weather-summary.c:319
 msgid "Coordinates\n"
-msgstr ""
+msgstr "Coordenades\n"
 
 #: ../panel-plugin/weather-summary.c:320
 msgid "Altitude"
-msgstr ""
+msgstr "Altitud"
 
 #: ../panel-plugin/weather-summary.c:321
 msgid "Latitude"
-msgstr ""
+msgstr "Latitud"
 
 #: ../panel-plugin/weather-summary.c:322
 msgid "Longitude"
-msgstr ""
+msgstr "Longitud"
 
 #: ../panel-plugin/weather-summary.c:324
 msgid ""
 "\n"
 "Time\n"
 msgstr ""
+"\n"
+"Hora\n"
 
 #: ../panel-plugin/weather-summary.c:328
 #, c-format
@@ -474,16 +465,16 @@ msgstr ""
 
 #: ../panel-plugin/weather-summary.c:349
 msgid "\tSunrise:\t\tThe sun never rises today.\n"
-msgstr ""
+msgstr "\tSortida del sol:\t\tEl sol no sortirà avui.\n"
 
 #: ../panel-plugin/weather-summary.c:352
 msgid "\tSunset:\t\tThe sun never sets today.\n"
-msgstr ""
+msgstr "\tPosta del sol:\t\tEl sol no es pondrà avui.\n"
 
 #: ../panel-plugin/weather-summary.c:357
 #, c-format
 msgid "\tSunrise:\t\t%s\n"
-msgstr ""
+msgstr "\tSortida del sol:\t\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:362
 #, c-format
@@ -491,23 +482,25 @@ msgid ""
 "\tSunset:\t\t%s\n"
 "\n"
 msgstr ""
+"\tPosta del sol:\t\t%s\n"
+"\n"
 
 #: ../panel-plugin/weather-summary.c:367
 #, c-format
 msgid "\tMoon phase:\t%s\n"
-msgstr ""
+msgstr "\tFase de la lluna:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:371
 msgid "\tMoon phase:\tUnknown\n"
-msgstr ""
+msgstr "\tFase de la lluna:\tDesconeguda\n"
 
 #: ../panel-plugin/weather-summary.c:375
 msgid "\tMoonrise:\tThe moon never rises today.\n"
-msgstr ""
+msgstr "\tSortida de la lluna:\tLa lluna no sortirà avui.\n"
 
 #: ../panel-plugin/weather-summary.c:378
 msgid "\tMoonset:\tThe moon never sets today.\n"
-msgstr ""
+msgstr "\tPosta de la lluna:\tLa lluna no es pondrà avui.\n"
 
 #: ../panel-plugin/weather-summary.c:383
 #, c-format
@@ -560,26 +553,25 @@ msgstr "Direcció"
 
 #. precipitation
 #: ../panel-plugin/weather-summary.c:425
-#, fuzzy
 msgid ""
 "\n"
 "Precipitations\n"
-msgstr "<b>Precipitacions</b>"
+msgstr ""
+"\n"
+"Precipitacions\n"
 
 #: ../panel-plugin/weather-summary.c:426
-#, fuzzy
 msgid "Precipitations amount"
-msgstr "<b>Precipitacions</b>"
+msgstr "Quantitat de precipitacions"
 
 #. atmosphere
 #: ../panel-plugin/weather-summary.c:429
-#, fuzzy
 msgid ""
 "\n"
 "Atmosphere\n"
 msgstr ""
 "\n"
-"Pressió atmosfèrica\n"
+"Atmosfera\n"
 
 #: ../panel-plugin/weather-summary.c:430
 msgid "Pressure"
@@ -591,11 +583,12 @@ msgstr "Humitat"
 
 #. clouds
 #: ../panel-plugin/weather-summary.c:434
-#, fuzzy
 msgid ""
 "\n"
 "Clouds\n"
-msgstr "Núvols"
+msgstr ""
+"\n"
+"Núvols\n"
 
 #: ../panel-plugin/weather-summary.c:435
 #: ../panel-plugin/weather-translate.c:168
@@ -603,9 +596,8 @@ msgid "Fog"
 msgstr "Boira"
 
 #: ../panel-plugin/weather-summary.c:436
-#, fuzzy
 msgid "Low clouds"
-msgstr "Núvols"
+msgstr "Núvols baixos"
 
 #: ../panel-plugin/weather-summary.c:437
 msgid "Medium clouds"
@@ -616,9 +608,8 @@ msgid "High clouds"
 msgstr ""
 
 #: ../panel-plugin/weather-summary.c:439
-#, fuzzy
 msgid "Cloudiness"
-msgstr "Núvols"
+msgstr "Nuvolositat"
 
 #: ../panel-plugin/weather-summary.c:441
 msgid ""
@@ -628,34 +619,33 @@ msgstr ""
 
 #: ../panel-plugin/weather-summary.c:444
 msgid "Thanks to met.no"
-msgstr ""
+msgstr "Gràcies a met.no"
 
 #: ../panel-plugin/weather-summary.c:557
 msgid "Morning"
-msgstr ""
+msgstr "Matí"
 
 #: ../panel-plugin/weather-summary.c:560
 msgid "Afternoon"
-msgstr ""
+msgstr "Tarda"
 
 #: ../panel-plugin/weather-summary.c:563
 msgid "Evening"
-msgstr ""
+msgstr "Vespre"
 
 #: ../panel-plugin/weather-summary.c:566
-#, fuzzy
 msgid "Night"
-msgstr "Nit: %s"
+msgstr "Nit"
 
 #: ../panel-plugin/weather-summary.c:575
 #, c-format
 msgid "Today"
-msgstr ""
+msgstr "Avui"
 
 #: ../panel-plugin/weather-summary.c:577
 #, c-format
 msgid "Tomorrow"
-msgstr ""
+msgstr "Demà"
 
 #: ../panel-plugin/weather-summary.c:765
 #, c-format
@@ -672,9 +662,8 @@ msgid "Currently no data available."
 msgstr ""
 
 #: ../panel-plugin/weather-summary.c:806
-#, fuzzy
 msgid "_Details"
-msgstr "Detalls"
+msgstr "_Detalls"
 
 # Migjorn (S)
 #. TRANSLATORS: Wind directions. It's where the wind comes _from_.
@@ -764,35 +753,35 @@ msgstr "CALMAT"
 #. TRANSLATORS: Moon phases
 #: ../panel-plugin/weather-translate.c:58
 msgid "New moon"
-msgstr ""
+msgstr "Lluna nova"
 
 #: ../panel-plugin/weather-translate.c:59
 msgid "Waxing crescent"
-msgstr ""
+msgstr "Lluna creixent"
 
 #: ../panel-plugin/weather-translate.c:60
 msgid "First quarter"
-msgstr ""
+msgstr "Quart creixent"
 
 #: ../panel-plugin/weather-translate.c:61
 msgid "Waxing gibbous"
-msgstr ""
+msgstr "Lluna gibosa creixent"
 
 #: ../panel-plugin/weather-translate.c:62
 msgid "Full moon"
-msgstr ""
+msgstr "Lluna plena"
 
 #: ../panel-plugin/weather-translate.c:63
 msgid "Waning gibbous"
-msgstr ""
+msgstr "Lluna gibosa minvant"
 
 #: ../panel-plugin/weather-translate.c:64
 msgid "Third quarter"
-msgstr ""
+msgstr "Quart minvant"
 
 #: ../panel-plugin/weather-translate.c:65
 msgid "Waning crescent"
-msgstr ""
+msgstr "Lluna gibosa minvant"
 
 #.
 #. * TRANSLATORS: How these symbols are defined is explained at http://api.yr.no/faq.html#symbols.
@@ -816,14 +805,12 @@ msgstr "Clar"
 
 #: ../panel-plugin/weather-translate.c:119
 #: ../panel-plugin/weather-translate.c:172
-#, fuzzy
 msgid "Lightly cloudy"
-msgstr "Gaire bé ennuvolat del tot"
+msgstr "Lleugerament ennuvolat"
 
 #: ../panel-plugin/weather-translate.c:120
-#, fuzzy
 msgid "Partly cloudy"
-msgstr "Ennuvolat parcialment"
+msgstr "Parcialment ennuvolat"
 
 #: ../panel-plugin/weather-translate.c:121
 msgid "Cloudy"
@@ -839,9 +826,8 @@ msgstr "Ennuvolat"
 #.
 #: ../panel-plugin/weather-translate.c:131
 #: ../panel-plugin/weather-translate.c:173
-#, fuzzy
 msgid "Rain showers"
-msgstr "Xàfec"
+msgstr "Xàfecs"
 
 #.
 #. * http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index:
@@ -849,25 +835,21 @@ msgstr "Xàfec"
 #. *    short-lived."
 #.
 #: ../panel-plugin/weather-translate.c:138
-#, fuzzy
 msgid "Thunder showers"
-msgstr "Xàfec"
+msgstr "Xàfecs i trons"
 
 #. Analogues to "Rain showers"
 #: ../panel-plugin/weather-translate.c:141
-#, fuzzy
 msgid "Sleet showers"
 msgstr "Xàfecs"
 
 #: ../panel-plugin/weather-translate.c:142
 #: ../panel-plugin/weather-translate.c:174
-#, fuzzy
 msgid "Snow showers"
-msgstr "Xàfec de neu"
+msgstr "Xàfecs de neu"
 
 #. It's raining incessantly, but not heavily.
 #: ../panel-plugin/weather-translate.c:145
-#, fuzzy
 msgid "Light rain"
 msgstr "Pluja lleugera"
 
@@ -879,9 +861,8 @@ msgstr "Pluja"
 #. A thunderstorm does not necessarily imply rain, but since the symbol claims it will rain
 #. * use "Rain with thunder".
 #: ../panel-plugin/weather-translate.c:152
-#, fuzzy
 msgid "Rain with thunder"
-msgstr "Pluja / trons"
+msgstr "Pluja i trons"
 
 #. Sleet is a mixture of rain and snow, but it's not hail.
 #: ../panel-plugin/weather-translate.c:155
@@ -900,35 +881,29 @@ msgstr "Neu"
 #. *    extratropical cyclone."
 #.
 #: ../panel-plugin/weather-translate.c:166
-#, fuzzy
 msgid "Thundersnow"
-msgstr "Trons"
+msgstr "Temporal de neu i trons"
 
 #. Same as symbols 1-15, but with thunder
 #: ../panel-plugin/weather-translate.c:177
-#, fuzzy
 msgid "Sleet showers with thunder"
-msgstr "Pluja / trons"
+msgstr "Xàfecs i trons"
 
 #: ../panel-plugin/weather-translate.c:178
-#, fuzzy
 msgid "Snow showers with thunder"
-msgstr "Pluja / trons"
+msgstr "Nevades i trons"
 
 #: ../panel-plugin/weather-translate.c:179
-#, fuzzy
 msgid "Light rain with thunder"
-msgstr "Pluja / trons"
+msgstr "Pluja lleugera i trons"
 
 #: ../panel-plugin/weather-translate.c:179
-#, fuzzy
 msgid "Rain showers with thunder"
-msgstr "Pluja / trons"
+msgstr "Xàfecs i trons"
 
 #: ../panel-plugin/weather-translate.c:180
-#, fuzzy
 msgid "Sleet with thunder"
-msgstr "Aiguaneu i neu"
+msgstr "Aiguaneu i trons"
 
 #: ../panel-plugin/weather-translate.c:286
 msgid "calm"
@@ -979,501 +954,3 @@ msgstr "Mostra les condicions meteorològiques actuals"
 
 #~ msgid "D"
 #~ msgstr "D"
-
-# Abreviatura de Ventades (Wind gust)
-#~ msgid "WG"
-#~ msgstr "Ve"
-
-#~ msgid "Windchill (F)"
-#~ msgstr "Índex de fredor (F)"
-
-#~ msgid "Atmosphere state (P)"
-#~ msgstr "Estat atmosfèric (P)"
-
-#~ msgid "Wind gust (WG)"
-#~ msgstr "Ventades (Ve)"
-
-#~ msgid "Visibility (V)"
-#~ msgstr "Visibilitat (V)"
-
-#~ msgid "UV Index (UV)"
-#~ msgstr "Índex de raigs ultraviolats (UV)"
-
-#~ msgid "Dewpoint (DP)"
-#~ msgstr "Punt de rosada (PR)"
-
-#~ msgid "mi"
-#~ msgstr "mi"
-
-#~ msgid ""
-#~ "Observation station located in %s\n"
-#~ "Last update: %s.\n"
-#~ msgstr ""
-#~ "L'estació es troba a %s\n"
-#~ "Última actualització: %s.\n"
-
-#~ msgid "Windchill"
-#~ msgstr "Índex de fredor"
-
-#~ msgid "Description"
-#~ msgstr "Descripció"
-
-#~ msgid "Dew point"
-#~ msgstr "Punt de rosada"
-
-#~ msgid "Gusts"
-#~ msgstr "Ventades"
-
-#~ msgid ""
-#~ "\n"
-#~ "UV\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Raigs ultraviolats\n"
-
-#~ msgid "Index"
-#~ msgstr "Índex"
-
-#~ msgid "Risk"
-#~ msgstr "Risc"
-
-#~ msgid "State"
-#~ msgstr "Estat"
-
-#~ msgid ""
-#~ "\n"
-#~ "Sun\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Sol\n"
-
-#~ msgid "Rise"
-#~ msgstr "Sortida"
-
-#~ msgid "Set"
-#~ msgstr "Posta"
-
-#~ msgid ""
-#~ "\n"
-#~ "Other\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Altri\n"
-
-#~ msgid "Visibility"
-#~ msgstr "Visibilitat"
-
-#~ msgid ""
-#~ "\n"
-#~ "More on weather.com\n"
-#~ msgstr ""
-#~ "\n"
-#~ "Més a weather.com\n"
-
-#~ msgid "Day: %s"
-#~ msgstr "Dia: %s"
-
-#~ msgid "<b>Temperature</b>"
-#~ msgstr "<b>Temperatura</b>"
-
-#~ msgid "<b>Wind</b>"
-#~ msgstr "<b>Vent</b>"
-
-#~ msgid "Forecast"
-#~ msgstr "Pronòstic"
-
-#~ msgid "AM Clouds / PM Sun"
-#~ msgstr "Matí: Núvols / Tarda: Sol"
-
-#~ msgid "AM Light Rain"
-#~ msgstr "Matí: Pluja suau"
-
-#~ msgid "AM Light Snow"
-#~ msgstr "Matí: Neu suau"
-
-#~ msgid "AM Rain / Snow Showers"
-#~ msgstr "Matí: Pluja / xàfecs de neu"
-
-#~ msgid "AM Rain / Wind"
-#~ msgstr "Matí: Pluja / vent"
-
-#~ msgid "AM Showers"
-#~ msgstr "Matí: Xàfecs"
-
-#~ msgid "AM Showers / Wind"
-#~ msgstr "Matí: Xàfecs / vent"
-
-#~ msgid "AM Snow Showers"
-#~ msgstr "Matí: Xàfecs de neu"
-
-#~ msgid "AM Snow Showers / Wind"
-#~ msgstr "Matí: Xàfecs de neu / vent"
-
-#~ msgid "AM T-Storms"
-#~ msgstr "Matí: Tempestes"
-
-#~ msgid "Becoming Cloudy"
-#~ msgstr "Ennuvolant-se"
-
-#~ msgid "Blizzard"
-#~ msgstr "Torb"
-
-#~ msgid "Blizzard Conditions"
-#~ msgstr "Torbonada"
-
-#~ msgid "Blowing Snow"
-#~ msgstr "Borrufa alta"
-
-#~ msgid "Chance of Rain"
-#~ msgstr "Possibilitats de pluja"
-
-#~ msgid "Chance of Rain/Snow"
-#~ msgstr "Possibilitats de pluja/neu"
-
-#~ msgid "Chance of Showers"
-#~ msgstr "Possibilitats de xàfecs"
-
-#~ msgid "Chance of Snow"
-#~ msgstr "Possibilitats de neu"
-
-#~ msgid "Chance of Snow/Rain"
-#~ msgstr "Possibilitats de neu/pluja"
-
-#~ msgid "Chance of T-Storm"
-#~ msgstr "Possibilitats de tempesta"
-
-#~ msgid "Clouds Early / Clearing Late"
-#~ msgstr "Núvols d'hora / aclarint-se al tard"
-
-#~ msgid "Cloudy / Wind"
-#~ msgstr "Ennuvolat / vent"
-
-#~ msgid "Cloudy Periods"
-#~ msgstr "Períodes de núvols"
-
-#~ msgid "Continued Hot"
-#~ msgstr "Càlid de forma continuada"
-
-#~ msgid "Cumulonimbus Clouds Observed"
-#~ msgstr "S'han vist cumulonimbus"
-
-#~ msgid "Drifting Snow"
-#~ msgstr "Borrufa baixa"
-
-#~ msgid "Drifting Snow and Windy"
-#~ msgstr "Borrifa baixa i vent"
-
-#~ msgid "Drizzle"
-#~ msgstr "Plugims"
-
-#~ msgid "Dry"
-#~ msgstr "Sec"
-
-#~ msgid "Dust"
-#~ msgstr "Pols"
-
-#~ msgid "Fair"
-#~ msgstr "Bon temps"
-
-#~ msgid "Few Showers"
-#~ msgstr "Uns pocs xàfecs"
-
-#~ msgid "Few Snow Showers"
-#~ msgstr "Uns pocs xàfecs de neu"
-
-#~ msgid "Freezing Drizzle"
-#~ msgstr "Plovisqueig gelant"
-
-#~ msgid "Freezing Rain"
-#~ msgstr "Pluja gelant"
-
-#~ msgid "Freezing Rain/Snow"
-#~ msgstr "Pluja gelant/neu"
-
-#~ msgid "Frigid"
-#~ msgstr "Frígid"
-
-#~ msgid "Frozen Precip"
-#~ msgstr "Precipitacions gelades"
-
-#~ msgid "Hail"
-#~ msgstr "Pedregada"
-
-#~ msgid "Haze"
-#~ msgstr "Calitja"
-
-#~ msgid "Hazy"
-#~ msgstr "Boirós"
-
-#~ msgid "Heavy Rain"
-#~ msgstr "Pluja forta"
-
-#~ msgid "Hot And Humid"
-#~ msgstr "Calent i humit"
-
-#~ msgid "Hot!"
-#~ msgstr "Calor!"
-
-#~ msgid "Ice Crystals"
-#~ msgstr "Cristalls de plaç"
-
-#~ msgid "Ice/Snow Mixture"
-#~ msgstr "Barreja de neu i glaç"
-
-#~ msgid "Increasing Clouds"
-#~ msgstr "Augmentant els núvols"
-
-#~ msgid "Isolated Showers"
-#~ msgstr "Xàfecs aïllats"
-
-#~ msgid "Isolated T-Storms"
-#~ msgstr "Tempestes aïllades"
-
-#~ msgid "Light Drizzle"
-#~ msgstr "Plovisqueig suau"
-
-#~ msgid "Light Drizzle and Windy"
-#~ msgstr "Plovisqueig suau i ventós"
-
-#~ msgid "Light Rain / Wind"
-#~ msgstr "Pluja lleugera / vent"
-
-#~ msgid "Light Rain Late"
-#~ msgstr "Pluja lleugera a última hora"
-
-#~ msgid "Light Rain Shower"
-#~ msgstr "Xàfec lleuger"
-
-#~ msgid "Light Snow"
-#~ msgstr "Neu lleugera"
-
-#~ msgid "Lightning Observed"
-#~ msgstr "S'han vist llamps"
-
-#~ msgid "Mild and Breezy"
-#~ msgstr "Tranquil i airejat"
-
-#~ msgid "Mist"
-#~ msgstr "Boirina"
-
-#~ msgid "Mostly Clear"
-#~ msgstr "Gaire bé clar del tot"
-
-#~ msgid "Mostly Cloudy / Wind"
-#~ msgstr "Gaire bé ennuvolat del tot / vent"
-
-#~ msgid "Mostly Cloudy and Windy"
-#~ msgstr "Gaire bé ennuvolat i ventós del tot"
-
-#~ msgid "Mostly Sunny"
-#~ msgstr "Gaire bé assolellat del tot"
-
-#~ msgid "Mostly Sunny / Wind"
-#~ msgstr "Gaire bé assolellat del tot / vent"
-
-#~ msgid "N/A Not Available"
-#~ msgstr "N/D No disponible"
-
-#~ msgid "Occasional Sunshine"
-#~ msgstr "Raigs de sol ocasionals"
-
-#~ msgid "Overcast"
-#~ msgstr "Cel obert"
-
-#~ msgid "Partial Clearing"
-#~ msgstr "Clarianes parcials"
-
-#~ msgid "Partial Fog"
-#~ msgstr "Boira parcial"
-
-#~ msgid "Partial Sunshine"
-#~ msgstr "Raigs de sol parcials"
-
-#~ msgid "Partly Cloudy / Wind"
-#~ msgstr "Ennuvolat parcialment / vent"
-
-#~ msgid "Partly Cloudy and Windy"
-#~ msgstr "Ennuvolat i ventós parcialment"
-
-#~ msgid "Partly Sunny"
-#~ msgstr "Assolellat parcialment"
-
-#~ msgid "PM Light Rain"
-#~ msgstr "Tarda: Pluja suau"
-
-#~ msgid "PM Light Snow"
-#~ msgstr "Tarda: Neu suau"
-
-#~ msgid "PM Rain / Wind"
-#~ msgstr "Tarda: Pluja / vent"
-
-#~ msgid "PM Rain / Snow Showers"
-#~ msgstr "Tarde: Pluja / xàfecs de neu"
-
-#~ msgid "PM Showers"
-#~ msgstr "Tarda: Xàfecs"
-
-#~ msgid "PM Snow Showers"
-#~ msgstr "Tarda: Xàfecs de neu"
-
-#~ msgid "PM T-Storms"
-#~ msgstr "Tarda: Tempestes"
-
-#~ msgid "Rain / Snow"
-#~ msgstr "Pluja / neu"
-
-#~ msgid "Rain / Snow / Wind"
-#~ msgstr "Pluja / neu / vent"
-
-#~ msgid "Rain / Snow Late"
-#~ msgstr "Pluja / neu a última hora"
-
-#~ msgid "Rain / Snow Showers"
-#~ msgstr "Pluja / xàfecs de neu"
-
-#~ msgid "Rain / Snow Showers Early"
-#~ msgstr "Pluja / xàfecs de neu d'hora"
-
-#~ msgid "Rain / Wind"
-#~ msgstr "Pluja / vent"
-
-#~ msgid "Rain and Sleet"
-#~ msgstr "Pluja i aiguaneu"
-
-#~ msgid "Rain and Snow"
-#~ msgstr "Pluja i neu"
-
-#~ msgid "Rain or Snow"
-#~ msgstr "Pluja o neu"
-
-#~ msgid "Rain Shower and Windy"
-#~ msgstr "Xàfec i ventós"
-
-#~ msgid "Rain to Snow"
-#~ msgstr "Pluja o neu"
-
-#~ msgid "Rain / Lightning"
-#~ msgstr "Pluja / llamps"
-
-#~ msgid "Scattered Showers"
-#~ msgstr "Xàfecs dispersos"
-
-#~ msgid "Scattered Snow Showers"
-#~ msgstr "Xàfecs de neu dispersos"
-
-#~ msgid "Scattered Snow Showers / Wind"
-#~ msgstr "Xàfecs de neu dispersos / vent"
-
-#~ msgid "Scattered T-Storms"
-#~ msgstr "Tempestes disperses"
-
-#~ msgid "Showers / Wind"
-#~ msgstr "Xàfecs / vent"
-
-#~ msgid "Showers Early"
-#~ msgstr "Xàfecs d'hora"
-
-#~ msgid "Showers in the Vicinity"
-#~ msgstr "Xàfecs a les rodalies"
-
-#~ msgid "Showers Late"
-#~ msgstr "Xàfecs tard"
-
-#~ msgid "Smoke"
-#~ msgstr "Fum"
-
-#~ msgid "Snow and Rain"
-#~ msgstr "Neu i pluja"
-
-#~ msgid "Snow or Rain"
-#~ msgstr "Neu o pluja"
-
-#~ msgid "Light Snow Shower"
-#~ msgstr "Xàfec de neu suau"
-
-#~ msgid "Snow Shower / Wind"
-#~ msgstr "Xàfec de neu / vent"
-
-#~ msgid "Snow Showers Early"
-#~ msgstr "Xàfecs de neu d'hora"
-
-#~ msgid "Snow Showers early"
-#~ msgstr "Xàfecs de neu d'hora"
-
-#~ msgid "Snow Showers Late"
-#~ msgstr "Xàfecs de neu tard"
-
-#~ msgid "Snow to Rain"
-#~ msgstr "Neu cap a pluja"
-
-#~ msgid "Sunny / Wind"
-#~ msgstr "Assolellat / vent"
-
-#~ msgid "T-Showers"
-#~ msgstr "Tempestes"
-
-#~ msgid "T-Storm"
-#~ msgstr "Tempesta"
-
-#~ msgid "T-Storms"
-#~ msgstr "Tempestes"
-
-#~ msgid "T-Storms / Wind"
-#~ msgstr "Tempestes / vent"
-
-#~ msgid "T-Storms Early"
-#~ msgstr "Tempestes d'hora"
-
-#~ msgid "Thunder in the Vicinity"
-#~ msgstr "Tro a les rodalies"
-
-#~ msgid "Thunder in the Vincinity"
-#~ msgstr "Trons a les rodalies"
-
-#~ msgid "Variable Clouds"
-#~ msgstr "Núvols variables"
-
-#~ msgid "Wind / Rain"
-#~ msgstr "Ventós / pluja"
-
-#~ msgid "Wind / Snow"
-#~ msgstr "Ventós / neu"
-
-#~ msgid "Wintry Mix"
-#~ msgstr "Borrasca hivernal"
-
-#~ msgid "rising"
-#~ msgstr "pujant"
-
-#~ msgid "steady"
-#~ msgstr "mantenint-se"
-
-#~ msgid "falling"
-#~ msgstr "caient"
-
-#~ msgid "Low"
-#~ msgstr "Baix"
-
-#~ msgid "Moderate"
-#~ msgstr "Moderat"
-
-#~ msgid "High"
-#~ msgstr "Alt"
-
-#~ msgid "Very High"
-#~ msgstr "Molt alt"
-
-#~ msgid "Extreme"
-#~ msgstr "Extrem"
-
-#~ msgid "%x at %X Local Time"
-#~ msgstr "%x a les %X hora local"
-
-#~ msgid "Unlimited"
-#~ msgstr "Sense límit"
-
-#~ msgid "Rain to snow"
-#~ msgstr "Pluja cap a neu"
-
-#~ msgid "Summary"
-#~ msgstr "Resum"
