@@ -78,6 +78,7 @@ get_data(const xml_time *timeslice,
     case LONGITUDE:
         return LOCALE_DOUBLE(loc->longitude, "%.4f");
     case TEMPERATURE:
+    case TEMPERATURE_RAW:
         val = g_ascii_strtod(loc->temperature_value, NULL);
         if (unit_system == IMPERIAL &&
             (!strcmp(loc->temperature_unit, "celcius") ||
@@ -86,7 +87,24 @@ get_data(const xml_time *timeslice,
         else if (unit_system == METRIC &&
                  !strcmp(loc->temperature_unit, "fahrenheit"))
             val = (val - 32.0) * 5.0 / 9.0;
-        return g_strdup_printf("%.1f", val);
+        if (type == TEMPERATURE_RAW) {
+            /* We might want to use the raw temperature value of
+             * higher precision for calculations. */
+            return g_strdup_printf("%.1f", val);
+        } else {
+            /*
+             * Round half up for temperatures, according to the
+             * "Federal Meteorological Handbook No. 1 - Surface
+             * Weather Observations and Reports September 2005",
+             * chapter 2.6.3 "Rounding Figures", available at
+             * http://www.ofcm.gov/fmh-1/fmh1.htm. As a side-effect,
+             * this approach automatically uses a negative zero "-0"
+             * for values between -0.5 and 0, which is considered
+             * important, as in the Celcius scale a value below 0
+             * indicates freezing.
+             */
+            return g_strdup_printf("%.0f", val);
+        }
     case PRESSURE:
         if (unit_system == METRIC)
             return LOCALE_DOUBLE(loc->pressure_value, "%.1f");
