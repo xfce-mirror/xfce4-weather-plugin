@@ -523,6 +523,7 @@ xml_geolocation_free(xml_geolocation *geo)
     g_free(geo->region_name);
     g_free(geo->latitude);
     g_free(geo->longitude);
+    g_slice_free(xml_geolocation, geo);
 }
 
 
@@ -535,4 +536,5 @@ xml_place_free(xml_place *place)
     g_free(place->lat);
     g_free(place->lon);
     g_free(place->display_name);
+    g_slice_free(xml_place, place);
 }
