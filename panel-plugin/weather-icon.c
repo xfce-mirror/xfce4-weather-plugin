@@ -24,72 +24,203 @@
 #include <gtk/gtk.h>
 #include <string.h>
 
+#include <libxfce4util/libxfce4util.h>
+
 #include "weather-icon.h"
+#include "weather-debug.h"
 
 #define DEFAULT_W_THEME "liquid"
+#define THEME_INFO_FILE "theme.info"
+#define ICON_DIR_SMALL "22"
+#define ICON_DIR_MEDIUM "48"
+#define ICON_DIR_BIG "128"
 #define NODATA "NODATA"
 
 
-/* For these symbols, there will be a separate icon used for night time */
-const gchar *night_symbols[] = {
-    "LIGHTCLOUD",
-    "LIGHTRAINSUN",
-    "LIGHTRAINTHUNDERSUN",
-    "PARTLYCLOUD",
-    "SLEETSUN",
-    "SLEETSUNTHUNDER"
-    "SNOWSUN",
-    "SNOWSUNTHUNDER",
-    "SUN",
-    NULL
-};
-
-
 GdkPixbuf *
-get_icon(const gchar *number,
+get_icon(const icon_theme *theme,
+         const gchar *number,
          const gint size,
          const gboolean night)
 {
     GdkPixbuf *image = NULL;
-    gchar *filename, *night_suffix = "";
-    gint number_len, night_symbol_len;
+    const gchar* dir;
+    gchar *filename, *suffix = "";
     guint i;
+
+    g_assert(theme != NULL);
+    if (G_UNLIKELY(!theme)) {
+        g_warning("No icon theme!");
+        return NULL;
+    }
+
+    /* Try to use optimal size */
+    if (size < 24)
+        dir = ICON_DIR_SMALL;
+    else if (size < 49)
+        dir = ICON_DIR_MEDIUM;
+    else
+        dir = ICON_DIR_BIG;
 
     if (number == NULL || strlen(number) == 0)
         number = NODATA;
-    else if (night) {
-        number_len = strlen(number);
-        for (i = 0; night_symbols[i] != NULL; i++) {
-            night_symbol_len = strlen(night_symbols[i]);
-            if (number_len != night_symbol_len)
-                continue;
+    else if (night)
+        suffix = "-night";
 
-            if (number[0] != night_symbols[i][0])
-                continue;
-
-            if (!g_ascii_strncasecmp(night_symbols[i], number, number_len))
-                night_suffix = "-night";
-        }
-    }
-
-    filename = g_strdup_printf("%s" G_DIR_SEPARATOR_S
-                               "%s" G_DIR_SEPARATOR_S
-                               "%s%s.png",
-                               THEMESDIR,
-                               DEFAULT_W_THEME,
-                               number,
-                               night_suffix);
+    filename = g_strconcat(theme->dir, G_DIR_SEPARATOR_S,
+                           dir, G_DIR_SEPARATOR_S,
+                           g_ascii_strdown(number, -1),
+                           suffix, ".png", NULL);
 
     image = gdk_pixbuf_new_from_file_at_scale(filename, size, size, TRUE, NULL);
 
     if (G_UNLIKELY(!image)) {
-        g_warning("Unable to open image: %s", filename);
+        weather_debug("Unable to open image: %s", filename);
         if (number && strcmp(number, NODATA)) {
             g_free(filename);
-            return get_icon(NULL, size, FALSE);
+
+            /* maybe there is no night icon, so fallback to using day icon */
+            if (night)
+                return get_icon(theme, number, size, FALSE);
+            else
+                return get_icon(theme, NULL, size, FALSE);
+        } else {
+            /* last fallback: get NODATA icon from standard theme */
+            g_free(filename);
+            filename = g_strconcat(THEMESDIR, G_DIR_SEPARATOR_S,
+                                   DEFAULT_W_THEME, G_DIR_SEPARATOR_S,
+                                   dir, G_DIR_SEPARATOR_S,
+                                   g_ascii_strdown(NODATA, -1), ".png", NULL);
+            image = gdk_pixbuf_new_from_file_at_scale(filename, size, size,
+                                                      TRUE, NULL);
+            if (G_UNLIKELY(!image))
+                g_warning("Failed to open image: %s", filename);
         }
     }
     g_free(filename);
 
     return image;
+}
+
+
+/*
+ * Load icon theme info from theme info file given a directory.
+ */
+icon_theme *
+icon_theme_load_info(const gchar *dir)
+{
+    XfceRc *rc;
+    icon_theme *theme = NULL;
+    gchar *filename;
+    const gchar *value;
+
+    g_assert(dir != NULL);
+    if (G_UNLIKELY(dir == NULL))
+        return NULL;
+
+    filename = g_build_filename(dir, G_DIR_SEPARATOR_S, THEME_INFO_FILE, NULL);
+
+    if (g_file_test(filename, G_FILE_TEST_EXISTS)) {
+        rc = xfce_rc_simple_open(filename, TRUE);
+        g_free(filename);
+        filename = NULL;
+
+        if (!rc)
+            return NULL;
+
+        if ((theme = g_slice_new0(icon_theme)) == NULL) {
+            xfce_rc_close(rc);
+            return NULL;
+        }
+
+        theme->dir = g_strdup(dir);
+
+        value = xfce_rc_read_entry(rc, "Name", NULL);
+        if (value)
+            theme->name = g_strdup(value);
+        else {
+            /* Use directory name as fallback */
+            filename = g_path_get_dirname(dir);
+            if (G_LIKELY(strcmp(filename, "."))) {
+                theme->dir = g_strdup(dir);
+                theme->name = g_strdup(filename);
+                weather_debug("No Name found in theme info file, "
+                              "using directory name %s as fallback.", dir);
+                g_free(filename);
+                filename = NULL;
+            } else { /* some weird error, not safe to proceed */
+                weather_debug("Some weird error, not safe to proceed. "
+                              "Abort loading icon theme from %s.", dir);
+                icon_theme_free(theme);
+                g_free(filename);
+                xfce_rc_close(rc);
+                return NULL;
+            }
+        }
+
+        value = xfce_rc_read_entry(rc, "Author", NULL);
+        if (value)
+            theme->author = g_strdup(value);
+
+        value = xfce_rc_read_entry(rc, "Description", NULL);
+        if (value)
+            theme->description = g_strdup(value);
+
+        value = xfce_rc_read_entry(rc, "License", NULL);
+        if (value)
+            theme->license = g_strdup(value);
+        xfce_rc_close(rc);
+    }
+
+    weather_dump(weather_dump_icon_theme, theme);
+    return theme;
+}
+
+
+/*
+ * Load theme from a directory, fallback to standard theme on failure
+ * or when dir is NULL.
+ */
+icon_theme *
+icon_theme_load(const gchar *dir)
+{
+    icon_theme *theme = NULL;
+    gchar *default_dir;
+
+    if (dir != NULL) {
+        weather_debug("Loading icon theme from %s.", dir);
+        if ((theme = icon_theme_load_info(dir)) != NULL) {
+            weather_debug("Successfully loaded theme from %s.", dir);
+            return theme;
+        } else
+            weather_debug("Error loading theme from %s.", dir);
+    }
+
+    /* on failure try the standard theme */
+    if (theme == NULL) {
+        default_dir = g_strdup_printf("%s" G_DIR_SEPARATOR_S "%s",
+                                      THEMESDIR, DEFAULT_W_THEME);
+        weather_debug("Loading standard icon theme from %s.", default_dir);
+        if ((theme = icon_theme_load_info(default_dir)) != NULL)
+            weather_debug("Successfully loaded theme from %s.", default_dir);
+        else
+            weather_debug("Error loading standard theme from %s.", default_dir);
+        g_free(default_dir);
+    }
+    return theme;
+}
+
+
+void
+icon_theme_free(icon_theme *theme)
+{
+    g_assert(theme != NULL);
+    if (G_UNLIKELY(theme == NULL))
+        return;
+    g_free(theme->dir);
+    g_free(theme->name);
+    g_free(theme->author);
+    g_free(theme->description);
+    g_free(theme->license);
+    g_slice_free(icon_theme, theme);
 }

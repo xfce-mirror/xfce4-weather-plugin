@@ -21,6 +21,8 @@
 
 #include <libxfce4panel/libxfce4panel.h>
 #include <libxfce4util/libxfce4util.h>
+#include "weather-icon.h"
+
 #define PLUGIN_WEBSITE "http://goodies.xfce.org/projects/panel-plugins/xfce4-weather-plugin"
 #define MAX_FORECAST_DAYS 10
 #define DEFAULT_FORECAST_DAYS 5
@@ -49,6 +51,8 @@ typedef struct {
     time_t last_astro_update;
     time_t last_data_update;
     time_t last_conditions_update;
+
+    icon_theme *icon_theme;
 
     gchar *lat;
     gchar *lon;

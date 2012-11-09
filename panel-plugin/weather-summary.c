@@ -599,7 +599,8 @@ make_forecast(xfceweather_data *data)
             if (fcdata != NULL) {
                 if (fcdata->location != NULL) {
                     rawvalue = get_data(fcdata, data->unit_system, SYMBOL);
-                    icon = get_icon(rawvalue, 48, (daytime == NIGHT));
+                    icon = get_icon(data->icon_theme, rawvalue, 48,
+                                    (daytime == NIGHT));
                     g_free(rawvalue);
                     image = gtk_image_new_from_pixbuf(icon);
                     gtk_box_pack_start(GTK_BOX(forecast_box), GTK_WIDGET(image),
@@ -774,7 +775,7 @@ create_summary_window (xfceweather_data *data)
     conditions = get_current_conditions(data->weatherdata);
 
     symbol = get_data(conditions, data->unit_system, SYMBOL);
-    icon = get_icon(symbol, 48, data->night_time);
+    icon = get_icon(data->icon_theme, symbol, 48, data->night_time);
     g_free(symbol);
 
     gtk_window_set_icon(GTK_WINDOW(window), icon);

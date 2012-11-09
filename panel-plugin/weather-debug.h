@@ -24,6 +24,7 @@
 
 #include "weather-parsers.h"
 #include "weather-data.h"
+#include "weather-icon.h"
 #include "weather.h"
 
 G_BEGIN_DECLS
@@ -62,6 +63,8 @@ gchar *weather_debug_strftime_t(const time_t t);
 gchar *weather_dump_geolocation(const xml_geolocation *geo);
 
 gchar *weather_dump_place(const xml_place *place);
+
+gchar *weather_dump_icon_theme(const icon_theme *theme);
 
 gchar *weather_dump_astrodata(const xml_astro *astrodata);
 

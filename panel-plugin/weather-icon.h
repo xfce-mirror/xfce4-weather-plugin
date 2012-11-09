@@ -21,9 +21,25 @@
 
 G_BEGIN_DECLS
 
-GdkPixbuf *get_icon(const gchar *icon,
+typedef struct {
+    gchar *dir;
+    gchar *name;
+    gchar *author;
+    gchar *description;
+    gchar *license;
+} icon_theme;
+
+
+GdkPixbuf *get_icon(const icon_theme *theme,
+                    const gchar *icon,
                     gint size,
                     gboolean night);
+
+icon_theme *icon_theme_load_info(const gchar *dir);
+
+icon_theme *icon_theme_load(const gchar *dir);
+
+void icon_theme_free(icon_theme *theme);
 
 G_END_DECLS
 

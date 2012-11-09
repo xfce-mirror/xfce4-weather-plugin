@@ -243,7 +243,7 @@ update_icon(xfceweather_data *data)
     /* set icon according to current weather conditions */
     conditions = get_current_conditions(data->weatherdata);
     str = get_data(conditions, data->unit_system, SYMBOL);
-    icon = get_icon(str, size, data->night_time);
+    icon = get_icon(data->icon_theme, str, size, data->night_time);
     g_free(str);
     gtk_image_set_from_pixbuf(GTK_IMAGE(data->iconimage), icon);
     if (G_LIKELY(icon))
@@ -623,6 +623,11 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
     gtk_scrollbox_set_animate(GTK_SCROLLBOX(data->scrollbox),
                               data->animation_transitions);
 
+    value = xfce_rc_read_entry(rc, "theme_dir", NULL);
+    if (data->icon_theme)
+        icon_theme_free(data->icon_theme);
+    data->icon_theme = icon_theme_load(value);
+
     data->labels = labels_clear(data->labels);
     val = 0;
     while (val != -1) {
@@ -681,6 +686,9 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
 
     xfce_rc_write_bool_entry(rc, "animation_transitions",
                              data->animation_transitions);
+
+    if (data->icon_theme && data->icon_theme->dir)
+        xfce_rc_write_entry(rc, "theme_dir", data->icon_theme->dir);
 
     for (i = 0; i < data->labels->len; i++) {
         g_snprintf(label, 10, "label%d", i);
@@ -988,7 +996,7 @@ weather_get_tooltip_cb(GtkWidget *widget,
 
     conditions = get_current_conditions(data->weatherdata);
     rawvalue = get_data(conditions, data->unit_system, SYMBOL);
-    icon = get_icon(rawvalue, 128, data->night_time);
+    icon = get_icon(data->icon_theme, rawvalue, 128, data->night_time);
     g_free(rawvalue);
     gtk_tooltip_set_icon(tooltip, icon);
     g_object_unref(G_OBJECT(icon));
@@ -1022,11 +1030,14 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     data->scrollbox = gtk_scrollbox_new();
 
     data->size = xfce_panel_plugin_get_size(plugin);
-    icon = get_icon(NULL, 16, FALSE);
-    data->iconimage = gtk_image_new_from_pixbuf(icon);
-
-    if (G_LIKELY(icon))
+    data->icon_theme = icon_theme_load(NULL);
+    icon = get_icon(data->icon_theme, NULL, 16, FALSE);
+    if (G_LIKELY(icon)) {
+        data->iconimage = gtk_image_new_from_pixbuf(icon);
         g_object_unref(G_OBJECT(icon));
+    } else
+        g_warning("No default icon theme? "
+                  "This should not happen, plugin will crash!");
 
     data->labels = g_array_new(FALSE, TRUE, sizeof(data_types));
 
@@ -1074,7 +1085,7 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     /* add forecast window to right click menu, for people who missed
        the left mouse click feature */
     mi = gtk_image_menu_item_new_with_mnemonic(_("_Forecast"));
-    icon = get_icon("SUN", 16, FALSE);
+    icon = get_icon(data->icon_theme, "SUN", 16, FALSE);
     gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi),
                                   gtk_image_new_from_pixbuf(icon));
     if (G_LIKELY(icon))
@@ -1141,6 +1152,9 @@ xfceweather_free(XfcePanelPlugin *plugin,
 
     /* free array */
     g_array_free(data->labels, TRUE);
+
+    /* free icon theme */
+    icon_theme_free(data->icon_theme);
 
     g_slice_free(xfceweather_data, data);
     data = NULL;

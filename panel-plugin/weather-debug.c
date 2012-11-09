@@ -172,6 +172,31 @@ weather_dump_place(const xml_place *place)
 
 
 gchar *
+weather_dump_icon_theme(const icon_theme *theme)
+{
+    gchar *out;
+
+    if (!theme)
+        return g_strdup("No icon theme data.");
+
+    out = g_strdup_printf("Icon theme data:\n"
+                          "  --------------------------------------------\n"
+                          "  Dir: %s\n"
+                          "  Name: %s\n"
+                          "  Author: %s\n"
+                          "  Description: %s\n"
+                          "  License: %s\n"
+                          "  --------------------------------------------",
+                          theme->dir,
+                          theme->name,
+                          theme->author,
+                          theme->description,
+                          theme->license);
+    return out;
+}
+
+
+gchar *
 weather_dump_astrodata(const xml_astro *astro)
 {
     gchar *out, *sunrise, *sunset, *moonrise, *moonset;
