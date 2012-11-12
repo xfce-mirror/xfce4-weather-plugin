@@ -741,9 +741,6 @@ summary_dialog_response(const GtkWidget *dlg,
 {
     if (response == GTK_RESPONSE_ACCEPT)
         gtk_widget_destroy(window);
-    else if (response == GTK_RESPONSE_HELP)
-        g_spawn_command_line_async ("exo-open --launch WebBrowser "
-                                    PLUGIN_WEBSITE, NULL);
 }
 
 
@@ -758,8 +755,6 @@ create_summary_window (xfceweather_data *data)
     window = xfce_titled_dialog_new_with_buttons(_("Weather Update"),
                                                  NULL,
                                                  GTK_DIALOG_NO_SEPARATOR,
-                                                 GTK_STOCK_ABOUT,
-                                                 GTK_RESPONSE_HELP,
                                                  GTK_STOCK_CLOSE,
                                                  GTK_RESPONSE_ACCEPT, NULL);
     if (data->location_name != NULL) {
