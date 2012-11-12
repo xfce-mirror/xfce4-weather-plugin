@@ -1009,7 +1009,7 @@ static xfceweather_data *
 xfceweather_create_control(XfcePanelPlugin *plugin)
 {
     xfceweather_data *data = g_slice_new0(xfceweather_data);
-    GtkWidget *refresh, *mi;
+    GtkWidget *refresh;
     data_types lbl;
     GdkPixbuf *icon = NULL;
 
@@ -1081,21 +1081,6 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
                      G_CALLBACK(mi_click), data);
 
     xfce_panel_plugin_menu_insert_item(plugin, GTK_MENU_ITEM(refresh));
-
-    /* add forecast window to right click menu, for people who missed
-       the left mouse click feature */
-    mi = gtk_image_menu_item_new_with_mnemonic(_("_Forecast"));
-    icon = get_icon(data->icon_theme, "SUN", 16, FALSE);
-    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(mi),
-                                  gtk_image_new_from_pixbuf(icon));
-    if (G_LIKELY(icon))
-        g_object_unref(G_OBJECT(icon));
-    gtk_widget_show(mi);
-
-    g_signal_connect(G_OBJECT(mi), "activate",
-                     G_CALLBACK(forecast_click), data);
-
-    xfce_panel_plugin_menu_insert_item(plugin, GTK_MENU_ITEM(mi));
 
     /* assign to tempval because g_array_append_val() is using & operator */
     lbl = TEMPERATURE;
