@@ -353,13 +353,15 @@ cb_geolocation(SoupSession *session,
         return;
     }
 
-    if (geo->country_name && geo->city)
+    if (geo->country_name && geo->city && strcmp(geo->city, "(none)"))
         if (geo->country_code && !strcmp(geo->country_code, "US") &&
             geo->region_name)
             full_loc = g_strdup_printf("%s, %s", geo->city, geo->region_name);
         else
             full_loc = g_strdup_printf("%s, %s", geo->city, geo->country_name);
-    else if (geo->country_name)
+    else if (geo->region_name && strcmp(geo->region_name, "(none)"))
+        full_loc = g_strdup(geo->region_name);
+    else if (geo->country_name && strcmp(geo->country_name, "(none)"))
         full_loc = g_strdup(geo->country_name);
     else if (geo->latitude && geo->longitude) {
         /*
