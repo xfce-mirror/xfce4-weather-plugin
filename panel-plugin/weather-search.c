@@ -36,8 +36,6 @@
 
 
 typedef struct {
-    const gchar *proxy_host;
-    gint proxy_port;
     void (*cb) (const gchar *loc_name,
                 const gchar *lat,
                 const gchar *lon,
@@ -353,49 +351,18 @@ get_preferred_unit_system(const gchar *country_code)
 
 
 static void
-cb_geolocation(const gboolean succeed,
-               gchar *received,
-               const size_t len,
+cb_geolocation(SoupSession *session,
+               SoupMessage *msg,
                gpointer user_data)
 {
     geolocation_data *data = (geolocation_data *) user_data;
-    xmlDoc *doc;
     xml_geolocation *geo;
     gchar *full_loc, *p;
     unit_systems unit_system;
     gsize length;
 
-    if (!succeed || received == NULL) {
-        data->cb(NULL, NULL, NULL, METRIC, data->user_data);
-        g_free(data);
-        return;
-    }
-
-    /* hack for geoip.xfce.org, which return no content-length */
-    p = strstr(received, "</Response>");
-    if (p != NULL)
-        length = p - received + strlen("</Response>");
-    else
-        length = strlen(received);
-
-    if (g_utf8_validate(received, -1, NULL)) {
-        /* force parsing as UTF-8, the XML encoding header may lie */
-        doc = xmlReadMemory(received, length, NULL, "UTF-8", 0);
-    } else
-        doc = xmlParseMemory(received, length);
-    g_free(received);
-
-    if (!doc) {
-        data->cb(NULL, NULL, NULL, METRIC, data->user_data);
-        g_free(data);
-        return;
-    }
-
-    geo = parse_geolocation(xmlDocGetRootElement(doc));
-    xmlFreeDoc(doc);
-    weather_dump(weather_dump_geolocation, geo);
-
-    if (geo == NULL) {
+    if (!(geo = (xml_geolocation *)
+          parse_xml_document(msg, (XmlParseFunc) parse_geolocation))) {
         data->cb(NULL, NULL, NULL, METRIC, data->user_data);
         g_free(data);
         return;
@@ -421,7 +388,8 @@ cb_geolocation(const gboolean succeed,
 
     unit_system = get_preferred_unit_system(geo->country_code);
 
-    data->cb(full_loc, geo->latitude, geo->longitude, unit_system, data->user_data);
+    data->cb(full_loc, geo->latitude, geo->longitude,
+             unit_system, data->user_data);
     xml_geolocation_free(geo);
     g_free(full_loc);
     g_free(data);
@@ -445,10 +413,7 @@ void weather_search_by_ip(const gchar *proxy_host,
     data = g_new0(geolocation_data, 1);
     data->cb = gui_cb;
     data->user_data = user_data;
-    data->proxy_host = proxy_host;
-    data->proxy_port = proxy_port;
 
     g_message("getting http://geoip.xfce.org/");
-    weather_http_receive_data("geoip.xfce.org", "/", proxy_host, proxy_port,
-                              cb_geolocation, data);
+    weather_http_queue_request("http://geoip.xfce.org/", cb_geolocation, data);
 }
