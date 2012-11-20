@@ -343,8 +343,11 @@ cb_geolocation(SoupSession *session,
     unit_systems unit_system;
     gsize length;
 
-    if (!(geo = (xml_geolocation *)
-          parse_xml_document(msg, (XmlParseFunc) parse_geolocation))) {
+    geo = (xml_geolocation *)
+        parse_xml_document(msg, (XmlParseFunc) parse_geolocation);
+    weather_dump(weather_dump_geolocation, geo);
+
+    if (!geo) {
         data->cb(NULL, NULL, NULL, METRIC, data->user_data);
         g_free(data);
         return;
