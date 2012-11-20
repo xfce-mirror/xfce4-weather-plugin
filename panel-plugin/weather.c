@@ -31,7 +31,6 @@
 #include "weather.h"
 
 #include "weather-translate.h"
-#include "weather-http.h"
 #include "weather-summary.h"
 #include "weather-config.h"
 #include "weather-icon.h"
@@ -42,7 +41,7 @@
 #define UPDATE_INTERVAL 15
 #define DATA_MAX_AGE (3 * 3600)
 #define BORDER 8
-
+#define CONNECTION_TIMEOUT (10)        /* connection timeout in seconds */
 
 #define DATA_AND_UNIT(var, item)                            \
     value = get_data(conditions, data->unit_system, item);  \
@@ -56,6 +55,19 @@
 
 
 gboolean debug_mode = FALSE;
+
+
+void
+weather_http_queue_request(SoupSession *session,
+                           const gchar *uri,
+                           SoupSessionCallback callback_func,
+                           gpointer user_data)
+{
+    SoupMessage *msg;
+
+    msg = soup_message_new("GET", uri);
+    soup_session_queue_message(session, msg, callback_func, user_data);
+}
 
 
 static const gchar *
@@ -399,7 +411,7 @@ update_weatherdata(xfceweather_data *data)
 
         /* start receive thread */
         g_message("getting %s", url);
-        weather_http_queue_request(url, cb_astro_update, data);
+        weather_http_queue_request(data->session, url, cb_astro_update, data);
         g_free(url);
     }
 
@@ -413,7 +425,8 @@ update_weatherdata(xfceweather_data *data)
 
         /* start receive thread */
         g_message("getting %s", url);
-        weather_http_queue_request(url, cb_weather_update, data);
+        weather_http_queue_request(data->session, url,
+                                   cb_weather_update, data);
         g_free(url);
 
         /* cb_update will deal with everything that follows this
@@ -896,19 +909,34 @@ static xfceweather_data *
 xfceweather_create_control(XfcePanelPlugin *plugin)
 {
     xfceweather_data *data = g_slice_new0(xfceweather_data);
+    SoupMessage *msg;
+    SoupURI *soup_proxy_uri;
+    const gchar *proxy_uri;
     GtkWidget *refresh;
     data_types lbl;
     GdkPixbuf *icon = NULL;
 
     /* Initialize with sane default values */
     data->plugin = plugin;
-    data->lat = NULL;
-    data->lon = NULL;
-    data->location_name = NULL;
     data->unit_system = METRIC;
     data->weatherdata = NULL;
-    data->animation_transitions = FALSE;
     data->forecast_days = DEFAULT_FORECAST_DAYS;
+
+    /* Setup session for HTTP connections */
+    data->session = soup_session_async_new();
+    g_object_set(data->session, SOUP_SESSION_TIMEOUT,
+                 CONNECTION_TIMEOUT, NULL);
+
+    /* Set the proxy URI from environment */
+    proxy_uri = g_getenv("HTTP_PROXY");
+    if (!proxy_uri)
+        proxy_uri = g_getenv("http_proxy");
+    if (proxy_uri) {
+        soup_proxy_uri = soup_uri_new (proxy_uri);
+        g_object_set(data->session, SOUP_SESSION_PROXY_URI,
+                     soup_proxy_uri, NULL);
+        soup_uri_free(soup_proxy_uri);
+    }
 
     data->scrollbox = gtk_scrollbox_new();
 

@@ -24,7 +24,6 @@
 
 #include "weather-parsers.h"
 #include "weather-data.h"
-#include "weather-http.h"
 #include "weather.h"
 
 #include "weather-summary.h"
@@ -254,7 +253,8 @@ weather_summary_get_logo(xfceweather_data *data)
     pixbuf = gdk_pixbuf_new_from_file(path, NULL);
     g_free(path);
     if (pixbuf == NULL)
-        weather_http_queue_request("http://met.no/filestore/met.no-logo.gif",
+        weather_http_queue_request(data->session,
+                                   "http://met.no/filestore/met.no-logo.gif",
                                    logo_fetched, image);
     else {
         gtk_image_set_from_pixbuf(GTK_IMAGE(image), pixbuf);

@@ -29,7 +29,6 @@
 #include "weather.h"
 
 #include "weather-search.h"
-#include "weather-http.h"
 #include "weather-debug.h"
 
 #define BORDER 8
@@ -168,7 +167,7 @@ search_cb(GtkWidget *widget,
 
     gtk_tree_view_column_set_title(dialog->column, _("Searching..."));
     g_message("getting %s", url);
-    weather_http_queue_request(url, cb_searchdone, dialog);
+    weather_http_queue_request(dialog->session, url, cb_searchdone, dialog);
     g_free(url);
 }
 
@@ -184,7 +183,8 @@ pass_search_results(GtkTreeView *tree_view,
 
 
 search_dialog *
-create_search_dialog(GtkWindow *parent)
+create_search_dialog(GtkWindow *parent,
+                     SoupSession *session)
 {
     search_dialog *dialog;
     GtkWidget *dialog_vbox, *vbox, *hbox, *scroll, *frame;
@@ -194,6 +194,8 @@ create_search_dialog(GtkWindow *parent)
 
     if (!dialog)
         return NULL;
+
+    dialog->session = session;
 
     dialog->dialog =
         xfce_titled_dialog_new_with_buttons(_("Search location"),
@@ -376,7 +378,8 @@ cb_geolocation(SoupSession *session,
 }
 
 
-void weather_search_by_ip(void (*gui_cb) (const gchar *loc_name,
+void weather_search_by_ip(SoupSession *session,
+                          void (*gui_cb) (const gchar *loc_name,
                                           const gchar *lat,
                                           const gchar *lon,
                                           const unit_systems unit_system,
@@ -393,5 +396,6 @@ void weather_search_by_ip(void (*gui_cb) (const gchar *loc_name,
     data->user_data = user_data;
 
     g_message("getting http://geoip.xfce.org/");
-    weather_http_queue_request("http://geoip.xfce.org/", cb_geolocation, data);
+    weather_http_queue_request(session, "http://geoip.xfce.org/",
+                               cb_geolocation, data);
 }

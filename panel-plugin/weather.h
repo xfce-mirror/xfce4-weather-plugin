@@ -21,6 +21,7 @@
 
 #include <libxfce4panel/libxfce4panel.h>
 #include <libxfce4util/libxfce4util.h>
+#include <libsoup/soup.h>
 #include "weather-icon.h"
 
 #define PLUGIN_WEBSITE "http://goodies.xfce.org/projects/panel-plugins/xfce4-weather-plugin"
@@ -31,6 +32,8 @@ G_BEGIN_DECLS
 
 typedef struct {
     XfcePanelPlugin *plugin;
+
+    SoupSession *session;
 
     GtkWidget *top_vbox;
     GtkWidget *top_hbox;
@@ -69,6 +72,15 @@ typedef struct {
 
 
 extern gboolean debug_mode;
+
+typedef void (*SoupSessionCallback) (SoupSession *session,
+                                     SoupMessage *msg,
+                                     gpointer user_data);
+
+void weather_http_queue_request(SoupSession *session,
+                                const gchar *uri,
+                                SoupSessionCallback callback_func,
+                                gpointer user_data);
 
 G_END_DECLS
 

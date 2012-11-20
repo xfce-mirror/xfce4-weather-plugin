@@ -38,14 +38,18 @@ typedef struct {
     gchar *result_name;
 
     gchar *last_search;
+
+    SoupSession *session;
 } search_dialog;
 
 
-search_dialog *create_search_dialog(GtkWindow *parent);
+search_dialog *create_search_dialog(GtkWindow *parent,
+                                    SoupSession *session);
 
 gboolean run_search_dialog(search_dialog *dialog);
 
-void weather_search_by_ip(void (*gui_cb) (const gchar *loc_name,
+void weather_search_by_ip(SoupSession *session,
+                          void (*gui_cb) (const gchar *loc_name,
                                           const gchar *lat,
                                           const gchar *lon,
                                           const unit_systems unit_system,

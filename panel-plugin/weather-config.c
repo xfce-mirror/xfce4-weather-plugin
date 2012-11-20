@@ -378,7 +378,7 @@ start_auto_locate(xfceweather_dialog *dialog)
 {
     gtk_widget_set_sensitive(dialog->txt_loc_name, FALSE);
     gtk_entry_set_text(GTK_ENTRY(dialog->txt_loc_name), _("Detecting..."));
-    weather_search_by_ip(auto_locate_cb, dialog);
+    weather_search_by_ip(dialog->wd->session, auto_locate_cb, dialog);
 }
 
 
@@ -390,7 +390,7 @@ cb_findlocation(GtkButton *button,
     search_dialog *sdialog;
     gchar *loc_name;
 
-    sdialog = create_search_dialog(NULL);
+    sdialog = create_search_dialog(NULL, dialog->wd->session);
 
     gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
     if (run_search_dialog(sdialog)) {
