@@ -77,9 +77,8 @@ sanitize_str(const gchar *str)
 
 
 static void
-cb_searchdone(const gboolean succeed,
-              gchar *received,
-              const size_t len,
+cb_searchdone(SoupSession *session,
+              SoupMessage *msg,
               gpointer user_data)
 {
     search_dialog *dialog = (search_dialog *) user_data;
@@ -92,22 +91,11 @@ cb_searchdone(const gboolean succeed,
 
     gtk_widget_set_sensitive(dialog->find_button, TRUE);
 
-    if (!succeed || received == NULL)
-        return;
-
-    if (g_utf8_validate(received, -1, NULL)) {
-        /* force parsing as UTF-8, the XML encoding header may lie */
-        doc = xmlReadMemory(received, strlen(received), NULL, "UTF-8", 0);
-    } else {
-        doc = xmlParseMemory(received, strlen(received));
-    }
-    g_free(received);
-
+    doc = get_xml_document(msg);
     if (!doc)
         return;
 
     cur_node = xmlDocGetRootElement(doc);
-
     if (cur_node) {
         for (cur_node = cur_node->children; cur_node;
              cur_node = cur_node->next) {
@@ -124,10 +112,8 @@ cb_searchdone(const gboolean succeed,
                 xml_place_free(place);
                 place = NULL;
             }
-
         }
     }
-
     xmlFreeDoc(doc);
 
     if (found > 0)
@@ -176,14 +162,13 @@ search_cb(GtkWidget *widget,
     gtk_dialog_set_response_sensitive(GTK_DIALOG(dialog->dialog),
                                       GTK_RESPONSE_ACCEPT, FALSE);
 
-    url = g_strdup_printf("/search?q=%s&format=xml", sane_str);
+    url = g_strdup_printf("http://nominatim.openstreetmap.org/"
+                          "search?q=%s&format=xml", sane_str);
     g_free(sane_str);
 
     gtk_tree_view_column_set_title(dialog->column, _("Searching..."));
-    g_message("getting http://nominatim.openstreetmap.org%s", url);
-    weather_http_receive_data("nominatim.openstreetmap.org", url,
-                              dialog->proxy_host, dialog->proxy_port,
-                              cb_searchdone, dialog);
+    g_message("getting %s", url);
+    weather_http_queue_request(url, cb_searchdone, dialog);
     g_free(url);
 }
 
