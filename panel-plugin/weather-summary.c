@@ -218,23 +218,22 @@ get_logo_path(void)
 
 
 static void
-logo_fetched (const gboolean succeed,
-              gchar *result,
-              const size_t len,
-              gpointer user_data)
+logo_fetched(SoupSession *session,
+             SoupMessage *msg,
+             gpointer user_data)
 {
-    if (succeed && result) {
+    if (msg && msg->response_body && msg->response_body->length > 0) {
         gchar *path = get_logo_path();
         GError *error = NULL;
         GdkPixbuf *pixbuf = NULL;
-        if (!g_file_set_contents(path, result, len, &error)) {
-            printf("err %s\n", error?error->message:"?");
+        if (!g_file_set_contents(path, msg->response_body->data,
+                                 msg->response_body->length, &error)) {
+            g_warning("Error downloading met.no logo image to %s, "
+                      "err %s\n", path, error ? error->message : "?");
             g_error_free(error);
-            g_free(result);
             g_free(path);
             return;
         }
-        g_free(result);
         pixbuf = gdk_pixbuf_new_from_file(path, NULL);
         g_free(path);
         if (pixbuf) {
@@ -255,9 +254,8 @@ weather_summary_get_logo(xfceweather_data *data)
     pixbuf = gdk_pixbuf_new_from_file(path, NULL);
     g_free(path);
     if (pixbuf == NULL)
-        weather_http_receive_data("met.no", "/filestore/met.no-logo.gif",
-                                  data->proxy_host, data->proxy_port,
-                                  logo_fetched, image);
+        weather_http_queue_request("http://met.no/filestore/met.no-logo.gif",
+                                   logo_fetched, image);
     else {
         gtk_image_set_from_pixbuf(GTK_IMAGE(image), pixbuf);
         g_object_unref(pixbuf);
