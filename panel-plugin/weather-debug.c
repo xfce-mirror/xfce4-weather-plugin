@@ -356,12 +356,6 @@ weather_dump_plugindata(const xfceweather_data *data)
                            "  unit system: %d\n"
                            "  night time: %s\n"
                            "  --------------------------------------------\n"
-                           "  proxy from env: %s\n"
-                           "  proxy host: %s\n"
-                           "  proxy port: %d\n"
-                           "  saved proxy host: %s\n"
-                           "  saved proxy port: %d\n"
-                           "  --------------------------------------------\n"
                            "  animation transitions: %s\n"
                            "  forecast days: %d\n"
                            "  --------------------------------------------",
@@ -377,11 +371,6 @@ weather_dump_plugindata(const xfceweather_data *data)
                            data->location_name,
                            data->unit_system,
                            YESNO(data->night_time),
-                           YESNO(data->proxy_fromenv),
-                           data->proxy_host,
-                           data->proxy_port,
-                           data->saved_proxy_host,
-                           data->saved_proxy_port,
                            YESNO(data->animation_transitions),
                            data->forecast_days);
     g_free(last_astro_update);

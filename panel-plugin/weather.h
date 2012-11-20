@@ -63,24 +63,12 @@ typedef struct {
     xml_astro *astrodata;
     gboolean night_time;
 
-    gchar *proxy_host;
-    gint proxy_port;
-    gboolean proxy_fromenv;
-
-    /* used for storing the configured but not active proxy settings */
-    gchar *saved_proxy_host;
-    gint saved_proxy_port;
-
     gboolean animation_transitions;
     gint forecast_days;
 } xfceweather_data;
 
 
 extern gboolean debug_mode;
-
-
-gboolean check_envproxy(gchar **proxy_host,
-                        gint *proxy_port);
 
 G_END_DECLS
 

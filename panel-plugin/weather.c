@@ -58,49 +58,6 @@
 gboolean debug_mode = FALSE;
 
 
-gboolean
-check_envproxy(gchar **proxy_host,
-               gint *proxy_port)
-{
-    gchar *env_proxy = NULL, *tmp, **split;
-
-    env_proxy = getenv("HTTP_PROXY");
-    if (!env_proxy)
-        env_proxy = getenv("http_proxy");
-
-    if (!env_proxy)
-        return FALSE;
-
-    tmp = strstr(env_proxy, "://");
-
-    if (tmp && strlen(tmp) >= 3)
-        env_proxy = tmp + 3;
-    else
-        return FALSE;
-
-    /* we don't support username:password so return */
-    tmp = strchr(env_proxy, '@');
-    if (tmp)
-        return FALSE;
-
-    split = g_strsplit(env_proxy, ":", 2);
-
-    if (!split[0])
-        return FALSE;
-    else if (!split[1]) {
-        g_strfreev(split);
-        return FALSE;
-    }
-
-    *proxy_host = g_strdup(split[0]);
-    *proxy_port = (int) strtol(split[1], NULL, 0);
-
-    g_strfreev(split);
-
-    return TRUE;
-}
-
-
 static const gchar *
 get_label_size(const xfceweather_data *data)
 {
@@ -551,28 +508,6 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
 
     data->unit_system = xfce_rc_read_int_entry(rc, "unit_system", METRIC);
 
-    if (data->proxy_host) {
-        g_free(data->proxy_host);
-        data->proxy_host = NULL;
-    }
-    if (data->saved_proxy_host) {
-        g_free(data->saved_proxy_host);
-        data->saved_proxy_host = NULL;
-    }
-    value = xfce_rc_read_entry(rc, "proxy_host", NULL);
-    if (value && *value)
-        data->saved_proxy_host = g_strdup(value);
-
-    data->saved_proxy_port = xfce_rc_read_int_entry(rc, "proxy_port", 0);
-
-    data->proxy_fromenv = xfce_rc_read_bool_entry(rc, "proxy_fromenv", FALSE);
-    if (data->proxy_fromenv)
-        check_envproxy(&data->proxy_host, &data->proxy_port);
-    else {
-        data->proxy_host = g_strdup(data->saved_proxy_host);
-        data->proxy_port = data->saved_proxy_port;
-    }
-
     val = xfce_rc_read_int_entry(rc, "forecast_days", DEFAULT_FORECAST_DAYS);
     data->forecast_days =
         (val > 0 && val <= MAX_FORECAST_DAYS) ? val : DEFAULT_FORECAST_DAYS;
@@ -633,13 +568,6 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
 
     if (data->location_name)
         xfce_rc_write_entry(rc, "loc_name", data->location_name);
-
-    xfce_rc_write_bool_entry(rc, "proxy_fromenv", data->proxy_fromenv);
-
-    if (data->proxy_host) {
-        xfce_rc_write_entry(rc, "proxy_host", data->proxy_host);
-        xfce_rc_write_int_entry(rc, "proxy_port", data->proxy_port);
-    }
 
     xfce_rc_write_int_entry(rc, "forecast_days", data->forecast_days);
 
@@ -979,10 +907,6 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     data->location_name = NULL;
     data->unit_system = METRIC;
     data->weatherdata = NULL;
-    data->proxy_host = NULL;
-    data->proxy_port = 0;
-    data->saved_proxy_host = NULL;
-    data->saved_proxy_port = 0;
     data->animation_transitions = FALSE;
     data->forecast_days = DEFAULT_FORECAST_DAYS;
 
@@ -1090,8 +1014,6 @@ xfceweather_free(XfcePanelPlugin *plugin,
     g_free(data->lat);
     g_free(data->lon);
     g_free(data->location_name);
-    g_free(data->proxy_host);
-    g_free(data->saved_proxy_host);
 
     /* free array */
     g_array_free(data->labels, TRUE);
