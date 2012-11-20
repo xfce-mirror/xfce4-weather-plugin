@@ -22,6 +22,7 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 #include <libxml/parser.h>
+#include <libsoup/soup.h>
 
 G_BEGIN_DECLS
 
@@ -34,6 +35,8 @@ enum {
     CLOUDS_PERC_CLOUDINESS,
     CLOUDS_PERC_NUM
 };
+
+typedef gpointer (*XmlParseFunc) (xmlNode *node);
 
 typedef struct {
     gchar *altitude;
@@ -118,6 +121,9 @@ xml_place *parse_place(xmlNode *cur_node);
 xml_time *get_timeslice(xml_weather *data,
                         const time_t start_t,
                         const time_t end_t);
+
+gpointer parse_xml_document(SoupMessage *msg,
+                            XmlParseFunc parse_func);
 
 void xml_time_free(xml_time *timeslice);
 
