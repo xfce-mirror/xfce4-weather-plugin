@@ -19,12 +19,18 @@
 #ifndef __WEATHER_HTTP_H__
 #define __WEATHER_HTTP_H__
 
+#include <libsoup/soup.h>
+
 G_BEGIN_DECLS
 
 typedef void (*WeatherFunc) (gboolean succeed,
                              gchar *received,
                              size_t len,
                              gpointer user_data);
+
+typedef void (*SoupSessionCallback) (SoupSession *session,
+                                     SoupMessage *msg,
+                                     gpointer user_data);
 
 
 void weather_http_cleanup_queue(void);
@@ -35,6 +41,10 @@ void weather_http_receive_data(const gchar *hostname,
                                gint proxy_port,
                                const WeatherFunc cb_func,
                                gpointer user_data);
+
+void weather_http_queue_request(const gchar *uri,
+                                SoupSessionCallback callback_func,
+                                gpointer user_data);
 
 G_END_DECLS
 

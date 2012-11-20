@@ -512,3 +512,30 @@ weather_http_cleanup_queue(void)
         }
     }
 }
+
+
+void
+weather_http_queue_request(const gchar *uri,
+                           SoupSessionCallback callback_func,
+                           gpointer user_data)
+{
+    SoupSession *session;
+    SoupMessage *msg;
+    SoupURI *soup_proxy_uri;
+    const gchar *proxy_uri;
+
+    /* create a new soup session */
+    session = soup_session_async_new();
+
+    /* Set the proxy URI if any */
+    proxy_uri = g_getenv("http_proxy");
+
+    if (proxy_uri != NULL) {
+        soup_proxy_uri = soup_uri_new (proxy_uri);
+        g_object_set(session, "proxy-uri", soup_proxy_uri, NULL);
+        soup_uri_free(soup_proxy_uri);
+    }
+
+    msg = soup_message_new("GET", uri);
+    soup_session_queue_message(session, msg, callback_func, user_data);
+}
