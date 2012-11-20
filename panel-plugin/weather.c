@@ -313,7 +313,6 @@ cb_astro_update(SoupSession *session,
                 SoupMessage *msg,
                 gpointer user_data)
 {
-    SoupMessageBody *body;
     xfceweather_data *data = user_data;
     xml_astro *astro;
 
@@ -329,33 +328,15 @@ cb_astro_update(SoupSession *session,
 
 
 static void
-cb_update(const gboolean succeed,
-          gchar *result,
-          const size_t len,
-          gpointer user_data)
+cb_weather_update(SoupSession *session,
+                  SoupMessage *msg,
+                  gpointer user_data)
 {
     xfceweather_data *data = user_data;
-    xmlDoc *doc;
-    xmlNode *cur_node;
     xml_weather *weather = NULL;
 
-    if (G_LIKELY(succeed && result)) {
-        if (g_utf8_validate(result, -1, NULL)) {
-            /* force parsing as UTF-8, the XML encoding header may lie */
-            doc = xmlReadMemory(result, strlen(result), NULL, "UTF-8", 0);
-        } else
-            doc = xmlParseMemory(result, strlen(result));
-        g_free(result);
-
-        if (G_LIKELY(doc)) {
-            cur_node = xmlDocGetRootElement(doc);
-            if (cur_node)
-                weather = parse_weather(cur_node);
-            xmlFreeDoc(doc);
-        }
-    }
-
-    if (G_LIKELY(weather)) {
+    if ((weather = (xml_weather *)
+         parse_xml_document(msg, (XmlParseFunc) parse_weather))) {
         if (G_LIKELY(data->weatherdata)) {
             weather_debug("Freeing weather data.");
             xml_weather_free(data->weatherdata);
@@ -469,15 +450,13 @@ update_weatherdata(xfceweather_data *data)
     if (need_data_update(data)) {
         /* build url */
         url =
-            g_strdup_printf("/weatherapi/locationforecastlts/1.1/?lat=%s;lon=%s",
+            g_strdup_printf("http://api.yr.no/weatherapi"
+                            "/locationforecastlts/1.1/?lat=%s;lon=%s",
                             data->lat, data->lon);
 
         /* start receive thread */
-        g_message("getting http://api.yr.no%s", url);
-        weather_http_receive_data("api.yr.no", url, data->proxy_host,
-                                  data->proxy_port, cb_update, data);
-
-        /* cleanup */
+        g_message("getting %s", url);
+        weather_http_queue_request(url, cb_weather_update, data);
         g_free(url);
 
         /* cb_update will deal with everything that follows this
