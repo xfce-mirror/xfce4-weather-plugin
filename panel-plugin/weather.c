@@ -309,39 +309,21 @@ update_current_conditions(xfceweather_data *data)
 
 
 static void
-cb_astro_update(const gboolean succeed,
-                gchar *result,
-                const size_t len,
+cb_astro_update(SoupSession *session,
+                SoupMessage *msg,
                 gpointer user_data)
 {
+    SoupMessageBody *body;
     xfceweather_data *data = user_data;
-    xmlDoc *doc;
-    xmlNode *cur_node;
-    xml_astro *astro = NULL;
+    xml_astro *astro;
 
-    if (G_LIKELY(succeed && result)) {
-        if (g_utf8_validate(result, -1, NULL)) {
-            /* force parsing as UTF-8, the XML encoding header may lie */
-            doc = xmlReadMemory(result, strlen(result), NULL, "UTF-8", 0);
-        } else
-            doc = xmlParseMemory(result, strlen(result));
-        g_free(result);
-
-        if (G_LIKELY(doc)) {
-            cur_node = xmlDocGetRootElement(doc);
-            if (G_LIKELY(cur_node))
-                astro = parse_astro(cur_node);
-            xmlFreeDoc(doc);
-        }
-    }
-
-    if (astro) {
+    if ((astro =
+         (xml_astro *) parse_xml_document(msg, (XmlParseFunc) parse_astro))) {
         if (data->astrodata)
             xml_astro_free(data->astrodata);
         data->astrodata = astro;
         data->last_astro_update = time(NULL);
     }
-
     weather_dump(weather_dump_astrodata, data->astrodata);
 }
 
@@ -470,7 +452,7 @@ update_weatherdata(xfceweather_data *data)
         now_tm = *localtime(&now_t);
 
         /* build url */
-        url = g_strdup_printf("/weatherapi/sunrise/1.0/?"
+        url = g_strdup_printf("http://api.yr.no/weatherapi/sunrise/1.0/?"
                               "lat=%s;lon=%s;date=%04d-%02d-%02d",
                               data->lat, data->lon,
                               now_tm.tm_year + 1900,
@@ -478,10 +460,8 @@ update_weatherdata(xfceweather_data *data)
                               now_tm.tm_mday);
 
         /* start receive thread */
-        g_message("getting http://api.yr.no%s", url);
-        weather_http_receive_data("api.yr.no", url, data->proxy_host,
-                                  data->proxy_port, cb_astro_update, data);
-
+        g_message("getting %s", url);
+        weather_http_queue_request(url, cb_astro_update, data);
         g_free(url);
     }
 
