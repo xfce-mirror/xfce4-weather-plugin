@@ -23,24 +23,10 @@
 
 G_BEGIN_DECLS
 
-typedef void (*WeatherFunc) (gboolean succeed,
-                             gchar *received,
-                             size_t len,
-                             gpointer user_data);
-
 typedef void (*SoupSessionCallback) (SoupSession *session,
                                      SoupMessage *msg,
                                      gpointer user_data);
 
-
-void weather_http_cleanup_queue(void);
-
-void weather_http_receive_data(const gchar *hostname,
-                               const gchar *url,
-                               const gchar *proxy_host,
-                               gint proxy_port,
-                               const WeatherFunc cb_func,
-                               gpointer user_data);
 
 void weather_http_queue_request(const gchar *uri,
                                 SoupSessionCallback callback_func,

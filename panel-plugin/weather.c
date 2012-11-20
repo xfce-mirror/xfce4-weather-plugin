@@ -1072,7 +1072,6 @@ xfceweather_free(XfcePanelPlugin *plugin,
 {
     weather_debug("Freeing plugin data.");
     g_assert(data != NULL);
-    weather_http_cleanup_queue();
 
     if (data->weatherdata)
         xml_weather_free(data->weatherdata);
