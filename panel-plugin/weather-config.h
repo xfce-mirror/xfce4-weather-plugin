@@ -32,10 +32,6 @@ typedef struct {
     GtkWidget *txt_lat;
     GtkWidget *txt_lon;
     GtkWidget *txt_loc_name;
-    GtkWidget *txt_proxy_host;
-    GtkWidget *txt_proxy_port;
-    GtkWidget *chk_proxy_use;
-    GtkWidget *chk_proxy_fromenv;
     GtkWidget *spin_forecast_days;
 
     GtkWidget *tooltip_yes;

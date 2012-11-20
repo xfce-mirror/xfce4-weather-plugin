@@ -184,9 +184,7 @@ pass_search_results(GtkTreeView *tree_view,
 
 
 search_dialog *
-create_search_dialog(GtkWindow *parent,
-                     gchar *proxy_host,
-                     gint proxy_port)
+create_search_dialog(GtkWindow *parent)
 {
     search_dialog *dialog;
     GtkWidget *dialog_vbox, *vbox, *hbox, *scroll, *frame;
@@ -196,9 +194,6 @@ create_search_dialog(GtkWindow *parent,
 
     if (!dialog)
         return NULL;
-
-    dialog->proxy_host = proxy_host;
-    dialog->proxy_port = proxy_port;
 
     dialog->dialog =
         xfce_titled_dialog_new_with_buttons(_("Search location"),
@@ -381,9 +376,7 @@ cb_geolocation(SoupSession *session,
 }
 
 
-void weather_search_by_ip(const gchar *proxy_host,
-                          gint proxy_port,
-                          void (*gui_cb) (const gchar *loc_name,
+void weather_search_by_ip(void (*gui_cb) (const gchar *loc_name,
                                           const gchar *lat,
                                           const gchar *lon,
                                           const unit_systems unit_system,
