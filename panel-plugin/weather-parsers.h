@@ -122,6 +122,8 @@ xml_time *get_timeslice(xml_weather *data,
                         const time_t start_t,
                         const time_t end_t);
 
+xmlDoc *get_xml_document(SoupMessage *msg);
+
 gpointer parse_xml_document(SoupMessage *msg,
                             XmlParseFunc parse_func);
 

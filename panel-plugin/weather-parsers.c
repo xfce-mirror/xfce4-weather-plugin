@@ -439,6 +439,22 @@ parse_place(xmlNode *cur_node)
 }
 
 
+xmlDoc *
+get_xml_document(SoupMessage *msg)
+{
+    if (G_LIKELY(msg && msg->response_body && msg->response_body->data))
+        if (g_utf8_validate(msg->response_body->data, -1, NULL)) {
+            /* force parsing as UTF-8, the XML encoding header may lie */
+            return xmlReadMemory(msg->response_body->data,
+                                 strlen(msg->response_body->data),
+                                 NULL, "UTF-8", 0);
+        } else
+            return xmlParseMemory(msg->response_body->data,
+                                  strlen(msg->response_body->data));
+    return NULL;
+}
+
+
 gpointer
 parse_xml_document(SoupMessage *msg,
                    XmlParseFunc parse_func)
@@ -447,21 +463,12 @@ parse_xml_document(SoupMessage *msg,
     xmlNode *root_node;
     gpointer user_data = NULL;
 
-    if (G_LIKELY(msg && msg->response_body && msg->response_body->data)) {
-        if (g_utf8_validate(msg->response_body->data, -1, NULL)) {
-            /* force parsing as UTF-8, the XML encoding header may lie */
-            doc = xmlReadMemory(msg->response_body->data,
-                                strlen(msg->response_body->data),
-                                NULL, "UTF-8", 0);
-        } else
-            doc = xmlParseMemory(msg->response_body->data,
-                                 strlen(msg->response_body->data));
-        if (G_LIKELY(doc)) {
-            root_node = xmlDocGetRootElement(doc);
-            if (G_LIKELY(root_node))
-                user_data = parse_func(root_node);
-            xmlFreeDoc(doc);
-        }
+    doc = get_xml_document(msg);
+    if (G_LIKELY(doc)) {
+        root_node = xmlDocGetRootElement(doc);
+        if (G_LIKELY(root_node))
+            user_data = parse_func(root_node);
+        xmlFreeDoc(doc);
     }
     return user_data;
 }
