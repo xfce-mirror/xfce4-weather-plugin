@@ -43,9 +43,10 @@ weather_http_queue_request(const gchar *uri,
                  WEATHER_MAX_CONN_TIMEOUT, NULL);
 
     /* Set the proxy URI if any */
-    proxy_uri = g_getenv("http_proxy");
-
-    if (proxy_uri != NULL) {
+    proxy_uri = g_getenv("HTTP_PROXY");
+    if (!proxy_uri)
+        proxy_uri = g_getenv("http_proxy");
+    if (proxy_uri) {
         soup_proxy_uri = soup_uri_new (proxy_uri);
         g_object_set(session, SOUP_SESSION_PROXY_URI, soup_proxy_uri, NULL);
         soup_uri_free(soup_proxy_uri);
