@@ -328,52 +328,23 @@ option_i(const data_types opt)
 
 
 static void
-set_location_tooltip(xfceweather_dialog *dialog,
-                     const gchar *lat,
-                     const gchar *lon)
-{
-    gchar *text;
-
-    if (lat && lon)
-        text = g_strdup_printf
-            (_("Latitude: %s, Longitude: %s\n\n"
-               "You may edit the location name to your liking.\n"
-               "To choose another location, "
-               "please use the \"Change\" button."),
-             lat, lon);
-    else
-        text = g_strdup(_("Please select a location "
-                          "by using the \"Change\" button."));
-    gtk_widget_set_tooltip_text(dialog->text_loc_name, text);
-    g_free(text);
-}
-
-
-static void
 auto_locate_cb(const gchar *loc_name,
                const gchar *lat,
                const gchar *lon,
                const unit_systems unit_system,
                gpointer user_data)
 {
-#if 0
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
 
     if (lat && lon && loc_name) {
-        gtk_entry_set_text(GTK_ENTRY(dialog->txt_lat), lat);
-        gtk_entry_set_text(GTK_ENTRY(dialog->txt_lon), lon);
         gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name), loc_name);
-        gtk_widget_set_sensitive(dialog->text_loc_name, TRUE);
-        set_location_tooltip(dialog, lat, lon);
-    } else {
-        gtk_entry_set_text(GTK_ENTRY(dialog->txt_lat), "");
-        gtk_entry_set_text(GTK_ENTRY(dialog->txt_lon), "");
+        gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_lat),
+                                  string_to_double(lat, 0));
+        gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_lon),
+                                  string_to_double(lon, 0));
+    } else
         gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name), _("Unset"));
-        gtk_widget_set_sensitive(dialog->text_loc_name, FALSE);
-    }
-    gtk_combo_box_set_active(GTK_COMBO_BOX(dialog->combo_unit_system),
-                             unit_system);
-#endif
+    gtk_widget_set_sensitive(dialog->text_loc_name, TRUE);
 }
 
 
@@ -398,15 +369,13 @@ cb_findlocation(GtkButton *button,
 
     gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
     if (run_search_dialog(sdialog)) {
-#if 0
-        gtk_entry_set_text(GTK_ENTRY(dialog->txt_lat), sdialog->result_lat);
-        gtk_entry_set_text(GTK_ENTRY(dialog->txt_lon), sdialog->result_lon);
-#endif
+        gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_lat),
+                                  string_to_double(sdialog->result_lat, 0));
+        gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_lon),
+                                  string_to_double(sdialog->result_lon, 0));
         loc_name = sanitize_location_name(sdialog->result_name);
         gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name), loc_name);
         g_free(loc_name);
-        gtk_widget_set_sensitive(dialog->text_loc_name, TRUE);
-        set_location_tooltip(dialog, sdialog->result_lat, sdialog->result_lon);
     }
     free_search_dialog(sdialog);
     gtk_widget_set_sensitive(GTK_WIDGET(button), TRUE);
@@ -437,6 +406,8 @@ create_location_page(xfceweather_dialog *dialog)
     gtk_size_group_add_widget(sg_label, label);
     gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, BORDER);
     dialog->text_loc_name = gtk_entry_new();
+    gtk_entry_set_max_length(GTK_ENTRY(dialog->text_loc_name),
+                             LOC_NAME_MAX_LEN);
     gtk_label_set_mnemonic_widget(GTK_LABEL(label),
                                   GTK_WIDGET(dialog->text_loc_name));
     gtk_box_pack_start(GTK_BOX(hbox), dialog->text_loc_name, TRUE, TRUE, 0);
@@ -495,6 +466,7 @@ create_location_page(xfceweather_dialog *dialog)
     gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
     gtk_size_group_add_widget(sg_label, label);
     dialog->spin_alt = gtk_spin_button_new_with_range(-420, 10000, 1);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_alt), 0);
     gtk_label_set_mnemonic_widget(GTK_LABEL(label),
                                   GTK_WIDGET(dialog->spin_alt));
     dialog->label_alt_unit = gtk_label_new(_("meters"));
@@ -530,40 +502,20 @@ create_location_page(xfceweather_dialog *dialog)
     gtk_container_set_border_width(GTK_CONTAINER(table), BORDER);
     gtk_box_pack_start(GTK_BOX(page), frame, FALSE, FALSE, BORDER);
 
-#if 0
-    dialog->spin_lon = gtk_spin_button_new_with_range(-90, 90, 1.000000);
-    if (dialog->wd->lat != NULL && strlen(dialog->wd->lat) > 0)
-        gtk_entry_set_text(GTK_ENTRY(dialog->txt_lat),
-                           dialog->wd->lat);
-    else
-        gtk_widget_set_sensitive(dialog->text_loc_name, FALSE);
-    if (dialog->wd->lon != NULL && strlen(dialog->wd->lon) > 0)
-        gtk_entry_set_text(GTK_ENTRY(dialog->txt_lon),
-                           dialog->wd->lon);
-    else
-        gtk_widget_set_sensitive(dialog->text_loc_name, FALSE);
-    if (dialog->wd->location_name != NULL)
-        gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name),
-                           dialog->wd->location_name);
-    else
-        gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name), _("Unset"));
-    gtk_entry_set_max_length(GTK_ENTRY(dialog->text_loc_name), LOC_NAME_MAX_LEN);
-    set_location_tooltip(dialog, dialog->wd->lat, dialog->wd->lon);
-    if ((dialog->wd->lat == NULL || dialog->wd->lon == NULL) ||
-        (! strlen(dialog->wd->lat) || ! strlen(dialog->wd->lon)))
+    /* initialize widgets with current data */
+    if (dialog->wd) {
+        if (dialog->wd->location_name)
+            gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name),
+                               dialog->wd->location_name);
+        else
+            gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name), _("Unset"));
+        gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_lat),
+                                  string_to_double(dialog->wd->lat, 0));
+        gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_lon),
+                                  string_to_double(dialog->wd->lon, 0));
+    }
+    if (!dialog->wd || ! (dialog->wd->lat && dialog->wd->lon))
         start_auto_locate(dialog);
-    gtk_size_group_add_widget(sg, label);
-    button = gtk_button_new_with_mnemonic(_("Chan_ge..."));
-    image = gtk_image_new_from_stock(GTK_STOCK_FIND, GTK_ICON_SIZE_BUTTON);
-    gtk_button_set_image(GTK_BUTTON(button), image);
-    g_signal_connect(G_OBJECT(button), "clicked",
-                     G_CALLBACK(cb_findlocation), dialog);
-    hbox = gtk_hbox_new(FALSE, BORDER);
-    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(hbox), dialog->text_loc_name, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
-#endif
 
     g_object_unref(G_OBJECT(sg_label));
     g_object_unref(G_OBJECT(sg_button));
