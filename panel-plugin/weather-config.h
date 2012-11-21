@@ -28,20 +28,40 @@ typedef struct {
 
 typedef struct {
     GtkWidget *dialog;
-    GtkWidget *combo_unit_system;
-    GtkWidget *txt_lat;
-    GtkWidget *txt_lon;
-    GtkWidget *txt_loc_name;
+
+    /* location page */
+    GtkWidget *text_loc_name;
+    GtkWidget *spin_lat;
+    GtkWidget *spin_lon;
+    GtkWidget *spin_alt;
+    GtkWidget *label_alt_unit;
+    GtkWidget *spin_timezone;
+
+    /* units page */
+    GtkWidget *combo_unit_temperature;
+    GtkWidget *combo_unit_pressure;
+    GtkWidget *combo_unit_windspeed;
+    GtkWidget *combo_unit_precipitations;
+    GtkWidget *combo_unit_altitude;
+
+    /* appearance page */
+    GtkWidget *combo_icon_theme;
+    GtkWidget *combo_tooltip_style;
+    GtkWidget *combo_forecast_layout;
     GtkWidget *spin_forecast_days;
-
-    GtkWidget *tooltip_yes;
-    GtkWidget *tooltip_no;
-
-    GtkWidget *opt_xmloption;
-    GtkWidget *lst_xmloption;
-    GtkListStore *mdl_xmloption;
+    GtkWidget *check_round_values;
+    GtkWidget *check_interpolate_data;
 
     GtkWidget *chk_animate_transition;
+    /* scrollbox page */
+    GtkWidget *check_scrollbox_show;
+    GtkWidget *spin_scrollbox_lines;
+    GtkWidget *button_scrollbox_font;
+    GtkWidget *button_scrollbox_color;
+    GtkWidget *options_datatypes;        /* labels to choose from */
+    GtkWidget *list_datatypes;           /* labels to show */
+    GtkListStore *model_datatypes;       /* model for labels */
+    GtkWidget *check_scrollbox_animate;
 
     xfceweather_data *wd;
 } xfceweather_dialog;

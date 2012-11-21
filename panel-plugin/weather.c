@@ -712,15 +712,21 @@ xfceweather_dialog_response(GtkWidget *dlg,
                       PLUGIN_WEBSITE);
     } else {
         weather_debug("Applying configuration options.");
+#if 0
         apply_options(dialog);
+#endif
         weather_dump(weather_dump_plugindata, data);
 
         gtk_widget_destroy(dlg);
+#if 0
         gtk_list_store_clear(dialog->mdl_xmloption);
+#endif
         g_slice_free(xfceweather_dialog, dialog);
 
         xfce_panel_plugin_unblock_menu(data->plugin);
+#if 0
         xfceweather_write_config(data->plugin, data);
+#endif
 
         xfceweather_set_visibility(data);
     }

@@ -32,7 +32,7 @@
 #include "weather-scrollbox.h"
 
 #define OPTIONS_N 13
-#define BORDER 8
+#define BORDER 4
 #define LOC_NAME_MAX_LEN 50
 
 
@@ -66,13 +66,13 @@ static cb_function cb = NULL;
 
 
 static void
-add_mdl_option(GtkListStore *mdl,
-               const gint opt)
+add_model_option(GtkListStore *model,
+                 const gint opt)
 {
     GtkTreeIter iter;
 
-    gtk_list_store_append(mdl, &iter);
-    gtk_list_store_set(mdl, &iter,
+    gtk_list_store_append(model, &iter);
+    gtk_list_store_set(model, &iter,
                        0, _(labeloptions[opt].name),
                        1, labeloptions[opt].number, -1);
 }
@@ -87,8 +87,8 @@ cb_addoption(GtkWidget *widget,
 
     dialog = (xfceweather_dialog *) data;
     history =
-        gtk_option_menu_get_history(GTK_OPTION_MENU(dialog->opt_xmloption));
-    add_mdl_option(dialog->mdl_xmloption, history);
+        gtk_option_menu_get_history(GTK_OPTION_MENU(dialog->options_datatypes));
+    add_model_option(dialog->model_datatypes, history);
 
     return FALSE;
 }
@@ -103,9 +103,9 @@ cb_deloption(GtkWidget *widget,
     GtkTreeIter iter;
 
     selection =
-        gtk_tree_view_get_selection(GTK_TREE_VIEW(dialog->lst_xmloption));
+        gtk_tree_view_get_selection(GTK_TREE_VIEW(dialog->list_datatypes));
     if (gtk_tree_selection_get_selected(selection, NULL, &iter))
-        gtk_list_store_remove(GTK_LIST_STORE(dialog->mdl_xmloption), &iter);
+        gtk_list_store_remove(GTK_LIST_STORE(dialog->model_datatypes), &iter);
 
     return FALSE;
 }
@@ -121,14 +121,14 @@ cb_upoption(GtkWidget *widget,
     GtkTreePath *path;
 
     selection =
-        gtk_tree_view_get_selection(GTK_TREE_VIEW(dialog->lst_xmloption));
+        gtk_tree_view_get_selection(GTK_TREE_VIEW(dialog->list_datatypes));
     if (gtk_tree_selection_get_selected(selection, NULL, &iter)) {
-        path = gtk_tree_model_get_path(GTK_TREE_MODEL(dialog->mdl_xmloption),
+        path = gtk_tree_model_get_path(GTK_TREE_MODEL(dialog->model_datatypes),
                                        &iter);
         if (gtk_tree_path_prev(path)) {
-            if (gtk_tree_model_get_iter(GTK_TREE_MODEL(dialog->mdl_xmloption),
+            if (gtk_tree_model_get_iter(GTK_TREE_MODEL(dialog->model_datatypes),
                                         &prev, path))
-                gtk_list_store_move_before(GTK_LIST_STORE(dialog->mdl_xmloption),
+                gtk_list_store_move_before(GTK_LIST_STORE(dialog->model_datatypes),
                                            &iter, &prev);
 
             gtk_tree_path_free(path);
@@ -148,12 +148,12 @@ cb_downoption(GtkWidget *widget,
     GtkTreeSelection *selection;
 
     selection =
-        gtk_tree_view_get_selection(GTK_TREE_VIEW(dialog->lst_xmloption));
+        gtk_tree_view_get_selection(GTK_TREE_VIEW(dialog->list_datatypes));
     if (gtk_tree_selection_get_selected(selection, NULL, &iter)) {
         next = iter;
-        if (gtk_tree_model_iter_next(GTK_TREE_MODEL(dialog->mdl_xmloption),
+        if (gtk_tree_model_iter_next(GTK_TREE_MODEL(dialog->model_datatypes),
                                      &next))
-            gtk_list_store_move_after(GTK_LIST_STORE(dialog->mdl_xmloption),
+            gtk_list_store_move_after(GTK_LIST_STORE(dialog->model_datatypes),
                                       &iter, &next);
     }
 
@@ -246,6 +246,7 @@ sanitize_location_name(const gchar *location_name)
 void
 apply_options(xfceweather_dialog *dialog)
 {
+#if 0
     gint option;
     gboolean hasiter = FALSE;
     GtkTreeIter iter;
@@ -272,7 +273,7 @@ apply_options(xfceweather_dialog *dialog)
     data->lon =
         g_strdup(gtk_entry_get_text(GTK_ENTRY(dialog->txt_lon)));
     data->location_name =
-        g_strdup(gtk_entry_get_text(GTK_ENTRY(dialog->txt_loc_name)));
+        g_strdup(gtk_entry_get_text(GTK_ENTRY(dialog->text_loc_name)));
 
     /* force update of astronomical data */
     memset(&data->last_astro_update, 0, sizeof(data->last_astro_update));
@@ -284,20 +285,20 @@ apply_options(xfceweather_dialog *dialog)
     data->labels = g_array_new(FALSE, TRUE, sizeof(data_types));
     for (hasiter =
              gtk_tree_model_get_iter_first(GTK_TREE_MODEL
-                                           (dialog->mdl_xmloption),
+                                           (dialog->model_datatypes),
                                            &iter);
          hasiter == TRUE;
          hasiter =
-             gtk_tree_model_iter_next(GTK_TREE_MODEL(dialog->mdl_xmloption),
+             gtk_tree_model_iter_next(GTK_TREE_MODEL(dialog->model_datatypes),
                                       &iter)) {
-        gtk_tree_model_get_value(GTK_TREE_MODEL(dialog->mdl_xmloption), &iter,
+        gtk_tree_model_get_value(GTK_TREE_MODEL(dialog->model_datatypes), &iter,
                                  1, &value);
         option = g_value_get_int(&value);
         g_array_append_val(data->labels, option);
         g_value_unset(&value);
     }
 
-    data->forecast_days = 
+    data->forecast_days =
         (gint) gtk_spin_button_get_value(GTK_SPIN_BUTTON
                                          (dialog->spin_forecast_days));
 
@@ -309,6 +310,7 @@ apply_options(xfceweather_dialog *dialog)
 
     if (cb)
         cb(data);
+#endif
 }
 
 
@@ -342,7 +344,7 @@ set_location_tooltip(xfceweather_dialog *dialog,
     else
         text = g_strdup(_("Please select a location "
                           "by using the \"Change\" button."));
-    gtk_widget_set_tooltip_text(dialog->txt_loc_name, text);
+    gtk_widget_set_tooltip_text(dialog->text_loc_name, text);
     g_free(text);
 }
 
@@ -354,30 +356,32 @@ auto_locate_cb(const gchar *loc_name,
                const unit_systems unit_system,
                gpointer user_data)
 {
+#if 0
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
 
     if (lat && lon && loc_name) {
         gtk_entry_set_text(GTK_ENTRY(dialog->txt_lat), lat);
         gtk_entry_set_text(GTK_ENTRY(dialog->txt_lon), lon);
-        gtk_entry_set_text(GTK_ENTRY(dialog->txt_loc_name), loc_name);
-        gtk_widget_set_sensitive(dialog->txt_loc_name, TRUE);
+        gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name), loc_name);
+        gtk_widget_set_sensitive(dialog->text_loc_name, TRUE);
         set_location_tooltip(dialog, lat, lon);
     } else {
         gtk_entry_set_text(GTK_ENTRY(dialog->txt_lat), "");
         gtk_entry_set_text(GTK_ENTRY(dialog->txt_lon), "");
-        gtk_entry_set_text(GTK_ENTRY(dialog->txt_loc_name), _("Unset"));
-        gtk_widget_set_sensitive(dialog->txt_loc_name, FALSE);
+        gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name), _("Unset"));
+        gtk_widget_set_sensitive(dialog->text_loc_name, FALSE);
     }
     gtk_combo_box_set_active(GTK_COMBO_BOX(dialog->combo_unit_system),
                              unit_system);
+#endif
 }
 
 
 static void
 start_auto_locate(xfceweather_dialog *dialog)
 {
-    gtk_widget_set_sensitive(dialog->txt_loc_name, FALSE);
-    gtk_entry_set_text(GTK_ENTRY(dialog->txt_loc_name), _("Detecting..."));
+    gtk_widget_set_sensitive(dialog->text_loc_name, FALSE);
+    gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name), _("Detecting..."));
     weather_search_by_ip(dialog->wd->session, auto_locate_cb, dialog);
 }
 
@@ -394,12 +398,14 @@ cb_findlocation(GtkButton *button,
 
     gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
     if (run_search_dialog(sdialog)) {
+#if 0
         gtk_entry_set_text(GTK_ENTRY(dialog->txt_lat), sdialog->result_lat);
         gtk_entry_set_text(GTK_ENTRY(dialog->txt_lon), sdialog->result_lon);
+#endif
         loc_name = sanitize_location_name(sdialog->result_name);
-        gtk_entry_set_text(GTK_ENTRY(dialog->txt_loc_name), loc_name);
+        gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name), loc_name);
         g_free(loc_name);
-        gtk_widget_set_sensitive(dialog->txt_loc_name, TRUE);
+        gtk_widget_set_sensitive(dialog->text_loc_name, TRUE);
         set_location_tooltip(dialog, sdialog->result_lat, sdialog->result_lon);
     }
     free_search_dialog(sdialog);
@@ -409,70 +415,139 @@ cb_findlocation(GtkButton *button,
 }
 
 
-xfceweather_dialog *
-create_config_dialog(xfceweather_data *data,
-                     GtkWidget *vbox)
+static GtkWidget *
+create_location_page(xfceweather_dialog *dialog)
 {
-    xfceweather_dialog *dialog;
-    GtkWidget *vbox2, *vbox3, *hbox, *hbox2, *label;
-    GtkWidget *button_add, *button_del, *button_up, *button_down;
-    GtkWidget *image, *button, *scroll;
-    GtkSizeGroup *sg, *sg_buttons;
-    GtkTreeViewColumn *column;
-    GtkCellRenderer *renderer;
-    data_types type;
-    guint i;
-    gint n;
+    GtkWidget *palign, *page, *hbox, *vbox, *table, *label, *image, *frame;
+    GtkWidget *button_loc_change, *button_alt_lookup, *button_timezone_lookup;
+    GtkSizeGroup *sg_label, *sg_spin, *sg_button;
 
-    sg = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
-    sg_buttons = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
+    palign = gtk_alignment_new(0.5, 0.5, 1, 1);
+    gtk_container_set_border_width(GTK_CONTAINER(palign), BORDER);
+    page = gtk_vbox_new(FALSE, BORDER);
+    gtk_container_add(GTK_CONTAINER(palign), page);
+    sg_label = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
+    sg_spin = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
+    sg_button = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
 
-    dialog = g_slice_new0(xfceweather_dialog);
-    dialog->wd = (xfceweather_data *) data;
-    dialog->dialog = gtk_widget_get_toplevel(vbox);
-
-    /* system of measurement */
-    label = gtk_label_new_with_mnemonic(_("System of _Measurement:"));
-    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
-    dialog->combo_unit_system = gtk_combo_box_new_text();
-    gtk_combo_box_append_text(GTK_COMBO_BOX(dialog->combo_unit_system),
-                              _("Imperial"));
-    gtk_combo_box_append_text(GTK_COMBO_BOX(dialog->combo_unit_system),
-                              _("Metric"));
-    gtk_label_set_mnemonic_widget(GTK_LABEL(label),
-                                  GTK_WIDGET(dialog->combo_unit_system));
-    gtk_combo_box_set_active(GTK_COMBO_BOX(dialog->combo_unit_system),
-                             dialog->wd->unit_system);
+    /* location name */
     hbox = gtk_hbox_new(FALSE, BORDER);
-    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(hbox), dialog->combo_unit_system, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
-    gtk_size_group_add_widget(sg, label);
-
-    /* location */
-    label = gtk_label_new_with_mnemonic(_("L_ocation:"));
-    dialog->txt_lat = gtk_entry_new();
-    dialog->txt_lon = gtk_entry_new();
-    dialog->txt_loc_name = gtk_entry_new();
+    label = gtk_label_new_with_mnemonic(_("Location _name:"));
     gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+    gtk_size_group_add_widget(sg_label, label);
+    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, BORDER);
+    dialog->text_loc_name = gtk_entry_new();
     gtk_label_set_mnemonic_widget(GTK_LABEL(label),
-                                  GTK_WIDGET(dialog->txt_loc_name));
+                                  GTK_WIDGET(dialog->text_loc_name));
+    gtk_box_pack_start(GTK_BOX(hbox), dialog->text_loc_name, TRUE, TRUE, 0);
+    button_loc_change = gtk_button_new_with_mnemonic(_("Chan_ge..."));
+    image = gtk_image_new_from_stock(GTK_STOCK_FIND, GTK_ICON_SIZE_BUTTON);
+    gtk_button_set_image(GTK_BUTTON(button_loc_change), image);
+    g_signal_connect(G_OBJECT(button_loc_change), "clicked",
+                     G_CALLBACK(cb_findlocation), dialog);
+    gtk_box_pack_start(GTK_BOX(hbox), button_loc_change,
+                       FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(page), hbox, FALSE, FALSE, BORDER);
+
+    /* latitude */
+    vbox = gtk_vbox_new(FALSE, BORDER);
+    hbox = gtk_hbox_new(FALSE, BORDER);
+    label = gtk_label_new_with_mnemonic(_("Latitud_e:"));
+    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+    gtk_size_group_add_widget(sg_label, label);
+    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, BORDER);
+    dialog->spin_lat = gtk_spin_button_new_with_range(-90, 90, 1);
+    gtk_spin_button_set_digits(GTK_SPIN_BUTTON(dialog->spin_lat), 6);
+    gtk_label_set_mnemonic_widget(GTK_LABEL(label),
+                                  GTK_WIDGET(dialog->spin_lat));
+    gtk_size_group_add_widget(sg_spin, dialog->spin_lat);
+    gtk_box_pack_start(GTK_BOX(hbox), dialog->spin_lat, FALSE, FALSE, 0);
+    label = gtk_label_new("°");
+    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
+
+    /* longitude */
+    hbox = gtk_hbox_new(FALSE, BORDER);
+    label = gtk_label_new_with_mnemonic(_("L_ongitude:"));
+    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+    gtk_size_group_add_widget(sg_label, label);
+    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, BORDER);
+    dialog->spin_lon = gtk_spin_button_new_with_range(-180, 180, 1);
+    gtk_spin_button_set_digits(GTK_SPIN_BUTTON(dialog->spin_lon), 6);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_lon), 0);
+    gtk_label_set_mnemonic_widget(GTK_LABEL(label),
+                                  GTK_WIDGET(dialog->spin_lon));
+    gtk_size_group_add_widget(sg_spin, dialog->spin_lon);
+    gtk_box_pack_start(GTK_BOX(hbox), dialog->spin_lon, FALSE, FALSE, 0);
+    label = gtk_label_new("°");
+    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
+    gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
+
+    /* altitude */
+    frame = gtk_frame_new(_("Corrections"));
+    table = gtk_table_new(2, 4, FALSE);
+    gtk_table_set_row_spacings(GTK_TABLE(table), BORDER*2);
+    gtk_table_set_col_spacings(GTK_TABLE(table), BORDER/2);
+    label = gtk_label_new_with_mnemonic(_("_Altitude:"));
+    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+    gtk_size_group_add_widget(sg_label, label);
+    dialog->spin_alt = gtk_spin_button_new_with_range(-420, 10000, 1);
+    gtk_label_set_mnemonic_widget(GTK_LABEL(label),
+                                  GTK_WIDGET(dialog->spin_alt));
+    dialog->label_alt_unit = gtk_label_new(_("meters"));
+    gtk_misc_set_alignment(GTK_MISC(dialog->label_alt_unit), 0, 0.5);
+    button_alt_lookup =
+        gtk_button_new_with_mnemonic(_("Lookup altitu_de"));
+    gtk_size_group_add_widget(sg_button, button_alt_lookup);
+    gtk_table_attach_defaults(GTK_TABLE(table), label, 0, 1, 0, 1);
+    gtk_table_attach_defaults(GTK_TABLE(table),
+                              dialog->spin_alt, 1, 2, 0, 1);
+    gtk_table_attach_defaults(GTK_TABLE(table),
+                              dialog->label_alt_unit, 2, 3, 0, 1);
+    gtk_table_attach_defaults(GTK_TABLE(table),
+                              button_alt_lookup, 3, 4, 0, 1);
+
+    /* timezone */
+    label = gtk_label_new_with_mnemonic(_("_Timezone:"));
+    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+    gtk_size_group_add_widget(sg_label, label);
+    dialog->spin_timezone = gtk_spin_button_new_with_range(-24, 24, 1);
+    gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_timezone), 0);
+    gtk_label_set_mnemonic_widget(GTK_LABEL(label),
+                                  GTK_WIDGET(dialog->spin_timezone));
+    button_timezone_lookup =
+        gtk_button_new_with_mnemonic(_("Lookup time_zone"));
+    gtk_size_group_add_widget(sg_button, button_timezone_lookup);
+    gtk_table_attach_defaults(GTK_TABLE(table), label, 0, 1, 1, 2);
+    gtk_table_attach_defaults(GTK_TABLE(table),
+                              dialog->spin_timezone, 1, 2, 1, 2);
+    gtk_table_attach_defaults(GTK_TABLE(table),
+                              button_timezone_lookup, 3, 4, 1, 2);
+    gtk_container_add(GTK_CONTAINER(frame), table);
+    gtk_container_set_border_width(GTK_CONTAINER(table), BORDER);
+    gtk_box_pack_start(GTK_BOX(page), frame, FALSE, FALSE, BORDER);
+
+#if 0
+    dialog->spin_lon = gtk_spin_button_new_with_range(-90, 90, 1.000000);
     if (dialog->wd->lat != NULL && strlen(dialog->wd->lat) > 0)
         gtk_entry_set_text(GTK_ENTRY(dialog->txt_lat),
                            dialog->wd->lat);
     else
-        gtk_widget_set_sensitive(dialog->txt_loc_name, FALSE);
+        gtk_widget_set_sensitive(dialog->text_loc_name, FALSE);
     if (dialog->wd->lon != NULL && strlen(dialog->wd->lon) > 0)
         gtk_entry_set_text(GTK_ENTRY(dialog->txt_lon),
                            dialog->wd->lon);
     else
-        gtk_widget_set_sensitive(dialog->txt_loc_name, FALSE);
+        gtk_widget_set_sensitive(dialog->text_loc_name, FALSE);
     if (dialog->wd->location_name != NULL)
-        gtk_entry_set_text(GTK_ENTRY(dialog->txt_loc_name),
+        gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name),
                            dialog->wd->location_name);
     else
-        gtk_entry_set_text(GTK_ENTRY(dialog->txt_loc_name), _("Unset"));
-    gtk_entry_set_max_length(GTK_ENTRY(dialog->txt_loc_name), LOC_NAME_MAX_LEN);
+        gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name), _("Unset"));
+    gtk_entry_set_max_length(GTK_ENTRY(dialog->text_loc_name), LOC_NAME_MAX_LEN);
     set_location_tooltip(dialog, dialog->wd->lat, dialog->wd->lon);
     if ((dialog->wd->lat == NULL || dialog->wd->lon == NULL) ||
         (! strlen(dialog->wd->lat) || ! strlen(dialog->wd->lon)))
@@ -485,12 +560,205 @@ create_config_dialog(xfceweather_data *data,
                      G_CALLBACK(cb_findlocation), dialog);
     hbox = gtk_hbox_new(FALSE, BORDER);
     gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(hbox), dialog->txt_loc_name, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(hbox), dialog->text_loc_name, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(hbox), button, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+#endif
+
+    g_object_unref(G_OBJECT(sg_label));
+    g_object_unref(G_OBJECT(sg_button));
+    return palign;
+}
+
+
+static GtkWidget *
+create_units_page(xfceweather_dialog *dialog)
+{
+    GtkWidget *palign, *page, *hbox, *vbox, *label;
+    GtkSizeGroup *sg_label, *sg_combo;
+
+    palign = gtk_alignment_new(0.5, 0.5, 1, 1);
+    gtk_container_set_border_width(GTK_CONTAINER(palign), BORDER);
+    page = gtk_vbox_new(FALSE, BORDER);
+    gtk_container_add(GTK_CONTAINER(palign), page);
+
+    sg_label = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
+    sg_combo = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
+    vbox = gtk_vbox_new(FALSE, BORDER);
+
+    /* temperature */
+    hbox = gtk_hbox_new(FALSE, BORDER);
+    label = gtk_label_new_with_mnemonic(_("_Temperature:"));
+    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+    gtk_size_group_add_widget(sg_label, label);
+    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, BORDER/2);
+    dialog->combo_unit_temperature = gtk_combo_box_new_text();
+    gtk_size_group_add_widget(sg_combo, dialog->combo_unit_temperature);
+    gtk_combo_box_append_text(GTK_COMBO_BOX(dialog->combo_unit_temperature),
+                              _("Celcius"));
+    gtk_combo_box_append_text(GTK_COMBO_BOX(dialog->combo_unit_temperature),
+                              _("Fahrenheit"));
+    gtk_label_set_mnemonic_widget(GTK_LABEL(label),
+                                  GTK_WIDGET(dialog->combo_unit_temperature));
+    gtk_box_pack_start(GTK_BOX(hbox), dialog->combo_unit_temperature,
+                       TRUE, TRUE, BORDER/2);
+    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER/2);
+
+    /* atmospheric pressure */
+    hbox = gtk_hbox_new(FALSE, BORDER);
+    label = gtk_label_new_with_mnemonic(_("Atmospheric _pressure:"));
+    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+    gtk_size_group_add_widget(sg_label, label);
+    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, BORDER/2);
+    dialog->combo_unit_pressure = gtk_combo_box_new_text();
+    gtk_size_group_add_widget(sg_combo, dialog->combo_unit_pressure);
+    gtk_combo_box_append_text(GTK_COMBO_BOX(dialog->combo_unit_pressure),
+                              _("Hectopascals (hPa)"));
+    gtk_combo_box_append_text(GTK_COMBO_BOX(dialog->combo_unit_pressure),
+                              _("Inches of mercury (inHg)"));
+    gtk_combo_box_append_text(GTK_COMBO_BOX(dialog->combo_unit_pressure),
+                              _("Pound-force per square inch (psi)"));
+    gtk_combo_box_append_text(GTK_COMBO_BOX(dialog->combo_unit_pressure),
+                              _("Torr (mmHg)"));
+    gtk_label_set_mnemonic_widget(GTK_LABEL(label),
+                                  GTK_WIDGET(dialog->combo_unit_pressure));
+    gtk_box_pack_start(GTK_BOX(hbox), dialog->combo_unit_pressure,
+                       TRUE, TRUE, BORDER/2);
+    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER/2);
+
+    /* wind speed */
+    hbox = gtk_hbox_new(FALSE, BORDER);
+    label = gtk_label_new_with_mnemonic(_("_Wind speed:"));
+    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+    gtk_size_group_add_widget(sg_label, label);
+    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, BORDER/2);
+    dialog->combo_unit_windspeed = gtk_combo_box_new_text();
+    gtk_size_group_add_widget(sg_combo, dialog->combo_unit_windspeed);
+    gtk_combo_box_append_text(GTK_COMBO_BOX(dialog->combo_unit_windspeed),
+                              _("Kilometers per hour (km/h)"));
+    gtk_combo_box_append_text(GTK_COMBO_BOX(dialog->combo_unit_windspeed),
+                              _("Miles per hour (mph)"));
+    gtk_combo_box_append_text(GTK_COMBO_BOX(dialog->combo_unit_windspeed),
+                              _("Meters per second (m/s)"));
+    gtk_label_set_mnemonic_widget(GTK_LABEL(label),
+                                  GTK_WIDGET(dialog->combo_unit_windspeed));
+    gtk_box_pack_start(GTK_BOX(hbox), dialog->combo_unit_windspeed,
+                       TRUE, TRUE, BORDER/2);
+    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER/2);
+
+    /* precipitations */
+    hbox = gtk_hbox_new(FALSE, BORDER);
+    label = gtk_label_new_with_mnemonic(_("Prec_ipitations:"));
+    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+    gtk_size_group_add_widget(sg_label, label);
+    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, BORDER/2);
+    dialog->combo_unit_precipitations = gtk_combo_box_new_text();
+    gtk_size_group_add_widget(sg_combo, dialog->combo_unit_precipitations);
+    gtk_combo_box_append_text(GTK_COMBO_BOX(dialog->combo_unit_precipitations),
+                              _("Millimeters (mm)"));
+    gtk_combo_box_append_text(GTK_COMBO_BOX(dialog->combo_unit_precipitations),
+                              _("Inches (in)"));
+    gtk_label_set_mnemonic_widget(GTK_LABEL(label),
+                                  GTK_WIDGET(dialog->combo_unit_precipitations));
+    gtk_box_pack_start(GTK_BOX(hbox), dialog->combo_unit_precipitations,
+                       TRUE, TRUE, BORDER/2);
+    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER/2);
+
+    /* altitude */
+    hbox = gtk_hbox_new(FALSE, BORDER);
+    label = gtk_label_new_with_mnemonic(_("Altitu_de:"));
+    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+    gtk_size_group_add_widget(sg_label, label);
+    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, BORDER/2);
+    dialog->combo_unit_altitude = gtk_combo_box_new_text();
+    gtk_size_group_add_widget(sg_combo, dialog->combo_unit_altitude);
+    gtk_combo_box_append_text(GTK_COMBO_BOX(dialog->combo_unit_altitude),
+                              _("Meters (m)"));
+    gtk_combo_box_append_text(GTK_COMBO_BOX(dialog->combo_unit_altitude),
+                              _("Feet (ft)"));
+    gtk_label_set_mnemonic_widget(GTK_LABEL(label),
+                                  GTK_WIDGET(dialog->combo_unit_altitude));
+    gtk_box_pack_start(GTK_BOX(hbox), dialog->combo_unit_altitude,
+                       TRUE, TRUE, BORDER/2);
+    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER/2);
+
+    gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
+    g_object_unref(G_OBJECT(sg_label));
+    g_object_unref(G_OBJECT(sg_combo));
+    return palign;
+}
+
+
+static GtkWidget *
+create_appearance_page(xfceweather_dialog *dialog)
+{
+    GtkWidget *palign, *page, *hbox, *vbox, *label;
+    GtkSizeGroup *sg;
+
+    palign = gtk_alignment_new(0.5, 0.5, 1, 1);
+    gtk_container_set_border_width(GTK_CONTAINER(palign), BORDER);
+    page = gtk_vbox_new(TRUE, BORDER);
+    gtk_container_add(GTK_CONTAINER(palign), page);
+    sg = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
+
+    /* icon theme */
+    vbox = gtk_vbox_new(FALSE, BORDER);
+    hbox = gtk_hbox_new(FALSE, BORDER);
+    label = gtk_label_new_with_mnemonic(_("_Icon theme:"));
+    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+    gtk_size_group_add_widget(sg, label);
+    dialog->combo_icon_theme = gtk_combo_box_new_text();
+    gtk_combo_box_append_text(GTK_COMBO_BOX(dialog->combo_icon_theme),
+                              "Liquid");
+    gtk_label_set_mnemonic_widget(GTK_LABEL(label),
+                                  GTK_WIDGET(dialog->combo_icon_theme));
+    hbox = gtk_hbox_new(FALSE, BORDER);
+    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(hbox), dialog->combo_icon_theme,
+                       TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+
+    /* tooltip style */
+    hbox = gtk_hbox_new(FALSE, BORDER);
+    label = gtk_label_new_with_mnemonic(_("_Tooltip style:"));
+    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+    gtk_size_group_add_widget(sg, label);
+    dialog->combo_tooltip_style = gtk_combo_box_new_text();
+    gtk_combo_box_append_text(GTK_COMBO_BOX(dialog->combo_tooltip_style),
+                              _("Verbose"));
+    gtk_combo_box_append_text(GTK_COMBO_BOX(dialog->combo_tooltip_style),
+                              _("Simple"));
+    gtk_label_set_mnemonic_widget(GTK_LABEL(label),
+                                  GTK_WIDGET(dialog->combo_tooltip_style));
+    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(hbox), dialog->combo_tooltip_style,
+                       TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
+
+    /* forecast layout */
+    vbox = gtk_vbox_new(FALSE, BORDER);
+    hbox = gtk_hbox_new(FALSE, BORDER);
+    label = gtk_label_new_with_mnemonic(_("_Forecast layout:"));
+    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+    gtk_size_group_add_widget(sg, label);
+    dialog->combo_forecast_layout = gtk_combo_box_new_text();
+    gtk_combo_box_append_text(GTK_COMBO_BOX(dialog->combo_forecast_layout),
+                              _("Horizontal"));
+    gtk_combo_box_append_text(GTK_COMBO_BOX(dialog->combo_forecast_layout),
+                              _("Vertical"));
+    gtk_label_set_mnemonic_widget(GTK_LABEL(label),
+                                  GTK_WIDGET(dialog->combo_forecast_layout));
+    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(hbox), dialog->combo_forecast_layout,
+                       TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
 
     /* number of days shown in forecast */
-    label = gtk_label_new_with_mnemonic(_("Number of _forecast days:"));
+    hbox = gtk_hbox_new(FALSE, BORDER);
+    label = gtk_label_new_with_mnemonic(_("Number of forecast _days:"));
+    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+    gtk_size_group_add_widget(sg, label);
     dialog->spin_forecast_days =
         gtk_spin_button_new_with_range(1, MAX_FORECAST_DAYS, 1);
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_forecast_days),
@@ -498,97 +766,202 @@ create_config_dialog(xfceweather_data *data,
                               ? dialog->wd->forecast_days : 5);
     gtk_label_set_mnemonic_widget(GTK_LABEL(label),
                                   GTK_WIDGET(dialog->spin_forecast_days));
-    hbox = gtk_hbox_new(FALSE, BORDER);
     gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(hbox),
                        dialog->spin_forecast_days, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
-    gtk_size_group_add_widget(sg, label);
+    gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
+
+    /* round temperature */
+    vbox = gtk_vbox_new(FALSE, BORDER);
+    dialog->check_round_values =
+        gtk_check_button_new_with_mnemonic(_("_Round values"));
+    gtk_box_pack_start(GTK_BOX(vbox), dialog->check_round_values,
+                       FALSE, FALSE, 0);
+
+    /* interpolate data */
+    dialog->check_interpolate_data =
+        gtk_check_button_new_with_mnemonic(_("Interpolate _data"));
+    gtk_box_pack_start(GTK_BOX(vbox), dialog->check_interpolate_data,
+                       FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
+
+    g_object_unref(G_OBJECT(sg));
+    return palign;
+}
+
+
+static GtkWidget *
+create_scrollbox_page(xfceweather_dialog *dialog)
+{
+    GtkWidget *palign, *page, *hbox, *table, *scroll, *label, *image;
+    GtkSizeGroup *sg_misc, *sg_button;
+    GtkWidget *button_add, *button_del, *button_up, *button_down;
+    GtkTreeViewColumn *column;
+    GtkCellRenderer *renderer;
+    GdkColor color;
+    data_types type;
+    guint i;
+    gint n;
+
+    palign = gtk_alignment_new(0.5, 0, 1, 1);
+    gtk_container_set_border_width(GTK_CONTAINER(palign), BORDER);
+    page = gtk_vbox_new(FALSE, BORDER);
+    gtk_container_add(GTK_CONTAINER(palign), page);
+    sg_misc = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
+
+    /* show scrollbox */
+    hbox = gtk_hbox_new(FALSE, BORDER);
+    dialog->check_scrollbox_show =
+        gtk_check_button_new_with_mnemonic("Show scroll_box");
+    gtk_box_pack_start(GTK_BOX(hbox), dialog->check_scrollbox_show,
+                       TRUE, TRUE, 0);
+
+    /* values to show at once (multiple lines) */
+    label = gtk_label_new_with_mnemonic(_("L_ines:"));
+    gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
+    gtk_box_pack_start(GTK_BOX(hbox), label, TRUE, TRUE, 0);
+    dialog->spin_scrollbox_lines = gtk_spin_button_new_with_range(1, 6, 1);
+    gtk_label_set_mnemonic_widget(GTK_LABEL(label),
+                                  GTK_WIDGET(dialog->spin_scrollbox_lines));
+    gtk_size_group_add_widget(sg_misc, dialog->spin_scrollbox_lines);
+    gtk_box_pack_start(GTK_BOX(hbox), dialog->spin_scrollbox_lines,
+                       FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(page), hbox, FALSE, FALSE, 0);
+
+    /* font and color */
+    hbox = gtk_hbox_new(FALSE, BORDER);
+    label = gtk_label_new(_("Font and Color:"));
+    gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
+    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
+    dialog->button_scrollbox_font =
+        gtk_button_new_with_mnemonic(_("Select _font"));
+    gtk_box_pack_start(GTK_BOX(hbox), dialog->button_scrollbox_font,
+                       TRUE, TRUE, 0);
+    gdk_color_parse("#000000", &color);
+    dialog->button_scrollbox_color =
+        gtk_color_button_new_with_color(&color);
+    gtk_size_group_add_widget(sg_misc, dialog->button_scrollbox_color);
+    gtk_box_pack_start(GTK_BOX(hbox), dialog->button_scrollbox_color,
+                       FALSE, FALSE, 0 );
+    gtk_box_pack_start(GTK_BOX(page), hbox, FALSE, FALSE, 0);
+
+    //g_signal_connect(dialog->button_scrollbox_color, "color-set", cb, base);
+
 
     /* labels and buttons */
-    dialog->opt_xmloption = make_label();
-    dialog->mdl_xmloption = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_INT);
-    dialog->lst_xmloption =
-        gtk_tree_view_new_with_model(GTK_TREE_MODEL(dialog->mdl_xmloption));
+    hbox = gtk_hbox_new(FALSE, BORDER);
+    sg_button = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
+    dialog->options_datatypes = make_label();
+    dialog->model_datatypes = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_INT);
+    dialog->list_datatypes =
+        gtk_tree_view_new_with_model(GTK_TREE_MODEL(dialog->model_datatypes));
     renderer = gtk_cell_renderer_text_new();
     column =
-        gtk_tree_view_column_new_with_attributes(_("_Labels to display"),
+        gtk_tree_view_column_new_with_attributes(_("Labels to _display"),
                                                  renderer, "text", 0, NULL);
-    gtk_tree_view_append_column(GTK_TREE_VIEW(dialog->lst_xmloption), column);
+    gtk_tree_view_append_column(GTK_TREE_VIEW(dialog->list_datatypes), column);
+    gtk_widget_set_size_request(dialog->options_datatypes, 300, -1);
 
     /* button "add" */
     button_add = gtk_button_new_with_mnemonic(_("_Add"));
     image = gtk_image_new_from_stock(GTK_STOCK_ADD, GTK_ICON_SIZE_BUTTON);
     gtk_button_set_image(GTK_BUTTON(button_add), image);
-    gtk_size_group_add_widget(sg_buttons, button_add);
-    hbox = gtk_hbox_new(FALSE, BORDER);
-    gtk_box_pack_start(GTK_BOX(hbox), dialog->opt_xmloption, TRUE, TRUE, 0);
+    gtk_size_group_add_widget(sg_button, button_add);
+    gtk_box_pack_start(GTK_BOX(hbox), dialog->options_datatypes, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(hbox), button_add, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(page), hbox, FALSE, FALSE, 0);
+    g_signal_connect(G_OBJECT(button_add), "clicked",
+                     G_CALLBACK(cb_addoption), dialog);
+
+    /* labels to display */
     hbox = gtk_hbox_new(FALSE, BORDER);
     scroll = gtk_scrolled_window_new(NULL, NULL);
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
                                    GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
-    gtk_container_add(GTK_CONTAINER(scroll), dialog->lst_xmloption);
+    gtk_container_add(GTK_CONTAINER(scroll), dialog->list_datatypes);
     gtk_box_pack_start(GTK_BOX(hbox), scroll, TRUE, TRUE, 0);
 
     /* button "remove" */
+    table = gtk_table_new(4, 1, TRUE);
     button_del = gtk_button_new_with_mnemonic(_("_Remove"));
     image = gtk_image_new_from_stock(GTK_STOCK_REMOVE, GTK_ICON_SIZE_BUTTON);
     gtk_button_set_image(GTK_BUTTON(button_del), image);
-    gtk_size_group_add_widget(sg_buttons, button_del);
+    gtk_size_group_add_widget(sg_button, button_del);
+    gtk_table_attach_defaults(GTK_TABLE(table), button_del, 0, 1, 0, 1);
+    g_signal_connect(G_OBJECT(button_del), "clicked",
+                     G_CALLBACK(cb_deloption), dialog);
 
     /* button "move up" */
     button_up = gtk_button_new_with_mnemonic(_("Move _Up"));
     image = gtk_image_new_from_stock(GTK_STOCK_GO_UP, GTK_ICON_SIZE_BUTTON);
     gtk_button_set_image(GTK_BUTTON(button_up), image);
-    gtk_size_group_add_widget(sg_buttons, button_up);
+    gtk_size_group_add_widget(sg_button, button_up);
+    gtk_table_attach_defaults(GTK_TABLE(table), button_up, 0, 1, 2, 3);
+    g_signal_connect(G_OBJECT(button_up), "clicked",
+                     G_CALLBACK(cb_upoption), dialog);
 
     /* button "move down" */
     button_down = gtk_button_new_with_mnemonic(_("Move _Down"));
     image = gtk_image_new_from_stock(GTK_STOCK_GO_DOWN, GTK_ICON_SIZE_BUTTON);
     gtk_button_set_image(GTK_BUTTON(button_down), image);
-    gtk_size_group_add_widget(sg_buttons, button_down);
-
-    vbox2 = gtk_vbox_new(FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(vbox2), button_del, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(vbox2), button_up, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(vbox2), button_down, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(hbox), vbox2, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(vbox), hbox, TRUE, TRUE, 0);
-    gtk_widget_set_size_request(dialog->lst_xmloption, -1, 120);
-
-    if (data->labels->len > 0) {
-        for (i = 0; i < data->labels->len; i++) {
-            type = g_array_index(data->labels, data_types, i);
-
-            if ((n = option_i(type)) != -1)
-                add_mdl_option(dialog->mdl_xmloption, n);
-        }
-    }
-
-    g_object_unref(G_OBJECT(sg));
-    g_object_unref(G_OBJECT(sg_buttons));
-
-    g_signal_connect(G_OBJECT(button_add), "clicked",
-                     G_CALLBACK(cb_addoption), dialog);
-    g_signal_connect(G_OBJECT(button_del), "clicked",
-                     G_CALLBACK(cb_deloption), dialog);
-    g_signal_connect(G_OBJECT(button_up), "clicked",
-                     G_CALLBACK(cb_upoption), dialog);
+    gtk_size_group_add_widget(sg_button, button_down);
+    gtk_table_attach_defaults(GTK_TABLE(table), button_down, 0, 1, 3, 4);
     g_signal_connect(G_OBJECT(button_down), "clicked",
                      G_CALLBACK(cb_downoption), dialog);
 
-    dialog->chk_animate_transition =
+    gtk_box_pack_start(GTK_BOX(hbox), table, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(page), hbox, FALSE, FALSE, 0);
+
+    if (dialog->wd->labels->len > 0) {
+        for (i = 0; i < dialog->wd->labels->len; i++) {
+            type = g_array_index(dialog->wd->labels, data_types, i);
+
+            if ((n = option_i(type)) != -1)
+                add_model_option(dialog->model_datatypes, n);
+        }
+    }
+
+    dialog->check_scrollbox_animate =
         gtk_check_button_new_with_mnemonic(_("Animate _transitions between labels"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON
-                                 (dialog->chk_animate_transition),
+                                 (dialog->check_scrollbox_animate),
                                  dialog->wd->animation_transitions);
-    gtk_box_pack_start(GTK_BOX(vbox), dialog->chk_animate_transition,
+    gtk_box_pack_start(GTK_BOX(page), dialog->check_scrollbox_animate,
                        FALSE, FALSE, 0);
 
-    gtk_widget_show_all(vbox);
+    g_object_unref(G_OBJECT(sg_misc));
+    g_object_unref(G_OBJECT(sg_button));
+    return palign;
+}
 
+
+xfceweather_dialog *
+create_config_dialog(xfceweather_data *data,
+                     GtkWidget *vbox)
+{
+    xfceweather_dialog *dialog;
+    GtkWidget *notebook;
+
+    dialog = g_slice_new0(xfceweather_dialog);
+    dialog->wd = (xfceweather_data *) data;
+    dialog->dialog = gtk_widget_get_toplevel(vbox);
+
+    notebook = gtk_notebook_new();
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook),
+                             create_location_page(dialog),
+                             gtk_label_new_with_mnemonic("_Location"));
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook),
+                             create_units_page(dialog),
+                             gtk_label_new_with_mnemonic("_Units"));
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook),
+                             create_appearance_page(dialog),
+                             gtk_label_new_with_mnemonic("_Appearance"));
+    gtk_notebook_append_page(GTK_NOTEBOOK(notebook),
+                             create_scrollbox_page(dialog),
+                             gtk_label_new_with_mnemonic("_Scrollbox"));
+    gtk_box_pack_start(GTK_BOX(vbox), notebook, TRUE, TRUE, 0);
+    gtk_widget_show_all(vbox);
     return dialog;
 }
 
