@@ -53,6 +53,18 @@ has_timeslice(xml_weather *data,
 }
 
 
+/* convert string to a double value, returning backup value on error */
+gdouble
+string_to_double(const gchar *str,
+                 gdouble backup)
+{
+    gdouble d = backup;
+    if (str && strlen(str) > 0)
+        d = g_ascii_strtod(str, NULL);
+    return d;
+}
+
+
 gchar *
 get_data(const xml_time *timeslice,
          const unit_systems unit_system,

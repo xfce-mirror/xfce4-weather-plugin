@@ -55,6 +55,9 @@ typedef enum {
 } daytime;
 
 
+gdouble string_to_double(const gchar *str,
+                         gdouble backup);
+
 gchar *get_data(const xml_time *timeslice,
                 unit_systems unit_system,
                 data_types type);
