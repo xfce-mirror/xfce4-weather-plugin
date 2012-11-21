@@ -439,6 +439,30 @@ parse_place(xmlNode *cur_node)
 }
 
 
+xml_altitude *
+parse_altitude(xmlNode *cur_node)
+{
+    xml_altitude *alt;
+
+    g_assert(cur_node != NULL);
+    if (G_UNLIKELY(cur_node == NULL))
+        return NULL;
+
+    if (!NODE_IS_TYPE(cur_node, "geonames"))
+        return NULL;
+
+    alt = g_slice_new0(xml_altitude);
+    if (G_UNLIKELY(alt == NULL))
+        return NULL;
+    for (cur_node = cur_node->children; cur_node;
+         cur_node = cur_node->next) {
+        if (NODE_IS_TYPE(cur_node, "srtm3"))
+            alt->altitude = DATA(cur_node);
+    }
+    return alt;
+}
+
+
 xmlDoc *
 get_xml_document(SoupMessage *msg)
 {
@@ -572,4 +596,15 @@ xml_place_free(xml_place *place)
     g_free(place->lon);
     g_free(place->display_name);
     g_slice_free(xml_place, place);
+}
+
+
+void
+xml_altitude_free(xml_altitude *alt)
+{
+    g_assert(alt != NULL);
+    if (G_UNLIKELY(alt == NULL))
+        return;
+    g_free(alt->altitude);
+    g_slice_free(xml_altitude, alt);
 }

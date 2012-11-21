@@ -26,11 +26,12 @@
 #include "weather-parsers.h"
 #include "weather-data.h"
 #include "weather.h"
-
+#include "weather-debug.h"
 #include "weather-config.h"
 #include "weather-search.h"
 #include "weather-scrollbox.h"
 
+#define GEONAMES_USERNAME "xfce4weatherplugin"
 #define OPTIONS_N 13
 #define BORDER 4
 #define LOC_NAME_MAX_LEN 50
@@ -63,6 +64,8 @@ static const labeloption labeloptions[OPTIONS_N] = {
 
 typedef void (*cb_function) (xfceweather_data *);
 static cb_function cb = NULL;
+typedef void (*cb_conf_dialog_function) (xfceweather_dialog *);
+static cb_conf_dialog_function cb_dialog = NULL;
 
 
 static void
@@ -384,6 +387,55 @@ cb_findlocation(GtkButton *button,
 }
 
 
+static void
+cb_lookup_altitude(SoupSession *session,
+                   SoupMessage *msg,
+                   gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    xml_altitude *altitude = NULL;
+    gdouble alt;
+
+    altitude = (xml_altitude *)
+        parse_xml_document(msg, (XmlParseFunc) parse_altitude);
+
+    if (altitude) {
+        alt = string_to_double(altitude->altitude, -9999);
+        weather_debug("Altitude returned by GeoNames: %.0f meters", alt);
+        if (alt != -9999)
+            gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_alt),
+                                      alt);
+        xml_altitude_free(altitude);
+    }
+}
+
+
+static gboolean
+button_lookup_altitude_clicked(GtkButton *button,
+                               gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    gchar *url, latbuf[10], lonbuf[10];
+    gdouble lat, lon;
+
+    gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
+    lat = gtk_spin_button_get_value(GTK_SPIN_BUTTON(dialog->spin_lat));
+    lon = gtk_spin_button_get_value(GTK_SPIN_BUTTON(dialog->spin_lon));
+
+    (void) g_ascii_formatd(latbuf, 10, "%.6f", lat);
+    (void) g_ascii_formatd(lonbuf, 10, "%.6f", lon);
+
+    url = g_strdup_printf("http://api.geonames.org"
+                          "/srtm3XML?lat=%s&lng=%s&username=%s",
+                          &latbuf[0], &lonbuf[0], GEONAMES_USERNAME);
+    weather_http_queue_request(dialog->wd->session, url,
+                               cb_lookup_altitude, user_data);
+    g_free(url);
+    gtk_widget_set_sensitive(GTK_WIDGET(button), TRUE);
+    return FALSE;
+}
+
+
 static GtkWidget *
 create_location_page(xfceweather_dialog *dialog)
 {
@@ -474,6 +526,8 @@ create_location_page(xfceweather_dialog *dialog)
     button_alt_lookup =
         gtk_button_new_with_mnemonic(_("Lookup altitu_de"));
     gtk_size_group_add_widget(sg_button, button_alt_lookup);
+    g_signal_connect(G_OBJECT(button_alt_lookup), "clicked",
+                     G_CALLBACK(button_lookup_altitude_clicked), dialog);
     gtk_table_attach_defaults(GTK_TABLE(table), label, 0, 1, 0, 1);
     gtk_table_attach_defaults(GTK_TABLE(table),
                               dialog->spin_alt, 1, 2, 0, 1);
