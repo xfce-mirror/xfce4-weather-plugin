@@ -102,17 +102,24 @@ typedef struct {
     gchar *longitude;
 } xml_geolocation;
 
-
 typedef struct {
     gchar *display_name;
     gchar *lat;
     gchar *lon;
 } xml_place;
 
-
 typedef struct {
     gchar *altitude;
 } xml_altitude;
+
+typedef struct {
+    gchar *offset;
+    gchar *suffix;
+    gchar *dst;
+    gchar *localtime;
+    gchar *isotime;
+    gchar *utctime;
+} xml_timezone;
 
 
 xml_weather *parse_weather(xmlNode *cur_node);
@@ -124,6 +131,8 @@ xml_geolocation *parse_geolocation(xmlNode *cur_node);
 xml_place *parse_place(xmlNode *cur_node);
 
 xml_altitude *parse_altitude(xmlNode *cur_node);
+
+xml_timezone *parse_timezone(xmlNode *cur_node);
 
 xml_time *get_timeslice(xml_weather *data,
                         const time_t start_t,
@@ -145,6 +154,8 @@ void xml_geolocation_free(xml_geolocation *geo);
 void xml_place_free(xml_place *place);
 
 void xml_altitude_free(xml_altitude *alt);
+
+void xml_timezone_free(xml_timezone *tz);
 
 G_END_DECLS
 

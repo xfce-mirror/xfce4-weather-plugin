@@ -172,6 +172,33 @@ weather_dump_place(const xml_place *place)
 
 
 gchar *
+weather_dump_timezone(const xml_timezone *tz)
+{
+    gchar *out;
+
+    if (!tz)
+        return g_strdup("No timezone data.");
+
+    out = g_strdup_printf("Timezone data:\n"
+                          "  --------------------------------------------\n"
+                          "  offset: %s\n"
+                          "  suffix: %s\n"
+                          "  dst: %s\n"
+                          "  localtime: %s\n"
+                          "  isotime: %s\n"
+                          "  utctime: %s\n"
+                          "  --------------------------------------------",
+                          tz->offset,
+                          tz->suffix,
+                          tz->dst,
+                          tz->localtime,
+                          tz->isotime,
+                          tz->utctime);
+    return out;
+}
+
+
+gchar *
 weather_dump_icon_theme(const icon_theme *theme)
 {
     gchar *out;

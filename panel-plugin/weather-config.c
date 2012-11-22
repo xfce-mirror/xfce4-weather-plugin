@@ -436,6 +436,54 @@ button_lookup_altitude_clicked(GtkButton *button,
 }
 
 
+static void
+cb_lookup_timezone(SoupSession *session,
+                   SoupMessage *msg,
+                   gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    xml_timezone *timezone = NULL;
+    gint tz;
+
+    timezone = (xml_timezone *)
+        parse_xml_document(msg, (XmlParseFunc) parse_timezone);
+    weather_dump(weather_dump_timezone, timezone);
+
+    if (timezone) {
+        tz = (gint) string_to_double(timezone->offset, -9999);
+        if (tz != -9999)
+            gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_timezone),
+                                      tz);
+        xml_timezone_free(timezone);
+    }
+}
+
+
+static gboolean
+button_lookup_timezone_clicked(GtkButton *button,
+                               gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    gchar *url, latbuf[10], lonbuf[10];
+    gdouble lat, lon;
+
+    gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
+    lat = gtk_spin_button_get_value(GTK_SPIN_BUTTON(dialog->spin_lat));
+    lon = gtk_spin_button_get_value(GTK_SPIN_BUTTON(dialog->spin_lon));
+
+    (void) g_ascii_formatd(latbuf, 10, "%.6f", lat);
+    (void) g_ascii_formatd(lonbuf, 10, "%.6f", lon);
+
+    url = g_strdup_printf("http://www.earthtools.org/timezone/%s/%s",
+                          &latbuf[0], &lonbuf[0]);
+    weather_http_queue_request(dialog->wd->session, url,
+                               cb_lookup_timezone, user_data);
+    g_free(url);
+    gtk_widget_set_sensitive(GTK_WIDGET(button), TRUE);
+    return FALSE;
+}
+
+
 static GtkWidget *
 create_location_page(xfceweather_dialog *dialog)
 {
@@ -547,6 +595,8 @@ create_location_page(xfceweather_dialog *dialog)
     button_timezone_lookup =
         gtk_button_new_with_mnemonic(_("Lookup time_zone"));
     gtk_size_group_add_widget(sg_button, button_timezone_lookup);
+    g_signal_connect(G_OBJECT(button_timezone_lookup), "clicked",
+                     G_CALLBACK(button_lookup_timezone_clicked), dialog);
     gtk_table_attach_defaults(GTK_TABLE(table), label, 0, 1, 1, 2);
     gtk_table_attach_defaults(GTK_TABLE(table),
                               dialog->spin_timezone, 1, 2, 1, 2);

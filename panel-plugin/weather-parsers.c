@@ -455,11 +455,44 @@ parse_altitude(xmlNode *cur_node)
     if (G_UNLIKELY(alt == NULL))
         return NULL;
     for (cur_node = cur_node->children; cur_node;
-         cur_node = cur_node->next) {
+         cur_node = cur_node->next)
         if (NODE_IS_TYPE(cur_node, "srtm3"))
             alt->altitude = DATA(cur_node);
-    }
     return alt;
+}
+
+
+xml_timezone *
+parse_timezone(xmlNode *cur_node)
+{
+    xml_timezone *tz;
+
+    g_assert(cur_node != NULL);
+    if (G_UNLIKELY(cur_node == NULL))
+        return NULL;
+
+    if (!NODE_IS_TYPE(cur_node, "timezone"))
+        return NULL;
+
+    tz = g_slice_new0(xml_timezone);
+    if (G_UNLIKELY(tz == NULL))
+        return NULL;
+    for (cur_node = cur_node->children; cur_node;
+         cur_node = cur_node->next) {
+        if (NODE_IS_TYPE(cur_node, "offset"))
+            tz->offset = DATA(cur_node);
+        if (NODE_IS_TYPE(cur_node, "suffix"))
+            tz->suffix = DATA(cur_node);
+        if (NODE_IS_TYPE(cur_node, "dst"))
+            tz->dst = DATA(cur_node);
+        if (NODE_IS_TYPE(cur_node, "localtime"))
+            tz->localtime = DATA(cur_node);
+        if (NODE_IS_TYPE(cur_node, "isotime"))
+            tz->isotime = DATA(cur_node);
+        if (NODE_IS_TYPE(cur_node, "utctime"))
+            tz->utctime = DATA(cur_node);
+    }
+    return tz;
 }
 
 
@@ -607,4 +640,20 @@ xml_altitude_free(xml_altitude *alt)
         return;
     g_free(alt->altitude);
     g_slice_free(xml_altitude, alt);
+}
+
+
+void
+xml_timezone_free(xml_timezone *tz)
+{
+    g_assert(tz != NULL);
+    if (G_UNLIKELY(tz == NULL))
+        return;
+    g_free(tz->offset);
+    g_free(tz->suffix);
+    g_free(tz->dst);
+    g_free(tz->localtime);
+    g_free(tz->isotime);
+    g_free(tz->utctime);
+    g_slice_free(xml_timezone, tz);
 }

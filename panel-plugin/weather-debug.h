@@ -64,6 +64,8 @@ gchar *weather_dump_geolocation(const xml_geolocation *geo);
 
 gchar *weather_dump_place(const xml_place *place);
 
+gchar *weather_dump_timezone(const xml_timezone *timezone);
+
 gchar *weather_dump_icon_theme(const icon_theme *theme);
 
 gchar *weather_dump_astrodata(const xml_astro *astrodata);
