@@ -331,6 +331,81 @@ option_i(const data_types opt)
 
 
 static void
+cb_lookup_altitude(SoupSession *session,
+                   SoupMessage *msg,
+                   gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    xml_altitude *altitude = NULL;
+    gdouble alt;
+
+    altitude = (xml_altitude *)
+        parse_xml_document(msg, (XmlParseFunc) parse_altitude);
+
+    if (altitude) {
+        alt = string_to_double(altitude->altitude, -9999);
+        weather_debug("Altitude returned by GeoNames: %.0f meters", alt);
+        if (alt >= -420)
+            gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_alt),
+                                      alt);
+        xml_altitude_free(altitude);
+    }
+}
+
+
+static void
+cb_lookup_timezone(SoupSession *session,
+                   SoupMessage *msg,
+                   gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    xml_timezone *timezone = NULL;
+    gint tz;
+
+    timezone = (xml_timezone *)
+        parse_xml_document(msg, (XmlParseFunc) parse_timezone);
+    weather_dump(weather_dump_timezone, timezone);
+
+    if (timezone) {
+        tz = (gint) string_to_double(timezone->offset, -9999);
+        if (tz != -9999)
+            gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_timezone),
+                                      tz);
+        xml_timezone_free(timezone);
+    }
+}
+
+
+static void
+lookup_altitude_timezone(const gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    gchar *url, latbuf[10], lonbuf[10];
+    gdouble lat, lon;
+
+    lat = gtk_spin_button_get_value(GTK_SPIN_BUTTON(dialog->spin_lat));
+    lon = gtk_spin_button_get_value(GTK_SPIN_BUTTON(dialog->spin_lon));
+
+    (void) g_ascii_formatd(latbuf, 10, "%.6f", lat);
+    (void) g_ascii_formatd(lonbuf, 10, "%.6f", lon);
+
+    /* lookup altitude */
+    url = g_strdup_printf("http://api.geonames.org"
+                          "/srtm3XML?lat=%s&lng=%s&username=%s",
+                          &latbuf[0], &lonbuf[0], GEONAMES_USERNAME);
+    weather_http_queue_request(dialog->wd->session, url,
+                               cb_lookup_altitude, user_data);
+    g_free(url);
+
+    /* lookup timezone */
+    url = g_strdup_printf("http://www.earthtools.org/timezone/%s/%s",
+                          &latbuf[0], &lonbuf[0]);
+    weather_http_queue_request(dialog->wd->session, url,
+                               cb_lookup_timezone, user_data);
+    g_free(url);
+}
+
+static void
 auto_locate_cb(const gchar *loc_name,
                const gchar *lat,
                const gchar *lon,
@@ -345,6 +420,7 @@ auto_locate_cb(const gchar *loc_name,
                                   string_to_double(lat, 0));
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_lon),
                                   string_to_double(lon, 0));
+        lookup_altitude_timezone(user_data);
     } else
         gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name), _("Unset"));
     gtk_widget_set_sensitive(dialog->text_loc_name, TRUE);
@@ -381,105 +457,10 @@ cb_findlocation(GtkButton *button,
         g_free(loc_name);
     }
     free_search_dialog(sdialog);
+
+    lookup_altitude_timezone(user_data);
     gtk_widget_set_sensitive(GTK_WIDGET(button), TRUE);
 
-    return FALSE;
-}
-
-
-static void
-cb_lookup_altitude(SoupSession *session,
-                   SoupMessage *msg,
-                   gpointer user_data)
-{
-    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    xml_altitude *altitude = NULL;
-    gdouble alt;
-
-    altitude = (xml_altitude *)
-        parse_xml_document(msg, (XmlParseFunc) parse_altitude);
-
-    if (altitude) {
-        alt = string_to_double(altitude->altitude, -9999);
-        weather_debug("Altitude returned by GeoNames: %.0f meters", alt);
-        if (alt != -9999)
-            gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_alt),
-                                      alt);
-        xml_altitude_free(altitude);
-    }
-}
-
-
-static gboolean
-button_lookup_altitude_clicked(GtkButton *button,
-                               gpointer user_data)
-{
-    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    gchar *url, latbuf[10], lonbuf[10];
-    gdouble lat, lon;
-
-    gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
-    lat = gtk_spin_button_get_value(GTK_SPIN_BUTTON(dialog->spin_lat));
-    lon = gtk_spin_button_get_value(GTK_SPIN_BUTTON(dialog->spin_lon));
-
-    (void) g_ascii_formatd(latbuf, 10, "%.6f", lat);
-    (void) g_ascii_formatd(lonbuf, 10, "%.6f", lon);
-
-    url = g_strdup_printf("http://api.geonames.org"
-                          "/srtm3XML?lat=%s&lng=%s&username=%s",
-                          &latbuf[0], &lonbuf[0], GEONAMES_USERNAME);
-    weather_http_queue_request(dialog->wd->session, url,
-                               cb_lookup_altitude, user_data);
-    g_free(url);
-    gtk_widget_set_sensitive(GTK_WIDGET(button), TRUE);
-    return FALSE;
-}
-
-
-static void
-cb_lookup_timezone(SoupSession *session,
-                   SoupMessage *msg,
-                   gpointer user_data)
-{
-    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    xml_timezone *timezone = NULL;
-    gint tz;
-
-    timezone = (xml_timezone *)
-        parse_xml_document(msg, (XmlParseFunc) parse_timezone);
-    weather_dump(weather_dump_timezone, timezone);
-
-    if (timezone) {
-        tz = (gint) string_to_double(timezone->offset, -9999);
-        if (tz != -9999)
-            gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_timezone),
-                                      tz);
-        xml_timezone_free(timezone);
-    }
-}
-
-
-static gboolean
-button_lookup_timezone_clicked(GtkButton *button,
-                               gpointer user_data)
-{
-    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    gchar *url, latbuf[10], lonbuf[10];
-    gdouble lat, lon;
-
-    gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
-    lat = gtk_spin_button_get_value(GTK_SPIN_BUTTON(dialog->spin_lat));
-    lon = gtk_spin_button_get_value(GTK_SPIN_BUTTON(dialog->spin_lon));
-
-    (void) g_ascii_formatd(latbuf, 10, "%.6f", lat);
-    (void) g_ascii_formatd(lonbuf, 10, "%.6f", lon);
-
-    url = g_strdup_printf("http://www.earthtools.org/timezone/%s/%s",
-                          &latbuf[0], &lonbuf[0]);
-    weather_http_queue_request(dialog->wd->session, url,
-                               cb_lookup_timezone, user_data);
-    g_free(url);
-    gtk_widget_set_sensitive(GTK_WIDGET(button), TRUE);
     return FALSE;
 }
 
@@ -487,9 +468,9 @@ button_lookup_timezone_clicked(GtkButton *button,
 static GtkWidget *
 create_location_page(xfceweather_dialog *dialog)
 {
-    GtkWidget *palign, *page, *hbox, *vbox, *table, *label, *image, *frame;
-    GtkWidget *button_loc_change, *button_alt_lookup, *button_timezone_lookup;
-    GtkSizeGroup *sg_label, *sg_spin, *sg_button;
+    GtkWidget *palign, *page, *hbox, *vbox, *label, *image;
+    GtkWidget *button_loc_change;
+    GtkSizeGroup *sg_label, *sg_spin;
 
     palign = gtk_alignment_new(0.5, 0.5, 1, 1);
     gtk_container_set_border_width(GTK_CONTAINER(palign), BORDER);
@@ -497,7 +478,6 @@ create_location_page(xfceweather_dialog *dialog)
     gtk_container_add(GTK_CONTAINER(palign), page);
     sg_label = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
     sg_spin = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
-    sg_button = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
 
     /* location name */
     hbox = gtk_hbox_new(FALSE, BORDER);
@@ -555,56 +535,47 @@ create_location_page(xfceweather_dialog *dialog)
     gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
     gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
-    gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
 
     /* altitude */
-    frame = gtk_frame_new(_("Corrections"));
-    table = gtk_table_new(2, 4, FALSE);
-    gtk_table_set_row_spacings(GTK_TABLE(table), BORDER*2);
-    gtk_table_set_col_spacings(GTK_TABLE(table), BORDER/2);
+    hbox = gtk_hbox_new(FALSE, BORDER);
     label = gtk_label_new_with_mnemonic(_("_Altitude:"));
     gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
     gtk_size_group_add_widget(sg_label, label);
+    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, BORDER);
     dialog->spin_alt = gtk_spin_button_new_with_range(-420, 10000, 1);
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_alt), 0);
+    gtk_size_group_add_widget(sg_spin, dialog->spin_alt);
     gtk_label_set_mnemonic_widget(GTK_LABEL(label),
                                   GTK_WIDGET(dialog->spin_alt));
     dialog->label_alt_unit = gtk_label_new(_("meters"));
     gtk_misc_set_alignment(GTK_MISC(dialog->label_alt_unit), 0, 0.5);
-    button_alt_lookup =
-        gtk_button_new_with_mnemonic(_("Lookup altitu_de"));
-    gtk_size_group_add_widget(sg_button, button_alt_lookup);
-    g_signal_connect(G_OBJECT(button_alt_lookup), "clicked",
-                     G_CALLBACK(button_lookup_altitude_clicked), dialog);
-    gtk_table_attach_defaults(GTK_TABLE(table), label, 0, 1, 0, 1);
-    gtk_table_attach_defaults(GTK_TABLE(table),
-                              dialog->spin_alt, 1, 2, 0, 1);
-    gtk_table_attach_defaults(GTK_TABLE(table),
-                              dialog->label_alt_unit, 2, 3, 0, 1);
-    gtk_table_attach_defaults(GTK_TABLE(table),
-                              button_alt_lookup, 3, 4, 0, 1);
+    gtk_box_pack_start(GTK_BOX(hbox), dialog->spin_alt, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(hbox), dialog->label_alt_unit, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
 
     /* timezone */
+    hbox = gtk_hbox_new(FALSE, BORDER);
     label = gtk_label_new_with_mnemonic(_("_Timezone:"));
     gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
     gtk_size_group_add_widget(sg_label, label);
+    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, BORDER);
     dialog->spin_timezone = gtk_spin_button_new_with_range(-24, 24, 1);
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_timezone), 0);
+    gtk_size_group_add_widget(sg_spin, dialog->spin_timezone);
     gtk_label_set_mnemonic_widget(GTK_LABEL(label),
                                   GTK_WIDGET(dialog->spin_timezone));
-    button_timezone_lookup =
-        gtk_button_new_with_mnemonic(_("Lookup time_zone"));
-    gtk_size_group_add_widget(sg_button, button_timezone_lookup);
-    g_signal_connect(G_OBJECT(button_timezone_lookup), "clicked",
-                     G_CALLBACK(button_lookup_timezone_clicked), dialog);
-    gtk_table_attach_defaults(GTK_TABLE(table), label, 0, 1, 1, 2);
-    gtk_table_attach_defaults(GTK_TABLE(table),
-                              dialog->spin_timezone, 1, 2, 1, 2);
-    gtk_table_attach_defaults(GTK_TABLE(table),
-                              button_timezone_lookup, 3, 4, 1, 2);
-    gtk_container_add(GTK_CONTAINER(frame), table);
-    gtk_container_set_border_width(GTK_CONTAINER(table), BORDER);
-    gtk_box_pack_start(GTK_BOX(page), frame, FALSE, FALSE, BORDER);
+    gtk_box_pack_start(GTK_BOX(hbox), dialog->spin_timezone, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
+
+    /* instructions for correction of altitude and timezone */
+    hbox = gtk_hbox_new(FALSE, BORDER);
+    label = gtk_label_new(_("Please change location name to your liking and "
+                            "correct\naltitude and timezone if they are "
+                            "not auto-detected correctly."));
+    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
+    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, BORDER/2);
+    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER/2);
+    gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
 
     /* initialize widgets with current data */
     if (dialog->wd) {
@@ -622,7 +593,7 @@ create_location_page(xfceweather_dialog *dialog)
         start_auto_locate(dialog);
 
     g_object_unref(G_OBJECT(sg_label));
-    g_object_unref(G_OBJECT(sg_button));
+    g_object_unref(G_OBJECT(sg_spin));
     return palign;
 }
 
