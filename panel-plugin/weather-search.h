@@ -52,7 +52,7 @@ void weather_search_by_ip(SoupSession *session,
                           void (*gui_cb) (const gchar *loc_name,
                                           const gchar *lat,
                                           const gchar *lon,
-                                          const unit_systems unit_system,
+                                          const units_config *units,
                                           gpointer user_data),
                           gpointer user_data);
 

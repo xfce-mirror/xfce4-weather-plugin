@@ -38,7 +38,7 @@ typedef struct {
     void (*cb) (const gchar *loc_name,
                 const gchar *lat,
                 const gchar *lon,
-                const unit_systems unit_system,
+                const units_config *units,
                 gpointer user_data);
     gpointer user_data;
 } geolocation_data;
@@ -314,21 +314,46 @@ free_search_dialog(search_dialog *dialog)
 }
 
 
-static unit_systems
-get_preferred_unit_system(const gchar *country_code)
+static units_config *
+get_preferred_units(const gchar *country_code)
 {
+    units_config *units;
+
+    if (G_UNLIKELY(country_code == NULL))
+        return NULL;
+
+    units = g_slice_new0(units_config);
+    if (G_UNLIKELY(units == NULL))
+        return NULL;
+
     /* List gathered from http://www.maxmind.com/app/iso3166 */
-    if (country_code == NULL)
-        return METRIC;
-    else if (!strcmp(country_code, "US"))  /* United States */
-        return IMPERIAL;
-    else if (!strcmp(country_code, "GB"))  /* United Kingdom */
-        return IMPERIAL;
-    else if (!strcmp(country_code, "LR"))  /* Liberia */
-        return IMPERIAL;
-    else if (!strcmp(country_code, "MM"))  /* Myanmar(Burma) */
-        return IMPERIAL;
-    return METRIC;
+    if (!strcmp(country_code, "US") ||        /* United States */
+        !strcmp(country_code, "GB") ||        /* United Kingdom */
+        !strcmp(country_code, "JM") ||        /* Jamaica */
+        !strcmp(country_code, "LR") ||        /* Liberia */
+        !strcmp(country_code, "MM")) {        /* Myanmar(Burma) */
+        units->pressure = PSI;
+        units->windspeed = MPH;
+        units->precipitations = INCHES;
+        units->altitude = FEET;
+    } else {
+        units->pressure = HECTOPASCAL;
+        units->windspeed = KMH;
+        units->precipitations = MILLIMETERS;
+        units->altitude = METERS;
+    }
+
+    if (!strcmp(country_code, "US") ||        /* United States */
+        !strcmp(country_code, "JM")) {        /* Jamaica */
+        units->temperature = FAHRENHEIT;
+    } else {
+        units->temperature = CELSIUS;
+    }
+
+    if (!strcmp(country_code, "RU"))          /* Russian Federation */
+        units->pressure = TORR;
+
+    return units;
 }
 
 
@@ -340,7 +365,7 @@ cb_geolocation(SoupSession *session,
     geolocation_data *data = (geolocation_data *) user_data;
     xml_geolocation *geo;
     gchar *full_loc, *p;
-    unit_systems unit_system;
+    units_config *units;
     gsize length;
 
     geo = (xml_geolocation *)
@@ -348,7 +373,7 @@ cb_geolocation(SoupSession *session,
     weather_dump(weather_dump_geolocation, geo);
 
     if (!geo) {
-        data->cb(NULL, NULL, NULL, METRIC, data->user_data);
+        data->cb(NULL, NULL, NULL, NULL, data->user_data);
         g_free(data);
         return;
     }
@@ -373,10 +398,10 @@ cb_geolocation(SoupSession *session,
     } else
         full_loc = NULL;
 
-    unit_system = get_preferred_unit_system(geo->country_code);
-
-    data->cb(full_loc, geo->latitude, geo->longitude,
-             unit_system, data->user_data);
+    units = get_preferred_units(geo->country_code);
+    weather_dump(weather_dump_units_config, units);
+    data->cb(full_loc, geo->latitude, geo->longitude, units, data->user_data);
+    g_slice_free(units_config, units);
     xml_geolocation_free(geo);
     g_free(full_loc);
     g_free(data);
@@ -387,7 +412,7 @@ void weather_search_by_ip(SoupSession *session,
                           void (*gui_cb) (const gchar *loc_name,
                                           const gchar *lat,
                                           const gchar *lon,
-                                          const unit_systems unit_system,
+                                          const units_config *units,
                                           gpointer user_data),
                           gpointer user_data)
 {

@@ -289,8 +289,11 @@ sanitize_location_name(const gchar *location_name)
 
 static void
 setup_units(xfceweather_dialog *dialog,
-            units_config *units)
+            const units_config *units)
 {
+    if (G_UNLIKELY(units == NULL))
+        return;
+
     SET_COMBO_VALUE(dialog->combo_unit_temperature, units->temperature);
     SET_COMBO_VALUE(dialog->combo_unit_pressure, units->pressure);
     SET_COMBO_VALUE(dialog->combo_unit_windspeed, units->windspeed);
@@ -461,7 +464,7 @@ static void
 auto_locate_cb(const gchar *loc_name,
                const gchar *lat,
                const gchar *lon,
-               const unit_systems unit_system,
+               const units_config *units,
                gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
@@ -475,6 +478,7 @@ auto_locate_cb(const gchar *loc_name,
         lookup_altitude_timezone(user_data);
     } else
         gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name), _("Unset"));
+    setup_units(dialog, units);
     gtk_widget_set_sensitive(dialog->text_loc_name, TRUE);
 }
 
