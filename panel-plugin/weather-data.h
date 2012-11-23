@@ -43,11 +43,6 @@ typedef enum {
 } data_types;
 
 typedef enum {
-    IMPERIAL,
-    METRIC
-} unit_systems;
-
-typedef enum {
     CELSIUS,
     FAHRENHEIT
 } units_temperature;
@@ -95,10 +90,11 @@ gdouble string_to_double(const gchar *str,
                          gdouble backup);
 
 gchar *get_data(const xml_time *timeslice,
-                unit_systems unit_system,
-                data_types type);
+                const units_config *units,
+                data_types type,
+                gboolean round);
 
-const gchar *get_unit(unit_systems unit_system,
+const gchar *get_unit(const units_config *units,
                       data_types type);
 
 gboolean is_night_time(const xml_astro *astro);

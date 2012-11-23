@@ -58,8 +58,8 @@ lnk_clicked(GtkTextTag *tag,
     g_free(value);
 
 #define APPEND_TEXT_ITEM(text, item)                            \
-    rawvalue = get_data(conditions, data->unit_system, item);   \
-    unit = get_unit(data->unit_system, item);                   \
+    rawvalue = get_data(conditions, data->units, item, FALSE);  \
+    unit = get_unit(data->units, item);                         \
     value = g_strdup_printf("\t%s%s%s%s%s\n",                   \
                             text, text ? ": " : "",             \
                             rawvalue,                           \
@@ -398,23 +398,23 @@ create_summary_tab(xfceweather_data *data)
 
     /* wind */
     APPEND_BTEXT(_("\nWind\n"));
-    rawvalue = get_data(conditions, data->unit_system, WIND_SPEED);
-    wind = translate_wind_speed(rawvalue, data->unit_system);
+    rawvalue = get_data(conditions, data->units, WIND_SPEED, FALSE);
+    wind = translate_wind_speed(rawvalue, data->units);
     g_free(rawvalue);
-    rawvalue = get_data(conditions, data->unit_system, WIND_BEAUFORT);
+    rawvalue = get_data(conditions, data->units, WIND_BEAUFORT, FALSE);
     value = g_strdup_printf(_("\t%s: %s (%s on the Beaufort scale)\n"),
                             _("Speed"), wind, rawvalue);
     g_free(rawvalue);
     g_free(wind);
     APPEND_TEXT_ITEM_REAL(value);
 
-    rawvalue = get_data(conditions, data->unit_system, WIND_DIRECTION);
+    rawvalue = get_data(conditions, data->units, WIND_DIRECTION, FALSE);
     wind = translate_wind_direction(rawvalue);
     g_free(rawvalue);
-    rawvalue = get_data(conditions, data->unit_system, WIND_DIRECTION_DEG);
+    rawvalue = get_data(conditions, data->units, WIND_DIRECTION_DEG, FALSE);
     value = g_strdup_printf("\t%s: %s (%s%s)\n", _("Direction"),
                             wind, rawvalue,
-                            get_unit(data->unit_system, WIND_DIRECTION_DEG));
+                            get_unit(data->units, WIND_DIRECTION_DEG));
     g_free(rawvalue);
     g_free(wind);
     APPEND_TEXT_ITEM_REAL(value);
@@ -596,7 +596,7 @@ make_forecast(xfceweather_data *data)
             fcdata = make_forecast_data(data->weatherdata, i, daytime);
             if (fcdata != NULL) {
                 if (fcdata->location != NULL) {
-                    rawvalue = get_data(fcdata, data->unit_system, SYMBOL);
+                    rawvalue = get_data(fcdata, data->units, SYMBOL, FALSE);
                     icon = get_icon(data->icon_theme, rawvalue, 48,
                                     (daytime == NIGHT));
                     g_free(rawvalue);
@@ -606,10 +606,11 @@ make_forecast(xfceweather_data *data)
                     if (G_LIKELY(icon))
                         g_object_unref(G_OBJECT(icon));
 
-                    rawvalue = get_data(fcdata, data->unit_system, SYMBOL);
-                    value = g_strdup_printf("%s",
-                                            translate_desc(rawvalue,
-                                                           (daytime == NIGHT)));
+                    rawvalue = get_data(fcdata, data->units, SYMBOL, FALSE);
+                    value =
+                        g_strdup_printf("%s",
+                                        translate_desc(rawvalue,
+                                                       (daytime == NIGHT)));
                     g_free(rawvalue);
                     label = gtk_label_new(NULL);
                     gtk_label_set_markup(GTK_LABEL(label), value);
@@ -620,10 +621,11 @@ make_forecast(xfceweather_data *data)
                                        TRUE, TRUE, 0);
                     g_free(value);
 
-                    rawvalue = get_data(fcdata, data->unit_system, TEMPERATURE);
+                    rawvalue = get_data(fcdata, data->units,
+                                        TEMPERATURE, data->round);
                     value = g_strdup_printf("%s %s",
                                             rawvalue,
-                                            get_unit(data->unit_system,
+                                            get_unit(data->units,
                                                      TEMPERATURE));
                     g_free(rawvalue);
                     label = gtk_label_new(value);
@@ -634,14 +636,15 @@ make_forecast(xfceweather_data *data)
                                        TRUE, TRUE, 0);
                     g_free(value);
 
-                    rawvalue = get_data(fcdata, data->unit_system,
-                                        WIND_DIRECTION);
+                    rawvalue = get_data(fcdata, data->units,
+                                        WIND_DIRECTION, FALSE);
                     wind_direction = translate_wind_direction(rawvalue);
-                    wind_speed = get_data(fcdata, data->unit_system, WIND_SPEED);
+                    wind_speed = get_data(fcdata, data->units,
+                                          WIND_SPEED, data->round);
                     value = g_strdup_printf("%s %s %s",
                                             wind_direction,
                                             wind_speed,
-                                            get_unit(data->unit_system,
+                                            get_unit(data->units,
                                                      WIND_SPEED));
                     g_free(wind_speed);
                     g_free(wind_direction);
@@ -767,7 +770,7 @@ create_summary_window (xfceweather_data *data)
 
     conditions = get_current_conditions(data->weatherdata);
 
-    symbol = get_data(conditions, data->unit_system, SYMBOL);
+    symbol = get_data(conditions, data->units, SYMBOL, FALSE);
     icon = get_icon(data->icon_theme, symbol, 48, data->night_time);
     g_free(symbol);
 

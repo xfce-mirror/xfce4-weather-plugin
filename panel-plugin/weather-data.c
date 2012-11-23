@@ -33,9 +33,11 @@
 
 #define CHK_NULL(s) ((s) ? g_strdup(s) : g_strdup(""))
 
-#define LOCALE_DOUBLE(value,                                            \
-                      format) (g_strdup_printf(format,                  \
-                                               g_ascii_strtod(value, NULL)))
+#define ROUND_TO_INT(default_format) (round ? "%.0f" : default_format)
+
+#define LOCALE_DOUBLE(value, format)                \
+    (g_strdup_printf(format,                        \
+                     g_ascii_strtod(value, NULL)))
 
 
 static gboolean
@@ -67,116 +69,146 @@ string_to_double(const gchar *str,
 
 gchar *
 get_data(const xml_time *timeslice,
-         const unit_systems unit_system,
-         const data_types type)
+         const units_config *units,
+         const data_types type,
+         gboolean round)
 {
     const xml_location *loc = NULL;
-    double val;
+    gdouble val;
 
-    if (timeslice == NULL || timeslice->location == NULL)
+    if (timeslice == NULL || timeslice->location == NULL || units == NULL)
         return g_strdup("");
 
     loc = timeslice->location;
 
     switch (type) {
     case ALTITUDE:
-        if (unit_system == METRIC)
+        switch (units->altitude) {
+        case METERS:
             return LOCALE_DOUBLE(loc->altitude, "%.0f");
-        val = g_ascii_strtod(loc->altitude, NULL);
-        val /= 0.3048;
-        return g_strdup_printf("%.2f", val);
+
+        case FEET:
+            val = string_to_double(loc->altitude, 0);
+            val /= 0.3048;
+            return g_strdup_printf("%.2f", val);
+        }
+
     case LATITUDE:
         return LOCALE_DOUBLE(loc->latitude, "%.4f");
+
     case LONGITUDE:
         return LOCALE_DOUBLE(loc->longitude, "%.4f");
-    case TEMPERATURE:
-    case TEMPERATURE_RAW:
-        val = g_ascii_strtod(loc->temperature_value, NULL);
-        if (unit_system == IMPERIAL &&
+
+    case TEMPERATURE:      /* source may be in Celsius or Fahrenheit */
+        val = string_to_double(loc->temperature_value, 0);
+        if (units->temperature == FAHRENHEIT &&
             (!strcmp(loc->temperature_unit, "celcius") ||
              !strcmp(loc->temperature_unit, "celsius")))
             val = val * 9.0 / 5.0 + 32.0;
-        else if (unit_system == METRIC &&
+        else if (units->temperature == CELSIUS &&
                  !strcmp(loc->temperature_unit, "fahrenheit"))
             val = (val - 32.0) * 5.0 / 9.0;
-        if (type == TEMPERATURE_RAW) {
-            /* We might want to use the raw temperature value of
-             * higher precision for calculations. */
-            return g_strdup_printf("%.1f", val);
-        } else {
-            /*
-             * Round half up for temperatures, according to the
-             * "Federal Meteorological Handbook No. 1 - Surface
-             * Weather Observations and Reports September 2005",
-             * chapter 2.6.3 "Rounding Figures", available at
-             * http://www.ofcm.gov/fmh-1/fmh1.htm. As a side-effect,
-             * this approach automatically uses a negative zero "-0"
-             * for values between -0.5 and 0, which is considered
-             * important, as in the Celcius scale a value below 0
-             * indicates freezing.
-             */
-            return g_strdup_printf("%.0f", val);
-        }
-    case PRESSURE:
-        if (unit_system == METRIC)
-            return LOCALE_DOUBLE(loc->pressure_value, "%.1f");
-        val = g_ascii_strtod(loc->pressure_value, NULL);
-        if (unit_system == IMPERIAL)
+        return g_strdup_printf(ROUND_TO_INT("%.1f"), val);
+
+    case PRESSURE:         /* source is in hectopascals */
+        val = string_to_double(loc->pressure_value, 0);
+        switch (units->pressure) {
+        case INCH_MERCURY:
+            val *= 0.03;
+        case PSI:
             val *= 0.01450378911491;
-        return g_strdup_printf("%.1f", val);
-    case WIND_SPEED:
-        val = g_ascii_strtod(loc->wind_speed_mps, NULL);
-        if (unit_system == IMPERIAL)
-            val *= 2.2369362920544;
-        else if (unit_system == METRIC)
+        case TORR:
+            val /= 1.333224;
+        }
+        return g_strdup_printf(ROUND_TO_INT("%.1f"), val);
+
+    case WIND_SPEED:       /* source is in meters per hour */
+        val = string_to_double(loc->wind_speed_mps, 0);
+        switch (units->windspeed) {
+        case KMH:
             val *= 3.6;
-        return g_strdup_printf("%.1f", val);
+        case MPH:
+            val *= 2.2369362920544;
+        }
+        return g_strdup_printf(ROUND_TO_INT("%.1f"), val);
+
     case WIND_BEAUFORT:
         return CHK_NULL(loc->wind_speed_beaufort);
+
     case WIND_DIRECTION:
         return CHK_NULL(loc->wind_dir_name);
+
     case WIND_DIRECTION_DEG:
         return LOCALE_DOUBLE(loc->wind_dir_deg, "%.1f");
+
     case HUMIDITY:
-        return LOCALE_DOUBLE(loc->humidity_value, "%.1f");
+        return LOCALE_DOUBLE(loc->humidity_value, ROUND_TO_INT("%.1f"));
+
     case CLOUDS_LOW:
-        return LOCALE_DOUBLE(loc->clouds_percent[CLOUDS_PERC_LOW], "%.1f");
+        return LOCALE_DOUBLE(loc->clouds_percent[CLOUDS_PERC_LOW],
+                             ROUND_TO_INT("%.1f"));
+
     case CLOUDS_MED:
-        return LOCALE_DOUBLE(loc->clouds_percent[CLOUDS_PERC_MED], "%.1f");
+        return LOCALE_DOUBLE(loc->clouds_percent[CLOUDS_PERC_MED],
+                             ROUND_TO_INT("%.1f"));
+
     case CLOUDS_HIGH:
-        return LOCALE_DOUBLE(loc->clouds_percent[CLOUDS_PERC_HIGH], "%.1f");
+        return LOCALE_DOUBLE(loc->clouds_percent[CLOUDS_PERC_HIGH],
+                             ROUND_TO_INT("%.1f"));
+
     case CLOUDINESS:
         return LOCALE_DOUBLE(loc->clouds_percent[CLOUDS_PERC_CLOUDINESS],
-                             "%.1f");
+                             ROUND_TO_INT("%.1f"));
+
     case FOG:
-        return LOCALE_DOUBLE(loc->fog_percent, "%.1f");
-    case PRECIPITATIONS:
-        if (unit_system == METRIC)
-            return LOCALE_DOUBLE(loc->precipitation_value, "%.1f");
-        val = g_ascii_strtod(loc->precipitation_value, NULL);
-        if (unit_system == IMPERIAL)
+        return LOCALE_DOUBLE(loc->fog_percent, ROUND_TO_INT("%.1f"));
+
+    case PRECIPITATIONS:   /* source is in millimeters */
+        val = string_to_double(loc->precipitation_value, 0);
+        if (units->precipitations == INCHES)
             val /= 25.4;
-        return g_strdup_printf("%.3f", val);
+        return g_strdup_printf(ROUND_TO_INT("%.1f"), val);
+
     case SYMBOL:
         return CHK_NULL(loc->symbol);
     }
+
     return g_strdup("");
 }
 
 
 const gchar *
-get_unit(const unit_systems unit_system,
+get_unit(const units_config *units,
          const data_types type)
 {
+    if (units == NULL)
+        return "";
+
     switch (type) {
     case ALTITUDE:
-        return (unit_system == IMPERIAL) ? _("ft") : _("m");
+        return (units->altitude == FEET) ? _("ft") : _("m");
     case TEMPERATURE:
-        return (unit_system == IMPERIAL) ? _("°F") : _("°C");
+        return (units->temperature == FAHRENHEIT) ? _("°F") : _("°C");
     case PRESSURE:
-        return (unit_system == IMPERIAL) ? _("psi") : _("hPa");
+        switch (units->pressure) {
+        case HECTOPASCAL:
+            return _("hPa");
+        case INCH_MERCURY:
+            return _("inHg");
+        case PSI:
+            return _("psi");
+        case TORR:
+            return _("mmHg");
+        }
     case WIND_SPEED:
-        return (unit_system == IMPERIAL) ? _("mph") : _("km/h");
+        switch (units->windspeed) {
+        case KMH:
+            return _("km/h");
+        case MPH:
+            return _("mph");
+        case MPS:
+            return _("m/s");
+        }
     case WIND_DIRECTION_DEG:
     case LATITUDE:
     case LONGITUDE:
@@ -189,7 +221,7 @@ get_unit(const unit_systems unit_system,
     case FOG:
         return "%";
     case PRECIPITATIONS:
-        return (unit_system == IMPERIAL) ? _("in") : _("mm");
+        return (units->precipitations == INCHES) ? _("in") : _("mm");
     case SYMBOL:
     case WIND_BEAUFORT:
     case WIND_DIRECTION:

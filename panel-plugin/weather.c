@@ -43,13 +43,13 @@
 #define BORDER 8
 #define CONNECTION_TIMEOUT (10)        /* connection timeout in seconds */
 
-#define DATA_AND_UNIT(var, item)                            \
-    value = get_data(conditions, data->unit_system, item);  \
-    unit = get_unit(data->unit_system, item);               \
-    var = g_strdup_printf("%s%s%s",                         \
-                          value,                            \
-                          strcmp(unit, "°") ? " " : "",     \
-                          unit);                            \
+#define DATA_AND_UNIT(var, item)                                    \
+    value = get_data(conditions, data->units, item, data->round);   \
+    unit = get_unit(data->units, item);                             \
+    var = g_strdup_printf("%s%s%s",                                 \
+                          value,                                    \
+                          strcmp(unit, "°") ? " " : "",             \
+                          unit);                                    \
     g_free(value);
 
 
@@ -151,14 +151,14 @@ make_label(const xfceweather_data *data,
 
     /* get current weather conditions */
     conditions = get_current_conditions(data->weatherdata);
-    rawvalue = get_data(conditions, data->unit_system, type);
+    rawvalue = get_data(conditions, data->units, type, data->round);
 
     switch (type) {
     case WIND_DIRECTION:
         value = translate_wind_direction(rawvalue);
         break;
     case WIND_SPEED:
-        value = translate_wind_speed(rawvalue, data->unit_system);
+        value = translate_wind_speed(rawvalue, data->units);
         break;
     default:
         value = NULL;
@@ -171,7 +171,7 @@ make_label(const xfceweather_data *data,
                                   txtsize, lbl, value);
             g_free(value);
         } else {
-            unit = get_unit(data->unit_system, type);
+            unit = get_unit(data->units, type);
             str = g_strdup_printf("<span size=\"%s\">%s: %s%s%s</span>",
                                   txtsize, lbl, rawvalue,
                                   strcmp(unit, "°") ? " " : "", unit);
@@ -182,7 +182,7 @@ make_label(const xfceweather_data *data,
                                   txtsize, value);
             g_free(value);
         } else {
-            unit = get_unit(data->unit_system, type);
+            unit = get_unit(data->units, type);
             str = g_strdup_printf("<span size=\"%s\">%s%s%s</span>",
                                   txtsize, rawvalue,
                                   strcmp(unit, "°") ? " " : "", unit);
@@ -211,7 +211,7 @@ update_icon(xfceweather_data *data)
 
     /* set icon according to current weather conditions */
     conditions = get_current_conditions(data->weatherdata);
-    str = get_data(conditions, data->unit_system, SYMBOL);
+    str = get_data(conditions, data->units, SYMBOL, data->round);
     icon = get_icon(data->icon_theme, str, size, data->night_time);
     g_free(str);
     gtk_image_set_from_pixbuf(GTK_IMAGE(data->iconimage), icon);
@@ -519,7 +519,21 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
         data->location_name = g_strdup(value);
     }
 
-    data->unit_system = xfce_rc_read_int_entry(rc, "unit_system", METRIC);
+    if (data->units)
+        g_slice_free(units_config, data->units);
+    data->units = g_slice_new0(units_config);
+    data->units->temperature =
+        xfce_rc_read_int_entry(rc, "units_temperature", CELSIUS);
+    data->units->pressure =
+        xfce_rc_read_int_entry(rc, "units_pressure", HECTOPASCAL);
+    data->units->windspeed =
+        xfce_rc_read_int_entry(rc, "units_windspeed", KMH);
+    data->units->precipitations =
+        xfce_rc_read_int_entry(rc, "units_precipitations", MILLIMETERS);
+    data->units->altitude =
+        xfce_rc_read_int_entry(rc, "units_altitude", METERS);
+
+    data->round = xfce_rc_read_bool_entry(rc, "round", TRUE);
 
     val = xfce_rc_read_int_entry(rc, "forecast_days", DEFAULT_FORECAST_DAYS);
     data->forecast_days =
@@ -571,7 +585,8 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
     if (!rc)
         return;
 
-    xfce_rc_write_int_entry(rc, "unit_system", data->unit_system);
+    if (data->location_name)
+        xfce_rc_write_entry(rc, "loc_name", data->location_name);
 
     if (data->lat)
         xfce_rc_write_entry(rc, "lat", data->lat);
@@ -579,8 +594,14 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
     if (data->lon)
         xfce_rc_write_entry(rc, "lon", data->lon);
 
-    if (data->location_name)
-        xfce_rc_write_entry(rc, "loc_name", data->location_name);
+    xfce_rc_write_int_entry(rc, "units_temperature", data->units->temperature);
+    xfce_rc_write_int_entry(rc, "units_pressure", data->units->pressure);
+    xfce_rc_write_int_entry(rc, "units_windspeed", data->units->windspeed);
+    xfce_rc_write_int_entry(rc, "units_precipitations",
+                            data->units->precipitations);
+    xfce_rc_write_int_entry(rc, "units_altitude", data->units->altitude);
+
+    xfce_rc_write_bool_entry(rc, "round", data->round);
 
     xfce_rc_write_int_entry(rc, "forecast_days", data->forecast_days);
 
@@ -814,7 +835,7 @@ weather_get_tooltip_text(const xfceweather_data *data)
     else
         sunval = g_strdup_printf("");
 
-    sym = get_data(conditions, data->unit_system, SYMBOL);
+    sym = get_data(conditions, data->units, SYMBOL, FALSE);
     DATA_AND_UNIT(symbol, SYMBOL);
     DATA_AND_UNIT(alt, ALTITUDE);
     DATA_AND_UNIT(lat, LATITUDE);
@@ -901,7 +922,7 @@ weather_get_tooltip_cb(GtkWidget *widget,
     }
 
     conditions = get_current_conditions(data->weatherdata);
-    rawvalue = get_data(conditions, data->unit_system, SYMBOL);
+    rawvalue = get_data(conditions, data->units, SYMBOL, data->round);
     icon = get_icon(data->icon_theme, rawvalue, 128, data->night_time);
     g_free(rawvalue);
     gtk_tooltip_set_icon(tooltip, icon);
@@ -924,7 +945,6 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
 
     /* Initialize with sane default values */
     data->plugin = plugin;
-    data->unit_system = METRIC;
     data->units = g_slice_new0(units_config);
     data->weatherdata = NULL;
     data->forecast_days = DEFAULT_FORECAST_DAYS;

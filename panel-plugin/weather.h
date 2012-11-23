@@ -61,8 +61,8 @@ typedef struct {
     gchar *lon;
     gchar *location_name;
 
-    unit_systems unit_system;
     units_config *units;
+    gboolean round;
 
     xml_weather *weatherdata;
     xml_astro *astrodata;

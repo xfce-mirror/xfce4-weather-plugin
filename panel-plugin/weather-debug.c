@@ -405,7 +405,6 @@ weather_dump_plugindata(const xfceweather_data *data)
                            "  latitude: %s\n"
                            "  longitude: %s\n"
                            "  location name: %s\n"
-                           "  unit system: %d\n"
                            "  night time: %s\n"
                            "  --------------------------------------------\n"
                            "  animation transitions: %s\n"
@@ -421,7 +420,6 @@ weather_dump_plugindata(const xfceweather_data *data)
                            data->lat,
                            data->lon,
                            data->location_name,
-                           data->unit_system,
                            YESNO(data->night_time),
                            YESNO(data->animation_transitions),
                            data->forecast_days);

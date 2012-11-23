@@ -278,7 +278,7 @@ translate_wind_direction(const gchar *wdir)
 /* Return "calm", "N/A" or a number */
 gchar *
 translate_wind_speed(const gchar *wspeed,
-                     const unit_systems unit_system)
+                     const units_config *units)
 {
     gchar *wspeed_loc;
 
@@ -288,7 +288,7 @@ translate_wind_speed(const gchar *wspeed,
         wspeed_loc = g_strdup(_("N/A"));
     else {
         wspeed_loc =
-            g_strdup_printf("%s %s", wspeed, get_unit(unit_system, WIND_SPEED));
+            g_strdup_printf("%s %s", wspeed, get_unit(units, WIND_SPEED));
     }
     return wspeed_loc;
 }
