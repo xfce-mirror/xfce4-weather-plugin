@@ -749,6 +749,16 @@ create_units_page(xfceweather_dialog *dialog)
 }
 
 
+static void
+check_round_values_toggled(GtkWidget *button,
+                           gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    dialog->wd->round =
+        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button));
+}
+
+
 static GtkWidget *
 create_appearance_page(xfceweather_dialog *dialog)
 {
@@ -799,6 +809,10 @@ create_appearance_page(xfceweather_dialog *dialog)
         gtk_check_button_new_with_mnemonic(_("_Round values"));
     gtk_box_pack_start(GTK_BOX(vbox), dialog->check_round_values,
                        FALSE, FALSE, 0);
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dialog->check_round_values),
+                                 dialog->wd->round);
+    g_signal_connect(dialog->check_round_values, "toggled",
+                     G_CALLBACK(check_round_values_toggled), dialog);
 
     /* interpolate data */
     dialog->check_interpolate_data =
