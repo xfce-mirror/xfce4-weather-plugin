@@ -615,6 +615,56 @@ create_location_page(xfceweather_dialog *dialog)
 }
 
 
+static void
+combo_unit_temperature_changed(GtkWidget *combo,
+                               gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    dialog->wd->units->temperature =
+        gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+}
+
+
+static void
+combo_unit_pressure_changed(GtkWidget *combo,
+                            gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    dialog->wd->units->pressure =
+        gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+}
+
+
+static void
+combo_unit_windspeed_changed(GtkWidget *combo,
+                             gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    dialog->wd->units->windspeed =
+        gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+}
+
+
+static void
+combo_unit_precipitations_changed(GtkWidget *combo,
+                                  gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    dialog->wd->units->precipitations =
+        gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+}
+
+
+static void
+combo_unit_altitude_changed(GtkWidget *combo,
+                            gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    dialog->wd->units->altitude =
+        gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+}
+
+
 static GtkWidget *
 create_units_page(xfceweather_dialog *dialog)
 {
@@ -632,6 +682,8 @@ create_units_page(xfceweather_dialog *dialog)
     ADD_COMBO_VALUE(dialog->combo_unit_temperature, _("Celcius"));
     ADD_COMBO_VALUE(dialog->combo_unit_temperature, _("Fahrenheit"));
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
+    g_signal_connect(dialog->combo_unit_temperature, "changed",
+                     G_CALLBACK(combo_unit_temperature_changed), dialog);
 
     /* atmospheric pressure */
     hbox = gtk_hbox_new(FALSE, BORDER);
@@ -646,6 +698,8 @@ create_units_page(xfceweather_dialog *dialog)
     ADD_COMBO_VALUE(dialog->combo_unit_pressure,
                     _("Torr (mmHg)"));
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
+    g_signal_connect(dialog->combo_unit_pressure, "changed",
+                     G_CALLBACK(combo_unit_pressure_changed), dialog);
 
     /* wind speed */
     hbox = gtk_hbox_new(FALSE, BORDER);
@@ -658,6 +712,8 @@ create_units_page(xfceweather_dialog *dialog)
     ADD_COMBO_VALUE(dialog->combo_unit_windspeed,
                     _("Meters per second (m/s)"));
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
+    g_signal_connect(dialog->combo_unit_windspeed, "changed",
+                     G_CALLBACK(combo_unit_windspeed_changed), dialog);
 
     /* precipitations */
     hbox = gtk_hbox_new(FALSE, BORDER);
@@ -668,6 +724,8 @@ create_units_page(xfceweather_dialog *dialog)
     ADD_COMBO_VALUE(dialog->combo_unit_precipitations,
                     _("Inches (in)"));
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
+    g_signal_connect(dialog->combo_unit_precipitations, "changed",
+                     G_CALLBACK(combo_unit_precipitations_changed), dialog);
 
     /* altitude */
     hbox = gtk_hbox_new(FALSE, BORDER);
@@ -678,6 +736,8 @@ create_units_page(xfceweather_dialog *dialog)
     ADD_COMBO_VALUE(dialog->combo_unit_altitude,
                     _("Feet (ft)"));
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
+    g_signal_connect(dialog->combo_unit_altitude, "changed",
+                     G_CALLBACK(combo_unit_altitude_changed), dialog);
 
     /* initialize widgets with current data */
     if (dialog->wd)
