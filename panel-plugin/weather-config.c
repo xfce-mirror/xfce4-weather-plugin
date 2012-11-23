@@ -66,6 +66,9 @@
 #define ADD_COMBO_VALUE(combo, text)                        \
     gtk_combo_box_append_text(GTK_COMBO_BOX(combo), text);
 
+#define SET_COMBO_VALUE(combo, val)                         \
+    gtk_combo_box_set_active(GTK_COMBO_BOX(combo), val);
+
 #define ADD_LABEL_EDIT_BUTTON(button, text, icon, cb_func)          \
     button = gtk_button_new_with_mnemonic(text);                    \
     image = gtk_image_new_from_stock(icon, GTK_ICON_SIZE_BUTTON);   \
@@ -283,6 +286,17 @@ sanitize_location_name(const gchar *location_name)
     }
 }
 
+
+static void
+setup_units(xfceweather_dialog *dialog,
+            units_config *units)
+{
+    SET_COMBO_VALUE(dialog->combo_unit_temperature, units->temperature);
+    SET_COMBO_VALUE(dialog->combo_unit_pressure, units->pressure);
+    SET_COMBO_VALUE(dialog->combo_unit_windspeed, units->windspeed);
+    SET_COMBO_VALUE(dialog->combo_unit_precipitations, units->precipitations);
+    SET_COMBO_VALUE(dialog->combo_unit_altitude, units->altitude);
+}
 
 void
 apply_options(xfceweather_dialog *dialog)
@@ -660,6 +674,10 @@ create_units_page(xfceweather_dialog *dialog)
     ADD_COMBO_VALUE(dialog->combo_unit_altitude,
                     _("Feet (ft)"));
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
+
+    /* initialize widgets with current data */
+    if (dialog->wd)
+        setup_units(dialog, dialog->wd->units);
 
     gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
     g_object_unref(G_OBJECT(sg_label));
