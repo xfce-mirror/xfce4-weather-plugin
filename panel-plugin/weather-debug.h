@@ -70,6 +70,8 @@ gchar *weather_dump_icon_theme(const icon_theme *theme);
 
 gchar *weather_dump_astrodata(const xml_astro *astrodata);
 
+gchar *weather_dump_units_config(const units_config *units);
+
 gchar *weather_dump_weatherdata(const xml_weather *weatherdata);
 
 gchar *weather_dump_plugindata(const xfceweather_data *data);

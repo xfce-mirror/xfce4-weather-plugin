@@ -266,7 +266,7 @@ weather_dump_astrodata(const xml_astro *astro)
 }
 
 
-gchar *
+static gchar *
 weather_dump_location(const xml_location *loc,
                       const gboolean interval)
 {
@@ -310,6 +310,31 @@ weather_dump_location(const xml_location *loc,
                             loc->clouds_percent[CLOUDS_PERC_LOW],
                             loc->clouds_percent[CLOUDS_PERC_MED],
                             loc->clouds_percent[CLOUDS_PERC_HIGH]);
+    return out;
+}
+
+
+gchar *
+weather_dump_units_config(const units_config *units)
+{
+    gchar *out;
+
+    if (!units)
+        return g_strdup("No units configuration data.");
+
+    out = g_strdup_printf("Units configuration data:\n"
+                          "  --------------------------------------------\n"
+                          "  Temperature: %d\n"
+                          "  Atmospheric pressure: %d\n"
+                          "  Windspeed: %d\n"
+                          "  Precipitations: %d\n"
+                          "  Altitude: %d\n"
+                          "  --------------------------------------------",
+                          units->temperature,
+                          units->pressure,
+                          units->windspeed,
+                          units->precipitations,
+                          units->altitude);
     return out;
 }
 
