@@ -48,6 +48,34 @@ typedef enum {
 } unit_systems;
 
 typedef enum {
+    CELSIUS,
+    FAHRENHEIT
+} units_temperature;
+
+typedef enum {
+    HECTOPASCAL,
+    INCH_MERCURY,
+    PSI,
+    TORR
+} units_pressure;
+
+typedef enum {
+    KMH,
+    MPH,
+    MPS
+} units_windspeed;
+
+typedef enum {
+    MILLIMETERS,
+    INCHES
+} units_precipitations;
+
+typedef enum {
+    METERS,
+    FEET
+} units_altitude;
+
+typedef enum {
     MORNING,
     AFTERNOON,
     EVENING,
