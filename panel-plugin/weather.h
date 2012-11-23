@@ -60,7 +60,9 @@ typedef struct {
     gchar *lat;
     gchar *lon;
     gchar *location_name;
+
     unit_systems unit_system;
+    units_config *units;
 
     xml_weather *weatherdata;
     xml_astro *astrodata;

@@ -82,6 +82,14 @@ typedef enum {
     NIGHT
 } daytime;
 
+typedef struct {
+    gint temperature;
+    gint pressure;
+    gint windspeed;
+    gint precipitations;
+    gint altitude;
+} units_config;
+
 
 gdouble string_to_double(const gchar *str,
                          gdouble backup);

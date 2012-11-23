@@ -925,6 +925,7 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     /* Initialize with sane default values */
     data->plugin = plugin;
     data->unit_system = METRIC;
+    data->units = g_slice_new0(units_config);
     data->weatherdata = NULL;
     data->forecast_days = DEFAULT_FORECAST_DAYS;
 
@@ -1036,6 +1037,9 @@ xfceweather_free(XfcePanelPlugin *plugin,
 
     if (data->astrodata)
         xml_astro_free(data->astrodata);
+
+    if (data->units)
+        g_slice_free(units_config, data->units);
 
     if (data->updatetimeout) {
         g_source_remove(data->updatetimeout);
