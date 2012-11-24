@@ -139,7 +139,7 @@ get_data(const xml_time *timeslice,
         return CHK_NULL(loc->wind_dir_name);
 
     case WIND_DIRECTION_DEG:
-        return LOCALE_DOUBLE(loc->wind_dir_deg, "%.1f");
+        return LOCALE_DOUBLE(loc->wind_dir_deg, ROUND_TO_INT("%.1f"));
 
     case HUMIDITY:
         return LOCALE_DOUBLE(loc->humidity_value, ROUND_TO_INT("%.1f"));
