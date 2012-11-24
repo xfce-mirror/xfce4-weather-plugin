@@ -61,6 +61,7 @@ typedef struct {
     gchar *lat;
     gchar *lon;
     gint msl;
+    gint timezone;
 
     units_config *units;
     gboolean round;

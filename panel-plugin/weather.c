@@ -521,6 +521,8 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
 
     data->msl = xfce_rc_read_int_entry(rc, "msl", 0);
 
+    data->timezone = xfce_rc_read_int_entry(rc, "timezone", 0);
+
     if (data->units)
         g_slice_free(units_config, data->units);
     data->units = g_slice_new0(units_config);
@@ -597,6 +599,8 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
         xfce_rc_write_entry(rc, "lon", data->lon);
 
     xfce_rc_write_int_entry(rc, "msl", data->msl);
+
+    xfce_rc_write_int_entry(rc, "timezone", data->timezone);
 
     xfce_rc_write_int_entry(rc, "units_temperature", data->units->temperature);
     xfce_rc_write_int_entry(rc, "units_pressure", data->units->pressure);

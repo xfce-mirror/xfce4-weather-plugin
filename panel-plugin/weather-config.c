@@ -594,6 +594,16 @@ spin_alt_value_changed(const GtkWidget *spin,
 }
 
 
+static void
+spin_timezone_value_changed(const GtkWidget *spin,
+                            gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    dialog->wd->timezone =
+        gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spin));
+}
+
+
 static GtkWidget *
 create_location_page(xfceweather_dialog *dialog)
 {
@@ -669,8 +679,11 @@ create_location_page(xfceweather_dialog *dialog)
     /* timezone */
     hbox = gtk_hbox_new(FALSE, BORDER);
     ADD_LABEL(_("_Timezone:"), sg_label);
-    ADD_SPIN(dialog->spin_timezone, -24, 24, 1, 0, 0, sg_spin);
+    ADD_SPIN(dialog->spin_timezone, -24, 24, 1,
+             dialog->wd->timezone, 0, sg_spin);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
+    g_signal_connect(GTK_SPIN_BUTTON(dialog->spin_timezone), "value-changed",
+                     G_CALLBACK(spin_timezone_value_changed), dialog);
 
     /* instructions for correction of altitude and timezone */
     hbox = gtk_hbox_new(FALSE, BORDER);
