@@ -89,6 +89,8 @@ void weather_http_queue_request(SoupSession *session,
                                 SoupSessionCallback callback_func,
                                 gpointer user_data);
 
+void toggle_scrollbox(xfceweather_data *data);
+
 G_END_DECLS
 
 #endif

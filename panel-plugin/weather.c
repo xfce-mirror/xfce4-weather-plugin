@@ -221,6 +221,16 @@ update_icon(xfceweather_data *data)
 }
 
 
+void
+toggle_scrollbox(xfceweather_data *data)
+{
+    if (data->show_scrollbox)
+        gtk_widget_show_all(GTK_WIDGET(data->vbox_center_scrollbox));
+    else
+        gtk_widget_hide_all(GTK_WIDGET(data->vbox_center_scrollbox));
+}
+
+
 static void
 update_scrollbox(xfceweather_data *data)
 {
@@ -233,6 +243,9 @@ update_scrollbox(xfceweather_data *data)
 
     txtsize = get_label_size(data);
     gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
+    gtk_scrollbox_set_animate(GTK_SCROLLBOX(data->scrollbox),
+                              data->scrollbox_animate);
+
     if (data->weatherdata) {
         for (i = 0; i < data->labels->len; i++) {
             type = g_array_index(data->labels, data_types, i);
@@ -249,6 +262,10 @@ update_scrollbox(xfceweather_data *data)
         weather_debug("No weather data available, set single label '%s'.",
                       _("No Data"));
     }
+
+    /* show or hide scrollbox */
+    toggle_scrollbox(data);
+
     weather_debug("Updated scrollbox.");
 }
 
