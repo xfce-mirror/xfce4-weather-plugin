@@ -521,6 +521,79 @@ cb_findlocation(GtkButton *button,
 }
 
 
+static void
+setup_altitude(xfceweather_dialog *dialog)
+{
+    switch (dialog->wd->units->altitude) {
+    case METERS:
+        gtk_label_set_text(GTK_LABEL(dialog->label_alt_unit),
+                           _("meters"));
+        gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_alt),
+                                  (gdouble) (dialog->wd->msl));
+        return;
+
+    case FEET:
+        gtk_label_set_text(GTK_LABEL(dialog->label_alt_unit),
+                           _("feet"));
+        gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_alt),
+                                  (gdouble) dialog->wd->msl / 0.3048);
+        return;
+    }
+}
+
+
+static void
+text_loc_name_changed(const GtkWidget *spin,
+                      gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    g_free(dialog->wd->location_name);
+    dialog->wd->location_name =
+        g_strdup(gtk_entry_get_text(GTK_ENTRY(dialog->text_loc_name)));
+}
+
+
+static void
+spin_lat_value_changed(const GtkWidget *spin,
+                       gpointer user_data)
+{
+    gchar latbuf[10];
+    gdouble val;
+
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    val = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spin));
+    g_free(dialog->wd->lat);
+    dialog->wd->lat = g_strdup(g_ascii_formatd(latbuf, 10, "%.6f", val));
+}
+
+
+static void
+spin_lon_value_changed(const GtkWidget *spin,
+                       gpointer user_data)
+{
+    gchar lonbuf[10];
+    gdouble val;
+
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    val = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spin));
+    g_free(dialog->wd->lon);
+    dialog->wd->lon = g_strdup(g_ascii_formatd(lonbuf, 10, "%.6f", val));
+}
+
+
+static void
+spin_alt_value_changed(const GtkWidget *spin,
+                       gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    gdouble val;
+    val = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spin));
+    if (dialog->wd->units->altitude == FEET)
+        val *= 0.3048;
+    dialog->wd->msl = (gint) val;
+}
+
+
 static GtkWidget *
 create_location_page(xfceweather_dialog *dialog)
 {
@@ -549,34 +622,49 @@ create_location_page(xfceweather_dialog *dialog)
     gtk_box_pack_start(GTK_BOX(hbox), button_loc_change,
                        FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(page), hbox, FALSE, FALSE, BORDER);
+    if (dialog->wd->location_name)
+        gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name),
+                           dialog->wd->location_name);
+    else
+        gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name), _("Unset"));
+    g_signal_connect(GTK_EDITABLE(dialog->text_loc_name), "changed",
+                     G_CALLBACK(text_loc_name_changed), dialog);
 
     /* latitude */
     vbox = gtk_vbox_new(FALSE, BORDER);
     hbox = gtk_hbox_new(FALSE, BORDER);
     ADD_LABEL(_("Latitud_e:"), sg_label);
-    ADD_SPIN(dialog->spin_lat, -90, 90, 1, 0, 6, sg_spin);
+    ADD_SPIN(dialog->spin_lat, -90, 90, 1,
+             (string_to_double(dialog->wd->lat, 0)), 6, sg_spin);
     label = gtk_label_new("°");
     gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
     gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
+    g_signal_connect(GTK_SPIN_BUTTON(dialog->spin_lat), "value-changed",
+                     G_CALLBACK(spin_lat_value_changed), dialog);
 
     /* longitude */
     hbox = gtk_hbox_new(FALSE, BORDER);
     ADD_LABEL(_("L_ongitude:"), sg_label);
-    ADD_SPIN(dialog->spin_lon, -180, 180, 1, 0, 6, sg_spin);
+    ADD_SPIN(dialog->spin_lon, -180, 180, 1,
+             (string_to_double(dialog->wd->lon, 0)), 6, sg_spin);
     label = gtk_label_new("°");
     gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
     gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
+    g_signal_connect(GTK_SPIN_BUTTON(dialog->spin_lon), "value-changed",
+                     G_CALLBACK(spin_lon_value_changed), dialog);
 
     /* altitude */
     hbox = gtk_hbox_new(FALSE, BORDER);
     ADD_LABEL(_("_Altitude:"), sg_label);
-    ADD_SPIN(dialog->spin_alt, -420, 10000, 1, 0, 0, sg_spin);
-    dialog->label_alt_unit = gtk_label_new(_("meters"));
+    ADD_SPIN(dialog->spin_alt, -420, 10000, 1, dialog->wd->msl, 0, sg_spin);
+    dialog->label_alt_unit = gtk_label_new(NULL);
     gtk_misc_set_alignment(GTK_MISC(dialog->label_alt_unit), 0, 0.5);
     gtk_box_pack_start(GTK_BOX(hbox), dialog->label_alt_unit, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
+    g_signal_connect(GTK_SPIN_BUTTON(dialog->spin_alt), "value-changed",
+                     G_CALLBACK(spin_alt_value_changed), dialog);
 
     /* timezone */
     hbox = gtk_hbox_new(FALSE, BORDER);
@@ -594,20 +682,12 @@ create_location_page(xfceweather_dialog *dialog)
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER/2);
     gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
 
-    /* initialize widgets with current data */
-    if (dialog->wd) {
-        if (dialog->wd->location_name)
-            gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name),
-                               dialog->wd->location_name);
-        else
-            gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name), _("Unset"));
-        gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_lat),
-                                  string_to_double(dialog->wd->lat, 0));
-        gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_lon),
-                                  string_to_double(dialog->wd->lon, 0));
-    }
-    if (!dialog->wd || ! (dialog->wd->lat && dialog->wd->lon))
+    /* automatically detect current location if it is yet unknown */
+    if (!(dialog->wd->lat && dialog->wd->lon))
         start_auto_locate(dialog);
+
+    /* set up the altitude spin box and unit label (meters/feet) */
+    setup_altitude(dialog);
 
     g_object_unref(G_OBJECT(sg_label));
     g_object_unref(G_OBJECT(sg_spin));
@@ -660,8 +740,10 @@ combo_unit_altitude_changed(GtkWidget *combo,
                             gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+
     dialog->wd->units->altitude =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+    setup_altitude(dialog);
 }
 
 

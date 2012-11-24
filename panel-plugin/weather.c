@@ -495,6 +495,14 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
     if (!rc)
         return;
 
+    value = xfce_rc_read_entry(rc, "loc_name", NULL);
+    if (value) {
+        if (data->location_name)
+            g_free(data->location_name);
+
+        data->location_name = g_strdup(value);
+    }
+
     value = xfce_rc_read_entry(rc, "lat", NULL);
     if (value) {
         if (data->lat)
@@ -511,13 +519,7 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
         data->lon = g_strdup(value);
     }
 
-    value = xfce_rc_read_entry(rc, "loc_name", NULL);
-    if (value) {
-        if (data->location_name)
-            g_free(data->location_name);
-
-        data->location_name = g_strdup(value);
-    }
+    data->msl = xfce_rc_read_int_entry(rc, "msl", 0);
 
     if (data->units)
         g_slice_free(units_config, data->units);
@@ -593,6 +595,8 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
 
     if (data->lon)
         xfce_rc_write_entry(rc, "lon", data->lon);
+
+    xfce_rc_write_int_entry(rc, "msl", data->msl);
 
     xfce_rc_write_int_entry(rc, "units_temperature", data->units->temperature);
     xfce_rc_write_int_entry(rc, "units_pressure", data->units->pressure);

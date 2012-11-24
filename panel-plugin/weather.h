@@ -57,9 +57,10 @@ typedef struct {
 
     icon_theme *icon_theme;
 
+    gchar *location_name;
     gchar *lat;
     gchar *lon;
-    gchar *location_name;
+    gint msl;
 
     units_config *units;
     gboolean round;
