@@ -27,6 +27,7 @@
 #define PLUGIN_WEBSITE "http://goodies.xfce.org/projects/panel-plugins/xfce4-weather-plugin"
 #define MAX_FORECAST_DAYS 10
 #define DEFAULT_FORECAST_DAYS 5
+#define MAX_SCROLLBOX_LINES 6
 
 G_BEGIN_DECLS
 
@@ -38,13 +39,10 @@ typedef struct {
     GtkWidget *top_vbox;
     GtkWidget *top_hbox;
     GtkWidget *vbox_center_scrollbox;
-    GtkWidget *scrollbox;
     GtkWidget *iconimage;
     GtkWidget *tooltipbox;
 
     GtkWidget *summary_window;
-
-    GArray *labels;
 
     gint panel_size;
     gint size;
@@ -54,6 +52,11 @@ typedef struct {
     time_t last_astro_update;
     time_t last_data_update;
     time_t last_conditions_update;
+
+    GtkWidget *scrollbox;
+    gboolean show_scrollbox;
+    guint scrollbox_lines;
+    GArray *labels;
 
     icon_theme *icon_theme;
 

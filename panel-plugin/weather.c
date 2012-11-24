@@ -553,6 +553,13 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
         icon_theme_free(data->icon_theme);
     data->icon_theme = icon_theme_load(value);
 
+    data->show_scrollbox = xfce_rc_read_bool_entry(rc, "show_scrollbox", TRUE);
+
+    data->scrollbox_lines = xfce_rc_read_int_entry(rc, "scrollbox_lines", 1);
+    if (data->scrollbox_lines < 1 ||
+        data->scrollbox_lines > MAX_SCROLLBOX_LINES)
+        data->scrollbox_lines = 1;
+
     data->labels = labels_clear(data->labels);
     val = 0;
     while (val != -1) {
@@ -618,6 +625,11 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
 
     if (data->icon_theme && data->icon_theme->dir)
         xfce_rc_write_entry(rc, "theme_dir", data->icon_theme->dir);
+
+    xfce_rc_write_bool_entry(rc, "show_scrollbox",
+                             data->show_scrollbox);
+
+    xfce_rc_write_int_entry(rc, "scrollbox_lines", data->scrollbox_lines);
 
     for (i = 0; i < data->labels->len; i++) {
         g_snprintf(label, 10, "label%d", i);
