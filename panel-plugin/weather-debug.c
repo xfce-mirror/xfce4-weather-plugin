@@ -407,8 +407,11 @@ weather_dump_plugindata(const xfceweather_data *data)
                            "  location name: %s\n"
                            "  night time: %s\n"
                            "  --------------------------------------------\n"
-                           "  animation transitions: %s\n"
                            "  forecast days: %d\n"
+                           "  --------------------------------------------\n"
+                           "  show scrollbox: %s\n"
+                           "  scrollbox lines: %d\n"
+                           "  animate scrollbox: %s\n"
                            "  --------------------------------------------",
                            data->panel_size,
                            data->size,
@@ -421,8 +424,10 @@ weather_dump_plugindata(const xfceweather_data *data)
                            data->lon,
                            data->location_name,
                            YESNO(data->night_time),
-                           YESNO(data->animation_transitions),
-                           data->forecast_days);
+                           data->forecast_days,
+                           YESNO(data->show_scrollbox),
+                           data->scrollbox_lines,
+                           YESNO(data->scrollbox_animate));
     g_free(last_astro_update);
     g_free(last_data_update);
     g_free(last_conditions_update);

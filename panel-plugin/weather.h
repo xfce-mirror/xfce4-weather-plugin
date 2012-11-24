@@ -56,6 +56,7 @@ typedef struct {
     GtkWidget *scrollbox;
     gboolean show_scrollbox;
     guint scrollbox_lines;
+    gboolean scrollbox_animate;
     GArray *labels;
 
     icon_theme *icon_theme;
@@ -73,7 +74,6 @@ typedef struct {
     xml_astro *astrodata;
     gboolean night_time;
 
-    gboolean animation_transitions;
     gint forecast_days;
 } xfceweather_data;
 

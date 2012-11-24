@@ -941,6 +941,16 @@ spin_scrollbox_lines_value_changed(const GtkWidget *spin,
 }
 
 
+static void
+check_scrollbox_animate_toggled(GtkWidget *button,
+                                gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    dialog->wd->scrollbox_animate =
+        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button));
+}
+
+
 static GtkWidget *
 create_scrollbox_page(xfceweather_dialog *dialog)
 {
@@ -1062,9 +1072,11 @@ create_scrollbox_page(xfceweather_dialog *dialog)
         gtk_check_button_new_with_mnemonic(_("Animate _transitions between labels"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON
                                  (dialog->check_scrollbox_animate),
-                                 dialog->wd->animation_transitions);
+                                 dialog->wd->scrollbox_animate);
     gtk_box_pack_start(GTK_BOX(page), dialog->check_scrollbox_animate,
                        FALSE, FALSE, 0);
+    g_signal_connect(dialog->check_scrollbox_animate, "toggled",
+                     G_CALLBACK(check_scrollbox_animate_toggled), dialog);
 
     g_object_unref(G_OBJECT(sg_misc));
     g_object_unref(G_OBJECT(sg_button));

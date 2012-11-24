@@ -543,11 +543,6 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
     data->forecast_days =
         (val > 0 && val <= MAX_FORECAST_DAYS) ? val : DEFAULT_FORECAST_DAYS;
 
-    data->animation_transitions =
-        xfce_rc_read_bool_entry(rc, "animation_transitions", TRUE);
-    gtk_scrollbox_set_animate(GTK_SCROLLBOX(data->scrollbox),
-                              data->animation_transitions);
-
     value = xfce_rc_read_entry(rc, "theme_dir", NULL);
     if (data->icon_theme)
         icon_theme_free(data->icon_theme);
@@ -559,6 +554,11 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
     if (data->scrollbox_lines < 1 ||
         data->scrollbox_lines > MAX_SCROLLBOX_LINES)
         data->scrollbox_lines = 1;
+
+    data->scrollbox_animate =
+        xfce_rc_read_bool_entry(rc, "scrollbox_animate", TRUE);
+    gtk_scrollbox_set_animate(GTK_SCROLLBOX(data->scrollbox),
+                              data->scrollbox_animate);
 
     data->labels = labels_clear(data->labels);
     val = 0;
@@ -620,8 +620,7 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
 
     xfce_rc_write_int_entry(rc, "forecast_days", data->forecast_days);
 
-    xfce_rc_write_bool_entry(rc, "animation_transitions",
-                             data->animation_transitions);
+    xfce_rc_write_bool_entry(rc, "scrollbox_animate", data->scrollbox_animate);
 
     if (data->icon_theme && data->icon_theme->dir)
         xfce_rc_write_entry(rc, "theme_dir", data->icon_theme->dir);
