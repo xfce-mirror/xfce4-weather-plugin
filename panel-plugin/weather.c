@@ -983,7 +983,11 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     data->plugin = plugin;
     data->units = g_slice_new0(units_config);
     data->weatherdata = NULL;
+    data->show_scrollbox = TRUE;
+    data->scrollbox_lines = 1;
+    data->scrollbox_animate = TRUE;
     data->forecast_days = DEFAULT_FORECAST_DAYS;
+    data->round = TRUE;
 
     /* Setup session for HTTP connections */
     data->session = soup_session_async_new();
