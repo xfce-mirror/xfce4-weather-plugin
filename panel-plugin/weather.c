@@ -765,9 +765,9 @@ xfceweather_dialog_response(GtkWidget *dlg,
         weather_dump(weather_dump_plugindata, data);
 
         gtk_widget_destroy(dlg);
-#if 0
-        gtk_list_store_clear(dialog->mdl_xmloption);
-#endif
+
+        gtk_list_store_clear(dialog->model_datatypes);
+
         g_slice_free(xfceweather_dialog, dialog);
 
         xfce_panel_plugin_unblock_menu(data->plugin);
