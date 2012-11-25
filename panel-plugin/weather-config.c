@@ -821,6 +821,19 @@ button_scrollbox_font_clicked(GtkWidget *button,
 }
 
 
+static void
+button_scrollbox_color_set(GtkWidget *button,
+                           gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+
+    gtk_color_button_get_color(GTK_COLOR_BUTTON(button),
+                               &(dialog->wd->scrollbox_color));
+    gtk_scrollbox_set_color(GTK_SCROLLBOX(dialog->wd->scrollbox),
+                            dialog->wd->scrollbox_color);
+}
+
+
 static GtkWidget *
 make_label(void)
 {
@@ -995,7 +1008,6 @@ create_scrollbox_page(xfceweather_dialog *dialog)
     GtkWidget *button_add, *button_del, *button_up, *button_down;
     GtkTreeViewColumn *column;
     GtkCellRenderer *renderer;
-    GdkColor color;
     data_types type;
     guint i;
     gint n;
@@ -1041,15 +1053,14 @@ create_scrollbox_page(xfceweather_dialog *dialog)
                              dialog->wd->scrollbox_font);
     g_signal_connect(dialog->button_scrollbox_font, "clicked",
                      G_CALLBACK(button_scrollbox_font_clicked), dialog);
-    gdk_color_parse("#000000", &color);
     dialog->button_scrollbox_color =
-        gtk_color_button_new_with_color(&color);
+        gtk_color_button_new_with_color(&(dialog->wd->scrollbox_color));
     gtk_size_group_add_widget(sg_misc, dialog->button_scrollbox_color);
     gtk_box_pack_start(GTK_BOX(hbox), dialog->button_scrollbox_color,
                        FALSE, FALSE, 0 );
     gtk_box_pack_start(GTK_BOX(page), hbox, FALSE, FALSE, 0);
-
-    //g_signal_connect(dialog->button_scrollbox_color, "color-set", cb, base);
+    g_signal_connect(dialog->button_scrollbox_color, "color-set",
+                     G_CALLBACK(button_scrollbox_color_set), dialog);
 
 
     /* labels and buttons */

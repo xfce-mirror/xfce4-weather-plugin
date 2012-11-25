@@ -50,6 +50,7 @@ struct _GtkScrollbox {
     gboolean animate;
     GtkOrientation orientation;
     gchar *fontname;
+    PangoAttrList *pattr_list;
 };
 
 struct _GtkScrollboxClass {
@@ -75,6 +76,9 @@ void gtk_scrollbox_next_label(GtkScrollbox *self);
 
 void gtk_scrollbox_set_fontname(GtkScrollbox *self,
                                 const gchar *fontname);
+
+void gtk_scrollbox_set_color(GtkScrollbox *self,
+                             const GdkColor color);
 
 G_END_DECLS
 

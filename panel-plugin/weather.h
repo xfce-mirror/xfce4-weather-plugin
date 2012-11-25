@@ -57,6 +57,7 @@ typedef struct {
     gboolean show_scrollbox;
     guint scrollbox_lines;
     gchar *scrollbox_font;
+    GdkColor scrollbox_color;
     gboolean scrollbox_animate;
     GArray *labels;
 

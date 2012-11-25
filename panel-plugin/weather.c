@@ -568,6 +568,10 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
         data->scrollbox_font = g_strdup(value);
     }
 
+    value = xfce_rc_read_entry(rc, "scrollbox_color", NULL);
+    if (value)
+        gdk_color_parse("#rrrrggggbbbb", &(data->scrollbox_color));
+
     data->scrollbox_animate =
         xfce_rc_read_bool_entry(rc, "scrollbox_animate", TRUE);
     gtk_scrollbox_set_animate(GTK_SCROLLBOX(data->scrollbox),
@@ -595,7 +599,7 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
     gchar label[10];
     guint i;
     XfceRc *rc;
-    gchar *file;
+    gchar *file, *value;
 
     if (!(file = xfce_panel_plugin_save_location(plugin, TRUE)))
         return;
@@ -645,6 +649,10 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
 
     if (data->scrollbox_font)
         xfce_rc_write_entry(rc, "scrollbox_font", data->scrollbox_font);
+
+    value = gdk_color_to_string(&(data->scrollbox_color));
+    xfce_rc_write_entry(rc, "scrollbox_color", value);
+    g_free(value);
 
     for (i = 0; i < data->labels->len; i++) {
         g_snprintf(label, 10, "label%d", i);
@@ -1274,6 +1282,8 @@ weather_construct(XfcePanelPlugin *plugin)
     scrollbox_set_visible(data);
     gtk_scrollbox_set_fontname(GTK_SCROLLBOX(data->scrollbox),
                                data->scrollbox_font);
+    gtk_scrollbox_set_color(GTK_SCROLLBOX(data->scrollbox),
+                            data->scrollbox_color);
 
 #if LIBXFCE4PANEL_CHECK_VERSION(4,9,0)
     xfceweather_set_mode(plugin, xfce_panel_plugin_get_mode(plugin), data);

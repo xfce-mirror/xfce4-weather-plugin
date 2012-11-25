@@ -70,6 +70,7 @@ gtk_scrollbox_init(GtkScrollbox *self)
     self->active = NULL;
     self->orientation = GTK_ORIENTATION_HORIZONTAL;
     self->fontname = NULL;
+    self->pattr_list = pango_attr_list_new();
 }
 
 
@@ -88,6 +89,7 @@ gtk_scrollbox_finalize(GObject *object)
 
     /* free everything else */
     g_free(self->fontname);
+    pango_attr_list_unref(self->pattr_list);
 
     G_OBJECT_CLASS(gtk_scrollbox_parent_class)->finalize(object);
 }
@@ -103,12 +105,14 @@ gtk_scrollbox_set_font(GtkScrollbox *self,
     if (self->fontname)
         desc = pango_font_description_from_string(self->fontname);
 
-    if (layout)
+    if (layout) {
         pango_layout_set_font_description(layout, desc);
-    else
+        pango_layout_set_attributes(layout, self->pattr_list);
+    } else
         for (li = self->labels; li != NULL; li = li->next) {
             layout = PANGO_LAYOUT(li->data);
             pango_layout_set_font_description(layout, desc);
+            pango_layout_set_attributes(layout, self->pattr_list);
         }
     pango_font_description_free(desc);
 }
@@ -368,6 +372,23 @@ gtk_scrollbox_set_fontname(GtkScrollbox *self,
     self->fontname = g_strdup(fontname);
 
     /* update all labels */
+    gtk_scrollbox_set_font(self, NULL);
+    gtk_widget_queue_resize(GTK_WIDGET(self));
+}
+
+
+void
+gtk_scrollbox_set_color(GtkScrollbox *self,
+                        const GdkColor color)
+{
+    PangoAttribute *pattr = NULL;
+
+    g_return_if_fail(GTK_IS_SCROLLBOX(self));
+
+    pattr = pango_attr_foreground_new(color.red,
+                                      color.green,
+                                      color.blue);
+    pango_attr_list_change(self->pattr_list, pattr);
     gtk_scrollbox_set_font(self, NULL);
     gtk_widget_queue_resize(GTK_WIDGET(self));
 }
