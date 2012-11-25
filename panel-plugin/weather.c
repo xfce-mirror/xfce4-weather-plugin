@@ -231,7 +231,7 @@ toggle_scrollbox(xfceweather_data *data)
 }
 
 
-static void
+void
 update_scrollbox(xfceweather_data *data)
 {
     xml_time *conditions;
@@ -470,7 +470,7 @@ update_weatherdata(xfceweather_data *data)
 }
 
 
-static GArray *
+GArray *
 labels_clear(GArray *array)
 {
     if (!array || array->len > 0) {

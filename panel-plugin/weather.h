@@ -91,6 +91,10 @@ void weather_http_queue_request(SoupSession *session,
 
 void toggle_scrollbox(xfceweather_data *data);
 
+void update_scrollbox(xfceweather_data *data);
+
+GArray* labels_clear(GArray *array);
+
 G_END_DECLS
 
 #endif

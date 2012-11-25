@@ -109,198 +109,6 @@ typedef void (*cb_conf_dialog_function) (xfceweather_dialog *);
 static cb_conf_dialog_function cb_dialog = NULL;
 
 
-static void
-add_model_option(GtkListStore *model,
-                 const gint opt)
-{
-    GtkTreeIter iter;
-
-    gtk_list_store_append(model, &iter);
-    gtk_list_store_set(model, &iter,
-                       0, _(labeloptions[opt].name),
-                       1, labeloptions[opt].number, -1);
-}
-
-
-static gboolean
-cb_addoption(GtkWidget *widget,
-             gpointer data)
-{
-    xfceweather_dialog *dialog;
-    gint history;
-
-    dialog = (xfceweather_dialog *) data;
-    history =
-        gtk_option_menu_get_history(GTK_OPTION_MENU(dialog->options_datatypes));
-    add_model_option(dialog->model_datatypes, history);
-
-    return FALSE;
-}
-
-
-static gboolean
-cb_deloption(GtkWidget *widget,
-             gpointer data)
-{
-    xfceweather_dialog *dialog = (xfceweather_dialog *) data;
-    GtkTreeSelection *selection;
-    GtkTreeIter iter;
-
-    selection =
-        gtk_tree_view_get_selection(GTK_TREE_VIEW(dialog->list_datatypes));
-    if (gtk_tree_selection_get_selected(selection, NULL, &iter))
-        gtk_list_store_remove(GTK_LIST_STORE(dialog->model_datatypes), &iter);
-
-    return FALSE;
-}
-
-
-static gboolean
-cb_upoption(GtkWidget *widget,
-            gpointer data)
-{
-    xfceweather_dialog *dialog = (xfceweather_dialog *) data;
-    GtkTreeSelection *selection;
-    GtkTreeIter iter, prev;
-    GtkTreePath *path;
-
-    selection =
-        gtk_tree_view_get_selection(GTK_TREE_VIEW(dialog->list_datatypes));
-    if (gtk_tree_selection_get_selected(selection, NULL, &iter)) {
-        path = gtk_tree_model_get_path(GTK_TREE_MODEL(dialog->model_datatypes),
-                                       &iter);
-        if (gtk_tree_path_prev(path)) {
-            if (gtk_tree_model_get_iter(GTK_TREE_MODEL(dialog->model_datatypes),
-                                        &prev, path))
-                gtk_list_store_move_before(GTK_LIST_STORE(dialog->model_datatypes),
-                                           &iter, &prev);
-
-            gtk_tree_path_free(path);
-        }
-    }
-
-    return FALSE;
-}
-
-
-static gboolean
-cb_downoption(GtkWidget *widget,
-              gpointer data)
-{
-    xfceweather_dialog *dialog = (xfceweather_dialog *) data;
-    GtkTreeIter iter, next;
-    GtkTreeSelection *selection;
-
-    selection =
-        gtk_tree_view_get_selection(GTK_TREE_VIEW(dialog->list_datatypes));
-    if (gtk_tree_selection_get_selected(selection, NULL, &iter)) {
-        next = iter;
-        if (gtk_tree_model_iter_next(GTK_TREE_MODEL(dialog->model_datatypes),
-                                     &next))
-            gtk_list_store_move_after(GTK_LIST_STORE(dialog->model_datatypes),
-                                      &iter, &next);
-    }
-
-    return FALSE;
-}
-
-
-static gboolean
-cb_toggle(GtkWidget *widget,
-          gpointer data)
-{
-    GtkWidget *target = (GtkWidget *) data;
-
-    gtk_widget_set_sensitive(target,
-                             gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON
-                                                          (widget)));
-    return FALSE;
-}
-
-
-static gboolean
-cb_not_toggle(GtkWidget *widget,
-              gpointer data)
-{
-    GtkWidget *target = (GtkWidget *) data;
-
-    gtk_widget_set_sensitive(target,
-                             !gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON
-                                                           (widget)));
-    return FALSE;
-}
-
-
-static GtkWidget *
-make_label(void)
-{
-    GtkWidget *widget, *menu;
-    guint i;
-
-    menu = gtk_menu_new();
-    widget = gtk_option_menu_new();
-    for (i = 0; i < OPTIONS_N; i++) {
-        labeloption opt = labeloptions[i];
-
-        gtk_menu_shell_append(GTK_MENU_SHELL(menu),
-                              gtk_menu_item_new_with_label(_(opt.name)));
-    }
-    gtk_option_menu_set_menu(GTK_OPTION_MENU(widget), menu);
-    return widget;
-}
-
-
-static gchar *
-sanitize_location_name(const gchar *location_name)
-{
-    gchar *pos, *pos2, sane[LOC_NAME_MAX_LEN * 4];
-    glong len, offset;
-
-    pos = g_utf8_strchr(location_name, -1, ',');
-    if (pos != NULL) {
-        pos2 = pos;
-        while ((pos2 = g_utf8_next_char(pos2)))
-            if (g_utf8_get_char(pos2) == ',') {
-                pos = pos2;
-                break;
-            }
-        offset = g_utf8_pointer_to_offset(location_name, pos);
-        if (offset > LOC_NAME_MAX_LEN)
-            offset = LOC_NAME_MAX_LEN;
-        (void) g_utf8_strncpy(sane, location_name, offset);
-        sane[LOC_NAME_MAX_LEN * 4 - 1] = '\0';
-        return g_strdup(sane);
-    } else {
-        len = g_utf8_strlen(location_name, LOC_NAME_MAX_LEN);
-
-        if (len >= LOC_NAME_MAX_LEN) {
-            (void) g_utf8_strncpy(sane, location_name, len);
-            sane[LOC_NAME_MAX_LEN * 4 - 1] = '\0';
-            return g_strdup(sane);
-        }
-
-        if (len > 0)
-            return g_strdup(location_name);
-
-        return g_strdup(_("Unset"));
-    }
-}
-
-
-static void
-setup_units(xfceweather_dialog *dialog,
-            const units_config *units)
-{
-    if (G_UNLIKELY(units == NULL))
-        return;
-
-    SET_COMBO_VALUE(dialog->combo_unit_temperature, units->temperature);
-    SET_COMBO_VALUE(dialog->combo_unit_pressure, units->pressure);
-    SET_COMBO_VALUE(dialog->combo_unit_windspeed, units->windspeed);
-    SET_COMBO_VALUE(dialog->combo_unit_precipitations, units->precipitations);
-    SET_COMBO_VALUE(dialog->combo_unit_altitude, units->altitude);
-}
-
 void
 apply_options(xfceweather_dialog *dialog)
 {
@@ -372,16 +180,40 @@ apply_options(xfceweather_dialog *dialog)
 }
 
 
-static int
-option_i(const data_types opt)
+static gchar *
+sanitize_location_name(const gchar *location_name)
 {
-    guint i;
+    gchar *pos, *pos2, sane[LOC_NAME_MAX_LEN * 4];
+    glong len, offset;
 
-    for (i = 0; i < OPTIONS_N; i++)
-        if (labeloptions[i].number == opt)
-            return i;
+    pos = g_utf8_strchr(location_name, -1, ',');
+    if (pos != NULL) {
+        pos2 = pos;
+        while ((pos2 = g_utf8_next_char(pos2)))
+            if (g_utf8_get_char(pos2) == ',') {
+                pos = pos2;
+                break;
+            }
+        offset = g_utf8_pointer_to_offset(location_name, pos);
+        if (offset > LOC_NAME_MAX_LEN)
+            offset = LOC_NAME_MAX_LEN;
+        (void) g_utf8_strncpy(sane, location_name, offset);
+        sane[LOC_NAME_MAX_LEN * 4 - 1] = '\0';
+        return g_strdup(sane);
+    } else {
+        len = g_utf8_strlen(location_name, LOC_NAME_MAX_LEN);
 
-    return -1;
+        if (len >= LOC_NAME_MAX_LEN) {
+            (void) g_utf8_strncpy(sane, location_name, len);
+            sane[LOC_NAME_MAX_LEN * 4 - 1] = '\0';
+            return g_strdup(sane);
+        }
+
+        if (len > 0)
+            return g_strdup(location_name);
+
+        return g_strdup(_("Unset"));
+    }
 }
 
 
@@ -459,6 +291,22 @@ lookup_altitude_timezone(const gpointer user_data)
                                cb_lookup_timezone, user_data);
     g_free(url);
 }
+
+
+static void
+setup_units(xfceweather_dialog *dialog,
+            const units_config *units)
+{
+    if (G_UNLIKELY(units == NULL))
+        return;
+
+    SET_COMBO_VALUE(dialog->combo_unit_temperature, units->temperature);
+    SET_COMBO_VALUE(dialog->combo_unit_pressure, units->pressure);
+    SET_COMBO_VALUE(dialog->combo_unit_windspeed, units->windspeed);
+    SET_COMBO_VALUE(dialog->combo_unit_precipitations, units->precipitations);
+    SET_COMBO_VALUE(dialog->combo_unit_altitude, units->altitude);
+}
+
 
 static void
 auto_locate_cb(const gchar *loc_name,
@@ -942,6 +790,160 @@ spin_scrollbox_lines_value_changed(const GtkWidget *spin,
 }
 
 
+static GtkWidget *
+make_label(void)
+{
+    GtkWidget *widget, *menu;
+    guint i;
+
+    menu = gtk_menu_new();
+    widget = gtk_option_menu_new();
+    for (i = 0; i < OPTIONS_N; i++) {
+        labeloption opt = labeloptions[i];
+
+        gtk_menu_shell_append(GTK_MENU_SHELL(menu),
+                              gtk_menu_item_new_with_label(_(opt.name)));
+    }
+    gtk_option_menu_set_menu(GTK_OPTION_MENU(widget), menu);
+    return widget;
+}
+
+
+static void
+update_scrollbox_labels(xfceweather_dialog *dialog)
+{
+    GtkTreeIter iter;
+    gboolean hasiter;
+    GValue value = { 0 };
+    gint option;
+
+    dialog->wd->labels = labels_clear(dialog->wd->labels);
+    hasiter =
+        gtk_tree_model_get_iter_first(GTK_TREE_MODEL
+                                      (dialog->model_datatypes),
+                                      &iter);
+    while (hasiter == TRUE) {
+        gtk_tree_model_get_value(GTK_TREE_MODEL(dialog->model_datatypes),
+                                 &iter, 1, &value);
+        option = g_value_get_int(&value);
+        g_array_append_val(dialog->wd->labels, option);
+        g_value_unset(&value);
+        hasiter =
+            gtk_tree_model_iter_next(GTK_TREE_MODEL(dialog->model_datatypes),
+                                     &iter);
+    }
+    update_scrollbox(dialog->wd);
+}
+
+
+static void
+add_model_option(GtkListStore *model,
+                 const gint opt)
+{
+    GtkTreeIter iter;
+
+    gtk_list_store_append(model, &iter);
+    gtk_list_store_set(model, &iter,
+                       0, _(labeloptions[opt].name),
+                       1, labeloptions[opt].number, -1);
+}
+
+
+static int
+option_i(const data_types opt)
+{
+    guint i;
+
+    for (i = 0; i < OPTIONS_N; i++)
+        if (labeloptions[i].number == opt)
+            return i;
+
+    return -1;
+}
+
+
+static gboolean
+button_add_option_clicked(GtkWidget *widget,
+                          gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    gint history;
+
+    history =
+        gtk_option_menu_get_history(GTK_OPTION_MENU(dialog->options_datatypes));
+    add_model_option(dialog->model_datatypes, history);
+    update_scrollbox_labels(dialog);
+    return FALSE;
+}
+
+
+static gboolean
+button_del_option_clicked(GtkWidget *widget,
+                          gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    GtkTreeSelection *selection;
+    GtkTreeIter iter;
+
+    selection =
+        gtk_tree_view_get_selection(GTK_TREE_VIEW(dialog->list_datatypes));
+    if (gtk_tree_selection_get_selected(selection, NULL, &iter))
+        gtk_list_store_remove(GTK_LIST_STORE(dialog->model_datatypes), &iter);
+    update_scrollbox_labels(dialog);
+    return FALSE;
+}
+
+
+static gboolean
+button_up_option_clicked(GtkWidget *widget,
+                         gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    GtkTreeSelection *selection;
+    GtkTreeIter iter, prev;
+    GtkTreePath *path;
+
+    selection =
+        gtk_tree_view_get_selection(GTK_TREE_VIEW(dialog->list_datatypes));
+    if (gtk_tree_selection_get_selected(selection, NULL, &iter)) {
+        path = gtk_tree_model_get_path(GTK_TREE_MODEL(dialog->model_datatypes),
+                                       &iter);
+        if (gtk_tree_path_prev(path)) {
+            if (gtk_tree_model_get_iter(GTK_TREE_MODEL(dialog->model_datatypes),
+                                        &prev, path))
+                gtk_list_store_move_before(GTK_LIST_STORE(dialog->model_datatypes),
+                                           &iter, &prev);
+
+            gtk_tree_path_free(path);
+        }
+    }
+    update_scrollbox_labels(dialog);
+    return FALSE;
+}
+
+
+static gboolean
+button_down_option_clicked(GtkWidget *widget,
+                           gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    GtkTreeIter iter, next;
+    GtkTreeSelection *selection;
+
+    selection =
+        gtk_tree_view_get_selection(GTK_TREE_VIEW(dialog->list_datatypes));
+    if (gtk_tree_selection_get_selected(selection, NULL, &iter)) {
+        next = iter;
+        if (gtk_tree_model_iter_next(GTK_TREE_MODEL(dialog->model_datatypes),
+                                     &next))
+            gtk_list_store_move_after(GTK_LIST_STORE(dialog->model_datatypes),
+                                      &iter, &next);
+    }
+    update_scrollbox_labels(dialog);
+    return FALSE;
+}
+
+
 static void
 check_scrollbox_animate_toggled(GtkWidget *button,
                                 gpointer user_data)
@@ -1031,7 +1033,7 @@ create_scrollbox_page(xfceweather_dialog *dialog)
 
     /* button "add" */
     ADD_LABEL_EDIT_BUTTON(button_add, _("_Add"),
-                          GTK_STOCK_ADD, cb_addoption);
+                          GTK_STOCK_ADD, button_add_option_clicked);
     gtk_box_pack_start(GTK_BOX(hbox), button_add, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(page), hbox, FALSE, FALSE, 0);
 
@@ -1046,17 +1048,17 @@ create_scrollbox_page(xfceweather_dialog *dialog)
     /* button "remove" */
     table = gtk_table_new(4, 1, TRUE);
     ADD_LABEL_EDIT_BUTTON(button_del, _("_Remove"),
-                          GTK_STOCK_REMOVE, cb_deloption);
+                          GTK_STOCK_REMOVE, button_del_option_clicked);
     gtk_table_attach_defaults(GTK_TABLE(table), button_del, 0, 1, 0, 1);
 
     /* button "move up" */
     ADD_LABEL_EDIT_BUTTON(button_up, _("Move _up"),
-                          GTK_STOCK_GO_UP, cb_upoption);
+                          GTK_STOCK_GO_UP, button_up_option_clicked);
     gtk_table_attach_defaults(GTK_TABLE(table), button_up, 0, 1, 2, 3);
 
     /* button "move down" */
     ADD_LABEL_EDIT_BUTTON(button_down, _("Move _down"),
-                          GTK_STOCK_GO_DOWN, cb_downoption);
+                          GTK_STOCK_GO_DOWN, button_down_option_clicked);
     gtk_table_attach_defaults(GTK_TABLE(table), button_down, 0, 1, 3, 4);
 
     gtk_box_pack_start(GTK_BOX(hbox), table, FALSE, FALSE, 0);
