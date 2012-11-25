@@ -308,14 +308,16 @@ gtk_scrollbox_clear(GtkScrollbox *self)
 }
 
 
-void gtk_scrollbox_set_animate(GtkScrollbox *self,
-                               const gboolean animate)
+void
+gtk_scrollbox_set_animate(GtkScrollbox *self,
+                          gboolean animate)
 {
     self->animate = animate;
 }
 
 
-void gtk_scrollbox_next_label(GtkScrollbox *self)
+void
+gtk_scrollbox_next_label(GtkScrollbox *self)
 {
     if (self->active->next != NULL) {
         self->active = self->active->next;

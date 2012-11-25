@@ -949,6 +949,8 @@ check_scrollbox_animate_toggled(GtkWidget *button,
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     dialog->wd->scrollbox_animate =
         gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button));
+    gtk_scrollbox_set_animate(GTK_SCROLLBOX(dialog->wd->scrollbox),
+                              dialog->wd->scrollbox_animate);
 }
 
 
