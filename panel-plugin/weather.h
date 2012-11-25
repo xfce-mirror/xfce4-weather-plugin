@@ -56,6 +56,7 @@ typedef struct {
     GtkWidget *scrollbox;
     gboolean show_scrollbox;
     guint scrollbox_lines;
+    gchar *scrollbox_font;
     gboolean scrollbox_animate;
     GArray *labels;
 

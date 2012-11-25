@@ -45,7 +45,7 @@ G_DEFINE_TYPE(GtkScrollbox, gtk_scrollbox, GTK_TYPE_DRAWING_AREA)
 
 
 static void
-gtk_scrollbox_class_init (GtkScrollboxClass *klass)
+gtk_scrollbox_class_init(GtkScrollboxClass *klass)
 {
     GObjectClass *gobject_class;
     GtkWidgetClass *widget_class;
@@ -69,6 +69,7 @@ gtk_scrollbox_init(GtkScrollbox *self)
     self->offset = 0;
     self->active = NULL;
     self->orientation = GTK_ORIENTATION_HORIZONTAL;
+    self->fontname = NULL;
 }
 
 
@@ -85,7 +86,31 @@ gtk_scrollbox_finalize(GObject *object)
     g_slist_foreach(self->labels, (GFunc) g_object_unref, NULL);
     g_slist_free(self->labels);
 
+    /* free everything else */
+    g_free(self->fontname);
+
     G_OBJECT_CLASS(gtk_scrollbox_parent_class)->finalize(object);
+}
+
+
+static void
+gtk_scrollbox_set_font(GtkScrollbox *self,
+                       PangoLayout *layout)
+{
+    GSList *li;
+    PangoFontDescription *desc = NULL;
+
+    if (self->fontname)
+        desc = pango_font_description_from_string(self->fontname);
+
+    if (layout)
+        pango_layout_set_font_description(layout, desc);
+    else
+        for (li = self->labels; li != NULL; li = li->next) {
+            layout = PANGO_LAYOUT(li->data);
+            pango_layout_set_font_description(layout, desc);
+        }
+    pango_font_description_free(desc);
 }
 
 
@@ -270,9 +295,9 @@ gtk_scrollbox_set_label(GtkScrollbox *self,
 
     layout = gtk_widget_create_pango_layout(GTK_WIDGET(self), NULL);
     pango_layout_set_markup(layout, markup, -1);
+    gtk_scrollbox_set_font(self, layout);
     self->labels = g_slist_insert(self->labels, layout, position);
     gtk_widget_queue_resize(GTK_WIDGET(self));
-
     gtk_scrollbox_start_fade(self);
 }
 
@@ -312,6 +337,8 @@ void
 gtk_scrollbox_set_animate(GtkScrollbox *self,
                           gboolean animate)
 {
+    g_return_if_fail(GTK_IS_SCROLLBOX(self));
+
     self->animate = animate;
 }
 
@@ -319,8 +346,28 @@ gtk_scrollbox_set_animate(GtkScrollbox *self,
 void
 gtk_scrollbox_next_label(GtkScrollbox *self)
 {
+    g_return_if_fail(GTK_IS_SCROLLBOX(self));
+
     if (self->active->next != NULL) {
         self->active = self->active->next;
-        gtk_widget_queue_resize (GTK_WIDGET (self));
+        gtk_widget_queue_resize(GTK_WIDGET(self));
     }
+}
+
+
+void
+gtk_scrollbox_set_fontname(GtkScrollbox *self,
+                           const gchar *fontname)
+{
+    g_return_if_fail(GTK_IS_SCROLLBOX(self));
+
+    if (fontname == NULL)
+        return;
+
+    g_free(self->fontname);
+    self->fontname = g_strdup(fontname);
+
+    /* update all labels */
+    gtk_scrollbox_set_font(self, NULL);
+    gtk_widget_queue_resize(GTK_WIDGET(self));
 }

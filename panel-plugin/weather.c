@@ -562,6 +562,12 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
         data->scrollbox_lines > MAX_SCROLLBOX_LINES)
         data->scrollbox_lines = 1;
 
+    value = xfce_rc_read_entry(rc, "scrollbox_font", NULL);
+    if (value) {
+        g_free(data->scrollbox_font);
+        data->scrollbox_font = g_strdup(value);
+    }
+
     data->scrollbox_animate =
         xfce_rc_read_bool_entry(rc, "scrollbox_animate", TRUE);
     gtk_scrollbox_set_animate(GTK_SCROLLBOX(data->scrollbox),
@@ -636,6 +642,9 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
                              data->show_scrollbox);
 
     xfce_rc_write_int_entry(rc, "scrollbox_lines", data->scrollbox_lines);
+
+    if (data->scrollbox_font)
+        xfce_rc_write_entry(rc, "scrollbox_font", data->scrollbox_font);
 
     for (i = 0; i < data->labels->len; i++) {
         g_snprintf(label, 10, "label%d", i);
@@ -1101,6 +1110,7 @@ xfceweather_free(XfcePanelPlugin *plugin,
     g_free(data->lat);
     g_free(data->lon);
     g_free(data->location_name);
+    g_free(data->scrollbox_font);
 
     /* free array */
     g_array_free(data->labels, TRUE);
@@ -1262,6 +1272,8 @@ weather_construct(XfcePanelPlugin *plugin)
     data = xfceweather_create_control(plugin);
     xfceweather_read_config(plugin, data);
     scrollbox_set_visible(data);
+    gtk_scrollbox_set_fontname(GTK_SCROLLBOX(data->scrollbox),
+                               data->scrollbox_font);
 
 #if LIBXFCE4PANEL_CHECK_VERSION(4,9,0)
     xfceweather_set_mode(plugin, xfce_panel_plugin_get_mode(plugin), data);

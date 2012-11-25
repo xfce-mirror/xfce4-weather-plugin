@@ -790,6 +790,37 @@ spin_scrollbox_lines_value_changed(const GtkWidget *spin,
 }
 
 
+static gboolean
+button_scrollbox_font_clicked(GtkWidget *button,
+                              gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    GtkFontSelectionDialog *fsd;
+    gchar *fontname;
+    gint result;
+
+    fsd = GTK_FONT_SELECTION_DIALOG
+        (gtk_font_selection_dialog_new(_("Select font")));
+    if (dialog->wd->scrollbox_font)
+        gtk_font_selection_dialog_set_font_name(fsd,
+                                                dialog->wd->scrollbox_font);
+
+    result = gtk_dialog_run(GTK_DIALOG(fsd));
+    if (result == GTK_RESPONSE_OK || result == GTK_RESPONSE_ACCEPT) {
+        fontname = gtk_font_selection_dialog_get_font_name(fsd);
+        if (fontname != NULL) {
+            gtk_button_set_label(GTK_BUTTON(button), fontname);
+            g_free(dialog->wd->scrollbox_font);
+            dialog->wd->scrollbox_font = fontname;
+            gtk_scrollbox_set_fontname(GTK_SCROLLBOX(dialog->wd->scrollbox),
+                                       fontname);
+        }
+    }
+    gtk_widget_destroy(GTK_WIDGET(fsd));
+    return FALSE;
+}
+
+
 static GtkWidget *
 make_label(void)
 {
@@ -1005,6 +1036,11 @@ create_scrollbox_page(xfceweather_dialog *dialog)
         gtk_button_new_with_mnemonic(_("Select _font"));
     gtk_box_pack_start(GTK_BOX(hbox), dialog->button_scrollbox_font,
                        TRUE, TRUE, 0);
+    if (dialog->wd->scrollbox_font)
+        gtk_button_set_label(GTK_BUTTON(dialog->button_scrollbox_font),
+                             dialog->wd->scrollbox_font);
+    g_signal_connect(dialog->button_scrollbox_font, "clicked",
+                     G_CALLBACK(button_scrollbox_font_clicked), dialog);
     gdk_color_parse("#000000", &color);
     dialog->button_scrollbox_color =
         gtk_color_button_new_with_color(&color);

@@ -411,6 +411,7 @@ weather_dump_plugindata(const xfceweather_data *data)
                            "  --------------------------------------------\n"
                            "  show scrollbox: %s\n"
                            "  scrollbox lines: %d\n"
+                           "  scrollbox font: %s\n"
                            "  animate scrollbox: %s\n"
                            "  --------------------------------------------",
                            data->panel_size,
@@ -427,6 +428,7 @@ weather_dump_plugindata(const xfceweather_data *data)
                            data->forecast_days,
                            YESNO(data->show_scrollbox),
                            data->scrollbox_lines,
+                           data->scrollbox_font,
                            YESNO(data->scrollbox_animate));
     g_free(last_astro_update);
     g_free(last_data_update);
