@@ -776,7 +776,7 @@ check_scrollbox_show_toggled(GtkWidget *button,
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     dialog->wd->show_scrollbox =
         gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button));
-    toggle_scrollbox(dialog->wd);
+    scrollbox_set_visible(dialog->wd);
 }
 
 

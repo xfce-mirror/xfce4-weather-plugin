@@ -222,9 +222,9 @@ update_icon(xfceweather_data *data)
 
 
 void
-toggle_scrollbox(xfceweather_data *data)
+scrollbox_set_visible(xfceweather_data *data)
 {
-    if (data->show_scrollbox)
+    if (data->show_scrollbox && data->labels->len > 0)
         gtk_widget_show_all(GTK_WIDGET(data->vbox_center_scrollbox));
     else
         gtk_widget_hide_all(GTK_WIDGET(data->vbox_center_scrollbox));
@@ -264,7 +264,7 @@ update_scrollbox(xfceweather_data *data)
     }
 
     /* show or hide scrollbox */
-    toggle_scrollbox(data);
+    scrollbox_set_visible(data);
 
     weather_debug("Updated scrollbox.");
 }
@@ -479,16 +479,6 @@ labels_clear(GArray *array)
         array = g_array_new(FALSE, TRUE, sizeof(data_types));
     }
     return array;
-}
-
-
-static void
-xfceweather_set_visibility(xfceweather_data *data)
-{
-    if (data->labels->len > 0)
-        gtk_widget_show(data->scrollbox);
-    else
-        gtk_widget_hide(data->scrollbox);
 }
 
 
@@ -785,7 +775,6 @@ xfceweather_dialog_response(GtkWidget *dlg,
         xfceweather_write_config(data->plugin, data);
 #endif
 
-        xfceweather_set_visibility(data);
     }
 }
 
@@ -1272,7 +1261,7 @@ weather_construct(XfcePanelPlugin *plugin)
     xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
     data = xfceweather_create_control(plugin);
     xfceweather_read_config(plugin, data);
-    xfceweather_set_visibility(data);
+    scrollbox_set_visible(data);
 
 #if LIBXFCE4PANEL_CHECK_VERSION(4,9,0)
     xfceweather_set_mode(plugin, xfce_panel_plugin_get_mode(plugin), data);
