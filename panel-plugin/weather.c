@@ -1015,6 +1015,7 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     data->show_scrollbox = TRUE;
     data->scrollbox_lines = 1;
     data->scrollbox_animate = TRUE;
+    data->tooltip_style = TOOLTIP_VERBOSE;
     data->forecast_days = DEFAULT_FORECAST_DAYS;
     data->round = TRUE;
 
