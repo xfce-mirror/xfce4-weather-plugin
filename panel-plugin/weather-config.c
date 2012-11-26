@@ -791,6 +791,28 @@ spin_scrollbox_lines_value_changed(const GtkWidget *spin,
 
 
 static gboolean
+button_scrollbox_font_pressed(GtkWidget *button,
+                              GdkEventButton *event,
+                              gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+
+    if (event->type != GDK_BUTTON_PRESS)
+        return FALSE;
+
+    if (event->button == 2) {
+        g_free(dialog->wd->scrollbox_font);
+        dialog->wd->scrollbox_font = NULL;
+        gtk_scrollbox_set_fontname(GTK_SCROLLBOX(dialog->wd->scrollbox),
+                                   NULL);
+        gtk_button_set_label(GTK_BUTTON(button), _("Select _font"));
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
+static gboolean
 button_scrollbox_font_clicked(GtkWidget *button,
                               gpointer user_data)
 {
@@ -1075,6 +1097,10 @@ create_scrollbox_page(xfceweather_dialog *dialog)
     if (dialog->wd->scrollbox_font)
         gtk_button_set_label(GTK_BUTTON(dialog->button_scrollbox_font),
                              dialog->wd->scrollbox_font);
+    g_signal_connect(G_OBJECT(dialog->button_scrollbox_font),
+                     "button_press_event",
+                     G_CALLBACK(button_scrollbox_font_pressed),
+                     dialog);
     g_signal_connect(dialog->button_scrollbox_font, "clicked",
                      G_CALLBACK(button_scrollbox_font_clicked), dialog);
     dialog->button_scrollbox_color =

@@ -365,9 +365,6 @@ gtk_scrollbox_set_fontname(GtkScrollbox *self,
 {
     g_return_if_fail(GTK_IS_SCROLLBOX(self));
 
-    if (fontname == NULL)
-        return;
-
     g_free(self->fontname);
     self->fontname = g_strdup(fontname);
 
