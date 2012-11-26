@@ -563,6 +563,7 @@ combo_unit_temperature_changed(GtkWidget *combo,
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     dialog->wd->units->temperature =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+    update_scrollbox(dialog->wd);
 }
 
 
@@ -573,6 +574,7 @@ combo_unit_pressure_changed(GtkWidget *combo,
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     dialog->wd->units->pressure =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+    update_scrollbox(dialog->wd);
 }
 
 
@@ -583,6 +585,7 @@ combo_unit_windspeed_changed(GtkWidget *combo,
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     dialog->wd->units->windspeed =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+    update_scrollbox(dialog->wd);
 }
 
 
@@ -593,6 +596,7 @@ combo_unit_precipitations_changed(GtkWidget *combo,
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     dialog->wd->units->precipitations =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+    update_scrollbox(dialog->wd);
 }
 
 
