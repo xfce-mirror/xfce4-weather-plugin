@@ -70,35 +70,12 @@ weather_http_queue_request(SoupSession *session,
 }
 
 
-static const gchar *
-get_label_size(const xfceweather_data *data)
-{
-#if LIBXFCE4PANEL_CHECK_VERSION(4,9,0)
-    /* use small label with low number of columns in deskbar mode */
-    if (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_DESKBAR)
-        if (data->panel_size > 99)
-            return "medium";
-        else if (data->panel_size > 79)
-            return "small";
-        else
-            return "x-small";
-    else
-#endif
-        if (data->panel_size > 25)
-            return "medium";
-        else if (data->panel_size > 23)
-            return "small";
-        else
-            return "x-small";
-}
-
-
 static gchar *
 make_label(const xfceweather_data *data,
            data_types type)
 {
     xml_time *conditions;
-    const gchar *lbl, *txtsize, *unit;
+    const gchar *lbl, *unit;
     gchar *str, *value, *rawvalue;
 
     switch (type) {
@@ -147,8 +124,6 @@ make_label(const xfceweather_data *data,
         break;
     }
 
-    txtsize = get_label_size(data);
-
     /* get current weather conditions */
     conditions = get_current_conditions(data->weatherdata);
     rawvalue = get_data(conditions, data->units, type, data->round);
@@ -167,24 +142,20 @@ make_label(const xfceweather_data *data,
 
     if (data->labels->len > 1) {
         if (value != NULL) {
-            str = g_strdup_printf("<span size=\"%s\">%s: %s</span>",
-                                  txtsize, lbl, value);
+            str = g_strdup_printf("%s: %s", lbl, value);
             g_free(value);
         } else {
             unit = get_unit(data->units, type);
-            str = g_strdup_printf("<span size=\"%s\">%s: %s%s%s</span>",
-                                  txtsize, lbl, rawvalue,
+            str = g_strdup_printf("%s: %s%s%s", lbl, rawvalue,
                                   strcmp(unit, "°") ? " " : "", unit);
         }
     } else {
         if (value != NULL) {
-            str = g_strdup_printf("<span size=\"%s\">%s</span>",
-                                  txtsize, value);
+            str = g_strdup_printf("%s", value);
             g_free(value);
         } else {
             unit = get_unit(data->units, type);
-            str = g_strdup_printf("<span size=\"%s\">%s%s%s</span>",
-                                  txtsize, rawvalue,
+            str = g_strdup_printf("%s%s%s", rawvalue,
                                   strcmp(unit, "°") ? " " : "", unit);
         }
     }
@@ -237,11 +208,9 @@ update_scrollbox(xfceweather_data *data)
     xml_time *conditions;
     guint i;
     data_types type;
-    const gchar *txtsize;
     gchar *str;
     gint size;
 
-    txtsize = get_label_size(data);
     gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
     gtk_scrollbox_set_animate(GTK_SCROLLBOX(data->scrollbox),
                               data->scrollbox_animate);
@@ -255,8 +224,7 @@ update_scrollbox(xfceweather_data *data)
         }
         weather_debug("Added %u labels to scrollbox.", data->labels->len);
     } else {
-        str = g_strdup_printf("<span size=\"%s\">%s</span>",
-                              txtsize, _("No Data"));
+        str = g_strdup(_("No Data"));
         gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox), -1, str);
         g_free(str);
         weather_debug("No weather data available, set single label '%s'.",
