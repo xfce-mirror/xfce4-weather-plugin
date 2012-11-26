@@ -83,10 +83,6 @@ typedef struct {
 
 extern gboolean debug_mode;
 
-typedef void (*SoupSessionCallback) (SoupSession *session,
-                                     SoupMessage *msg,
-                                     gpointer user_data);
-
 void weather_http_queue_request(SoupSession *session,
                                 const gchar *uri,
                                 SoupSessionCallback callback_func,
