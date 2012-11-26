@@ -206,27 +206,38 @@ void
 update_scrollbox(xfceweather_data *data)
 {
     xml_time *conditions;
-    guint i;
+    GString *out;
+    gchar *single = NULL;
     data_types type;
-    gchar *str;
-    gint size;
+    guint i = 0, j = 0;
 
     gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
     gtk_scrollbox_set_animate(GTK_SCROLLBOX(data->scrollbox),
                               data->scrollbox_animate);
 
     if (data->weatherdata) {
-        for (i = 0; i < data->labels->len; i++) {
-            type = g_array_index(data->labels, data_types, i);
-            str = make_label(data, type);
-            gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox), -1, str);
-            g_free(str);
+        while (i < data->labels->len) {
+            j = 0;
+            out = g_string_sized_new(128);
+            while ((i + j) < data->labels->len && j < data->scrollbox_lines) {
+                type = g_array_index(data->labels, data_types, i + j);
+                single = make_label(data, type);
+                g_string_append_printf(out, "%s%s", single,
+                                       (j < (data->scrollbox_lines - 1)
+                                        ? "\n"
+                                        : ""));
+                g_free(single);
+                j++;
+            }
+            gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox), -1, out->str);
+            g_string_free(out, TRUE);
+            i = i + j;
         }
         weather_debug("Added %u labels to scrollbox.", data->labels->len);
     } else {
-        str = g_strdup(_("No Data"));
-        gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox), -1, str);
-        g_free(str);
+        single = g_strdup(_("No Data"));
+        gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox), -1, single);
+        g_free(single);
         weather_debug("No weather data available, set single label '%s'.",
                       _("No Data"));
     }

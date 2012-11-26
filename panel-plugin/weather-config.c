@@ -791,6 +791,7 @@ spin_scrollbox_lines_value_changed(const GtkWidget *spin,
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     dialog->wd->scrollbox_lines =
         (guint) gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spin));
+    update_scrollbox(dialog->wd);
 }
 
 

@@ -108,11 +108,13 @@ gtk_scrollbox_set_font(GtkScrollbox *self,
     if (layout) {
         pango_layout_set_font_description(layout, desc);
         pango_layout_set_attributes(layout, self->pattr_list);
+        pango_layout_set_alignment(layout, PANGO_ALIGN_CENTER);
     } else
         for (li = self->labels; li != NULL; li = li->next) {
             layout = PANGO_LAYOUT(li->data);
             pango_layout_set_font_description(layout, desc);
             pango_layout_set_attributes(layout, self->pattr_list);
+            pango_layout_set_alignment(layout, PANGO_ALIGN_CENTER);
         }
     pango_font_description_free(desc);
 }
