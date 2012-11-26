@@ -706,6 +706,16 @@ combo_tooltip_style_changed(GtkWidget *combo,
 
 
 static void
+spin_forecast_days_value_changed(const GtkWidget *spin,
+                                 gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    dialog->wd->forecast_days =
+        gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spin));
+}
+
+
+static void
 check_round_values_toggled(GtkWidget *button,
                            gpointer user_data)
 {
@@ -761,6 +771,9 @@ create_appearance_page(xfceweather_dialog *dialog)
              0, NULL);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
+    g_signal_connect(GTK_SPIN_BUTTON(dialog->spin_forecast_days),
+                     "value-changed",
+                     G_CALLBACK(spin_forecast_days_value_changed), dialog);
 
     /* round temperature */
     vbox = gtk_vbox_new(FALSE, BORDER);
