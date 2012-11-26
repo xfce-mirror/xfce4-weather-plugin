@@ -484,8 +484,8 @@ create_summary_tab(xfceweather_data *data)
 
 
 static GtkWidget *
-add_forecast_cell(const GtkWidget *widget,
-                  const GdkColor *color)
+wrap_forecast_cell(const GtkWidget *widget,
+                   const GdkColor *color)
 {
     GtkWidget *ebox;
 
@@ -521,7 +521,84 @@ add_forecast_header(const gchar *text,
     gtk_label_set_markup(GTK_LABEL(label), str);
     g_free(str);
     gtk_container_add(GTK_CONTAINER(align), GTK_WIDGET(label));
-    return add_forecast_cell(align, color);
+    return wrap_forecast_cell(align, color);
+}
+
+
+static GtkWidget *
+add_forecast_cell(xfceweather_data *data,
+                  gint day,
+                  gint daytime)
+{
+    GtkWidget *box, *label, *image;
+    GdkPixbuf *icon;
+    const GdkColor black = {0, 0x0000, 0x0000, 0x0000};
+    gchar *wind_speed, *wind_direction, *value, *rawvalue;
+    xml_time *fcdata;
+
+    box = gtk_vbox_new(FALSE, 0);
+
+    fcdata = make_forecast_data(data->weatherdata, day, daytime);
+    if (fcdata == NULL)
+        return box;
+
+    if (fcdata->location == NULL) {
+        xml_time_free(fcdata);
+        return box;
+    }
+
+    /* symbol */
+    rawvalue = get_data(fcdata, data->units, SYMBOL, FALSE);
+    icon = get_icon(data->icon_theme, rawvalue, 48, (daytime == NIGHT));
+    g_free(rawvalue);
+    image = gtk_image_new_from_pixbuf(icon);
+    gtk_box_pack_start(GTK_BOX(box), GTK_WIDGET(image), TRUE, TRUE, 0);
+    if (G_LIKELY(icon))
+        g_object_unref(G_OBJECT(icon));
+
+    /* symbol description */
+    rawvalue = get_data(fcdata, data->units, SYMBOL, FALSE);
+    value = g_strdup_printf("%s",
+                            translate_desc(rawvalue, (daytime == NIGHT)));
+    g_free(rawvalue);
+    label = gtk_label_new(NULL);
+    gtk_label_set_markup(GTK_LABEL(label), value);
+    if (!(day % 2))
+        gtk_widget_modify_fg(GTK_WIDGET(label), GTK_STATE_NORMAL, &black);
+    gtk_box_pack_start(GTK_BOX(box), GTK_WIDGET(label), TRUE, TRUE, 0);
+    g_free(value);
+
+    /* temperature */
+    rawvalue = get_data(fcdata, data->units,
+                        TEMPERATURE, data->round);
+    value = g_strdup_printf("%s %s", rawvalue,
+                            get_unit(data->units, TEMPERATURE));
+    g_free(rawvalue);
+    label = gtk_label_new(value);
+    if (!(day % 2))
+        gtk_widget_modify_fg(GTK_WIDGET(label), GTK_STATE_NORMAL, &black);
+    gtk_box_pack_start(GTK_BOX(box), GTK_WIDGET(label), TRUE, TRUE, 0);
+    g_free(value);
+
+    /* wind direction and speed */
+    rawvalue = get_data(fcdata, data->units, WIND_DIRECTION, FALSE);
+    wind_direction = translate_wind_direction(rawvalue);
+    wind_speed = get_data(fcdata, data->units, WIND_SPEED, data->round);
+    value = g_strdup_printf("%s %s %s", wind_direction, wind_speed,
+                            get_unit(data->units, WIND_SPEED));
+    g_free(wind_speed);
+    g_free(wind_direction);
+    g_free(rawvalue);
+    label = gtk_label_new(value);
+    if (!(day % 2))
+        gtk_widget_modify_fg(GTK_WIDGET(label), GTK_STATE_NORMAL, &black);
+    gtk_box_pack_start(GTK_BOX(box), label, TRUE, TRUE, 0);
+    g_free(value);
+
+    gtk_widget_set_size_request(GTK_WIDGET(box), 150, -1);
+
+    xml_time_free(fcdata);
+    return box;
 }
 
 
@@ -529,14 +606,11 @@ static GtkWidget *
 make_forecast(xfceweather_data *data)
 {
     GtkWidget *table, *ebox, *box, *align;
-    GtkWidget *forecast_box, *label, *image;
-    GdkPixbuf *icon;
-    const GdkColor black = {0, 0x0000, 0x0000, 0x0000};
+    GtkWidget *forecast_box;
     const GdkColor lightbg = {0, 0xeaea, 0xeaea, 0xeaea};
     const GdkColor darkbg = {0, 0x6666, 0x6666, 0x6666};
     gint i, weekday, daytime;
-    gchar *dayname, *wind_speed, *wind_direction, *value, *rawvalue;
-    xml_time *fcdata;
+    gchar *dayname;
     struct tm fcday_tm;
     time_t now_t = time(NULL), fcday_t;
 
@@ -547,7 +621,7 @@ make_forecast(xfceweather_data *data)
     /* empty upper left corner */
     box = gtk_vbox_new(FALSE, 0);
     gtk_table_attach_defaults(GTK_TABLE(table),
-                              add_forecast_cell(box, &darkbg),
+                              wrap_forecast_cell(box, &darkbg),
                               0, 1, 0, 1);
 
     /* daytime headers */
@@ -584,84 +658,15 @@ make_forecast(xfceweather_data *data)
 
         /* get forecast data for each daytime */
         for (daytime = MORNING; daytime <= NIGHT; daytime++) {
-            forecast_box = gtk_vbox_new(FALSE, 0);
+            forecast_box = add_forecast_cell(data, i, daytime);
             align = gtk_alignment_new(0.5, 0.5, 1, 1);
             gtk_container_set_border_width(GTK_CONTAINER(align), 4);
             gtk_container_add(GTK_CONTAINER(align), GTK_WIDGET(forecast_box));
             if (i % 2)
-                ebox = add_forecast_cell(align, NULL);
+                ebox = wrap_forecast_cell(align, NULL);
             else
-                ebox = add_forecast_cell(align, &lightbg);
+                ebox = wrap_forecast_cell(align, &lightbg);
 
-            fcdata = make_forecast_data(data->weatherdata, i, daytime);
-            if (fcdata != NULL) {
-                if (fcdata->location != NULL) {
-                    rawvalue = get_data(fcdata, data->units, SYMBOL, FALSE);
-                    icon = get_icon(data->icon_theme, rawvalue, 48,
-                                    (daytime == NIGHT));
-                    g_free(rawvalue);
-                    image = gtk_image_new_from_pixbuf(icon);
-                    gtk_box_pack_start(GTK_BOX(forecast_box), GTK_WIDGET(image),
-                                       TRUE, TRUE, 0);
-                    if (G_LIKELY(icon))
-                        g_object_unref(G_OBJECT(icon));
-
-                    rawvalue = get_data(fcdata, data->units, SYMBOL, FALSE);
-                    value =
-                        g_strdup_printf("%s",
-                                        translate_desc(rawvalue,
-                                                       (daytime == NIGHT)));
-                    g_free(rawvalue);
-                    label = gtk_label_new(NULL);
-                    gtk_label_set_markup(GTK_LABEL(label), value);
-                    if (!(i % 2))
-                        gtk_widget_modify_fg(GTK_WIDGET(label),
-                                             GTK_STATE_NORMAL, &black);
-                    gtk_box_pack_start(GTK_BOX(forecast_box), GTK_WIDGET(label),
-                                       TRUE, TRUE, 0);
-                    g_free(value);
-
-                    rawvalue = get_data(fcdata, data->units,
-                                        TEMPERATURE, data->round);
-                    value = g_strdup_printf("%s %s",
-                                            rawvalue,
-                                            get_unit(data->units,
-                                                     TEMPERATURE));
-                    g_free(rawvalue);
-                    label = gtk_label_new(value);
-                    if (!(i % 2))
-                        gtk_widget_modify_fg(GTK_WIDGET(label),
-                                             GTK_STATE_NORMAL, &black);
-                    gtk_box_pack_start(GTK_BOX(forecast_box), GTK_WIDGET(label),
-                                       TRUE, TRUE, 0);
-                    g_free(value);
-
-                    rawvalue = get_data(fcdata, data->units,
-                                        WIND_DIRECTION, FALSE);
-                    wind_direction = translate_wind_direction(rawvalue);
-                    wind_speed = get_data(fcdata, data->units,
-                                          WIND_SPEED, data->round);
-                    value = g_strdup_printf("%s %s %s",
-                                            wind_direction,
-                                            wind_speed,
-                                            get_unit(data->units,
-                                                     WIND_SPEED));
-                    g_free(wind_speed);
-                    g_free(wind_direction);
-                    g_free(rawvalue);
-                    label = gtk_label_new(value);
-                    if (!(i % 2))
-                        gtk_widget_modify_fg(GTK_WIDGET(label),
-                                             GTK_STATE_NORMAL, &black);
-                    gtk_box_pack_start(GTK_BOX(forecast_box), label,
-                                       TRUE, TRUE, 0);
-                    g_free(value);
-
-                    gtk_widget_set_size_request(GTK_WIDGET(forecast_box),
-                                                150, -1);
-                }
-                xml_time_free(fcdata);
-            }
             gtk_table_attach_defaults(GTK_TABLE(table),
                                       GTK_WIDGET(ebox),
                                       1+daytime, 2+daytime, i+1, i+2);
