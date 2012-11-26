@@ -697,6 +697,15 @@ create_units_page(xfceweather_dialog *dialog)
 
 
 static void
+combo_tooltip_style_changed(GtkWidget *combo,
+                            gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    dialog->wd->tooltip_style = gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+}
+
+
+static void
 check_round_values_toggled(GtkWidget *button,
                            gpointer user_data)
 {
@@ -729,8 +738,11 @@ create_appearance_page(xfceweather_dialog *dialog)
     ADD_COMBO(dialog->combo_tooltip_style);
     ADD_COMBO_VALUE(dialog->combo_tooltip_style, _("Simple"));
     ADD_COMBO_VALUE(dialog->combo_tooltip_style, _("Verbose"));
+    SET_COMBO_VALUE(dialog->combo_tooltip_style, dialog->wd->tooltip_style);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
+    g_signal_connect(dialog->combo_tooltip_style, "changed",
+                     G_CALLBACK(combo_tooltip_style_changed), dialog);
 
     /* forecast layout */
     vbox = gtk_vbox_new(FALSE, BORDER);

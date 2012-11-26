@@ -525,6 +525,9 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
 
     data->round = xfce_rc_read_bool_entry(rc, "round", TRUE);
 
+    data->tooltip_style = xfce_rc_read_int_entry(rc, "tooltip_style",
+                                                 TOOLTIP_VERBOSE);
+
     val = xfce_rc_read_int_entry(rc, "forecast_days", DEFAULT_FORECAST_DAYS);
     data->forecast_days =
         (val > 0 && val <= MAX_FORECAST_DAYS) ? val : DEFAULT_FORECAST_DAYS;
@@ -616,6 +619,8 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
     xfce_rc_write_int_entry(rc, "units_altitude", data->units->altitude);
 
     xfce_rc_write_bool_entry(rc, "round", data->round);
+
+    xfce_rc_write_int_entry(rc, "tooltip_style", data->tooltip_style);
 
     xfce_rc_write_int_entry(rc, "forecast_days", data->forecast_days);
 
@@ -878,36 +883,59 @@ weather_get_tooltip_text(const xfceweather_data *data)
     DATA_AND_UNIT(fog, FOG);
     DATA_AND_UNIT(cloudiness, CLOUDINESS);
 
-    text = g_markup_printf_escaped
-        /*
-         * TRANSLATORS: Re-arrange and align at will, optionally using
-         * abbreviations for labels if desired or necessary. Just take
-         * into account the possible size constraints, the centered
-         * vertical alignment of the icon - which unfortunately cannot
-         * be changed easily - and try to make it compact and look
-         * good!
-         */
-        (_("<b><span size=\"large\">%s</span></b> "
-           "<span size=\"medium\">(%s)</span>\n"
-           "<b><span size=\"large\">%s</span></b>\n"
-           "<span size=\"smaller\">"
-           "from %s to %s, with %s precipitations</span>\n\n"
-           "<b>Temperature:</b> %s\t\t"
-           "<span size=\"smaller\">(values at %s)</span>\n"
-           "<b>Wind:</b> %s (%son the Beaufort scale) from %s(%s)\n"
-           "<b>Pressure:</b> %s    <b>Humidity:</b> %s\n"
-           "<b>Fog:</b> %s    <b>Cloudiness:</b> %s\n\n"
-           "<span size=\"smaller\">%s</span>"),
-         data->location_name,
-         alt,
-         translate_desc(sym, data->night_time),
-         interval_start, interval_end,
-         precipitations,
-         temp, point,
-         windspeed, windbeau, winddir, winddeg,
-         pressure, humidity,
-         fog, cloudiness,
-         sunval);
+    switch (data->tooltip_style) {
+    case TOOLTIP_SIMPLE:
+        text = g_markup_printf_escaped
+            /*
+             * TRANSLATORS: This is the simple tooltip. For a bigger challenge,
+             * look at the verbose tooltip style further below ;-)
+             */
+            (_("<b><span size=\"large\">%s</span></b> "
+               "<span size=\"medium\">(%s)</span>\n"
+               "<b><span size=\"large\">%s</span></b>\n\n"
+               "<b>Temperature:</b> %s\n"
+               "<b>Wind:</b> %s from %s\n"
+               "<b>Pressure:</b> %s\n"
+               "<b>Humidity:</b> %s\n"),
+             data->location_name, alt,
+             translate_desc(sym, data->night_time),
+             temp, windspeed, winddir, pressure, humidity);
+        break;
+
+    case TOOLTIP_VERBOSE:
+    default:
+        text = g_markup_printf_escaped
+            /*
+             * TRANSLATORS: Re-arrange and align at will, optionally using
+             * abbreviations for labels if desired or necessary. Just take
+             * into account the possible size constraints, the centered
+             * vertical alignment of the icon - which unfortunately cannot
+             * be changed easily - and try to make it compact and look
+             * good!
+             */
+            (_("<b><span size=\"large\">%s</span></b> "
+               "<span size=\"medium\">(%s)</span>\n"
+               "<b><span size=\"large\">%s</span></b>\n"
+               "<span size=\"smaller\">"
+               "from %s to %s, with %s precipitations</span>\n\n"
+               "<b>Temperature:</b> %s\t\t"
+               "<span size=\"smaller\">(values at %s)</span>\n"
+               "<b>Wind:</b> %s (%son the Beaufort scale) from %s(%s)\n"
+               "<b>Pressure:</b> %s    <b>Humidity:</b> %s\n"
+               "<b>Fog:</b> %s    <b>Cloudiness:</b> %s\n\n"
+               "<span size=\"smaller\">%s</span>"),
+             data->location_name,
+             alt,
+             translate_desc(sym, data->night_time),
+             interval_start, interval_end,
+             precipitations,
+             temp, point,
+             windspeed, windbeau, winddir, winddeg,
+             pressure, humidity,
+             fog, cloudiness,
+             sunval);
+        break;
+    }
     g_free(sunval);
     g_free(sym);
     g_free(symbol);
@@ -939,6 +967,7 @@ weather_get_tooltip_cb(GtkWidget *widget,
     GdkPixbuf *icon;
     xml_time *conditions;
     gchar *markup_text, *rawvalue;
+    guint icon_size;
 
     if (data->weatherdata == NULL)
         gtk_tooltip_set_text(tooltip, _("Cannot update weather data"));
@@ -950,7 +979,16 @@ weather_get_tooltip_cb(GtkWidget *widget,
 
     conditions = get_current_conditions(data->weatherdata);
     rawvalue = get_data(conditions, data->units, SYMBOL, data->round);
-    icon = get_icon(data->icon_theme, rawvalue, 128, data->night_time);
+    switch (data->tooltip_style) {
+    case TOOLTIP_SIMPLE:
+        icon_size = 96;
+        break;
+    case TOOLTIP_VERBOSE:
+    default:
+        icon_size = 128;
+        break;
+    }
+    icon = get_icon(data->icon_theme, rawvalue, icon_size, data->night_time);
     g_free(rawvalue);
     gtk_tooltip_set_icon(tooltip, icon);
     g_object_unref(G_OBJECT(icon));

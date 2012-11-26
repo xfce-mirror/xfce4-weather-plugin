@@ -72,6 +72,7 @@ typedef struct {
 
     units_config *units;
     gboolean round;
+    guint tooltip_style;
 
     xml_weather *weatherdata;
     xml_astro *astrodata;
@@ -79,6 +80,11 @@ typedef struct {
 
     gint forecast_days;
 } xfceweather_data;
+
+typedef enum {
+    TOOLTIP_SIMPLE,
+    TOOLTIP_VERBOSE
+} tooltip_styles;
 
 
 extern gboolean debug_mode;
