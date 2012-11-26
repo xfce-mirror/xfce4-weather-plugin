@@ -389,6 +389,22 @@ gtk_scrollbox_set_color(GtkScrollbox *self,
                                       color.green,
                                       color.blue);
     pango_attr_list_change(self->pattr_list, pattr);
+
+    /* update all labels */
+    gtk_scrollbox_set_font(self, NULL);
+    gtk_widget_queue_resize(GTK_WIDGET(self));
+}
+
+
+void
+gtk_scrollbox_clear_color(GtkScrollbox *self)
+{
+    g_return_if_fail(GTK_IS_SCROLLBOX(self));
+
+    pango_attr_list_unref(self->pattr_list);
+    self->pattr_list = pango_attr_list_new();
+
+    /* update all labels */
     gtk_scrollbox_set_font(self, NULL);
     gtk_widget_queue_resize(GTK_WIDGET(self));
 }

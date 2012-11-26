@@ -821,6 +821,29 @@ button_scrollbox_font_clicked(GtkWidget *button,
 }
 
 
+static gboolean
+button_scrollbox_color_pressed(GtkWidget *button,
+                               GdkEventButton *event,
+                               gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    GtkStyle *style;
+    GdkColor color;
+    gchar *colstr;
+
+    if (event->type != GDK_BUTTON_PRESS)
+        return FALSE;
+
+    if (event->button == 2) {
+        dialog->wd->scrollbox_use_color = FALSE;
+        gtk_scrollbox_clear_color(GTK_SCROLLBOX(dialog->wd->scrollbox));
+        return TRUE;
+    }
+
+    return FALSE;
+}
+
+
 static void
 button_scrollbox_color_set(GtkWidget *button,
                            gpointer user_data)
@@ -831,6 +854,7 @@ button_scrollbox_color_set(GtkWidget *button,
                                &(dialog->wd->scrollbox_color));
     gtk_scrollbox_set_color(GTK_SCROLLBOX(dialog->wd->scrollbox),
                             dialog->wd->scrollbox_color);
+    dialog->wd->scrollbox_use_color = TRUE;
 }
 
 
@@ -1059,6 +1083,10 @@ create_scrollbox_page(xfceweather_dialog *dialog)
     gtk_box_pack_start(GTK_BOX(hbox), dialog->button_scrollbox_color,
                        FALSE, FALSE, 0 );
     gtk_box_pack_start(GTK_BOX(page), hbox, FALSE, FALSE, 0);
+    g_signal_connect(G_OBJECT(dialog->button_scrollbox_color),
+                     "button-press-event",
+                     G_CALLBACK(button_scrollbox_color_pressed),
+                     dialog);
     g_signal_connect(dialog->button_scrollbox_color, "color-set",
                      G_CALLBACK(button_scrollbox_color_set), dialog);
 
