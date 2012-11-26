@@ -79,6 +79,18 @@ lnk_clicked(GtkTextTag *tag,
     g_signal_connect(G_OBJECT(lnk_tag), "event",                        \
                      G_CALLBACK(lnk_clicked), NULL);
 
+#define ATTACH_DAYTIME_HEADER(title, pos)               \
+    if (data->forecast_layout == FC_LAYOUT_CALENDAR)    \
+        gtk_table_attach_defaults                       \
+            (GTK_TABLE(table),                          \
+             add_forecast_header(title, 90.0, &darkbg), \
+             0, 1, pos, pos+1);                         \
+    else                                                \
+        gtk_table_attach_defaults                       \
+            (GTK_TABLE(table),                          \
+             add_forecast_header(title, 0.0, &darkbg),  \
+             pos, pos+1, 0, 1);                         \
+
 
 static gboolean
 lnk_clicked(GtkTextTag *tag,
@@ -483,6 +495,27 @@ create_summary_tab(xfceweather_data *data)
 }
 
 
+static gchar *
+get_dayname(gint day)
+{
+    struct tm fcday_tm;
+    time_t now_t = time(NULL), fcday_t;
+    gint weekday;
+
+    fcday_tm = *localtime(&now_t);
+    fcday_t = time_calc_day(fcday_tm, day);
+    weekday = localtime(&fcday_t)->tm_wday;
+    switch (day) {
+    case 0:
+        return g_strdup_printf(_("Today"));
+    case 1:
+        return g_strdup_printf(_("Tomorrow"));
+    default:
+        return translate_day(weekday);
+    }
+}
+
+
 static GtkWidget *
 wrap_forecast_cell(const GtkWidget *widget,
                    const GdkColor *color)
@@ -609,12 +642,15 @@ make_forecast(xfceweather_data *data)
     GtkWidget *forecast_box;
     const GdkColor lightbg = {0, 0xeaea, 0xeaea, 0xeaea};
     const GdkColor darkbg = {0, 0x6666, 0x6666, 0x6666};
-    gint i, weekday, daytime;
     gchar *dayname;
-    struct tm fcday_tm;
-    time_t now_t = time(NULL), fcday_t;
+    gint i;
+    daytime daytime;
 
-    table = gtk_table_new(data->forecast_days + 1, 5, FALSE);
+    if (data->forecast_layout == FC_LAYOUT_CALENDAR)
+        table = gtk_table_new(5, data->forecast_days + 1, FALSE);
+    else
+        table = gtk_table_new(data->forecast_days + 1, 5, FALSE);
+
     gtk_table_set_row_spacings(GTK_TABLE(table), 0);
     gtk_table_set_col_spacings(GTK_TABLE(table), 0);
 
@@ -625,36 +661,26 @@ make_forecast(xfceweather_data *data)
                               0, 1, 0, 1);
 
     /* daytime headers */
-    gtk_table_attach_defaults(GTK_TABLE(table),
-                              add_forecast_header(_("Morning"), 0.0, &darkbg),
-                              1, 2, 0, 1);
-    gtk_table_attach_defaults(GTK_TABLE(table),
-                              add_forecast_header(_("Afternoon"), 0.0, &darkbg),
-                              2, 3, 0, 1);
-    gtk_table_attach_defaults(GTK_TABLE(table),
-                              add_forecast_header(_("Evening"), 0.0, &darkbg),
-                              3, 4, 0, 1);
-    gtk_table_attach_defaults(GTK_TABLE(table),
-                              add_forecast_header(_("Night"), 0.0, &darkbg),
-                              4, 5, 0, 1);
+    ATTACH_DAYTIME_HEADER(_("Morning"), 1);
+    ATTACH_DAYTIME_HEADER(_("Afternoon"), 2);
+    ATTACH_DAYTIME_HEADER(_("Evening"), 3);
+    ATTACH_DAYTIME_HEADER(_("Night"), 4);
 
     for (i = 0; i < data->forecast_days; i++) {
         /* forecast day headers */
-        fcday_tm = *localtime(&now_t);
-        fcday_t = time_calc_day(fcday_tm, i);
-        weekday = localtime(&fcday_t)->tm_wday;
-        if (i == 0)
-            dayname = g_strdup_printf(_("Today"));
-        else if (i == 1)
-            dayname = g_strdup_printf(_("Tomorrow"));
+        dayname = get_dayname(i);
+        if (data->forecast_layout == FC_LAYOUT_CALENDAR)
+            ebox = add_forecast_header(dayname, 0.0, &darkbg);
         else
-            dayname = translate_day(weekday);
-
-        ebox = add_forecast_header(dayname, 90.0, &darkbg);
+            ebox = add_forecast_header(dayname, 90.0, &darkbg);
         g_free(dayname);
 
-        gtk_table_attach_defaults(GTK_TABLE(table), GTK_WIDGET(ebox),
-                                  0, 1, i+1, i+2);
+        if (data->forecast_layout == FC_LAYOUT_CALENDAR)
+            gtk_table_attach_defaults(GTK_TABLE(table), GTK_WIDGET(ebox),
+                                      i+1, i+2, 0, 1);
+        else
+            gtk_table_attach_defaults(GTK_TABLE(table), GTK_WIDGET(ebox),
+                                      0, 1, i+1, i+2);
 
         /* get forecast data for each daytime */
         for (daytime = MORNING; daytime <= NIGHT; daytime++) {
@@ -667,9 +693,14 @@ make_forecast(xfceweather_data *data)
             else
                 ebox = wrap_forecast_cell(align, &lightbg);
 
-            gtk_table_attach_defaults(GTK_TABLE(table),
-                                      GTK_WIDGET(ebox),
-                                      1+daytime, 2+daytime, i+1, i+2);
+            if (data->forecast_layout == FC_LAYOUT_CALENDAR)
+                gtk_table_attach_defaults(GTK_TABLE(table),
+                                          GTK_WIDGET(ebox),
+                                          i+1, i+2, 1+daytime, 2+daytime);
+            else
+                gtk_table_attach_defaults(GTK_TABLE(table),
+                                          GTK_WIDGET(ebox),
+                                          1+daytime, 2+daytime, i+1, i+2);
         }
     }
     return table;
@@ -683,8 +714,8 @@ create_forecast_tab(xfceweather_data *data)
     GdkWindow *window;
     GdkScreen *screen;
     GdkRectangle rect;
-    gint monitor_num = 0, height_needed, height_max;
-    gdouble factor;
+    gint monitor_num = 0, h_need, h_max, height;
+    gint w_need, w_max, width;
 
     /* To avoid causing a GDK assertion, determine the monitor
      * geometry using the weather icon window, which has already been
@@ -697,25 +728,33 @@ create_forecast_tab(xfceweather_data *data)
         monitor_num = gdk_screen_get_monitor_at_window(screen, window);
     gdk_screen_get_monitor_geometry(screen, monitor_num, &rect);
 
-    /* optimize max height a bit depending on common resolutions */
-    if ((rect.height > 600 && rect.height <= 800) || rect.height <= 480)
-        factor = 0.85;
-    else
-        factor = 0.90;
-    height_max = rect.height * factor - 200;
+    /* calculate maximum width and height */
+    h_max = rect.height - 250;
+    w_max = rect.width - 50;
 
-    /* calculate height needed using a good arbitrary value */
-    height_needed = data->forecast_days * 110;
+    /* calculate needed space using a good arbitrary value */
+    if (data->forecast_layout == FC_LAYOUT_CALENDAR) {
+        w_need = ((data->forecast_days < 8) ? data->forecast_days : 7) * 142;
+        h_need = 500;
+    } else {
+        w_need = (rect.width <= 720) ? 650 : 700;
+        h_need = data->forecast_days * 110;
+    }
 
     /* generate the forecast table */
     table = GTK_WIDGET(make_forecast(data));
 
+    /* generate the containing widgets */
     align = gtk_alignment_new(0.5, 0, 0.5, 0);
-    if (height_needed < height_max) {
+    if ((data->forecast_layout == FC_LAYOUT_CALENDAR &&
+         w_need < w_max && data->forecast_days < 8) ||
+        (data->forecast_layout == FC_LAYOUT_LIST && h_need < h_max)) {
+        /* no scroll window needed, just align the contents */
         gtk_container_add(GTK_CONTAINER(align), GTK_WIDGET(table));
         gtk_container_set_border_width(GTK_CONTAINER(align), BORDER);
         return align;
     } else {
+        /* contents too big, scroll window needed */
         hbox = gtk_hbox_new(FALSE, 0);
         gtk_box_pack_start(GTK_BOX(hbox), table, TRUE, FALSE, 0);
         gtk_container_add(GTK_CONTAINER(align), GTK_WIDGET(hbox));
@@ -728,10 +767,12 @@ create_forecast_tab(xfceweather_data *data)
         gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled),
                                        GTK_POLICY_AUTOMATIC,
                                        GTK_POLICY_AUTOMATIC);
-        if (rect.width <= 720)
-            gtk_widget_set_size_request(GTK_WIDGET(scrolled), 650, height_max);
-        else
-            gtk_widget_set_size_request(GTK_WIDGET(scrolled), 700, height_max);
+
+        /* set scroll window size */
+        width = (w_need > w_max) ? w_max : w_need;
+        height = (h_need > h_max) ? h_max : h_need;
+        gtk_widget_set_size_request(GTK_WIDGET(scrolled), width, height);
+
         ebox = gtk_event_box_new();
         gtk_event_box_set_visible_window(GTK_EVENT_BOX(ebox), TRUE);
         gtk_container_add(GTK_CONTAINER(ebox), GTK_WIDGET(scrolled));

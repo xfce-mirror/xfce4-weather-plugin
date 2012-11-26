@@ -528,6 +528,12 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
     data->tooltip_style = xfce_rc_read_int_entry(rc, "tooltip_style",
                                                  TOOLTIP_VERBOSE);
 
+    val = xfce_rc_read_int_entry(rc, "forecast_layout", FC_LAYOUT_LIST);
+    if (val == FC_LAYOUT_CALENDAR || val == FC_LAYOUT_LIST)
+        data->forecast_layout = val;
+    else
+        data->forecast_layout = FC_LAYOUT_LIST;
+
     val = xfce_rc_read_int_entry(rc, "forecast_days", DEFAULT_FORECAST_DAYS);
     data->forecast_days =
         (val > 0 && val <= MAX_FORECAST_DAYS) ? val : DEFAULT_FORECAST_DAYS;
@@ -621,6 +627,8 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
     xfce_rc_write_bool_entry(rc, "round", data->round);
 
     xfce_rc_write_int_entry(rc, "tooltip_style", data->tooltip_style);
+
+    xfce_rc_write_int_entry(rc, "forecast_layout", data->forecast_layout);
 
     xfce_rc_write_int_entry(rc, "forecast_days", data->forecast_days);
 
@@ -1016,6 +1024,7 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     data->scrollbox_lines = 1;
     data->scrollbox_animate = TRUE;
     data->tooltip_style = TOOLTIP_VERBOSE;
+    data->forecast_layout = FC_LAYOUT_LIST;
     data->forecast_days = DEFAULT_FORECAST_DAYS;
     data->round = TRUE;
 

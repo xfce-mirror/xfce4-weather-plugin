@@ -31,6 +31,16 @@
 
 G_BEGIN_DECLS
 
+typedef enum {
+    TOOLTIP_SIMPLE,
+    TOOLTIP_VERBOSE
+} tooltip_styles;
+
+typedef enum {
+    FC_LAYOUT_CALENDAR,
+    FC_LAYOUT_LIST
+} forecast_layouts;
+
 typedef struct {
     XfcePanelPlugin *plugin;
 
@@ -72,19 +82,15 @@ typedef struct {
 
     units_config *units;
     gboolean round;
-    guint tooltip_style;
+    tooltip_styles tooltip_style;
 
     xml_weather *weatherdata;
     xml_astro *astrodata;
     gboolean night_time;
 
+    forecast_layouts forecast_layout;
     gint forecast_days;
 } xfceweather_data;
-
-typedef enum {
-    TOOLTIP_SIMPLE,
-    TOOLTIP_VERBOSE
-} tooltip_styles;
 
 
 extern gboolean debug_mode;

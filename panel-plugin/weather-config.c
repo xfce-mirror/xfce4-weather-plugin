@@ -706,6 +706,16 @@ combo_tooltip_style_changed(GtkWidget *combo,
 
 
 static void
+combo_forecast_layout_changed(GtkWidget *combo,
+                              gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    dialog->wd->forecast_layout =
+        gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+}
+
+
+static void
 spin_forecast_days_value_changed(const GtkWidget *spin,
                                  gpointer user_data)
 {
@@ -759,9 +769,13 @@ create_appearance_page(xfceweather_dialog *dialog)
     hbox = gtk_hbox_new(FALSE, BORDER);
     ADD_LABEL(_("_Forecast layout:"), sg);
     ADD_COMBO(dialog->combo_forecast_layout);
-    ADD_COMBO_VALUE(dialog->combo_forecast_layout, _("Horizontal"));
-    ADD_COMBO_VALUE(dialog->combo_forecast_layout, _("Vertical"));
+    ADD_COMBO_VALUE(dialog->combo_forecast_layout, _("Days in columns"));
+    ADD_COMBO_VALUE(dialog->combo_forecast_layout, _("Days in rows"));
+    SET_COMBO_VALUE(dialog->combo_forecast_layout,
+                    dialog->wd->forecast_layout);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+    g_signal_connect(dialog->combo_forecast_layout, "changed",
+                     G_CALLBACK(combo_forecast_layout_changed), dialog);
 
     /* number of days shown in forecast */
     hbox = gtk_hbox_new(FALSE, BORDER);
