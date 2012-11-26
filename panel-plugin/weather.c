@@ -1016,9 +1016,9 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     gtk_box_pack_start(GTK_BOX(data->top_hbox),
                        data->iconimage, TRUE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(data->vbox_center_scrollbox),
-                       data->scrollbox, TRUE, FALSE, 0);
+                       data->scrollbox, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(data->top_hbox),
-                       data->vbox_center_scrollbox, TRUE, FALSE, 0);
+                       data->vbox_center_scrollbox, TRUE, TRUE, 0);
 
     data->top_vbox = gtk_vbox_new(FALSE, 0);
     gtk_box_pack_start(GTK_BOX(data->top_vbox),
