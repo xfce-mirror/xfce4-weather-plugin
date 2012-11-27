@@ -301,6 +301,7 @@ start_auto_locate(xfceweather_dialog *dialog)
 {
     gtk_widget_set_sensitive(dialog->text_loc_name, FALSE);
     gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name), _("Detecting..."));
+    gtk_spinner_start(GTK_SPINNER(dialog->update_spinner));
     weather_search_by_ip(dialog->wd->session, auto_locate_cb, dialog);
 }
 
