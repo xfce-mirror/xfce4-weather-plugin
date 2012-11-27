@@ -533,10 +533,6 @@ create_location_page(xfceweather_dialog *dialog)
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER/2);
     gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
 
-    /* automatically detect current location if it is yet unknown */
-    if (!(dialog->wd->lat && dialog->wd->lon))
-        start_auto_locate(dialog);
-
     /* set up the altitude spin box and unit label (meters/feet) */
     setup_altitude(dialog);
 
@@ -1305,6 +1301,11 @@ create_config_dialog(xfceweather_data *data,
                              create_scrollbox_page(dialog),
                              gtk_label_new_with_mnemonic("_Scrollbox"));
     setup_notebook_signals(dialog);
+
+    /* automatically detect current location if it is yet unknown */
+    if (!(dialog->wd->lat && dialog->wd->lon))
+        start_auto_locate(dialog);
+
     gtk_box_pack_start(GTK_BOX(vbox), notebook, TRUE, TRUE, 0);
     gtk_widget_show_all(vbox);
     return dialog;
