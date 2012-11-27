@@ -772,29 +772,21 @@ xfceweather_dialog_response(GtkWidget *dlg,
             g_warning(_("Unable to open the following url: %s"),
                       PLUGIN_WEBSITE);
     } else {
-        weather_debug("Applying configuration options.");
-#if 0
-        apply_options(dialog);
-#endif
-        weather_dump(weather_dump_plugindata, data);
-
+        /* free stuff used in config dialog */
         gtk_widget_destroy(dlg);
-
         gtk_list_store_clear(dialog->model_datatypes);
-
         for (i = 0; i < dialog->icon_themes->len; i++) {
             theme = g_array_index(dialog->icon_themes, icon_theme*, i);
             icon_theme_free(theme);
             g_array_free(dialog->icon_themes, TRUE);
         }
-
         g_slice_free(xfceweather_dialog, dialog);
 
         xfce_panel_plugin_unblock_menu(data->plugin);
-#if 0
-        xfceweather_write_config(data->plugin, data);
-#endif
 
+        weather_debug("Saving configuration options.");
+        xfceweather_write_config(data->plugin, data);
+        weather_dump(weather_dump_plugindata, data);
     }
 }
 
