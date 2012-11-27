@@ -416,8 +416,8 @@ update_weatherdata(xfceweather_data *data)
         /* build url */
         url =
             g_strdup_printf("http://api.yr.no/weatherapi"
-                            "/locationforecastlts/1.1/?lat=%s;lon=%s",
-                            data->lat, data->lon);
+                            "/locationforecastlts/1.1/?lat=%s;lon=%s;msl=%d",
+                            data->lat, data->lon, data->msl);
 
         /* start receive thread */
         g_message("getting %s", url);
