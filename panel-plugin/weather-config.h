@@ -56,7 +56,6 @@ typedef struct {
     GtkWidget *check_round_values;
     GtkWidget *check_interpolate_data;
 
-    GtkWidget *chk_animate_transition;
     /* scrollbox page */
     GtkWidget *check_scrollbox_show;
     GtkWidget *spin_scrollbox_lines;
