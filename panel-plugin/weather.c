@@ -834,7 +834,7 @@ weather_get_tooltip_text(const xfceweather_data *data)
     xml_time *conditions;
     struct tm *point_tm, *start_tm, *end_tm, *sunrise_tm, *sunset_tm;
     gchar *text, *sym, *symbol, *alt, *lat, *lon, *temp;
-    gchar *windspeed, *windbeau, *winddir, *winddeg;
+    gchar *windspeed, *windbeau, *winddir, *winddir_trans, *winddeg;
     gchar *pressure, *humidity, *precipitations;
     gchar *fog, *cloudiness, *sunval, *value;
     gchar sunrise[40], sunset[40];
@@ -881,6 +881,7 @@ weather_get_tooltip_text(const xfceweather_data *data)
     DATA_AND_UNIT(windspeed, WIND_SPEED);
     DATA_AND_UNIT(windbeau, WIND_BEAUFORT);
     DATA_AND_UNIT(winddir, WIND_DIRECTION);
+    winddir_trans = translate_wind_direction(winddir);
     DATA_AND_UNIT(winddeg, WIND_DIRECTION_DEG);
     DATA_AND_UNIT(pressure, PRESSURE);
     DATA_AND_UNIT(humidity, HUMIDITY);
@@ -904,7 +905,7 @@ weather_get_tooltip_text(const xfceweather_data *data)
                "<b>Humidity:</b> %s\n"),
              data->location_name, alt,
              translate_desc(sym, data->night_time),
-             temp, windspeed, winddir, pressure, humidity);
+             temp, windspeed, winddir_trans, pressure, humidity);
         break;
 
     case TOOLTIP_VERBOSE:
@@ -935,7 +936,7 @@ weather_get_tooltip_text(const xfceweather_data *data)
              interval_start, interval_end,
              precipitations,
              temp, point,
-             windspeed, windbeau, winddir, winddeg,
+             windspeed, windbeau, winddir_trans, winddeg,
              pressure, humidity,
              fog, cloudiness,
              sunval);
@@ -950,6 +951,7 @@ weather_get_tooltip_text(const xfceweather_data *data)
     g_free(temp);
     g_free(windspeed);
     g_free(windbeau);
+    g_free(winddir_trans);
     g_free(winddir);
     g_free(winddeg);
     g_free(pressure);
