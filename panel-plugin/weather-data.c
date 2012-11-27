@@ -115,10 +115,13 @@ get_data(const xml_time *timeslice,
         switch (units->pressure) {
         case INCH_MERCURY:
             val *= 0.03;
+            break;
         case PSI:
             val *= 0.01450378911491;
+            break;
         case TORR:
             val /= 1.333224;
+            break;
         }
         return g_strdup_printf(ROUND_TO_INT("%.1f"), val);
 
@@ -127,8 +130,10 @@ get_data(const xml_time *timeslice,
         switch (units->windspeed) {
         case KMH:
             val *= 3.6;
+            break;
         case MPH:
             val *= 2.2369362920544;
+            break;
         }
         return g_strdup_printf(ROUND_TO_INT("%.1f"), val);
 
