@@ -661,14 +661,16 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
 }
 
 
-static void
+void
 update_weatherdata_with_reset(xfceweather_data *data)
 {
     if (data->updatetimeout)
         g_source_remove(data->updatetimeout);
 
-    data->last_data_update = 0;
-    data->last_conditions_update = 0;
+    memset(&data->last_data_update, 0, sizeof(data->last_data_update));
+    memset(&data->last_astro_update, 0, sizeof(data->last_astro_update));
+    memset(&data->last_conditions_update, 0,
+           sizeof(data->last_conditions_update));
     update_weatherdata(data);
 
     data->updatetimeout =

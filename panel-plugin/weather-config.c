@@ -32,7 +32,7 @@
 #include "weather-scrollbox.h"
 
 #define GEONAMES_USERNAME "xfce4weatherplugin"
-#define UPDATE_TIMER_DELAY 3
+#define UPDATE_TIMER_DELAY 7
 #define OPTIONS_N 13
 #define BORDER 4
 #define LOC_NAME_MAX_LEN 50
@@ -114,18 +114,13 @@ static gboolean
 schedule_data_update(gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    xfceweather_data *data;
 
     if (dialog == NULL)
         return FALSE;
 
+    /* force update of downloaded data */
     weather_debug("Delayed update timer expired, now scheduling data update.");
-
-    /* force update of downloaded data, download will be performed by
-     * main routine */
-    data = dialog->wd;
-    memset(&data->last_data_update, 0, sizeof(data->last_data_update));
-    memset(&data->last_astro_update, 0, sizeof(data->last_astro_update));
+    update_weatherdata_with_reset(dialog->wd);
     gtk_spinner_stop(GTK_SPINNER(dialog->update_spinner));
     return FALSE;
 }
@@ -135,8 +130,13 @@ static void
 schedule_delayed_data_update(xfceweather_dialog *dialog)
 {
     weather_debug("Starting delayed data update.");
+    /* cancel any update that was scheduled before */
     if (dialog->timer_id)
         g_source_remove(dialog->timer_id);
+
+    /* stop any updates that could be performed by weather.c */
+    if (dialog->wd->updatetimeout)
+        g_source_remove(dialog->wd->updatetimeout);
 
     gtk_spinner_start(GTK_SPINNER(dialog->update_spinner));
     dialog->timer_id =
@@ -456,7 +456,6 @@ create_location_page(xfceweather_dialog *dialog)
         gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name), _("Unset"));
     /* update spinner */
     dialog->update_spinner = gtk_spinner_new();
-    gtk_misc_set_alignment(GTK_MISC(dialog->update_spinner), 1, 0.5);
     gtk_box_pack_start(GTK_BOX(hbox), dialog->update_spinner, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(page), hbox, FALSE, FALSE, BORDER);
 
