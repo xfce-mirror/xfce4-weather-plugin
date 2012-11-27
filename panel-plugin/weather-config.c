@@ -659,6 +659,7 @@ check_round_values_toggled(GtkWidget *button,
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     dialog->wd->round =
         gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button));
+    update_scrollbox(dialog->wd);
 }
 
 
