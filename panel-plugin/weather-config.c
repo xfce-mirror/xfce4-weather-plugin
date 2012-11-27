@@ -32,6 +32,7 @@
 #include "weather-scrollbox.h"
 
 #define GEONAMES_USERNAME "xfce4weatherplugin"
+#define UPDATE_TIMER_DELAY 3
 #define OPTIONS_N 13
 #define BORDER 4
 #define LOC_NAME_MAX_LEN 50
@@ -107,6 +108,39 @@ typedef void (*cb_function) (xfceweather_data *);
 static cb_function cb = NULL;
 typedef void (*cb_conf_dialog_function) (xfceweather_dialog *);
 static cb_conf_dialog_function cb_dialog = NULL;
+
+
+static gboolean
+schedule_data_update(gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    xfceweather_data *data;
+
+    if (dialog == NULL)
+        return FALSE;
+
+    weather_debug("Delayed update timer expired, now scheduling data update.");
+
+    /* force update of downloaded data, download will be performed by
+     * main routine */
+    data = dialog->wd;
+    memset(&data->last_data_update, 0, sizeof(data->last_data_update));
+    memset(&data->last_astro_update, 0, sizeof(data->last_astro_update));
+    return FALSE;
+}
+
+
+static void
+schedule_delayed_data_update(xfceweather_dialog *dialog)
+{
+    weather_debug("Starting delayed data update.");
+    if (dialog->timer_id)
+        g_source_remove(dialog->timer_id);
+
+    dialog->timer_id =
+        g_timeout_add_seconds(UPDATE_TIMER_DELAY,
+                              (GSourceFunc) schedule_data_update, dialog);
+}
 
 
 static gchar *
@@ -334,13 +368,14 @@ static void
 spin_lat_value_changed(const GtkWidget *spin,
                        gpointer user_data)
 {
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     gchar latbuf[10];
     gdouble val;
 
-    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     val = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spin));
     g_free(dialog->wd->lat);
     dialog->wd->lat = g_strdup(g_ascii_formatd(latbuf, 10, "%.6f", val));
+    schedule_delayed_data_update(dialog);
 }
 
 
@@ -348,13 +383,14 @@ static void
 spin_lon_value_changed(const GtkWidget *spin,
                        gpointer user_data)
 {
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     gchar lonbuf[10];
     gdouble val;
 
-    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     val = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spin));
     g_free(dialog->wd->lon);
     dialog->wd->lon = g_strdup(g_ascii_formatd(lonbuf, 10, "%.6f", val));
+    schedule_delayed_data_update(dialog);
 }
 
 
@@ -364,10 +400,12 @@ spin_alt_value_changed(const GtkWidget *spin,
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     gdouble val;
+
     val = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spin));
     if (dialog->wd->units->altitude == FEET)
         val *= 0.3048;
     dialog->wd->msl = (gint) val;
+    schedule_delayed_data_update(dialog);
 }
 
 
@@ -376,6 +414,7 @@ spin_timezone_value_changed(const GtkWidget *spin,
                             gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+
     dialog->wd->timezone =
         gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spin));
 }

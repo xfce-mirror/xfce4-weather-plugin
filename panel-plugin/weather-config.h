@@ -28,6 +28,8 @@ typedef struct {
 
 typedef struct {
     GtkWidget *dialog;
+    xfceweather_data *wd;
+    guint timer_id;
 
     /* location page */
     GtkWidget *text_loc_name;
@@ -63,8 +65,6 @@ typedef struct {
     GtkWidget *list_datatypes;           /* labels to show */
     GtkListStore *model_datatypes;       /* model for labels */
     GtkWidget *check_scrollbox_animate;
-
-    xfceweather_data *wd;
 } xfceweather_dialog;
 
 
