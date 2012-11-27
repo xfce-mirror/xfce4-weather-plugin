@@ -402,12 +402,18 @@ weather_dump_plugindata(const xfceweather_data *data)
                            "  last data update: %s\n"
                            "  last conditions update: %s\n"
                            "  --------------------------------------------\n"
+                           "  location name: %s\n"
                            "  latitude: %s\n"
                            "  longitude: %s\n"
-                           "  location name: %s\n"
+                           "  msl: %d\n"
+                           "  timezone: %d\n"
                            "  night time: %s\n"
                            "  --------------------------------------------\n"
+                           "  icon theme dir: %s\n"
+                           "  tooltip style: %d\n"
+                           "  forecast layout: %d\n"
                            "  forecast days: %d\n"
+                           "  round values: %s\n"
                            "  --------------------------------------------\n"
                            "  show scrollbox: %s\n"
                            "  scrollbox lines: %d\n"
@@ -423,11 +429,17 @@ weather_dump_plugindata(const xfceweather_data *data)
                            last_astro_update,
                            last_data_update,
                            last_conditions_update,
+                           data->location_name,
                            data->lat,
                            data->lon,
-                           data->location_name,
+                           data->msl,
+                           data->timezone,
                            YESNO(data->night_time),
+                           (data->icon_theme) ? (data->icon_theme->dir) : NULL,
+                           data->tooltip_style,
+                           data->forecast_layout,
                            data->forecast_days,
+                           YESNO(data->round),
                            YESNO(data->show_scrollbox),
                            data->scrollbox_lines,
                            data->scrollbox_font,

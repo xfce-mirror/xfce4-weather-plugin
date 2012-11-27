@@ -51,17 +51,18 @@ typedef struct {
     GtkWidget *vbox_center_scrollbox;
     GtkWidget *iconimage;
     GtkWidget *tooltipbox;
-
     GtkWidget *summary_window;
 
     gint panel_size;
     gint size;
     GtkOrientation orientation;
     GtkOrientation panel_orientation;
-    gint updatetimeout;
+    xml_weather *weatherdata;
+    xml_astro *astrodata;
     time_t last_astro_update;
     time_t last_data_update;
     time_t last_conditions_update;
+    gint updatetimeout;
 
     GtkWidget *scrollbox;
     gboolean show_scrollbox;
@@ -72,24 +73,20 @@ typedef struct {
     gboolean scrollbox_animate;
     GArray *labels;
 
-    icon_theme *icon_theme;
-
     gchar *location_name;
     gchar *lat;
     gchar *lon;
     gint msl;
     gint timezone;
-
-    units_config *units;
-    gboolean round;
-    tooltip_styles tooltip_style;
-
-    xml_weather *weatherdata;
-    xml_astro *astrodata;
     gboolean night_time;
 
+    units_config *units;
+
+    icon_theme *icon_theme;
+    tooltip_styles tooltip_style;
     forecast_layouts forecast_layout;
     gint forecast_days;
+    gboolean round;
 } xfceweather_data;
 
 
