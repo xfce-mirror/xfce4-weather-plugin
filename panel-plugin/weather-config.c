@@ -109,6 +109,9 @@ static cb_function cb = NULL;
 typedef void (*cb_conf_dialog_function) (xfceweather_dialog *);
 static cb_conf_dialog_function cb_dialog = NULL;
 
+static void
+spin_alt_value_changed(const GtkWidget *spin,
+                       gpointer user_data);
 
 static gboolean
 schedule_data_update(gpointer user_data)
@@ -338,21 +341,28 @@ cb_findlocation(GtkButton *button,
 static void
 setup_altitude(xfceweather_dialog *dialog)
 {
+    g_signal_handlers_block_by_func(dialog->spin_alt,
+                                    G_CALLBACK(spin_alt_value_changed),
+                                    dialog);
     switch (dialog->wd->units->altitude) {
     case METERS:
         gtk_label_set_text(GTK_LABEL(dialog->label_alt_unit),
                            _("meters"));
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_alt),
                                   (gdouble) (dialog->wd->msl));
-        return;
+        break;
 
     case FEET:
         gtk_label_set_text(GTK_LABEL(dialog->label_alt_unit),
                            _("feet"));
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_alt),
                                   (gdouble) dialog->wd->msl / 0.3048);
-        return;
+        break;
     }
+    g_signal_handlers_unblock_by_func(dialog->spin_alt,
+                                      G_CALLBACK(spin_alt_value_changed),
+                                      dialog);
+    return;
 }
 
 
