@@ -242,9 +242,9 @@ find_themes_in_dir(const gchar *path)
             }
         }
         g_dir_close(dir);
+        weather_debug("Found %d icon theme(s) in %s.", themes->len, path);
     } else
         weather_debug("Could not list directory %s.", path);
-    weather_debug("Found %d icon theme(s) in %s.", themes->len, path);
     return themes;
 }
 
@@ -266,17 +266,20 @@ find_icon_themes(void)
                       "xfce4", G_DIR_SEPARATOR_S, "weather",
                       G_DIR_SEPARATOR_S, "icons", NULL);
     found = find_themes_in_dir(dir);
-
     g_free(dir);
-    if (found->len > 0)
-        themes = g_array_append_vals(themes, found->data, found->len);
-    g_array_free(found, FALSE);
+    if (found) {
+        if (found->len > 0)
+            themes = g_array_append_vals(themes, found->data, found->len);
+        g_array_free(found, FALSE);
+    }
 
     /* next find themes in system directory */
     found = find_themes_in_dir(THEMESDIR);
-    if (found->len > 0)
-        themes = g_array_append_vals(themes, found->data, found->len);
-    g_array_free(found, FALSE);
+    if (found) {
+        if (found->len > 0)
+            themes = g_array_append_vals(themes, found->data, found->len);
+        g_array_free(found, FALSE);
+    }
 
     weather_debug("Found %d icon themes in total.", themes->len, dir);
     return themes;
