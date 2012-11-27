@@ -126,6 +126,7 @@ schedule_data_update(gpointer user_data)
     data = dialog->wd;
     memset(&data->last_data_update, 0, sizeof(data->last_data_update));
     memset(&data->last_astro_update, 0, sizeof(data->last_astro_update));
+    gtk_spinner_stop(GTK_SPINNER(dialog->update_spinner));
     return FALSE;
 }
 
@@ -137,6 +138,7 @@ schedule_delayed_data_update(xfceweather_dialog *dialog)
     if (dialog->timer_id)
         g_source_remove(dialog->timer_id);
 
+    gtk_spinner_start(GTK_SPINNER(dialog->update_spinner));
     dialog->timer_id =
         g_timeout_add_seconds(UPDATE_TIMER_DELAY,
                               (GSourceFunc) schedule_data_update, dialog);
@@ -447,12 +449,16 @@ create_location_page(xfceweather_dialog *dialog)
                      G_CALLBACK(cb_findlocation), dialog);
     gtk_box_pack_start(GTK_BOX(hbox), button_loc_change,
                        FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(page), hbox, FALSE, FALSE, BORDER);
     if (dialog->wd->location_name)
         gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name),
                            dialog->wd->location_name);
     else
         gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name), _("Unset"));
+    /* update spinner */
+    dialog->update_spinner = gtk_spinner_new();
+    gtk_misc_set_alignment(GTK_MISC(dialog->update_spinner), 1, 0.5);
+    gtk_box_pack_start(GTK_BOX(hbox), dialog->update_spinner, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(page), hbox, FALSE, FALSE, BORDER);
 
     /* latitude */
     vbox = gtk_vbox_new(FALSE, BORDER);

@@ -38,6 +38,7 @@ typedef struct {
     GtkWidget *spin_alt;
     GtkWidget *label_alt_unit;
     GtkWidget *spin_timezone;
+    GtkWidget *update_spinner;
 
     /* units page */
     GtkWidget *combo_unit_temperature;
