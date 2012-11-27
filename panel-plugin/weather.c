@@ -681,13 +681,6 @@ update_weatherdata_with_reset(xfceweather_data *data)
 
 
 static void
-update_config(xfceweather_data *data)
-{
-    update_weatherdata_with_reset(data);
-}
-
-
-static void
 close_summary(GtkWidget *widget,
               gpointer *user_data)
 {
@@ -820,12 +813,8 @@ xfceweather_create_options(XfcePanelPlugin *plugin,
     gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), vbox, TRUE, TRUE, 0);
 
     dialog = create_config_dialog(data, vbox);
-
     g_signal_connect(G_OBJECT(dlg), "response",
                      G_CALLBACK(xfceweather_dialog_response), dialog);
-
-    set_callback_config_dialog(dialog, update_config);
-
     gtk_widget_show(dlg);
 }
 

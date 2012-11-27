@@ -72,11 +72,6 @@ typedef struct {
 xfceweather_dialog *create_config_dialog(xfceweather_data *data,
                                          GtkWidget *vbox);
 
-void set_callback_config_dialog(xfceweather_dialog *dialog,
-                                void (cb) (xfceweather_data *data));
-
-void apply_options(xfceweather_dialog *dialog);
-
 G_END_DECLS
 
 #endif

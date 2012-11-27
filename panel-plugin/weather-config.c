@@ -104,14 +104,10 @@ static const labeloption labeloptions[OPTIONS_N] = {
     {N_("Precipitations (R)"), PRECIPITATIONS},
 };
 
-typedef void (*cb_function) (xfceweather_data *);
-static cb_function cb = NULL;
-typedef void (*cb_conf_dialog_function) (xfceweather_dialog *);
-static cb_conf_dialog_function cb_dialog = NULL;
-
 static void
 spin_alt_value_changed(const GtkWidget *spin,
                        gpointer user_data);
+
 
 static gboolean
 schedule_data_update(gpointer user_data)
@@ -1294,12 +1290,4 @@ create_config_dialog(xfceweather_data *data,
     gtk_box_pack_start(GTK_BOX(vbox), notebook, TRUE, TRUE, 0);
     gtk_widget_show_all(vbox);
     return dialog;
-}
-
-
-void
-set_callback_config_dialog(xfceweather_dialog *dialog,
-                           cb_function cb_new)
-{
-    cb = cb_new;
 }
