@@ -161,7 +161,7 @@ make_label(const xfceweather_data *data,
 }
 
 
-static void
+void
 update_icon(xfceweather_data *data)
 {
     GdkPixbuf *icon = NULL;
@@ -759,7 +759,9 @@ xfceweather_dialog_response(GtkWidget *dlg,
                             xfceweather_dialog *dialog)
 {
     xfceweather_data *data = (xfceweather_data *) dialog->wd;
+    icon_theme *theme;
     gboolean result;
+    guint i;
 
     if (response == GTK_RESPONSE_HELP) {
         /* show help */
@@ -779,6 +781,12 @@ xfceweather_dialog_response(GtkWidget *dlg,
         gtk_widget_destroy(dlg);
 
         gtk_list_store_clear(dialog->model_datatypes);
+
+        for (i = 0; i < dialog->icon_themes->len; i++) {
+            theme = g_array_index(dialog->icon_themes, icon_theme*, i);
+            icon_theme_free(theme);
+            g_array_free(dialog->icon_themes, TRUE);
+        }
 
         g_slice_free(xfceweather_dialog, dialog);
 

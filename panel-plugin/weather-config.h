@@ -46,6 +46,7 @@ typedef struct {
 
     /* appearance page */
     GtkWidget *combo_icon_theme;
+    GArray *icon_themes;
     GtkWidget *combo_tooltip_style;
     GtkWidget *combo_forecast_layout;
     GtkWidget *spin_forecast_days;

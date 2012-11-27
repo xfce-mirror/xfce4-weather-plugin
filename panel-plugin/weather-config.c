@@ -697,6 +697,28 @@ create_units_page(xfceweather_dialog *dialog)
 
 
 static void
+combo_icon_theme_changed(GtkWidget *combo,
+                         gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    icon_theme *theme;
+    gint i;
+
+    i = gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+    if (G_UNLIKELY(i == -1))
+        return;
+
+    theme = g_array_index(dialog->icon_themes, icon_theme*, i);
+    if (G_UNLIKELY(theme == NULL))
+        return;
+
+    icon_theme_free(dialog->wd->icon_theme);
+    dialog->wd->icon_theme = icon_theme_copy(theme);
+    update_icon(dialog->wd);
+}
+
+
+static void
 combo_tooltip_style_changed(GtkWidget *combo,
                             gpointer user_data)
 {
@@ -740,6 +762,8 @@ create_appearance_page(xfceweather_dialog *dialog)
 {
     GtkWidget *palign, *page, *hbox, *vbox, *label;
     GtkSizeGroup *sg;
+    icon_theme *theme;
+    guint i;
 
     ADD_PAGE(TRUE);
     sg = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
@@ -749,8 +773,18 @@ create_appearance_page(xfceweather_dialog *dialog)
     hbox = gtk_hbox_new(FALSE, BORDER);
     ADD_LABEL(_("_Icon theme:"), sg);
     ADD_COMBO(dialog->combo_icon_theme);
-    ADD_COMBO_VALUE(dialog->combo_icon_theme, "Liquid");
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+    dialog->icon_themes = find_icon_themes();
+    for (i = 0; i < dialog->icon_themes->len; i++) {
+        theme = g_array_index(dialog->icon_themes, icon_theme*, i);
+        ADD_COMBO_VALUE(dialog->combo_icon_theme, theme->name);
+        /* set selection to current theme */
+        if (G_LIKELY(dialog->wd->icon_theme) &&
+            !strcmp(theme->dir, dialog->wd->icon_theme->dir))
+            SET_COMBO_VALUE(dialog->combo_icon_theme, i);
+    }
+    g_signal_connect(dialog->combo_icon_theme, "changed",
+                     G_CALLBACK(combo_icon_theme_changed), dialog);
 
     /* tooltip style */
     hbox = gtk_hbox_new(FALSE, BORDER);
