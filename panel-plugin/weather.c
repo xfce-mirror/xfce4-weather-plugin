@@ -132,9 +132,6 @@ make_label(const xfceweather_data *data,
     case WIND_DIRECTION:
         value = translate_wind_direction(rawvalue);
         break;
-    case WIND_SPEED:
-        value = translate_wind_speed(rawvalue, data->units);
-        break;
     default:
         value = NULL;
         break;

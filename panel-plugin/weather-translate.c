@@ -273,22 +273,3 @@ translate_wind_direction(const gchar *wdir)
     }
     return wdir_loc;
 }
-
-
-/* Return "calm", "N/A" or a number */
-gchar *
-translate_wind_speed(const gchar *wspeed,
-                     const units_config *units)
-{
-    gchar *wspeed_loc;
-
-    if (g_ascii_strcasecmp(wspeed, "calm") == 0)
-        wspeed_loc = g_strdup(_("calm"));
-    else if (g_ascii_strcasecmp(wspeed, "N/A") == 0)
-        wspeed_loc = g_strdup(_("N/A"));
-    else {
-        wspeed_loc =
-            g_strdup_printf("%s %s", wspeed, get_unit(units, WIND_SPEED));
-    }
-    return wspeed_loc;
-}

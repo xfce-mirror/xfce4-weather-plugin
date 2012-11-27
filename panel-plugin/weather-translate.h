@@ -34,9 +34,6 @@ gchar *translate_day(gint weekday);
 
 gchar *translate_wind_direction(const gchar *wdir);
 
-gchar *translate_wind_speed(const gchar *wspeed,
-                            const units_config *units);
-
 G_END_DECLS
 
 #endif
