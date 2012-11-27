@@ -211,6 +211,104 @@ icon_theme_load(const gchar *dir)
 }
 
 
+static GArray *
+find_themes_in_dir(const gchar *path)
+{
+    GArray *themes = NULL;
+    GDir *dir;
+    icon_theme *theme;
+    gchar *themedir;
+    const gchar *dirname;
+
+    g_assert(path != NULL);
+    if (G_UNLIKELY(path == NULL))
+        return NULL;
+
+    weather_debug("Looking for icon themes in %s.", path);
+    dir = g_dir_open(path, 0, NULL);
+    if (dir) {
+        themes = g_array_new(FALSE, TRUE, sizeof(icon_theme*));
+
+        while (dirname = g_dir_read_name(dir)) {
+            themedir = g_strdup_printf("%s" G_DIR_SEPARATOR_S "%s",
+                                       path, dirname);
+            theme = icon_theme_load_info(themedir);
+            g_free(themedir);
+
+            if (theme) {
+                themes = g_array_append_val(themes, theme);
+                weather_debug("Found icon theme %s", theme->dir);
+                weather_dump(weather_dump_icon_theme, theme);
+            }
+        }
+        g_dir_close(dir);
+    } else
+        weather_debug("Could not list directory %s.", path);
+    weather_debug("Found %d icon theme(s) in %s.", themes->len, path);
+    return themes;
+}
+
+
+/*
+ * Find all available themes in user's config dir and at the install
+ * location.
+ */
+GArray *
+find_icon_themes(void)
+{
+    GArray *themes, *found;
+    gchar *dir;
+
+    themes = g_array_new(FALSE, TRUE, sizeof(icon_theme *));
+
+    /* look in user directory first */
+    dir = g_strconcat(g_get_user_config_dir(), G_DIR_SEPARATOR_S,
+                      "xfce4", G_DIR_SEPARATOR_S, "weather",
+                      G_DIR_SEPARATOR_S, "icons", NULL);
+    found = find_themes_in_dir(dir);
+
+    g_free(dir);
+    if (found->len > 0)
+        themes = g_array_append_vals(themes, found->data, found->len);
+    g_array_free(found, FALSE);
+
+    /* next find themes in system directory */
+    found = find_themes_in_dir(THEMESDIR);
+    if (found->len > 0)
+        themes = g_array_append_vals(themes, found->data, found->len);
+    g_array_free(found, FALSE);
+
+    weather_debug("Found %d icon themes in total.", themes->len, dir);
+    return themes;
+}
+
+
+icon_theme *
+icon_theme_copy(icon_theme *src)
+{
+    icon_theme *dst;
+
+    if (G_UNLIKELY(src == NULL))
+        return NULL;
+
+    dst = g_slice_new0(icon_theme);
+    if (G_UNLIKELY(dst == NULL))
+        return NULL;
+
+    if (src->dir)
+        dst->dir = g_strdup(src->dir);
+    if (src->name)
+        dst->name = g_strdup(src->name);
+    if (src->author)
+        dst->author = g_strdup(src->author);
+    if (src->description)
+        dst->description = g_strdup(src->description);
+    if (src->license)
+        dst->license = g_strdup(src->license);
+    return dst;
+}
+
+
 void
 icon_theme_free(icon_theme *theme)
 {

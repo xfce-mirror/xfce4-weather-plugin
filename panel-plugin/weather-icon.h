@@ -39,6 +39,10 @@ icon_theme *icon_theme_load_info(const gchar *dir);
 
 icon_theme *icon_theme_load(const gchar *dir);
 
+GArray *find_icon_themes(void);
+
+icon_theme *icon_theme_copy(icon_theme *src);
+
 void icon_theme_free(icon_theme *theme);
 
 G_END_DECLS
