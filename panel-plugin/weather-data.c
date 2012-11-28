@@ -90,7 +90,7 @@ get_data(const xml_time *timeslice,
         case FEET:
             val = string_to_double(loc->altitude, 0);
             val /= 0.3048;
-            return g_strdup_printf("%.2f", val);
+            return g_strdup_printf(ROUND_TO_INT("%.2f"), val);
         }
 
     case LATITUDE:
