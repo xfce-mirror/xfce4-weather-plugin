@@ -42,6 +42,14 @@ typedef enum {
 } forecast_layouts;
 
 typedef struct {
+    GdkCursor *hand_cursor;
+    GdkCursor *text_cursor;
+    GtkWidget *icon_ebox;
+    GtkWidget *text_view;
+    gboolean on_icon;
+} summary_details;
+
+typedef struct {
     XfcePanelPlugin *plugin;
 
     SoupSession *session;
@@ -52,6 +60,7 @@ typedef struct {
     GtkWidget *iconimage;
     GtkWidget *tooltipbox;
     GtkWidget *summary_window;
+    summary_details *summary_details;
 
     gint panel_size;
     gint size;

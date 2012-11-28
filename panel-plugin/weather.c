@@ -686,6 +686,8 @@ close_summary(GtkWidget *widget,
 {
     xfceweather_data *data = (xfceweather_data *) user_data;
 
+    summary_details_free(data->summary_details);
+    data->summary_details = NULL;
     data->summary_window = NULL;
 }
 

@@ -31,13 +31,6 @@
 #include "weather-icon.h"
 
 
-static GdkCursor *hand_cursor = NULL;
-static GdkCursor *text_cursor = NULL;
-static gboolean on_icon = FALSE;
-static GtkWidget *weather_channel_evt = NULL;
-static GtkTooltips *tooltips = NULL;
-
-
 static gboolean
 lnk_clicked(GtkTextTag *tag,
             GObject *obj,
@@ -127,7 +120,7 @@ icon_clicked (GtkWidget *widget,
 static gboolean
 view_motion_notify(GtkWidget *widget,
                    GdkEventMotion *event,
-                   GtkWidget *view)
+                   summary_details *sum)
 {
     GtkTextIter iter;
     GtkTextTag *tag;
@@ -136,26 +129,28 @@ view_motion_notify(GtkWidget *widget,
     gint bx, by;
 
     if (event->x != -1 && event->y != -1) {
-        gtk_text_view_window_to_buffer_coords(GTK_TEXT_VIEW(view),
+        gtk_text_view_window_to_buffer_coords(GTK_TEXT_VIEW(sum->text_view),
                                               GTK_TEXT_WINDOW_WIDGET,
                                               event->x, event->y, &bx, &by);
-        gtk_text_view_get_iter_at_location(GTK_TEXT_VIEW(view),
+        gtk_text_view_get_iter_at_location(GTK_TEXT_VIEW(sum->text_view),
                                            &iter, bx, by);
         tags = gtk_text_iter_get_tags(&iter);
         for (cur = tags; cur != NULL; cur = cur->next) {
             tag = cur->data;
             if (g_object_get_data(G_OBJECT(tag), "url")) {
-                gdk_window_set_cursor(gtk_text_view_get_window
-                                      (GTK_TEXT_VIEW(view),
-                                       GTK_TEXT_WINDOW_TEXT), hand_cursor);
+                gdk_window_set_cursor
+                    (gtk_text_view_get_window(GTK_TEXT_VIEW(sum->text_view),
+                                              GTK_TEXT_WINDOW_TEXT),
+                     sum->hand_cursor);
                 return FALSE;
             }
         }
     }
-    if (!on_icon)
-        gdk_window_set_cursor(gtk_text_view_get_window(GTK_TEXT_VIEW(view),
-                                                       GTK_TEXT_WINDOW_TEXT),
-                              text_cursor);
+    if (!sum->on_icon)
+        gdk_window_set_cursor
+            (gtk_text_view_get_window(GTK_TEXT_VIEW(sum->text_view),
+                                      GTK_TEXT_WINDOW_TEXT),
+             sum->text_cursor);
     return FALSE;
 }
 
@@ -163,12 +158,13 @@ view_motion_notify(GtkWidget *widget,
 static gboolean
 icon_motion_notify(GtkWidget *widget,
                    GdkEventMotion *event,
-                   GtkWidget *view)
+                   summary_details *sum)
 {
-    on_icon = TRUE;
-    gdk_window_set_cursor(gtk_text_view_get_window(GTK_TEXT_VIEW(view),
-                                                   GTK_TEXT_WINDOW_TEXT),
-                          hand_cursor);
+    sum->on_icon = TRUE;
+    gdk_window_set_cursor
+        (gtk_text_view_get_window(GTK_TEXT_VIEW(sum->text_view),
+                                  GTK_TEXT_WINDOW_TEXT),
+         sum->hand_cursor);
     return FALSE;
 }
 
@@ -176,30 +172,31 @@ icon_motion_notify(GtkWidget *widget,
 static gboolean
 view_leave_notify(GtkWidget *widget,
                   GdkEventMotion *event,
-                  GtkWidget *view)
+                  summary_details *sum)
 {
-    on_icon = FALSE;
-    gdk_window_set_cursor(gtk_text_view_get_window(GTK_TEXT_VIEW(view),
-                                                   GTK_TEXT_WINDOW_TEXT),
-                          text_cursor);
+    sum->on_icon = FALSE;
+    gdk_window_set_cursor
+        (gtk_text_view_get_window(GTK_TEXT_VIEW(sum->text_view),
+                                  GTK_TEXT_WINDOW_TEXT),
+         sum->text_cursor);
     return FALSE;
 }
 
 
 static void
 view_scrolled_cb(GtkAdjustment *adj,
-                 GtkWidget *view)
+                 summary_details *sum)
 {
     gint x, y, x1, y1;
 
-    if (weather_channel_evt) {
-        x1 = view->allocation.width - 191 - 15;
-        y1 = view->requisition.height - 60 - 15;
-        gtk_text_view_buffer_to_window_coords(GTK_TEXT_VIEW(view),
+    if (sum->icon_ebox) {
+        x1 = sum->text_view->allocation.width - 191 - 15;
+        y1 = sum->text_view->requisition.height - 60 - 15;
+        gtk_text_view_buffer_to_window_coords(GTK_TEXT_VIEW(sum->text_view),
                                               GTK_TEXT_WINDOW_TEXT,
                                               x1, y1, &x, &y);
-        gtk_text_view_move_child(GTK_TEXT_VIEW(view),
-                                 weather_channel_evt, x, y);
+        gtk_text_view_move_child(GTK_TEXT_VIEW(sum->text_view),
+                                 sum->icon_ebox, x, y);
     }
 }
 
@@ -209,7 +206,7 @@ view_size_allocate_cb(GtkWidget *widget,
                       GtkAllocation *allocation,
                       gpointer data)
 {
-    view_scrolled_cb(NULL, GTK_WIDGET(data));
+    view_scrolled_cb(NULL, data);
 }
 
 
@@ -282,7 +279,7 @@ create_summary_tab(xfceweather_data *data)
     GtkTextBuffer *buffer;
     GtkTextIter iter;
     GtkTextTag *btag, *ltag0, *ltag1;
-    GtkWidget *view, *frame, *scrolled, *weather_channel_icon;
+    GtkWidget *view, *frame, *scrolled, *icon;
     GtkAdjustment *adj;
     GdkColor lnk_color;
     xml_time *conditions;
@@ -292,8 +289,15 @@ create_summary_tab(xfceweather_data *data)
     gchar *value, *rawvalue, *wind;
     gchar interval_start[80], interval_end[80], point[80];
     gchar sunrise[80], sunset[80], moonrise[80], moonset[80];
+    summary_details *sum;
 
-    view = gtk_text_view_new();
+    sum = g_slice_new0(summary_details);
+    sum->on_icon = FALSE;
+    sum->hand_cursor = gdk_cursor_new(GDK_HAND2);
+    sum->text_cursor = gdk_cursor_new(GDK_XTERM);
+    data->summary_details = sum;
+
+    sum->text_view = view = gtk_text_view_new();
     gtk_text_view_set_editable(GTK_TEXT_VIEW(view), FALSE);
     gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW(view), FALSE);
     gtk_container_set_border_width(GTK_CONTAINER(view), BORDER);
@@ -452,43 +456,38 @@ create_summary_tab(xfceweather_data *data)
     APPEND_LINK_ITEM("\t", _("Thanks to met.no"), "http://met.no/", ltag1);
 
     g_signal_connect(G_OBJECT(view), "motion-notify-event",
-                     G_CALLBACK(view_motion_notify), view);
+                     G_CALLBACK(view_motion_notify), sum);
     g_signal_connect(G_OBJECT(view), "leave-notify-event",
-                     G_CALLBACK(view_leave_notify), view);
+                     G_CALLBACK(view_leave_notify), sum);
 
-    weather_channel_icon = weather_summary_get_logo(data);
+    icon = weather_summary_get_logo(data);
 
-    if (weather_channel_icon) {
-        weather_channel_evt = gtk_event_box_new();
-        gtk_container_add(GTK_CONTAINER(weather_channel_evt),
-                          weather_channel_icon);
+    if (icon) {
+        sum->icon_ebox = gtk_event_box_new();
+        gtk_container_add(GTK_CONTAINER(sum->icon_ebox),
+                          icon);
         gtk_text_view_add_child_in_window(GTK_TEXT_VIEW(view),
-                                          weather_channel_evt,
+                                          sum->icon_ebox,
                                           GTK_TEXT_WINDOW_TEXT, 0, 0);
-        gtk_widget_show_all(weather_channel_evt);
+        gtk_widget_show_all(sum->icon_ebox);
         adj =
             gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(scrolled));
         g_signal_connect(G_OBJECT(adj), "value-changed",
-                         G_CALLBACK(view_scrolled_cb), view);
+                         G_CALLBACK(view_scrolled_cb), sum);
         g_signal_connect(G_OBJECT(view), "size_allocate",
-                         G_CALLBACK(view_size_allocate_cb),
-                         view);
-        g_signal_connect(G_OBJECT(weather_channel_evt), "button-release-event",
-                         G_CALLBACK(icon_clicked),
-                         ltag0);
-        g_signal_connect(G_OBJECT(weather_channel_evt), "enter-notify-event",
-                         G_CALLBACK(icon_motion_notify), view);
-        g_signal_connect(G_OBJECT(weather_channel_evt), "visibility-notify-event",
-                         G_CALLBACK(icon_motion_notify), view);
-        g_signal_connect(G_OBJECT(weather_channel_evt), "motion-notify-event",
-                         G_CALLBACK(icon_motion_notify), view);
-        g_signal_connect(G_OBJECT(weather_channel_evt), "leave-notify-event",
-                         G_CALLBACK(view_leave_notify), view);
+                         G_CALLBACK(view_size_allocate_cb), sum);
+        g_signal_connect(G_OBJECT(sum->icon_ebox), "button-release-event",
+                         G_CALLBACK(icon_clicked), ltag0);
+        g_signal_connect(G_OBJECT(sum->icon_ebox), "enter-notify-event",
+                         G_CALLBACK(icon_motion_notify), sum);
+        g_signal_connect(G_OBJECT(sum->icon_ebox), "visibility-notify-event",
+                         G_CALLBACK(icon_motion_notify), sum);
+        g_signal_connect(G_OBJECT(sum->icon_ebox), "motion-notify-event",
+                         G_CALLBACK(icon_motion_notify), sum);
+        g_signal_connect(G_OBJECT(sum->icon_ebox), "leave-notify-event",
+                         G_CALLBACK(view_leave_notify), sum);
     }
-    if (hand_cursor == NULL)
-        hand_cursor = gdk_cursor_new(GDK_HAND2);
-    if (text_cursor == NULL)
-        text_cursor = gdk_cursor_new(GDK_XTERM);
+
     return frame;
 }
 
@@ -853,4 +852,22 @@ create_summary_window (xfceweather_data *data)
                      G_CALLBACK(summary_dialog_response), window);
 
     return window;
+}
+
+
+void
+summary_details_free(summary_details *sum)
+{
+    g_assert(sum != NULL);
+    if (G_UNLIKELY(sum == NULL))
+        return;
+
+    sum->icon_ebox = NULL;
+    sum->text_view = NULL;
+    if (sum->hand_cursor)
+        gdk_cursor_unref(sum->hand_cursor);
+    sum->hand_cursor = NULL;
+    if (sum->text_cursor)
+        gdk_cursor_unref(sum->text_cursor);
+    sum->text_cursor = NULL;
 }
