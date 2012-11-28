@@ -196,9 +196,12 @@ cb_lookup_altitude(SoupSession *session,
     if (altitude) {
         alt = string_to_double(altitude->altitude, -9999);
         weather_debug("Altitude returned by GeoNames: %.0f meters", alt);
-        if (alt >= -420)
+        if (alt >= -420) {
+            if (dialog->wd->units->altitude == FEET)
+                alt /= 0.3048;
             gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_alt),
                                       alt);
+        }
         xml_altitude_free(altitude);
     }
 }
