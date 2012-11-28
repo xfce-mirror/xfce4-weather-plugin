@@ -300,7 +300,6 @@ create_summary_tab(xfceweather_data *data)
     sum->text_view = view = gtk_text_view_new();
     gtk_text_view_set_editable(GTK_TEXT_VIEW(view), FALSE);
     gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW(view), FALSE);
-    gtk_container_set_border_width(GTK_CONTAINER(view), BORDER);
     frame = gtk_frame_new(NULL);
     scrolled = gtk_scrolled_window_new(NULL, NULL);
 
