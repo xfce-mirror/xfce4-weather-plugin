@@ -479,8 +479,6 @@ create_summary_tab(xfceweather_data *data)
                          G_CALLBACK(icon_clicked), ltag0);
         g_signal_connect(G_OBJECT(sum->icon_ebox), "enter-notify-event",
                          G_CALLBACK(icon_motion_notify), sum);
-        g_signal_connect(G_OBJECT(sum->icon_ebox), "visibility-notify-event",
-                         G_CALLBACK(icon_motion_notify), sum);
         g_signal_connect(G_OBJECT(sum->icon_ebox), "motion-notify-event",
                          G_CALLBACK(icon_motion_notify), sum);
         g_signal_connect(G_OBJECT(sum->icon_ebox), "leave-notify-event",
