@@ -464,8 +464,8 @@ create_summary_tab(xfceweather_data *data)
 
     if (icon) {
         sum->icon_ebox = gtk_event_box_new();
-        gtk_container_add(GTK_CONTAINER(sum->icon_ebox),
-                          icon);
+        gtk_event_box_set_visible_window(GTK_EVENT_BOX(sum->icon_ebox), FALSE);
+        gtk_container_add(GTK_CONTAINER(sum->icon_ebox), icon);
         gtk_text_view_add_child_in_window(GTK_TEXT_VIEW(view),
                                           sum->icon_ebox,
                                           GTK_TEXT_WINDOW_TEXT, 0, 0);
