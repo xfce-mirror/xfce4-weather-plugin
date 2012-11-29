@@ -38,8 +38,7 @@ typedef enum {
     CLOUDINESS,
     FOG,
     PRECIPITATIONS,
-    SYMBOL,
-    TEMPERATURE_RAW
+    SYMBOL
 } data_types;
 
 typedef enum {
