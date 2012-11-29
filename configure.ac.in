@@ -69,6 +69,16 @@ XDT_CHECK_PACKAGE([SOUP], [libsoup-2.4], [2.26.0])
 AC_CHECK_LIB(resolv, res_query, [LIBRESOLV=-lresolv])
 AC_SUBST(LIBRESOLV)
 
+dnl ************************************
+dnl *** Special compile time options ***
+dnl ************************************
+AC_ARG_VAR([GEONAMES_USERNAME], [Username for the GeoNames webservice.
+          Please register your own if you're going to distribute the
+          package, as requests are limited per hour and day.
+          See README for further information.])
+AS_IF([test "x$GEONAMES_USERNAME" = x], [GEONAMES_USERNAME="xfce4weatherplugin"])
+
+
 dnl ***********************************
 dnl *** Check for debugging support ***
 dnl ***********************************

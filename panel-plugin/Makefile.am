@@ -1,6 +1,7 @@
 INCLUDES =								\
 	-I$(top_srcdir)							\
 	-DTHEMESDIR=\"$(datadir)/xfce4/weather/icons\" 			\
+	-DGEONAMES_USERNAME=\"@GEONAMES_USERNAME@\" 			\
 	-DPACKAGE_LOCALE_DIR=\"$(localedir)\"				\
 	-DG_LOG_DOMAIN=\"weather\"
 

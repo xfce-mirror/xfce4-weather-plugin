@@ -31,7 +31,6 @@
 #include "weather-search.h"
 #include "weather-scrollbox.h"
 
-#define GEONAMES_USERNAME "xfce4weatherplugin"
 #define UPDATE_TIMER_DELAY 7
 #define OPTIONS_N 13
 #define BORDER 4
