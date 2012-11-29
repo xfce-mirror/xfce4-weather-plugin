@@ -109,6 +109,33 @@ spin_alt_value_changed(const GtkWidget *spin,
                        gpointer user_data);
 
 
+static void
+update_summary_window(xfceweather_dialog *dialog,
+                      gboolean restore_position)
+{
+    if (dialog->wd->summary_window) {
+        guint x, y;
+
+        /* remember position */
+        if (restore_position)
+            gtk_window_get_position(GTK_WINDOW(dialog->wd->summary_window),
+                                    &x, &y);
+
+        /* call toggle function two times to close and open dialog */
+        forecast_click(dialog->wd->summary_window, dialog->wd);
+        forecast_click(dialog->wd->summary_window, dialog->wd);
+
+        /* ask wm to restore position of new window */
+        if (restore_position)
+            gtk_window_move(GTK_WINDOW(dialog->wd->summary_window), x, y);
+
+        /* bring config dialog to the front, it might have been hidden
+         * beneath the summary window */
+        gtk_window_present(GTK_WINDOW(dialog->dialog));
+    }
+}
+
+
 static gboolean
 schedule_data_update(gpointer user_data)
 {
@@ -533,6 +560,7 @@ combo_unit_temperature_changed(GtkWidget *combo,
     dialog->wd->units->temperature =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
     update_scrollbox(dialog->wd);
+    update_summary_window(dialog, TRUE);
 }
 
 
@@ -544,6 +572,7 @@ combo_unit_pressure_changed(GtkWidget *combo,
     dialog->wd->units->pressure =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
     update_scrollbox(dialog->wd);
+    update_summary_window(dialog, TRUE);
 }
 
 
@@ -555,6 +584,7 @@ combo_unit_windspeed_changed(GtkWidget *combo,
     dialog->wd->units->windspeed =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
     update_scrollbox(dialog->wd);
+    update_summary_window(dialog, TRUE);
 }
 
 
@@ -566,6 +596,7 @@ combo_unit_precipitations_changed(GtkWidget *combo,
     dialog->wd->units->precipitations =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
     update_scrollbox(dialog->wd);
+    update_summary_window(dialog, TRUE);
 }
 
 
@@ -578,6 +609,7 @@ combo_unit_altitude_changed(GtkWidget *combo,
     dialog->wd->units->altitude =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
     setup_altitude(dialog);
+    update_summary_window(dialog, TRUE);
 }
 
 
@@ -674,6 +706,7 @@ combo_icon_theme_changed(GtkWidget *combo,
     icon_theme_free(dialog->wd->icon_theme);
     dialog->wd->icon_theme = icon_theme_copy(theme);
     update_icon(dialog->wd);
+    update_summary_window(dialog, TRUE);
 }
 
 
@@ -693,6 +726,7 @@ combo_forecast_layout_changed(GtkWidget *combo,
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     dialog->wd->forecast_layout =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+    update_summary_window(dialog, FALSE);
 }
 
 
@@ -703,6 +737,7 @@ spin_forecast_days_value_changed(const GtkWidget *spin,
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     dialog->wd->forecast_days =
         gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spin));
+    update_summary_window(dialog, FALSE);
 }
 
 
@@ -714,6 +749,7 @@ check_round_values_toggled(GtkWidget *button,
     dialog->wd->round =
         gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button));
     update_scrollbox(dialog->wd);
+    update_summary_window(dialog, TRUE);
 }
 
 

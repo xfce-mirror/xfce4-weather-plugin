@@ -692,7 +692,7 @@ close_summary(GtkWidget *widget,
 }
 
 
-static void
+void
 forecast_click(GtkWidget *widget,
                gpointer user_data)
 {

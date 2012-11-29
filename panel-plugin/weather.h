@@ -108,6 +108,9 @@ void weather_http_queue_request(SoupSession *session,
 
 void scrollbox_set_visible(xfceweather_data *data);
 
+void forecast_click(GtkWidget *widget,
+                    gpointer user_data);
+
 void update_icon(xfceweather_data *data);
 
 void update_scrollbox(xfceweather_data *data);
