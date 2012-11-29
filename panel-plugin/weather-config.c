@@ -148,6 +148,7 @@ schedule_data_update(gpointer user_data)
     weather_debug("Delayed update timer expired, now scheduling data update.");
     update_weatherdata_with_reset(dialog->wd);
     gtk_spinner_stop(GTK_SPINNER(dialog->update_spinner));
+    gtk_widget_hide(GTK_WIDGET(dialog->update_spinner));
     return FALSE;
 }
 
@@ -164,6 +165,7 @@ schedule_delayed_data_update(xfceweather_dialog *dialog)
     if (dialog->wd->updatetimeout)
         g_source_remove(dialog->wd->updatetimeout);
 
+    gtk_widget_show(GTK_WIDGET(dialog->update_spinner));
     gtk_spinner_start(GTK_SPINNER(dialog->update_spinner));
     dialog->timer_id =
         g_timeout_add_seconds(UPDATE_TIMER_DELAY,
@@ -1328,5 +1330,6 @@ create_config_dialog(xfceweather_data *data,
 
     gtk_box_pack_start(GTK_BOX(vbox), notebook, TRUE, TRUE, 0);
     gtk_widget_show_all(vbox);
+    gtk_widget_hide(GTK_WIDGET(dialog->update_spinner));
     return dialog;
 }
