@@ -77,6 +77,10 @@
     g_signal_connect(G_OBJECT(button), "clicked",                   \
                      G_CALLBACK(cb_func), dialog);
 
+#define SET_TOOLTIP(widget, text)                           \
+    gtk_widget_set_tooltip_text(GTK_WIDGET(widget), text);
+
+#define TEXT_UNKNOWN(text) (text ? text : "-")
 
 static const labeloption labeloptions[OPTIONS_N] = {
     /*
@@ -483,10 +487,16 @@ create_location_page(xfceweather_dialog *dialog)
                              LOC_NAME_MAX_LEN);
     gtk_label_set_mnemonic_widget(GTK_LABEL(label),
                                   GTK_WIDGET(dialog->text_loc_name));
+    SET_TOOLTIP(dialog->text_loc_name,
+                _("Change the name for the location to your liking. "
+                  "It is used for display and does not affect the location "
+                  "parameters in any way."));
     gtk_box_pack_start(GTK_BOX(hbox), dialog->text_loc_name, TRUE, TRUE, 0);
     button_loc_change = gtk_button_new_with_mnemonic(_("Chan_ge..."));
     image = gtk_image_new_from_stock(GTK_STOCK_FIND, GTK_ICON_SIZE_BUTTON);
     gtk_button_set_image(GTK_BUTTON(button_loc_change), image);
+    SET_TOOLTIP(button_loc_change, _("Search for a new location and "
+                                     "auto-detect its parameters."));
     g_signal_connect(G_OBJECT(button_loc_change), "clicked",
                      G_CALLBACK(cb_findlocation), dialog);
     gtk_box_pack_start(GTK_BOX(hbox), button_loc_change,
@@ -507,6 +517,10 @@ create_location_page(xfceweather_dialog *dialog)
     ADD_LABEL(_("Latitud_e:"), sg_label);
     ADD_SPIN(dialog->spin_lat, -90, 90, 1,
              (string_to_double(dialog->wd->lat, 0)), 6, sg_spin);
+    SET_TOOLTIP(dialog->spin_lat,
+                _("Latitude specifies the north-south position of a point on "
+                  "the Earth's surface. If you change this value manually, "
+                  "you need to provide altitude and timezone manually too."));
     label = gtk_label_new("°");
     gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
     gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
@@ -517,6 +531,10 @@ create_location_page(xfceweather_dialog *dialog)
     ADD_LABEL(_("L_ongitude:"), sg_label);
     ADD_SPIN(dialog->spin_lon, -180, 180, 1,
              (string_to_double(dialog->wd->lon, 0)), 6, sg_spin);
+    SET_TOOLTIP(dialog->spin_lon,
+                _("Longitude specifies the east-west position of a point on "
+                  "the Earth's surface. If you change this value manually, "
+                  "you need to provide altitude and timezone manually too."));
     label = gtk_label_new("°");
     gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
     gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
@@ -526,6 +544,20 @@ create_location_page(xfceweather_dialog *dialog)
     hbox = gtk_hbox_new(FALSE, BORDER);
     ADD_LABEL(_("_Altitude:"), sg_label);
     ADD_SPIN(dialog->spin_alt, -420, 10000, 1, dialog->wd->msl, 0, sg_spin);
+    SET_TOOLTIP
+        (dialog->spin_alt,
+         _("For locations outside Norway the elevation model that's used by "
+           "the met.no webservice is not very good, so it's usually necessary "
+           "to specify the altitude as an additional parameter, otherwise the "
+           "reported values will not be correct.\n\n"
+           "The plugin tries to auto-detect the altitude using the GeoNames "
+           "webservice, but that might not always be correct too, so you "
+           "can change it here.\n\n"
+           "Altitude is given in meters above sea level, or alternatively "
+           "in feet by changing the unit on the units page. It should match "
+           "the real value roughly, but small differences will have no "
+           "influence on the weather data. Inside Norway, this setting has "
+           "no effect at all."));
     dialog->label_alt_unit = gtk_label_new(NULL);
     gtk_misc_set_alignment(GTK_MISC(dialog->label_alt_unit), 0, 0.5);
     gtk_box_pack_start(GTK_BOX(hbox), dialog->label_alt_unit, FALSE, FALSE, 0);
@@ -536,13 +568,21 @@ create_location_page(xfceweather_dialog *dialog)
     ADD_LABEL(_("_Timezone:"), sg_label);
     ADD_SPIN(dialog->spin_timezone, -24, 24, 1,
              dialog->wd->timezone, 0, sg_spin);
+    SET_TOOLTIP
+        (dialog->spin_timezone,
+         _("If the chosen location is not in your current timezone, this "
+           "value which is auto-detected using the EarthTools web service "
+           "will be used for correcting the time differences."));
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
 
     /* instructions for correction of altitude and timezone */
     hbox = gtk_hbox_new(FALSE, BORDER);
-    label = gtk_label_new(_("Please change location name to your liking and "
-                            "correct\naltitude and timezone if they are "
-                            "not auto-detected correctly."));
+    label = gtk_label_new(NULL);
+    gtk_label_set_markup
+        (GTK_LABEL(label),
+         _("<i>Please change location name to your liking and "
+           "correct\naltitude and timezone if they are "
+           "not auto-detected correctly.</i>"));
     gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
     gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, BORDER/2);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER/2);
@@ -693,6 +733,34 @@ create_units_page(xfceweather_dialog *dialog)
 
 
 static void
+combo_icon_theme_set_tooltip(GtkWidget *combo,
+                             gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    gchar *text;
+
+    if (G_UNLIKELY(dialog->wd->icon_theme == NULL)) {
+        /* this should never happen, but who knows... */
+        gtk_widget_set_tooltip_text(GTK_WIDGET(combo),
+                                    _("Choose an icon theme."));
+        return;
+    }
+
+    text = g_strdup_printf
+        (_("<b>Directory:</b> %s\n\n"
+           "<b>Author:</b> %s\n\n"
+           "<b>Description:</b> %s\n\n"
+           "<b>License:</b> %s"),
+           TEXT_UNKNOWN(dialog->wd->icon_theme->dir),
+           TEXT_UNKNOWN(dialog->wd->icon_theme->author),
+           TEXT_UNKNOWN(dialog->wd->icon_theme->description),
+           TEXT_UNKNOWN(dialog->wd->icon_theme->license));
+    gtk_widget_set_tooltip_markup(GTK_WIDGET(combo), text);
+    g_free(text);
+}
+
+
+static void
 combo_icon_theme_changed(GtkWidget *combo,
                          gpointer user_data)
 {
@@ -710,6 +778,7 @@ combo_icon_theme_changed(GtkWidget *combo,
 
     icon_theme_free(dialog->wd->icon_theme);
     dialog->wd->icon_theme = icon_theme_copy(theme);
+    combo_icon_theme_set_tooltip(combo, dialog);
     update_icon(dialog->wd);
     update_summary_window(dialog, TRUE);
 }
@@ -781,8 +850,10 @@ create_appearance_page(xfceweather_dialog *dialog)
         ADD_COMBO_VALUE(dialog->combo_icon_theme, theme->name);
         /* set selection to current theme */
         if (G_LIKELY(dialog->wd->icon_theme) &&
-            !strcmp(theme->dir, dialog->wd->icon_theme->dir))
+            !strcmp(theme->dir, dialog->wd->icon_theme->dir)) {
             SET_COMBO_VALUE(dialog->combo_icon_theme, i);
+            combo_icon_theme_set_tooltip(dialog->combo_icon_theme, dialog);
+        }
     }
 
     /* tooltip style */
@@ -819,6 +890,9 @@ create_appearance_page(xfceweather_dialog *dialog)
     vbox = gtk_vbox_new(FALSE, BORDER);
     dialog->check_round_values =
         gtk_check_button_new_with_mnemonic(_("_Round values"));
+    SET_TOOLTIP(dialog->check_round_values,
+                _("Check to round values everywhere except on the details "
+                  "page in the summary window."));
     gtk_box_pack_start(GTK_BOX(vbox), dialog->check_round_values,
                        FALSE, FALSE, 0);
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dialog->check_round_values),
@@ -1145,6 +1219,11 @@ create_scrollbox_page(xfceweather_dialog *dialog)
     gtk_box_pack_start(GTK_BOX(hbox), label, TRUE, TRUE, 0);
     ADD_SPIN(dialog->spin_scrollbox_lines, 1, MAX_SCROLLBOX_LINES, 1,
              dialog->wd->scrollbox_lines, 0, sg_misc);
+    SET_TOOLTIP
+        (dialog->spin_scrollbox_lines,
+         _("Decide how many values should be shown at once in the scrollbox. "
+           "You can choose a smaller font or enlarge the panel to make "
+           "more lines fit."));
     gtk_box_pack_start(GTK_BOX(page), hbox, FALSE, FALSE, 0);
 
     /* font and color */
@@ -1154,6 +1233,11 @@ create_scrollbox_page(xfceweather_dialog *dialog)
     gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
     dialog->button_scrollbox_font =
         gtk_button_new_with_mnemonic(_("Select _font"));
+    SET_TOOLTIP
+        (dialog->button_scrollbox_font,
+         _("Choose a font you like and set it to a smaller or larger size. "
+           "Middle-click on the button to unset the font and use your "
+           "theme's default."));
     gtk_box_pack_start(GTK_BOX(hbox), dialog->button_scrollbox_font,
                        TRUE, TRUE, 0);
     if (dialog->wd->scrollbox_font)
@@ -1162,6 +1246,13 @@ create_scrollbox_page(xfceweather_dialog *dialog)
     dialog->button_scrollbox_color =
         gtk_color_button_new_with_color(&(dialog->wd->scrollbox_color));
     gtk_size_group_add_widget(sg_misc, dialog->button_scrollbox_color);
+    SET_TOOLTIP
+        (dialog->button_scrollbox_color,
+         _("There may be problems with some themes that cause the "
+           "scrollbox text to be hardly readable. If this is the case "
+           "or you simply want it to appear in another color, then "
+           "you can change it using this button. Middle-click on the "
+           "button to unset the scrollbox text color."));
     gtk_box_pack_start(GTK_BOX(hbox), dialog->button_scrollbox_color,
                        FALSE, FALSE, 0 );
     gtk_box_pack_start(GTK_BOX(page), hbox, FALSE, FALSE, 0);
@@ -1170,6 +1261,9 @@ create_scrollbox_page(xfceweather_dialog *dialog)
     hbox = gtk_hbox_new(FALSE, BORDER);
     sg_button = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
     dialog->options_datatypes = make_label();
+    SET_TOOLTIP(dialog->options_datatypes,
+                _("Choose the value to add to the list below. Values can be "
+                  "added more than once."));
     gtk_box_pack_start(GTK_BOX(hbox), dialog->options_datatypes, TRUE, TRUE, 0);
     dialog->model_datatypes = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_INT);
     dialog->list_datatypes =
@@ -1178,12 +1272,19 @@ create_scrollbox_page(xfceweather_dialog *dialog)
     column =
         gtk_tree_view_column_new_with_attributes(_("Labels to _display"),
                                                  renderer, "text", 0, NULL);
+    SET_TOOLTIP(dialog->list_datatypes,
+                _("These are the values that will be shown in the scrollbox. "
+                  "Select a single value here and click the appropriate button "
+                  "to remove it or move it up and down in the list."));
     gtk_tree_view_append_column(GTK_TREE_VIEW(dialog->list_datatypes), column);
     gtk_widget_set_size_request(dialog->options_datatypes, 300, -1);
 
     /* button "add" */
     ADD_LABEL_EDIT_BUTTON(button_add, _("_Add"),
                           GTK_STOCK_ADD, button_add_option_clicked);
+    SET_TOOLTIP(button_add,
+                _("Add the selected value to the labels that should be "
+                  "displayed in the scrollbox."));
     gtk_box_pack_start(GTK_BOX(hbox), button_add, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(page), hbox, FALSE, FALSE, 0);
 
@@ -1199,16 +1300,25 @@ create_scrollbox_page(xfceweather_dialog *dialog)
     table = gtk_table_new(4, 1, TRUE);
     ADD_LABEL_EDIT_BUTTON(button_del, _("_Remove"),
                           GTK_STOCK_REMOVE, button_del_option_clicked);
+    SET_TOOLTIP(button_del,
+                _("Select a value in the list of labels to display and click "
+                  "this button to remove it."));
     gtk_table_attach_defaults(GTK_TABLE(table), button_del, 0, 1, 0, 1);
 
     /* button "move up" */
     ADD_LABEL_EDIT_BUTTON(button_up, _("Move _up"),
                           GTK_STOCK_GO_UP, button_up_option_clicked);
+    SET_TOOLTIP(button_up,
+                _("Move the selected value up in the list of labels "
+                  "to display."));
     gtk_table_attach_defaults(GTK_TABLE(table), button_up, 0, 1, 2, 3);
 
     /* button "move down" */
     ADD_LABEL_EDIT_BUTTON(button_down, _("Move _down"),
                           GTK_STOCK_GO_DOWN, button_down_option_clicked);
+    SET_TOOLTIP(button_down,
+                _("Move the selected value down in the list of labels "
+                  "to display."));
     gtk_table_attach_defaults(GTK_TABLE(table), button_down, 0, 1, 3, 4);
 
     gtk_box_pack_start(GTK_BOX(hbox), table, FALSE, FALSE, 0);
@@ -1223,11 +1333,16 @@ create_scrollbox_page(xfceweather_dialog *dialog)
         }
     }
 
-    dialog->check_scrollbox_animate =
-        gtk_check_button_new_with_mnemonic(_("Animate _transitions between labels"));
+    dialog->check_scrollbox_animate = gtk_check_button_new_with_mnemonic
+        (_("Animate _transitions between labels"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON
                                  (dialog->check_scrollbox_animate),
                                  dialog->wd->scrollbox_animate);
+    SET_TOOLTIP(dialog->check_scrollbox_animate,
+                _("Scroll the current displayed value(s) out and the "
+                  "new value(s) in instead of simply changing them. "
+                  "Uncheck this option if you find the animation too "
+                  "distracting."));
     gtk_box_pack_start(GTK_BOX(page), dialog->check_scrollbox_animate,
                        FALSE, FALSE, 0);
 
