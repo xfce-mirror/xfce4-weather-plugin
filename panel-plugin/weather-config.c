@@ -375,6 +375,8 @@ setup_altitude(xfceweather_dialog *dialog)
     case METERS:
         gtk_label_set_text(GTK_LABEL(dialog->label_alt_unit),
                            _("meters"));
+        gtk_spin_button_set_range(GTK_SPIN_BUTTON(dialog->spin_alt),
+                                  -420, 10000);
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_alt),
                                   (gdouble) (dialog->wd->msl));
         break;
@@ -382,6 +384,8 @@ setup_altitude(xfceweather_dialog *dialog)
     case FEET:
         gtk_label_set_text(GTK_LABEL(dialog->label_alt_unit),
                            _("feet"));
+        gtk_spin_button_set_range(GTK_SPIN_BUTTON(dialog->spin_alt),
+                                  -1378.0, 32808);
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_alt),
                                   (gdouble) dialog->wd->msl / 0.3048);
         break;
