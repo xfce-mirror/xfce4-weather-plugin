@@ -898,13 +898,7 @@ create_appearance_page(xfceweather_dialog *dialog)
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dialog->check_round_values),
                                  dialog->wd->round);
 
-    /* interpolate data */
-    dialog->check_interpolate_data =
-        gtk_check_button_new_with_mnemonic(_("Interpolate _data"));
-    gtk_box_pack_start(GTK_BOX(vbox), dialog->check_interpolate_data,
-                       FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
-
     g_object_unref(G_OBJECT(sg));
     return palign;
 }
