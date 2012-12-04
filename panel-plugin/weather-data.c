@@ -473,7 +473,7 @@ make_combined_timeslice(xml_weather *data,
     } else if (ipol) {
         /* deal with timeslices that are in the near future and use point
            data available at the start of the interval */
-        if (difftime(*between_t, end->start) <= 0)
+        if (difftime(*between_t, start->start) <= 0)
             comb->point = start->start;
         else
             comb->point = *between_t;
