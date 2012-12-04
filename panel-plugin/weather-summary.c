@@ -415,8 +415,10 @@ create_summary_tab(xfceweather_data *data)
     APPEND_BTEXT(_("\nWind\n"));
     wind = get_data(conditions, data->units, WIND_SPEED, FALSE);
     rawvalue = get_data(conditions, data->units, WIND_BEAUFORT, FALSE);
-    value = g_strdup_printf(_("\t%s: %s (%s on the Beaufort scale)\n"),
-                            _("Speed"), wind, rawvalue);
+    value = g_strdup_printf(_("\t%s: %s %s (%s on the Beaufort scale)\n"),
+                            _("Speed"), wind,
+                            get_unit(data->units, WIND_SPEED),
+                            rawvalue);
     g_free(rawvalue);
     g_free(wind);
     APPEND_TEXT_ITEM_REAL(value);
