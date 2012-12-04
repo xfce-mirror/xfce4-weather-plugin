@@ -333,6 +333,47 @@ get_daytime_interval(struct tm *start_tm,
 
 
 /*
+ * Return wind direction name (S, N, W,...) for wind degrees.
+ */
+static gchar*
+wind_dir_name_by_deg(gchar *degrees, gboolean long_name)
+{
+    gdouble deg;
+
+    if (G_UNLIKELY(degrees == NULL))
+        return "";
+
+    deg = string_to_double(degrees, 0);
+
+    if (deg >= 360 - 22.5 && deg < 45 - 22.5)
+        return (long_name) ? _("North") : _("N");
+
+    if (deg >= 45 - 22.5 && deg < 45 + 22.5)
+        return (long_name) ? _("North-East") : _("NE");
+
+    if (deg >= 90 - 22.5 && deg < 90 + 22.5)
+        return (long_name) ? _("East") : _("E");
+
+    if (deg >= 135 - 22.5 && deg < 135 + 22.5)
+        return (long_name) ? _("South-East") : _("SE");
+
+    if (deg >= 180 - 22.5 && deg < 180 + 22.5)
+        return (long_name) ? _("South") : _("S");
+
+    if (deg >= 225 - 22.5 && deg < 225 + 22.5)
+        return (long_name) ? _("South-West") : _("SW");
+
+    if (deg >= 270 - 22.5 && deg < 270 + 22.5)
+        return (long_name) ? _("West") : _("W");
+
+    if (deg >= 315 - 22.5 && deg < 315 + 22.5)
+        return (long_name) ? _("North-West") : _("NW");
+
+    return "";
+}
+
+
+/*
  * Interpolate data for a certain time in a given interval
  */
 static gdouble
@@ -442,9 +483,9 @@ make_combined_timeslice(xml_weather *data,
     INTERPOLATE_OR_COPY(temperature_value);
     COMB_END_COPY(temperature_unit);
 
-    /* TODO: interpolate wind direction */
-    COMB_END_COPY(wind_dir_deg);
-    COMB_END_COPY(wind_dir_name);
+    INTERPOLATE_OR_COPY(wind_dir_deg);
+    comb->location->wind_dir_name =
+        g_strdup(wind_dir_name_by_deg(comb->location->wind_dir_deg, FALSE));
 
     INTERPOLATE_OR_COPY(wind_speed_mps);
     INTERPOLATE_OR_COPY(wind_speed_beaufort);
