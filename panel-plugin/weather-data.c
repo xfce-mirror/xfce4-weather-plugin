@@ -148,6 +148,9 @@ get_data(const xml_time *timeslice,
         case MPH:
             val *= 2.2369362920544;
             break;
+        case KNOTS:
+            val *= 1.9438445;
+            break;
         }
         return g_strdup_printf(ROUND_TO_INT("%.1f"), val);
 
@@ -228,6 +231,8 @@ get_unit(const units_config *units,
             return _("mph");
         case MPS:
             return _("m/s");
+        case KNOTS:
+            return _("kt");
         }
     case WIND_DIRECTION_DEG:
     case LATITUDE:
