@@ -345,7 +345,7 @@ wind_dir_name_by_deg(gchar *degrees, gboolean long_name)
 
     deg = string_to_double(degrees, 0);
 
-    if (deg >= 360 - 22.5 && deg < 45 - 22.5)
+    if (deg >= 360 - 22.5 || deg < 45 - 22.5)
         return (long_name) ? _("North") : _("N");
 
     if (deg >= 45 - 22.5 && deg < 45 + 22.5)
