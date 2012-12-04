@@ -830,12 +830,12 @@ check_round_values_toggled(GtkWidget *button,
 static GtkWidget *
 create_appearance_page(xfceweather_dialog *dialog)
 {
-    GtkWidget *palign, *page, *hbox, *vbox, *label;
+    GtkWidget *palign, *page, *sep, *hbox, *vbox, *label;
     GtkSizeGroup *sg;
     icon_theme *theme;
     guint i;
 
-    ADD_PAGE(TRUE);
+    ADD_PAGE(FALSE);
     sg = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
 
     /* icon theme */
@@ -866,6 +866,9 @@ create_appearance_page(xfceweather_dialog *dialog)
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
 
+    sep = gtk_hseparator_new();
+    gtk_box_pack_start(GTK_BOX(page), sep, FALSE, FALSE, BORDER * 2);
+
     /* forecast layout */
     vbox = gtk_vbox_new(FALSE, BORDER);
     hbox = gtk_hbox_new(FALSE, BORDER);
@@ -885,6 +888,9 @@ create_appearance_page(xfceweather_dialog *dialog)
              0, NULL);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
+
+    sep = gtk_hseparator_new();
+    gtk_box_pack_start(GTK_BOX(page), sep, FALSE, FALSE, BORDER * 2);
 
     /* round temperature */
     vbox = gtk_vbox_new(FALSE, BORDER);
