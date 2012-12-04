@@ -830,12 +830,12 @@ check_round_values_toggled(GtkWidget *button,
 static GtkWidget *
 create_appearance_page(xfceweather_dialog *dialog)
 {
-    GtkWidget *palign, *page, *hbox, *vbox, *label;
+    GtkWidget *palign, *page, *sep, *hbox, *vbox, *label;
     GtkSizeGroup *sg;
     icon_theme *theme;
     guint i;
 
-    ADD_PAGE(TRUE);
+    ADD_PAGE(FALSE);
     sg = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
 
     /* icon theme */
@@ -866,6 +866,9 @@ create_appearance_page(xfceweather_dialog *dialog)
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
 
+    sep = gtk_hseparator_new();
+    gtk_box_pack_start(GTK_BOX(page), sep, FALSE, FALSE, BORDER * 2);
+
     /* forecast layout */
     vbox = gtk_vbox_new(FALSE, BORDER);
     hbox = gtk_hbox_new(FALSE, BORDER);
@@ -886,6 +889,9 @@ create_appearance_page(xfceweather_dialog *dialog)
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
 
+    sep = gtk_hseparator_new();
+    gtk_box_pack_start(GTK_BOX(page), sep, FALSE, FALSE, BORDER * 2);
+
     /* round temperature */
     vbox = gtk_vbox_new(FALSE, BORDER);
     dialog->check_round_values =
@@ -898,13 +904,7 @@ create_appearance_page(xfceweather_dialog *dialog)
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dialog->check_round_values),
                                  dialog->wd->round);
 
-    /* interpolate data */
-    dialog->check_interpolate_data =
-        gtk_check_button_new_with_mnemonic(_("Interpolate _data"));
-    gtk_box_pack_start(GTK_BOX(vbox), dialog->check_interpolate_data,
-                       FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
-
     g_object_unref(G_OBJECT(sg));
     return palign;
 }

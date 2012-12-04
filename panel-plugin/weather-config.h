@@ -54,7 +54,6 @@ typedef struct {
     GtkWidget *combo_forecast_layout;
     GtkWidget *spin_forecast_days;
     GtkWidget *check_round_values;
-    GtkWidget *check_interpolate_data;
 
     /* scrollbox page */
     GtkWidget *check_scrollbox_show;

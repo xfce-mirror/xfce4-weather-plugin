@@ -249,6 +249,8 @@ update_scrollbox(xfceweather_data *data)
 static void
 update_current_conditions(xfceweather_data *data)
 {
+    struct tm now_tm;
+
     if (G_UNLIKELY(data->weatherdata == NULL)) {
         update_icon(data);
         update_scrollbox(data);
@@ -260,9 +262,14 @@ update_current_conditions(xfceweather_data *data)
         data->weatherdata->current_conditions = NULL;
     }
 
-    data->weatherdata->current_conditions =
-        make_current_conditions(data->weatherdata);
     data->last_conditions_update = time(NULL);
+    now_tm = *localtime(&data->last_conditions_update);
+    now_tm.tm_sec = 0;
+    data->last_conditions_update = mktime(&now_tm);
+    data->weatherdata->current_conditions =
+        make_current_conditions(data->weatherdata,
+                                data->last_conditions_update);
+
     data->night_time = is_night_time(data->astrodata);
     update_icon(data);
     update_scrollbox(data);
@@ -354,19 +361,15 @@ static gboolean
 need_conditions_update(const xfceweather_data *data)
 {
     time_t now_t;
-    struct tm now_tm, last_tm;
+    struct tm now_tm;
 
     if (!data->updatetimeout || !data->last_conditions_update)
         return TRUE;
 
     time(&now_t);
     now_tm = *localtime(&now_t);
-    last_tm = *localtime(&(data->last_conditions_update));
-    if (now_tm.tm_mday != last_tm.tm_mday ||
-        now_tm.tm_hour != last_tm.tm_hour)
-        return TRUE;
-
-    return FALSE;
+    return (difftime(now_t, data->last_conditions_update) > 300 &&
+            (now_tm.tm_min % 5 == 0 || now_tm.tm_min == 0));
 }
 
 

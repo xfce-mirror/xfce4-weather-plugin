@@ -25,6 +25,7 @@
 #include "weather-parsers.h"
 #include "weather-data.h"
 #include "weather.h"
+#include "weather-debug.h"
 
 /* fallback values when astrodata is unavailable */
 #define NIGHT_TIME_START 21
@@ -38,6 +39,19 @@
 #define LOCALE_DOUBLE(value, format)                \
     (g_strdup_printf(format,                        \
                      g_ascii_strtod(value, NULL)))
+
+#define INTERPOLATE_OR_COPY(var)                                        \
+    if (ipol)                                                           \
+        comb->location->var =                                           \
+            interpolate_gchar_value(start->location->var,               \
+                                    end->location->var,                 \
+                                    comb->start, comb->end,             \
+                                    comb->point);                       \
+    else                                                                \
+        comb->location->var = g_strdup(end->location->var);
+
+#define COMB_END_COPY(var)                              \
+    comb->location->var = g_strdup(end->location->var);
 
 
 static gboolean
@@ -138,7 +152,8 @@ get_data(const xml_time *timeslice,
         return g_strdup_printf(ROUND_TO_INT("%.1f"), val);
 
     case WIND_BEAUFORT:
-        return CHK_NULL(loc->wind_speed_beaufort);
+        val = string_to_double(loc->wind_speed_beaufort, 0);
+        return g_strdup_printf("%.0f", val);
 
     case WIND_DIRECTION:
         return CHK_NULL(loc->wind_dir_name);
@@ -317,6 +332,187 @@ get_daytime_interval(struct tm *start_tm,
 }
 
 
+/*
+ * Return wind direction name (S, N, W,...) for wind degrees.
+ */
+static gchar*
+wind_dir_name_by_deg(gchar *degrees, gboolean long_name)
+{
+    gdouble deg;
+
+    if (G_UNLIKELY(degrees == NULL))
+        return "";
+
+    deg = string_to_double(degrees, 0);
+
+    if (deg >= 360 - 22.5 && deg < 45 - 22.5)
+        return (long_name) ? _("North") : _("N");
+
+    if (deg >= 45 - 22.5 && deg < 45 + 22.5)
+        return (long_name) ? _("North-East") : _("NE");
+
+    if (deg >= 90 - 22.5 && deg < 90 + 22.5)
+        return (long_name) ? _("East") : _("E");
+
+    if (deg >= 135 - 22.5 && deg < 135 + 22.5)
+        return (long_name) ? _("South-East") : _("SE");
+
+    if (deg >= 180 - 22.5 && deg < 180 + 22.5)
+        return (long_name) ? _("South") : _("S");
+
+    if (deg >= 225 - 22.5 && deg < 225 + 22.5)
+        return (long_name) ? _("South-West") : _("SW");
+
+    if (deg >= 270 - 22.5 && deg < 270 + 22.5)
+        return (long_name) ? _("West") : _("W");
+
+    if (deg >= 315 - 22.5 && deg < 315 + 22.5)
+        return (long_name) ? _("North-West") : _("NW");
+
+    return "";
+}
+
+
+/*
+ * Interpolate data for a certain time in a given interval
+ */
+static gdouble
+interpolate_value(gdouble value_start,
+                  gdouble value_end,
+                  time_t start_t,
+                  time_t end_t,
+                  time_t between_t)
+{
+    gdouble total, part, ratio, delta, result;
+
+    /* calculate durations from start to end and start to between */
+    total = difftime(end_t, start_t);
+    part = difftime(between_t, start_t);
+
+    /* calculate ratio of these durations */
+    ratio = part / total;
+
+    /* now how big is that change? */
+    delta = (value_end - value_start) * ratio;
+
+    /* apply change and return corresponding value for between_t */
+    result = value_start + delta;
+    return result;
+}
+
+
+/*
+ * convert gchar in a gdouble and interpolate the value
+ */
+static gchar *
+interpolate_gchar_value(gchar *value_start,
+                        gchar *value_end,
+                        time_t start_t,
+                        time_t end_t,
+                        time_t between_t)
+{
+    gchar value_result[10];
+    gdouble val_start, val_end, val_result;
+
+    if (value_end == NULL)
+        return NULL;
+
+    if (value_start == NULL)
+        return g_strdup(value_end);
+
+    val_start = string_to_double(value_start, 0);
+    val_end = string_to_double(value_end, 0);
+
+    val_result = interpolate_value(val_start, val_end,
+                                   start_t, end_t, between_t);
+    weather_debug("Interpolated data: start=%f, end=%f, result=%f",
+                  val_start, val_end, val_result);
+    (void) g_ascii_formatd(value_result, 10, "%.1f", val_result);
+
+    return g_strdup(value_result);
+}
+
+
+/* Create a new combined timeslice, with optionally interpolated data */
+static xml_time *
+make_combined_timeslice(xml_weather *data,
+                        const xml_time *interval,
+                        const time_t *between_t)
+{
+    xml_time *comb, *start = NULL, *end = NULL;
+    xml_location *combloc, *startloc, *endloc;
+    gboolean ipol = (between_t != NULL) ? TRUE : FALSE;
+    guint i;
+
+    /* find point data at start of interval (may not be available) */
+    if (has_timeslice(data, interval->start, interval->start))
+        start = get_timeslice(data, interval->start, interval->start);
+
+    /* find point interval at end of interval */
+    if (has_timeslice(data, interval->end, interval->end))
+        end = get_timeslice(data, interval->end, interval->end);
+
+    if (start == NULL && end == NULL)
+        return NULL;
+
+    /* create new timeslice to hold our copy */
+    comb = g_slice_new0(xml_time);
+    if (comb == NULL)
+        return NULL;
+
+    comb->location = g_slice_new0(xml_location);
+    if (comb->location == NULL) {
+        g_slice_free(xml_time, comb);
+        return NULL;
+    }
+
+    /* do not interpolate if no point data available at start of interval */
+    if (start == NULL) {
+        comb->point = end->start;
+        start = end;
+    } else if (between_t)          /* only interpolate if requested */
+        comb->point = *between_t;
+
+    comb->start = interval->start;
+    comb->end = interval->end;
+
+    COMB_END_COPY(altitude);
+    COMB_END_COPY(latitude);
+    COMB_END_COPY(longitude);
+
+    INTERPOLATE_OR_COPY(temperature_value);
+    COMB_END_COPY(temperature_unit);
+
+    INTERPOLATE_OR_COPY(wind_dir_deg);
+    comb->location->wind_dir_name =
+        g_strdup(wind_dir_name_by_deg(comb->location->wind_dir_deg, FALSE));
+
+    INTERPOLATE_OR_COPY(wind_speed_mps);
+    INTERPOLATE_OR_COPY(wind_speed_beaufort);
+    INTERPOLATE_OR_COPY(humidity_value);
+    COMB_END_COPY(humidity_unit);
+
+    INTERPOLATE_OR_COPY(pressure_value);
+    COMB_END_COPY(pressure_unit);
+
+    for (i = 0; i < CLOUDS_PERC_NUM; i++)
+        INTERPOLATE_OR_COPY(clouds_percent[i]);
+
+    INTERPOLATE_OR_COPY(fog_percent);
+
+    /* it makes no sense to interpolate the following (interval) values */
+    comb->location->precipitation_value =
+        g_strdup(interval->location->precipitation_value);
+    comb->location->precipitation_unit =
+        g_strdup(interval->location->precipitation_unit);
+
+    comb->location->symbol_id = interval->location->symbol_id;
+    comb->location->symbol = g_strdup(interval->location->symbol);
+
+    return comb;
+}
+
+
 /* Return current weather conditions, or NULL if not available. */
 xml_time *
 get_current_conditions(const xml_weather *data)
@@ -462,92 +658,20 @@ find_shortest_timeslice(xml_weather *data,
 }
 
 
-/*
- * Take point and interval data and generate one combined timeslice
- * that provides all information needed to present a forecast.
- */
-static xml_time *
-make_combined_timeslice(const xml_time *point,
-                        const xml_time *interval)
-{
-    xml_time *forecast;
-    xml_location *loc;
-    gint i;
-
-    if (point == NULL || interval == NULL)
-        return NULL;
-
-    forecast = g_slice_new0(xml_time);
-    if (forecast == NULL)
-        return NULL;
-
-    loc = g_slice_new0(xml_location);
-    if (loc == NULL)
-        return forecast;
-
-    forecast->point = point->start;
-    forecast->start = interval->start;
-    forecast->end = interval->end;
-
-    loc->altitude = g_strdup(point->location->altitude);
-    loc->latitude = g_strdup(point->location->latitude);
-    loc->longitude = g_strdup(point->location->longitude);
-
-    loc->temperature_value = g_strdup(point->location->temperature_value);
-    loc->temperature_unit = g_strdup(point->location->temperature_unit);
-
-    loc->wind_dir_deg = g_strdup(point->location->wind_dir_deg);
-    loc->wind_dir_name = g_strdup(point->location->wind_dir_name);
-    loc->wind_speed_mps = g_strdup(point->location->wind_speed_mps);
-    loc->wind_speed_beaufort = g_strdup(point->location->wind_speed_beaufort);
-
-    loc->humidity_value = g_strdup(point->location->humidity_value);
-    loc->humidity_unit = g_strdup(point->location->humidity_unit);
-
-    loc->pressure_value = g_strdup(point->location->pressure_value);
-    loc->pressure_unit = g_strdup(point->location->pressure_unit);
-
-    for (i = 0; i < CLOUDS_PERC_NUM; i++)
-        loc->clouds_percent[i] = g_strdup(point->location->clouds_percent[i]);
-
-    loc->fog_percent = g_strdup(point->location->fog_percent);
-
-    loc->precipitation_value =
-        g_strdup(interval->location->precipitation_value);
-    loc->precipitation_unit = g_strdup(interval->location->precipitation_unit);
-
-    loc->symbol_id = interval->location->symbol_id;
-    loc->symbol = g_strdup(interval->location->symbol);
-
-    forecast->location = loc;
-
-    return forecast;
-}
-
-
 xml_time *
-make_current_conditions(xml_weather *data)
+make_current_conditions(xml_weather *data,
+                        time_t now_t)
 {
-    xml_time *conditions, *point_data, *interval_data;
+    xml_time *interval_data;
     struct tm now_tm, start_tm, end_tm;
-    time_t now_t, end_t;
-
-    /* get the current time */
-    time(&now_t);
-    now_tm = *localtime(&now_t);
-
-    /* find nearest point data, starting with the current hour, with a
-       deviation of 1 hour into the past and 6 hours into the future */
-    point_data = find_timeslice(data, now_tm, now_tm, -1, 6);
-    if (point_data == NULL)
-        return NULL;
+    time_t end_t;
 
     /* now search for the nearest and shortest interval data
        available, using a maximum interval of 6 hours */
+    now_tm = *localtime(&now_t);
     end_tm = start_tm = now_tm;
 
-    /* set interval to 1 hour as minimum, we don't want to retrieve
-       point data */
+    /* minimum interval is 1 hour */
     end_t = time_calc_hour(end_tm, 1);
     end_tm = *localtime(&end_t);
 
@@ -567,9 +691,8 @@ make_current_conditions(xml_weather *data)
     if (interval_data == NULL)
         return NULL;
 
-    /* create a new timeslice with combined point and interval data */
-    conditions = make_combined_timeslice(point_data, interval_data);
-    return conditions;
+    /* create combined timeslice with interpolated point and interval data */
+    return make_combined_timeslice(data, interval_data, &now_t);
 }
 
 
@@ -581,7 +704,7 @@ make_forecast_data(xml_weather *data,
                    const int day,
                    const daytime dt)
 {
-    xml_time *forecast = NULL, *point_data = NULL, *interval_data = NULL;
+    xml_time *interval_data = NULL;
     struct tm start_tm, end_tm;
     time_t now_t, start_t, end_t;
     gint interval;
@@ -598,11 +721,6 @@ make_forecast_data(xml_weather *data,
     start_t = mktime(&start_tm);
     end_t = mktime(&end_tm);
 
-    /* find point data using a maximum variance of ±3 hours*/
-    point_data = find_timeslice(data, start_tm, start_tm, -3, 3);
-    if (point_data == NULL)
-        return NULL;
-
     /* next find biggest possible (limited by daytime) interval data
        using a maximum deviation of ±3 hours */
     while ((interval = (gint) (difftime(end_t, start_t) / 3600)) > 0) {
@@ -615,7 +733,7 @@ make_forecast_data(xml_weather *data,
     if (interval_data == NULL)
         return NULL;
 
-    /* create a new timeslice with combined point and interval data */
-    forecast = make_combined_timeslice(point_data, interval_data);
-    return forecast;
+    /* create combined timeslice with non-interpolated point
+       and interval data */
+    return make_combined_timeslice(data, interval_data, NULL);
 }
