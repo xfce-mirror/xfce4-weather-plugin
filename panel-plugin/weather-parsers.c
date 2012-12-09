@@ -89,9 +89,9 @@ get_timeslice(xml_weather *wd,
 }
 
 
-static time_t
-parse_xml_timestring(const gchar *ts,
-                     gchar *format) {
+time_t
+parse_timestring(const gchar *ts,
+                 gchar *format) {
     time_t t;
     struct tm tm;
 
@@ -233,11 +233,11 @@ parse_time(xmlNode *cur_node,
     xmlFree(datatype);
 
     from = PROP(cur_node, "from");
-    start_t = parse_xml_timestring(from, NULL);
+    start_t = parse_timestring(from, NULL);
     xmlFree(from);
 
     to = PROP(cur_node, "to");
-    end_t = parse_xml_timestring(to, NULL);
+    end_t = parse_timestring(to, NULL);
     xmlFree(to);
 
     if (G_UNLIKELY(!start_t || !end_t))
@@ -335,11 +335,11 @@ parse_astro_location(xmlNode *cur_node,
             xmlFree(never_sets);
 
             sunrise = PROP(child_node, "rise");
-            astro->sunrise = parse_xml_timestring(sunrise, NULL);
+            astro->sunrise = parse_timestring(sunrise, NULL);
             xmlFree(sunrise);
 
             sunset = PROP(child_node, "set");
-            astro->sunset = parse_xml_timestring(sunset, NULL);
+            astro->sunset = parse_timestring(sunset, NULL);
             xmlFree(sunset);
         }
 
@@ -363,11 +363,11 @@ parse_astro_location(xmlNode *cur_node,
             xmlFree(never_sets);
 
             moonrise = PROP(child_node, "rise");
-            astro->moonrise = parse_xml_timestring(moonrise, NULL);
+            astro->moonrise = parse_timestring(moonrise, NULL);
             xmlFree(moonrise);
 
             moonset = PROP(child_node, "set");
-            astro->moonset = parse_xml_timestring(moonset, NULL);
+            astro->moonset = parse_timestring(moonset, NULL);
             xmlFree(moonset);
 
             astro->moon_phase = PROP(child_node, "phase");

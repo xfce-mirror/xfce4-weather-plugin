@@ -123,6 +123,9 @@ typedef struct {
 
 xml_time *make_timeslice(void);
 
+time_t parse_timestring(const gchar *ts,
+                        gchar *format);
+
 void parse_weather(xmlNode *cur_node,
                    xml_weather *wd);
 
