@@ -274,6 +274,7 @@ parse_weather(xmlNode *cur_node,
 {
     xmlNode *child_node;
 
+    g_assert(wd != NULL);
     if (G_UNLIKELY(wd == NULL))
         return;
 
@@ -282,10 +283,11 @@ parse_weather(xmlNode *cur_node,
 
     /* create new timeslices array if it doesn't exist yet, otherwise
        overwrite existing data */
-    if (wd->timeslices == NULL)
+    if (G_UNLIKELY(wd->timeslices == NULL))
         wd->timeslices = g_array_sized_new(FALSE, TRUE,
                                            sizeof(xml_time *), 200);
-    if (wd->timeslices == NULL)
+    g_assert(wd->timeslices != NULL);
+    if (G_UNLIKELY(wd->timeslices == NULL))
         return;
 
     for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next) {
