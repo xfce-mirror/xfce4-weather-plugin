@@ -520,9 +520,7 @@ make_combined_timeslice(xml_weather *wd,
 xml_time *
 get_current_conditions(const xml_weather *wd)
 {
-    if (wd == NULL)
-        return NULL;
-    return wd->current_conditions;
+    return wd ? wd->current_conditions : NULL;
 }
 
 
@@ -670,8 +668,11 @@ make_current_conditions(xml_weather *wd,
     struct tm now_tm, start_tm, end_tm;
     time_t end_t;
 
-    /* now search for the nearest and shortest interval data
-       available, using a maximum interval of 6 hours */
+    if (G_UNLIKELY(wd == NULL))
+        return NULL;
+
+    /* search for the nearest and shortest interval data available,
+       using a maximum interval of 6 hours */
     now_tm = *localtime(&now_t);
     end_tm = start_tm = now_tm;
 

@@ -217,7 +217,6 @@ scrollbox_set_visible(xfceweather_data *data)
 void
 update_scrollbox(xfceweather_data *data)
 {
-    xml_time *conditions;
     GString *out;
     gchar *single = NULL;
     data_types type;
@@ -227,7 +226,7 @@ update_scrollbox(xfceweather_data *data)
     gtk_scrollbox_set_animate(GTK_SCROLLBOX(data->scrollbox),
                               data->scrollbox_animate);
 
-    if (data->weatherdata) {
+    if (data->weatherdata && data->weatherdata->current_conditions) {
         while (i < data->labels->len) {
             j = 0;
             out = g_string_sized_new(128);
@@ -241,7 +240,8 @@ update_scrollbox(xfceweather_data *data)
                 g_free(single);
                 j++;
             }
-            gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox), -1, out->str);
+            gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox),
+                                    -1, out->str);
             g_string_free(out, TRUE);
             i = i + j;
         }
@@ -1030,7 +1030,7 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     /* Initialize with sane default values */
     data->plugin = plugin;
     data->units = g_slice_new0(units_config);
-    data->weatherdata = NULL;
+    data->weatherdata = g_slice_new0(xml_weather);
     data->show_scrollbox = TRUE;
     data->scrollbox_lines = 1;
     data->scrollbox_animate = TRUE;

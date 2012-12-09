@@ -348,6 +348,12 @@ weather_dump_weatherdata(const xml_weather *wd)
     gboolean is_interval;
     guint i;
 
+    if (G_UNLIKELY(wd == NULL))
+        return g_strdup("No weather data.");
+
+    if (G_UNLIKELY(wd->timeslices == NULL))
+        return g_strdup("Weather data: No timeslices available.");
+
     out = g_string_sized_new(20480);
     g_string_assign(out, "Timeslices (local time): ");
     g_string_append_printf(out, "%d timeslices available.\n",
