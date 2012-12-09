@@ -56,6 +56,17 @@
     if (val)                                    \
         g_string_append_printf(out, str, val);
 
+#define CACHE_FREE_VARS()                       \
+    g_free(locname);                            \
+    g_free(lat);                                \
+    g_free(lon);                                \
+    if (keyfile)                                \
+        g_key_file_free(keyfile);
+
+#define CACHE_READ_STRING(var, key)                             \
+    if (g_key_file_has_key(keyfile, group, key, NULL))          \
+        var = g_key_file_get_string(keyfile, group, key, NULL);
+
 
 gboolean debug_mode = FALSE;
 
@@ -799,6 +810,130 @@ write_cache_file(xfceweather_data *data)
 
 
 void
+read_cache_file(xfceweather_data *data)
+{
+    GKeyFile *keyfile;
+    GError **err;
+    xml_weather *wd = data->weatherdata;
+    xml_time *timeslice = NULL;
+    xml_location *loc = NULL;
+    gchar *file, *locname = NULL, *lat = NULL, *lon = NULL, *group = NULL;
+    gchar *timestring;
+    gint msl, timezone, num_timeslices, i, j;
+
+    if (G_UNLIKELY(data->lat == NULL || data->lon == NULL))
+        return;
+
+    file = make_cache_filename(data);
+    if (G_UNLIKELY(file == NULL))
+        return;
+
+    keyfile = g_key_file_new();
+    if (!g_key_file_load_from_file(keyfile, file, G_KEY_FILE_NONE, NULL)) {
+        weather_debug("Could not read cache file %s.", file);
+        g_free(file);
+        return;
+    }
+    weather_debug("Reading cache file %s.", file);
+    g_free(file);
+
+    if (!g_key_file_has_group(keyfile, "info")) {
+        CACHE_FREE_VARS();
+        return;
+    }
+
+    /* check all needed values are present and match the current parameters */
+    locname = g_key_file_get_string(keyfile, "info", "location_name", NULL);
+    lat = g_key_file_get_string(keyfile, "info", "lat", NULL);
+    lon = g_key_file_get_string(keyfile, "info", "lon", NULL);
+    if (locname == NULL || lat == NULL || lon == NULL) {
+        CACHE_FREE_VARS();
+        weather_debug("Required values are missing in the cache file, "
+                      "reading cache file aborted.");
+        return;
+    }
+    msl = g_key_file_get_integer(keyfile, "info", "msl", err);
+    if (!err)
+        timezone = g_key_file_get_integer(keyfile, "info", "timezone", err);
+    if (!err)
+        num_timeslices = g_key_file_get_integer(keyfile, "info",
+                                                "timeslices", err);
+    if (err || strcmp(lat, data->lat) || strcmp(lon, data->lon) ||
+        msl != data->msl || timezone != data->timezone || num_timeslices < 1) {
+        CACHE_FREE_VARS();
+        weather_debug("The required values are not present in the cache file "
+                      "or do not match the current plugin data. Reading "
+                      "cache file aborted.");
+        return;
+    }
+
+    /* parse available timeslices */
+    for (i = 0; i < num_timeslices; i++) {
+        group = g_strdup_printf("timeslice%d", i);
+        if (!g_key_file_has_group(keyfile, group)) {
+            weather_debug("Group %s not found, continuing with next.", group);
+            g_free(group);
+            continue;
+        }
+
+        timeslice = make_timeslice();
+        if (G_UNLIKELY(timeslice == NULL)) {
+            g_free(group);
+            continue;
+        }
+
+        /* parse time strings (start, end, point) */
+        CACHE_READ_STRING(timestring, "start");
+        timeslice->start = parse_timestring(timestring, NULL);
+        g_free(timestring);
+        CACHE_READ_STRING(timestring, "end");
+        timeslice->end = parse_timestring(timestring, NULL);
+        g_free(timestring);
+        CACHE_READ_STRING(timestring, "point");
+        timeslice->point = parse_timestring(timestring, NULL);
+        g_free(timestring);
+
+        /* parse location data */
+        loc = timeslice->location;
+        CACHE_READ_STRING(loc->altitude, "altitude");
+        CACHE_READ_STRING(loc->latitude, "latitude");
+        CACHE_READ_STRING(loc->longitude, "longitude");
+        CACHE_READ_STRING(loc->temperature_value, "temperature_value");
+        CACHE_READ_STRING(loc->temperature_unit, "temperature_unit");
+        CACHE_READ_STRING(loc->wind_dir_deg, "wind_dir_deg");
+        CACHE_READ_STRING(loc->wind_speed_mps, "wind_speed_mps");
+        CACHE_READ_STRING(loc->wind_speed_beaufort, "wind_speed_beaufort");
+        CACHE_READ_STRING(loc->humidity_value, "humidity_value");
+        CACHE_READ_STRING(loc->humidity_unit, "humidity_unit");
+        CACHE_READ_STRING(loc->pressure_value, "pressure_value");
+        CACHE_READ_STRING(loc->pressure_unit, "pressure_unit");
+
+        for (j = 0; j < CLOUDS_PERC_NUM; j++) {
+            gchar *key = g_strdup_printf("clouds_percent[%d]", j);
+            if (g_key_file_has_key(keyfile, group, key, NULL))
+                loc->clouds_percent[j] =
+                    g_key_file_get_string(keyfile, group, key, NULL);
+            g_free(key);
+        }
+
+        CACHE_READ_STRING(loc->fog_percent, "fog_percent");
+        CACHE_READ_STRING(loc->precipitation_value, "precipitation_value");
+        CACHE_READ_STRING(loc->precipitation_unit, "precipitation_unit");
+        CACHE_READ_STRING(loc->symbol, "symbol");
+        if (loc->symbol &&
+            g_key_file_has_key(keyfile, group, "symbol_id", NULL))
+            loc->symbol_id =
+                g_key_file_get_integer(keyfile, group, "symbol_id", NULL);
+
+        merge_timeslice(wd, timeslice);
+        xml_time_free(timeslice);
+    }
+    CACHE_FREE_VARS();
+    weather_debug("Reading cache file complete.");
+}
+
+
+void
 update_weatherdata_with_reset(xfceweather_data *data, gboolean clear)
 {
     if (data->updatetimeout)
@@ -1449,6 +1584,7 @@ weather_construct(XfcePanelPlugin *plugin)
     xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
     data = xfceweather_create_control(plugin);
     xfceweather_read_config(plugin, data);
+    read_cache_file(data);
     scrollbox_set_visible(data);
     gtk_scrollbox_set_fontname(GTK_SCROLLBOX(data->scrollbox),
                                data->scrollbox_font);

@@ -113,6 +113,8 @@ void forecast_click(GtkWidget *widget,
 
 gchar *get_cache_directory(void);
 
+void read_cache_file(xfceweather_data *data);
+
 void update_icon(xfceweather_data *data);
 
 void update_scrollbox(xfceweather_data *data);
