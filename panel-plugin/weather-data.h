@@ -113,6 +113,9 @@ time_t time_calc_hour(struct tm time_tm,
 time_t time_calc_day(struct tm time_tm,
                      gint days);
 
+void merge_timeslice(xml_weather *wd,
+                     const xml_time *timeslice);
+
 xml_time *get_current_conditions(const xml_weather *wd);
 
 xml_time *make_current_conditions(xml_weather *wd,

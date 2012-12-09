@@ -516,6 +516,50 @@ make_combined_timeslice(xml_weather *wd,
 }
 
 
+void
+merge_timeslice(xml_weather *wd,
+                const xml_time *timeslice)
+{
+    xml_time *old_ts, *new_ts;
+    time_t now_t = time(NULL);
+    guint i;
+
+    g_assert(wd != NULL);
+    if (G_UNLIKELY(wd == NULL))
+        return;
+
+    if (wd->timeslices == NULL)
+        wd->timeslices = g_array_sized_new(FALSE, TRUE,
+                                           sizeof(xml_time *), 200);
+
+    g_assert(wd->timeslices != NULL);
+    if (G_UNLIKELY(wd->timeslices == NULL))
+        return;
+
+    /* first check if it isn't too old */
+    if (difftime(now_t, timeslice->end) > DATA_EXPIRY_TIME) {
+        weather_debug("Not merging timeslice because it has expired.");
+        return;
+    }
+
+    /* Copy timeslice, as it will be deleted by the calling function */
+    new_ts = xml_time_copy(timeslice);
+
+    /* check if there is a timeslice with the same interval and
+       replace it with the current data */
+    old_ts = get_timeslice(wd, timeslice->start, timeslice->end, &i);
+    if (old_ts) {
+        xml_time_free(old_ts);
+        g_array_remove_index(wd->timeslices, i);
+        g_array_insert_val(wd->timeslices, i, new_ts);
+        weather_debug("Replaced existing timeslice at %d.", i);
+    } else {
+        g_array_prepend_val(wd->timeslices, new_ts);
+        //weather_debug("Prepended timeslice to the existing timeslices.");
+    }
+}
+
+
 /* Return current weather conditions, or NULL if not available. */
 xml_time *
 get_current_conditions(const xml_weather *wd)
