@@ -74,7 +74,8 @@ my_timegm(struct tm *tm)
 xml_time *
 get_timeslice(xml_weather *wd,
               const time_t start_t,
-              const time_t end_t)
+              const time_t end_t,
+              guint *index)
 {
     xml_time *timeslice;
     guint i;
@@ -82,8 +83,11 @@ get_timeslice(xml_weather *wd,
     for (i = 0; i < wd->timeslices->len; i++) {
         timeslice = g_array_index(wd->timeslices, xml_time*, i);
         if (timeslice &&
-            timeslice->start == start_t && timeslice->end == end_t)
+            timeslice->start == start_t && timeslice->end == end_t) {
+            if (index != NULL)
+                *index = i;
             return timeslice;
+        }
     }
     return NULL;
 }
@@ -244,7 +248,7 @@ parse_time(xmlNode *cur_node,
         return;
 
     /* look for existing timeslice or add a new one */
-    timeslice = get_timeslice(wd, start_t, end_t);
+    timeslice = get_timeslice(wd, start_t, end_t, NULL);
     if (! timeslice) {
         timeslice = make_timeslice();
         if (G_UNLIKELY(!timeslice))

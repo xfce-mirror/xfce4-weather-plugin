@@ -444,10 +444,10 @@ make_combined_timeslice(xml_weather *wd,
     guint i;
 
     /* find point data at start of interval (may not be available) */
-    start = get_timeslice(wd, interval->start, interval->start);
+    start = get_timeslice(wd, interval->start, interval->start, NULL);
 
     /* find point interval at end of interval */
-    end = get_timeslice(wd, interval->end, interval->end);
+    end = get_timeslice(wd, interval->end, interval->end, NULL);
 
     if (start == NULL && end == NULL)
         return NULL;
@@ -597,7 +597,7 @@ find_timeslice(xml_weather *wd,
             start_t = time_calc_hour(start_tm, 0 - hours);
             end_t = time_calc_hour(end_tm, 0 - hours);
 
-            if ((timeslice = get_timeslice(wd, start_t, end_t)))
+            if ((timeslice = get_timeslice(wd, start_t, end_t, NULL)))
                 return timeslice;
         }
 
@@ -606,7 +606,7 @@ find_timeslice(xml_weather *wd,
             start_t = time_calc_hour(start_tm, hours);
             end_t = time_calc_hour(end_tm, hours);
 
-            if ((timeslice = get_timeslice(wd, start_t, end_t)))
+            if ((timeslice = get_timeslice(wd, start_t, end_t, NULL)))
                 return timeslice;
         }
         hours++;

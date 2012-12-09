@@ -141,7 +141,8 @@ xml_timezone *parse_timezone(xmlNode *cur_node);
 
 xml_time *get_timeslice(xml_weather *wd,
                         const time_t start_t,
-                        const time_t end_t);
+                        const time_t end_t,
+                        guint *index);
 
 xmlDoc *get_xml_document(SoupMessage *msg);
 
