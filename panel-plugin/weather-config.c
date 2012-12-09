@@ -149,7 +149,8 @@ schedule_data_update(gpointer user_data)
 
     /* force update of downloaded data */
     weather_debug("Delayed update timer expired, now scheduling data update.");
-    update_weatherdata_with_reset(dialog->wd);
+    update_weatherdata_with_reset(dialog->wd, TRUE);
+
     gtk_spinner_stop(GTK_SPINNER(dialog->update_spinner));
     gtk_widget_hide(GTK_WIDGET(dialog->update_spinner));
     return FALSE;

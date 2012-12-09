@@ -117,7 +117,8 @@ void update_icon(xfceweather_data *data);
 
 void update_scrollbox(xfceweather_data *data);
 
-void update_weatherdata_with_reset(xfceweather_data *data);
+void update_weatherdata_with_reset(xfceweather_data *data,
+                                   gboolean clear);
 
 GArray *labels_clear(GArray *array);
 

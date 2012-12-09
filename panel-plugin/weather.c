@@ -682,7 +682,7 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
 
 
 void
-update_weatherdata_with_reset(xfceweather_data *data)
+update_weatherdata_with_reset(xfceweather_data *data, gboolean clear)
 {
     if (data->updatetimeout)
         g_source_remove(data->updatetimeout);
@@ -691,6 +691,13 @@ update_weatherdata_with_reset(xfceweather_data *data)
     memset(&data->last_astro_update, 0, sizeof(data->last_astro_update));
     memset(&data->last_conditions_update, 0,
            sizeof(data->last_conditions_update));
+
+    /* clear existing weather data, needed for location changes */
+    if (clear && data->weatherdata) {
+        xml_weather_free(data->weatherdata);
+        data->weatherdata = g_slice_new0(xml_weather);
+    }
+
     update_weatherdata(data);
 
     data->updatetimeout =
@@ -740,7 +747,7 @@ cb_click(GtkWidget *widget,
     if (event->button == 1)
         forecast_click(widget, user_data);
     else if (event->button == 2)
-        update_weatherdata_with_reset(data);
+        update_weatherdata_with_reset(data, FALSE);
 
     return FALSE;
 }
@@ -767,7 +774,7 @@ mi_click(GtkWidget *widget,
 {
     xfceweather_data *data = (xfceweather_data *) user_data;
 
-    update_weatherdata_with_reset(data);
+    update_weatherdata_with_reset(data, FALSE);
 }
 
 
