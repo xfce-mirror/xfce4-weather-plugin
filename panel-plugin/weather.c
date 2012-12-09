@@ -681,6 +681,26 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
 }
 
 
+/*
+ * Generate file name for the weather data cache file.
+ */
+static gchar *
+make_cache_filename(xfceweather_data *data)
+{
+    gchar *cache_dir, *file;
+
+    if (G_UNLIKELY(data->lat == NULL || data->lon == NULL))
+        return NULL;
+
+    cache_dir = get_cache_directory();
+    file = g_strdup_printf("%s%sweatherdata_%s_%s_%d",
+                           cache_dir, G_DIR_SEPARATOR_S,
+                           data->lat, data->lon, data->msl);
+    g_free(cache_dir);
+    return file;
+}
+
+
 void
 update_weatherdata_with_reset(xfceweather_data *data, gboolean clear)
 {
