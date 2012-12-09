@@ -697,6 +697,40 @@ find_shortest_timeslice(xml_weather *wd,
 }
 
 
+/*
+ * Compare two xml_time structs using their start and end times,
+ * returning the result as a qsort()-style comparison function (less
+ * than zero for first arg is less than second arg, zero for equal,
+ * greater zero if first arg is greater than second arg).
+ */
+gint
+xml_time_compare(gpointer a,
+                 gpointer b)
+{
+    xml_time *ts1 = (xml_time *) a;
+    xml_time *ts2 = (xml_time *) b;
+    gdouble diff;
+
+    if (G_UNLIKELY(a == NULL && b == NULL))
+        return 0;
+
+    if (G_UNLIKELY(a == NULL))
+        return -1;
+
+    if (G_UNLIKELY(b == NULL))
+        return 1;
+
+    diff = difftime(ts2->start, ts1->start);
+    if (diff > 0)
+        return -1;
+    if (diff < 0)
+        return 1;
+
+    /* start time is equal, now it's easy to check end time ;-) */
+    return (gint) difftime(ts2->end, ts1->end);
+}
+
+
 xml_time *
 make_current_conditions(xml_weather *wd,
                         time_t now_t)
