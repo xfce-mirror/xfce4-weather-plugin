@@ -67,6 +67,15 @@ string_to_double(const gchar *str,
 }
 
 
+/* check whether timeslice is interval or point data */
+gboolean
+timeslice_is_interval(xml_time *timeslice)
+{
+    return (timeslice->location->symbol != NULL ||
+            timeslice->location->precipitation_value != NULL);
+}
+
+
 gchar *
 get_data(const xml_time *timeslice,
          const units_config *units,
