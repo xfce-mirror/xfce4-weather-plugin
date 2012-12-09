@@ -243,20 +243,28 @@ parse_time(xmlNode *cur_node,
 }
 
 
-xml_weather *
-parse_weather(xmlNode *cur_node)
+/*
+ * Parse XML weather data and merge it with current data.
+ */
+void
+parse_weather(xmlNode *cur_node,
+              xml_weather *wd)
 {
-    xml_weather *wd;
     xmlNode *child_node;
 
-    if (G_UNLIKELY(!NODE_IS_TYPE(cur_node, "weatherdata"))) {
-        return NULL;
-    }
+    if (G_UNLIKELY(wd == NULL))
+        return;
 
-    if ((wd = g_slice_new0(xml_weather)) == NULL)
-        return NULL;
+    if (G_UNLIKELY(!NODE_IS_TYPE(cur_node, "weatherdata")))
+        return;
 
-    wd->timeslices = g_array_sized_new(FALSE, TRUE, sizeof(xml_time *), 200);
+    /* create new timeslices array if it doesn't exist yet, otherwise
+       overwrite existing data */
+    if (wd->timeslices == NULL)
+        wd->timeslices = g_array_sized_new(FALSE, TRUE,
+                                           sizeof(xml_time *), 200);
+    if (wd->timeslices == NULL)
+        return;
 
     for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next) {
         if (cur_node->type != XML_ELEMENT_NODE)
@@ -275,7 +283,7 @@ parse_weather(xmlNode *cur_node)
                     parse_time(child_node, wd);
         }
     }
-    return wd;
+    return;
 }
 
 

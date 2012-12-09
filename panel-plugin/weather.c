@@ -284,7 +284,6 @@ update_current_conditions(xfceweather_data *data)
     data->weatherdata->current_conditions =
         make_current_conditions(data->weatherdata,
                                 data->last_conditions_update);
-
     data->night_time = is_night_time(data->astrodata);
     update_icon(data);
     update_scrollbox(data);
@@ -317,20 +316,20 @@ cb_weather_update(SoupSession *session,
                   gpointer user_data)
 {
     xfceweather_data *data = user_data;
-    xml_weather *wd = NULL;
+    xmlDoc *doc;
+    xmlNode *root_node;
 
-    if ((wd = (xml_weather *)
-         parse_xml_document(msg, (XmlParseFunc) parse_weather))) {
-        if (G_LIKELY(data->weatherdata)) {
-            weather_debug("Freeing weather data.");
-            xml_weather_free(data->weatherdata);
+    doc = get_xml_document(msg);
+    if (G_LIKELY(doc)) {
+        root_node = xmlDocGetRootElement(doc);
+        if (G_LIKELY(root_node)) {
+            parse_weather(root_node, data->weatherdata);
+            data->last_data_update = time(NULL);
         }
-        data->weatherdata = wd;
-        data->last_data_update = time(NULL);
+        xmlFreeDoc(doc);
     }
     weather_debug("Updating current conditions.");
     update_current_conditions(data);
-
     weather_dump(weather_dump_weatherdata, data->weatherdata);
 }
 

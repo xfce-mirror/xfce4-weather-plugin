@@ -119,7 +119,8 @@ typedef struct {
 } xml_timezone;
 
 
-xml_weather *parse_weather(xmlNode *cur_node);
+void parse_weather(xmlNode *cur_node,
+                   xml_weather *wd);
 
 xml_astro *parse_astro(xmlNode *cur_node);
 
