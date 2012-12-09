@@ -38,9 +38,9 @@
 #include "weather-debug.h"
 
 #define XFCEWEATHER_ROOT "weather"
-#define UPDATE_INTERVAL 15
-#define DATA_MAX_AGE (3 * 3600)
-#define BORDER 8
+#define UPDATE_INTERVAL (15)
+#define DATA_MAX_AGE (20 * 60)
+#define BORDER (8)
 #define CONNECTION_TIMEOUT (10)        /* connection timeout in seconds */
 
 #define DATA_AND_UNIT(var, item)                                    \
