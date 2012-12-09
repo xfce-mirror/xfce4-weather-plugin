@@ -549,6 +549,9 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
 
     data->timezone = xfce_rc_read_int_entry(rc, "timezone", 0);
 
+    data->cache_file_max_age =
+        xfce_rc_read_int_entry(rc, "cache_file_max_age", CACHE_FILE_MAX_AGE);
+
     if (data->units)
         g_slice_free(units_config, data->units);
     data->units = g_slice_new0(units_config);
@@ -656,6 +659,9 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
     xfce_rc_write_int_entry(rc, "msl", data->msl);
 
     xfce_rc_write_int_entry(rc, "timezone", data->timezone);
+
+    xfce_rc_write_int_entry(rc, "cache_file_max_age",
+                            data->cache_file_max_age);
 
     xfce_rc_write_int_entry(rc, "units_temperature", data->units->temperature);
     xfce_rc_write_int_entry(rc, "units_pressure", data->units->pressure);
@@ -881,7 +887,7 @@ read_cache_file(plugin_data *data)
     CACHE_READ_STRING(timestring, "cache_date");
     cache_date_t = parse_timestring(timestring, NULL);
     g_free(timestring);
-    if (difftime(now_t, cache_date_t) > CACHE_FILE_MAX_AGE) {
+    if (difftime(now_t, cache_date_t) > data->cache_file_max_age) {
         weather_debug("Cache file is too old and will not be used.");
         CACHE_FREE_VARS();
         return;
@@ -1313,6 +1319,7 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     data->plugin = plugin;
     data->units = g_slice_new0(units_config);
     data->weatherdata = g_slice_new0(xml_weather);
+    data->cache_file_max_age = CACHE_FILE_MAX_AGE;
     data->show_scrollbox = TRUE;
     data->scrollbox_lines = 1;
     data->scrollbox_animate = TRUE;

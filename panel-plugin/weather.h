@@ -87,6 +87,7 @@ typedef struct {
     gchar *lon;
     gint msl;
     gint timezone;
+    gint cache_file_max_age;
     gboolean night_time;
 
     units_config *units;
