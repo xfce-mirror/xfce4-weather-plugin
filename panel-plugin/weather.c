@@ -169,7 +169,7 @@ gchar *
 get_cache_directory(void)
 {
     gchar *dir = g_strconcat(g_get_user_cache_dir(), G_DIR_SEPARATOR_S,
-                             "xfce4", G_DIR_SEPARATOR_S, "weather-plugin",
+                             "xfce4", G_DIR_SEPARATOR_S, "weather",
                              NULL);
     g_mkdir_with_parents(dir, 0755);
     return dir;
