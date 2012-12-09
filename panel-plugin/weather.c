@@ -293,9 +293,13 @@ update_current_conditions(xfceweather_data *data)
         xml_time_free(data->weatherdata->current_conditions);
         data->weatherdata->current_conditions = NULL;
     }
-    /* set time of last update to now, but exact only to the minute */
+    /* use exact 5 minute intervals for calculation */
     time(&data->last_conditions_update);
     now_tm = *localtime(&data->last_conditions_update);
+    if (now_tm.tm_min % 5 < 5)
+        now_tm.tm_min -= (now_tm.tm_min % 5);
+    if (now_tm.tm_min < 0)
+        now_tm.tm_min = 0;
     now_tm.tm_sec = 0;
     data->last_conditions_update = mktime(&now_tm);
 
