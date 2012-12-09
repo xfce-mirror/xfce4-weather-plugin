@@ -24,6 +24,8 @@
 #include <libxml/parser.h>
 #include <libsoup/soup.h>
 
+#define DATA_EXPIRY_TIME (24 * 3600)
+
 G_BEGIN_DECLS
 
 enum {
@@ -144,6 +146,8 @@ gpointer parse_xml_document(SoupMessage *msg,
 void xml_time_free(xml_time *timeslice);
 
 void xml_weather_free(xml_weather *wd);
+
+void xml_weather_clean(xml_weather *wd);
 
 void xml_astro_free(xml_astro *astro);
 

@@ -276,11 +276,12 @@ update_current_conditions(xfceweather_data *data)
         xml_time_free(data->weatherdata->current_conditions);
         data->weatherdata->current_conditions = NULL;
     }
-
-    data->last_conditions_update = time(NULL);
+    /* set time of last update to now, but exact only to the minute */
+    time(&data->last_conditions_update);
     now_tm = *localtime(&data->last_conditions_update);
     now_tm.tm_sec = 0;
     data->last_conditions_update = mktime(&now_tm);
+
     data->weatherdata->current_conditions =
         make_current_conditions(data->weatherdata,
                                 data->last_conditions_update);
@@ -319,6 +320,7 @@ cb_weather_update(SoupSession *session,
     xmlDoc *doc;
     xmlNode *root_node;
 
+    weather_debug("Processing downloaded weather data.");
     doc = get_xml_document(msg);
     if (G_LIKELY(doc)) {
         root_node = xmlDocGetRootElement(doc);
@@ -328,6 +330,7 @@ cb_weather_update(SoupSession *session,
         }
         xmlFreeDoc(doc);
     }
+    xml_weather_clean(data->weatherdata);
     weather_debug("Updating current conditions.");
     update_current_conditions(data);
     weather_dump(weather_dump_weatherdata, data->weatherdata);

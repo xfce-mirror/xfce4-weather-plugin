@@ -45,6 +45,9 @@
     (xmlStrEqual(node->name, (const xmlChar *) type))
 
 
+extern debug_mode;
+
+
 /*
  * This is a portable replacement for the deprecated timegm(),
  * copied from the man page and modified to use GLIB functions.
@@ -601,6 +604,35 @@ xml_weather_free(xml_weather *wd)
         xml_time_free(wd->current_conditions);
     }
     g_slice_free(xml_weather, wd);
+}
+
+
+void
+xml_weather_clean(xml_weather *wd)
+{
+    xml_time *timeslice;
+    time_t now_t = time(NULL);
+    guint i;
+
+    if (G_UNLIKELY(wd == NULL || wd->timeslices == NULL))
+        return;
+    for (i = 0; i < wd->timeslices->len; i++) {
+        timeslice = g_array_index(wd->timeslices, xml_time*, i);
+        if (G_UNLIKELY(timeslice == NULL))
+            continue;
+        if (difftime(now_t, timeslice->end) > DATA_EXPIRY_TIME) {
+            if (debug_mode) {
+                gchar *start, *end;
+                start = weather_debug_strftime_t(timeslice->start);
+                end = weather_debug_strftime_t(timeslice->end);
+                weather_debug("Removing expired timeslice [%s - %s].");
+                g_free(start);
+                g_free(end);
+            }
+            xml_time_free(timeslice);
+            g_array_remove_index(wd->timeslices, i--);
+        }
+    }
 }
 
 
