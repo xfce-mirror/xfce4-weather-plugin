@@ -198,6 +198,24 @@ parse_location(xmlNode *cur_node,
 }
 
 
+xml_time *
+make_timeslice(void)
+{
+    xml_time *timeslice;
+
+    timeslice = g_slice_new0(xml_time);
+    if (G_UNLIKELY(timeslice == NULL))
+        return NULL;
+
+    timeslice->location = g_slice_new0(xml_location);
+    if (G_UNLIKELY(timeslice->location == NULL)) {
+        g_slice_free(xml_time, timeslice);
+        return NULL;
+    }
+    return timeslice;
+}
+
+
 static void
 parse_time(xmlNode *cur_node,
            xml_weather *wd)
@@ -228,7 +246,7 @@ parse_time(xmlNode *cur_node,
     /* look for existing timeslice or add a new one */
     timeslice = get_timeslice(wd, start_t, end_t);
     if (! timeslice) {
-        timeslice = g_slice_new0(xml_time);
+        timeslice = make_timeslice();
         if (G_UNLIKELY(!timeslice))
             return;
         timeslice->start = start_t;
@@ -238,11 +256,8 @@ parse_time(xmlNode *cur_node,
 
     for (child_node = cur_node->children; child_node;
          child_node = child_node->next)
-        if (G_LIKELY(NODE_IS_TYPE(child_node, "location"))) {
-            if (timeslice->location == NULL)
-                timeslice->location = g_slice_new0(xml_location);
+        if (G_LIKELY(NODE_IS_TYPE(child_node, "location")))
             parse_location(child_node, timeslice->location);
-        }
 }
 
 

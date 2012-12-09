@@ -121,6 +121,8 @@ typedef struct {
 } xml_timezone;
 
 
+xml_time *make_timeslice(void);
+
 void parse_weather(xmlNode *cur_node,
                    xml_weather *wd);
 
