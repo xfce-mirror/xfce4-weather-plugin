@@ -340,12 +340,40 @@ weather_dump_units_config(const units_config *units)
 
 
 gchar *
+weather_dump_timeslice(const xml_time *timeslice)
+{
+    GString *out;
+    gchar *start, *end, *loc, *result;
+    gboolean is_interval;
+
+    if (G_UNLIKELY(timeslice == NULL))
+        return g_strdup("No timeslice data.");
+
+    out = g_string_sized_new(512);
+    start = weather_debug_strftime_t(timeslice->start);
+    end = weather_debug_strftime_t(timeslice->end);
+    is_interval = (gboolean) strcmp(start, end);
+    loc = weather_dump_location((timeslice) ? timeslice->location : NULL,
+                                is_interval);
+    g_string_append_printf(out, "[%s %s %s] %s\n", start,
+                           is_interval ? "-" : "=", end, loc);
+    g_free(start);
+    g_free(end);
+    g_free(loc);
+
+    /* Free GString only and return its character data */
+    result = out->str;
+    g_string_free(out, FALSE);
+    return result;
+}
+
+
+gchar *
 weather_dump_weatherdata(const xml_weather *wd)
 {
     GString *out;
     xml_time *timeslice;
-    gchar *start, *end, *loc, *result;
-    gboolean is_interval;
+    gchar *result, *tmp;
     guint i;
 
     if (G_UNLIKELY(wd == NULL))
@@ -360,23 +388,11 @@ weather_dump_weatherdata(const xml_weather *wd)
                            wd->timeslices->len);
     for (i = 0; i < wd->timeslices->len; i++) {
         timeslice = g_array_index(wd->timeslices, xml_time*, i);
-        if (timeslice) {
-            start = weather_debug_strftime_t(timeslice->start);
-            end = weather_debug_strftime_t(timeslice->end);
-        } else {
-            start = g_strdup("-");
-            end = g_strdup("-");
-        }
-        is_interval = (gboolean) strcmp(start, end);
-        loc = weather_dump_location((timeslice) ? timeslice->location : NULL,
-                                    is_interval);
-        g_string_append_printf(out, "  #%3d: [%s %s %s] %s\n",
-                               i + 1, start, is_interval ? "-" : "=",
-                               end, loc);
-        g_free(start);
-        g_free(end);
-        g_free(loc);
+        tmp = weather_dump_timeslice(timeslice);
+        g_string_append_printf(out, "  #%3d: %s", i + 1, tmp);
+        g_free(tmp);
     }
+
     /* Remove trailing newline */
     if (out->str[out->len - 1] == '\n')
         out->str[--out->len] = '\0';
