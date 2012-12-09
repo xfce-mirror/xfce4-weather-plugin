@@ -588,12 +588,14 @@ xml_weather_free(xml_weather *wd)
     g_assert(wd != NULL);
     if (G_UNLIKELY(wd == NULL))
         return;
-    weather_debug("Freeing %u timeslices.", wd->timeslices->len);
-    for (i = 0; i < wd->timeslices->len; i++) {
-        timeslice = g_array_index(wd->timeslices, xml_time*, i);
-        xml_time_free(timeslice);
+    if (G_LIKELY(wd->timeslices)) {
+        weather_debug("Freeing %u timeslices.", wd->timeslices->len);
+        for (i = 0; i < wd->timeslices->len; i++) {
+            timeslice = g_array_index(wd->timeslices, xml_time*, i);
+            xml_time_free(timeslice);
+        }
+        g_array_free(wd->timeslices, FALSE);
     }
-    g_array_free(wd->timeslices, FALSE);
     if (G_LIKELY(wd->current_conditions)) {
         weather_debug("Freeing current conditions.");
         xml_time_free(wd->current_conditions);
