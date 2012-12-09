@@ -586,6 +586,66 @@ xml_location_free(xml_location *loc)
 }
 
 
+/*
+ * Deep copy xml_time struct.
+ */
+xml_time *
+xml_time_copy(const xml_time *src)
+{
+    xml_time *dst;
+    xml_location *loc;
+    gint i;
+
+    if (src == NULL)
+        return NULL;
+
+    dst = g_slice_new0(xml_time);
+    if (dst == NULL)
+        return NULL;
+
+    loc = g_slice_new0(xml_location);
+    if (loc == NULL)
+        return dst;
+
+    dst->start = src->start;
+    dst->end = src->end;
+
+    loc->altitude = g_strdup(src->location->altitude);
+    loc->latitude = g_strdup(src->location->latitude);
+    loc->longitude = g_strdup(src->location->longitude);
+
+    loc->temperature_value = g_strdup(src->location->temperature_value);
+    loc->temperature_unit = g_strdup(src->location->temperature_unit);
+
+    loc->wind_dir_deg = g_strdup(src->location->wind_dir_deg);
+    loc->wind_dir_name = g_strdup(src->location->wind_dir_name);
+    loc->wind_speed_mps = g_strdup(src->location->wind_speed_mps);
+    loc->wind_speed_beaufort = g_strdup(src->location->wind_speed_beaufort);
+
+    loc->humidity_value = g_strdup(src->location->humidity_value);
+    loc->humidity_unit = g_strdup(src->location->humidity_unit);
+
+    loc->pressure_value = g_strdup(src->location->pressure_value);
+    loc->pressure_unit = g_strdup(src->location->pressure_unit);
+
+    for (i = 0; i < CLOUDS_PERC_NUM; i++)
+        loc->clouds_percent[i] = g_strdup(src->location->clouds_percent[i]);
+
+    loc->fog_percent = g_strdup(src->location->fog_percent);
+
+    loc->precipitation_value =
+        g_strdup(src->location->precipitation_value);
+    loc->precipitation_unit = g_strdup(src->location->precipitation_unit);
+
+    loc->symbol_id = src->location->symbol_id;
+    loc->symbol = g_strdup(src->location->symbol);
+
+    dst->location = loc;
+
+    return dst;
+}
+
+
 void
 xml_time_free(xml_time *timeslice)
 {

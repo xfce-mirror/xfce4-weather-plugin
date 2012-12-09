@@ -148,6 +148,8 @@ xmlDoc *get_xml_document(SoupMessage *msg);
 gpointer parse_xml_document(SoupMessage *msg,
                             XmlParseFunc parse_func);
 
+xml_time *xml_time_copy(const xml_time *src);
+
 void xml_time_free(xml_time *timeslice);
 
 void xml_weather_free(xml_weather *wd);
