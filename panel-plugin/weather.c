@@ -824,18 +824,23 @@ write_cache_file(plugin_data *data)
 }
 
 
-void
+static void
 read_cache_file(plugin_data *data)
 {
     GKeyFile *keyfile;
     GError **err;
-    xml_weather *wd = data->weatherdata;
+    xml_weather *wd;
     xml_time *timeslice = NULL;
     xml_location *loc = NULL;
     time_t now_t = time(NULL), cache_date_t;
     gchar *file, *locname = NULL, *lat = NULL, *lon = NULL, *group = NULL;
     gchar *timestring;
     gint msl, timezone, num_timeslices, i, j;
+
+    g_assert(data != NULL);
+    if (G_UNLIKELY(data == NULL))
+        return;
+    wd = data->weatherdata;
 
     if (G_UNLIKELY(data->lat == NULL || data->lon == NULL))
         return;
@@ -963,8 +968,15 @@ read_cache_file(plugin_data *data)
 void
 update_weatherdata_with_reset(plugin_data *data, gboolean clear)
 {
-    if (data->updatetimeout)
+    weather_debug("Update weatherdata with reset.");
+    g_assert(data != NULL);
+    if (G_UNLIKELY(data == NULL))
+        return;
+
+    if (data->updatetimeout) {
         g_source_remove(data->updatetimeout);
+        data->updatetimeout = 0;
+    }
 
     memset(&data->last_data_update, 0, sizeof(data->last_data_update));
     memset(&data->last_astro_update, 0, sizeof(data->last_astro_update));
@@ -975,6 +987,9 @@ update_weatherdata_with_reset(plugin_data *data, gboolean clear)
     if (clear && data->weatherdata) {
         xml_weather_free(data->weatherdata);
         data->weatherdata = g_slice_new0(xml_weather);
+
+        /* make use of previously saved data */
+        read_cache_file(data);
     }
 
     update_weatherdata(data);
@@ -983,6 +998,7 @@ update_weatherdata_with_reset(plugin_data *data, gboolean clear)
         g_timeout_add_seconds(UPDATE_INTERVAL,
                               (GSourceFunc) update_weatherdata,
                               data);
+    weather_debug("Updated weatherdata with reset.");
 }
 
 

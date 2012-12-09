@@ -114,8 +114,6 @@ void forecast_click(GtkWidget *widget,
 
 gchar *get_cache_directory(void);
 
-void read_cache_file(plugin_data *data);
-
 void update_icon(plugin_data *data);
 
 void update_scrollbox(plugin_data *data);

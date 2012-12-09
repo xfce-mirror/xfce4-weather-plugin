@@ -143,16 +143,11 @@ static gboolean
 schedule_data_update(gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-
-    if (dialog == NULL)
-        return FALSE;
+    plugin_data *pd = dialog->pd;
 
     /* force update of downloaded data */
     weather_debug("Delayed update timer expired, now scheduling data update.");
-    update_weatherdata_with_reset(dialog->pd, TRUE);
-
-    /* make use of previously saved data */
-    read_cache_file(dialog->pd);
+    update_weatherdata_with_reset(pd, TRUE);
 
     gtk_spinner_stop(GTK_SPINNER(dialog->update_spinner));
     gtk_widget_hide(GTK_WIDGET(dialog->update_spinner));
@@ -165,12 +160,16 @@ schedule_delayed_data_update(xfceweather_dialog *dialog)
 {
     weather_debug("Starting delayed data update.");
     /* cancel any update that was scheduled before */
-    if (dialog->timer_id)
+    if (dialog->timer_id) {
         g_source_remove(dialog->timer_id);
+        dialog->timer_id = 0;
+    }
 
     /* stop any updates that could be performed by weather.c */
-    if (dialog->pd->updatetimeout)
+    if (dialog->pd->updatetimeout) {
         g_source_remove(dialog->pd->updatetimeout);
+        dialog->pd->updatetimeout = 0;
+    }
 
     gtk_widget_show(GTK_WIDGET(dialog->update_spinner));
     gtk_spinner_start(GTK_SPINNER(dialog->update_spinner));
