@@ -986,7 +986,7 @@ update_weatherdata_with_reset(plugin_data *data, gboolean clear)
     /* clear existing weather data, needed for location changes */
     if (clear && data->weatherdata) {
         xml_weather_free(data->weatherdata);
-        data->weatherdata = g_slice_new0(xml_weather);
+        data->weatherdata = make_weather_data();
 
         /* make use of previously saved data */
         read_cache_file(data);
@@ -1334,7 +1334,7 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     /* Initialize with sane default values */
     data->plugin = plugin;
     data->units = g_slice_new0(units_config);
-    data->weatherdata = g_slice_new0(xml_weather);
+    data->weatherdata = make_weather_data();
     data->cache_file_max_age = CACHE_FILE_MAX_AGE;
     data->show_scrollbox = TRUE;
     data->scrollbox_lines = 1;

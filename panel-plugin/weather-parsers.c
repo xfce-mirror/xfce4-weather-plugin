@@ -80,6 +80,10 @@ get_timeslice(xml_weather *wd,
     xml_time *timeslice;
     guint i;
 
+    g_assert(wd != NULL);
+    if (G_UNLIKELY(wd == NULL))
+        return NULL;
+
     for (i = 0; i < wd->timeslices->len; i++) {
         timeslice = g_array_index(wd->timeslices, xml_time *, i);
         if (timeslice &&
@@ -100,6 +104,7 @@ parse_timestring(const gchar *ts,
     struct tm tm;
 
     memset(&t, 0, sizeof(time_t));
+    g_assert(ts != NULL);
     if (G_UNLIKELY(ts == NULL))
         return t;
 
@@ -202,6 +207,24 @@ parse_location(xmlNode *cur_node,
 }
 
 
+xml_weather *
+make_weather_data(void)
+{
+    xml_weather *wd;
+
+    wd = g_slice_new0(xml_weather);
+    if (G_UNLIKELY(wd == NULL))
+        return NULL;
+    wd->timeslices = g_array_sized_new(FALSE, TRUE,
+                                       sizeof(xml_time *), 200);
+    if (G_UNLIKELY(wd->timeslices == NULL)) {
+        g_slice_free(xml_weather, wd);
+        return NULL;
+    }
+    return wd;
+}
+
+
 xml_time *
 make_timeslice(void)
 {
@@ -278,16 +301,7 @@ parse_weather(xmlNode *cur_node,
     if (G_UNLIKELY(wd == NULL))
         return;
 
-    if (G_UNLIKELY(!NODE_IS_TYPE(cur_node, "weatherdata")))
-        return;
-
-    /* create new timeslices array if it doesn't exist yet, otherwise
-       overwrite existing data */
-    if (G_UNLIKELY(wd->timeslices == NULL))
-        wd->timeslices = g_array_sized_new(FALSE, TRUE,
-                                           sizeof(xml_time *), 200);
-    g_assert(wd->timeslices != NULL);
-    if (G_UNLIKELY(wd->timeslices == NULL))
+    if (G_UNLIKELY(cur_node == NULL || !NODE_IS_TYPE(cur_node, "weatherdata")))
         return;
 
     for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next) {
@@ -392,7 +406,8 @@ parse_astro(xmlNode *cur_node)
     xmlNode *child_node, *time_node = NULL;
     xml_astro *astro;
 
-    if (cur_node == NULL || !NODE_IS_TYPE(cur_node, "astrodata"))
+    g_assert(cur_node != NULL);
+    if (G_UNLIKELY(cur_node == NULL || !NODE_IS_TYPE(cur_node, "astrodata")))
         return NULL;
 
     astro = g_slice_new0(xml_astro);
@@ -453,10 +468,7 @@ parse_place(xmlNode *cur_node)
     xml_place *place;
 
     g_assert(cur_node != NULL);
-    if (G_UNLIKELY(cur_node == NULL))
-        return NULL;
-
-    if (!NODE_IS_TYPE(cur_node, "place"))
+    if (G_UNLIKELY(cur_node == NULL || !NODE_IS_TYPE(cur_node, "place")))
         return NULL;
 
     place = g_slice_new0(xml_place);
@@ -475,10 +487,7 @@ parse_altitude(xmlNode *cur_node)
     xml_altitude *alt;
 
     g_assert(cur_node != NULL);
-    if (G_UNLIKELY(cur_node == NULL))
-        return NULL;
-
-    if (!NODE_IS_TYPE(cur_node, "geonames"))
+    if (G_UNLIKELY(cur_node == NULL) || !NODE_IS_TYPE(cur_node, "geonames"))
         return NULL;
 
     alt = g_slice_new0(xml_altitude);
@@ -498,10 +507,7 @@ parse_timezone(xmlNode *cur_node)
     xml_timezone *tz;
 
     g_assert(cur_node != NULL);
-    if (G_UNLIKELY(cur_node == NULL))
-        return NULL;
-
-    if (!NODE_IS_TYPE(cur_node, "timezone"))
+    if (G_UNLIKELY(cur_node == NULL) || !NODE_IS_TYPE(cur_node, "timezone"))
         return NULL;
 
     tz = g_slice_new0(xml_timezone);
@@ -549,6 +555,10 @@ parse_xml_document(SoupMessage *msg,
     xmlDoc *doc;
     xmlNode *root_node;
     gpointer user_data = NULL;
+
+    g_assert(msg != NULL);
+    if (G_UNLIKELY(msg == NULL))
+        return NULL;
 
     doc = get_xml_document(msg);
     if (G_LIKELY(doc)) {

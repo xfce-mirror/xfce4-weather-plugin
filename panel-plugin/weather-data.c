@@ -36,9 +36,10 @@
 
 #define ROUND_TO_INT(default_format) (round ? "%.0f" : default_format)
 
-#define LOCALE_DOUBLE(value, format)                \
-    (g_strdup_printf(format,                        \
-                     g_ascii_strtod(value, NULL)))
+#define LOCALE_DOUBLE(value, format)                        \
+    (value                                                  \
+     ? g_strdup_printf(format, g_ascii_strtod(value, NULL)) \
+     : g_strdup(""))
 
 #define INTERPOLATE_OR_COPY(var, radian)                                \
     if (ipol)                                                           \
@@ -526,14 +527,6 @@ merge_timeslice(xml_weather *wd,
 
     g_assert(wd != NULL);
     if (G_UNLIKELY(wd == NULL))
-        return;
-
-    if (wd->timeslices == NULL)
-        wd->timeslices = g_array_sized_new(FALSE, TRUE,
-                                           sizeof(xml_time *), 200);
-
-    g_assert(wd->timeslices != NULL);
-    if (G_UNLIKELY(wd->timeslices == NULL))
         return;
 
     /* first check if it isn't too old */
