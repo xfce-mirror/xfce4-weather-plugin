@@ -113,12 +113,12 @@ time_t time_calc_hour(struct tm time_tm,
 time_t time_calc_day(struct tm time_tm,
                      gint days);
 
-xml_time *get_current_conditions(const xml_weather *data);
+xml_time *get_current_conditions(const xml_weather *wd);
 
-xml_time *make_current_conditions(xml_weather *data,
+xml_time *make_current_conditions(xml_weather *wd,
                                   time_t now_t);
 
-xml_time *make_forecast_data(xml_weather *data,
+xml_time *make_forecast_data(xml_weather *wd,
                              int day,
                              daytime dt);
 

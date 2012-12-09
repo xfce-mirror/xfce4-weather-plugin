@@ -317,15 +317,15 @@ cb_weather_update(SoupSession *session,
                   gpointer user_data)
 {
     xfceweather_data *data = user_data;
-    xml_weather *weather = NULL;
+    xml_weather *wd = NULL;
 
-    if ((weather = (xml_weather *)
+    if ((wd = (xml_weather *)
          parse_xml_document(msg, (XmlParseFunc) parse_weather))) {
         if (G_LIKELY(data->weatherdata)) {
             weather_debug("Freeing weather data.");
             xml_weather_free(data->weatherdata);
         }
-        data->weatherdata = weather;
+        data->weatherdata = wd;
         data->last_data_update = time(NULL);
     }
     weather_debug("Updating current conditions.");

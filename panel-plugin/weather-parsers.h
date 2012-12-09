@@ -131,7 +131,7 @@ xml_altitude *parse_altitude(xmlNode *cur_node);
 
 xml_timezone *parse_timezone(xmlNode *cur_node);
 
-xml_time *get_timeslice(xml_weather *data,
+xml_time *get_timeslice(xml_weather *wd,
                         const time_t start_t,
                         const time_t end_t);
 
@@ -142,7 +142,7 @@ gpointer parse_xml_document(SoupMessage *msg,
 
 void xml_time_free(xml_time *timeslice);
 
-void xml_weather_free(xml_weather *data);
+void xml_weather_free(xml_weather *wd);
 
 void xml_astro_free(xml_astro *astro);
 
