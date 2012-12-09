@@ -54,21 +54,6 @@
     comb->location->var = g_strdup(end->location->var);
 
 
-static gboolean
-has_timeslice(xml_weather *data,
-              const time_t start_t,
-              const time_t end_t)
-{
-    guint i = 0;
-
-    for (i = 0; i < data->num_timeslices; i++)
-        if (data->timeslice[i]->start == start_t &&
-            data->timeslice[i]->end == end_t)
-            return TRUE;
-    return FALSE;
-}
-
-
 /* convert string to a double value, returning backup value on error */
 gdouble
 string_to_double(const gchar *str,
@@ -459,12 +444,10 @@ make_combined_timeslice(xml_weather *data,
     guint i;
 
     /* find point data at start of interval (may not be available) */
-    if (has_timeslice(data, interval->start, interval->start))
-        start = get_timeslice(data, interval->start, interval->start);
+    start = get_timeslice(data, interval->start, interval->start);
 
     /* find point interval at end of interval */
-    if (has_timeslice(data, interval->end, interval->end))
-        end = get_timeslice(data, interval->end, interval->end);
+    end = get_timeslice(data, interval->end, interval->end);
 
     if (start == NULL && end == NULL)
         return NULL;
@@ -602,6 +585,7 @@ find_timeslice(xml_weather *data,
                const gint prev_hours_limit,
                const gint next_hours_limit)
 {
+    xml_time *timeslice;
     time_t start_t, end_t;
     gint hours = 0;
 
@@ -615,8 +599,8 @@ find_timeslice(xml_weather *data,
             start_t = time_calc_hour(start_tm, 0 - hours);
             end_t = time_calc_hour(end_tm, 0 - hours);
 
-            if (has_timeslice(data, start_t, end_t))
-                return get_timeslice(data, start_t, end_t);
+            if ((timeslice = get_timeslice(data, start_t, end_t)))
+                return timeslice;
         }
 
         /* check later hours */
@@ -624,8 +608,8 @@ find_timeslice(xml_weather *data,
             start_t = time_calc_hour(start_tm, hours);
             end_t = time_calc_hour(end_tm, hours);
 
-            if (has_timeslice(data, start_t, end_t))
-                return get_timeslice(data, start_t, end_t);
+            if ((timeslice = get_timeslice(data, start_t, end_t)))
+                return timeslice;
         }
         hours++;
     }

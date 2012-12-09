@@ -340,23 +340,29 @@ weather_dump_units_config(const units_config *units)
 
 
 gchar *
-weather_dump_weatherdata(const xml_weather *weatherdata)
+weather_dump_weatherdata(const xml_weather *wd)
 {
     GString *out;
+    xml_time *timeslice;
     gchar *start, *end, *loc, *result;
     gboolean is_interval;
     guint i;
 
     out = g_string_sized_new(20480);
     g_string_assign(out, "Timeslices (local time): ");
-    g_string_append_printf(out, "%d timeslices available (%d max, %d free).\n",
-                           weatherdata->num_timeslices, MAX_TIMESLICE,
-                           MAX_TIMESLICE - weatherdata->num_timeslices);
-    for (i = 0; i < weatherdata->num_timeslices; i++) {
-        start = weather_debug_strftime_t(weatherdata->timeslice[i]->start);
-        end = weather_debug_strftime_t(weatherdata->timeslice[i]->end);
+    g_string_append_printf(out, "%d timeslices available.\n",
+                           wd->timeslices->len);
+    for (i = 0; i < wd->timeslices->len; i++) {
+        timeslice = g_array_index(wd->timeslices, xml_time*, i);
+        if (timeslice) {
+            start = weather_debug_strftime_t(timeslice->start);
+            end = weather_debug_strftime_t(timeslice->end);
+        } else {
+            start = g_strdup("-");
+            end = g_strdup("-");
+        }
         is_interval = (gboolean) strcmp(start, end);
-        loc = weather_dump_location(weatherdata->timeslice[i]->location,
+        loc = weather_dump_location((timeslice) ? timeslice->location : NULL,
                                     is_interval);
         g_string_append_printf(out, "  #%3d: [%s %s %s] %s\n",
                                i + 1, start, is_interval ? "-" : "=",

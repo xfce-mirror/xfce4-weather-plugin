@@ -28,12 +28,11 @@
 #define _XOPEN_SOURCE
 #define _XOPEN_SOURCE_EXTENDED 1
 #include "weather-parsers.h"
-#include <libxfce4panel/libxfce4panel.h>
+#include "weather-debug.h"
+
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include "weather-debug.h"
 
 
 #define DATA(node)                                                  \
@@ -74,22 +73,16 @@ get_timeslice(xml_weather *data,
               const time_t start_t,
               const time_t end_t)
 {
+    xml_time *timeslice;
     guint i;
 
-    for (i = 0; i < data->num_timeslices; i++) {
-        if (data->timeslice[i]->start == start_t &&
-            data->timeslice[i]->end == end_t)
-            return data->timeslice[i];
+    for (i = 0; i < data->timeslices->len; i++) {
+        timeslice = g_array_index(data->timeslices, xml_time*, i);
+        if (timeslice &&
+            timeslice->start == start_t && timeslice->end == end_t)
+            return timeslice;
     }
-    if (data->num_timeslices == MAX_TIMESLICE - 1)
-        return NULL;
-
-    data->timeslice[data->num_timeslices] = g_slice_new0(xml_time);
-    data->timeslice[data->num_timeslices]->start = start_t;
-    data->timeslice[data->num_timeslices]->end = end_t;
-    data->num_timeslices++;
-
-    return data->timeslice[data->num_timeslices - 1];
+    return NULL;
 }
 
 
@@ -229,13 +222,17 @@ parse_time(xmlNode *cur_node,
     if (G_UNLIKELY(!start_t || !end_t))
         return;
 
+    /* look for existing timeslice or add a new one */
     timeslice = get_timeslice(data, start_t, end_t);
-
-    if (G_UNLIKELY(!timeslice)) {
-        g_warning("No timeslice found or created. "
-                  "Perhaps maximum of %d slices reached?", MAX_TIMESLICE);
-        return;
+    if (! timeslice) {
+        timeslice = g_slice_new0(xml_time);
+        if (G_UNLIKELY(!timeslice))
+            return;
+        timeslice->start = start_t;
+        timeslice->end = end_t;
+        g_array_append_val(data->timeslices, timeslice);
     }
+
     for (child_node = cur_node->children; child_node;
          child_node = child_node->next)
         if (G_LIKELY(NODE_IS_TYPE(child_node, "location"))) {
@@ -249,17 +246,18 @@ parse_time(xmlNode *cur_node,
 xml_weather *
 parse_weather(xmlNode *cur_node)
 {
-    xml_weather *ret;
+    xml_weather *wd;
     xmlNode *child_node;
 
     if (G_UNLIKELY(!NODE_IS_TYPE(cur_node, "weatherdata"))) {
         return NULL;
     }
 
-    if ((ret = g_slice_new0(xml_weather)) == NULL)
+    if ((wd = g_slice_new0(xml_weather)) == NULL)
         return NULL;
 
-    ret->num_timeslices = 0;
+    wd->timeslices = g_array_sized_new(FALSE, TRUE, sizeof(xml_time *), 200);
+
     for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next) {
         if (cur_node->type != XML_ELEMENT_NODE)
             continue;
@@ -274,10 +272,10 @@ parse_weather(xmlNode *cur_node)
             for (child_node = cur_node->children; child_node;
                  child_node = child_node->next)
                 if (NODE_IS_TYPE(child_node, "time"))
-                    parse_time(child_node, ret);
+                    parse_time(child_node, wd);
         }
     }
-    return ret;
+    return wd;
 }
 
 
@@ -574,21 +572,25 @@ xml_time_free(xml_time *timeslice)
 
 
 void
-xml_weather_free(xml_weather *data)
+xml_weather_free(xml_weather *wd)
 {
+    xml_time *timeslice;
     guint i;
 
-    g_assert(data != NULL);
-    if (G_UNLIKELY(data == NULL))
+    g_assert(wd != NULL);
+    if (G_UNLIKELY(wd == NULL))
         return;
-    weather_debug("Freeing %u timeslices.", data->num_timeslices);
-    for (i = 0; i < data->num_timeslices; i++)
-        xml_time_free(data->timeslice[i]);
-    if (G_LIKELY(data->current_conditions)) {
-        weather_debug("Freeing current conditions.");
-        xml_time_free(data->current_conditions);
+    weather_debug("Freeing %u timeslices.", wd->timeslices->len);
+    for (i = 0; i < wd->timeslices->len; i++) {
+        timeslice = g_array_index(wd->timeslices, xml_time*, i);
+        xml_time_free(timeslice);
     }
-    g_slice_free(xml_weather, data);
+    g_array_free(wd->timeslices, FALSE);
+    if (G_LIKELY(wd->current_conditions)) {
+        weather_debug("Freeing current conditions.");
+        xml_time_free(wd->current_conditions);
+    }
+    g_slice_free(xml_weather, wd);
 }
 
 

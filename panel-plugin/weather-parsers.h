@@ -26,8 +26,6 @@
 
 G_BEGIN_DECLS
 
-#define MAX_TIMESLICE 500
-
 enum {
     CLOUDS_PERC_LOW = 0,
     CLOUDS_PERC_MED,
@@ -75,8 +73,7 @@ typedef struct {
 } xml_time;
 
 typedef struct {
-    xml_time *timeslice[MAX_TIMESLICE];
-    guint num_timeslices;
+    GArray *timeslices;
     xml_time *current_conditions;
 } xml_weather;
 
