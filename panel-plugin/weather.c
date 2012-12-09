@@ -43,6 +43,7 @@
 #define CACHE_FILE_MAX_AGE (48 * 3600)
 #define BORDER (8)
 #define CONNECTION_TIMEOUT (10)        /* connection timeout in seconds */
+#define DATA_RETRY_WAIT (180)          /* download retry wait time in seconds */
 
 #define DATA_AND_UNIT(var, item)                                    \
     value = get_data(conditions, data->units, item, data->round);   \
@@ -314,6 +315,20 @@ update_current_conditions(plugin_data *data)
 }
 
 
+static time_t
+calc_conn_retry_time(gint regular_interval) {
+    time_t now_t = time(NULL);
+    struct tm now_tm;
+
+    now_tm = *localtime(&now_t);
+    now_t = time_calc(now_tm, 0, 0, 0, 0, 0,
+                      0 - regular_interval + DATA_RETRY_WAIT);
+    weather_debug("Calculated time to delay next retry to %d seconds, is %d.",
+                  DATA_RETRY_WAIT, now_t);
+    return now_t;
+}
+
+
 static void
 cb_astro_update(SoupSession *session,
                 SoupMessage *msg,
@@ -328,6 +343,10 @@ cb_astro_update(SoupSession *session,
             xml_astro_free(data->astrodata);
         data->astrodata = astro;
         data->last_astro_update = time(NULL);
+    } else {
+        /* download or parsing failed, set last_astro_update so that
+           downloading will be retried after DATA_RETRY_WAIT time */
+        data->last_astro_update = calc_conn_retry_time(DATA_MAX_AGE);
     }
     weather_dump(weather_dump_astrodata, data->astrodata);
 }
@@ -347,11 +366,18 @@ cb_weather_update(SoupSession *session,
     if (G_LIKELY(doc)) {
         root_node = xmlDocGetRootElement(doc);
         if (G_LIKELY(root_node)) {
-            parse_weather(root_node, data->weatherdata);
-            data->last_data_update = time(NULL);
+            if (parse_weather(root_node, data->weatherdata))
+                data->last_data_update = time(NULL);
+            else
+                data->last_data_update = calc_conn_retry_time(DATA_MAX_AGE);
         }
         xmlFreeDoc(doc);
+    } else {
+        /* download or parsing failed, set last_data_update so that
+           downloading will be retried after DATA_RETRY_WAIT time */
+        data->last_data_update = calc_conn_retry_time(DATA_MAX_AGE);
     }
+
     xml_weather_clean(data->weatherdata);
     weather_debug("Updating current conditions.");
     update_current_conditions(data);

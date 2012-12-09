@@ -291,7 +291,7 @@ parse_time(xmlNode *cur_node,
 /*
  * Parse XML weather data and merge it with current data.
  */
-void
+gboolean
 parse_weather(xmlNode *cur_node,
               xml_weather *wd)
 {
@@ -299,10 +299,10 @@ parse_weather(xmlNode *cur_node,
 
     g_assert(wd != NULL);
     if (G_UNLIKELY(wd == NULL))
-        return;
+        return FALSE;
 
     if (G_UNLIKELY(cur_node == NULL || !NODE_IS_TYPE(cur_node, "weatherdata")))
-        return;
+        return FALSE;
 
     for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next) {
         if (cur_node->type != XML_ELEMENT_NODE)
@@ -321,7 +321,7 @@ parse_weather(xmlNode *cur_node,
                     parse_time(child_node, wd);
         }
     }
-    return;
+    return TRUE;
 }
 
 
