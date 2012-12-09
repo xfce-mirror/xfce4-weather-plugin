@@ -213,15 +213,13 @@ view_size_allocate_cb(GtkWidget *widget,
 static gchar *
 get_logo_path(void)
 {
-    gchar *dir = g_strconcat(g_get_user_cache_dir(), G_DIR_SEPARATOR_S,
-                             "xfce4", G_DIR_SEPARATOR_S, "weather-plugin",
-                             NULL);
+    gchar *cache_dir, *logo_path;
 
-    g_mkdir_with_parents(dir, 0755);
-    g_free(dir);
-    return g_strconcat(g_get_user_cache_dir(), G_DIR_SEPARATOR_S,
-                       "xfce4", G_DIR_SEPARATOR_S, "weather-plugin",
-                       G_DIR_SEPARATOR_S, "weather_logo.gif", NULL);
+    cache_dir = get_cache_directory();
+    logo_path = g_strconcat(cache_dir, G_DIR_SEPARATOR_S,
+                            "weather_logo.gif", NULL);
+    g_free(cache_dir);
+    return logo_path;
 }
 
 

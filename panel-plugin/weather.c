@@ -161,6 +161,21 @@ make_label(const xfceweather_data *data,
 }
 
 
+/*
+ * Return the weather plugin cache directory, creating it if
+ * necessary. The string returned does not contain a trailing slash.
+ */
+gchar *
+get_cache_directory(void)
+{
+    gchar *dir = g_strconcat(g_get_user_cache_dir(), G_DIR_SEPARATOR_S,
+                             "xfce4", G_DIR_SEPARATOR_S, "weather-plugin",
+                             NULL);
+    g_mkdir_with_parents(dir, 0755);
+    return dir;
+}
+
+
 void
 update_icon(xfceweather_data *data)
 {
