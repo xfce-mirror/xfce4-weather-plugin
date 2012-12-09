@@ -52,9 +52,15 @@
                           unit);                                    \
     g_free(value);
 
+#define CACHE_APPEND(str, val)                  \
+    if (val)                                    \
+        g_string_append_printf(out, str, val);
 
 
 gboolean debug_mode = FALSE;
+
+static void
+write_cache_file(xfceweather_data *data);
 
 
 void
@@ -333,6 +339,7 @@ cb_weather_update(SoupSession *session,
     xml_weather_clean(data->weatherdata);
     weather_debug("Updating current conditions.");
     update_current_conditions(data);
+    write_cache_file(data);
     weather_dump(weather_dump_weatherdata, data->weatherdata);
 }
 
@@ -698,6 +705,96 @@ make_cache_filename(xfceweather_data *data)
                            data->lat, data->lon, data->msl);
     g_free(cache_dir);
     return file;
+}
+
+
+/*
+ * Convert localtime to gmtime and format it to a string
+ * that can be parsed later by parse_timestring.
+ */
+static gchar *
+cache_file_strftime_t(const time_t t)
+{
+    struct tm *tm;
+    gchar *res;
+    gchar str[21];
+    size_t size;
+
+    tm = gmtime(&t);
+    size = strftime(str, 21, "%Y-%m-%dT%H:%M:%SZ", tm);
+    return (size ? g_strdup(str) : g_strdup(""));
+}
+
+
+static void
+write_cache_file(xfceweather_data *data)
+{
+    GString *out;
+    xml_weather *wd = data->weatherdata;
+    xml_time *timeslice;
+    xml_location *loc;
+    gchar *file, *start, *end, *point;
+    guint i, j;
+
+    file = make_cache_filename(data);
+    if (G_UNLIKELY(file == NULL))
+        return;
+
+    out = g_string_sized_new(20480);
+    g_string_assign(out, "# xfce4-weather-plugin cache file\n\n[info]\n");
+    CACHE_APPEND("location_name=%s\n", data->location_name);
+    CACHE_APPEND("lat=%s\n", data->lat);
+    CACHE_APPEND("lon=%s\n", data->lon);
+    g_string_append_printf(out, "msl=%d\ntimezone=%d\ntimeslices=%d\n\n",
+                           data->msl, data->timezone, wd->timeslices->len);
+
+    for (i = 0; i < wd->timeslices->len; i++) {
+        timeslice = g_array_index(wd->timeslices, xml_time*, i);
+        if (G_UNLIKELY(timeslice == NULL || timeslice->location == NULL))
+            continue;
+        loc = timeslice->location;
+        start = cache_file_strftime_t(timeslice->start);
+        end = cache_file_strftime_t(timeslice->end);
+        point = cache_file_strftime_t(timeslice->point);
+        g_string_append_printf(out, "[timeslice%d]\n", i);
+        CACHE_APPEND("start=%s\n", start);
+        CACHE_APPEND("end=%s\n", end);
+        CACHE_APPEND("point=%s\n", point);
+        CACHE_APPEND("altitude=%s\n", loc->altitude);
+        CACHE_APPEND("latitude=%s\n", loc->latitude);
+        CACHE_APPEND("longitude=%s\n", loc->longitude);
+        CACHE_APPEND("temperature_value=%s\n", loc->temperature_value);
+        CACHE_APPEND("temperature_unit=%s\n", loc->temperature_unit);
+        CACHE_APPEND("wind_dir_deg=%s\n", loc->wind_dir_deg);
+        CACHE_APPEND("wind_dir_name=%s\n", loc->wind_dir_name);
+        CACHE_APPEND("wind_speed_mps=%s\n", loc->wind_speed_mps);
+        CACHE_APPEND("wind_speed_beaufort=%s\n", loc->wind_speed_beaufort);
+        CACHE_APPEND("humidity_value=%s\n", loc->humidity_value);
+        CACHE_APPEND("humidity_unit=%s\n", loc->humidity_unit);
+        CACHE_APPEND("pressure_value=%s\n", loc->pressure_value);
+        CACHE_APPEND("pressure_unit=%s\n", loc->pressure_unit);
+        g_free(start);
+        g_free(end);
+        g_free(point);
+        for (j = 0; j < CLOUDS_PERC_NUM; j++)
+            g_string_append_printf(out, "clouds_percent[%d]=%s\n", j,
+                                   loc->clouds_percent[j]);
+        CACHE_APPEND("fog_percent=%s\n", loc->fog_percent);
+        CACHE_APPEND("precipitation_value=%s\n", loc->precipitation_value);
+        CACHE_APPEND("precipitation_unit=%s\n", loc->precipitation_unit);
+        if (loc->symbol)
+            g_string_append_printf(out, "symbol_id=%d\nsymbol=%s\n",
+                                   loc->symbol_id, loc->symbol);
+        g_string_append(out, "\n");
+    }
+
+    if (!g_file_set_contents(file, out->str, -1, NULL))
+        g_warning("Error writing cache file %s!", file);
+    else
+        weather_debug("Cache file %s has been written.", file);
+
+    g_string_free(out, TRUE);
+    g_free(file);
 }
 
 
