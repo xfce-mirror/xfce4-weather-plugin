@@ -71,7 +71,7 @@
 gboolean debug_mode = FALSE;
 
 static void
-write_cache_file(xfceweather_data *data);
+write_cache_file(plugin_data *data);
 
 
 void
@@ -88,7 +88,7 @@ weather_http_queue_request(SoupSession *session,
 
 
 static gchar *
-make_label(const xfceweather_data *data,
+make_label(const plugin_data *data,
            data_types type)
 {
     xml_time *conditions;
@@ -194,7 +194,7 @@ get_cache_directory(void)
 
 
 void
-update_icon(xfceweather_data *data)
+update_icon(plugin_data *data)
 {
     GdkPixbuf *icon = NULL;
     xml_time *conditions;
@@ -222,7 +222,7 @@ update_icon(xfceweather_data *data)
 
 
 void
-scrollbox_set_visible(xfceweather_data *data)
+scrollbox_set_visible(plugin_data *data)
 {
     if (data->show_scrollbox && data->labels->len > 0)
         gtk_widget_show_all(GTK_WIDGET(data->vbox_center_scrollbox));
@@ -232,7 +232,7 @@ scrollbox_set_visible(xfceweather_data *data)
 
 
 void
-update_scrollbox(xfceweather_data *data)
+update_scrollbox(plugin_data *data)
 {
     GString *out;
     gchar *single = NULL;
@@ -279,7 +279,7 @@ update_scrollbox(xfceweather_data *data)
 
 
 static void
-update_current_conditions(xfceweather_data *data)
+update_current_conditions(plugin_data *data)
 {
     struct tm now_tm;
 
@@ -318,7 +318,7 @@ cb_astro_update(SoupSession *session,
                 SoupMessage *msg,
                 gpointer user_data)
 {
-    xfceweather_data *data = user_data;
+    plugin_data *data = user_data;
     xml_astro *astro;
 
     if ((astro =
@@ -337,7 +337,7 @@ cb_weather_update(SoupSession *session,
                   SoupMessage *msg,
                   gpointer user_data)
 {
-    xfceweather_data *data = user_data;
+    plugin_data *data = user_data;
     xmlDoc *doc;
     xmlNode *root_node;
 
@@ -360,7 +360,7 @@ cb_weather_update(SoupSession *session,
 
 
 static gboolean
-need_astro_update(const xfceweather_data *data)
+need_astro_update(const plugin_data *data)
 {
     time_t now_t;
     struct tm now_tm, last_tm;
@@ -379,7 +379,7 @@ need_astro_update(const xfceweather_data *data)
 
 
 static gboolean
-need_data_update(const xfceweather_data *data)
+need_data_update(const plugin_data *data)
 {
     time_t now_t;
     gint diff;
@@ -397,7 +397,7 @@ need_data_update(const xfceweather_data *data)
 
 
 static gboolean
-need_conditions_update(const xfceweather_data *data)
+need_conditions_update(const plugin_data *data)
 {
     time_t now_t;
     struct tm now_tm;
@@ -413,7 +413,7 @@ need_conditions_update(const xfceweather_data *data)
 
 
 static gboolean
-update_weatherdata(xfceweather_data *data)
+update_weatherdata(plugin_data *data)
 {
     gchar *url;
     gboolean night_time;
@@ -502,7 +502,7 @@ labels_clear(GArray *array)
 
 static void
 xfceweather_read_config(XfcePanelPlugin *plugin,
-                        xfceweather_data *data)
+                        plugin_data *data)
 {
     XfceRc *rc;
     const gchar *value;
@@ -624,7 +624,7 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
 
 static void
 xfceweather_write_config(XfcePanelPlugin *plugin,
-                         xfceweather_data *data)
+                         plugin_data *data)
 {
     gchar label[10];
     guint i;
@@ -707,7 +707,7 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
  * Generate file name for the weather data cache file.
  */
 static gchar *
-make_cache_filename(xfceweather_data *data)
+make_cache_filename(plugin_data *data)
 {
     gchar *cache_dir, *file;
 
@@ -742,7 +742,7 @@ cache_file_strftime_t(const time_t t)
 
 
 static void
-write_cache_file(xfceweather_data *data)
+write_cache_file(plugin_data *data)
 {
     GString *out;
     xml_weather *wd = data->weatherdata;
@@ -764,7 +764,7 @@ write_cache_file(xfceweather_data *data)
                            data->msl, data->timezone, wd->timeslices->len);
 
     for (i = 0; i < wd->timeslices->len; i++) {
-        timeslice = g_array_index(wd->timeslices, xml_time*, i);
+        timeslice = g_array_index(wd->timeslices, xml_time *, i);
         if (G_UNLIKELY(timeslice == NULL || timeslice->location == NULL))
             continue;
         loc = timeslice->location;
@@ -814,7 +814,7 @@ write_cache_file(xfceweather_data *data)
 
 
 void
-read_cache_file(xfceweather_data *data)
+read_cache_file(plugin_data *data)
 {
     GKeyFile *keyfile;
     GError **err;
@@ -938,7 +938,7 @@ read_cache_file(xfceweather_data *data)
 
 
 void
-update_weatherdata_with_reset(xfceweather_data *data, gboolean clear)
+update_weatherdata_with_reset(plugin_data *data, gboolean clear)
 {
     if (data->updatetimeout)
         g_source_remove(data->updatetimeout);
@@ -967,7 +967,7 @@ static void
 close_summary(GtkWidget *widget,
               gpointer *user_data)
 {
-    xfceweather_data *data = (xfceweather_data *) user_data;
+    plugin_data *data = (plugin_data *) user_data;
 
     if (data->summary_details)
         summary_details_free(data->summary_details);
@@ -980,7 +980,7 @@ void
 forecast_click(GtkWidget *widget,
                gpointer user_data)
 {
-    xfceweather_data *data = (xfceweather_data *) user_data;
+    plugin_data *data = (plugin_data *) user_data;
 
     if (data->summary_window != NULL)
         gtk_widget_destroy(data->summary_window);
@@ -998,7 +998,7 @@ cb_click(GtkWidget *widget,
          GdkEventButton *event,
          gpointer user_data)
 {
-    xfceweather_data *data = (xfceweather_data *) user_data;
+    plugin_data *data = (plugin_data *) user_data;
 
     if (event->button == 1)
         forecast_click(widget, user_data);
@@ -1014,7 +1014,7 @@ cb_scroll(GtkWidget *widget,
           GdkEventScroll *event,
           gpointer user_data)
 {
-    xfceweather_data *data = (xfceweather_data *) user_data;
+    plugin_data *data = (plugin_data *) user_data;
 
     if (event->direction == GDK_SCROLL_UP ||
         event->direction == GDK_SCROLL_DOWN)
@@ -1028,7 +1028,7 @@ static void
 mi_click(GtkWidget *widget,
          gpointer user_data)
 {
-    xfceweather_data *data = (xfceweather_data *) user_data;
+    plugin_data *data = (plugin_data *) user_data;
 
     update_weatherdata_with_reset(data, FALSE);
 }
@@ -1039,7 +1039,7 @@ xfceweather_dialog_response(GtkWidget *dlg,
                             gint response,
                             xfceweather_dialog *dialog)
 {
-    xfceweather_data *data = (xfceweather_data *) dialog->wd;
+    plugin_data *data = (plugin_data *) dialog->pd;
     icon_theme *theme;
     gboolean result;
     guint i;
@@ -1057,7 +1057,7 @@ xfceweather_dialog_response(GtkWidget *dlg,
         gtk_widget_destroy(dlg);
         gtk_list_store_clear(dialog->model_datatypes);
         for (i = 0; i < dialog->icon_themes->len; i++) {
-            theme = g_array_index(dialog->icon_themes, icon_theme*, i);
+            theme = g_array_index(dialog->icon_themes, icon_theme *, i);
             icon_theme_free(theme);
             g_array_free(dialog->icon_themes, TRUE);
         }
@@ -1074,7 +1074,7 @@ xfceweather_dialog_response(GtkWidget *dlg,
 
 static void
 xfceweather_create_options(XfcePanelPlugin *plugin,
-                           xfceweather_data *data)
+                           plugin_data *data)
 {
     GtkWidget *dlg, *vbox;
     xfceweather_dialog *dialog;
@@ -1106,7 +1106,7 @@ xfceweather_create_options(XfcePanelPlugin *plugin,
 
 
 static gchar *
-weather_get_tooltip_text(const xfceweather_data *data)
+weather_get_tooltip_text(const plugin_data *data)
 {
     xml_time *conditions;
     struct tm *point_tm, *start_tm, *end_tm, *sunrise_tm, *sunset_tm;
@@ -1246,7 +1246,7 @@ weather_get_tooltip_cb(GtkWidget *widget,
                        gint y,
                        gboolean keyboard_mode,
                        GtkTooltip *tooltip,
-                       xfceweather_data *data)
+                       plugin_data *data)
 {
     GdkPixbuf *icon;
     xml_time *conditions;
@@ -1281,10 +1281,10 @@ weather_get_tooltip_cb(GtkWidget *widget,
 }
 
 
-static xfceweather_data *
+static plugin_data *
 xfceweather_create_control(XfcePanelPlugin *plugin)
 {
-    xfceweather_data *data = g_slice_new0(xfceweather_data);
+    plugin_data *data = g_slice_new0(plugin_data);
     SoupMessage *msg;
     SoupURI *soup_proxy_uri;
     const gchar *proxy_uri;
@@ -1402,7 +1402,7 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
 
 static void
 xfceweather_free(XfcePanelPlugin *plugin,
-                 xfceweather_data *data)
+                 plugin_data *data)
 {
     weather_debug("Freeing plugin data.");
     g_assert(data != NULL);
@@ -1435,7 +1435,7 @@ xfceweather_free(XfcePanelPlugin *plugin,
     /* free icon theme */
     icon_theme_free(data->icon_theme);
 
-    g_slice_free(xfceweather_data, data);
+    g_slice_free(plugin_data, data);
     data = NULL;
 }
 
@@ -1443,7 +1443,7 @@ xfceweather_free(XfcePanelPlugin *plugin,
 static gboolean
 xfceweather_set_size(XfcePanelPlugin *panel,
                      gint size,
-                     xfceweather_data *data)
+                     plugin_data *data)
 {
     data->panel_size = size;
 #if LIBXFCE4PANEL_CHECK_VERSION(4,9,0)
@@ -1465,7 +1465,7 @@ xfceweather_set_size(XfcePanelPlugin *panel,
 static gboolean
 xfceweather_set_mode(XfcePanelPlugin *panel,
                      XfcePanelPluginMode mode,
-                     xfceweather_data *data)
+                     plugin_data *data)
 {
     GtkWidget *parent = gtk_widget_get_parent(data->vbox_center_scrollbox);
 
@@ -1508,7 +1508,7 @@ xfceweather_set_mode(XfcePanelPlugin *panel,
 static gboolean
 xfceweather_set_orientation(XfcePanelPlugin *panel,
                             GtkOrientation orientation,
-                            xfceweather_data *data)
+                            plugin_data *data)
 {
     GtkWidget *parent = gtk_widget_get_parent(data->vbox_center_scrollbox);
 
@@ -1542,7 +1542,7 @@ xfceweather_set_orientation(XfcePanelPlugin *panel,
 
 static void
 xfceweather_show_about(XfcePanelPlugin *plugin,
-                       xfceweather_data *data)
+                       plugin_data *data)
 {
     GdkPixbuf *icon;
     const gchar *auth[] = {
@@ -1575,7 +1575,7 @@ xfceweather_show_about(XfcePanelPlugin *plugin,
 static void
 weather_construct(XfcePanelPlugin *plugin)
 {
-    xfceweather_data *data;
+    plugin_data *data;
     const gchar *panel_debug_env;
 
     /* Enable debug level logging if PANEL_DEBUG contains G_LOG_DOMAIN */

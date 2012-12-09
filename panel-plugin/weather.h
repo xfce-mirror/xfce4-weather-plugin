@@ -96,7 +96,7 @@ typedef struct {
     forecast_layouts forecast_layout;
     gint forecast_days;
     gboolean round;
-} xfceweather_data;
+} plugin_data;
 
 
 extern gboolean debug_mode;
@@ -106,20 +106,20 @@ void weather_http_queue_request(SoupSession *session,
                                 SoupSessionCallback callback_func,
                                 gpointer user_data);
 
-void scrollbox_set_visible(xfceweather_data *data);
+void scrollbox_set_visible(plugin_data *data);
 
 void forecast_click(GtkWidget *widget,
                     gpointer user_data);
 
 gchar *get_cache_directory(void);
 
-void read_cache_file(xfceweather_data *data);
+void read_cache_file(plugin_data *data);
 
-void update_icon(xfceweather_data *data);
+void update_icon(plugin_data *data);
 
-void update_scrollbox(xfceweather_data *data);
+void update_scrollbox(plugin_data *data);
 
-void update_weatherdata_with_reset(xfceweather_data *data,
+void update_weatherdata_with_reset(plugin_data *data,
                                    gboolean clear);
 
 GArray *labels_clear(GArray *array);

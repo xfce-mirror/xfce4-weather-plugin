@@ -45,7 +45,7 @@
     (xmlStrEqual(node->name, (const xmlChar *) type))
 
 
-extern debug_mode;
+extern gboolean debug_mode;
 
 
 /*
@@ -81,7 +81,7 @@ get_timeslice(xml_weather *wd,
     guint i;
 
     for (i = 0; i < wd->timeslices->len; i++) {
-        timeslice = g_array_index(wd->timeslices, xml_time*, i);
+        timeslice = g_array_index(wd->timeslices, xml_time *, i);
         if (timeslice &&
             timeslice->start == start_t && timeslice->end == end_t) {
             if (index != NULL)
@@ -675,7 +675,7 @@ xml_weather_free(xml_weather *wd)
     if (G_LIKELY(wd->timeslices)) {
         weather_debug("Freeing %u timeslices.", wd->timeslices->len);
         for (i = 0; i < wd->timeslices->len; i++) {
-            timeslice = g_array_index(wd->timeslices, xml_time*, i);
+            timeslice = g_array_index(wd->timeslices, xml_time *, i);
             xml_time_free(timeslice);
         }
         g_array_free(wd->timeslices, FALSE);
@@ -698,7 +698,7 @@ xml_weather_clean(xml_weather *wd)
     if (G_UNLIKELY(wd == NULL || wd->timeslices == NULL))
         return;
     for (i = 0; i < wd->timeslices->len; i++) {
-        timeslice = g_array_index(wd->timeslices, xml_time*, i);
+        timeslice = g_array_index(wd->timeslices, xml_time *, i);
         if (G_UNLIKELY(timeslice == NULL))
             continue;
         if (difftime(now_t, timeslice->end) > DATA_EXPIRY_TIME) {

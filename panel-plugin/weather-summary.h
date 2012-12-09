@@ -21,7 +21,7 @@
 
 G_BEGIN_DECLS
 
-GtkWidget *create_summary_window(xfceweather_data *data);
+GtkWidget *create_summary_window(plugin_data *data);
 
 void summary_details_free(summary_details *sum);
 

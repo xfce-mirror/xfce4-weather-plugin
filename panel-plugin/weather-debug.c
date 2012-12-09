@@ -387,7 +387,7 @@ weather_dump_weatherdata(const xml_weather *wd)
     g_string_append_printf(out, "%d timeslices available.\n",
                            wd->timeslices->len);
     for (i = 0; i < wd->timeslices->len; i++) {
-        timeslice = g_array_index(wd->timeslices, xml_time*, i);
+        timeslice = g_array_index(wd->timeslices, xml_time *, i);
         tmp = weather_dump_timeslice(timeslice);
         g_string_append_printf(out, "  #%3d: %s", i + 1, tmp);
         g_free(tmp);
@@ -405,7 +405,7 @@ weather_dump_weatherdata(const xml_weather *wd)
 
 
 gchar *
-weather_dump_plugindata(const xfceweather_data *data)
+weather_dump_plugindata(const plugin_data *data)
 {
     GString *out;
     GtkOrientation orientation, panel_orientation;
