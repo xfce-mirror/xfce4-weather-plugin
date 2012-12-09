@@ -40,13 +40,13 @@
     (g_strdup_printf(format,                        \
                      g_ascii_strtod(value, NULL)))
 
-#define INTERPOLATE_OR_COPY(var)                                        \
+#define INTERPOLATE_OR_COPY(var, radian)                                \
     if (ipol)                                                           \
         comb->location->var =                                           \
             interpolate_gchar_value(start->location->var,               \
                                     end->location->var,                 \
                                     comb->start, comb->end,             \
-                                    comb->point);                       \
+                                    comb->point, radian);               \
     else                                                                \
         comb->location->var = g_strdup(end->location->var);
 
@@ -414,12 +414,13 @@ interpolate_gchar_value(gchar *value_start,
                         gchar *value_end,
                         time_t start_t,
                         time_t end_t,
-                        time_t between_t)
+                        time_t between_t,
+                        gboolean radian)
 {
     gchar value_result[10];
     gdouble val_start, val_end, val_result;
 
-    if (value_end == NULL)
+    if (G_UNLIKELY(value_end == NULL))
         return NULL;
 
     if (value_start == NULL)
@@ -428,8 +429,16 @@ interpolate_gchar_value(gchar *value_start,
     val_start = string_to_double(value_start, 0);
     val_end = string_to_double(value_end, 0);
 
+    if (radian)
+        if (val_end > val_start && val_end - val_start > 180)
+            val_start += 360;
+        else if (val_start > val_end && val_start - val_end > 180)
+            val_end += 360;
     val_result = interpolate_value(val_start, val_end,
                                    start_t, end_t, between_t);
+    if (radian && val_result >= 360)
+        val_result -= 360;
+
     weather_debug("Interpolated data: start=%f, end=%f, result=%f",
                   val_start, val_end, val_result);
     (void) g_ascii_formatd(value_result, 10, "%.1f", val_result);
@@ -491,25 +500,25 @@ make_combined_timeslice(xml_weather *data,
     COMB_END_COPY(latitude);
     COMB_END_COPY(longitude);
 
-    INTERPOLATE_OR_COPY(temperature_value);
+    INTERPOLATE_OR_COPY(temperature_value, FALSE);
     COMB_END_COPY(temperature_unit);
 
-    INTERPOLATE_OR_COPY(wind_dir_deg);
+    INTERPOLATE_OR_COPY(wind_dir_deg, TRUE);
     comb->location->wind_dir_name =
         g_strdup(wind_dir_name_by_deg(comb->location->wind_dir_deg, FALSE));
 
-    INTERPOLATE_OR_COPY(wind_speed_mps);
-    INTERPOLATE_OR_COPY(wind_speed_beaufort);
-    INTERPOLATE_OR_COPY(humidity_value);
+    INTERPOLATE_OR_COPY(wind_speed_mps, FALSE);
+    INTERPOLATE_OR_COPY(wind_speed_beaufort, FALSE);
+    INTERPOLATE_OR_COPY(humidity_value, FALSE);
     COMB_END_COPY(humidity_unit);
 
-    INTERPOLATE_OR_COPY(pressure_value);
+    INTERPOLATE_OR_COPY(pressure_value, FALSE);
     COMB_END_COPY(pressure_unit);
 
     for (i = 0; i < CLOUDS_PERC_NUM; i++)
-        INTERPOLATE_OR_COPY(clouds_percent[i]);
+        INTERPOLATE_OR_COPY(clouds_percent[i], FALSE);
 
-    INTERPOLATE_OR_COPY(fog_percent);
+    INTERPOLATE_OR_COPY(fog_percent, FALSE);
 
     /* it makes no sense to interpolate the following (interval) values */
     comb->location->precipitation_value =
