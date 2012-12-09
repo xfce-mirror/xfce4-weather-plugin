@@ -40,6 +40,7 @@
 #define XFCEWEATHER_ROOT "weather"
 #define UPDATE_INTERVAL (15)
 #define DATA_MAX_AGE (20 * 60)
+#define CACHE_FILE_MAX_AGE (48 * 3600)
 #define BORDER (8)
 #define CONNECTION_TIMEOUT (10)        /* connection timeout in seconds */
 
@@ -748,7 +749,8 @@ write_cache_file(plugin_data *data)
     xml_weather *wd = data->weatherdata;
     xml_time *timeslice;
     xml_location *loc;
-    gchar *file, *start, *end, *point;
+    gchar *file, *start, *end, *point, *now;
+    time_t now_t = time(NULL);
     guint i, j;
 
     file = make_cache_filename(data);
@@ -760,8 +762,11 @@ write_cache_file(plugin_data *data)
     CACHE_APPEND("location_name=%s\n", data->location_name);
     CACHE_APPEND("lat=%s\n", data->lat);
     CACHE_APPEND("lon=%s\n", data->lon);
-    g_string_append_printf(out, "msl=%d\ntimezone=%d\ntimeslices=%d\n\n",
+    g_string_append_printf(out, "msl=%d\ntimezone=%d\ntimeslices=%d\n",
                            data->msl, data->timezone, wd->timeslices->len);
+    now = cache_file_strftime_t(now_t);
+    CACHE_APPEND("cache_date=%s\n\n", now);
+    g_free(now);
 
     for (i = 0; i < wd->timeslices->len; i++) {
         timeslice = g_array_index(wd->timeslices, xml_time *, i);
@@ -821,6 +826,7 @@ read_cache_file(plugin_data *data)
     xml_weather *wd = data->weatherdata;
     xml_time *timeslice = NULL;
     xml_location *loc = NULL;
+    time_t now_t = time(NULL), cache_date_t;
     gchar *file, *locname = NULL, *lat = NULL, *lon = NULL, *group = NULL;
     gchar *timestring;
     gint msl, timezone, num_timeslices, i, j;
@@ -841,26 +847,27 @@ read_cache_file(plugin_data *data)
     weather_debug("Reading cache file %s.", file);
     g_free(file);
 
-    if (!g_key_file_has_group(keyfile, "info")) {
+    group = "info";
+    if (!g_key_file_has_group(keyfile, group)) {
         CACHE_FREE_VARS();
         return;
     }
 
     /* check all needed values are present and match the current parameters */
-    locname = g_key_file_get_string(keyfile, "info", "location_name", NULL);
-    lat = g_key_file_get_string(keyfile, "info", "lat", NULL);
-    lon = g_key_file_get_string(keyfile, "info", "lon", NULL);
+    locname = g_key_file_get_string(keyfile, group, "location_name", NULL);
+    lat = g_key_file_get_string(keyfile, group, "lat", NULL);
+    lon = g_key_file_get_string(keyfile, group, "lon", NULL);
     if (locname == NULL || lat == NULL || lon == NULL) {
         CACHE_FREE_VARS();
         weather_debug("Required values are missing in the cache file, "
                       "reading cache file aborted.");
         return;
     }
-    msl = g_key_file_get_integer(keyfile, "info", "msl", err);
+    msl = g_key_file_get_integer(keyfile, group, "msl", err);
     if (!err)
-        timezone = g_key_file_get_integer(keyfile, "info", "timezone", err);
+        timezone = g_key_file_get_integer(keyfile, group, "timezone", err);
     if (!err)
-        num_timeslices = g_key_file_get_integer(keyfile, "info",
+        num_timeslices = g_key_file_get_integer(keyfile, group,
                                                 "timeslices", err);
     if (err || strcmp(lat, data->lat) || strcmp(lon, data->lon) ||
         msl != data->msl || timezone != data->timezone || num_timeslices < 1) {
@@ -870,6 +877,16 @@ read_cache_file(plugin_data *data)
                       "cache file aborted.");
         return;
     }
+    /* read cache creation date and check if cache file is not too old */
+    CACHE_READ_STRING(timestring, "cache_date");
+    cache_date_t = parse_timestring(timestring, NULL);
+    g_free(timestring);
+    if (difftime(now_t, cache_date_t) > CACHE_FILE_MAX_AGE) {
+        weather_debug("Cache file is too old and will not be used.");
+        CACHE_FREE_VARS();
+        return;
+    }
+    group = NULL;
 
     /* parse available timeslices */
     for (i = 0; i < num_timeslices; i++) {
