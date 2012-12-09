@@ -36,37 +36,31 @@
 
 #define ROUND_TO_INT(default_format) (round ? "%.0f" : default_format)
 
-#define LOCALE_DOUBLE(value, format)                \
-    (g_strdup_printf(format,                        \
-                     g_ascii_strtod(value, NULL)))
+#define LOCALE_DOUBLE(value, format)                        \
+    (value                                                  \
+     ? g_strdup_printf(format, g_ascii_strtod(value, NULL)) \
+     : g_strdup(""))
 
-#define INTERPOLATE_OR_COPY(var)                                        \
-    if (ipol)                                                           \
-        comb->location->var =                                           \
-            interpolate_gchar_value(start->location->var,               \
-                                    end->location->var,                 \
-                                    comb->start, comb->end,             \
-                                    comb->point);                       \
-    else                                                                \
+#define INTERPOLATE_OR_COPY(var, radian)                    \
+    if (ipol)                                               \
+        comb->location->var =                               \
+            interpolate_gchar_value(start->location->var,   \
+                                    end->location->var,     \
+                                    comb->start, comb->end, \
+                                    comb->point, radian);   \
+    else                                                    \
         comb->location->var = g_strdup(end->location->var);
 
 #define COMB_END_COPY(var)                              \
     comb->location->var = g_strdup(end->location->var);
 
 
-static gboolean
-has_timeslice(xml_weather *data,
-              const time_t start_t,
-              const time_t end_t)
-{
-    guint i = 0;
-
-    for (i = 0; i < data->num_timeslices; i++)
-        if (data->timeslice[i]->start == start_t &&
-            data->timeslice[i]->end == end_t)
-            return TRUE;
-    return FALSE;
-}
+/* struct to store results from searches for point data */
+typedef struct {
+    GArray *before;
+    time_t point;
+    GArray *after;
+} point_data_results;
 
 
 /* convert string to a double value, returning backup value on error */
@@ -78,6 +72,15 @@ string_to_double(const gchar *str,
     if (str && strlen(str) > 0)
         d = g_ascii_strtod(str, NULL);
     return d;
+}
+
+
+/* check whether timeslice is interval or point data */
+gboolean
+timeslice_is_interval(xml_time *timeslice)
+{
+    return (timeslice->location->symbol != NULL ||
+            timeslice->location->precipitation_value != NULL);
 }
 
 
@@ -297,47 +300,6 @@ is_night_time(const xml_astro *astro)
 
 
 /*
- * Calculate start and end of a daytime interval using given dates.
- * We ought to take one of the intervals supplied by the XML feed,
- * which gives the most consistent data and does not force too many
- * searches to find something that fits. The following chosen
- * intervals were pretty reliable for several tested locations at the
- * time of this writing and gave reasonable results:
- *   Morning:   08:00-14:00
- *   Afternoon: 14:00-20:00
- *   Evening:   20:00-02:00
- *   Night:     02:00-08:00
- */
-static void
-get_daytime_interval(struct tm *start_tm,
-                     struct tm *end_tm,
-                     const daytime dt)
-{
-    start_tm->tm_min = end_tm->tm_min = 0;
-    start_tm->tm_sec = end_tm->tm_sec = 0;
-    start_tm->tm_isdst = end_tm->tm_isdst = -1;
-    switch (dt) {
-    case MORNING:
-        start_tm->tm_hour = 8;
-        end_tm->tm_hour = 14;
-        break;
-    case AFTERNOON:
-        start_tm->tm_hour = 14;
-        end_tm->tm_hour = 20;
-        break;
-    case EVENING:
-        start_tm->tm_hour = 20;
-        end_tm->tm_hour = 26;
-        break;
-    case NIGHT:
-        start_tm->tm_hour = 26;
-        end_tm->tm_hour = 32;
-        break;
-    }
-}
-
-
-/*
  * Return wind direction name (S, N, W,...) for wind degrees.
  */
 static gchar*
@@ -414,12 +376,13 @@ interpolate_gchar_value(gchar *value_start,
                         gchar *value_end,
                         time_t start_t,
                         time_t end_t,
-                        time_t between_t)
+                        time_t between_t,
+                        gboolean radian)
 {
     gchar value_result[10];
     gdouble val_start, val_end, val_result;
 
-    if (value_end == NULL)
+    if (G_UNLIKELY(value_end == NULL))
         return NULL;
 
     if (value_start == NULL)
@@ -428,8 +391,16 @@ interpolate_gchar_value(gchar *value_start,
     val_start = string_to_double(value_start, 0);
     val_end = string_to_double(value_end, 0);
 
+    if (radian)
+        if (val_end > val_start && val_end - val_start > 180)
+            val_start += 360;
+        else if (val_start > val_end && val_start - val_end > 180)
+            val_end += 360;
     val_result = interpolate_value(val_start, val_end,
                                    start_t, end_t, between_t);
+    if (radian && val_result >= 360)
+        val_result -= 360;
+
     weather_debug("Interpolated data: start=%f, end=%f, result=%f",
                   val_start, val_end, val_result);
     (void) g_ascii_formatd(value_result, 10, "%.1f", val_result);
@@ -440,7 +411,7 @@ interpolate_gchar_value(gchar *value_start,
 
 /* Create a new combined timeslice, with optionally interpolated data */
 static xml_time *
-make_combined_timeslice(xml_weather *data,
+make_combined_timeslice(xml_weather *wd,
                         const xml_time *interval,
                         const time_t *between_t)
 {
@@ -450,12 +421,10 @@ make_combined_timeslice(xml_weather *data,
     guint i;
 
     /* find point data at start of interval (may not be available) */
-    if (has_timeslice(data, interval->start, interval->start))
-        start = get_timeslice(data, interval->start, interval->start);
+    start = get_timeslice(wd, interval->start, interval->start, NULL);
 
     /* find point interval at end of interval */
-    if (has_timeslice(data, interval->end, interval->end))
-        end = get_timeslice(data, interval->end, interval->end);
+    end = get_timeslice(wd, interval->end, interval->end, NULL);
 
     if (start == NULL && end == NULL)
         return NULL;
@@ -491,25 +460,25 @@ make_combined_timeslice(xml_weather *data,
     COMB_END_COPY(latitude);
     COMB_END_COPY(longitude);
 
-    INTERPOLATE_OR_COPY(temperature_value);
+    INTERPOLATE_OR_COPY(temperature_value, FALSE);
     COMB_END_COPY(temperature_unit);
 
-    INTERPOLATE_OR_COPY(wind_dir_deg);
+    INTERPOLATE_OR_COPY(wind_dir_deg, TRUE);
     comb->location->wind_dir_name =
         g_strdup(wind_dir_name_by_deg(comb->location->wind_dir_deg, FALSE));
 
-    INTERPOLATE_OR_COPY(wind_speed_mps);
-    INTERPOLATE_OR_COPY(wind_speed_beaufort);
-    INTERPOLATE_OR_COPY(humidity_value);
+    INTERPOLATE_OR_COPY(wind_speed_mps, FALSE);
+    INTERPOLATE_OR_COPY(wind_speed_beaufort, FALSE);
+    INTERPOLATE_OR_COPY(humidity_value, FALSE);
     COMB_END_COPY(humidity_unit);
 
-    INTERPOLATE_OR_COPY(pressure_value);
+    INTERPOLATE_OR_COPY(pressure_value, FALSE);
     COMB_END_COPY(pressure_unit);
 
     for (i = 0; i < CLOUDS_PERC_NUM; i++)
-        INTERPOLATE_OR_COPY(clouds_percent[i]);
+        INTERPOLATE_OR_COPY(clouds_percent[i], FALSE);
 
-    INTERPOLATE_OR_COPY(fog_percent);
+    INTERPOLATE_OR_COPY(fog_percent, FALSE);
 
     /* it makes no sense to interpolate the following (interval) values */
     comb->location->precipitation_value =
@@ -524,13 +493,47 @@ make_combined_timeslice(xml_weather *data,
 }
 
 
+void
+merge_timeslice(xml_weather *wd,
+                const xml_time *timeslice)
+{
+    xml_time *old_ts, *new_ts;
+    time_t now_t = time(NULL);
+    guint i;
+
+    g_assert(wd != NULL);
+    if (G_UNLIKELY(wd == NULL))
+        return;
+
+    /* first check if it isn't too old */
+    if (difftime(now_t, timeslice->end) > DATA_EXPIRY_TIME) {
+        weather_debug("Not merging timeslice because it has expired.");
+        return;
+    }
+
+    /* Copy timeslice, as it will be deleted by the calling function */
+    new_ts = xml_time_copy(timeslice);
+
+    /* check if there is a timeslice with the same interval and
+       replace it with the current data */
+    old_ts = get_timeslice(wd, timeslice->start, timeslice->end, &i);
+    if (old_ts) {
+        xml_time_free(old_ts);
+        g_array_remove_index(wd->timeslices, i);
+        g_array_insert_val(wd->timeslices, i, new_ts);
+        weather_debug("Replaced existing timeslice at %d.", i);
+    } else {
+        g_array_prepend_val(wd->timeslices, new_ts);
+        //weather_debug("Prepended timeslice to the existing timeslices.");
+    }
+}
+
+
 /* Return current weather conditions, or NULL if not available. */
 xml_time *
-get_current_conditions(const xml_weather *data)
+get_current_conditions(const xml_weather *wd)
 {
-    if (data == NULL)
-        return NULL;
-    return data->current_conditions;
+    return wd ? wd->current_conditions : NULL;
 }
 
 
@@ -587,12 +590,13 @@ time_calc_day(const struct tm time_tm,
  * next_hours_limit hours into the future.
  */
 static xml_time *
-find_timeslice(xml_weather *data,
+find_timeslice(xml_weather *wd,
                struct tm start_tm,
                struct tm end_tm,
                const gint prev_hours_limit,
                const gint next_hours_limit)
 {
+    xml_time *timeslice;
     time_t start_t, end_t;
     gint hours = 0;
 
@@ -606,8 +610,8 @@ find_timeslice(xml_weather *data,
             start_t = time_calc_hour(start_tm, 0 - hours);
             end_t = time_calc_hour(end_tm, 0 - hours);
 
-            if (has_timeslice(data, start_t, end_t))
-                return get_timeslice(data, start_t, end_t);
+            if ((timeslice = get_timeslice(wd, start_t, end_t, NULL)))
+                return timeslice;
         }
 
         /* check later hours */
@@ -615,8 +619,8 @@ find_timeslice(xml_weather *data,
             start_t = time_calc_hour(start_tm, hours);
             end_t = time_calc_hour(end_tm, hours);
 
-            if (has_timeslice(data, start_t, end_t))
-                return get_timeslice(data, start_t, end_t);
+            if ((timeslice = get_timeslice(wd, start_t, end_t, NULL)))
+                return timeslice;
         }
         hours++;
     }
@@ -629,7 +633,7 @@ find_timeslice(xml_weather *data,
  * and end times
  */
 static xml_time *
-find_shortest_timeslice(xml_weather *data,
+find_shortest_timeslice(xml_weather *wd,
                         struct tm start_tm,
                         struct tm end_tm,
                         const gint prev_hours_limit,
@@ -654,7 +658,7 @@ find_shortest_timeslice(xml_weather *data,
     interval = (gint) (difftime(end_t, start_t) / 3600);
 
     while (interval <= interval_limit) {
-        interval_data = find_timeslice(data, start_tm, end_tm,
+        interval_data = find_timeslice(wd, start_tm, end_tm,
                                        prev_hours_limit, next_hours_limit);
         if (interval_data != NULL)
             return interval_data;
@@ -669,41 +673,227 @@ find_shortest_timeslice(xml_weather *data,
 }
 
 
+/*
+ * Compare two xml_time structs using their start and end times,
+ * returning the result as a qsort()-style comparison function (less
+ * than zero for first arg is less than second arg, zero for equal,
+ * greater zero if first arg is greater than second arg).
+ */
+gint
+xml_time_compare(gpointer a,
+                 gpointer b)
+{
+    xml_time *ts1 = (xml_time *) a;
+    xml_time *ts2 = (xml_time *) b;
+    gdouble diff;
+
+    if (G_UNLIKELY(a == NULL && b == NULL))
+        return 0;
+
+    if (G_UNLIKELY(a == NULL))
+        return -1;
+
+    if (G_UNLIKELY(b == NULL))
+        return 1;
+
+    diff = difftime(ts2->start, ts1->start);
+    if (diff > 0)
+        return -1;
+    if (diff < 0)
+        return 1;
+
+    /* start time is equal, now it's easy to check end time ;-) */
+    return (gint) difftime(ts2->end, ts1->end);
+}
+
+
+static void
+point_data_results_free(point_data_results *pdr)
+{
+    g_assert(pdr != NULL);
+    if (G_UNLIKELY(pdr == NULL))
+        return;
+
+    g_assert(pdr->before != NULL);
+    g_array_free(pdr->before, FALSE);
+    g_assert(pdr->after != NULL);
+    g_array_free(pdr->after, FALSE);
+    g_slice_free(point_data_results, pdr);
+    return;
+}
+
+/*
+ * Given an array of point data, find two points for which
+ * corresponding interval data can be found so that the interval is as
+ * small as possible, returning NULL if such interval data doesn't
+ * exist.
+ */
+static xml_time *
+find_smallest_interval(xml_weather *wd,
+                       const point_data_results *pdr)
+{
+    GArray *before = pdr->before, *after = pdr->after;
+    xml_time *ts_before, *ts_after, *found;
+    gint i, j;
+
+    for (i = before->len - 1; i >= 0; i--) {
+        ts_before = g_array_index(before, xml_time *, i);
+        for (j = 0; j < after->len; j++) {
+            ts_after = g_array_index(after, xml_time *, j);
+            found = get_timeslice(wd, ts_before->start, ts_after->end, NULL);
+            if (found)
+                return found;
+        }
+    }
+    return NULL;
+}
+
+
+/*
+ * Given an array of point data, find two points for which
+ * corresponding interval data can be found so that the interval is as
+ * big as possible, returning NULL if such interval data doesn't
+ * exist.
+ */
+static xml_time *
+find_largest_interval(xml_weather *wd,
+                      const point_data_results *pdr)
+{
+    GArray *before = pdr->before, *after = pdr->after;
+    xml_time *ts_before = NULL, *ts_after = NULL, *found = NULL;
+    gint i, j;
+
+    for (i = before->len - 1; i >= 0; i--) {
+        ts_before = g_array_index(before, xml_time *, i);
+        g_assert(ts_before != NULL);
+        for (j = after->len - 1; j >= 0; j--) {
+            ts_after = g_array_index(after, xml_time *, j);
+            found = get_timeslice(wd, ts_before->start, ts_after->end, NULL);
+            if (found) {
+                weather_debug("Found biggest interval:");
+                weather_dump(weather_dump_timeslice, found);
+                return found;
+            }
+        }
+    }
+    weather_debug("Could not find interval.");
+    return NULL;
+}
+
+
+/* find point data within certain limits around a point in time */
+static point_data_results *
+find_point_data(const xml_weather *wd,
+                const time_t point_t,
+                const gdouble min_diff,
+                const gdouble max_diff)
+{
+    point_data_results *found = NULL;
+    xml_time *timeslice;
+    guint i;
+    gdouble diff;
+
+    found = g_slice_new0(point_data_results);
+    found->before = g_array_new(FALSE, TRUE, sizeof(xml_time *));
+    found->after = g_array_new(FALSE, TRUE, sizeof(xml_time *));
+
+    weather_debug("Checking %d timeslices for point data.",
+                  wd->timeslices->len);
+    for (i = 0; i < wd->timeslices->len; i++) {
+        timeslice = g_array_index(wd->timeslices, xml_time *, i);
+        /* look only for point data, not intervals */
+        if (G_UNLIKELY(timeslice == NULL) || timeslice_is_interval(timeslice))
+            continue;
+
+        /* add point data if within limits */
+        diff = difftime(timeslice->end, point_t);
+        if (diff < 0) {   /* before point_t */
+            diff *= -1;
+            if (diff < min_diff || diff > max_diff)
+                continue;
+            g_array_append_val(found->before, timeslice);
+            weather_dump(weather_dump_timeslice, timeslice);
+        } else {          /* after point_t */
+            if (diff < min_diff || diff > max_diff)
+                continue;
+            g_array_append_val(found->after, timeslice);
+            weather_dump(weather_dump_timeslice, timeslice);
+        }
+    }
+    g_array_sort(found->before, (GCompareFunc) xml_time_compare);
+    g_array_sort(found->after, (GCompareFunc) xml_time_compare);
+    found->point = point_t;
+    weather_debug("Found %d timeslices with point data, "
+                  "%d before and %d after point_t.",
+                  (found->before->len + found->after->len),
+                  found->before->len, found->after->len);
+    return found;
+}
+
+
 xml_time *
-make_current_conditions(xml_weather *data,
+make_current_conditions(xml_weather *wd,
                         time_t now_t)
 {
-    xml_time *interval_data;
-    struct tm now_tm, start_tm, end_tm;
-    time_t end_t;
+    point_data_results *found = NULL;
+    xml_time *interval = NULL;
+    struct tm point_tm = *localtime(&now_t);
+    time_t point_t = now_t;
+    gint i = 0;
 
-    /* now search for the nearest and shortest interval data
-       available, using a maximum interval of 6 hours */
-    now_tm = *localtime(&now_t);
-    end_tm = start_tm = now_tm;
-
-    /* minimum interval is 1 hour */
-    end_t = time_calc_hour(end_tm, 1);
-    end_tm = *localtime(&end_t);
-
-    /* We want to keep the hour deviation as small as possible,
-       so let's try an interval with ±1 hour deviation first */
-    interval_data = find_shortest_timeslice(data, start_tm, end_tm, -1, 1, 6);
-    if (interval_data == NULL) {
-        /* in case we were unsuccessful we might need to enlarge the
-           search radius */
-        interval_data = find_shortest_timeslice(data, start_tm, end_tm,
-                                                -3, 3, 6);
-        if (interval_data == NULL)
-            /* and maybe it's necessary to try even harder... */
-            interval_data = find_shortest_timeslice(data, start_tm, end_tm,
-                                                    -3, 6, 6);
-    }
-    if (interval_data == NULL)
+    g_assert(wd != NULL);
+    if (G_UNLIKELY(wd == NULL))
         return NULL;
 
-    /* create combined timeslice with interpolated point and interval data */
-    return make_combined_timeslice(data, interval_data, &now_t);
+    /* there may not be a timeslice available for the current
+       interval, so look max three hours ahead */
+    while (i < 3 && interval == NULL) {
+        point_t = time_calc_hour(point_tm, i);
+        found = find_point_data(wd, point_t, 1, 4 * 3600);
+        interval = find_smallest_interval(wd, found);
+        point_data_results_free(found);
+        point_tm = *localtime(&point_t);
+        i++;
+    }
+    weather_dump(weather_dump_timeslice, interval);
+    if (interval == NULL)
+        return NULL;
+
+    return make_combined_timeslice(wd, interval, &now_t);
+}
+
+
+static time_t
+get_daytime(int day,
+            daytime dt)
+{
+    struct tm point_tm;
+    time_t point_t;
+
+    /* initialize times to the current day */
+    time(&point_t);
+    point_tm = *localtime(&point_t);
+
+    /* calculate daytime for the requested day */
+    point_tm.tm_mday += day;
+    point_tm.tm_min = point_tm.tm_sec = 0;
+    point_tm.tm_isdst = -1;
+    switch (dt) {
+    case MORNING:
+        point_tm.tm_hour = 9;
+        break;
+    case AFTERNOON:
+        point_tm.tm_hour = 15;
+        break;
+    case EVENING:
+        point_tm.tm_hour = 21;
+        break;
+    case NIGHT:
+        point_tm.tm_hour = 27;
+        break;
+    }
+    point_t = mktime(&point_tm);
+    return point_t;
 }
 
 
@@ -711,40 +901,25 @@ make_current_conditions(xml_weather *data,
  * Get forecast data for a given daytime for the day (today + day).
  */
 xml_time *
-make_forecast_data(xml_weather *data,
-                   const int day,
-                   const daytime dt)
+make_forecast_data(xml_weather *wd,
+                   int day,
+                   daytime dt)
 {
-    xml_time *interval_data = NULL;
-    struct tm start_tm, end_tm;
-    time_t now_t, start_t, end_t;
-    gint interval;
+    point_data_results *found = NULL;
+    xml_time *interval = NULL;
+    time_t point_t;
 
-    /* initialize times to the current day */
-    time(&now_t);
-    start_tm = *localtime(&now_t);
-    end_tm = *localtime(&now_t);
-
-    /* calculate daytime interval start and end times for the requested day */
-    start_tm.tm_mday += day;
-    end_tm.tm_mday += day;
-    get_daytime_interval(&start_tm, &end_tm, dt);
-    start_t = mktime(&start_tm);
-    end_t = mktime(&end_tm);
-
-    /* next find biggest possible (limited by daytime) interval data
-       using a maximum deviation of ±3 hours */
-    while ((interval = (gint) (difftime(end_t, start_t) / 3600)) > 0) {
-        interval_data = find_timeslice(data, start_tm, end_tm, -3, 3);
-        if (interval_data != NULL)
-            break;
-        end_t = time_calc_hour(end_tm, -1);
-        end_tm = *localtime(&end_t);
-    }
-    if (interval_data == NULL)
+    g_assert(wd != NULL);
+    if (G_UNLIKELY(wd == NULL))
         return NULL;
 
-    /* create combined timeslice with non-interpolated point
-       and interval data */
-    return make_combined_timeslice(data, interval_data, NULL);
+    point_t = get_daytime(day, dt);
+    found = find_point_data(wd, point_t, 1, 5 * 3600);
+    interval = find_largest_interval(wd, found);
+    point_data_results_free(found);
+    weather_dump(weather_dump_timeslice, interval);
+    if (interval == NULL)
+        return NULL;
+
+    return make_combined_timeslice(wd, interval, &point_t);
 }

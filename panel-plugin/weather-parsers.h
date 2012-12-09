@@ -24,9 +24,9 @@
 #include <libxml/parser.h>
 #include <libsoup/soup.h>
 
-G_BEGIN_DECLS
+#define DATA_EXPIRY_TIME (24 * 3600)
 
-#define MAX_TIMESLICE 500
+G_BEGIN_DECLS
 
 enum {
     CLOUDS_PERC_LOW = 0,
@@ -75,8 +75,7 @@ typedef struct {
 } xml_time;
 
 typedef struct {
-    xml_time *timeslice[MAX_TIMESLICE];
-    guint num_timeslices;
+    GArray *timeslices;
     xml_time *current_conditions;
 } xml_weather;
 
@@ -122,7 +121,15 @@ typedef struct {
 } xml_timezone;
 
 
-xml_weather *parse_weather(xmlNode *cur_node);
+xml_weather *make_weather_data(void);
+
+xml_time *make_timeslice(void);
+
+time_t parse_timestring(const gchar *ts,
+                        gchar *format);
+
+gboolean parse_weather(xmlNode *cur_node,
+                       xml_weather *wd);
 
 xml_astro *parse_astro(xmlNode *cur_node);
 
@@ -134,18 +141,23 @@ xml_altitude *parse_altitude(xmlNode *cur_node);
 
 xml_timezone *parse_timezone(xmlNode *cur_node);
 
-xml_time *get_timeslice(xml_weather *data,
+xml_time *get_timeslice(xml_weather *wd,
                         const time_t start_t,
-                        const time_t end_t);
+                        const time_t end_t,
+                        guint *index);
 
 xmlDoc *get_xml_document(SoupMessage *msg);
 
 gpointer parse_xml_document(SoupMessage *msg,
                             XmlParseFunc parse_func);
 
+xml_time *xml_time_copy(const xml_time *src);
+
 void xml_time_free(xml_time *timeslice);
 
-void xml_weather_free(xml_weather *data);
+void xml_weather_free(xml_weather *wd);
+
+void xml_weather_clean(xml_weather *wd);
 
 void xml_astro_free(xml_astro *astro);
 

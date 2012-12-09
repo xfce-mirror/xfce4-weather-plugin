@@ -28,7 +28,7 @@ typedef struct {
 
 typedef struct {
     GtkWidget *dialog;
-    xfceweather_data *wd;
+    plugin_data *pd;
     guint timer_id;
 
     /* location page */
@@ -67,7 +67,7 @@ typedef struct {
 } xfceweather_dialog;
 
 
-xfceweather_dialog *create_config_dialog(xfceweather_data *data,
+xfceweather_dialog *create_config_dialog(plugin_data *data,
                                          GtkWidget *vbox);
 
 G_END_DECLS

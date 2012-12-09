@@ -116,21 +116,21 @@ static void
 update_summary_window(xfceweather_dialog *dialog,
                       gboolean restore_position)
 {
-    if (dialog->wd->summary_window) {
-        guint x, y;
+    if (dialog->pd->summary_window) {
+        gint x, y;
 
         /* remember position */
         if (restore_position)
-            gtk_window_get_position(GTK_WINDOW(dialog->wd->summary_window),
+            gtk_window_get_position(GTK_WINDOW(dialog->pd->summary_window),
                                     &x, &y);
 
         /* call toggle function two times to close and open dialog */
-        forecast_click(dialog->wd->summary_window, dialog->wd);
-        forecast_click(dialog->wd->summary_window, dialog->wd);
+        forecast_click(dialog->pd->summary_window, dialog->pd);
+        forecast_click(dialog->pd->summary_window, dialog->pd);
 
         /* ask wm to restore position of new window */
         if (restore_position)
-            gtk_window_move(GTK_WINDOW(dialog->wd->summary_window), x, y);
+            gtk_window_move(GTK_WINDOW(dialog->pd->summary_window), x, y);
 
         /* bring config dialog to the front, it might have been hidden
          * beneath the summary window */
@@ -143,13 +143,12 @@ static gboolean
 schedule_data_update(gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-
-    if (dialog == NULL)
-        return FALSE;
+    plugin_data *pd = dialog->pd;
 
     /* force update of downloaded data */
     weather_debug("Delayed update timer expired, now scheduling data update.");
-    update_weatherdata_with_reset(dialog->wd);
+    update_weatherdata_with_reset(pd, TRUE);
+
     gtk_spinner_stop(GTK_SPINNER(dialog->update_spinner));
     gtk_widget_hide(GTK_WIDGET(dialog->update_spinner));
     return FALSE;
@@ -161,12 +160,16 @@ schedule_delayed_data_update(xfceweather_dialog *dialog)
 {
     weather_debug("Starting delayed data update.");
     /* cancel any update that was scheduled before */
-    if (dialog->timer_id)
+    if (dialog->timer_id) {
         g_source_remove(dialog->timer_id);
+        dialog->timer_id = 0;
+    }
 
     /* stop any updates that could be performed by weather.c */
-    if (dialog->wd->updatetimeout)
-        g_source_remove(dialog->wd->updatetimeout);
+    if (dialog->pd->updatetimeout) {
+        g_source_remove(dialog->pd->updatetimeout);
+        dialog->pd->updatetimeout = 0;
+    }
 
     gtk_widget_show(GTK_WIDGET(dialog->update_spinner));
     gtk_spinner_start(GTK_SPINNER(dialog->update_spinner));
@@ -229,7 +232,7 @@ cb_lookup_altitude(SoupSession *session,
         alt = string_to_double(altitude->altitude, -9999);
         weather_debug("Altitude returned by GeoNames: %.0f meters", alt);
         if (alt >= -420) {
-            if (dialog->wd->units->altitude == FEET)
+            if (dialog->pd->units->altitude == FEET)
                 alt /= 0.3048;
             gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_alt),
                                       alt);
@@ -279,14 +282,14 @@ lookup_altitude_timezone(const gpointer user_data)
     url = g_strdup_printf("http://api.geonames.org"
                           "/srtm3XML?lat=%s&lng=%s&username=%s",
                           &latbuf[0], &lonbuf[0], GEONAMES_USERNAME);
-    weather_http_queue_request(dialog->wd->session, url,
+    weather_http_queue_request(dialog->pd->session, url,
                                cb_lookup_altitude, user_data);
     g_free(url);
 
     /* lookup timezone */
     url = g_strdup_printf("http://www.earthtools.org/timezone/%s/%s",
                           &latbuf[0], &lonbuf[0]);
-    weather_http_queue_request(dialog->wd->session, url,
+    weather_http_queue_request(dialog->pd->session, url,
                                cb_lookup_timezone, user_data);
     g_free(url);
 }
@@ -336,7 +339,7 @@ start_auto_locate(xfceweather_dialog *dialog)
     gtk_widget_set_sensitive(dialog->text_loc_name, FALSE);
     gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name), _("Detecting..."));
     gtk_spinner_start(GTK_SPINNER(dialog->update_spinner));
-    weather_search_by_ip(dialog->wd->session, auto_locate_cb, dialog);
+    weather_search_by_ip(dialog->pd->session, auto_locate_cb, dialog);
 }
 
 
@@ -346,16 +349,22 @@ cb_findlocation(GtkButton *button,
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     search_dialog *sdialog;
-    gchar *loc_name;
+    gchar *loc_name, *lat, *lon;
+    gchar latbuf[15], lonbuf[15];
 
-    sdialog = create_search_dialog(NULL, dialog->wd->session);
+    sdialog = create_search_dialog(NULL, dialog->pd->session);
 
     gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
     if (run_search_dialog(sdialog)) {
+        /* limit digit precision of coordinates from search results */
+        lat = g_ascii_formatd(latbuf, 15, "%.7f",
+                              string_to_double(sdialog->result_lat, 0));
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_lat),
-                                  string_to_double(sdialog->result_lat, 0));
+                                  string_to_double(lat, 0));
+        lon = g_ascii_formatd(lonbuf, 15, "%.7f",
+                              string_to_double(sdialog->result_lon, 0));
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_lon),
-                                  string_to_double(sdialog->result_lon, 0));
+                                  string_to_double(lon, 0));
         loc_name = sanitize_location_name(sdialog->result_name);
         gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name), loc_name);
         g_free(loc_name);
@@ -375,14 +384,14 @@ setup_altitude(xfceweather_dialog *dialog)
     g_signal_handlers_block_by_func(dialog->spin_alt,
                                     G_CALLBACK(spin_alt_value_changed),
                                     dialog);
-    switch (dialog->wd->units->altitude) {
+    switch (dialog->pd->units->altitude) {
     case METERS:
         gtk_label_set_text(GTK_LABEL(dialog->label_alt_unit),
                            _("meters"));
         gtk_spin_button_set_range(GTK_SPIN_BUTTON(dialog->spin_alt),
                                   -420, 10000);
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_alt),
-                                  (gdouble) (dialog->wd->msl));
+                                  (gdouble) (dialog->pd->msl));
         break;
 
     case FEET:
@@ -391,7 +400,7 @@ setup_altitude(xfceweather_dialog *dialog)
         gtk_spin_button_set_range(GTK_SPIN_BUTTON(dialog->spin_alt),
                                   -1378.0, 32808);
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_alt),
-                                  (gdouble) dialog->wd->msl / 0.3048);
+                                  (gdouble) dialog->pd->msl / 0.3048);
         break;
     }
     g_signal_handlers_unblock_by_func(dialog->spin_alt,
@@ -406,8 +415,8 @@ text_loc_name_changed(const GtkWidget *spin,
                       gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    g_free(dialog->wd->location_name);
-    dialog->wd->location_name =
+    g_free(dialog->pd->location_name);
+    dialog->pd->location_name =
         g_strdup(gtk_entry_get_text(GTK_ENTRY(dialog->text_loc_name)));
 }
 
@@ -421,8 +430,8 @@ spin_lat_value_changed(const GtkWidget *spin,
     gdouble val;
 
     val = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spin));
-    g_free(dialog->wd->lat);
-    dialog->wd->lat = g_strdup(g_ascii_formatd(latbuf, 10, "%.6f", val));
+    g_free(dialog->pd->lat);
+    dialog->pd->lat = g_strdup(g_ascii_formatd(latbuf, 10, "%.6f", val));
     schedule_delayed_data_update(dialog);
 }
 
@@ -436,8 +445,8 @@ spin_lon_value_changed(const GtkWidget *spin,
     gdouble val;
 
     val = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spin));
-    g_free(dialog->wd->lon);
-    dialog->wd->lon = g_strdup(g_ascii_formatd(lonbuf, 10, "%.6f", val));
+    g_free(dialog->pd->lon);
+    dialog->pd->lon = g_strdup(g_ascii_formatd(lonbuf, 10, "%.6f", val));
     schedule_delayed_data_update(dialog);
 }
 
@@ -450,9 +459,9 @@ spin_alt_value_changed(const GtkWidget *spin,
     gdouble val;
 
     val = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spin));
-    if (dialog->wd->units->altitude == FEET)
+    if (dialog->pd->units->altitude == FEET)
         val *= 0.3048;
-    dialog->wd->msl = (gint) val;
+    dialog->pd->msl = (gint) val;
     schedule_delayed_data_update(dialog);
 }
 
@@ -463,7 +472,7 @@ spin_timezone_value_changed(const GtkWidget *spin,
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
 
-    dialog->wd->timezone =
+    dialog->pd->timezone =
         gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spin));
 }
 
@@ -501,9 +510,9 @@ create_location_page(xfceweather_dialog *dialog)
                      G_CALLBACK(cb_findlocation), dialog);
     gtk_box_pack_start(GTK_BOX(hbox), button_loc_change,
                        FALSE, FALSE, 0);
-    if (dialog->wd->location_name)
+    if (dialog->pd->location_name)
         gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name),
-                           dialog->wd->location_name);
+                           dialog->pd->location_name);
     else
         gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name), _("Unset"));
     /* update spinner */
@@ -516,7 +525,7 @@ create_location_page(xfceweather_dialog *dialog)
     hbox = gtk_hbox_new(FALSE, BORDER);
     ADD_LABEL(_("Latitud_e:"), sg_label);
     ADD_SPIN(dialog->spin_lat, -90, 90, 1,
-             (string_to_double(dialog->wd->lat, 0)), 6, sg_spin);
+             (string_to_double(dialog->pd->lat, 0)), 6, sg_spin);
     SET_TOOLTIP(dialog->spin_lat,
                 _("Latitude specifies the north-south position of a point on "
                   "the Earth's surface. If you change this value manually, "
@@ -530,7 +539,7 @@ create_location_page(xfceweather_dialog *dialog)
     hbox = gtk_hbox_new(FALSE, BORDER);
     ADD_LABEL(_("L_ongitude:"), sg_label);
     ADD_SPIN(dialog->spin_lon, -180, 180, 1,
-             (string_to_double(dialog->wd->lon, 0)), 6, sg_spin);
+             (string_to_double(dialog->pd->lon, 0)), 6, sg_spin);
     SET_TOOLTIP(dialog->spin_lon,
                 _("Longitude specifies the east-west position of a point on "
                   "the Earth's surface. If you change this value manually, "
@@ -543,7 +552,7 @@ create_location_page(xfceweather_dialog *dialog)
     /* altitude */
     hbox = gtk_hbox_new(FALSE, BORDER);
     ADD_LABEL(_("_Altitude:"), sg_label);
-    ADD_SPIN(dialog->spin_alt, -420, 10000, 1, dialog->wd->msl, 0, sg_spin);
+    ADD_SPIN(dialog->spin_alt, -420, 10000, 1, dialog->pd->msl, 0, sg_spin);
     SET_TOOLTIP
         (dialog->spin_alt,
          _("For locations outside Norway the elevation model that's used by "
@@ -567,7 +576,7 @@ create_location_page(xfceweather_dialog *dialog)
     hbox = gtk_hbox_new(FALSE, BORDER);
     ADD_LABEL(_("_Timezone:"), sg_label);
     ADD_SPIN(dialog->spin_timezone, -24, 24, 1,
-             dialog->wd->timezone, 0, sg_spin);
+             dialog->pd->timezone, 0, sg_spin);
     SET_TOOLTIP
         (dialog->spin_timezone,
          _("If the chosen location is not in your current timezone, this "
@@ -602,9 +611,9 @@ combo_unit_temperature_changed(GtkWidget *combo,
                                gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    dialog->wd->units->temperature =
+    dialog->pd->units->temperature =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
-    update_scrollbox(dialog->wd);
+    update_scrollbox(dialog->pd);
     update_summary_window(dialog, TRUE);
 }
 
@@ -614,9 +623,9 @@ combo_unit_pressure_changed(GtkWidget *combo,
                             gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    dialog->wd->units->pressure =
+    dialog->pd->units->pressure =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
-    update_scrollbox(dialog->wd);
+    update_scrollbox(dialog->pd);
     update_summary_window(dialog, TRUE);
 }
 
@@ -626,9 +635,9 @@ combo_unit_windspeed_changed(GtkWidget *combo,
                              gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    dialog->wd->units->windspeed =
+    dialog->pd->units->windspeed =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
-    update_scrollbox(dialog->wd);
+    update_scrollbox(dialog->pd);
     update_summary_window(dialog, TRUE);
 }
 
@@ -638,9 +647,9 @@ combo_unit_precipitations_changed(GtkWidget *combo,
                                   gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    dialog->wd->units->precipitations =
+    dialog->pd->units->precipitations =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
-    update_scrollbox(dialog->wd);
+    update_scrollbox(dialog->pd);
     update_summary_window(dialog, TRUE);
 }
 
@@ -651,7 +660,7 @@ combo_unit_altitude_changed(GtkWidget *combo,
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
 
-    dialog->wd->units->altitude =
+    dialog->pd->units->altitude =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
     setup_altitude(dialog);
     update_summary_window(dialog, TRUE);
@@ -725,8 +734,8 @@ create_units_page(xfceweather_dialog *dialog)
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
 
     /* initialize widgets with current data */
-    if (dialog->wd)
-        setup_units(dialog, dialog->wd->units);
+    if (dialog->pd)
+        setup_units(dialog, dialog->pd->units);
 
     gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
     g_object_unref(G_OBJECT(sg_label));
@@ -741,7 +750,7 @@ combo_icon_theme_set_tooltip(GtkWidget *combo,
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     gchar *text;
 
-    if (G_UNLIKELY(dialog->wd->icon_theme == NULL)) {
+    if (G_UNLIKELY(dialog->pd->icon_theme == NULL)) {
         /* this should never happen, but who knows... */
         gtk_widget_set_tooltip_text(GTK_WIDGET(combo),
                                     _("Choose an icon theme."));
@@ -753,10 +762,10 @@ combo_icon_theme_set_tooltip(GtkWidget *combo,
            "<b>Author:</b> %s\n\n"
            "<b>Description:</b> %s\n\n"
            "<b>License:</b> %s"),
-           TEXT_UNKNOWN(dialog->wd->icon_theme->dir),
-           TEXT_UNKNOWN(dialog->wd->icon_theme->author),
-           TEXT_UNKNOWN(dialog->wd->icon_theme->description),
-           TEXT_UNKNOWN(dialog->wd->icon_theme->license));
+           TEXT_UNKNOWN(dialog->pd->icon_theme->dir),
+           TEXT_UNKNOWN(dialog->pd->icon_theme->author),
+           TEXT_UNKNOWN(dialog->pd->icon_theme->description),
+           TEXT_UNKNOWN(dialog->pd->icon_theme->license));
     gtk_widget_set_tooltip_markup(GTK_WIDGET(combo), text);
     g_free(text);
 }
@@ -774,14 +783,14 @@ combo_icon_theme_changed(GtkWidget *combo,
     if (G_UNLIKELY(i == -1))
         return;
 
-    theme = g_array_index(dialog->icon_themes, icon_theme*, i);
+    theme = g_array_index(dialog->icon_themes, icon_theme *, i);
     if (G_UNLIKELY(theme == NULL))
         return;
 
-    icon_theme_free(dialog->wd->icon_theme);
-    dialog->wd->icon_theme = icon_theme_copy(theme);
+    icon_theme_free(dialog->pd->icon_theme);
+    dialog->pd->icon_theme = icon_theme_copy(theme);
     combo_icon_theme_set_tooltip(combo, dialog);
-    update_icon(dialog->wd);
+    update_icon(dialog->pd);
     update_summary_window(dialog, TRUE);
 }
 
@@ -791,7 +800,7 @@ combo_tooltip_style_changed(GtkWidget *combo,
                             gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    dialog->wd->tooltip_style = gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+    dialog->pd->tooltip_style = gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
 }
 
 
@@ -800,7 +809,7 @@ combo_forecast_layout_changed(GtkWidget *combo,
                               gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    dialog->wd->forecast_layout =
+    dialog->pd->forecast_layout =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
     update_summary_window(dialog, FALSE);
 }
@@ -811,7 +820,7 @@ spin_forecast_days_value_changed(const GtkWidget *spin,
                                  gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    dialog->wd->forecast_days =
+    dialog->pd->forecast_days =
         gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spin));
     update_summary_window(dialog, FALSE);
 }
@@ -822,9 +831,9 @@ check_round_values_toggled(GtkWidget *button,
                            gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    dialog->wd->round =
+    dialog->pd->round =
         gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button));
-    update_scrollbox(dialog->wd);
+    update_scrollbox(dialog->pd);
     update_summary_window(dialog, TRUE);
 }
 
@@ -848,11 +857,11 @@ create_appearance_page(xfceweather_dialog *dialog)
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
     dialog->icon_themes = find_icon_themes();
     for (i = 0; i < dialog->icon_themes->len; i++) {
-        theme = g_array_index(dialog->icon_themes, icon_theme*, i);
+        theme = g_array_index(dialog->icon_themes, icon_theme *, i);
         ADD_COMBO_VALUE(dialog->combo_icon_theme, theme->name);
         /* set selection to current theme */
-        if (G_LIKELY(dialog->wd->icon_theme) &&
-            !strcmp(theme->dir, dialog->wd->icon_theme->dir)) {
+        if (G_LIKELY(dialog->pd->icon_theme) &&
+            !strcmp(theme->dir, dialog->pd->icon_theme->dir)) {
             SET_COMBO_VALUE(dialog->combo_icon_theme, i);
             combo_icon_theme_set_tooltip(dialog->combo_icon_theme, dialog);
         }
@@ -864,7 +873,7 @@ create_appearance_page(xfceweather_dialog *dialog)
     ADD_COMBO(dialog->combo_tooltip_style);
     ADD_COMBO_VALUE(dialog->combo_tooltip_style, _("Simple"));
     ADD_COMBO_VALUE(dialog->combo_tooltip_style, _("Verbose"));
-    SET_COMBO_VALUE(dialog->combo_tooltip_style, dialog->wd->tooltip_style);
+    SET_COMBO_VALUE(dialog->combo_tooltip_style, dialog->pd->tooltip_style);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
 
@@ -879,14 +888,14 @@ create_appearance_page(xfceweather_dialog *dialog)
     ADD_COMBO_VALUE(dialog->combo_forecast_layout, _("Days in columns"));
     ADD_COMBO_VALUE(dialog->combo_forecast_layout, _("Days in rows"));
     SET_COMBO_VALUE(dialog->combo_forecast_layout,
-                    dialog->wd->forecast_layout);
+                    dialog->pd->forecast_layout);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
 
     /* number of days shown in forecast */
     hbox = gtk_hbox_new(FALSE, BORDER);
     ADD_LABEL(_("_Number of forecast _days:"), sg);
     ADD_SPIN(dialog->spin_forecast_days, 1, MAX_FORECAST_DAYS, 1,
-             (dialog->wd->forecast_days ? dialog->wd->forecast_days : 5),
+             (dialog->pd->forecast_days ? dialog->pd->forecast_days : 5),
              0, NULL);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
@@ -904,7 +913,7 @@ create_appearance_page(xfceweather_dialog *dialog)
     gtk_box_pack_start(GTK_BOX(vbox), dialog->check_round_values,
                        FALSE, FALSE, 0);
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dialog->check_round_values),
-                                 dialog->wd->round);
+                                 dialog->pd->round);
 
     gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
     g_object_unref(G_OBJECT(sg));
@@ -917,9 +926,9 @@ check_scrollbox_show_toggled(GtkWidget *button,
                              gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    dialog->wd->show_scrollbox =
+    dialog->pd->show_scrollbox =
         gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button));
-    scrollbox_set_visible(dialog->wd);
+    scrollbox_set_visible(dialog->pd);
 }
 
 
@@ -928,9 +937,9 @@ spin_scrollbox_lines_value_changed(const GtkWidget *spin,
                                    gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    dialog->wd->scrollbox_lines =
+    dialog->pd->scrollbox_lines =
         (guint) gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spin));
-    update_scrollbox(dialog->wd);
+    update_scrollbox(dialog->pd);
 }
 
 
@@ -945,9 +954,9 @@ button_scrollbox_font_pressed(GtkWidget *button,
         return FALSE;
 
     if (event->button == 2) {
-        g_free(dialog->wd->scrollbox_font);
-        dialog->wd->scrollbox_font = NULL;
-        gtk_scrollbox_set_fontname(GTK_SCROLLBOX(dialog->wd->scrollbox),
+        g_free(dialog->pd->scrollbox_font);
+        dialog->pd->scrollbox_font = NULL;
+        gtk_scrollbox_set_fontname(GTK_SCROLLBOX(dialog->pd->scrollbox),
                                    NULL);
         gtk_button_set_label(GTK_BUTTON(button), _("Select _font"));
         return TRUE;
@@ -967,18 +976,18 @@ button_scrollbox_font_clicked(GtkWidget *button,
 
     fsd = GTK_FONT_SELECTION_DIALOG
         (gtk_font_selection_dialog_new(_("Select font")));
-    if (dialog->wd->scrollbox_font)
+    if (dialog->pd->scrollbox_font)
         gtk_font_selection_dialog_set_font_name(fsd,
-                                                dialog->wd->scrollbox_font);
+                                                dialog->pd->scrollbox_font);
 
     result = gtk_dialog_run(GTK_DIALOG(fsd));
     if (result == GTK_RESPONSE_OK || result == GTK_RESPONSE_ACCEPT) {
         fontname = gtk_font_selection_dialog_get_font_name(fsd);
         if (fontname != NULL) {
             gtk_button_set_label(GTK_BUTTON(button), fontname);
-            g_free(dialog->wd->scrollbox_font);
-            dialog->wd->scrollbox_font = fontname;
-            gtk_scrollbox_set_fontname(GTK_SCROLLBOX(dialog->wd->scrollbox),
+            g_free(dialog->pd->scrollbox_font);
+            dialog->pd->scrollbox_font = fontname;
+            gtk_scrollbox_set_fontname(GTK_SCROLLBOX(dialog->pd->scrollbox),
                                        fontname);
         }
     }
@@ -1001,8 +1010,8 @@ button_scrollbox_color_pressed(GtkWidget *button,
         return FALSE;
 
     if (event->button == 2) {
-        dialog->wd->scrollbox_use_color = FALSE;
-        gtk_scrollbox_clear_color(GTK_SCROLLBOX(dialog->wd->scrollbox));
+        dialog->pd->scrollbox_use_color = FALSE;
+        gtk_scrollbox_clear_color(GTK_SCROLLBOX(dialog->pd->scrollbox));
         return TRUE;
     }
 
@@ -1017,10 +1026,10 @@ button_scrollbox_color_set(GtkWidget *button,
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
 
     gtk_color_button_get_color(GTK_COLOR_BUTTON(button),
-                               &(dialog->wd->scrollbox_color));
-    gtk_scrollbox_set_color(GTK_SCROLLBOX(dialog->wd->scrollbox),
-                            dialog->wd->scrollbox_color);
-    dialog->wd->scrollbox_use_color = TRUE;
+                               &(dialog->pd->scrollbox_color));
+    gtk_scrollbox_set_color(GTK_SCROLLBOX(dialog->pd->scrollbox),
+                            dialog->pd->scrollbox_color);
+    dialog->pd->scrollbox_use_color = TRUE;
 }
 
 
@@ -1051,7 +1060,7 @@ update_scrollbox_labels(xfceweather_dialog *dialog)
     GValue value = { 0 };
     gint option;
 
-    dialog->wd->labels = labels_clear(dialog->wd->labels);
+    dialog->pd->labels = labels_clear(dialog->pd->labels);
     hasiter =
         gtk_tree_model_get_iter_first(GTK_TREE_MODEL
                                       (dialog->model_datatypes),
@@ -1060,13 +1069,13 @@ update_scrollbox_labels(xfceweather_dialog *dialog)
         gtk_tree_model_get_value(GTK_TREE_MODEL(dialog->model_datatypes),
                                  &iter, 1, &value);
         option = g_value_get_int(&value);
-        g_array_append_val(dialog->wd->labels, option);
+        g_array_append_val(dialog->pd->labels, option);
         g_value_unset(&value);
         hasiter =
             gtk_tree_model_iter_next(GTK_TREE_MODEL(dialog->model_datatypes),
                                      &iter);
     }
-    update_scrollbox(dialog->wd);
+    update_scrollbox(dialog->pd);
 }
 
 
@@ -1183,10 +1192,10 @@ check_scrollbox_animate_toggled(GtkWidget *button,
                                 gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    dialog->wd->scrollbox_animate =
+    dialog->pd->scrollbox_animate =
         gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button));
-    gtk_scrollbox_set_animate(GTK_SCROLLBOX(dialog->wd->scrollbox),
-                              dialog->wd->scrollbox_animate);
+    gtk_scrollbox_set_animate(GTK_SCROLLBOX(dialog->pd->scrollbox),
+                              dialog->pd->scrollbox_animate);
 }
 
 
@@ -1213,14 +1222,14 @@ create_scrollbox_page(xfceweather_dialog *dialog)
                        TRUE, TRUE, 0);
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON
                                  (dialog->check_scrollbox_show),
-                                 dialog->wd->show_scrollbox);
+                                 dialog->pd->show_scrollbox);
 
     /* values to show at once (multiple lines) */
     label = gtk_label_new_with_mnemonic(_("L_ines:"));
     gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
     gtk_box_pack_start(GTK_BOX(hbox), label, TRUE, TRUE, 0);
     ADD_SPIN(dialog->spin_scrollbox_lines, 1, MAX_SCROLLBOX_LINES, 1,
-             dialog->wd->scrollbox_lines, 0, sg_misc);
+             dialog->pd->scrollbox_lines, 0, sg_misc);
     SET_TOOLTIP
         (dialog->spin_scrollbox_lines,
          _("Decide how many values should be shown at once in the scrollbox. "
@@ -1242,11 +1251,11 @@ create_scrollbox_page(xfceweather_dialog *dialog)
            "theme's default."));
     gtk_box_pack_start(GTK_BOX(hbox), dialog->button_scrollbox_font,
                        TRUE, TRUE, 0);
-    if (dialog->wd->scrollbox_font)
+    if (dialog->pd->scrollbox_font)
         gtk_button_set_label(GTK_BUTTON(dialog->button_scrollbox_font),
-                             dialog->wd->scrollbox_font);
+                             dialog->pd->scrollbox_font);
     dialog->button_scrollbox_color =
-        gtk_color_button_new_with_color(&(dialog->wd->scrollbox_color));
+        gtk_color_button_new_with_color(&(dialog->pd->scrollbox_color));
     gtk_size_group_add_widget(sg_misc, dialog->button_scrollbox_color);
     SET_TOOLTIP
         (dialog->button_scrollbox_color,
@@ -1326,9 +1335,9 @@ create_scrollbox_page(xfceweather_dialog *dialog)
     gtk_box_pack_start(GTK_BOX(hbox), table, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(page), hbox, FALSE, FALSE, 0);
 
-    if (dialog->wd->labels->len > 0) {
-        for (i = 0; i < dialog->wd->labels->len; i++) {
-            type = g_array_index(dialog->wd->labels, data_types, i);
+    if (dialog->pd->labels->len > 0) {
+        for (i = 0; i < dialog->pd->labels->len; i++) {
+            type = g_array_index(dialog->pd->labels, data_types, i);
 
             if ((n = option_i(type)) != -1)
                 add_model_option(dialog->model_datatypes, n);
@@ -1339,7 +1348,7 @@ create_scrollbox_page(xfceweather_dialog *dialog)
         (_("Animate _transitions between labels"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON
                                  (dialog->check_scrollbox_animate),
-                                 dialog->wd->scrollbox_animate);
+                                 dialog->pd->scrollbox_animate);
     SET_TOOLTIP(dialog->check_scrollbox_animate,
                 _("Scroll the current displayed value(s) out and the "
                   "new value(s) in instead of simply changing them. "
@@ -1419,14 +1428,14 @@ setup_notebook_signals(xfceweather_dialog *dialog)
 
 
 xfceweather_dialog *
-create_config_dialog(xfceweather_data *data,
+create_config_dialog(plugin_data *data,
                      GtkWidget *vbox)
 {
     xfceweather_dialog *dialog;
     GtkWidget *notebook;
 
     dialog = g_slice_new0(xfceweather_dialog);
-    dialog->wd = (xfceweather_data *) data;
+    dialog->pd = (plugin_data *) data;
     dialog->dialog = gtk_widget_get_toplevel(vbox);
 
     notebook = gtk_notebook_new();
@@ -1445,7 +1454,7 @@ create_config_dialog(xfceweather_data *data,
     setup_notebook_signals(dialog);
 
     /* automatically detect current location if it is yet unknown */
-    if (!(dialog->wd->lat && dialog->wd->lon))
+    if (!(dialog->pd->lat && dialog->pd->lon))
         start_auto_locate(dialog);
 
     gtk_box_pack_start(GTK_BOX(vbox), notebook, TRUE, TRUE, 0);

@@ -72,9 +72,11 @@ gchar *weather_dump_astrodata(const xml_astro *astrodata);
 
 gchar *weather_dump_units_config(const units_config *units);
 
-gchar *weather_dump_weatherdata(const xml_weather *weatherdata);
+gchar *weather_dump_timeslice(const xml_time *timeslice);
 
-gchar *weather_dump_plugindata(const xfceweather_data *data);
+gchar *weather_dump_weatherdata(const xml_weather *wd);
+
+gchar *weather_dump_plugindata(const plugin_data *data);
 
 G_END_DECLS
 

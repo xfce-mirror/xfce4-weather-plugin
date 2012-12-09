@@ -89,6 +89,8 @@ typedef struct {
 gdouble string_to_double(const gchar *str,
                          gdouble backup);
 
+gboolean timeslice_is_interval(xml_time *timeslice);
+
 gchar *get_data(const xml_time *timeslice,
                 const units_config *units,
                 data_types type,
@@ -113,12 +115,18 @@ time_t time_calc_hour(struct tm time_tm,
 time_t time_calc_day(struct tm time_tm,
                      gint days);
 
-xml_time *get_current_conditions(const xml_weather *data);
+gint xml_time_compare(gpointer a,
+                      gpointer b);
 
-xml_time *make_current_conditions(xml_weather *data,
+void merge_timeslice(xml_weather *wd,
+                     const xml_time *timeslice);
+
+xml_time *get_current_conditions(const xml_weather *wd);
+
+xml_time *make_current_conditions(xml_weather *wd,
                                   time_t now_t);
 
-xml_time *make_forecast_data(xml_weather *data,
+xml_time *make_forecast_data(xml_weather *wd,
                              int day,
                              daytime dt);
 

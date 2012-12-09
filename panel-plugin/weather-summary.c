@@ -213,15 +213,13 @@ view_size_allocate_cb(GtkWidget *widget,
 static gchar *
 get_logo_path(void)
 {
-    gchar *dir = g_strconcat(g_get_user_cache_dir(), G_DIR_SEPARATOR_S,
-                             "xfce4", G_DIR_SEPARATOR_S, "weather-plugin",
-                             NULL);
+    gchar *cache_dir, *logo_path;
 
-    g_mkdir_with_parents(dir, 0755);
-    g_free(dir);
-    return g_strconcat(g_get_user_cache_dir(), G_DIR_SEPARATOR_S,
-                       "xfce4", G_DIR_SEPARATOR_S, "weather-plugin",
-                       G_DIR_SEPARATOR_S, "weather_logo.gif", NULL);
+    cache_dir = get_cache_directory();
+    logo_path = g_strconcat(cache_dir, G_DIR_SEPARATOR_S,
+                            "weather_logo.gif", NULL);
+    g_free(cache_dir);
+    return logo_path;
 }
 
 
@@ -253,7 +251,7 @@ logo_fetched(SoupSession *session,
 
 
 static GtkWidget *
-weather_summary_get_logo(xfceweather_data *data)
+weather_summary_get_logo(plugin_data *data)
 {
     GtkWidget *image = gtk_image_new();
     GdkPixbuf *pixbuf = NULL;
@@ -274,7 +272,7 @@ weather_summary_get_logo(xfceweather_data *data)
 
 
 static GtkWidget *
-create_summary_tab(xfceweather_data *data)
+create_summary_tab(plugin_data *data)
 {
     GtkTextBuffer *buffer;
     GtkTextIter iter;
@@ -555,7 +553,7 @@ add_forecast_header(const gchar *text,
 
 
 static GtkWidget *
-add_forecast_cell(xfceweather_data *data,
+add_forecast_cell(plugin_data *data,
                   gint day,
                   gint daytime)
 {
@@ -632,7 +630,7 @@ add_forecast_cell(xfceweather_data *data,
 
 
 static GtkWidget *
-make_forecast(xfceweather_data *data)
+make_forecast(plugin_data *data)
 {
     GtkWidget *table, *ebox, *box, *align;
     GtkWidget *forecast_box;
@@ -704,7 +702,7 @@ make_forecast(xfceweather_data *data)
 
 
 static GtkWidget *
-create_forecast_tab(xfceweather_data *data)
+create_forecast_tab(plugin_data *data)
 {
     GtkWidget *ebox, *align, *hbox, *scrolled, *table;
     GdkWindow *window;
@@ -788,7 +786,7 @@ summary_dialog_response(const GtkWidget *dlg,
 
 
 GtkWidget *
-create_summary_window (xfceweather_data *data)
+create_summary_window(plugin_data *data)
 {
     GtkWidget *window, *notebook, *vbox, *hbox, *label;
     gchar *title, *symbol;

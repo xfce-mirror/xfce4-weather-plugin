@@ -28,12 +28,11 @@
 #define _XOPEN_SOURCE
 #define _XOPEN_SOURCE_EXTENDED 1
 #include "weather-parsers.h"
-#include <libxfce4panel/libxfce4panel.h>
+#include "weather-debug.h"
+
 #include <time.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include "weather-debug.h"
 
 
 #define DATA(node)                                                  \
@@ -44,6 +43,9 @@
 
 #define NODE_IS_TYPE(node, type)                        \
     (xmlStrEqual(node->name, (const xmlChar *) type))
+
+
+extern gboolean debug_mode;
 
 
 /*
@@ -70,36 +72,39 @@ my_timegm(struct tm *tm)
 
 
 xml_time *
-get_timeslice(xml_weather *data,
+get_timeslice(xml_weather *wd,
               const time_t start_t,
-              const time_t end_t)
+              const time_t end_t,
+              guint *index)
 {
+    xml_time *timeslice;
     guint i;
 
-    for (i = 0; i < data->num_timeslices; i++) {
-        if (data->timeslice[i]->start == start_t &&
-            data->timeslice[i]->end == end_t)
-            return data->timeslice[i];
-    }
-    if (data->num_timeslices == MAX_TIMESLICE - 1)
+    g_assert(wd != NULL);
+    if (G_UNLIKELY(wd == NULL))
         return NULL;
 
-    data->timeslice[data->num_timeslices] = g_slice_new0(xml_time);
-    data->timeslice[data->num_timeslices]->start = start_t;
-    data->timeslice[data->num_timeslices]->end = end_t;
-    data->num_timeslices++;
-
-    return data->timeslice[data->num_timeslices - 1];
+    for (i = 0; i < wd->timeslices->len; i++) {
+        timeslice = g_array_index(wd->timeslices, xml_time *, i);
+        if (timeslice &&
+            timeslice->start == start_t && timeslice->end == end_t) {
+            if (index != NULL)
+                *index = i;
+            return timeslice;
+        }
+    }
+    return NULL;
 }
 
 
-static time_t
-parse_xml_timestring(const gchar *ts,
-                     gchar *format) {
+time_t
+parse_timestring(const gchar *ts,
+                 gchar *format) {
     time_t t;
     struct tm tm;
 
     memset(&t, 0, sizeof(time_t));
+    g_assert(ts != NULL);
     if (G_UNLIKELY(ts == NULL))
         return t;
 
@@ -202,9 +207,45 @@ parse_location(xmlNode *cur_node,
 }
 
 
+xml_weather *
+make_weather_data(void)
+{
+    xml_weather *wd;
+
+    wd = g_slice_new0(xml_weather);
+    if (G_UNLIKELY(wd == NULL))
+        return NULL;
+    wd->timeslices = g_array_sized_new(FALSE, TRUE,
+                                       sizeof(xml_time *), 200);
+    if (G_UNLIKELY(wd->timeslices == NULL)) {
+        g_slice_free(xml_weather, wd);
+        return NULL;
+    }
+    return wd;
+}
+
+
+xml_time *
+make_timeslice(void)
+{
+    xml_time *timeslice;
+
+    timeslice = g_slice_new0(xml_time);
+    if (G_UNLIKELY(timeslice == NULL))
+        return NULL;
+
+    timeslice->location = g_slice_new0(xml_location);
+    if (G_UNLIKELY(timeslice->location == NULL)) {
+        g_slice_free(xml_time, timeslice);
+        return NULL;
+    }
+    return timeslice;
+}
+
+
 static void
 parse_time(xmlNode *cur_node,
-           xml_weather *data)
+           xml_weather *wd)
 {
     gchar *datatype, *from, *to;
     time_t start_t, end_t;
@@ -219,47 +260,50 @@ parse_time(xmlNode *cur_node,
     xmlFree(datatype);
 
     from = PROP(cur_node, "from");
-    start_t = parse_xml_timestring(from, NULL);
+    start_t = parse_timestring(from, NULL);
     xmlFree(from);
 
     to = PROP(cur_node, "to");
-    end_t = parse_xml_timestring(to, NULL);
+    end_t = parse_timestring(to, NULL);
     xmlFree(to);
 
     if (G_UNLIKELY(!start_t || !end_t))
         return;
 
-    timeslice = get_timeslice(data, start_t, end_t);
-
-    if (G_UNLIKELY(!timeslice)) {
-        g_warning("No timeslice found or created. "
-                  "Perhaps maximum of %d slices reached?", MAX_TIMESLICE);
-        return;
+    /* look for existing timeslice or add a new one */
+    timeslice = get_timeslice(wd, start_t, end_t, NULL);
+    if (! timeslice) {
+        timeslice = make_timeslice();
+        if (G_UNLIKELY(!timeslice))
+            return;
+        timeslice->start = start_t;
+        timeslice->end = end_t;
+        g_array_append_val(wd->timeslices, timeslice);
     }
+
     for (child_node = cur_node->children; child_node;
          child_node = child_node->next)
-        if (G_LIKELY(NODE_IS_TYPE(child_node, "location"))) {
-            if (timeslice->location == NULL)
-                timeslice->location = g_slice_new0(xml_location);
+        if (G_LIKELY(NODE_IS_TYPE(child_node, "location")))
             parse_location(child_node, timeslice->location);
-        }
 }
 
 
-xml_weather *
-parse_weather(xmlNode *cur_node)
+/*
+ * Parse XML weather data and merge it with current data.
+ */
+gboolean
+parse_weather(xmlNode *cur_node,
+              xml_weather *wd)
 {
-    xml_weather *ret;
     xmlNode *child_node;
 
-    if (G_UNLIKELY(!NODE_IS_TYPE(cur_node, "weatherdata"))) {
-        return NULL;
-    }
+    g_assert(wd != NULL);
+    if (G_UNLIKELY(wd == NULL))
+        return FALSE;
 
-    if ((ret = g_slice_new0(xml_weather)) == NULL)
-        return NULL;
+    if (G_UNLIKELY(cur_node == NULL || !NODE_IS_TYPE(cur_node, "weatherdata")))
+        return FALSE;
 
-    ret->num_timeslices = 0;
     for (cur_node = cur_node->children; cur_node; cur_node = cur_node->next) {
         if (cur_node->type != XML_ELEMENT_NODE)
             continue;
@@ -274,10 +318,10 @@ parse_weather(xmlNode *cur_node)
             for (child_node = cur_node->children; child_node;
                  child_node = child_node->next)
                 if (NODE_IS_TYPE(child_node, "time"))
-                    parse_time(child_node, ret);
+                    parse_time(child_node, wd);
         }
     }
-    return ret;
+    return TRUE;
 }
 
 
@@ -311,11 +355,11 @@ parse_astro_location(xmlNode *cur_node,
             xmlFree(never_sets);
 
             sunrise = PROP(child_node, "rise");
-            astro->sunrise = parse_xml_timestring(sunrise, NULL);
+            astro->sunrise = parse_timestring(sunrise, NULL);
             xmlFree(sunrise);
 
             sunset = PROP(child_node, "set");
-            astro->sunset = parse_xml_timestring(sunset, NULL);
+            astro->sunset = parse_timestring(sunset, NULL);
             xmlFree(sunset);
         }
 
@@ -339,11 +383,11 @@ parse_astro_location(xmlNode *cur_node,
             xmlFree(never_sets);
 
             moonrise = PROP(child_node, "rise");
-            astro->moonrise = parse_xml_timestring(moonrise, NULL);
+            astro->moonrise = parse_timestring(moonrise, NULL);
             xmlFree(moonrise);
 
             moonset = PROP(child_node, "set");
-            astro->moonset = parse_xml_timestring(moonset, NULL);
+            astro->moonset = parse_timestring(moonset, NULL);
             xmlFree(moonset);
 
             astro->moon_phase = PROP(child_node, "phase");
@@ -362,7 +406,8 @@ parse_astro(xmlNode *cur_node)
     xmlNode *child_node, *time_node = NULL;
     xml_astro *astro;
 
-    if (cur_node == NULL || !NODE_IS_TYPE(cur_node, "astrodata"))
+    g_assert(cur_node != NULL);
+    if (G_UNLIKELY(cur_node == NULL || !NODE_IS_TYPE(cur_node, "astrodata")))
         return NULL;
 
     astro = g_slice_new0(xml_astro);
@@ -423,10 +468,7 @@ parse_place(xmlNode *cur_node)
     xml_place *place;
 
     g_assert(cur_node != NULL);
-    if (G_UNLIKELY(cur_node == NULL))
-        return NULL;
-
-    if (!NODE_IS_TYPE(cur_node, "place"))
+    if (G_UNLIKELY(cur_node == NULL || !NODE_IS_TYPE(cur_node, "place")))
         return NULL;
 
     place = g_slice_new0(xml_place);
@@ -445,10 +487,7 @@ parse_altitude(xmlNode *cur_node)
     xml_altitude *alt;
 
     g_assert(cur_node != NULL);
-    if (G_UNLIKELY(cur_node == NULL))
-        return NULL;
-
-    if (!NODE_IS_TYPE(cur_node, "geonames"))
+    if (G_UNLIKELY(cur_node == NULL) || !NODE_IS_TYPE(cur_node, "geonames"))
         return NULL;
 
     alt = g_slice_new0(xml_altitude);
@@ -468,10 +507,7 @@ parse_timezone(xmlNode *cur_node)
     xml_timezone *tz;
 
     g_assert(cur_node != NULL);
-    if (G_UNLIKELY(cur_node == NULL))
-        return NULL;
-
-    if (!NODE_IS_TYPE(cur_node, "timezone"))
+    if (G_UNLIKELY(cur_node == NULL) || !NODE_IS_TYPE(cur_node, "timezone"))
         return NULL;
 
     tz = g_slice_new0(xml_timezone);
@@ -520,6 +556,10 @@ parse_xml_document(SoupMessage *msg,
     xmlNode *root_node;
     gpointer user_data = NULL;
 
+    g_assert(msg != NULL);
+    if (G_UNLIKELY(msg == NULL))
+        return NULL;
+
     doc = get_xml_document(msg);
     if (G_LIKELY(doc)) {
         root_node = xmlDocGetRootElement(doc);
@@ -562,6 +602,66 @@ xml_location_free(xml_location *loc)
 }
 
 
+/*
+ * Deep copy xml_time struct.
+ */
+xml_time *
+xml_time_copy(const xml_time *src)
+{
+    xml_time *dst;
+    xml_location *loc;
+    gint i;
+
+    if (src == NULL)
+        return NULL;
+
+    dst = g_slice_new0(xml_time);
+    if (dst == NULL)
+        return NULL;
+
+    loc = g_slice_new0(xml_location);
+    if (loc == NULL)
+        return dst;
+
+    dst->start = src->start;
+    dst->end = src->end;
+
+    loc->altitude = g_strdup(src->location->altitude);
+    loc->latitude = g_strdup(src->location->latitude);
+    loc->longitude = g_strdup(src->location->longitude);
+
+    loc->temperature_value = g_strdup(src->location->temperature_value);
+    loc->temperature_unit = g_strdup(src->location->temperature_unit);
+
+    loc->wind_dir_deg = g_strdup(src->location->wind_dir_deg);
+    loc->wind_dir_name = g_strdup(src->location->wind_dir_name);
+    loc->wind_speed_mps = g_strdup(src->location->wind_speed_mps);
+    loc->wind_speed_beaufort = g_strdup(src->location->wind_speed_beaufort);
+
+    loc->humidity_value = g_strdup(src->location->humidity_value);
+    loc->humidity_unit = g_strdup(src->location->humidity_unit);
+
+    loc->pressure_value = g_strdup(src->location->pressure_value);
+    loc->pressure_unit = g_strdup(src->location->pressure_unit);
+
+    for (i = 0; i < CLOUDS_PERC_NUM; i++)
+        loc->clouds_percent[i] = g_strdup(src->location->clouds_percent[i]);
+
+    loc->fog_percent = g_strdup(src->location->fog_percent);
+
+    loc->precipitation_value =
+        g_strdup(src->location->precipitation_value);
+    loc->precipitation_unit = g_strdup(src->location->precipitation_unit);
+
+    loc->symbol_id = src->location->symbol_id;
+    loc->symbol = g_strdup(src->location->symbol);
+
+    dst->location = loc;
+
+    return dst;
+}
+
+
 void
 xml_time_free(xml_time *timeslice)
 {
@@ -574,21 +674,56 @@ xml_time_free(xml_time *timeslice)
 
 
 void
-xml_weather_free(xml_weather *data)
+xml_weather_free(xml_weather *wd)
 {
+    xml_time *timeslice;
     guint i;
 
-    g_assert(data != NULL);
-    if (G_UNLIKELY(data == NULL))
+    g_assert(wd != NULL);
+    if (G_UNLIKELY(wd == NULL))
         return;
-    weather_debug("Freeing %u timeslices.", data->num_timeslices);
-    for (i = 0; i < data->num_timeslices; i++)
-        xml_time_free(data->timeslice[i]);
-    if (G_LIKELY(data->current_conditions)) {
-        weather_debug("Freeing current conditions.");
-        xml_time_free(data->current_conditions);
+    if (G_LIKELY(wd->timeslices)) {
+        weather_debug("Freeing %u timeslices.", wd->timeslices->len);
+        for (i = 0; i < wd->timeslices->len; i++) {
+            timeslice = g_array_index(wd->timeslices, xml_time *, i);
+            xml_time_free(timeslice);
+        }
+        g_array_free(wd->timeslices, FALSE);
     }
-    g_slice_free(xml_weather, data);
+    if (G_LIKELY(wd->current_conditions)) {
+        weather_debug("Freeing current conditions.");
+        xml_time_free(wd->current_conditions);
+    }
+    g_slice_free(xml_weather, wd);
+}
+
+
+void
+xml_weather_clean(xml_weather *wd)
+{
+    xml_time *timeslice;
+    time_t now_t = time(NULL);
+    guint i;
+
+    if (G_UNLIKELY(wd == NULL || wd->timeslices == NULL))
+        return;
+    for (i = 0; i < wd->timeslices->len; i++) {
+        timeslice = g_array_index(wd->timeslices, xml_time *, i);
+        if (G_UNLIKELY(timeslice == NULL))
+            continue;
+        if (difftime(now_t, timeslice->end) > DATA_EXPIRY_TIME) {
+            if (debug_mode) {
+                gchar *start, *end;
+                start = weather_debug_strftime_t(timeslice->start);
+                end = weather_debug_strftime_t(timeslice->end);
+                weather_debug("Removing expired timeslice [%s - %s].");
+                g_free(start);
+                g_free(end);
+            }
+            xml_time_free(timeslice);
+            g_array_remove_index(wd->timeslices, i--);
+        }
+    }
 }
 
 

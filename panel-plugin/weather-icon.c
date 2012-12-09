@@ -227,7 +227,7 @@ find_themes_in_dir(const gchar *path)
     weather_debug("Looking for icon themes in %s.", path);
     dir = g_dir_open(path, 0, NULL);
     if (dir) {
-        themes = g_array_new(FALSE, TRUE, sizeof(icon_theme*));
+        themes = g_array_new(FALSE, TRUE, sizeof(icon_theme *));
 
         while (dirname = g_dir_read_name(dir)) {
             themedir = g_strdup_printf("%s" G_DIR_SEPARATOR_S "%s",

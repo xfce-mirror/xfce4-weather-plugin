@@ -38,10 +38,12 @@
 #include "weather-debug.h"
 
 #define XFCEWEATHER_ROOT "weather"
-#define UPDATE_INTERVAL 15
-#define DATA_MAX_AGE (3 * 3600)
-#define BORDER 8
+#define UPDATE_INTERVAL (15)
+#define DATA_MAX_AGE (20 * 60)
+#define CACHE_FILE_MAX_AGE (48 * 3600)
+#define BORDER (8)
 #define CONNECTION_TIMEOUT (10)        /* connection timeout in seconds */
+#define DATA_RETRY_WAIT (180)          /* download retry wait time in seconds */
 
 #define DATA_AND_UNIT(var, item)                                    \
     value = get_data(conditions, data->units, item, data->round);   \
@@ -52,9 +54,26 @@
                           unit);                                    \
     g_free(value);
 
+#define CACHE_APPEND(str, val)                  \
+    if (val)                                    \
+        g_string_append_printf(out, str, val);
+
+#define CACHE_FREE_VARS()                       \
+    g_free(locname);                            \
+    g_free(lat);                                \
+    g_free(lon);                                \
+    if (keyfile)                                \
+        g_key_file_free(keyfile);
+
+#define CACHE_READ_STRING(var, key)                             \
+    if (g_key_file_has_key(keyfile, group, key, NULL))          \
+        var = g_key_file_get_string(keyfile, group, key, NULL);
 
 
 gboolean debug_mode = FALSE;
+
+static void
+write_cache_file(plugin_data *data);
 
 
 void
@@ -71,7 +90,7 @@ weather_http_queue_request(SoupSession *session,
 
 
 static gchar *
-make_label(const xfceweather_data *data,
+make_label(const plugin_data *data,
            data_types type)
 {
     xml_time *conditions;
@@ -161,8 +180,23 @@ make_label(const xfceweather_data *data,
 }
 
 
+/*
+ * Return the weather plugin cache directory, creating it if
+ * necessary. The string returned does not contain a trailing slash.
+ */
+gchar *
+get_cache_directory(void)
+{
+    gchar *dir = g_strconcat(g_get_user_cache_dir(), G_DIR_SEPARATOR_S,
+                             "xfce4", G_DIR_SEPARATOR_S, "weather",
+                             NULL);
+    g_mkdir_with_parents(dir, 0755);
+    return dir;
+}
+
+
 void
-update_icon(xfceweather_data *data)
+update_icon(plugin_data *data)
 {
     GdkPixbuf *icon = NULL;
     xml_time *conditions;
@@ -190,7 +224,7 @@ update_icon(xfceweather_data *data)
 
 
 void
-scrollbox_set_visible(xfceweather_data *data)
+scrollbox_set_visible(plugin_data *data)
 {
     if (data->show_scrollbox && data->labels->len > 0)
         gtk_widget_show_all(GTK_WIDGET(data->vbox_center_scrollbox));
@@ -200,9 +234,8 @@ scrollbox_set_visible(xfceweather_data *data)
 
 
 void
-update_scrollbox(xfceweather_data *data)
+update_scrollbox(plugin_data *data)
 {
-    xml_time *conditions;
     GString *out;
     gchar *single = NULL;
     data_types type;
@@ -212,7 +245,7 @@ update_scrollbox(xfceweather_data *data)
     gtk_scrollbox_set_animate(GTK_SCROLLBOX(data->scrollbox),
                               data->scrollbox_animate);
 
-    if (data->weatherdata) {
+    if (data->weatherdata && data->weatherdata->current_conditions) {
         while (i < data->labels->len) {
             j = 0;
             out = g_string_sized_new(128);
@@ -226,7 +259,8 @@ update_scrollbox(xfceweather_data *data)
                 g_free(single);
                 j++;
             }
-            gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox), -1, out->str);
+            gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox),
+                                    -1, out->str);
             g_string_free(out, TRUE);
             i = i + j;
         }
@@ -247,7 +281,7 @@ update_scrollbox(xfceweather_data *data)
 
 
 static void
-update_current_conditions(xfceweather_data *data)
+update_current_conditions(plugin_data *data)
 {
     struct tm now_tm;
 
@@ -261,19 +295,37 @@ update_current_conditions(xfceweather_data *data)
         xml_time_free(data->weatherdata->current_conditions);
         data->weatherdata->current_conditions = NULL;
     }
-
-    data->last_conditions_update = time(NULL);
+    /* use exact 5 minute intervals for calculation */
+    time(&data->last_conditions_update);
     now_tm = *localtime(&data->last_conditions_update);
+    if (now_tm.tm_min % 5 < 5)
+        now_tm.tm_min -= (now_tm.tm_min % 5);
+    if (now_tm.tm_min < 0)
+        now_tm.tm_min = 0;
     now_tm.tm_sec = 0;
     data->last_conditions_update = mktime(&now_tm);
+
     data->weatherdata->current_conditions =
         make_current_conditions(data->weatherdata,
                                 data->last_conditions_update);
-
     data->night_time = is_night_time(data->astrodata);
     update_icon(data);
     update_scrollbox(data);
     weather_debug("Updated current conditions.");
+}
+
+
+static time_t
+calc_conn_retry_time(gint regular_interval) {
+    time_t now_t = time(NULL);
+    struct tm now_tm;
+
+    now_tm = *localtime(&now_t);
+    now_t = time_calc(now_tm, 0, 0, 0, 0, 0,
+                      0 - regular_interval + DATA_RETRY_WAIT);
+    weather_debug("Calculated time to delay next retry to %d seconds, is %d.",
+                  DATA_RETRY_WAIT, now_t);
+    return now_t;
 }
 
 
@@ -282,7 +334,7 @@ cb_astro_update(SoupSession *session,
                 SoupMessage *msg,
                 gpointer user_data)
 {
-    xfceweather_data *data = user_data;
+    plugin_data *data = user_data;
     xml_astro *astro;
 
     if ((astro =
@@ -291,6 +343,10 @@ cb_astro_update(SoupSession *session,
             xml_astro_free(data->astrodata);
         data->astrodata = astro;
         data->last_astro_update = time(NULL);
+    } else {
+        /* download or parsing failed, set last_astro_update so that
+           downloading will be retried after DATA_RETRY_WAIT time */
+        data->last_astro_update = calc_conn_retry_time(DATA_MAX_AGE);
     }
     weather_dump(weather_dump_astrodata, data->astrodata);
 }
@@ -301,27 +357,37 @@ cb_weather_update(SoupSession *session,
                   SoupMessage *msg,
                   gpointer user_data)
 {
-    xfceweather_data *data = user_data;
-    xml_weather *weather = NULL;
+    plugin_data *data = user_data;
+    xmlDoc *doc;
+    xmlNode *root_node;
 
-    if ((weather = (xml_weather *)
-         parse_xml_document(msg, (XmlParseFunc) parse_weather))) {
-        if (G_LIKELY(data->weatherdata)) {
-            weather_debug("Freeing weather data.");
-            xml_weather_free(data->weatherdata);
+    weather_debug("Processing downloaded weather data.");
+    doc = get_xml_document(msg);
+    if (G_LIKELY(doc)) {
+        root_node = xmlDocGetRootElement(doc);
+        if (G_LIKELY(root_node)) {
+            if (parse_weather(root_node, data->weatherdata))
+                data->last_data_update = time(NULL);
+            else
+                data->last_data_update = calc_conn_retry_time(DATA_MAX_AGE);
         }
-        data->weatherdata = weather;
-        data->last_data_update = time(NULL);
+        xmlFreeDoc(doc);
+    } else {
+        /* download or parsing failed, set last_data_update so that
+           downloading will be retried after DATA_RETRY_WAIT time */
+        data->last_data_update = calc_conn_retry_time(DATA_MAX_AGE);
     }
+
+    xml_weather_clean(data->weatherdata);
     weather_debug("Updating current conditions.");
     update_current_conditions(data);
-
+    write_cache_file(data);
     weather_dump(weather_dump_weatherdata, data->weatherdata);
 }
 
 
 static gboolean
-need_astro_update(const xfceweather_data *data)
+need_astro_update(const plugin_data *data)
 {
     time_t now_t;
     struct tm now_tm, last_tm;
@@ -340,7 +406,7 @@ need_astro_update(const xfceweather_data *data)
 
 
 static gboolean
-need_data_update(const xfceweather_data *data)
+need_data_update(const plugin_data *data)
 {
     time_t now_t;
     gint diff;
@@ -358,7 +424,7 @@ need_data_update(const xfceweather_data *data)
 
 
 static gboolean
-need_conditions_update(const xfceweather_data *data)
+need_conditions_update(const plugin_data *data)
 {
     time_t now_t;
     struct tm now_tm;
@@ -374,7 +440,7 @@ need_conditions_update(const xfceweather_data *data)
 
 
 static gboolean
-update_weatherdata(xfceweather_data *data)
+update_weatherdata(plugin_data *data)
 {
     gchar *url;
     gboolean night_time;
@@ -463,7 +529,7 @@ labels_clear(GArray *array)
 
 static void
 xfceweather_read_config(XfcePanelPlugin *plugin,
-                        xfceweather_data *data)
+                        plugin_data *data)
 {
     XfceRc *rc;
     const gchar *value;
@@ -508,6 +574,9 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
     data->msl = xfce_rc_read_int_entry(rc, "msl", 0);
 
     data->timezone = xfce_rc_read_int_entry(rc, "timezone", 0);
+
+    data->cache_file_max_age =
+        xfce_rc_read_int_entry(rc, "cache_file_max_age", CACHE_FILE_MAX_AGE);
 
     if (data->units)
         g_slice_free(units_config, data->units);
@@ -585,7 +654,7 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
 
 static void
 xfceweather_write_config(XfcePanelPlugin *plugin,
-                         xfceweather_data *data)
+                         plugin_data *data)
 {
     gchar label[10];
     guint i;
@@ -616,6 +685,9 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
     xfce_rc_write_int_entry(rc, "msl", data->msl);
 
     xfce_rc_write_int_entry(rc, "timezone", data->timezone);
+
+    xfce_rc_write_int_entry(rc, "cache_file_max_age",
+                            data->cache_file_max_age);
 
     xfce_rc_write_int_entry(rc, "units_temperature", data->units->temperature);
     xfce_rc_write_int_entry(rc, "units_pressure", data->units->pressure);
@@ -664,22 +736,295 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
 }
 
 
-void
-update_weatherdata_with_reset(xfceweather_data *data)
+/*
+ * Generate file name for the weather data cache file.
+ */
+static gchar *
+make_cache_filename(plugin_data *data)
 {
-    if (data->updatetimeout)
+    gchar *cache_dir, *file;
+
+    if (G_UNLIKELY(data->lat == NULL || data->lon == NULL))
+        return NULL;
+
+    cache_dir = get_cache_directory();
+    file = g_strdup_printf("%s%sweatherdata_%s_%s_%d",
+                           cache_dir, G_DIR_SEPARATOR_S,
+                           data->lat, data->lon, data->msl);
+    g_free(cache_dir);
+    return file;
+}
+
+
+/*
+ * Convert localtime to gmtime and format it to a string
+ * that can be parsed later by parse_timestring.
+ */
+static gchar *
+cache_file_strftime_t(const time_t t)
+{
+    struct tm *tm;
+    gchar *res;
+    gchar str[21];
+    size_t size;
+
+    tm = gmtime(&t);
+    size = strftime(str, 21, "%Y-%m-%dT%H:%M:%SZ", tm);
+    return (size ? g_strdup(str) : g_strdup(""));
+}
+
+
+static void
+write_cache_file(plugin_data *data)
+{
+    GString *out;
+    xml_weather *wd = data->weatherdata;
+    xml_time *timeslice;
+    xml_location *loc;
+    gchar *file, *start, *end, *point, *now;
+    time_t now_t = time(NULL);
+    guint i, j;
+
+    file = make_cache_filename(data);
+    if (G_UNLIKELY(file == NULL))
+        return;
+
+    out = g_string_sized_new(20480);
+    g_string_assign(out, "# xfce4-weather-plugin cache file\n\n[info]\n");
+    CACHE_APPEND("location_name=%s\n", data->location_name);
+    CACHE_APPEND("lat=%s\n", data->lat);
+    CACHE_APPEND("lon=%s\n", data->lon);
+    g_string_append_printf(out, "msl=%d\ntimezone=%d\ntimeslices=%d\n",
+                           data->msl, data->timezone, wd->timeslices->len);
+    now = cache_file_strftime_t(now_t);
+    CACHE_APPEND("cache_date=%s\n\n", now);
+    g_free(now);
+
+    for (i = 0; i < wd->timeslices->len; i++) {
+        timeslice = g_array_index(wd->timeslices, xml_time *, i);
+        if (G_UNLIKELY(timeslice == NULL || timeslice->location == NULL))
+            continue;
+        loc = timeslice->location;
+        start = cache_file_strftime_t(timeslice->start);
+        end = cache_file_strftime_t(timeslice->end);
+        point = cache_file_strftime_t(timeslice->point);
+        g_string_append_printf(out, "[timeslice%d]\n", i);
+        CACHE_APPEND("start=%s\n", start);
+        CACHE_APPEND("end=%s\n", end);
+        CACHE_APPEND("point=%s\n", point);
+        CACHE_APPEND("altitude=%s\n", loc->altitude);
+        CACHE_APPEND("latitude=%s\n", loc->latitude);
+        CACHE_APPEND("longitude=%s\n", loc->longitude);
+        CACHE_APPEND("temperature_value=%s\n", loc->temperature_value);
+        CACHE_APPEND("temperature_unit=%s\n", loc->temperature_unit);
+        CACHE_APPEND("wind_dir_deg=%s\n", loc->wind_dir_deg);
+        CACHE_APPEND("wind_dir_name=%s\n", loc->wind_dir_name);
+        CACHE_APPEND("wind_speed_mps=%s\n", loc->wind_speed_mps);
+        CACHE_APPEND("wind_speed_beaufort=%s\n", loc->wind_speed_beaufort);
+        CACHE_APPEND("humidity_value=%s\n", loc->humidity_value);
+        CACHE_APPEND("humidity_unit=%s\n", loc->humidity_unit);
+        CACHE_APPEND("pressure_value=%s\n", loc->pressure_value);
+        CACHE_APPEND("pressure_unit=%s\n", loc->pressure_unit);
+        g_free(start);
+        g_free(end);
+        g_free(point);
+        for (j = 0; j < CLOUDS_PERC_NUM; j++)
+            g_string_append_printf(out, "clouds_percent[%d]=%s\n", j,
+                                   loc->clouds_percent[j]);
+        CACHE_APPEND("fog_percent=%s\n", loc->fog_percent);
+        CACHE_APPEND("precipitation_value=%s\n", loc->precipitation_value);
+        CACHE_APPEND("precipitation_unit=%s\n", loc->precipitation_unit);
+        if (loc->symbol)
+            g_string_append_printf(out, "symbol_id=%d\nsymbol=%s\n",
+                                   loc->symbol_id, loc->symbol);
+        g_string_append(out, "\n");
+    }
+
+    if (!g_file_set_contents(file, out->str, -1, NULL))
+        g_warning("Error writing cache file %s!", file);
+    else
+        weather_debug("Cache file %s has been written.", file);
+
+    g_string_free(out, TRUE);
+    g_free(file);
+}
+
+
+static void
+read_cache_file(plugin_data *data)
+{
+    GKeyFile *keyfile;
+    GError **err;
+    xml_weather *wd;
+    xml_time *timeslice = NULL;
+    xml_location *loc = NULL;
+    time_t now_t = time(NULL), cache_date_t;
+    gchar *file, *locname = NULL, *lat = NULL, *lon = NULL, *group = NULL;
+    gchar *timestring;
+    gint msl, timezone, num_timeslices, i, j;
+
+    g_assert(data != NULL);
+    if (G_UNLIKELY(data == NULL))
+        return;
+    wd = data->weatherdata;
+
+    if (G_UNLIKELY(data->lat == NULL || data->lon == NULL))
+        return;
+
+    file = make_cache_filename(data);
+    if (G_UNLIKELY(file == NULL))
+        return;
+
+    keyfile = g_key_file_new();
+    if (!g_key_file_load_from_file(keyfile, file, G_KEY_FILE_NONE, NULL)) {
+        weather_debug("Could not read cache file %s.", file);
+        g_free(file);
+        return;
+    }
+    weather_debug("Reading cache file %s.", file);
+    g_free(file);
+
+    group = "info";
+    if (!g_key_file_has_group(keyfile, group)) {
+        CACHE_FREE_VARS();
+        return;
+    }
+
+    /* check all needed values are present and match the current parameters */
+    locname = g_key_file_get_string(keyfile, group, "location_name", NULL);
+    lat = g_key_file_get_string(keyfile, group, "lat", NULL);
+    lon = g_key_file_get_string(keyfile, group, "lon", NULL);
+    if (locname == NULL || lat == NULL || lon == NULL) {
+        CACHE_FREE_VARS();
+        weather_debug("Required values are missing in the cache file, "
+                      "reading cache file aborted.");
+        return;
+    }
+    msl = g_key_file_get_integer(keyfile, group, "msl", err);
+    if (!err)
+        timezone = g_key_file_get_integer(keyfile, group, "timezone", err);
+    if (!err)
+        num_timeslices = g_key_file_get_integer(keyfile, group,
+                                                "timeslices", err);
+    if (err || strcmp(lat, data->lat) || strcmp(lon, data->lon) ||
+        msl != data->msl || timezone != data->timezone || num_timeslices < 1) {
+        CACHE_FREE_VARS();
+        weather_debug("The required values are not present in the cache file "
+                      "or do not match the current plugin data. Reading "
+                      "cache file aborted.");
+        return;
+    }
+    /* read cache creation date and check if cache file is not too old */
+    CACHE_READ_STRING(timestring, "cache_date");
+    cache_date_t = parse_timestring(timestring, NULL);
+    g_free(timestring);
+    if (difftime(now_t, cache_date_t) > data->cache_file_max_age) {
+        weather_debug("Cache file is too old and will not be used.");
+        CACHE_FREE_VARS();
+        return;
+    }
+    group = NULL;
+
+    /* parse available timeslices */
+    for (i = 0; i < num_timeslices; i++) {
+        group = g_strdup_printf("timeslice%d", i);
+        if (!g_key_file_has_group(keyfile, group)) {
+            weather_debug("Group %s not found, continuing with next.", group);
+            g_free(group);
+            continue;
+        }
+
+        timeslice = make_timeslice();
+        if (G_UNLIKELY(timeslice == NULL)) {
+            g_free(group);
+            continue;
+        }
+
+        /* parse time strings (start, end, point) */
+        CACHE_READ_STRING(timestring, "start");
+        timeslice->start = parse_timestring(timestring, NULL);
+        g_free(timestring);
+        CACHE_READ_STRING(timestring, "end");
+        timeslice->end = parse_timestring(timestring, NULL);
+        g_free(timestring);
+        CACHE_READ_STRING(timestring, "point");
+        timeslice->point = parse_timestring(timestring, NULL);
+        g_free(timestring);
+
+        /* parse location data */
+        loc = timeslice->location;
+        CACHE_READ_STRING(loc->altitude, "altitude");
+        CACHE_READ_STRING(loc->latitude, "latitude");
+        CACHE_READ_STRING(loc->longitude, "longitude");
+        CACHE_READ_STRING(loc->temperature_value, "temperature_value");
+        CACHE_READ_STRING(loc->temperature_unit, "temperature_unit");
+        CACHE_READ_STRING(loc->wind_dir_deg, "wind_dir_deg");
+        CACHE_READ_STRING(loc->wind_speed_mps, "wind_speed_mps");
+        CACHE_READ_STRING(loc->wind_speed_beaufort, "wind_speed_beaufort");
+        CACHE_READ_STRING(loc->humidity_value, "humidity_value");
+        CACHE_READ_STRING(loc->humidity_unit, "humidity_unit");
+        CACHE_READ_STRING(loc->pressure_value, "pressure_value");
+        CACHE_READ_STRING(loc->pressure_unit, "pressure_unit");
+
+        for (j = 0; j < CLOUDS_PERC_NUM; j++) {
+            gchar *key = g_strdup_printf("clouds_percent[%d]", j);
+            if (g_key_file_has_key(keyfile, group, key, NULL))
+                loc->clouds_percent[j] =
+                    g_key_file_get_string(keyfile, group, key, NULL);
+            g_free(key);
+        }
+
+        CACHE_READ_STRING(loc->fog_percent, "fog_percent");
+        CACHE_READ_STRING(loc->precipitation_value, "precipitation_value");
+        CACHE_READ_STRING(loc->precipitation_unit, "precipitation_unit");
+        CACHE_READ_STRING(loc->symbol, "symbol");
+        if (loc->symbol &&
+            g_key_file_has_key(keyfile, group, "symbol_id", NULL))
+            loc->symbol_id =
+                g_key_file_get_integer(keyfile, group, "symbol_id", NULL);
+
+        merge_timeslice(wd, timeslice);
+        xml_time_free(timeslice);
+    }
+    CACHE_FREE_VARS();
+    weather_debug("Reading cache file complete.");
+}
+
+
+void
+update_weatherdata_with_reset(plugin_data *data, gboolean clear)
+{
+    weather_debug("Update weatherdata with reset.");
+    g_assert(data != NULL);
+    if (G_UNLIKELY(data == NULL))
+        return;
+
+    if (data->updatetimeout) {
         g_source_remove(data->updatetimeout);
+        data->updatetimeout = 0;
+    }
 
     memset(&data->last_data_update, 0, sizeof(data->last_data_update));
     memset(&data->last_astro_update, 0, sizeof(data->last_astro_update));
     memset(&data->last_conditions_update, 0,
            sizeof(data->last_conditions_update));
+
+    /* clear existing weather data, needed for location changes */
+    if (clear && data->weatherdata) {
+        xml_weather_free(data->weatherdata);
+        data->weatherdata = make_weather_data();
+
+        /* make use of previously saved data */
+        read_cache_file(data);
+    }
+
     update_weatherdata(data);
 
     data->updatetimeout =
         g_timeout_add_seconds(UPDATE_INTERVAL,
                               (GSourceFunc) update_weatherdata,
                               data);
+    weather_debug("Updated weatherdata with reset.");
 }
 
 
@@ -687,9 +1032,10 @@ static void
 close_summary(GtkWidget *widget,
               gpointer *user_data)
 {
-    xfceweather_data *data = (xfceweather_data *) user_data;
+    plugin_data *data = (plugin_data *) user_data;
 
-    summary_details_free(data->summary_details);
+    if (data->summary_details)
+        summary_details_free(data->summary_details);
     data->summary_details = NULL;
     data->summary_window = NULL;
 }
@@ -699,7 +1045,7 @@ void
 forecast_click(GtkWidget *widget,
                gpointer user_data)
 {
-    xfceweather_data *data = (xfceweather_data *) user_data;
+    plugin_data *data = (plugin_data *) user_data;
 
     if (data->summary_window != NULL)
         gtk_widget_destroy(data->summary_window);
@@ -717,12 +1063,12 @@ cb_click(GtkWidget *widget,
          GdkEventButton *event,
          gpointer user_data)
 {
-    xfceweather_data *data = (xfceweather_data *) user_data;
+    plugin_data *data = (plugin_data *) user_data;
 
     if (event->button == 1)
         forecast_click(widget, user_data);
     else if (event->button == 2)
-        update_weatherdata_with_reset(data);
+        update_weatherdata_with_reset(data, FALSE);
 
     return FALSE;
 }
@@ -733,7 +1079,7 @@ cb_scroll(GtkWidget *widget,
           GdkEventScroll *event,
           gpointer user_data)
 {
-    xfceweather_data *data = (xfceweather_data *) user_data;
+    plugin_data *data = (plugin_data *) user_data;
 
     if (event->direction == GDK_SCROLL_UP ||
         event->direction == GDK_SCROLL_DOWN)
@@ -747,9 +1093,9 @@ static void
 mi_click(GtkWidget *widget,
          gpointer user_data)
 {
-    xfceweather_data *data = (xfceweather_data *) user_data;
+    plugin_data *data = (plugin_data *) user_data;
 
-    update_weatherdata_with_reset(data);
+    update_weatherdata_with_reset(data, FALSE);
 }
 
 
@@ -758,7 +1104,7 @@ xfceweather_dialog_response(GtkWidget *dlg,
                             gint response,
                             xfceweather_dialog *dialog)
 {
-    xfceweather_data *data = (xfceweather_data *) dialog->wd;
+    plugin_data *data = (plugin_data *) dialog->pd;
     icon_theme *theme;
     gboolean result;
     guint i;
@@ -776,7 +1122,7 @@ xfceweather_dialog_response(GtkWidget *dlg,
         gtk_widget_destroy(dlg);
         gtk_list_store_clear(dialog->model_datatypes);
         for (i = 0; i < dialog->icon_themes->len; i++) {
-            theme = g_array_index(dialog->icon_themes, icon_theme*, i);
+            theme = g_array_index(dialog->icon_themes, icon_theme *, i);
             icon_theme_free(theme);
             g_array_free(dialog->icon_themes, TRUE);
         }
@@ -793,7 +1139,7 @@ xfceweather_dialog_response(GtkWidget *dlg,
 
 static void
 xfceweather_create_options(XfcePanelPlugin *plugin,
-                           xfceweather_data *data)
+                           plugin_data *data)
 {
     GtkWidget *dlg, *vbox;
     xfceweather_dialog *dialog;
@@ -825,7 +1171,7 @@ xfceweather_create_options(XfcePanelPlugin *plugin,
 
 
 static gchar *
-weather_get_tooltip_text(const xfceweather_data *data)
+weather_get_tooltip_text(const plugin_data *data)
 {
     xml_time *conditions;
     struct tm *point_tm, *start_tm, *end_tm, *sunrise_tm, *sunset_tm;
@@ -965,7 +1311,7 @@ weather_get_tooltip_cb(GtkWidget *widget,
                        gint y,
                        gboolean keyboard_mode,
                        GtkTooltip *tooltip,
-                       xfceweather_data *data)
+                       plugin_data *data)
 {
     GdkPixbuf *icon;
     xml_time *conditions;
@@ -1000,10 +1346,10 @@ weather_get_tooltip_cb(GtkWidget *widget,
 }
 
 
-static xfceweather_data *
+static plugin_data *
 xfceweather_create_control(XfcePanelPlugin *plugin)
 {
-    xfceweather_data *data = g_slice_new0(xfceweather_data);
+    plugin_data *data = g_slice_new0(plugin_data);
     SoupMessage *msg;
     SoupURI *soup_proxy_uri;
     const gchar *proxy_uri;
@@ -1014,7 +1360,8 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     /* Initialize with sane default values */
     data->plugin = plugin;
     data->units = g_slice_new0(units_config);
-    data->weatherdata = NULL;
+    data->weatherdata = make_weather_data();
+    data->cache_file_max_age = CACHE_FILE_MAX_AGE;
     data->show_scrollbox = TRUE;
     data->scrollbox_lines = 1;
     data->scrollbox_animate = TRUE;
@@ -1121,7 +1468,7 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
 
 static void
 xfceweather_free(XfcePanelPlugin *plugin,
-                 xfceweather_data *data)
+                 plugin_data *data)
 {
     weather_debug("Freeing plugin data.");
     g_assert(data != NULL);
@@ -1154,7 +1501,7 @@ xfceweather_free(XfcePanelPlugin *plugin,
     /* free icon theme */
     icon_theme_free(data->icon_theme);
 
-    g_slice_free(xfceweather_data, data);
+    g_slice_free(plugin_data, data);
     data = NULL;
 }
 
@@ -1162,7 +1509,7 @@ xfceweather_free(XfcePanelPlugin *plugin,
 static gboolean
 xfceweather_set_size(XfcePanelPlugin *panel,
                      gint size,
-                     xfceweather_data *data)
+                     plugin_data *data)
 {
     data->panel_size = size;
 #if LIBXFCE4PANEL_CHECK_VERSION(4,9,0)
@@ -1184,7 +1531,7 @@ xfceweather_set_size(XfcePanelPlugin *panel,
 static gboolean
 xfceweather_set_mode(XfcePanelPlugin *panel,
                      XfcePanelPluginMode mode,
-                     xfceweather_data *data)
+                     plugin_data *data)
 {
     GtkWidget *parent = gtk_widget_get_parent(data->vbox_center_scrollbox);
 
@@ -1227,7 +1574,7 @@ xfceweather_set_mode(XfcePanelPlugin *panel,
 static gboolean
 xfceweather_set_orientation(XfcePanelPlugin *panel,
                             GtkOrientation orientation,
-                            xfceweather_data *data)
+                            plugin_data *data)
 {
     GtkWidget *parent = gtk_widget_get_parent(data->vbox_center_scrollbox);
 
@@ -1261,7 +1608,7 @@ xfceweather_set_orientation(XfcePanelPlugin *panel,
 
 static void
 xfceweather_show_about(XfcePanelPlugin *plugin,
-                       xfceweather_data *data)
+                       plugin_data *data)
 {
     GdkPixbuf *icon;
     const gchar *auth[] = {
@@ -1294,7 +1641,7 @@ xfceweather_show_about(XfcePanelPlugin *plugin,
 static void
 weather_construct(XfcePanelPlugin *plugin)
 {
-    xfceweather_data *data;
+    plugin_data *data;
     const gchar *panel_debug_env;
 
     /* Enable debug level logging if PANEL_DEBUG contains G_LOG_DOMAIN */
@@ -1307,6 +1654,7 @@ weather_construct(XfcePanelPlugin *plugin)
     xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
     data = xfceweather_create_control(plugin);
     xfceweather_read_config(plugin, data);
+    read_cache_file(data);
     scrollbox_set_visible(data);
     gtk_scrollbox_set_fontname(GTK_SCROLLBOX(data->scrollbox),
                                data->scrollbox_font);
