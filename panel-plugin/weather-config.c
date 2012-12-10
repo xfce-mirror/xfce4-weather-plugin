@@ -350,18 +350,18 @@ cb_findlocation(GtkButton *button,
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     search_dialog *sdialog;
     gchar *loc_name, *lat, *lon;
-    gchar latbuf[15], lonbuf[15];
+    gchar latbuf[10], lonbuf[10];
 
     sdialog = create_search_dialog(NULL, dialog->pd->session);
 
     gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
     if (run_search_dialog(sdialog)) {
         /* limit digit precision of coordinates from search results */
-        lat = g_ascii_formatd(latbuf, 15, "%.7f",
+        lat = g_ascii_formatd(latbuf, 10, "%.6f",
                               string_to_double(sdialog->result_lat, 0));
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_lat),
                                   string_to_double(lat, 0));
-        lon = g_ascii_formatd(lonbuf, 15, "%.7f",
+        lon = g_ascii_formatd(lonbuf, 10, "%.6f",
                               string_to_double(sdialog->result_lon, 0));
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_lon),
                                   string_to_double(lon, 0));
