@@ -75,7 +75,7 @@ typedef struct {
 
     GtkWidget *scrollbox;
     gboolean show_scrollbox;
-    guint scrollbox_lines;
+    gint scrollbox_lines;
     gchar *scrollbox_font;
     GdkColor scrollbox_color;
     gboolean scrollbox_use_color;

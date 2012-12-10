@@ -844,7 +844,7 @@ create_appearance_page(xfceweather_dialog *dialog)
     GtkWidget *palign, *page, *sep, *hbox, *vbox, *label;
     GtkSizeGroup *sg;
     icon_theme *theme;
-    guint i;
+    gint i;
 
     ADD_PAGE(FALSE);
     sg = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
@@ -938,7 +938,7 @@ spin_scrollbox_lines_value_changed(const GtkWidget *spin,
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     dialog->pd->scrollbox_lines =
-        (guint) gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spin));
+        gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spin));
     update_scrollbox(dialog->pd);
 }
 
@@ -1034,7 +1034,7 @@ static GtkWidget *
 make_label(void)
 {
     GtkWidget *widget, *menu;
-    guint i;
+    gint i;
 
     menu = gtk_menu_new();
     widget = gtk_option_menu_new();
@@ -1092,7 +1092,7 @@ add_model_option(GtkListStore *model,
 static int
 option_i(const data_types opt)
 {
-    guint i;
+    gint i;
 
     for (i = 0; i < OPTIONS_N; i++)
         if (labeloptions[i].number == opt)
@@ -1205,8 +1205,7 @@ create_scrollbox_page(xfceweather_dialog *dialog)
     GtkTreeViewColumn *column;
     GtkCellRenderer *renderer;
     data_types type;
-    guint i;
-    gint n;
+    gint i, n;
 
     ADD_PAGE(FALSE);
     sg_misc = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);

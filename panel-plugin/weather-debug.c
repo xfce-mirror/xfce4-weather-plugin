@@ -56,7 +56,7 @@ weather_debug_init(const gchar *log_domain,
     const gchar *debug_env;
     gchar *debug_env_new_array[] = { NULL, NULL, NULL, NULL };
     gchar *debug_env_new;
-    guint i = 0, j = 0;
+    gint i = 0, j = 0;
 
     if (debug_mode) {
         debug_env = g_getenv("G_MESSAGES_DEBUG");
@@ -373,7 +373,7 @@ weather_dump_weatherdata(const xml_weather *wd)
     GString *out;
     xml_time *timeslice;
     gchar *result, *tmp;
-    guint i;
+    gint i;
 
     if (G_UNLIKELY(wd == NULL))
         return g_strdup("No weather data.");

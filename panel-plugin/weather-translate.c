@@ -71,8 +71,7 @@ static const gchar *
 translate_str(const gchar **loc_strings,
               const gchar *str)
 {
-    gint loc_string_len, str_len;
-    guint i;
+    gint loc_string_len, str_len, i;
 
     if (str == NULL)
         return "?";
@@ -187,7 +186,7 @@ const gchar *
 translate_desc(const gchar *desc,
                const gboolean nighttime)
 {
-    guint i;
+    gint i;
 
     for (i = 0; i < NUM_SYMBOLS; i++)
         if (!strcmp(desc, symbol_to_desc[i].symbol))
@@ -202,7 +201,7 @@ translate_desc(const gchar *desc,
 const gchar *
 translate_moon_phase(const gchar *moon_phase)
 {
-    guint i;
+    gint i;
 
     for (i = 0; i < NUM_MOON_PHASES; i++)
         if (!strcmp(moon_phase, moon_phases[i]))
@@ -241,7 +240,7 @@ gchar *
 translate_wind_direction(const gchar *wdir)
 {
     gchar *wdir_loc, *tmp, wdir_i[2];
-    guint i;
+    gint i;
 
     if (wdir == NULL || strlen(wdir) < 1)
         return NULL;

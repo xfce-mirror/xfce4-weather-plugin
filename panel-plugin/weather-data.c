@@ -417,7 +417,7 @@ make_combined_timeslice(xml_weather *wd,
 {
     xml_time *comb, *start, *end;
     gboolean ipol = (between_t != NULL) ? TRUE : FALSE;
-    guint i;
+    gint i;
 
     /* find point data at start of interval (may not be available) */
     start = get_timeslice(wd, interval->start, interval->start, NULL);
@@ -498,7 +498,7 @@ merge_timeslice(xml_weather *wd,
 {
     xml_time *old_ts, *new_ts;
     time_t now_t = time(NULL);
-    guint i;
+    guint index;
 
     g_assert(wd != NULL);
     if (G_UNLIKELY(wd == NULL))
@@ -515,12 +515,12 @@ merge_timeslice(xml_weather *wd,
 
     /* check if there is a timeslice with the same interval and
        replace it with the current data */
-    old_ts = get_timeslice(wd, timeslice->start, timeslice->end, &i);
+    old_ts = get_timeslice(wd, timeslice->start, timeslice->end, &index);
     if (old_ts) {
         xml_time_free(old_ts);
-        g_array_remove_index(wd->timeslices, i);
-        g_array_insert_val(wd->timeslices, i, new_ts);
-        weather_debug("Replaced existing timeslice at %d.", i);
+        g_array_remove_index(wd->timeslices, index);
+        g_array_insert_val(wd->timeslices, index, new_ts);
+        weather_debug("Replaced existing timeslice at %d.", index);
     } else {
         g_array_prepend_val(wd->timeslices, new_ts);
         //weather_debug("Prepended timeslice to the existing timeslices.");
@@ -700,8 +700,8 @@ find_point_data(const xml_weather *wd,
 {
     point_data_results *found;
     xml_time *timeslice;
-    guint i;
     gdouble diff;
+    gint i;
 
     found = g_slice_new0(point_data_results);
     found->before = g_array_new(FALSE, TRUE, sizeof(xml_time *));

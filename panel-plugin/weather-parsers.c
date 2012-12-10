@@ -78,7 +78,7 @@ get_timeslice(xml_weather *wd,
               guint *index)
 {
     xml_time *timeslice;
-    guint i;
+    gint i;
 
     g_assert(wd != NULL);
     if (G_UNLIKELY(wd == NULL))
@@ -677,7 +677,7 @@ void
 xml_weather_free(xml_weather *wd)
 {
     xml_time *timeslice;
-    guint i;
+    gint i;
 
     g_assert(wd != NULL);
     if (G_UNLIKELY(wd == NULL))
@@ -703,7 +703,7 @@ xml_weather_clean(xml_weather *wd)
 {
     xml_time *timeslice;
     time_t now_t = time(NULL);
-    guint i;
+    gint i;
 
     if (G_UNLIKELY(wd == NULL || wd->timeslices == NULL))
         return;

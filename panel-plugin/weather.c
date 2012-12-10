@@ -239,7 +239,7 @@ update_scrollbox(plugin_data *data)
     GString *out;
     gchar *single = NULL;
     data_types type;
-    guint i = 0, j = 0;
+    gint i = 0, j = 0;
 
     gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
     gtk_scrollbox_set_animate(GTK_SCROLLBOX(data->scrollbox),
@@ -534,8 +534,7 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
     const gchar *value;
     gchar *file;
     gchar label[10];
-    guint label_count = 0;
-    gint val;
+    gint label_count = 0, val;
 
     if (!(file = xfce_panel_plugin_lookup_rc_file(plugin)))
         return;
@@ -655,10 +654,10 @@ static void
 xfceweather_write_config(XfcePanelPlugin *plugin,
                          plugin_data *data)
 {
-    gchar label[10];
-    guint i;
     XfceRc *rc;
+    gchar label[10];
     gchar *file, *value;
+    gint i;
 
     if (!(file = xfce_panel_plugin_save_location(plugin, TRUE)))
         return;
@@ -781,7 +780,7 @@ write_cache_file(plugin_data *data)
     xml_location *loc;
     gchar *file, *start, *end, *point, *now;
     time_t now_t = time(NULL);
-    guint i, j;
+    gint i, j;
 
     file = make_cache_filename(data);
     if (G_UNLIKELY(file == NULL))
@@ -1105,7 +1104,7 @@ xfceweather_dialog_response(GtkWidget *dlg,
     plugin_data *data = (plugin_data *) dialog->pd;
     icon_theme *theme;
     gboolean result;
-    guint i;
+    gint i;
 
     if (response == GTK_RESPONSE_HELP) {
         /* show help */
@@ -1307,7 +1306,7 @@ weather_get_tooltip_cb(GtkWidget *widget,
     GdkPixbuf *icon;
     xml_time *conditions;
     gchar *markup_text, *rawvalue;
-    guint icon_size;
+    gint icon_size;
 
     if (data->weatherdata == NULL)
         gtk_tooltip_set_text(tooltip, _("Cannot update weather data"));
