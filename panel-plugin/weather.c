@@ -527,6 +527,21 @@ labels_clear(GArray *array)
 
 
 static void
+constrain_to_limits(gint *i,
+                    const gint min,
+                    const gint max)
+{
+    g_assert(i != NULL);
+    if (G_UNLIKELY(i == NULL))
+        return;
+    if (*i < min)
+        *i = min;
+    if (*i > max)
+        *i = max;
+}
+
+
+static void
 xfceweather_read_config(XfcePanelPlugin *plugin,
                         plugin_data *data)
 {
@@ -564,8 +579,10 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
     }
 
     data->msl = xfce_rc_read_int_entry(rc, "msl", 0);
+    constrain_to_limits(&data->msl, -420, 10000);
 
     data->timezone = xfce_rc_read_int_entry(rc, "timezone", 0);
+    constrain_to_limits(&data->timezone, -24, 24);
 
     data->cache_file_max_age =
         xfce_rc_read_int_entry(rc, "cache_file_max_age", CACHE_FILE_MAX_AGE);
@@ -596,8 +613,7 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
         data->forecast_layout = FC_LAYOUT_LIST;
 
     val = xfce_rc_read_int_entry(rc, "forecast_days", DEFAULT_FORECAST_DAYS);
-    data->forecast_days =
-        (val > 0 && val <= MAX_FORECAST_DAYS) ? val : DEFAULT_FORECAST_DAYS;
+    constrain_to_limits(&data->forecast_days, 1, DEFAULT_FORECAST_DAYS);
 
     value = xfce_rc_read_entry(rc, "theme_dir", NULL);
     if (data->icon_theme)
@@ -607,9 +623,7 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
     data->show_scrollbox = xfce_rc_read_bool_entry(rc, "show_scrollbox", TRUE);
 
     data->scrollbox_lines = xfce_rc_read_int_entry(rc, "scrollbox_lines", 1);
-    if (data->scrollbox_lines < 1 ||
-        data->scrollbox_lines > MAX_SCROLLBOX_LINES)
-        data->scrollbox_lines = 1;
+    constrain_to_limits(&data->scrollbox_lines, 1, MAX_SCROLLBOX_LINES);
 
     value = xfce_rc_read_entry(rc, "scrollbox_font", NULL);
     if (value) {
