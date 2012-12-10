@@ -547,25 +547,19 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
 
     value = xfce_rc_read_entry(rc, "loc_name", NULL);
     if (value) {
-        if (data->location_name)
-            g_free(data->location_name);
-
+        g_free(data->location_name);
         data->location_name = g_strdup(value);
     }
 
     value = xfce_rc_read_entry(rc, "lat", NULL);
     if (value) {
-        if (data->lat)
-            g_free(data->lat);
-
+        g_free(data->lat);
         data->lat = g_strdup(value);
     }
 
     value = xfce_rc_read_entry(rc, "lon", NULL);
     if (value) {
-        if (data->lon)
-            g_free(data->lon);
-
+        g_free(data->lon);
         data->lon = g_strdup(value);
     }
 
