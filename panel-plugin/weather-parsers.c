@@ -716,7 +716,8 @@ xml_weather_clean(xml_weather *wd)
                 gchar *start, *end;
                 start = weather_debug_strftime_t(timeslice->start);
                 end = weather_debug_strftime_t(timeslice->end);
-                weather_debug("Removing expired timeslice [%s - %s].");
+                weather_debug("Removing expired timeslice [%s - %s].",
+                              start, end);
                 g_free(start);
                 g_free(end);
             }
