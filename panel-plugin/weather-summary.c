@@ -254,7 +254,7 @@ static GtkWidget *
 weather_summary_get_logo(plugin_data *data)
 {
     GtkWidget *image = gtk_image_new();
-    GdkPixbuf *pixbuf = NULL;
+    GdkPixbuf *pixbuf;
     gchar *path = get_logo_path();
 
     pixbuf = gdk_pixbuf_new_from_file(path, NULL);

@@ -415,8 +415,7 @@ make_combined_timeslice(xml_weather *wd,
                         const xml_time *interval,
                         const time_t *between_t)
 {
-    xml_time *comb, *start = NULL, *end = NULL;
-    xml_location *combloc, *startloc, *endloc;
+    xml_time *comb, *start, *end;
     gboolean ipol = (between_t != NULL) ? TRUE : FALSE;
     guint i;
 
@@ -788,7 +787,7 @@ find_point_data(const xml_weather *wd,
                 const gdouble min_diff,
                 const gdouble max_diff)
 {
-    point_data_results *found = NULL;
+    point_data_results *found;
     xml_time *timeslice;
     guint i;
     gdouble diff;

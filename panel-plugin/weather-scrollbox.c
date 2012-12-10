@@ -380,7 +380,7 @@ void
 gtk_scrollbox_set_color(GtkScrollbox *self,
                         const GdkColor color)
 {
-    PangoAttribute *pattr = NULL;
+    PangoAttribute *pattr;
 
     g_return_if_fail(GTK_IS_SCROLLBOX(self));
 

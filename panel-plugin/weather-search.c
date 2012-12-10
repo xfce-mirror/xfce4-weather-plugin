@@ -364,9 +364,8 @@ cb_geolocation(SoupSession *session,
 {
     geolocation_data *data = (geolocation_data *) user_data;
     xml_geolocation *geo;
-    gchar *full_loc, *p;
+    gchar *full_loc;
     units_config *units;
-    gsize length;
 
     geo = (xml_geolocation *)
         parse_xml_document(msg, (XmlParseFunc) parse_geolocation);

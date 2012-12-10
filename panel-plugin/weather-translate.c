@@ -240,14 +240,10 @@ translate_day(const gint weekday)
 gchar *
 translate_wind_direction(const gchar *wdir)
 {
-    gint wdir_len;
     gchar *wdir_loc, *tmp, wdir_i[2];
     guint i;
 
-    if (wdir == NULL || (wdir_len = strlen(wdir)) < 1)
-        return NULL;
-
-    if (strchr(wdir, '/'))        /* N/A */
+    if (wdir == NULL || strlen(wdir) < 1)
         return NULL;
 
     /*

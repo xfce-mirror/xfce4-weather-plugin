@@ -46,7 +46,6 @@ get_icon(const icon_theme *theme,
     GdkPixbuf *image = NULL;
     const gchar* dir;
     gchar *filename, *suffix = "";
-    guint i;
 
     g_assert(theme != NULL);
     if (G_UNLIKELY(!theme)) {

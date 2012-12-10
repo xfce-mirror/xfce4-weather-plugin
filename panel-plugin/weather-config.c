@@ -222,7 +222,7 @@ cb_lookup_altitude(SoupSession *session,
                    gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    xml_altitude *altitude = NULL;
+    xml_altitude *altitude;
     gdouble alt;
 
     altitude = (xml_altitude *)
@@ -248,7 +248,7 @@ cb_lookup_timezone(SoupSession *session,
                    gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    xml_timezone *timezone = NULL;
+    xml_timezone *timezone;
     gint tz;
 
     timezone = (xml_timezone *)
@@ -1002,9 +1002,6 @@ button_scrollbox_color_pressed(GtkWidget *button,
                                gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    GtkStyle *style;
-    GdkColor color;
-    gchar *colstr;
 
     if (event->type != GDK_BUTTON_PRESS)
         return FALSE;

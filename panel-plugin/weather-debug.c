@@ -113,7 +113,6 @@ gchar *
 weather_debug_strftime_t(const time_t t)
 {
     struct tm tm;
-    gchar *res;
     gchar str[20];
     size_t size;
 
@@ -228,13 +227,13 @@ weather_dump_astrodata(const xml_astro *astro)
 {
     gchar *out, *sunrise, *sunset, *moonrise, *moonset;
 
+    if (!astro)
+        return g_strdup("No astronomical data.");
+
     sunrise = weather_debug_strftime_t(astro->sunrise);
     sunset = weather_debug_strftime_t(astro->sunset);
     moonrise = weather_debug_strftime_t(astro->moonrise);
     moonset = weather_debug_strftime_t(astro->moonset);
-
-    if (!astro)
-        return g_strdup("No astronomical data.");
 
     out = g_strdup_printf("Astronomical data:\n"
                           "  --------------------------------------------\n"
@@ -408,7 +407,6 @@ gchar *
 weather_dump_plugindata(const plugin_data *data)
 {
     GString *out;
-    GtkOrientation orientation, panel_orientation;
     gchar *last_astro_update, *last_data_update, *last_conditions_update;
     gchar *result;
 

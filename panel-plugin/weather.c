@@ -198,7 +198,7 @@ get_cache_directory(void)
 void
 update_icon(plugin_data *data)
 {
-    GdkPixbuf *icon = NULL;
+    GdkPixbuf *icon;
     xml_time *conditions;
     gchar *str;
     gint size;
@@ -298,8 +298,7 @@ update_current_conditions(plugin_data *data)
     /* use exact 5 minute intervals for calculation */
     time(&data->last_conditions_update);
     now_tm = *localtime(&data->last_conditions_update);
-    if (now_tm.tm_min % 5 < 5)
-        now_tm.tm_min -= (now_tm.tm_min % 5);
+    now_tm.tm_min -= (now_tm.tm_min % 5);
     if (now_tm.tm_min < 0)
         now_tm.tm_min = 0;
     now_tm.tm_sec = 0;
@@ -764,7 +763,6 @@ static gchar *
 cache_file_strftime_t(const time_t t)
 {
     struct tm *tm;
-    gchar *res;
     gchar str[21];
     size_t size;
 
@@ -1175,7 +1173,7 @@ weather_get_tooltip_text(const plugin_data *data)
 {
     xml_time *conditions;
     struct tm *point_tm, *start_tm, *end_tm, *sunrise_tm, *sunset_tm;
-    gchar *text, *sym, *symbol, *alt, *lat, *lon, *temp;
+    gchar *text, *sym, *alt, *temp;
     gchar *windspeed, *windbeau, *winddir, *winddir_trans, *winddeg;
     gchar *pressure, *humidity, *precipitations;
     gchar *fog, *cloudiness, *sunval, *value;
@@ -1215,10 +1213,7 @@ weather_get_tooltip_text(const plugin_data *data)
         sunval = g_strdup_printf("");
 
     sym = get_data(conditions, data->units, SYMBOL, FALSE);
-    DATA_AND_UNIT(symbol, SYMBOL);
     DATA_AND_UNIT(alt, ALTITUDE);
-    DATA_AND_UNIT(lat, LATITUDE);
-    DATA_AND_UNIT(lon, LONGITUDE);
     DATA_AND_UNIT(temp, TEMPERATURE);
     DATA_AND_UNIT(windspeed, WIND_SPEED);
     DATA_AND_UNIT(windbeau, WIND_BEAUFORT);
@@ -1272,8 +1267,7 @@ weather_get_tooltip_text(const plugin_data *data)
                "<b>Pressure:</b> %s    <b>Humidity:</b> %s\n"
                "<b>Fog:</b> %s    <b>Cloudiness:</b> %s\n\n"
                "<span size=\"smaller\">%s</span>"),
-             data->location_name,
-             alt,
+             data->location_name, alt,
              translate_desc(sym, data->night_time),
              interval_start, interval_end,
              precipitations,
@@ -1286,10 +1280,7 @@ weather_get_tooltip_text(const plugin_data *data)
     }
     g_free(sunval);
     g_free(sym);
-    g_free(symbol);
     g_free(alt);
-    g_free(lat);
-    g_free(lon);
     g_free(temp);
     g_free(windspeed);
     g_free(windbeau);
@@ -1350,7 +1341,6 @@ static plugin_data *
 xfceweather_create_control(XfcePanelPlugin *plugin)
 {
     plugin_data *data = g_slice_new0(plugin_data);
-    SoupMessage *msg;
     SoupURI *soup_proxy_uri;
     const gchar *proxy_uri;
     GtkWidget *refresh;
