@@ -378,6 +378,8 @@ cb_weather_update(SoupSession *session,
     }
 
     xml_weather_clean(data->weatherdata);
+    g_array_sort(data->weatherdata->timeslices,
+                 (GCompareFunc) xml_time_compare);
     weather_debug("Updating current conditions.");
     update_current_conditions(data);
     write_cache_file(data);
