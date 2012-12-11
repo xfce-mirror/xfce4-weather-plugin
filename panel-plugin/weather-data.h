@@ -115,8 +115,8 @@ time_t time_calc_hour(struct tm time_tm,
 time_t time_calc_day(struct tm time_tm,
                      gint days);
 
-gint xml_time_compare(gpointer a,
-                      gpointer b);
+gint xml_time_compare(gconstpointer a,
+                      gconstpointer b);
 
 void merge_timeslice(xml_weather *wd,
                      const xml_time *timeslice);

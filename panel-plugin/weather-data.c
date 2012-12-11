@@ -590,30 +590,26 @@ time_calc_day(const struct tm time_tm,
  * greater zero if first arg is greater than second arg).
  */
 gint
-xml_time_compare(gpointer a,
-                 gpointer b)
+xml_time_compare(gconstpointer a,
+                 gconstpointer b)
 {
-    xml_time *ts1 = (xml_time *) a;
-    xml_time *ts2 = (xml_time *) b;
+    xml_time *ts1 = *(xml_time **) a;
+    xml_time *ts2 = *(xml_time **) b;
     gdouble diff;
 
-    if (G_UNLIKELY(a == NULL && b == NULL))
+    if (G_UNLIKELY(ts1 == NULL && ts2 == NULL))
         return 0;
-
-    if (G_UNLIKELY(a == NULL))
+    if (G_UNLIKELY(ts1 == NULL))
         return -1;
-
-    if (G_UNLIKELY(b == NULL))
+    if (G_UNLIKELY(ts2 == NULL))
         return 1;
 
     diff = difftime(ts2->start, ts1->start);
-    if (diff > 0)
-        return -1;
-    if (diff < 0)
-        return 1;
+    if (diff != 0)
+        return (gint) (diff * -1);
 
     /* start time is equal, now it's easy to check end time ;-) */
-    return (gint) difftime(ts2->end, ts1->end);
+    return (gint) (difftime(ts2->end, ts1->end) * -1);
 }
 
 
