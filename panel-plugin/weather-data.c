@@ -655,6 +655,33 @@ find_smallest_interval(xml_weather *wd,
 }
 
 
+static xml_time *
+find_smallest_incomplete_interval(xml_weather *wd,
+                                  time_t end_t)
+{
+    xml_time *timeslice, *found = NULL;
+    gint i;
+
+    weather_debug("Searching for the smallest incomplete interval.");
+    /* search for all timeslices with interval data that have end time end_t */
+    for (i = 0; i < wd->timeslices->len; i++) {
+        timeslice = g_array_index(wd->timeslices, xml_time *, i);
+        if (timeslice && difftime(timeslice->end, end_t) == 0
+            && difftime(timeslice->end, timeslice->start) != 0) {
+            if (found == NULL)
+                found = timeslice;
+            else
+                if (difftime(timeslice->start, found->start) > 0)
+                    found = timeslice;
+            weather_dump(weather_dump_timeslice, found);
+        }
+    }
+    weather_debug("Search result for smallest incomplete interval is:");
+    weather_dump(weather_dump_timeslice, found);
+    return found;
+}
+
+
 /*
  * Given an array of point data, find two points for which
  * corresponding interval data can be found so that the interval is as
@@ -671,7 +698,6 @@ find_largest_interval(xml_weather *wd,
 
     for (i = before->len - 1; i >= 0; i--) {
         ts_before = g_array_index(before, xml_time *, i);
-        g_assert(ts_before != NULL);
         for (j = after->len - 1; j >= 0; j--) {
             ts_after = g_array_index(after, xml_time *, j);
             found = get_timeslice(wd, ts_before->start, ts_after->end, NULL);
@@ -742,7 +768,7 @@ make_current_conditions(xml_weather *wd,
                         time_t now_t)
 {
     point_data_results *found = NULL;
-    xml_time *interval = NULL;
+    xml_time *interval = NULL, *incomplete;
     struct tm point_tm = *localtime(&now_t);
     time_t point_t = now_t;
     gint i = 0;
@@ -758,6 +784,15 @@ make_current_conditions(xml_weather *wd,
         found = find_point_data(wd, point_t, 1, 4 * 3600);
         interval = find_smallest_interval(wd, found);
         point_data_results_free(found);
+
+        /* There may be interval data where point data is only
+           available at the end of that interval. If such an interval
+           exists, use it, it's still better than the next one where
+           now_t is not in between. */
+        if (interval && difftime(interval->start, now_t) > 0)
+            if ((incomplete =
+                 find_smallest_incomplete_interval(wd, interval->start)))
+                interval = incomplete;
         point_tm = *localtime(&point_t);
         i++;
     }
