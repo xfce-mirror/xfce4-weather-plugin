@@ -71,7 +71,7 @@ typedef struct {
     time_t last_astro_update;
     time_t last_data_update;
     time_t last_conditions_update;
-    gint updatetimeout;
+    guint update_timer;
 
     GtkWidget *scrollbox;
     gboolean show_scrollbox;

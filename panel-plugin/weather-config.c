@@ -166,9 +166,9 @@ schedule_delayed_data_update(xfceweather_dialog *dialog)
     }
 
     /* stop any updates that could be performed by weather.c */
-    if (dialog->pd->updatetimeout) {
-        g_source_remove(dialog->pd->updatetimeout);
-        dialog->pd->updatetimeout = 0;
+    if (dialog->pd->update_timer) {
+        g_source_remove(dialog->pd->update_timer);
+        dialog->pd->update_timer = 0;
     }
 
     gtk_widget_show(GTK_WIDGET(dialog->update_spinner));

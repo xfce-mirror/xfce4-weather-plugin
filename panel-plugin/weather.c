@@ -393,7 +393,7 @@ need_astro_update(const plugin_data *data)
     time_t now_t;
     struct tm now_tm, last_tm;
 
-    if (!data->updatetimeout || !data->last_astro_update)
+    if (!data->update_timer || !data->last_astro_update)
         return TRUE;
 
     time(&now_t);
@@ -412,7 +412,7 @@ need_data_update(const plugin_data *data)
     time_t now_t;
     gint diff;
 
-    if (!data->updatetimeout || !data->last_data_update)
+    if (!data->update_timer || !data->last_data_update)
         return TRUE;
 
     time(&now_t);
@@ -430,7 +430,7 @@ need_conditions_update(const plugin_data *data)
     time_t now_t;
     struct tm now_tm;
 
-    if (!data->updatetimeout || !data->last_conditions_update)
+    if (!data->update_timer || !data->last_conditions_update)
         return TRUE;
 
     time(&now_t);
@@ -1006,9 +1006,9 @@ update_weatherdata_with_reset(plugin_data *data, gboolean clear)
     if (G_UNLIKELY(data == NULL))
         return;
 
-    if (data->updatetimeout) {
-        g_source_remove(data->updatetimeout);
-        data->updatetimeout = 0;
+    if (data->update_timer) {
+        g_source_remove(data->update_timer);
+        data->update_timer = 0;
     }
 
     memset(&data->last_data_update, 0, sizeof(data->last_data_update));
@@ -1027,7 +1027,7 @@ update_weatherdata_with_reset(plugin_data *data, gboolean clear)
 
     update_weatherdata(data);
 
-    data->updatetimeout =
+    data->update_timer =
         g_timeout_add_seconds(UPDATE_INTERVAL,
                               (GSourceFunc) update_weatherdata,
                               data);
@@ -1455,7 +1455,7 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox), -1, "1");
     gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
 
-    data->updatetimeout =
+    data->update_timer =
         g_timeout_add_seconds(UPDATE_INTERVAL,
                               (GSourceFunc) update_weatherdata,
                               data);
@@ -1481,9 +1481,9 @@ xfceweather_free(XfcePanelPlugin *plugin,
     if (data->units)
         g_slice_free(units_config, data->units);
 
-    if (data->updatetimeout) {
-        g_source_remove(data->updatetimeout);
-        data->updatetimeout = 0;
+    if (data->update_timer) {
+        g_source_remove(data->update_timer);
+        data->update_timer = 0;
     }
 
     xmlCleanupParser();
