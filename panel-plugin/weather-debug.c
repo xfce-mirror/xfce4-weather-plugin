@@ -407,13 +407,19 @@ gchar *
 weather_dump_plugindata(const plugin_data *data)
 {
     GString *out;
-    gchar *last_astro_update, *last_data_update, *last_conditions_update;
-    gchar *result;
+    gchar *last_astro_update, *last_weather_update, *last_conditions_update;
+    gchar *next_astro_update, *next_weather_update, *next_conditions_update;
+    gchar *next_wakeup, *result;
 
-    last_astro_update = weather_debug_strftime_t(data->last_astro_update);
-    last_data_update = weather_debug_strftime_t(data->last_data_update);
+    last_astro_update = weather_debug_strftime_t(data->astro_update->last);
+    last_weather_update = weather_debug_strftime_t(data->weather_update->last);
     last_conditions_update =
-        weather_debug_strftime_t(data->last_conditions_update);
+        weather_debug_strftime_t(data->conditions_update->last);
+    next_astro_update = weather_debug_strftime_t(data->astro_update->next);
+    next_weather_update = weather_debug_strftime_t(data->weather_update->next);
+    next_conditions_update =
+        weather_debug_strftime_t(data->conditions_update->next);
+    next_wakeup = weather_debug_strftime_t(data->next_wakeup);
 
     out = g_string_sized_new(1024);
     g_string_assign(out, "xfce_weatherdata:\n");
@@ -425,8 +431,15 @@ weather_dump_plugindata(const plugin_data *data)
                            "  plugin orientation: %d\n"
                            "  --------------------------------------------\n"
                            "  last astro update: %s\n"
-                           "  last data update: %s\n"
+                           "  next astro update: %s\n"
+                           "  astro download attempts: %d\n"
+                           "  last weather update: %s\n"
+                           "  next weather update: %s\n"
+                           "  weather download attempts: %d\n"
                            "  last conditions update: %s\n"
+                           "  next conditions update: %s\n"
+                           "  next scheduled wakeup: %s\n"
+                           "  wakeup reason: %s\n"
                            "  --------------------------------------------\n"
                            "  location name: %s\n"
                            "  latitude: %s\n"
@@ -453,8 +466,15 @@ weather_dump_plugindata(const plugin_data *data)
                            data->panel_orientation,
                            data->orientation,
                            last_astro_update,
-                           last_data_update,
+                           next_astro_update,
+                           data->astro_update->attempt,
+                           last_weather_update,
+                           next_weather_update,
+                           data->weather_update->attempt,
                            last_conditions_update,
+                           next_conditions_update,
+                           next_wakeup,
+                           data->next_wakeup_reason,
                            data->location_name,
                            data->lat,
                            data->lon,
@@ -472,8 +492,12 @@ weather_dump_plugindata(const plugin_data *data)
                            gdk_color_to_string(&(data->scrollbox_color)),
                            YESNO(data->scrollbox_use_color),
                            YESNO(data->scrollbox_animate));
+    g_free(next_wakeup);
+    g_free(next_astro_update);
+    g_free(next_weather_update);
+    g_free(next_conditions_update);
     g_free(last_astro_update);
-    g_free(last_data_update);
+    g_free(last_weather_update);
     g_free(last_conditions_update);
 
     /* Free GString only and return its character data */

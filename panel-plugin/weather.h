@@ -50,6 +50,13 @@ typedef struct {
 } summary_details;
 
 typedef struct {
+    time_t last;
+    time_t next;
+    guint attempt;
+    guint check_interval;
+} update_info;
+
+typedef struct {
     XfcePanelPlugin *plugin;
 
     SoupSession *session;
@@ -68,9 +75,12 @@ typedef struct {
     GtkOrientation panel_orientation;
     xml_weather *weatherdata;
     xml_astro *astrodata;
-    time_t last_astro_update;
-    time_t last_data_update;
-    time_t last_conditions_update;
+
+    update_info *astro_update;
+    update_info *weather_update;
+    update_info *conditions_update;
+    time_t next_wakeup;
+    gchar *next_wakeup_reason;
     guint update_timer;
 
     GtkWidget *scrollbox;

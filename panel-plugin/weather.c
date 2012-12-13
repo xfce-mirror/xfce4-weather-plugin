@@ -38,12 +38,12 @@
 #include "weather-debug.h"
 
 #define XFCEWEATHER_ROOT "weather"
-#define UPDATE_INTERVAL (15)
-#define DATA_MAX_AGE (20 * 60)
 #define CACHE_FILE_MAX_AGE (48 * 3600)
 #define BORDER (8)
-#define CONNECTION_TIMEOUT (10)        /* connection timeout in seconds */
-#define DATA_RETRY_WAIT (180)          /* download retry wait time in seconds */
+#define CONN_TIMEOUT (10)        /* connection timeout in seconds */
+#define CONN_MAX_ATTEMPTS (3)    /* max retry attempts using small interval */
+#define CONN_RETRY_INTERVAL_SMALL (10)
+#define CONN_RETRY_INTERVAL_LARGE (10 * 60)
 
 #define DATA_AND_UNIT(var, item)                                    \
     value = get_data(conditions, data->units, item, data->round);   \
@@ -69,11 +69,20 @@
     if (g_key_file_has_key(keyfile, group, key, NULL))          \
         var = g_key_file_get_string(keyfile, group, key, NULL);
 
+#define SCHEDULE_WAKEUP_COMPARE(var, reason)        \
+    if (difftime(var, now_t) < diff) {              \
+        data->next_wakeup = var;                    \
+        diff = difftime(data->next_wakeup, now_t);  \
+        data->next_wakeup_reason = reason;          \
+    }
+
 
 gboolean debug_mode = FALSE;
 
-static void
-write_cache_file(plugin_data *data);
+
+static void write_cache_file(plugin_data *data);
+
+static void schedule_next_wakeup(plugin_data *data);
 
 
 void
@@ -177,6 +186,38 @@ make_label(const plugin_data *data,
     }
     g_free(rawvalue);
     return str;
+}
+
+
+static update_info *
+make_update_info(const guint check_interval)
+{
+    update_info *upi;
+
+    upi = g_slice_new0(update_info);
+    if (G_UNLIKELY(upi == NULL))
+        return NULL;
+
+    memset(&upi->last, 0, sizeof(upi->last));
+    upi->next = time(NULL);
+    upi->check_interval = check_interval;
+    return upi;
+}
+
+
+static void
+init_update_infos(plugin_data *data)
+{
+    if (G_LIKELY(data->astro_update))
+        g_slice_free(update_info, data->astro_update);
+    if (G_LIKELY(data->weather_update))
+        g_slice_free(update_info, data->weather_update);
+    if (G_LIKELY(data->conditions_update))
+        g_slice_free(update_info, data->conditions_update);
+
+    data->astro_update = make_update_info(24 * 3600);
+    data->weather_update = make_update_info(20 * 60);
+    data->conditions_update = make_update_info(5 * 60);
 }
 
 
@@ -296,18 +337,25 @@ update_current_conditions(plugin_data *data)
         data->weatherdata->current_conditions = NULL;
     }
     /* use exact 5 minute intervals for calculation */
-    time(&data->last_conditions_update);
-    now_tm = *localtime(&data->last_conditions_update);
+    time(&data->conditions_update->last);
+    now_tm = *localtime(&data->conditions_update->last);
     now_tm.tm_min -= (now_tm.tm_min % 5);
     if (now_tm.tm_min < 0)
         now_tm.tm_min = 0;
     now_tm.tm_sec = 0;
-    data->last_conditions_update = mktime(&now_tm);
+    data->conditions_update->last = mktime(&now_tm);
 
     data->weatherdata->current_conditions =
         make_current_conditions(data->weatherdata,
-                                data->last_conditions_update);
+                                data->conditions_update->last);
+
+    /* schedule next update */
+    now_tm.tm_min += 5;
+    data->conditions_update->next = mktime(&now_tm);
     data->night_time = is_night_time(data->astrodata);
+    schedule_next_wakeup(data);
+
+    /* update widgets */
     update_icon(data);
     update_scrollbox(data);
     weather_debug("Updated current conditions.");
@@ -315,19 +363,36 @@ update_current_conditions(plugin_data *data)
 
 
 static time_t
-calc_conn_retry_time(gint regular_interval) {
-    time_t now_t = time(NULL);
-    struct tm now_tm;
+calc_next_download_time(const update_info *upi) {
+    time_t retry_t = time(NULL);
+    struct tm retry_tm;
+    guint interval;
 
-    now_tm = *localtime(&now_t);
-    now_t = time_calc(now_tm, 0, 0, 0, 0, 0,
-                      0 - regular_interval + DATA_RETRY_WAIT);
-    weather_debug("Calculated time to delay next retry to %d seconds, is %d.",
-                  DATA_RETRY_WAIT, now_t);
-    return now_t;
+    retry_tm = *localtime(&retry_t);
+
+    /* If the download failed, retry immediately using a small retry
+     * interval for a limited number of times. If it still fails after
+     * that, continue using a larger interval or the default check,
+     * whatever is smaller.
+     */
+    if (G_LIKELY(upi->attempt == 0))
+        interval = upi->check_interval;
+    else if (upi->attempt <= CONN_MAX_ATTEMPTS)
+        interval = CONN_RETRY_INTERVAL_SMALL;
+    else {
+        if (upi->check_interval > CONN_RETRY_INTERVAL_LARGE)
+            interval = CONN_RETRY_INTERVAL_LARGE;
+        else
+            interval = upi->check_interval;
+    }
+
+    return time_calc(retry_tm, 0, 0, 0, 0, 0, interval);
 }
 
 
+/*
+ * Process downloaded astro data and schedule next astro update.
+ */
 static void
 cb_astro_update(SoupSession *session,
                 SoupMessage *msg,
@@ -335,22 +400,36 @@ cb_astro_update(SoupSession *session,
 {
     plugin_data *data = user_data;
     xml_astro *astro;
+    time_t now_t;
+    struct tm now_tm;
 
+    time(&now_t);
+    now_tm = *localtime(&now_t);
     if ((astro =
          (xml_astro *) parse_xml_document(msg, (XmlParseFunc) parse_astro))) {
         if (data->astrodata)
             xml_astro_free(data->astrodata);
         data->astrodata = astro;
-        data->last_astro_update = time(NULL);
+
+        /* schedule next update at 00:00 of the next day */
+        data->astro_update->last = now_t;
+        data->astro_update->next =
+            time_calc(now_tm, 0, 0, 1, 0 - now_tm.tm_hour,
+                      0 - now_tm.tm_min, 0 - now_tm.tm_sec);
+        data->astro_update->attempt = 0;
     } else {
-        /* download or parsing failed, set last_astro_update so that
-           downloading will be retried after DATA_RETRY_WAIT time */
-        data->last_astro_update = calc_conn_retry_time(DATA_MAX_AGE);
+        /* download or parsing failed, schedule retry */
+        data->astro_update->next = calc_next_download_time(data->astro_update);
+        data->astro_update->attempt++;
     }
+    schedule_next_wakeup(data);
     weather_dump(weather_dump_astrodata, data->astrodata);
 }
 
 
+/*
+ * Process downloaded weather data and schedule next weather update.
+ */
 static void
 cb_weather_update(SoupSession *session,
                   SoupMessage *msg,
@@ -359,23 +438,24 @@ cb_weather_update(SoupSession *session,
     plugin_data *data = user_data;
     xmlDoc *doc;
     xmlNode *root_node;
+    time_t now_t;
+    struct tm now_tm;
 
     weather_debug("Processing downloaded weather data.");
+    time(&now_t);
+    now_tm = *localtime(&now_t);
+    data->weather_update->attempt++;
     doc = get_xml_document(msg);
     if (G_LIKELY(doc)) {
         root_node = xmlDocGetRootElement(doc);
-        if (G_LIKELY(root_node)) {
-            if (parse_weather(root_node, data->weatherdata))
-                data->last_data_update = time(NULL);
-            else
-                data->last_data_update = calc_conn_retry_time(DATA_MAX_AGE);
-        }
+        if (G_LIKELY(root_node))
+            if (parse_weather(root_node, data->weatherdata)) {
+                data->weather_update->attempt = 0;
+                data->weather_update->last = now_t;
+            }
         xmlFreeDoc(doc);
-    } else {
-        /* download or parsing failed, set last_data_update so that
-           downloading will be retried after DATA_RETRY_WAIT time */
-        data->last_data_update = calc_conn_retry_time(DATA_MAX_AGE);
     }
+    data->weather_update->next = calc_next_download_time(data->weather_update);
 
     xml_weather_clean(data->weatherdata);
     g_array_sort(data->weatherdata->timeslices,
@@ -383,65 +463,13 @@ cb_weather_update(SoupSession *session,
     weather_debug("Updating current conditions.");
     update_current_conditions(data);
     write_cache_file(data);
+    schedule_next_wakeup(data);
     weather_dump(weather_dump_weatherdata, data->weatherdata);
 }
 
 
 static gboolean
-need_astro_update(const plugin_data *data)
-{
-    time_t now_t;
-    struct tm now_tm, last_tm;
-
-    if (!data->update_timer || !data->last_astro_update)
-        return TRUE;
-
-    time(&now_t);
-    now_tm = *localtime(&now_t);
-    last_tm = *localtime(&(data->last_astro_update));
-    if (now_tm.tm_mday != last_tm.tm_mday)
-        return TRUE;
-
-    return FALSE;
-}
-
-
-static gboolean
-need_data_update(const plugin_data *data)
-{
-    time_t now_t;
-    gint diff;
-
-    if (!data->update_timer || !data->last_data_update)
-        return TRUE;
-
-    time(&now_t);
-    diff = (gint) difftime(now_t, data->last_data_update);
-    if (diff >= DATA_MAX_AGE)
-        return TRUE;
-
-    return FALSE;
-}
-
-
-static gboolean
-need_conditions_update(const plugin_data *data)
-{
-    time_t now_t;
-    struct tm now_tm;
-
-    if (!data->update_timer || !data->last_conditions_update)
-        return TRUE;
-
-    time(&now_t);
-    now_tm = *localtime(&now_t);
-    return (difftime(now_t, data->last_conditions_update) > 300 &&
-            (now_tm.tm_min % 5 == 0 || now_tm.tm_min == 0));
-}
-
-
-static gboolean
-update_weatherdata(plugin_data *data)
+update_handler(plugin_data *data)
 {
     gchar *url;
     gboolean night_time;
@@ -450,18 +478,18 @@ update_weatherdata(plugin_data *data)
 
     g_assert(data != NULL);
     if (G_UNLIKELY(data == NULL))
-        return TRUE;
+        return FALSE;
 
-    if ((!data->lat || !data->lon) ||
-        strlen(data->lat) == 0 || strlen(data->lon) == 0) {
+    if (G_UNLIKELY(data->lat == NULL || data->lon == NULL)) {
         update_icon(data);
         update_scrollbox(data);
-        return TRUE;
+        return FALSE;
     }
 
+    now_t = time(NULL);
+
     /* fetch astronomical data */
-    if (need_astro_update(data)) {
-        now_t = time(NULL);
+    if (difftime(data->astro_update->next, now_t) <= 0) {
         now_tm = *localtime(&now_t);
 
         /* build url */
@@ -479,7 +507,7 @@ update_weatherdata(plugin_data *data)
     }
 
     /* fetch weather data */
-    if (need_data_update(data)) {
+    if (difftime(data->weather_update->next, now_t) <= 0) {
         /* build url */
         url =
             g_strdup_printf("http://api.yr.no/weatherapi"
@@ -494,11 +522,11 @@ update_weatherdata(plugin_data *data)
 
         /* cb_update will deal with everything that follows this
          * block, so let's return instead of doing things twice */
-        return TRUE;
+        return FALSE;
     }
 
     /* update current conditions, icon and labels */
-    if (need_conditions_update(data)) {
+    if (difftime(data->conditions_update->next, now_t) <= 0) {
         weather_debug("Updating current conditions.");
         update_current_conditions(data);
     }
@@ -511,8 +539,46 @@ update_weatherdata(plugin_data *data)
         update_icon(data);
     }
 
-    /* keep timeout running */
-    return TRUE;
+    schedule_next_wakeup(data);
+    return FALSE;
+}
+
+
+static void
+schedule_next_wakeup(plugin_data *data)
+{
+    time_t now_t = time(NULL), future_t;
+    struct tm now_tm;
+    gdouble diff;
+
+    if (data->update_timer) {
+        g_source_remove(data->update_timer);
+        data->update_timer = 0;
+    }
+
+    now_tm = *localtime(&now_t);
+    future_t = time_calc_day(now_tm, 1);
+    diff = difftime(future_t, now_t);
+    SCHEDULE_WAKEUP_COMPARE(data->astro_update->next,
+                            "astro data download");
+    SCHEDULE_WAKEUP_COMPARE(data->weather_update->next,
+                            "weather data download");
+    SCHEDULE_WAKEUP_COMPARE(data->conditions_update->next,
+                            "current conditions update");
+    /* If astronomical data is unavailable, current conditions update
+       will usually handle night/day. */
+    if (data->astrodata) {
+        if (difftime(data->astrodata->sunrise, now_t) > 0)
+            SCHEDULE_WAKEUP_COMPARE(data->astrodata->sunrise,
+                                    "sunrise icon change");
+        if (difftime(data->astrodata->sunset, now_t) > 0)
+            SCHEDULE_WAKEUP_COMPARE(data->astrodata->sunset,
+                                    "sunset icon change");
+    }
+    data->update_timer =
+        g_timeout_add_seconds((guint) diff,
+                              (GSourceFunc) update_handler, data);
+    weather_dump(weather_dump_plugindata, data);
 }
 
 
@@ -1011,10 +1077,8 @@ update_weatherdata_with_reset(plugin_data *data, gboolean clear)
         data->update_timer = 0;
     }
 
-    memset(&data->last_data_update, 0, sizeof(data->last_data_update));
-    memset(&data->last_astro_update, 0, sizeof(data->last_astro_update));
-    memset(&data->last_conditions_update, 0,
-           sizeof(data->last_conditions_update));
+    /* reset update times */
+    init_update_infos(data);
 
     /* clear existing weather data, needed for location changes */
     if (clear && data->weatherdata) {
@@ -1024,13 +1088,7 @@ update_weatherdata_with_reset(plugin_data *data, gboolean clear)
         /* make use of previously saved data */
         read_cache_file(data);
     }
-
-    update_weatherdata(data);
-
-    data->update_timer =
-        g_timeout_add_seconds(UPDATE_INTERVAL,
-                              (GSourceFunc) update_weatherdata,
-                              data);
+    schedule_next_wakeup(data);
     weather_debug("Updated weatherdata with reset.");
 }
 
@@ -1369,10 +1427,14 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     data->forecast_days = DEFAULT_FORECAST_DAYS;
     data->round = TRUE;
 
+    /* Setup update infos */
+    init_update_infos(data);
+    data->next_wakeup = time(NULL);
+
     /* Setup session for HTTP connections */
     data->session = soup_session_async_new();
     g_object_set(data->session, SOUP_SESSION_TIMEOUT,
-                 CONNECTION_TIMEOUT, NULL);
+                 CONN_TIMEOUT, NULL);
 
     /* Set the proxy URI from environment */
     proxy_uri = g_getenv("HTTP_PROXY");
@@ -1455,10 +1517,8 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox), -1, "1");
     gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
 
-    data->update_timer =
-        g_timeout_add_seconds(UPDATE_INTERVAL,
-                              (GSourceFunc) update_weatherdata,
-                              data);
+    /* prepare data and widget updates */
+    schedule_next_wakeup(data);
 
     weather_debug("Plugin widgets set up and ready.");
     return data;
@@ -1472,6 +1532,11 @@ xfceweather_free(XfcePanelPlugin *plugin,
     weather_debug("Freeing plugin data.");
     g_assert(data != NULL);
 
+    if (data->update_timer) {
+        g_source_remove(data->update_timer);
+        data->update_timer = 0;
+    }
+
     if (data->weatherdata)
         xml_weather_free(data->weatherdata);
 
@@ -1481,11 +1546,6 @@ xfceweather_free(XfcePanelPlugin *plugin,
     if (data->units)
         g_slice_free(units_config, data->units);
 
-    if (data->update_timer) {
-        g_source_remove(data->update_timer);
-        data->update_timer = 0;
-    }
-
     xmlCleanupParser();
 
     /* free chars */
@@ -1494,14 +1554,18 @@ xfceweather_free(XfcePanelPlugin *plugin,
     g_free(data->location_name);
     g_free(data->scrollbox_font);
 
-    /* free array */
+    /* free update infos */
+    g_slice_free(update_info, data->weather_update);
+    g_slice_free(update_info, data->astro_update);
+    g_slice_free(update_info, data->conditions_update);
+
+    /* free label array */
     g_array_free(data->labels, TRUE);
 
     /* free icon theme */
     icon_theme_free(data->icon_theme);
 
     g_slice_free(plugin_data, data);
-    data = NULL;
 }
 
 
@@ -1692,8 +1756,6 @@ weather_construct(XfcePanelPlugin *plugin)
                      G_CALLBACK(xfceweather_show_about), data);
 
     weather_dump(weather_dump_plugindata, data);
-
-    update_weatherdata(data);
 }
 
 XFCE_PANEL_PLUGIN_REGISTER(weather_construct)
