@@ -399,25 +399,41 @@ cb_astro_update(SoupSession *session,
                 gpointer user_data)
 {
     plugin_data *data = user_data;
-    xml_astro *astro;
+    xml_astro *astro = NULL;
     time_t now_t;
     struct tm now_tm;
 
     time(&now_t);
     now_tm = *localtime(&now_t);
-    if ((astro =
-         (xml_astro *) parse_xml_document(msg, (XmlParseFunc) parse_astro))) {
-        if (data->astrodata)
-            xml_astro_free(data->astrodata);
-        data->astrodata = astro;
+    if ((msg->status_code == 200 || msg->status_code == 203)) {
+        if (msg->status_code == 203)
+            g_warning
+                (_("Met.no sunrise API states that this version of the "
+                   "webservice is deprecated, and the plugin needs to be "
+                   "adapted to use a newer version, or it will stop working "
+                   "within a few month. Please file a bug on "
+                   "https://bugzilla.xfce.org if no one else has done so "
+                   "yet."));
+        if ((astro = (xml_astro *)
+             parse_xml_document(msg, (XmlParseFunc) parse_astro))) {
+            if (data->astrodata)
+                xml_astro_free(data->astrodata);
+            data->astrodata = astro;
 
-        /* schedule next update at 00:00 of the next day */
-        data->astro_update->last = now_t;
-        data->astro_update->next =
-            time_calc(now_tm, 0, 0, 1, 0 - now_tm.tm_hour,
-                      0 - now_tm.tm_min, 0 - now_tm.tm_sec);
-        data->astro_update->attempt = 0;
-    } else {
+            /* schedule next update at 00:00 of the next day */
+            data->astro_update->last = now_t;
+            data->astro_update->next =
+                time_calc(now_tm, 0, 0, 1, 0 - now_tm.tm_hour,
+                          0 - now_tm.tm_min, 0 - now_tm.tm_sec);
+            data->astro_update->attempt = 0;
+        } else
+            g_warning(_("Error parsing astronomical data!"));
+    } else
+        g_warning(_("Download of astronomical data failed with "
+                    "HTTP Status Code %d, Reason phrase: %s"),
+                  msg->status_code, msg->reason_phrase);
+
+    if (G_UNLIKELY(astro == NULL)) {
         /* download or parsing failed, schedule retry */
         data->astro_update->next = calc_next_download_time(data->astro_update);
         data->astro_update->attempt++;
@@ -440,21 +456,38 @@ cb_weather_update(SoupSession *session,
     xmlNode *root_node;
     time_t now_t;
     struct tm now_tm;
+    gboolean parsing_error = TRUE;
 
     weather_debug("Processing downloaded weather data.");
     time(&now_t);
     now_tm = *localtime(&now_t);
     data->weather_update->attempt++;
-    doc = get_xml_document(msg);
-    if (G_LIKELY(doc)) {
-        root_node = xmlDocGetRootElement(doc);
-        if (G_LIKELY(root_node))
-            if (parse_weather(root_node, data->weatherdata)) {
-                data->weather_update->attempt = 0;
-                data->weather_update->last = now_t;
-            }
-        xmlFreeDoc(doc);
-    }
+    if (msg->status_code == 200 || msg->status_code == 203) {
+        if (msg->status_code == 203)
+            g_warning
+                (_("Met.no LocationforecastLTS API states that this version "
+                   "of the webservice is deprecated, and the plugin needs to "
+                   "be adapted to use a newer version, or it will stop "
+                   "working within a few month. Please file a bug on "
+                   "https://bugzilla.xfce.org if no one else has done so "
+                   "yet."));
+        doc = get_xml_document(msg);
+        if (G_LIKELY(doc)) {
+            root_node = xmlDocGetRootElement(doc);
+            if (G_LIKELY(root_node))
+                if (parse_weather(root_node, data->weatherdata)) {
+                    data->weather_update->attempt = 0;
+                    data->weather_update->last = now_t;
+                    parsing_error = FALSE;
+                }
+            xmlFreeDoc(doc);
+        }
+        if (parsing_error)
+            g_warning(_("Error parsing weather data!"));
+    } else
+        g_warning
+            (_("Download of weather data failed with HTTP Status Code %d, "
+               "Reason phrase: %s"), msg->status_code, msg->reason_phrase);
     data->weather_update->next = calc_next_download_time(data->weather_update);
 
     xml_weather_clean(data->weatherdata);
