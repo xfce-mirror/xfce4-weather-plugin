@@ -1553,13 +1553,6 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     lbl = WIND_SPEED;
     g_array_append_val(data->labels, lbl);
 
-    /*
-     * FIXME: Without this the first label looks odd, because
-     * the gc isn't created yet
-     */
-    gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox), -1, "1");
-    gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
-
     weather_debug("Plugin widgets set up and ready.");
     return data;
 }
