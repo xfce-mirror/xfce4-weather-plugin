@@ -943,7 +943,7 @@ write_cache_file(plugin_data *data)
         g_free(point);
         for (j = 0; j < CLOUDS_PERC_NUM; j++)
             if (loc->clouds_percent[j])
-                g_string_append_printf(out, "clouds_percent[%d]=%s\n", j,
+                g_string_append_printf(out, "clouds_percent_%d=%s\n", j,
                                        loc->clouds_percent[j]);
         CACHE_APPEND("fog_percent=%s\n", loc->fog_percent);
         CACHE_APPEND("precipitation_value=%s\n", loc->precipitation_value);
@@ -1072,6 +1072,7 @@ read_cache_file(plugin_data *data)
         CACHE_READ_STRING(loc->longitude, "longitude");
         CACHE_READ_STRING(loc->temperature_value, "temperature_value");
         CACHE_READ_STRING(loc->temperature_unit, "temperature_unit");
+        CACHE_READ_STRING(loc->wind_dir_name, "wind_dir_name");
         CACHE_READ_STRING(loc->wind_dir_deg, "wind_dir_deg");
         CACHE_READ_STRING(loc->wind_speed_mps, "wind_speed_mps");
         CACHE_READ_STRING(loc->wind_speed_beaufort, "wind_speed_beaufort");
@@ -1081,7 +1082,7 @@ read_cache_file(plugin_data *data)
         CACHE_READ_STRING(loc->pressure_unit, "pressure_unit");
 
         for (j = 0; j < CLOUDS_PERC_NUM; j++) {
-            gchar *key = g_strdup_printf("clouds_percent[%d]", j);
+            gchar *key = g_strdup_printf("clouds_percent_%d", j);
             if (g_key_file_has_key(keyfile, group, key, NULL))
                 loc->clouds_percent[j] =
                     g_key_file_get_string(keyfile, group, key, NULL);
