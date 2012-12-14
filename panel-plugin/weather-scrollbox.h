@@ -72,6 +72,8 @@ void gtk_scrollbox_clear(GtkScrollbox *self);
 void gtk_scrollbox_set_animate(GtkScrollbox *self,
                                gboolean animate);
 
+void gtk_scrollbox_prev_label(GtkScrollbox *self);
+
 void gtk_scrollbox_next_label(GtkScrollbox *self);
 
 void gtk_scrollbox_set_fontname(GtkScrollbox *self,

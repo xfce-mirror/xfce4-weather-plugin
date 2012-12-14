@@ -350,6 +350,21 @@ gtk_scrollbox_set_animate(GtkScrollbox *self,
 
 
 void
+gtk_scrollbox_prev_label(GtkScrollbox *self)
+{
+    g_return_if_fail(GTK_IS_SCROLLBOX(self));
+
+    if (g_list_length(self->labels) > 1) {
+        if (self->active->prev != NULL)
+            self->active = self->active->prev;
+        else
+            self->active = g_list_last(self->labels);
+        gtk_widget_queue_resize(GTK_WIDGET(self));
+    }
+}
+
+
+void
 gtk_scrollbox_next_label(GtkScrollbox *self)
 {
     g_return_if_fail(GTK_IS_SCROLLBOX(self));
