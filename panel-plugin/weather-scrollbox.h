@@ -43,10 +43,10 @@ typedef struct _GtkScrollboxClass GtkScrollboxClass;
 struct _GtkScrollbox {
     GtkDrawingArea __parent__;
 
-    GSList *labels;
+    GList *labels;
+    GList *active;
     guint timeout_id;
     gint offset;
-    GSList *active;
     gboolean animate;
     GtkOrientation orientation;
     gchar *fontname;

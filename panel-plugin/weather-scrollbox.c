@@ -84,8 +84,8 @@ gtk_scrollbox_finalize(GObject *object)
         g_source_remove(self->timeout_id);
 
     /* free all the labels */
-    g_slist_foreach(self->labels, (GFunc) g_object_unref, NULL);
-    g_slist_free(self->labels);
+    g_list_foreach(self->labels, (GFunc) g_object_unref, NULL);
+    g_list_free(self->labels);
 
     /* free everything else */
     g_free(self->fontname);
@@ -99,7 +99,7 @@ static void
 gtk_scrollbox_set_font(GtkScrollbox *self,
                        PangoLayout *layout)
 {
-    GSList *li;
+    GList *li;
     PangoFontDescription *desc = NULL;
 
     if (self->fontname)
@@ -125,7 +125,7 @@ gtk_scrollbox_size_request(GtkWidget *widget,
                            GtkRequisition *requisition)
 {
     GtkScrollbox *self = GTK_SCROLLBOX(widget);
-    GSList *li;
+    GList *li;
     PangoLayout *layout;
     PangoRectangle logical_rect;
     gint width, height;
@@ -276,7 +276,7 @@ gtk_scrollbox_start_fade(GtkScrollbox *self)
 
     self->active = self->labels;
 
-    if (g_slist_length(self->labels) > 1) {
+    if (g_list_length(self->labels) > 1) {
         if (self->orientation == GTK_ORIENTATION_HORIZONTAL)
             self->offset = GTK_WIDGET(self)->allocation.height;
         else
@@ -302,7 +302,7 @@ gtk_scrollbox_set_label(GtkScrollbox *self,
     layout = gtk_widget_create_pango_layout(GTK_WIDGET(self), NULL);
     pango_layout_set_markup(layout, markup, -1);
     gtk_scrollbox_set_font(self, layout);
-    self->labels = g_slist_insert(self->labels, layout, position);
+    self->labels = g_list_insert(self->labels, layout, position);
     gtk_widget_queue_resize(GTK_WIDGET(self));
     gtk_scrollbox_start_fade(self);
 }
@@ -331,8 +331,8 @@ gtk_scrollbox_clear(GtkScrollbox *self)
 {
     g_return_if_fail(GTK_IS_SCROLLBOX(self));
 
-    g_slist_foreach(self->labels, (GFunc) g_object_unref, NULL);
-    g_slist_free(self->labels);
+    g_list_foreach(self->labels, (GFunc) g_object_unref, NULL);
+    g_list_free(self->labels);
     self->labels = NULL;
 
     gtk_widget_queue_resize(GTK_WIDGET(self));
@@ -354,7 +354,7 @@ gtk_scrollbox_next_label(GtkScrollbox *self)
 {
     g_return_if_fail(GTK_IS_SCROLLBOX(self));
 
-    if (g_slist_length(self->labels) > 1) {
+    if (g_list_length(self->labels) > 1) {
         if (self->active->next != NULL)
             self->active = self->active->next;
         else
