@@ -75,6 +75,16 @@ gtk_scrollbox_init(GtkScrollbox *self)
 
 
 static void
+gtk_scrollbox_labels_free(GtkScrollbox *self)
+{
+    /* free all the labels */
+    g_list_foreach(self->labels, (GFunc) g_object_unref, NULL);
+    g_list_free(self->labels);
+    self->labels = NULL;
+}
+
+
+static void
 gtk_scrollbox_finalize(GObject *object)
 {
     GtkScrollbox *self = GTK_SCROLLBOX(object);
@@ -84,8 +94,7 @@ gtk_scrollbox_finalize(GObject *object)
         g_source_remove(self->timeout_id);
 
     /* free all the labels */
-    g_list_foreach(self->labels, (GFunc) g_object_unref, NULL);
-    g_list_free(self->labels);
+    gtk_scrollbox_labels_free(self);
 
     /* free everything else */
     g_free(self->fontname);
@@ -331,9 +340,7 @@ gtk_scrollbox_clear(GtkScrollbox *self)
 {
     g_return_if_fail(GTK_IS_SCROLLBOX(self));
 
-    g_list_foreach(self->labels, (GFunc) g_object_unref, NULL);
-    g_list_free(self->labels);
-    self->labels = NULL;
+    gtk_scrollbox_labels_free(self);
 
     gtk_widget_queue_resize(GTK_WIDGET(self));
 }
