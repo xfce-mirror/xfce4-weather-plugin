@@ -435,8 +435,8 @@ cb_astro_update(SoupSession *session,
 
     if (G_UNLIKELY(astro == NULL)) {
         /* download or parsing failed, schedule retry */
-        data->astro_update->next = calc_next_download_time(data->astro_update);
         data->astro_update->attempt++;
+        data->astro_update->next = calc_next_download_time(data->astro_update);
     }
     schedule_next_wakeup(data);
     weather_dump(weather_dump_astrodata, data->astrodata);
