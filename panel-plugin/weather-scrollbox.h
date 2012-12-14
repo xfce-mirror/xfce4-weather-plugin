@@ -55,6 +55,7 @@ struct _GtkScrollbox {
     guint timeout_id;
     gint offset;
     gboolean animate;
+    gboolean visible;
     fade_states fade;
     GtkOrientation orientation;
     gchar *fontname;
@@ -81,6 +82,9 @@ void gtk_scrollbox_clear(GtkScrollbox *self);
 
 void gtk_scrollbox_set_animate(GtkScrollbox *self,
                                gboolean animate);
+
+void gtk_scrollbox_set_visible(GtkScrollbox *self,
+                               gboolean visible);
 
 void gtk_scrollbox_prev_label(GtkScrollbox *self);
 

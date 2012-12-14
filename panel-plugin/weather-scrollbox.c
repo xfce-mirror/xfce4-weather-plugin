@@ -72,6 +72,7 @@ gtk_scrollbox_init(GtkScrollbox *self)
     self->offset = 0;
     self->fade = FADE_UNSET;
     self->active = NULL;
+    self->visible = FALSE;
     self->orientation = GTK_ORIENTATION_HORIZONTAL;
     self->fontname = NULL;
     self->pattr_list = pango_attr_list_new();
@@ -296,7 +297,9 @@ gtk_scrollbox_fade_in(gpointer user_data)
         return TRUE;
 
     self->fade = FADE_OUT;
-    self->timeout_id = g_timeout_add(LABEL_REFRESH, gtk_scrollbox_sleep, self);
+    if (self->visible)
+        self->timeout_id = g_timeout_add(LABEL_REFRESH,
+                                         gtk_scrollbox_sleep, self);
     return FALSE;
 }
 
@@ -327,8 +330,9 @@ gtk_scrollbox_fade_out(gpointer user_data)
             self->active = self->labels;
 
         gtk_scrollbox_swap_labels(self);
-        self->timeout_id = g_timeout_add(LABEL_SPEED,
-                                         gtk_scrollbox_fade_in, self);
+        if (self->visible)
+            self->timeout_id = g_timeout_add(LABEL_SPEED,
+                                             gtk_scrollbox_fade_in, self);
     }
     return FALSE;
 }
@@ -393,6 +397,21 @@ gtk_scrollbox_set_animate(GtkScrollbox *self,
     g_return_if_fail(GTK_IS_SCROLLBOX(self));
 
     self->animate = animate;
+}
+
+
+void
+gtk_scrollbox_set_visible(GtkScrollbox *self,
+                          gboolean visible)
+{
+    g_return_if_fail(GTK_IS_SCROLLBOX(self));
+
+    self->visible = visible;
+    gtk_widget_set_visible(GTK_WIDGET(self), visible);
+    if (visible) {
+        gtk_scrollbox_swap_labels(self);
+        gtk_scrollbox_start_fade(self);
+    }
 }
 
 

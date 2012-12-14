@@ -271,6 +271,8 @@ scrollbox_set_visible(plugin_data *data)
         gtk_widget_show_all(GTK_WIDGET(data->vbox_center_scrollbox));
     else
         gtk_widget_hide_all(GTK_WIDGET(data->vbox_center_scrollbox));
+    gtk_scrollbox_set_visible(GTK_SCROLLBOX(data->scrollbox),
+                              data->show_scrollbox);
 }
 
 
