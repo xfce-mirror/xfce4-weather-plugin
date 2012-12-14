@@ -608,6 +608,13 @@ schedule_next_wakeup(plugin_data *data)
             SCHEDULE_WAKEUP_COMPARE(data->astrodata->sunset,
                                     "sunset icon change");
     }
+
+    /* next wakeup time could not be calculated, so force it */
+    if (diff < 0) {
+        diff = 5;
+        data->next_wakeup_reason = "forced";
+    }
+
     data->update_timer =
         g_timeout_add_seconds((guint) diff,
                               (GSourceFunc) update_handler, data);
@@ -1550,9 +1557,6 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox), -1, "1");
     gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
 
-    /* prepare data and widget updates */
-    schedule_next_wakeup(data);
-
     weather_debug("Plugin widgets set up and ready.");
     return data;
 }
@@ -1787,6 +1791,9 @@ weather_construct(XfcePanelPlugin *plugin)
     xfce_panel_plugin_menu_show_about(plugin);
     g_signal_connect(G_OBJECT(plugin), "about",
                      G_CALLBACK(xfceweather_show_about), data);
+
+    /* call update handler updates */
+    update_handler(data);
 
     weather_dump(weather_dump_plugindata, data);
 }
