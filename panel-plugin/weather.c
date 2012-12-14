@@ -1188,9 +1188,10 @@ cb_scroll(GtkWidget *widget,
 {
     plugin_data *data = (plugin_data *) user_data;
 
-    if (event->direction == GDK_SCROLL_UP ||
-        event->direction == GDK_SCROLL_DOWN)
+    if (event->direction == GDK_SCROLL_UP)
         gtk_scrollbox_next_label(GTK_SCROLLBOX(data->scrollbox));
+    else if (event->direction == GDK_SCROLL_DOWN)
+        gtk_scrollbox_prev_label(GTK_SCROLLBOX(data->scrollbox));
 
     return FALSE;
 }
