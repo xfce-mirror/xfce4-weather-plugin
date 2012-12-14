@@ -282,7 +282,6 @@ update_scrollbox(plugin_data *data)
     data_types type;
     gint i = 0, j = 0;
 
-    gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
     gtk_scrollbox_set_animate(GTK_SCROLLBOX(data->scrollbox),
                               data->scrollbox_animate);
 
@@ -300,7 +299,7 @@ update_scrollbox(plugin_data *data)
                 g_free(single);
                 j++;
             }
-            gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox),
+            gtk_scrollbox_add_label(GTK_SCROLLBOX(data->scrollbox),
                                     -1, out->str);
             g_string_free(out, TRUE);
             i = i + j;
@@ -308,7 +307,7 @@ update_scrollbox(plugin_data *data)
         weather_debug("Added %u labels to scrollbox.", data->labels->len);
     } else {
         single = g_strdup(_("No Data"));
-        gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox), -1, single);
+        gtk_scrollbox_add_label(GTK_SCROLLBOX(data->scrollbox), -1, single);
         g_free(single);
         weather_debug("No weather data available, set single label '%s'.",
                       _("No Data"));
@@ -316,6 +315,7 @@ update_scrollbox(plugin_data *data)
 
     /* show or hide scrollbox */
     scrollbox_set_visible(data);
+    gtk_scrollbox_swap_labels(GTK_SCROLLBOX(data->scrollbox));
 
     weather_debug("Updated scrollbox.");
 }

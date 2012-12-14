@@ -39,6 +39,8 @@ static void gtk_scrollbox_size_request(GtkWidget *widget,
 static gboolean gtk_scrollbox_expose_event(GtkWidget *widget,
                                            GdkEventExpose *event);
 
+static void gtk_scrollbox_start_fade(GtkScrollbox *self);
+
 static gboolean gtk_scrollbox_fade_out(gpointer user_data);
 
 G_DEFINE_TYPE(GtkScrollbox, gtk_scrollbox, GTK_TYPE_DRAWING_AREA)
@@ -65,8 +67,10 @@ gtk_scrollbox_init(GtkScrollbox *self)
     GTK_WIDGET_SET_FLAGS(self, GTK_NO_WINDOW);
 
     self->labels = NULL;
+    self->labels_new = NULL;
     self->timeout_id = 0;
     self->offset = 0;
+    self->fade = FADE_UNSET;
     self->active = NULL;
     self->orientation = GTK_ORIENTATION_HORIZONTAL;
     self->fontname = NULL;
@@ -95,6 +99,11 @@ gtk_scrollbox_finalize(GObject *object)
 
     /* free all the labels */
     gtk_scrollbox_labels_free(self);
+
+    /* free all the new labels */
+    g_list_foreach(self->labels_new, (GFunc) g_object_unref, NULL);
+    g_list_free(self->labels_new);
+    self->labels_new = NULL;
 
     /* free everything else */
     g_free(self->fontname);
@@ -211,12 +220,60 @@ gtk_scrollbox_expose_event(GtkWidget *widget,
 }
 
 
+void
+gtk_scrollbox_add_label(GtkScrollbox *self,
+                        const gint position,
+                        gchar *markup)
+{
+    PangoLayout *layout;
+
+    g_return_if_fail(GTK_IS_SCROLLBOX(self));
+
+    layout = gtk_widget_create_pango_layout(GTK_WIDGET(self), NULL);
+    pango_layout_set_markup(layout, markup, -1);
+    gtk_scrollbox_set_font(self, layout);
+    self->labels_new = g_list_insert(self->labels_new, layout, position);
+}
+
+
+void
+gtk_scrollbox_swap_labels(GtkScrollbox *self)
+{
+    guint len;
+    gint pos;
+
+    g_return_if_fail(GTK_IS_SCROLLBOX(self));
+
+    if (G_LIKELY(self->labels_new == NULL))
+        return;
+
+    pos = g_list_position(self->labels, self->active);
+    len = g_list_length(self->labels_new);
+
+    if (pos >= len)
+        pos = 0;
+
+    self->active = g_list_nth(self->labels_new, pos);
+    if (self->active == NULL)
+        self->active = self->labels_new;
+
+    gtk_scrollbox_labels_free(self);
+    self->labels = self->labels_new;
+    self->labels_new = NULL;
+
+    gtk_widget_queue_resize(GTK_WIDGET(self));
+    if (self->fade == FADE_UNSET)
+        gtk_scrollbox_start_fade(self);
+}
+
+
 static gboolean
 gtk_scrollbox_sleep(gpointer user_data)
 {
     GtkScrollbox *self = GTK_SCROLLBOX(user_data);
 
-    self->timeout_id = g_timeout_add(LABEL_SPEED, gtk_scrollbox_fade_out, self);
+    self->timeout_id = g_timeout_add(LABEL_SPEED,
+                                     gtk_scrollbox_fade_out, self);
     return FALSE;
 }
 
@@ -238,6 +295,7 @@ gtk_scrollbox_fade_in(gpointer user_data)
         (self->orientation == GTK_ORIENTATION_VERTICAL && self->offset < 0))
         return TRUE;
 
+    self->fade = FADE_OUT;
     self->timeout_id = g_timeout_add(LABEL_REFRESH, gtk_scrollbox_sleep, self);
     return FALSE;
 }
@@ -268,6 +326,7 @@ gtk_scrollbox_fade_out(gpointer user_data)
         else
             self->active = self->labels;
 
+        gtk_scrollbox_swap_labels(self);
         self->timeout_id = g_timeout_add(LABEL_SPEED,
                                          gtk_scrollbox_fade_in, self);
     }
@@ -283,37 +342,18 @@ gtk_scrollbox_start_fade(GtkScrollbox *self)
         self->timeout_id = 0;
     }
 
-    self->active = self->labels;
-
     if (g_list_length(self->labels) > 1) {
         if (self->orientation == GTK_ORIENTATION_HORIZONTAL)
             self->offset = GTK_WIDGET(self)->allocation.height;
         else
             self->offset = 0;
 
+        self->fade = FADE_IN;
         self->timeout_id = g_timeout_add(LABEL_SPEED,
                                          gtk_scrollbox_fade_in,
                                          self);
     } else
         self->offset = 0;
-}
-
-
-void
-gtk_scrollbox_set_label(GtkScrollbox *self,
-                        const gint position,
-                        gchar *markup)
-{
-    PangoLayout *layout;
-
-    g_return_if_fail(GTK_IS_SCROLLBOX(self));
-
-    layout = gtk_widget_create_pango_layout(GTK_WIDGET(self), NULL);
-    pango_layout_set_markup(layout, markup, -1);
-    gtk_scrollbox_set_font(self, layout);
-    self->labels = g_list_insert(self->labels, layout, position);
-    gtk_widget_queue_resize(GTK_WIDGET(self));
-    gtk_scrollbox_start_fade(self);
 }
 
 
