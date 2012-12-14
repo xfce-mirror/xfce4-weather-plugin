@@ -942,8 +942,9 @@ write_cache_file(plugin_data *data)
         g_free(end);
         g_free(point);
         for (j = 0; j < CLOUDS_PERC_NUM; j++)
-            g_string_append_printf(out, "clouds_percent[%d]=%s\n", j,
-                                   loc->clouds_percent[j]);
+            if (loc->clouds_percent[j])
+                g_string_append_printf(out, "clouds_percent[%d]=%s\n", j,
+                                       loc->clouds_percent[j]);
         CACHE_APPEND("fog_percent=%s\n", loc->fog_percent);
         CACHE_APPEND("precipitation_value=%s\n", loc->precipitation_value);
         CACHE_APPEND("precipitation_unit=%s\n", loc->precipitation_unit);
