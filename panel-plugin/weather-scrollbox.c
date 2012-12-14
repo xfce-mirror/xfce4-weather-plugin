@@ -354,8 +354,11 @@ gtk_scrollbox_next_label(GtkScrollbox *self)
 {
     g_return_if_fail(GTK_IS_SCROLLBOX(self));
 
-    if (self->active->next != NULL) {
-        self->active = self->active->next;
+    if (g_slist_length(self->labels) > 1) {
+        if (self->active->next != NULL)
+            self->active = self->active->next;
+        else
+            self->active = self->labels;
         gtk_widget_queue_resize(GTK_WIDGET(self));
     }
 }
