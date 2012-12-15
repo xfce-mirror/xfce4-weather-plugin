@@ -284,9 +284,6 @@ update_scrollbox(plugin_data *data)
     data_types type;
     gint i = 0, j = 0;
 
-    gtk_scrollbox_set_animate(GTK_SCROLLBOX(data->scrollbox),
-                              data->scrollbox_animate);
-
     if (data->weatherdata && data->weatherdata->current_conditions) {
         while (i < data->labels->len) {
             j = 0;
@@ -314,11 +311,7 @@ update_scrollbox(plugin_data *data)
         weather_debug("No weather data available, set single label '%s'.",
                       _("No Data"));
     }
-
-    /* show or hide scrollbox */
     scrollbox_set_visible(data);
-    gtk_scrollbox_swap_labels(GTK_SCROLLBOX(data->scrollbox));
-
     weather_debug("Updated scrollbox.");
 }
 

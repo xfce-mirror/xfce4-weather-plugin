@@ -38,9 +38,9 @@ GType gtk_scrollbox_get_type(void);
 
 
 typedef enum {
-    FADE_UNSET,
     FADE_IN,
-    FADE_OUT
+    FADE_OUT,
+    FADE_NONE
 } fade_states;
 
 typedef struct _GtkScrollbox GtkScrollbox;

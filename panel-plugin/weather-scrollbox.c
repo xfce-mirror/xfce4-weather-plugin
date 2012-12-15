@@ -27,8 +27,10 @@
 #include <libxfce4panel/libxfce4panel.h>
 
 #include "weather-scrollbox.h"
-#define LABEL_REFRESH 3000
-#define LABEL_SPEED   25
+
+#define LABEL_REFRESH (3000)
+#define LABEL_REFRESH_NO_ANIMATION (5000)
+#define LABEL_SPEED (25)
 
 
 static void gtk_scrollbox_finalize(GObject *object);
@@ -38,8 +40,6 @@ static void gtk_scrollbox_size_request(GtkWidget *widget,
 
 static gboolean gtk_scrollbox_expose_event(GtkWidget *widget,
                                            GdkEventExpose *event);
-
-static void gtk_scrollbox_start_fade(GtkScrollbox *self);
 
 static gboolean gtk_scrollbox_fade_out(gpointer user_data);
 
@@ -70,8 +70,9 @@ gtk_scrollbox_init(GtkScrollbox *self)
     self->labels_new = NULL;
     self->timeout_id = 0;
     self->offset = 0;
-    self->fade = FADE_UNSET;
+    self->fade = FADE_NONE;
     self->active = NULL;
+    self->animate = FALSE;
     self->visible = FALSE;
     self->orientation = GTK_ORIENTATION_HORIZONTAL;
     self->fontname = NULL;
@@ -200,12 +201,12 @@ gtk_scrollbox_expose_event(GtkWidget *widget,
             height = widget->allocation.y
                 + (widget->allocation.height
                    - PANGO_PIXELS(logical_rect.height)) / 2
-                + (self->animate ? self->offset : 0);
+                + (self->animate || self->fade == FADE_OUT ? self->offset : 0);
         } else {
             width = widget->allocation.x
                 + (widget->allocation.width
                    - PANGO_PIXELS(logical_rect.height)) / 2
-                + (self->animate ? self->offset : 0);
+                + (self->animate || self->fade == FADE_OUT ? self->offset : 0);
             height = widget->allocation.y
                 + (widget->allocation.height
                    - PANGO_PIXELS(logical_rect.width)) / 2;
@@ -263,8 +264,42 @@ gtk_scrollbox_swap_labels(GtkScrollbox *self)
     self->labels_new = NULL;
 
     gtk_widget_queue_resize(GTK_WIDGET(self));
-    if (self->fade == FADE_UNSET)
-        gtk_scrollbox_start_fade(self);
+}
+
+
+static gboolean
+gtk_scrollbox_fade_none(gpointer user_data)
+{
+    GtkScrollbox *self = GTK_SCROLLBOX(user_data);
+
+    if (!self->visible)
+        return FALSE;
+
+    /* start fading out if animation has been enabled */
+    if (self->animate) {
+        self->fade = FADE_OUT;
+        self->offset = 0;
+        self->timeout_id = g_timeout_add(LABEL_SPEED,
+                                         gtk_scrollbox_fade_out, self);
+        return FALSE;
+    }
+
+    if (self->timeout_id != 0) {
+        g_source_remove(self->timeout_id);
+        self->timeout_id = 0;
+    }
+
+    if (self->orientation == GTK_ORIENTATION_HORIZONTAL)
+        self->offset = GTK_WIDGET(self)->allocation.height;
+    else
+        self->offset = GTK_WIDGET(self)->allocation.width;
+
+    gtk_scrollbox_swap_labels(self);
+    gtk_scrollbox_next_label(self);
+
+    self->timeout_id = g_timeout_add(LABEL_REFRESH_NO_ANIMATION,
+                                     gtk_scrollbox_fade_none, self);
+    return FALSE;
 }
 
 
@@ -296,10 +331,16 @@ gtk_scrollbox_fade_in(gpointer user_data)
         (self->orientation == GTK_ORIENTATION_VERTICAL && self->offset < 0))
         return TRUE;
 
-    self->fade = FADE_OUT;
     if (self->visible)
-        self->timeout_id = g_timeout_add(LABEL_REFRESH,
-                                         gtk_scrollbox_sleep, self);
+        if (self->animate) {
+            self->fade = FADE_OUT;
+            self->timeout_id = g_timeout_add(LABEL_REFRESH,
+                                             gtk_scrollbox_sleep, self);
+        } else {
+            self->fade = FADE_NONE;
+            self->timeout_id = g_timeout_add(LABEL_REFRESH_NO_ANIMATION,
+                                             gtk_scrollbox_fade_none, self);
+        }
     return FALSE;
 }
 
@@ -323,16 +364,11 @@ gtk_scrollbox_fade_out(gpointer user_data)
          self->offset > 0 - GTK_WIDGET(self)->allocation.width))
         return TRUE;
 
-    if (self->active != NULL) {
-        if (self->active->next != NULL)
-            self->active = self->active->next;
-        else
-            self->active = self->labels;
-
-        gtk_scrollbox_swap_labels(self);
-        if (self->visible)
-            self->timeout_id = g_timeout_add(LABEL_SPEED,
-                                             gtk_scrollbox_fade_in, self);
+    gtk_scrollbox_swap_labels(self);
+    gtk_scrollbox_next_label(self);
+    if (self->visible) {
+        self->timeout_id = g_timeout_add(LABEL_SPEED,
+                                         gtk_scrollbox_fade_in, self);
     }
     return FALSE;
 }
@@ -346,7 +382,9 @@ gtk_scrollbox_start_fade(GtkScrollbox *self)
         self->timeout_id = 0;
     }
 
-    if (g_list_length(self->labels) > 1) {
+    gtk_scrollbox_swap_labels(self);
+
+    if (self->animate && g_list_length(self->labels) > 1) {
         if (self->orientation == GTK_ORIENTATION_HORIZONTAL)
             self->offset = GTK_WIDGET(self)->allocation.height;
         else
@@ -354,8 +392,7 @@ gtk_scrollbox_start_fade(GtkScrollbox *self)
 
         self->fade = FADE_IN;
         self->timeout_id = g_timeout_add(LABEL_SPEED,
-                                         gtk_scrollbox_fade_in,
-                                         self);
+                                         gtk_scrollbox_fade_in, self);
     } else
         self->offset = 0;
 }
@@ -406,12 +443,23 @@ gtk_scrollbox_set_visible(GtkScrollbox *self,
 {
     g_return_if_fail(GTK_IS_SCROLLBOX(self));
 
-    self->visible = visible;
     gtk_widget_set_visible(GTK_WIDGET(self), visible);
+    self->visible = visible;
     if (visible) {
-        gtk_scrollbox_swap_labels(self);
-        gtk_scrollbox_start_fade(self);
-    }
+        if (self->timeout_id == 0)
+            if (self->animate)
+                gtk_scrollbox_start_fade(self);
+            else {
+                self->fade = FADE_NONE;
+                self->timeout_id = g_timeout_add(1000,
+                                                 gtk_scrollbox_fade_none,
+                                                 self);
+            }
+    } else
+        if (self->timeout_id != 0) {
+            g_source_remove(self->timeout_id);
+            self->timeout_id = 0;
+        }
 }
 
 
@@ -425,7 +473,7 @@ gtk_scrollbox_prev_label(GtkScrollbox *self)
             self->active = self->active->prev;
         else
             self->active = g_list_last(self->labels);
-        gtk_widget_queue_resize(GTK_WIDGET(self));
+        gtk_widget_queue_draw(GTK_WIDGET(self));
     }
 }
 
@@ -440,7 +488,7 @@ gtk_scrollbox_next_label(GtkScrollbox *self)
             self->active = self->active->next;
         else
             self->active = self->labels;
-        gtk_widget_queue_resize(GTK_WIDGET(self));
+        gtk_widget_queue_draw(GTK_WIDGET(self));
     }
 }
 
