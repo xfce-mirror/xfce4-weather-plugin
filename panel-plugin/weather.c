@@ -284,6 +284,7 @@ update_scrollbox(plugin_data *data)
     data_types type;
     gint i = 0, j = 0;
 
+    gtk_scrollbox_clear_new(GTK_SCROLLBOX(data->scrollbox));
     if (data->weatherdata && data->weatherdata->current_conditions) {
         while (i < data->labels->len) {
             j = 0;

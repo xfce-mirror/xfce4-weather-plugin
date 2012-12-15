@@ -103,9 +103,7 @@ gtk_scrollbox_finalize(GObject *object)
     gtk_scrollbox_labels_free(self);
 
     /* free all the new labels */
-    g_list_foreach(self->labels_new, (GFunc) g_object_unref, NULL);
-    g_list_free(self->labels_new);
-    self->labels_new = NULL;
+    gtk_scrollbox_clear_new(self);
 
     /* free everything else */
     g_free(self->fontname);
@@ -413,6 +411,18 @@ GtkWidget *
 gtk_scrollbox_new(void)
 {
     return g_object_new(GTK_TYPE_SCROLLBOX, NULL);
+}
+
+
+void
+gtk_scrollbox_clear_new(GtkScrollbox *self)
+{
+    g_return_if_fail(GTK_IS_SCROLLBOX(self));
+
+    /* free all the new labels */
+    g_list_foreach(self->labels_new, (GFunc) g_object_unref, NULL);
+    g_list_free(self->labels_new);
+    self->labels_new = NULL;
 }
 
 
