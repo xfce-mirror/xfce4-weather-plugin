@@ -271,6 +271,8 @@ scrollbox_set_visible(plugin_data *data)
         gtk_widget_show_all(GTK_WIDGET(data->vbox_center_scrollbox));
     else
         gtk_widget_hide_all(GTK_WIDGET(data->vbox_center_scrollbox));
+    gtk_scrollbox_set_visible(GTK_SCROLLBOX(data->scrollbox),
+                              data->show_scrollbox);
 }
 
 
@@ -282,10 +284,7 @@ update_scrollbox(plugin_data *data)
     data_types type;
     gint i = 0, j = 0;
 
-    gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
-    gtk_scrollbox_set_animate(GTK_SCROLLBOX(data->scrollbox),
-                              data->scrollbox_animate);
-
+    gtk_scrollbox_clear_new(GTK_SCROLLBOX(data->scrollbox));
     if (data->weatherdata && data->weatherdata->current_conditions) {
         while (i < data->labels->len) {
             j = 0;
@@ -300,7 +299,7 @@ update_scrollbox(plugin_data *data)
                 g_free(single);
                 j++;
             }
-            gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox),
+            gtk_scrollbox_add_label(GTK_SCROLLBOX(data->scrollbox),
                                     -1, out->str);
             g_string_free(out, TRUE);
             i = i + j;
@@ -308,15 +307,12 @@ update_scrollbox(plugin_data *data)
         weather_debug("Added %u labels to scrollbox.", data->labels->len);
     } else {
         single = g_strdup(_("No Data"));
-        gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox), -1, single);
+        gtk_scrollbox_add_label(GTK_SCROLLBOX(data->scrollbox), -1, single);
         g_free(single);
         weather_debug("No weather data available, set single label '%s'.",
                       _("No Data"));
     }
-
-    /* show or hide scrollbox */
     scrollbox_set_visible(data);
-
     weather_debug("Updated scrollbox.");
 }
 
@@ -1131,6 +1127,7 @@ update_weatherdata_with_reset(plugin_data *data, gboolean clear)
         read_cache_file(data);
     }
     schedule_next_wakeup(data);
+    gtk_scrollbox_reset(GTK_SCROLLBOX(data->scrollbox));
     weather_debug("Updated weatherdata with reset.");
 }
 
@@ -1188,9 +1185,10 @@ cb_scroll(GtkWidget *widget,
 {
     plugin_data *data = (plugin_data *) user_data;
 
-    if (event->direction == GDK_SCROLL_UP ||
-        event->direction == GDK_SCROLL_DOWN)
+    if (event->direction == GDK_SCROLL_UP)
         gtk_scrollbox_next_label(GTK_SCROLLBOX(data->scrollbox));
+    else if (event->direction == GDK_SCROLL_DOWN)
+        gtk_scrollbox_prev_label(GTK_SCROLLBOX(data->scrollbox));
 
     return FALSE;
 }
@@ -1551,13 +1549,6 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     g_array_append_val(data->labels, lbl);
     lbl = WIND_SPEED;
     g_array_append_val(data->labels, lbl);
-
-    /*
-     * FIXME: Without this the first label looks odd, because
-     * the gc isn't created yet
-     */
-    gtk_scrollbox_set_label(GTK_SCROLLBOX(data->scrollbox), -1, "1");
-    gtk_scrollbox_clear(GTK_SCROLLBOX(data->scrollbox));
 
     weather_debug("Plugin widgets set up and ready.");
     return data;
