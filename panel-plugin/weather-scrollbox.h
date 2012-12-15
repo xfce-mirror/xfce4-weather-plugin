@@ -78,7 +78,7 @@ void gtk_scrollbox_set_orientation(GtkScrollbox *self,
 
 GtkWidget *gtk_scrollbox_new(void);
 
-void gtk_scrollbox_clear(GtkScrollbox *self);
+void gtk_scrollbox_reset(GtkScrollbox *self);
 
 void gtk_scrollbox_set_animate(GtkScrollbox *self,
                                gboolean animate);

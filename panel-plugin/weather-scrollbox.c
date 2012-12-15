@@ -417,12 +417,22 @@ gtk_scrollbox_new(void)
 
 
 void
-gtk_scrollbox_clear(GtkScrollbox *self)
+gtk_scrollbox_reset(GtkScrollbox *self)
 {
     g_return_if_fail(GTK_IS_SCROLLBOX(self));
 
-    gtk_scrollbox_labels_free(self);
+    if (self->timeout_id != 0) {
+        g_source_remove(self->timeout_id);
+        self->timeout_id = 0;
+    }
 
+    if (self->animate)
+        gtk_scrollbox_start_fade(self);
+    else {
+        self->fade = FADE_NONE;
+        self->timeout_id = g_timeout_add(LABEL_REFRESH_NO_ANIMATION,
+                                         gtk_scrollbox_fade_none, self);
+    }
     gtk_widget_queue_resize(GTK_WIDGET(self));
 }
 

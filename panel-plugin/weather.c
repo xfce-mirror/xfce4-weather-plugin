@@ -1126,6 +1126,7 @@ update_weatherdata_with_reset(plugin_data *data, gboolean clear)
         read_cache_file(data);
     }
     schedule_next_wakeup(data);
+    gtk_scrollbox_reset(GTK_SCROLLBOX(data->scrollbox));
     weather_debug("Updated weatherdata with reset.");
 }
 
