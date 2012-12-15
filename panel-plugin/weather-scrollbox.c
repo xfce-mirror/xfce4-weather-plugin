@@ -28,8 +28,9 @@
 
 #include "weather-scrollbox.h"
 
-#define LABEL_REFRESH (3000)
-#define LABEL_REFRESH_NO_ANIMATION (5000)
+#define LABEL_REFRESH (3)
+#define LABEL_REFRESH_NO_ANIMATION (6)
+#define LABEL_REFRESH_NO_ANIM_INIT (1)
 #define LABEL_SPEED (25)
 
 
@@ -295,8 +296,8 @@ gtk_scrollbox_fade_none(gpointer user_data)
     gtk_scrollbox_swap_labels(self);
     gtk_scrollbox_next_label(self);
 
-    self->timeout_id = g_timeout_add(LABEL_REFRESH_NO_ANIMATION,
-                                     gtk_scrollbox_fade_none, self);
+    self->timeout_id = g_timeout_add_seconds(LABEL_REFRESH_NO_ANIMATION,
+                                             gtk_scrollbox_fade_none, self);
     return FALSE;
 }
 
@@ -332,12 +333,14 @@ gtk_scrollbox_fade_in(gpointer user_data)
     if (self->visible)
         if (self->animate) {
             self->fade = FADE_OUT;
-            self->timeout_id = g_timeout_add(LABEL_REFRESH,
-                                             gtk_scrollbox_sleep, self);
+            self->timeout_id =
+                g_timeout_add_seconds(LABEL_REFRESH,
+                                      gtk_scrollbox_sleep, self);
         } else {
             self->fade = FADE_NONE;
-            self->timeout_id = g_timeout_add(LABEL_REFRESH_NO_ANIMATION,
-                                             gtk_scrollbox_fade_none, self);
+            self->timeout_id =
+                g_timeout_add_seconds(LABEL_REFRESH_NO_ANIMATION,
+                                      gtk_scrollbox_fade_none, self);
         }
     return FALSE;
 }
@@ -440,8 +443,9 @@ gtk_scrollbox_reset(GtkScrollbox *self)
         gtk_scrollbox_start_fade(self);
     else {
         self->fade = FADE_NONE;
-        self->timeout_id = g_timeout_add(LABEL_REFRESH_NO_ANIMATION,
-                                         gtk_scrollbox_fade_none, self);
+        self->timeout_id =
+            g_timeout_add_seconds(LABEL_REFRESH_NO_ANIMATION,
+                                  gtk_scrollbox_fade_none, self);
     }
     gtk_widget_queue_resize(GTK_WIDGET(self));
 }
@@ -471,9 +475,10 @@ gtk_scrollbox_set_visible(GtkScrollbox *self,
                 gtk_scrollbox_start_fade(self);
             else {
                 self->fade = FADE_NONE;
-                self->timeout_id = g_timeout_add(1000,
-                                                 gtk_scrollbox_fade_none,
-                                                 self);
+                self->timeout_id =
+                    g_timeout_add_seconds(LABEL_REFRESH_NO_ANIM_INIT,
+                                          gtk_scrollbox_fade_none,
+                                          self);
             }
     } else
         if (self->timeout_id != 0) {
