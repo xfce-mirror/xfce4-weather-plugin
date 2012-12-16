@@ -1361,6 +1361,18 @@ create_scrollbox_page(xfceweather_dialog *dialog)
 }
 
 
+static void
+notebook_page_switched(GtkNotebook *notebook,
+                       GtkNotebookPage *page,
+                       guint page_num,
+                       gpointer user_data)
+{
+    plugin_data *data = (plugin_data *) user_data;
+
+    data->config_remember_tab = page_num;
+}
+
+
 void
 setup_notebook_signals(xfceweather_dialog *dialog)
 {
@@ -1422,6 +1434,13 @@ setup_notebook_signals(xfceweather_dialog *dialog)
                      G_CALLBACK(button_scrollbox_color_set), dialog);
     g_signal_connect(dialog->check_scrollbox_animate, "toggled",
                      G_CALLBACK(check_scrollbox_animate_toggled), dialog);
+
+    /* notebook widget */
+    gtk_widget_show_all(GTK_WIDGET(dialog->notebook));
+    gtk_notebook_set_current_page(GTK_NOTEBOOK(dialog->notebook),
+                                  dialog->pd->config_remember_tab);
+    g_signal_connect(GTK_NOTEBOOK(dialog->notebook), "switch-page",
+                     G_CALLBACK(notebook_page_switched), dialog->pd);
 }
 
 
@@ -1430,33 +1449,32 @@ create_config_dialog(plugin_data *data,
                      GtkWidget *vbox)
 {
     xfceweather_dialog *dialog;
-    GtkWidget *notebook;
 
     dialog = g_slice_new0(xfceweather_dialog);
     dialog->pd = (plugin_data *) data;
     dialog->dialog = gtk_widget_get_toplevel(vbox);
 
-    notebook = gtk_notebook_new();
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook),
+    dialog->notebook = gtk_notebook_new();
+    gtk_notebook_append_page(GTK_NOTEBOOK(dialog->notebook),
                              create_location_page(dialog),
                              gtk_label_new_with_mnemonic("_Location"));
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook),
+    gtk_notebook_append_page(GTK_NOTEBOOK(dialog->notebook),
                              create_units_page(dialog),
                              gtk_label_new_with_mnemonic("_Units"));
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook),
+    gtk_notebook_append_page(GTK_NOTEBOOK(dialog->notebook),
                              create_appearance_page(dialog),
                              gtk_label_new_with_mnemonic("_Appearance"));
-    gtk_notebook_append_page(GTK_NOTEBOOK(notebook),
+    gtk_notebook_append_page(GTK_NOTEBOOK(dialog->notebook),
                              create_scrollbox_page(dialog),
                              gtk_label_new_with_mnemonic("_Scrollbox"));
     setup_notebook_signals(dialog);
+    gtk_box_pack_start(GTK_BOX(vbox), dialog->notebook, TRUE, TRUE, 0);
+    gtk_widget_show(GTK_WIDGET(vbox));
+    gtk_widget_hide(GTK_WIDGET(dialog->update_spinner));
 
     /* automatically detect current location if it is yet unknown */
     if (!(dialog->pd->lat && dialog->pd->lon))
         start_auto_locate(dialog);
 
-    gtk_box_pack_start(GTK_BOX(vbox), notebook, TRUE, TRUE, 0);
-    gtk_widget_show_all(vbox);
-    gtk_widget_hide(GTK_WIDGET(dialog->update_spinner));
     return dialog;
 }

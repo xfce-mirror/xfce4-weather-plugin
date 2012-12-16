@@ -28,6 +28,7 @@ typedef struct {
 
 typedef struct {
     GtkWidget *dialog;
+    GtkWidget *notebook;
     plugin_data *pd;
     guint timer_id;
 
