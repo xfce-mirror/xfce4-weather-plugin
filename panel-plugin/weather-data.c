@@ -151,6 +151,9 @@ get_data(const xml_time *timeslice,
         case MPH:
             val *= 2.2369362920544;
             break;
+        case FTS:
+            val *= 3.2808399;
+            break;
         case KNOTS:
             val *= 1.9438445;
             break;
@@ -234,6 +237,8 @@ get_unit(const units_config *units,
             return _("mph");
         case MPS:
             return _("m/s");
+        case FTS:
+            return _("ft/s");
         case KNOTS:
             return _("kt");
         }

@@ -57,6 +57,7 @@ typedef enum {
     KMH,
     MPH,
     MPS,
+    FTS,
     KNOTS
 } units_windspeed;
 

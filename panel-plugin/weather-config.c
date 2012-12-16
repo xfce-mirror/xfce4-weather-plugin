@@ -710,6 +710,8 @@ create_units_page(xfceweather_dialog *dialog)
     ADD_COMBO_VALUE(dialog->combo_unit_windspeed,
                     _("Meters per second (m/s)"));
     ADD_COMBO_VALUE(dialog->combo_unit_windspeed,
+                    _("Feet per second (ft/s)"));
+    ADD_COMBO_VALUE(dialog->combo_unit_windspeed,
                     _("International knots (kt)"));
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
 
