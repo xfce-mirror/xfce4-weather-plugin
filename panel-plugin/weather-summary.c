@@ -83,6 +83,14 @@ lnk_clicked(GtkTextTag *tag,
              add_forecast_header(title, 0.0, &darkbg),  \
              pos, pos+1, 0, 1);                         \
 
+#define APPEND_TOOLTIP_ITEM(description, item)                  \
+    value = get_data(fcdata, data->units, item, data->round);   \
+    unit = get_unit(data->units, item);                         \
+    g_string_append_printf(text, description, value,            \
+                           strcmp(unit, "°") ? " " : "",        \
+                           unit);                               \
+    g_free(value);
+
 
 static gboolean
 lnk_clicked(GtkTextTag *tag,
@@ -267,6 +275,18 @@ weather_summary_get_logo(plugin_data *data)
         g_object_unref(pixbuf);
     }
     return image;
+}
+
+
+static gchar *
+format_date(time_t t)
+{
+    struct tm *tm;
+    gchar buf[80];
+
+    tm = localtime(&t);
+    strftime(buf, 80, "%c", tm);
+    return g_strdup(buf);
 }
 
 
@@ -509,6 +529,47 @@ get_dayname(gint day)
 }
 
 
+static gchar *
+forecast_cell_get_tooltip_text(plugin_data *data,
+                               xml_time *fcdata)
+{
+    GString *text;
+    gchar *result, *value;
+    const gchar *unit;
+
+    /* TRANSLATORS: Please use \t as needed to properly align the values */
+    text = g_string_new(_("<b>Times used for calculation</b>\n"));
+    value = format_date(fcdata->start);
+    g_string_append_printf(text, _("Interval start:\t\t\t%s\n"), value);
+    g_free(value);
+    value = format_date(fcdata->end);
+    g_string_append_printf(text, _("Interval end:\t\t\t%s\n"), value);
+    g_free(value);
+    value = format_date(fcdata->point);
+    g_string_append_printf(text, _("Data calculated for:\t%s\n\n"), value);
+    g_free(value);
+
+    g_string_append(text, _("<b>Atmosphere</b>\n"));
+    APPEND_TOOLTIP_ITEM(_("Pressure:\t%s%s%s\n"), PRESSURE);
+    APPEND_TOOLTIP_ITEM(_("Humidity:\t%s%s%s\n\n"), HUMIDITY);
+
+    g_string_append(text, _("<b>Precipitations</b>\n"));
+    APPEND_TOOLTIP_ITEM(_("Amount:\t\t%s%s%s\n\n"), PRECIPITATIONS);
+
+    g_string_append(text, _("<b>Clouds</b>\n"));
+    APPEND_TOOLTIP_ITEM(_("Fog:\t\t%s%s%s\n"), FOG);
+    APPEND_TOOLTIP_ITEM(_("Low:\t\t%s%s%s\n"), CLOUDS_LOW);
+    APPEND_TOOLTIP_ITEM(_("Medium\t\t%s%s%s\n"), CLOUDS_MED);
+    APPEND_TOOLTIP_ITEM(_("High:\t\t%s%s%s\n"), CLOUDS_HIGH);
+    APPEND_TOOLTIP_ITEM(_("Cloudiness:\t%s%s%s"), CLOUDINESS);
+
+    /* Free GString only and return its character data */
+    result = text->str;
+    g_string_free(text, FALSE);
+    return result;
+}
+
+
 static GtkWidget *
 wrap_forecast_cell(const GtkWidget *widget,
                    const GdkColor *color)
@@ -622,6 +683,10 @@ add_forecast_cell(plugin_data *data,
     g_free(value);
 
     gtk_widget_set_size_request(GTK_WIDGET(box), 150, -1);
+
+    value = forecast_cell_get_tooltip_text(data, fcdata);
+    gtk_widget_set_tooltip_markup(GTK_WIDGET(box), value);
+    g_free(value);
 
     xml_time_free(fcdata);
     return box;
