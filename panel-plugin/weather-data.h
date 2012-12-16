@@ -90,6 +90,10 @@ typedef struct {
 gdouble string_to_double(const gchar *str,
                          gdouble backup);
 
+gchar *format_date(const time_t t,
+                   gchar *format,
+                   gboolean local);
+
 gboolean timeslice_is_interval(xml_time *timeslice);
 
 gchar *get_data(const xml_time *timeslice,

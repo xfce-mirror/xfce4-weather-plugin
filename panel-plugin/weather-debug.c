@@ -29,8 +29,6 @@
 
 #include "weather-debug.h"
 
-#define INVALID_TIME "INVALID"
-
 #define YESNO(bool) ((bool) ? "yes" : "no")
 
 
@@ -106,19 +104,6 @@ weather_debug_real(const gchar *log_domain,
     g_logv(log_domain, G_LOG_LEVEL_DEBUG, prefixed_format, args);
     va_end(args);
     g_free(prefixed_format);
-}
-
-
-gchar *
-weather_debug_strftime_t(const time_t t)
-{
-    struct tm tm;
-    gchar str[20];
-    size_t size;
-
-    tm = *localtime(&t);
-    size = strftime(str, 20, "%Y-%m-%d %H:%M:%S", &tm);
-    return (size ? g_strdup(str) : g_strdup(INVALID_TIME));
 }
 
 
@@ -230,10 +215,10 @@ weather_dump_astrodata(const xml_astro *astro)
     if (!astro)
         return g_strdup("No astronomical data.");
 
-    sunrise = weather_debug_strftime_t(astro->sunrise);
-    sunset = weather_debug_strftime_t(astro->sunset);
-    moonrise = weather_debug_strftime_t(astro->moonrise);
-    moonset = weather_debug_strftime_t(astro->moonset);
+    sunrise = format_date(astro->sunrise, "%c", TRUE);
+    sunset = format_date(astro->sunset, "%c", TRUE);
+    moonrise = format_date(astro->moonrise, "%c", TRUE);
+    moonset = format_date(astro->moonset, "%c", TRUE);
 
     out = g_strdup_printf("Astronomical data:\n"
                           "  --------------------------------------------\n"
@@ -349,8 +334,8 @@ weather_dump_timeslice(const xml_time *timeslice)
         return g_strdup("No timeslice data.");
 
     out = g_string_sized_new(512);
-    start = weather_debug_strftime_t(timeslice->start);
-    end = weather_debug_strftime_t(timeslice->end);
+    start = format_date(timeslice->start, "%c", TRUE);
+    end = format_date(timeslice->end, "%c", TRUE);
     is_interval = (gboolean) strcmp(start, end);
     loc = weather_dump_location((timeslice) ? timeslice->location : NULL,
                                 is_interval);
@@ -411,15 +396,15 @@ weather_dump_plugindata(const plugin_data *data)
     gchar *next_astro_update, *next_weather_update, *next_conditions_update;
     gchar *next_wakeup, *result;
 
-    last_astro_update = weather_debug_strftime_t(data->astro_update->last);
-    last_weather_update = weather_debug_strftime_t(data->weather_update->last);
+    last_astro_update = format_date(data->astro_update->last, "%c", TRUE);
+    last_weather_update = format_date(data->weather_update->last, "%c", TRUE);
     last_conditions_update =
-        weather_debug_strftime_t(data->conditions_update->last);
-    next_astro_update = weather_debug_strftime_t(data->astro_update->next);
-    next_weather_update = weather_debug_strftime_t(data->weather_update->next);
+        format_date(data->conditions_update->last, "%c", TRUE);
+    next_astro_update = format_date(data->astro_update->next, "%c", TRUE);
+    next_weather_update = format_date(data->weather_update->next, "%c", TRUE);
     next_conditions_update =
-        weather_debug_strftime_t(data->conditions_update->next);
-    next_wakeup = weather_debug_strftime_t(data->next_wakeup);
+        format_date(data->conditions_update->next, "%c", TRUE);
+    next_wakeup = format_date(data->next_wakeup, "%c", TRUE);
 
     out = g_string_sized_new(1024);
     g_string_assign(out, "xfce_weatherdata:\n");

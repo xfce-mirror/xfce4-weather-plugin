@@ -452,12 +452,10 @@ cb_weather_update(SoupSession *session,
     xmlDoc *doc;
     xmlNode *root_node;
     time_t now_t;
-    struct tm now_tm;
     gboolean parsing_error = TRUE;
 
     weather_debug("Processing downloaded weather data.");
     time(&now_t);
-    now_tm = *localtime(&now_t);
     data->weather_update->attempt++;
     if (msg->status_code == 200 || msg->status_code == 203) {
         if (msg->status_code == 203)
@@ -868,23 +866,6 @@ make_cache_filename(plugin_data *data)
 }
 
 
-/*
- * Convert localtime to gmtime and format it to a string
- * that can be parsed later by parse_timestring.
- */
-static gchar *
-cache_file_strftime_t(const time_t t)
-{
-    struct tm *tm;
-    gchar str[21];
-    size_t size;
-
-    tm = gmtime(&t);
-    size = strftime(str, 21, "%Y-%m-%dT%H:%M:%SZ", tm);
-    return (size ? g_strdup(str) : g_strdup(""));
-}
-
-
 static void
 write_cache_file(plugin_data *data)
 {
@@ -893,6 +874,7 @@ write_cache_file(plugin_data *data)
     xml_time *timeslice;
     xml_location *loc;
     gchar *file, *start, *end, *point, *now;
+    gchar *date_format = "%Y-%m-%dT%H:%M:%SZ";
     time_t now_t = time(NULL);
     gint i, j;
 
@@ -907,7 +889,7 @@ write_cache_file(plugin_data *data)
     CACHE_APPEND("lon=%s\n", data->lon);
     g_string_append_printf(out, "msl=%d\ntimezone=%d\ntimeslices=%d\n",
                            data->msl, data->timezone, wd->timeslices->len);
-    now = cache_file_strftime_t(now_t);
+    now = format_date(now_t, date_format, FALSE);
     CACHE_APPEND("cache_date=%s\n\n", now);
     g_free(now);
 
@@ -916,9 +898,9 @@ write_cache_file(plugin_data *data)
         if (G_UNLIKELY(timeslice == NULL || timeslice->location == NULL))
             continue;
         loc = timeslice->location;
-        start = cache_file_strftime_t(timeslice->start);
-        end = cache_file_strftime_t(timeslice->end);
-        point = cache_file_strftime_t(timeslice->point);
+        start = format_date(timeslice->start, date_format, FALSE);
+        end = format_date(timeslice->end, date_format, FALSE);
+        point = format_date(timeslice->point, date_format, FALSE);
         g_string_append_printf(out, "[timeslice%d]\n", i);
         CACHE_APPEND("start=%s\n", start);
         CACHE_APPEND("end=%s\n", end);
@@ -1281,13 +1263,11 @@ static gchar *
 weather_get_tooltip_text(const plugin_data *data)
 {
     xml_time *conditions;
-    struct tm *point_tm, *start_tm, *end_tm, *sunrise_tm, *sunset_tm;
     gchar *text, *sym, *alt, *temp;
     gchar *windspeed, *windbeau, *winddir, *winddir_trans, *winddeg;
     gchar *pressure, *humidity, *precipitations;
     gchar *fog, *cloudiness, *sunval, *value;
-    gchar sunrise[40], sunset[40];
-    gchar point[40], interval_start[40], interval_end[40];
+    gchar *point, *interval_start, *interval_end, *sunrise, *sunset;
     const gchar *unit;
 
     conditions = get_current_conditions(data->weatherdata);
@@ -1297,12 +1277,9 @@ weather_get_tooltip_text(const plugin_data *data)
     }
 
     /* times for forecast and point data */
-    point_tm = localtime(&conditions->point);
-    strftime(point, 40, "%X", point_tm);
-    start_tm = localtime(&conditions->start);
-    strftime(interval_start, 40, "%X", start_tm);
-    end_tm = localtime(&conditions->end);
-    strftime(interval_end, 40, "%X", end_tm);
+    point = format_date(conditions->point, "%H:%M", TRUE);
+    interval_start = format_date(conditions->start, "%H:%M", TRUE);
+    interval_end = format_date(conditions->end, "%H:%M", TRUE);
 
     /* use sunrise and sunset times if available */
     if (data->astrodata)
@@ -1311,12 +1288,12 @@ weather_get_tooltip_text(const plugin_data *data)
         } else if (data->astrodata->sun_never_sets) {
             sunval = g_strdup(_("The sun never sets today."));
         } else {
-            sunrise_tm = localtime(&data->astrodata->sunrise);
-            strftime(sunrise, 40, "%X", sunrise_tm);
-            sunset_tm = localtime(&data->astrodata->sunset);
-            strftime(sunset, 40, "%X", sunset_tm);
+            sunrise = format_date(data->astrodata->sunrise, "%H:%M:%S", TRUE);
+            sunset = format_date(data->astrodata->sunset, "%H:%M:%S", TRUE);
             sunval = g_strdup_printf(_("The sun rises at %s and sets at %s."),
                                      sunrise, sunset);
+            g_free(sunrise);
+            g_free(sunset);
         }
     else
         sunval = g_strdup_printf("");
@@ -1391,6 +1368,9 @@ weather_get_tooltip_text(const plugin_data *data)
     g_free(sym);
     g_free(alt);
     g_free(temp);
+    g_free(interval_start);
+    g_free(interval_end);
+    g_free(point);
     g_free(windspeed);
     g_free(windbeau);
     g_free(winddir_trans);

@@ -278,18 +278,6 @@ weather_summary_get_logo(plugin_data *data)
 }
 
 
-static gchar *
-format_date(time_t t)
-{
-    struct tm *tm;
-    gchar buf[80];
-
-    tm = localtime(&t);
-    strftime(buf, 80, "%c", tm);
-    return g_strdup(buf);
-}
-
-
 static GtkWidget *
 create_summary_tab(plugin_data *data)
 {
@@ -301,11 +289,9 @@ create_summary_tab(plugin_data *data)
     GdkColor lnk_color;
     xml_time *conditions;
     const gchar *unit;
-    struct tm *start_tm, *end_tm, *point_tm;
-    struct tm *sunrise_tm, *sunset_tm, *moonrise_tm, *moonset_tm;
     gchar *value, *rawvalue, *wind;
-    gchar interval_start[80], interval_end[80], point[80];
-    gchar sunrise[80], sunset[80], moonrise[80], moonset[80];
+    gchar *interval_start, *interval_end, *point, *last_weather_update;
+    gchar *sunrise, *sunset, *moonrise, *moonset;
     summary_details *sum;
 
     sum = g_slice_new0(summary_details);
@@ -352,17 +338,21 @@ create_summary_tab(plugin_data *data)
     APPEND_TEXT_ITEM(_("Longitude"), LONGITUDE);
 
     APPEND_BTEXT(_("\nTime\n"));
-    point_tm = localtime(&conditions->point);
-    strftime(point, 80, "%c", point_tm);
-    value = g_strdup_printf
-        (_("\tTemperature, wind, atmosphere and cloud data apply to:\n\t%s\n"),
-         point);
+    last_weather_update = format_date(data->weather_update->last, NULL, TRUE);
+    value = g_strdup_printf(_("\tLast updated:\t%s\n\n"),
+                            last_weather_update);
+    g_free(last_weather_update);
     APPEND_TEXT_ITEM_REAL(value);
 
-    start_tm = localtime(&conditions->start);
-    strftime(interval_start, 80, "%c", start_tm);
-    end_tm = localtime(&conditions->end);
-    strftime(interval_end, 80, "%c", end_tm);
+    point = format_date(conditions->point, NULL, TRUE);
+    value = g_strdup_printf
+        (_("\tTemperature, wind, atmosphere and cloud data calculated for:\n\t%s\n"),
+         point);
+    g_free(point);
+    APPEND_TEXT_ITEM_REAL(value);
+
+    interval_start = format_date(conditions->start, NULL, TRUE);
+    interval_end = format_date(conditions->end, NULL, TRUE);
     value = g_strdup_printf
         (_("\n\tPrecipitation and the weather symbol have been calculated\n"
            "\tfor the following time interval:\n"
@@ -370,6 +360,8 @@ create_summary_tab(plugin_data *data)
            "\tEnd:\t%s\n"),
          interval_start,
          interval_end);
+    g_free(interval_end);
+    g_free(interval_start);
     APPEND_TEXT_ITEM_REAL(value);
 
     /* sun and moon */
@@ -382,14 +374,14 @@ create_summary_tab(plugin_data *data)
             value = g_strdup(_("\tSunset:\t\tThe sun never sets today.\n"));
             APPEND_TEXT_ITEM_REAL(value);
         } else {
-            sunrise_tm = localtime(&data->astrodata->sunrise);
-            strftime(sunrise, 80, "%c", sunrise_tm);
+            sunrise = format_date(data->astrodata->sunrise, NULL, TRUE);
             value = g_strdup_printf(_("\tSunrise:\t\t%s\n"), sunrise);
+            g_free(sunrise);
             APPEND_TEXT_ITEM_REAL(value);
 
-            sunset_tm = localtime(&data->astrodata->sunset);
-            strftime(sunset, 80, "%c", sunset_tm);
+            sunset = format_date(data->astrodata->sunset, NULL, TRUE);
             value = g_strdup_printf(_("\tSunset:\t\t%s\n\n"), sunset);
+            g_free(sunset);
             APPEND_TEXT_ITEM_REAL(value);
         }
 
@@ -408,14 +400,14 @@ create_summary_tab(plugin_data *data)
             value = g_strdup(_("\tMoonset:\tThe moon never sets today.\n"));
             APPEND_TEXT_ITEM_REAL(value);
         } else {
-            moonrise_tm = localtime(&data->astrodata->moonrise);
-            strftime(moonrise, 80, "%c", moonrise_tm);
+            moonrise = format_date(data->astrodata->moonrise, NULL, TRUE);
             value = g_strdup_printf(_("\tMoonrise:\t%s\n"), moonrise);
+            g_free(moonrise);
             APPEND_TEXT_ITEM_REAL(value);
 
-            moonset_tm = localtime(&data->astrodata->moonset);
-            strftime(moonset, 80, "%c", moonset_tm);
+            moonset = format_date(data->astrodata->moonset, NULL, TRUE);
             value = g_strdup_printf(_("\tMoonset:\t%s\n"), moonset);
+            g_free(moonset);
             APPEND_TEXT_ITEM_REAL(value);
         }
     } else {
@@ -539,13 +531,13 @@ forecast_cell_get_tooltip_text(plugin_data *data,
 
     /* TRANSLATORS: Please use \t as needed to properly align the values */
     text = g_string_new(_("<b>Times used for calculation</b>\n"));
-    value = format_date(fcdata->start);
+    value = format_date(fcdata->start, NULL, TRUE);
     g_string_append_printf(text, _("Interval start:\t\t\t%s\n"), value);
     g_free(value);
-    value = format_date(fcdata->end);
+    value = format_date(fcdata->end, NULL, TRUE);
     g_string_append_printf(text, _("Interval end:\t\t\t%s\n"), value);
     g_free(value);
-    value = format_date(fcdata->point);
+    value = format_date(fcdata->point, NULL, TRUE);
     g_string_append_printf(text, _("Data calculated for:\t%s\n\n"), value);
     g_free(value);
 

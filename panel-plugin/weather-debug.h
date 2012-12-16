@@ -58,8 +58,6 @@ void weather_debug_real(const gchar *log_domain,
                         const gchar *format,
                         ...);
 
-gchar *weather_debug_strftime_t(const time_t t);
-
 gchar *weather_dump_geolocation(const xml_geolocation *geo);
 
 gchar *weather_dump_place(const xml_place *place);

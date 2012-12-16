@@ -75,6 +75,31 @@ string_to_double(const gchar *str,
 }
 
 
+gchar *
+format_date(const time_t date_t,
+            gchar *format,
+            gboolean local)
+{
+    struct tm *tm;
+    time_t t = date_t;
+    gchar buf[40];
+    size_t size;
+
+    if (G_LIKELY(local))
+        tm = localtime(&t);
+    else
+        tm = gmtime(&t);
+
+    /* A year <= 1970 means date has not been set */
+    if (G_UNLIKELY(tm == NULL) || tm->tm_year <= 70)
+        return g_strdup("-");
+    if (format == NULL)
+        format = "%Y-%m-%d %H:%M:%S";
+    size = strftime(buf, 40, format, tm);
+    return (size ? g_strdup(buf) : g_strdup("-"));
+}
+
+
 /* check whether timeslice is interval or point data */
 gboolean
 timeslice_is_interval(xml_time *timeslice)
