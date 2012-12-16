@@ -69,6 +69,7 @@ typedef struct {
     GtkWidget *summary_window;
     summary_details *summary_details;
     guint config_remember_tab;
+    guint summary_remember_tab;
 
     gint panel_size;
     gint size;

@@ -25,7 +25,6 @@
 #include "weather-parsers.h"
 #include "weather-data.h"
 #include "weather.h"
-
 #include "weather-summary.h"
 #include "weather-translate.h"
 #include "weather-icon.h"
@@ -785,6 +784,18 @@ summary_dialog_response(const GtkWidget *dlg,
 }
 
 
+static void
+cb_notebook_page_switched(GtkNotebook *notebook,
+                          GtkNotebookPage *page,
+                          guint page_num,
+                          gpointer user_data)
+{
+    plugin_data *data = (plugin_data *) user_data;
+
+    data->summary_remember_tab = page_num;
+}
+
+
 GtkWidget *
 create_summary_window(plugin_data *data)
 {
@@ -841,8 +852,11 @@ create_summary_window(plugin_data *data)
         gtk_notebook_append_page(GTK_NOTEBOOK(notebook),
                                  create_summary_tab(data),
                                  gtk_label_new_with_mnemonic(_("_Details")));
-
         gtk_box_pack_start(GTK_BOX(vbox), notebook, TRUE, TRUE, 0);
+        gtk_widget_show_all(GTK_WIDGET(notebook));
+        gtk_notebook_set_current_page(GTK_NOTEBOOK(notebook), data->summary_remember_tab);
+        g_signal_connect(GTK_NOTEBOOK(notebook), "switch-page",
+                         G_CALLBACK(cb_notebook_page_switched), data);
     }
 
     g_signal_connect(G_OBJECT(window), "response",
