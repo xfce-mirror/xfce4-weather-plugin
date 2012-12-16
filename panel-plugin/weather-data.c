@@ -55,6 +55,33 @@
     comb->location->var = g_strdup(end->location->var);
 
 
+enum {
+    SYMBOL_NODATA = 0,
+    SYMBOL_SUN,
+    SYMBOL_LIGHTCLOUD,
+    SYMBOL_PARTLYCLOUD,
+    SYMBOL_CLOUD,
+    SYMBOL_LIGHTRAINSUN,
+    SYMBOL_LIGHTRAINTHUNDERSUN,
+    SYMBOL_SLEETSUN,
+    SYMBOL_SNOWSUN,
+    SYMBOL_LIGHTRAIN,
+    SYMBOL_RAIN,
+    SYMBOL_RAINTHUNDER,
+    SYMBOL_SLEET,
+    SYMBOL_SNOW,
+    SYMBOL_SNOWTHUNDER,
+    SYMBOL_FOG,
+    SYMBOL_SUN_POLAR,
+    SYMBOL_LIGHTCLOUD_POLAR,
+    SYMBOL_LIGHTRAINSUN_POLAR,
+    SYMBOL_SNOWSUN_POLAR,
+    SYMBOL_SLEETSUNTHUNDER,
+    SYMBOL_SNOWSUNTHUNDER,
+    SYMBOL_LIGHTRAINTHUNDER,
+    SYMBOL_SLEETTHUNDER
+};
+
 /* struct to store results from searches for point data */
 typedef struct {
     GArray *before;
@@ -370,6 +397,69 @@ wind_dir_name_by_deg(gchar *degrees, gboolean long_name)
 }
 
 
+static const gchar *
+symbol_by_id(const gint symbol_id)
+{
+    switch (symbol_id) {
+    case SYMBOL_SUN:                  return "SUN";
+    case SYMBOL_LIGHTCLOUD:           return "LIGHTCLOUD";
+    case SYMBOL_PARTLYCLOUD:          return "PARTLYCLOUD";
+    case SYMBOL_CLOUD:                return "CLOUD";
+    case SYMBOL_LIGHTRAINSUN:         return "LIGHTRAINSUN";
+    case SYMBOL_LIGHTRAINTHUNDERSUN:  return "LIGHTRAINTHUNDERSUN";
+    case SYMBOL_SLEETSUN:             return "SLEETSUN";
+    case SYMBOL_SNOWSUN:              return "SNOWSUN";
+    case SYMBOL_LIGHTRAIN:            return "LIGHTRAIN";
+    case SYMBOL_RAIN:                 return "RAIN";
+    case SYMBOL_RAINTHUNDER:          return "RAINTHUNDER";
+    case SYMBOL_SLEET:                return "SLEET";
+    case SYMBOL_SNOW:                 return "SNOW";
+    case SYMBOL_SNOWTHUNDER:          return "SNOWTHUNDER";
+    case SYMBOL_FOG:                  return "FOG";
+    case SYMBOL_SUN_POLAR:            return "SUN";
+    case SYMBOL_LIGHTCLOUD_POLAR:     return "LIGHTCLOUD";
+    case SYMBOL_LIGHTRAINSUN_POLAR:   return "LIGHTRAINSUN";
+    case SYMBOL_SNOWSUN_POLAR:        return "SNOWSUN";
+    case SYMBOL_SLEETSUNTHUNDER:      return "SLEETSUNTHUNDER";
+    case SYMBOL_SNOWSUNTHUNDER:       return "SLEETSUNTHUNDER";
+    case SYMBOL_LIGHTRAINTHUNDER:     return "LIGHTRAINTHUNDER";
+    case SYMBOL_SLEETTHUNDER:         return "SLEETTHUNDER";
+    default:                          return "";
+    }
+}
+
+
+static void
+calculate_symbol(xml_time *timeslice)
+{
+    xml_location *loc;
+    gdouble cloudiness, precipitation;
+
+    g_assert(timeslice != NULL && timeslice->location != NULL);
+    if (G_UNLIKELY(timeslice == NULL || timeslice->location == NULL))
+        return;
+
+    loc = timeslice->location;
+
+    precipitation = string_to_double(loc->precipitation_value, 0);
+    if (precipitation > 0)
+        return;
+
+    cloudiness =
+        string_to_double(loc->clouds_percent[CLOUDS_PERC_CLOUDINESS], 0);
+    if (cloudiness >= 90)
+        loc->symbol_id = SYMBOL_CLOUD;
+    else if (cloudiness >= 30)
+        loc->symbol_id = SYMBOL_PARTLYCLOUD;
+    else if (cloudiness >= 1.0 / 8.0)
+        loc->symbol_id = SYMBOL_LIGHTCLOUD;
+
+    /* update symbol name */
+    g_free(loc->symbol);
+    loc->symbol = g_strdup(symbol_by_id(loc->symbol_id));
+}
+
+
 /*
  * Interpolate data for a certain time in a given interval
  */
@@ -518,6 +608,7 @@ make_combined_timeslice(xml_weather *wd,
     comb->location->symbol_id = interval->location->symbol_id;
     comb->location->symbol = g_strdup(interval->location->symbol);
 
+    calculate_symbol(comb);
     return comb;
 }
 
