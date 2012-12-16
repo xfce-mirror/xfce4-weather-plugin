@@ -569,7 +569,6 @@ update_handler(plugin_data *data)
         update_icon(data);
     }
 
-    schedule_next_wakeup(data);
     return FALSE;
 }
 
@@ -587,7 +586,7 @@ schedule_next_wakeup(plugin_data *data)
     }
 
     now_tm = *localtime(&now_t);
-    future_t = time_calc_day(now_tm, 1);
+    future_t = time_calc_day(now_tm, 3);
     diff = difftime(future_t, now_t);
     SCHEDULE_WAKEUP_COMPARE(data->astro_update->next,
                             "astro data download");
@@ -606,9 +605,10 @@ schedule_next_wakeup(plugin_data *data)
                                     "sunset icon change");
     }
 
-    /* next wakeup time could not be calculated, so force it */
+    /* next wakeup time could not be calculated, so force it to not
+       miss any updates*/
     if (diff < 0) {
-        diff = 5;
+        diff = 0;
         data->next_wakeup_reason = "forced";
     }
 
