@@ -280,7 +280,7 @@ void
 update_scrollbox(plugin_data *data)
 {
     GString *out;
-    gchar *single = NULL;
+    gchar *label = NULL;
     data_types type;
     gint i = 0, j = 0;
 
@@ -291,12 +291,12 @@ update_scrollbox(plugin_data *data)
             out = g_string_sized_new(128);
             while ((i + j) < data->labels->len && j < data->scrollbox_lines) {
                 type = g_array_index(data->labels, data_types, i + j);
-                single = make_label(data, type);
-                g_string_append_printf(out, "%s%s", single,
+                label = make_label(data, type);
+                g_string_append_printf(out, "%s%s", label,
                                        (j < (data->scrollbox_lines - 1)
                                         ? "\n"
                                         : ""));
-                g_free(single);
+                g_free(label);
                 j++;
             }
             gtk_scrollbox_add_label(GTK_SCROLLBOX(data->scrollbox),
@@ -306,12 +306,13 @@ update_scrollbox(plugin_data *data)
         }
         weather_debug("Added %u labels to scrollbox.", data->labels->len);
     } else {
-        single = g_strdup(_("No Data"));
-        gtk_scrollbox_add_label(GTK_SCROLLBOX(data->scrollbox), -1, single);
-        g_free(single);
+        gtk_scrollbox_add_label(GTK_SCROLLBOX(data->scrollbox), -1,
+                                _("No Data"));
         weather_debug("No weather data available, set single label '%s'.",
                       _("No Data"));
     }
+    gtk_scrollbox_set_animate(GTK_SCROLLBOX(data->scrollbox),
+                              data->scrollbox_animate);
     scrollbox_set_visible(data);
     weather_debug("Updated scrollbox.");
 }

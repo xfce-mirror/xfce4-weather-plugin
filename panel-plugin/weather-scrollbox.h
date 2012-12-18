@@ -40,7 +40,8 @@ GType gtk_scrollbox_get_type(void);
 typedef enum {
     FADE_IN,
     FADE_OUT,
-    FADE_NONE
+    FADE_NONE,
+    FADE_SLEEP
 } fade_states;
 
 typedef struct _GtkScrollbox GtkScrollbox;
@@ -52,6 +53,7 @@ struct _GtkScrollbox {
     GList *labels;
     GList *labels_new;
     GList *active;
+    guint labels_len;
     guint timeout_id;
     gint offset;
     gboolean animate;
@@ -69,9 +71,7 @@ struct _GtkScrollboxClass {
 
 void gtk_scrollbox_add_label(GtkScrollbox *self,
                              gint position,
-                             gchar *markup);
-
-void gtk_scrollbox_swap_labels(GtkScrollbox *self);
+                             const gchar *markup);
 
 void gtk_scrollbox_set_orientation(GtkScrollbox *self,
                                    GtkOrientation orientation);

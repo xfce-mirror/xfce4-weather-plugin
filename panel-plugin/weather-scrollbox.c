@@ -28,10 +28,8 @@
 
 #include "weather-scrollbox.h"
 
-#define LABEL_REFRESH (3)
-#define LABEL_REFRESH_NO_ANIMATION (6)
-#define LABEL_REFRESH_NO_ANIM_INIT (1)
-#define LABEL_SPEED (25)
+#define LABEL_SLEEP (3)    /* sleep time in seconds */
+#define LABEL_SPEED (25)   /* animation speed, delay in ms */
 
 
 static void gtk_scrollbox_finalize(GObject *object);
@@ -42,7 +40,7 @@ static void gtk_scrollbox_size_request(GtkWidget *widget,
 static gboolean gtk_scrollbox_expose_event(GtkWidget *widget,
                                            GdkEventExpose *event);
 
-static gboolean gtk_scrollbox_fade_out(gpointer user_data);
+static gboolean gtk_scrollbox_control_loop(gpointer user_data);
 
 G_DEFINE_TYPE(GtkScrollbox, gtk_scrollbox, GTK_TYPE_DRAWING_AREA)
 
@@ -70,8 +68,9 @@ gtk_scrollbox_init(GtkScrollbox *self)
     self->labels = NULL;
     self->labels_new = NULL;
     self->timeout_id = 0;
+    self->labels_len = 0;
     self->offset = 0;
-    self->fade = FADE_NONE;
+    self->fade = FADE_OUT;
     self->active = NULL;
     self->animate = FALSE;
     self->visible = FALSE;
@@ -200,12 +199,14 @@ gtk_scrollbox_expose_event(GtkWidget *widget,
             height = widget->allocation.y
                 + (widget->allocation.height
                    - PANGO_PIXELS(logical_rect.height)) / 2
-                + (self->animate || self->fade == FADE_OUT ? self->offset : 0);
+                + (self->fade == FADE_IN || self->fade == FADE_OUT
+                   ? self->offset : 0);
         } else {
             width = widget->allocation.x
                 + (widget->allocation.width
                    - PANGO_PIXELS(logical_rect.height)) / 2
-                + (self->animate || self->fade == FADE_OUT ? self->offset : 0);
+                + (self->fade == FADE_IN || self->fade == FADE_OUT
+                   ? self->offset : 0);
             height = widget->allocation.y
                 + (widget->allocation.height
                    - PANGO_PIXELS(logical_rect.width)) / 2;
@@ -224,7 +225,7 @@ gtk_scrollbox_expose_event(GtkWidget *widget,
 void
 gtk_scrollbox_add_label(GtkScrollbox *self,
                         const gint position,
-                        gchar *markup)
+                        const gchar *markup)
 {
     PangoLayout *layout;
 
@@ -237,79 +238,38 @@ gtk_scrollbox_add_label(GtkScrollbox *self,
 }
 
 
-void
+/*
+ * Sets new labels active if there are any, or advances the current
+ * label.
+ */
+static void
 gtk_scrollbox_swap_labels(GtkScrollbox *self)
 {
-    guint len;
     gint pos;
 
     g_return_if_fail(GTK_IS_SCROLLBOX(self));
 
-    if (G_LIKELY(self->labels_new == NULL))
+    /* No new label, so simply switch to the next */
+    if (G_LIKELY(self->labels_new == NULL)) {
+        gtk_scrollbox_next_label(self);
         return;
+    }
 
+    /* Keep current list position if possible */
     pos = g_list_position(self->labels, self->active);
-    len = g_list_length(self->labels_new);
-
-    if (pos >= len)
+    self->labels_len = g_list_length(self->labels_new);
+    if (pos >= self->labels_len)
         pos = 0;
-
-    self->active = g_list_nth(self->labels_new, pos);
+    self->active = g_list_nth(self->labels_new, pos + 1);
     if (self->active == NULL)
         self->active = self->labels_new;
 
+    /* clear the existing labels */
     gtk_scrollbox_labels_free(self);
     self->labels = self->labels_new;
     self->labels_new = NULL;
 
     gtk_widget_queue_resize(GTK_WIDGET(self));
-}
-
-
-static gboolean
-gtk_scrollbox_fade_none(gpointer user_data)
-{
-    GtkScrollbox *self = GTK_SCROLLBOX(user_data);
-
-    if (!self->visible)
-        return FALSE;
-
-    /* start fading out if animation has been enabled */
-    if (self->animate) {
-        self->fade = FADE_OUT;
-        self->offset = 0;
-        self->timeout_id = g_timeout_add(LABEL_SPEED,
-                                         gtk_scrollbox_fade_out, self);
-        return FALSE;
-    }
-
-    if (self->timeout_id != 0) {
-        g_source_remove(self->timeout_id);
-        self->timeout_id = 0;
-    }
-
-    if (self->orientation == GTK_ORIENTATION_HORIZONTAL)
-        self->offset = GTK_WIDGET(self)->allocation.height;
-    else
-        self->offset = GTK_WIDGET(self)->allocation.width;
-
-    gtk_scrollbox_swap_labels(self);
-    gtk_scrollbox_next_label(self);
-
-    self->timeout_id = g_timeout_add_seconds(LABEL_REFRESH_NO_ANIMATION,
-                                             gtk_scrollbox_fade_none, self);
-    return FALSE;
-}
-
-
-static gboolean
-gtk_scrollbox_sleep(gpointer user_data)
-{
-    GtkScrollbox *self = GTK_SCROLLBOX(user_data);
-
-    self->timeout_id = g_timeout_add(LABEL_SPEED,
-                                     gtk_scrollbox_fade_out, self);
-    return FALSE;
 }
 
 
@@ -330,18 +290,7 @@ gtk_scrollbox_fade_in(gpointer user_data)
         (self->orientation == GTK_ORIENTATION_VERTICAL && self->offset < 0))
         return TRUE;
 
-    if (self->visible)
-        if (self->animate) {
-            self->fade = FADE_OUT;
-            self->timeout_id =
-                g_timeout_add_seconds(LABEL_REFRESH,
-                                      gtk_scrollbox_sleep, self);
-        } else {
-            self->fade = FADE_NONE;
-            self->timeout_id =
-                g_timeout_add_seconds(LABEL_REFRESH_NO_ANIMATION,
-                                      gtk_scrollbox_fade_none, self);
-        }
+    (void) gtk_scrollbox_control_loop(self);
     return FALSE;
 }
 
@@ -365,37 +314,85 @@ gtk_scrollbox_fade_out(gpointer user_data)
          self->offset > 0 - GTK_WIDGET(self)->allocation.width))
         return TRUE;
 
-    gtk_scrollbox_swap_labels(self);
-    gtk_scrollbox_next_label(self);
-    if (self->visible) {
-        self->timeout_id = g_timeout_add(LABEL_SPEED,
-                                         gtk_scrollbox_fade_in, self);
-    }
+    (void) gtk_scrollbox_control_loop(self);
     return FALSE;
 }
 
 
-static void
-gtk_scrollbox_start_fade(GtkScrollbox *self)
+/*
+ * This control loop is called between any animation steps except
+ * sleeps and determines what to do next.
+ */
+static gboolean
+gtk_scrollbox_control_loop(gpointer user_data)
 {
+    GtkScrollbox *self = GTK_SCROLLBOX(user_data);
+
     if (self->timeout_id != 0) {
         g_source_remove(self->timeout_id);
         self->timeout_id = 0;
     }
 
-    gtk_scrollbox_swap_labels(self);
+    /* determine what to do next */
+    switch(self->fade) {
+    case FADE_IN:
+        self->fade = FADE_SLEEP;
+        break;
+    case FADE_OUT:
+        self->fade = FADE_IN;
+        gtk_scrollbox_swap_labels(self);
+        break;
+    case FADE_NONE:
+        if (self->animate && self->labels_len > 1)
+            self->fade = FADE_OUT;
+        else {
+            self->fade = FADE_NONE;
+            gtk_scrollbox_swap_labels(self);
+        }
+        break;
+    case FADE_SLEEP:
+        self->fade = self->animate ? FADE_OUT : FADE_NONE;
+        break;
+    }
 
-    if (self->animate && g_list_length(self->labels) > 1) {
+    /* now perform the next action */
+    switch(self->fade) {
+    case FADE_IN:
+        if (self->labels_len > 1) {
+            if (self->orientation == GTK_ORIENTATION_HORIZONTAL)
+                self->offset = GTK_WIDGET(self)->allocation.height;
+            else
+                self->offset = 0;
+        } else
+            self->offset = 0;
+        self->timeout_id = g_timeout_add(LABEL_SPEED,
+                                         gtk_scrollbox_fade_in,
+                                         self);
+        break;
+    case FADE_OUT:
+        self->offset = 0;
+        self->timeout_id = g_timeout_add(LABEL_SPEED,
+                                         gtk_scrollbox_fade_out,
+                                         self);
+        break;
+    case FADE_SLEEP:
+        self->timeout_id = g_timeout_add_seconds(LABEL_SLEEP,
+                                                 gtk_scrollbox_control_loop,
+                                                 self);
+        break;
+    case FADE_NONE:
         if (self->orientation == GTK_ORIENTATION_HORIZONTAL)
             self->offset = GTK_WIDGET(self)->allocation.height;
         else
-            self->offset = 0;
+            self->offset = GTK_WIDGET(self)->allocation.width;
+        self->timeout_id = g_timeout_add_seconds(LABEL_SLEEP,
+                                                 gtk_scrollbox_control_loop,
+                                                 self);
+        break;
+    }
 
-        self->fade = FADE_IN;
-        self->timeout_id = g_timeout_add(LABEL_SPEED,
-                                         gtk_scrollbox_fade_in, self);
-    } else
-        self->offset = 0;
+    gtk_widget_queue_resize(GTK_WIDGET(self));
+    return FALSE;
 }
 
 
@@ -438,22 +435,14 @@ gtk_scrollbox_reset(GtkScrollbox *self)
         g_source_remove(self->timeout_id);
         self->timeout_id = 0;
     }
-
-    if (self->animate)
-        gtk_scrollbox_start_fade(self);
-    else {
-        self->fade = FADE_NONE;
-        self->timeout_id =
-            g_timeout_add_seconds(LABEL_REFRESH_NO_ANIMATION,
-                                  gtk_scrollbox_fade_none, self);
-    }
-    gtk_widget_queue_resize(GTK_WIDGET(self));
+    self->fade = FADE_OUT;
+    (void) gtk_scrollbox_control_loop(self);
 }
 
 
 void
 gtk_scrollbox_set_animate(GtkScrollbox *self,
-                          gboolean animate)
+                          const gboolean animate)
 {
     g_return_if_fail(GTK_IS_SCROLLBOX(self));
 
@@ -463,23 +452,22 @@ gtk_scrollbox_set_animate(GtkScrollbox *self,
 
 void
 gtk_scrollbox_set_visible(GtkScrollbox *self,
-                          gboolean visible)
+                          const gboolean visible)
 {
     g_return_if_fail(GTK_IS_SCROLLBOX(self));
 
     gtk_widget_set_visible(GTK_WIDGET(self), visible);
     self->visible = visible;
     if (visible) {
-        if (self->timeout_id == 0)
-            if (self->animate)
-                gtk_scrollbox_start_fade(self);
-            else {
-                self->fade = FADE_NONE;
-                self->timeout_id =
-                    g_timeout_add_seconds(LABEL_REFRESH_NO_ANIM_INIT,
-                                          gtk_scrollbox_fade_none,
-                                          self);
-            }
+        if (self->timeout_id == 0) {
+            self->fade = FADE_NONE;
+            (void) gtk_scrollbox_control_loop(self);
+        } else {
+            /* update immediately if there's only one or no label,
+             typically this is the case at startup */
+            if (self->active == NULL || self->labels_len <= 1)
+                (void) gtk_scrollbox_control_loop(self);
+        }
     } else
         if (self->timeout_id != 0) {
             g_source_remove(self->timeout_id);
@@ -493,7 +481,7 @@ gtk_scrollbox_prev_label(GtkScrollbox *self)
 {
     g_return_if_fail(GTK_IS_SCROLLBOX(self));
 
-    if (g_list_length(self->labels) > 1) {
+    if (self->labels_len > 1) {
         if (self->active->prev != NULL)
             self->active = self->active->prev;
         else
@@ -508,7 +496,7 @@ gtk_scrollbox_next_label(GtkScrollbox *self)
 {
     g_return_if_fail(GTK_IS_SCROLLBOX(self));
 
-    if (g_list_length(self->labels) > 1) {
+    if (self->labels_len > 1) {
         if (self->active->next != NULL)
             self->active = self->active->next;
         else
