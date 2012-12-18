@@ -717,8 +717,9 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
     else
         data->forecast_layout = FC_LAYOUT_LIST;
 
-    val = xfce_rc_read_int_entry(rc, "forecast_days", DEFAULT_FORECAST_DAYS);
-    constrain_to_limits(&data->forecast_days, 1, DEFAULT_FORECAST_DAYS);
+    data->forecast_days = xfce_rc_read_int_entry(rc, "forecast_days",
+                                                 DEFAULT_FORECAST_DAYS);
+    constrain_to_limits(&data->forecast_days, 1, MAX_FORECAST_DAYS);
 
     value = xfce_rc_read_entry(rc, "theme_dir", NULL);
     if (data->icon_theme)
