@@ -1201,7 +1201,7 @@ check_scrollbox_animate_toggled(GtkWidget *button,
 static GtkWidget *
 create_scrollbox_page(xfceweather_dialog *dialog)
 {
-    GtkWidget *palign, *page, *hbox, *table, *scroll, *label, *image;
+    GtkWidget *palign, *page, *hbox, *table, *scroll, *label, *image, *sep;
     GtkSizeGroup *sg_misc, *sg_button;
     GtkWidget *button_add, *button_del, *button_up, *button_down;
     GtkTreeViewColumn *column;
@@ -1265,6 +1265,10 @@ create_scrollbox_page(xfceweather_dialog *dialog)
     gtk_box_pack_start(GTK_BOX(hbox), dialog->button_scrollbox_color,
                        FALSE, FALSE, 0 );
     gtk_box_pack_start(GTK_BOX(page), hbox, FALSE, FALSE, 0);
+
+    /* separator */
+    sep = gtk_hseparator_new();
+    gtk_box_pack_start(GTK_BOX(page), sep, FALSE, FALSE, BORDER * 2);
 
     /* labels and buttons */
     hbox = gtk_hbox_new(FALSE, BORDER);
