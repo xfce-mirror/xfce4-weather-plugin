@@ -433,7 +433,7 @@ static void
 calculate_symbol(xml_time *timeslice)
 {
     xml_location *loc;
-    gdouble cloudiness, precipitation;
+    gdouble fog, cloudiness, precipitation;
 
     g_assert(timeslice != NULL && timeslice->location != NULL);
     if (G_UNLIKELY(timeslice == NULL || timeslice->location == NULL))
@@ -453,6 +453,10 @@ calculate_symbol(xml_time *timeslice)
         loc->symbol_id = SYMBOL_PARTLYCLOUD;
     else if (cloudiness >= 1.0 / 8.0)
         loc->symbol_id = SYMBOL_LIGHTCLOUD;
+
+    fog = string_to_double(loc->fog_percent, 0);
+    if (fog >= 80)
+        loc->symbol_id = SYMBOL_FOG;
 
     /* update symbol name */
     g_free(loc->symbol);
