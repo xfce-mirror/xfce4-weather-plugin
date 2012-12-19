@@ -325,18 +325,14 @@ create_summary_tab(plugin_data *data)
     ltag1 = gtk_text_buffer_create_tag(buffer, "lnk1",
                                        "foreground-gdk", &lnk_color, NULL);
 
-    /* head */
-    value = g_strdup_printf(_("Weather report for: %s.\n\n"),
-                            data->location_name);
-    APPEND_BTEXT(value);
-    g_free(value);
-
     conditions = get_current_conditions(data->weatherdata);
     APPEND_BTEXT(_("Coordinates\n"));
     APPEND_TEXT_ITEM(_("Altitude"), ALTITUDE);
     APPEND_TEXT_ITEM(_("Latitude"), LATITUDE);
     APPEND_TEXT_ITEM(_("Longitude"), LONGITUDE);
 
+    /* TRANSLATORS: Please use as many \t as appropriate to align the
+       date/time values as in the original. */
     APPEND_BTEXT(_("\nTime\n"));
     last_weather_update = format_date(data->weather_update->last, NULL, TRUE);
     value = g_strdup_printf(_("\tLast updated:\t%s\n\n"),
@@ -346,7 +342,8 @@ create_summary_tab(plugin_data *data)
 
     point = format_date(conditions->point, NULL, TRUE);
     value = g_strdup_printf
-        (_("\tTemperature, wind, atmosphere and cloud data calculated for:\n\t%s\n"),
+        (_("\tTemperature, wind, atmosphere and cloud data calculated\n"
+           "\tfor:\t\t\t%s\n"),
          point);
     g_free(point);
     APPEND_TEXT_ITEM_REAL(value);
@@ -355,9 +352,9 @@ create_summary_tab(plugin_data *data)
     interval_end = format_date(conditions->end, NULL, TRUE);
     value = g_strdup_printf
         (_("\n\tPrecipitation and the weather symbol have been calculated\n"
-           "\tfor the following time interval:\n"
-           "\tStart:\t%s\n"
-           "\tEnd:\t%s\n"),
+           "\tusing the following time interval:\n"
+           "\tStart:\t\t%s\n"
+           "\tEnd:\t\t%s\n"),
          interval_start,
          interval_end);
     g_free(interval_end);
@@ -394,10 +391,12 @@ create_summary_tab(plugin_data *data)
         APPEND_TEXT_ITEM_REAL(value);
 
         if (data->astrodata->moon_never_rises) {
-            value = g_strdup(_("\tMoonrise:\tThe moon never rises today.\n"));
+            value =
+                g_strdup(_("\tMoonrise:\tThe moon never rises today.\n"));
             APPEND_TEXT_ITEM_REAL(value);
         } else if (data->astrodata->moon_never_sets) {
-            value = g_strdup(_("\tMoonset:\tThe moon never sets today.\n"));
+            value =
+                g_strdup(_("\tMoonset:\tThe moon never sets today.\n"));
             APPEND_TEXT_ITEM_REAL(value);
         } else {
             moonrise = format_date(data->astrodata->moonrise, NULL, TRUE);
@@ -861,22 +860,20 @@ create_summary_window(plugin_data *data)
     GdkPixbuf *icon;
     xml_time *conditions;
 
-    window = xfce_titled_dialog_new_with_buttons(_("Weather Update"),
+    conditions = get_current_conditions(data->weatherdata);
+    window = xfce_titled_dialog_new_with_buttons(_("Weather Report"),
                                                  NULL,
                                                  GTK_DIALOG_NO_SEPARATOR,
                                                  GTK_STOCK_CLOSE,
                                                  GTK_RESPONSE_ACCEPT, NULL);
     if (data->location_name != NULL) {
-        title = g_strdup_printf(_("Weather report for: %s"),
-                                data->location_name);
+        title = g_strdup_printf("%s", data->location_name);
         xfce_titled_dialog_set_subtitle(XFCE_TITLED_DIALOG(window), title);
         g_free(title);
     }
 
     vbox = gtk_vbox_new(FALSE, 0);
     gtk_box_pack_start(GTK_BOX(GTK_DIALOG(window)->vbox), vbox, TRUE, TRUE, 0);
-
-    conditions = get_current_conditions(data->weatherdata);
 
     symbol = get_data(conditions, data->units, SYMBOL, FALSE);
     icon = get_icon(data->icon_theme, symbol, 48, data->night_time);
