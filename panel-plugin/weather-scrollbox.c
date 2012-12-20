@@ -256,10 +256,14 @@ gtk_scrollbox_swap_labels(GtkScrollbox *self)
     }
 
     /* Keep current list position if possible */
-    pos = g_list_position(self->labels, self->active);
+    if (self->active && self->labels_len > 1)
+        pos = g_list_position(self->labels, self->active);
+    else
+        pos = -1;
+
     self->labels_len = g_list_length(self->labels_new);
-    if (pos >= self->labels_len)
-        pos = 0;
+    if (pos >= (gint) self->labels_len)
+        pos = -1;
     self->active = g_list_nth(self->labels_new, pos + 1);
     if (self->active == NULL)
         self->active = self->labels_new;
