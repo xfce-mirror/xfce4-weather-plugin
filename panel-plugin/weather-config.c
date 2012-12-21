@@ -269,29 +269,32 @@ static void
 lookup_altitude_timezone(const gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    gchar *url, latbuf[10], lonbuf[10];
+    gchar *url, *latstr, *lonstr;
     gdouble lat, lon;
 
     lat = gtk_spin_button_get_value(GTK_SPIN_BUTTON(dialog->spin_lat));
     lon = gtk_spin_button_get_value(GTK_SPIN_BUTTON(dialog->spin_lon));
 
-    (void) g_ascii_formatd(latbuf, 10, "%.6f", lat);
-    (void) g_ascii_formatd(lonbuf, 10, "%.6f", lon);
+    latstr = double_to_string(lat, "%.6f");
+    lonstr = double_to_string(lon, "%.6f");
 
     /* lookup altitude */
     url = g_strdup_printf("http://api.geonames.org"
                           "/srtm3XML?lat=%s&lng=%s&username=%s",
-                          &latbuf[0], &lonbuf[0], GEONAMES_USERNAME);
+                          latstr, lonstr, GEONAMES_USERNAME);
     weather_http_queue_request(dialog->pd->session, url,
                                cb_lookup_altitude, user_data);
     g_free(url);
 
     /* lookup timezone */
     url = g_strdup_printf("http://www.earthtools.org/timezone/%s/%s",
-                          &latbuf[0], &lonbuf[0]);
+                          latstr, lonstr);
     weather_http_queue_request(dialog->pd->session, url,
                                cb_lookup_timezone, user_data);
     g_free(url);
+
+    g_free(lonstr);
+    g_free(latstr);
 }
 
 
@@ -350,24 +353,25 @@ cb_findlocation(GtkButton *button,
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     search_dialog *sdialog;
     gchar *loc_name, *lat, *lon;
-    gchar latbuf[10], lonbuf[10];
 
     sdialog = create_search_dialog(NULL, dialog->pd->session);
 
     gtk_widget_set_sensitive(GTK_WIDGET(button), FALSE);
     if (run_search_dialog(sdialog)) {
         /* limit digit precision of coordinates from search results */
-        lat = g_ascii_formatd(latbuf, 10, "%.6f",
-                              string_to_double(sdialog->result_lat, 0));
+        lat = double_to_string(string_to_double(sdialog->result_lat, 0),
+                               "%.6f");
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_lat),
                                   string_to_double(lat, 0));
-        lon = g_ascii_formatd(lonbuf, 10, "%.6f",
-                              string_to_double(sdialog->result_lon, 0));
+        lon = double_to_string(string_to_double(sdialog->result_lon, 0),
+                               "%.6f");
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_lon),
                                   string_to_double(lon, 0));
         loc_name = sanitize_location_name(sdialog->result_name);
         gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name), loc_name);
         g_free(loc_name);
+        g_free(lon);
+        g_free(lat);
     }
     free_search_dialog(sdialog);
 
@@ -426,12 +430,11 @@ spin_lat_value_changed(const GtkWidget *spin,
                        gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    gchar latbuf[10];
     gdouble val;
 
     val = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spin));
     g_free(dialog->pd->lat);
-    dialog->pd->lat = g_strdup(g_ascii_formatd(latbuf, 10, "%.6f", val));
+    dialog->pd->lat = double_to_string(val, "%.6f");
     schedule_delayed_data_update(dialog);
 }
 
@@ -441,12 +444,11 @@ spin_lon_value_changed(const GtkWidget *spin,
                        gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    gchar lonbuf[10];
     gdouble val;
 
     val = gtk_spin_button_get_value(GTK_SPIN_BUTTON(spin));
     g_free(dialog->pd->lon);
-    dialog->pd->lon = g_strdup(g_ascii_formatd(lonbuf, 10, "%.6f", val));
+    dialog->pd->lon = double_to_string(val, "%.6f");
     schedule_delayed_data_update(dialog);
 }
 

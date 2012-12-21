@@ -515,7 +515,6 @@ interpolate_gchar_value(gchar *value_start,
                         time_t between_t,
                         gboolean radian)
 {
-    gchar value_result[10];
     gdouble val_start, val_end, val_result;
 
     if (G_UNLIKELY(value_end == NULL))
@@ -539,9 +538,7 @@ interpolate_gchar_value(gchar *value_start,
 
     weather_debug("Interpolated data: start=%f, end=%f, result=%f",
                   val_start, val_end, val_result);
-    (void) g_ascii_formatd(value_result, 10, "%.1f", val_result);
-
-    return g_strdup(value_result);
+    return double_to_string(val_result, "%.1f");
 }
 
 
