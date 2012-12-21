@@ -93,12 +93,24 @@ typedef struct {
 /* convert string to a double value, returning backup value on error */
 gdouble
 string_to_double(const gchar *str,
-                 gdouble backup)
+                 const gdouble backup)
 {
     gdouble d = backup;
     if (str && strlen(str) > 0)
         d = g_ascii_strtod(str, NULL);
     return d;
+}
+
+
+/* convert double to string, using non-local format */
+gchar *
+double_to_string(const gdouble val,
+                 const gchar *format)
+{
+    gchar buf[20];
+    return g_strdup(g_ascii_formatd(buf, 20,
+                                    format ? format : "%.1f",
+                                    val));
 }
 
 
