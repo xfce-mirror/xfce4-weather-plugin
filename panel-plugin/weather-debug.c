@@ -430,7 +430,7 @@ weather_dump_plugindata(const plugin_data *data)
                            "  latitude: %s\n"
                            "  longitude: %s\n"
                            "  msl: %d\n"
-                           "  timezone: %d\n"
+                           "  timezone: %.1f\n"
                            "  night time: %s\n"
                            "  --------------------------------------------\n"
                            "  icon theme dir: %s\n"

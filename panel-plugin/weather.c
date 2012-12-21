@@ -720,8 +720,12 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
     data->msl = xfce_rc_read_int_entry(rc, "msl", 0);
     constrain_to_limits(&data->msl, -420, 10000);
 
-    data->timezone = xfce_rc_read_int_entry(rc, "timezone", 0);
-    constrain_to_limits(&data->timezone, -24, 24);
+    value = xfce_rc_read_entry(rc, "timezone", 0);
+    data->timezone = string_to_double(value, 0);
+    if (data->timezone < -25.0)
+        data->timezone = -25;
+    if (data->timezone > 25.0)
+        data->timezone = 25;
 
     data->cache_file_max_age =
         xfce_rc_read_int_entry(rc, "cache_file_max_age", CACHE_FILE_MAX_AGE);
@@ -830,7 +834,9 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
 
     xfce_rc_write_int_entry(rc, "msl", data->msl);
 
-    xfce_rc_write_int_entry(rc, "timezone", data->timezone);
+    value = double_to_string(data->timezone, "%.1f");
+    xfce_rc_write_entry(rc, "timezone", value);
+    g_free(value);
 
     xfce_rc_write_int_entry(rc, "cache_file_max_age",
                             data->cache_file_max_age);
@@ -909,7 +915,7 @@ write_cache_file(plugin_data *data)
     xml_weather *wd = data->weatherdata;
     xml_time *timeslice;
     xml_location *loc;
-    gchar *file, *start, *end, *point, *now;
+    gchar *file, *start, *end, *point, *now, *value;
     gchar *date_format = "%Y-%m-%dT%H:%M:%SZ";
     time_t now_t = time(NULL);
     gint i, j;
@@ -923,8 +929,11 @@ write_cache_file(plugin_data *data)
     CACHE_APPEND("location_name=%s\n", data->location_name);
     CACHE_APPEND("lat=%s\n", data->lat);
     CACHE_APPEND("lon=%s\n", data->lon);
-    g_string_append_printf(out, "msl=%d\ntimezone=%d\ntimeslices=%d\n",
-                           data->msl, data->timezone, wd->timeslices->len);
+    g_string_append_printf(out, "msl=%d\n", data->msl);
+    g_string_append_printf(out, "timeslices=%d\n", wd->timeslices->len);
+    value = double_to_string(data->timezone, "%.1f");
+    CACHE_APPEND("timezone=%s\n", value);
+    g_free(value);
     now = format_date(now_t, date_format, FALSE);
     CACHE_APPEND("cache_date=%s\n\n", now);
     g_free(now);
@@ -991,7 +1000,8 @@ read_cache_file(plugin_data *data)
     time_t now_t = time(NULL), cache_date_t;
     gchar *file, *locname = NULL, *lat = NULL, *lon = NULL, *group = NULL;
     gchar *timestring;
-    gint msl, timezone, num_timeslices, i, j;
+    gdouble timezone;
+    gint msl, num_timeslices, i, j;
 
     g_assert(data != NULL);
     if (G_UNLIKELY(data == NULL))
@@ -1032,7 +1042,7 @@ read_cache_file(plugin_data *data)
     }
     msl = g_key_file_get_integer(keyfile, group, "msl", err);
     if (!err)
-        timezone = g_key_file_get_integer(keyfile, group, "timezone", err);
+        timezone = g_key_file_get_double(keyfile, group, "timezone", err);
     if (!err)
         num_timeslices = g_key_file_get_integer(keyfile, group,
                                                 "timeslices", err);

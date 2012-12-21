@@ -249,14 +249,14 @@ cb_lookup_timezone(SoupSession *session,
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     xml_timezone *timezone;
-    gint tz;
+    gdouble tz;
 
     timezone = (xml_timezone *)
         parse_xml_document(msg, (XmlParseFunc) parse_timezone);
     weather_dump(weather_dump_timezone, timezone);
 
     if (timezone) {
-        tz = (gint) string_to_double(timezone->offset, -9999);
+        tz = string_to_double(timezone->offset, -9999);
         if (tz != -9999)
             gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_timezone),
                                       tz);
@@ -475,7 +475,7 @@ spin_timezone_value_changed(const GtkWidget *spin,
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
 
     dialog->pd->timezone =
-        gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spin));
+        gtk_spin_button_get_value(GTK_SPIN_BUTTON(spin));
 }
 
 
@@ -577,13 +577,15 @@ create_location_page(xfceweather_dialog *dialog)
     /* timezone */
     hbox = gtk_hbox_new(FALSE, BORDER);
     ADD_LABEL(_("_Timezone:"), sg_label);
-    ADD_SPIN(dialog->spin_timezone, -24, 24, 1,
-             dialog->pd->timezone, 0, sg_spin);
+    ADD_SPIN(dialog->spin_timezone, -25, 25, 0.5,
+             dialog->pd->timezone, 1, sg_spin);
     SET_TOOLTIP
         (dialog->spin_timezone,
          _("If the chosen location is not in your current timezone, this "
            "value which is auto-detected using the EarthTools web service "
-           "will be used for correcting the time differences."));
+           "will be used for correcting the time differences. Please adjust "
+           "it manually to accomodate for daylight summer time or if it "
+           "is not correct."));
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
 
     /* instructions for correction of altitude and timezone */
