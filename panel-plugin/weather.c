@@ -332,6 +332,7 @@ update_current_conditions(plugin_data *data)
     if (G_UNLIKELY(data->weatherdata == NULL)) {
         update_icon(data);
         update_scrollbox(data, FALSE);
+        schedule_next_wakeup(data);
         return;
     }
 
@@ -514,6 +515,8 @@ update_handler(plugin_data *data)
     if (G_UNLIKELY(data == NULL))
         return FALSE;
 
+    /* plugin has not been configured yet, so simply update icon and
+       scrollbox and return */
     if (G_UNLIKELY(data->lat == NULL || data->lon == NULL)) {
         update_icon(data);
         update_scrollbox(data, FALSE);
@@ -521,10 +524,13 @@ update_handler(plugin_data *data)
     }
 
     now_t = time(NULL);
+    now_tm = *localtime(&now_t);
 
     /* fetch astronomical data */
     if (difftime(data->astro_update->next, now_t) <= 0) {
-        now_tm = *localtime(&now_t);
+        /* real next update time will be calculated when update is finished,
+           this is to prevent spawning multiple updates in a row */
+        data->astro_update->next = time_calc_hour(now_tm, 1);
 
         /* build url */
         url = g_strdup_printf("http://api.yr.no/weatherapi/sunrise/1.0/?"
@@ -542,6 +548,10 @@ update_handler(plugin_data *data)
 
     /* fetch weather data */
     if (difftime(data->weather_update->next, now_t) <= 0) {
+        /* real next update time will be calculated when update is finished,
+           this is to prevent spawning multiple updates in a row */
+        data->weather_update->next = time_calc_hour(now_tm, 1);
+
         /* build url */
         url =
             g_strdup_printf("http://api.yr.no/weatherapi"
@@ -554,15 +564,21 @@ update_handler(plugin_data *data)
                                    cb_weather_update, data);
         g_free(url);
 
-        /* cb_update will deal with everything that follows this
+        /* cb_weather_update will deal with everything that follows this
          * block, so let's return instead of doing things twice */
         return FALSE;
     }
 
     /* update current conditions, icon and labels */
     if (difftime(data->conditions_update->next, now_t) <= 0) {
+        /* real next update time will be calculated when update is finished,
+           this is to prevent spawning multiple updates in a row */
+        data->conditions_update->next = time_calc_hour(now_tm, 1);
         weather_debug("Updating current conditions.");
         update_current_conditions(data);
+        /* update_current_conditions updates day/night time status
+           too, so quit here */
+        return FALSE;
     }
 
     /* update night time status and icon */
@@ -573,6 +589,7 @@ update_handler(plugin_data *data)
         update_icon(data);
     }
 
+    schedule_next_wakeup(data);
     return FALSE;
 }
 
