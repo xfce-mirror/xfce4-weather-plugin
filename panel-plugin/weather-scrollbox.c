@@ -369,7 +369,7 @@ gtk_scrollbox_control_loop(gpointer user_data)
             if (self->orientation == GTK_ORIENTATION_HORIZONTAL)
                 self->offset = GTK_WIDGET(self)->allocation.height;
             else
-                self->offset = 0;
+                self->offset = 0 - GTK_WIDGET(self)->allocation.width;
         } else
             self->offset = 0;
         self->timeout_id = g_timeout_add(LABEL_SPEED,
