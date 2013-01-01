@@ -443,6 +443,7 @@ gtk_scrollbox_reset(GtkScrollbox *self)
         self->timeout_id = 0;
     }
     self->fade = FADE_OUT;
+    gtk_scrollbox_prev_label(self);
     (void) gtk_scrollbox_control_loop(self);
 }
 
