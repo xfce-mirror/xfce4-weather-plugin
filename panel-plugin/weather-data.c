@@ -180,15 +180,10 @@ get_data(const xml_time *timeslice,
     case LONGITUDE:
         return LOCALE_DOUBLE(loc->longitude, "%.4f");
 
-    case TEMPERATURE:      /* source may be in Celsius or Fahrenheit */
+    case TEMPERATURE:      /* source is in °C */
         val = string_to_double(loc->temperature_value, 0);
-        if (units->temperature == FAHRENHEIT &&
-            (!strcmp(loc->temperature_unit, "celcius") ||
-             !strcmp(loc->temperature_unit, "celsius")))
+        if (units->temperature == FAHRENHEIT)
             val = val * 9.0 / 5.0 + 32.0;
-        else if (units->temperature == CELSIUS &&
-                 !strcmp(loc->temperature_unit, "fahrenheit"))
-            val = (val - 32.0) * 5.0 / 9.0;
         return g_strdup_printf(ROUND_TO_INT("%.1f"), val);
 
     case PRESSURE:         /* source is in hectopascals */

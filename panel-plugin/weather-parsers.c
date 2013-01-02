@@ -200,6 +200,18 @@ parse_location(xmlNode *cur_node,
             loc->symbol_id = strtol(PROP(child_node, "number"), NULL, 10);
         }
     }
+
+    /* Convert Fahrenheit to Celsius if necessary, so that we don't
+       have to do it later. met.no usually provides values in Celsius. */
+    if (loc->temperature_value && loc->temperature_unit &&
+        !strcmp(loc->temperature_unit, "fahrenheit")) {
+        gdouble val = string_to_double(loc->temperature_value, 0);
+        val = (val - 32.0) * 5.0 / 9.0;
+        g_free(loc->temperature_value);
+        loc->temperature_value = double_to_string(val, "%.1f");
+        g_free(loc->temperature_unit);
+        loc->temperature_unit = g_strdup("celsius");
+    }
 }
 
 
