@@ -613,7 +613,7 @@ combo_unit_temperature_changed(GtkWidget *combo,
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     dialog->pd->units->temperature =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
-    update_scrollbox(dialog->pd);
+    update_scrollbox(dialog->pd, TRUE);
     update_summary_window(dialog, TRUE);
 }
 
@@ -625,7 +625,7 @@ combo_unit_pressure_changed(GtkWidget *combo,
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     dialog->pd->units->pressure =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
-    update_scrollbox(dialog->pd);
+    update_scrollbox(dialog->pd, TRUE);
     update_summary_window(dialog, TRUE);
 }
 
@@ -637,7 +637,7 @@ combo_unit_windspeed_changed(GtkWidget *combo,
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     dialog->pd->units->windspeed =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
-    update_scrollbox(dialog->pd);
+    update_scrollbox(dialog->pd, TRUE);
     update_summary_window(dialog, TRUE);
 }
 
@@ -649,7 +649,7 @@ combo_unit_precipitations_changed(GtkWidget *combo,
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     dialog->pd->units->precipitations =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
-    update_scrollbox(dialog->pd);
+    update_scrollbox(dialog->pd, TRUE);
     update_summary_window(dialog, TRUE);
 }
 
@@ -835,7 +835,7 @@ check_round_values_toggled(GtkWidget *button,
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     dialog->pd->round =
         gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button));
-    update_scrollbox(dialog->pd);
+    update_scrollbox(dialog->pd, TRUE);
     update_summary_window(dialog, TRUE);
 }
 
@@ -941,7 +941,7 @@ spin_scrollbox_lines_value_changed(const GtkWidget *spin,
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     dialog->pd->scrollbox_lines =
         gtk_spin_button_get_value_as_int(GTK_SPIN_BUTTON(spin));
-    update_scrollbox(dialog->pd);
+    update_scrollbox(dialog->pd, FALSE);
 }
 
 
@@ -1074,7 +1074,7 @@ update_scrollbox_labels(xfceweather_dialog *dialog)
             gtk_tree_model_iter_next(GTK_TREE_MODEL(dialog->model_datatypes),
                                      &iter);
     }
-    update_scrollbox(dialog->pd);
+    update_scrollbox(dialog->pd, TRUE);
 }
 
 

@@ -128,7 +128,8 @@ gchar *get_cache_directory(void);
 
 void update_icon(plugin_data *data);
 
-void update_scrollbox(plugin_data *data);
+void update_scrollbox(plugin_data *data,
+                      gboolean immediately);
 
 void update_weatherdata_with_reset(plugin_data *data,
                                    gboolean clear);

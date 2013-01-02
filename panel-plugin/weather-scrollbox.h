@@ -80,6 +80,8 @@ GtkWidget *gtk_scrollbox_new(void);
 
 void gtk_scrollbox_clear_new(GtkScrollbox *self);
 
+void gtk_scrollbox_swap_labels(GtkScrollbox *self);
+
 void gtk_scrollbox_reset(GtkScrollbox *self);
 
 void gtk_scrollbox_set_animate(GtkScrollbox *self,

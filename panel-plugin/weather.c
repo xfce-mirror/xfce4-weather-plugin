@@ -277,7 +277,8 @@ scrollbox_set_visible(plugin_data *data)
 
 
 void
-update_scrollbox(plugin_data *data)
+update_scrollbox(plugin_data *data,
+                 gboolean immediately)
 {
     GString *out;
     gchar *label = NULL;
@@ -313,6 +314,11 @@ update_scrollbox(plugin_data *data)
     }
     gtk_scrollbox_set_animate(GTK_SCROLLBOX(data->scrollbox),
                               data->scrollbox_animate);
+    /* update labels immediately (mainly used on config change) */
+    if (immediately) {
+        gtk_scrollbox_prev_label(GTK_SCROLLBOX(data->scrollbox));
+        gtk_scrollbox_swap_labels(GTK_SCROLLBOX(data->scrollbox));
+    }
     scrollbox_set_visible(data);
     weather_debug("Updated scrollbox.");
 }
@@ -325,7 +331,7 @@ update_current_conditions(plugin_data *data)
 
     if (G_UNLIKELY(data->weatherdata == NULL)) {
         update_icon(data);
-        update_scrollbox(data);
+        update_scrollbox(data, FALSE);
         return;
     }
 
@@ -354,7 +360,7 @@ update_current_conditions(plugin_data *data)
 
     /* update widgets */
     update_icon(data);
-    update_scrollbox(data);
+    update_scrollbox(data, FALSE);
     weather_debug("Updated current conditions.");
 }
 
@@ -510,7 +516,7 @@ update_handler(plugin_data *data)
 
     if (G_UNLIKELY(data->lat == NULL || data->lon == NULL)) {
         update_icon(data);
-        update_scrollbox(data);
+        update_scrollbox(data, FALSE);
         return FALSE;
     }
 
@@ -1593,7 +1599,7 @@ xfceweather_set_size(XfcePanelPlugin *panel,
     data->size = size;
 
     update_icon(data);
-    update_scrollbox(data);
+    update_scrollbox(data, FALSE);
 
     weather_dump(weather_dump_plugindata, data);
 
@@ -1634,7 +1640,7 @@ xfceweather_set_mode(XfcePanelPlugin *panel,
                                   data->orientation);
 
     update_icon(data);
-    update_scrollbox(data);
+    update_scrollbox(data, FALSE);
 
     weather_dump(weather_dump_plugindata, data);
 
@@ -1671,7 +1677,7 @@ xfceweather_set_orientation(XfcePanelPlugin *panel,
                                   data->panel_orientation);
 
     update_icon(data);
-    update_scrollbox(data);
+    update_scrollbox(data, FALSE);
 
     weather_dump(weather_dump_plugindata, data);
 

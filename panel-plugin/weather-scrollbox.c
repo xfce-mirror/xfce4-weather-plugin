@@ -242,7 +242,7 @@ gtk_scrollbox_add_label(GtkScrollbox *self,
  * Sets new labels active if there are any, or advances the current
  * label.
  */
-static void
+void
 gtk_scrollbox_swap_labels(GtkScrollbox *self)
 {
     gint pos;
