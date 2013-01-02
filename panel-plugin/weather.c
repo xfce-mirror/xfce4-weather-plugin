@@ -133,6 +133,9 @@ make_label(const plugin_data *data,
     case HUMIDITY:
         lbl = _("H");
         break;
+    case DEWPOINT:
+        lbl = _("D");
+        break;
     case CLOUDS_LOW:
         lbl = _("CL");
         break;

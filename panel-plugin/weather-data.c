@@ -21,6 +21,7 @@
 #endif
 
 #include <libxfce4util/libxfce4util.h>
+#include <math.h>
 
 #include "weather-parsers.h"
 #include "weather-data.h"
@@ -148,6 +149,22 @@ timeslice_is_interval(xml_time *timeslice)
 }
 
 
+/*
+ * Calculate dew point in Celsius, taking the Magnus formulae as a
+ * basis. Source: http://de.wikipedia.org/wiki/Taupunkt
+ */
+static gdouble
+calc_dewpoint(const xml_location *loc)
+{
+    gdouble temp = string_to_double(loc->temperature_value, 0);
+    gdouble humidity = string_to_double(loc->humidity_value, 0);
+    gdouble val = log(humidity / 100);
+
+    return (241.2 * val + 4222.03716 * temp / (241.2 + temp))
+        / (17.5043 - val - 17.5043 * temp / (241.2 + temp));
+}
+
+
 gchar *
 get_data(const xml_time *timeslice,
          const units_config *units,
@@ -232,6 +249,12 @@ get_data(const xml_time *timeslice,
     case HUMIDITY:
         return LOCALE_DOUBLE(loc->humidity_value, ROUND_TO_INT("%.1f"));
 
+    case DEWPOINT:
+        val = calc_dewpoint(loc);
+        if (units->temperature == FAHRENHEIT)
+            val = val * 9.0 / 5.0 + 32.0;
+        return g_strdup_printf(ROUND_TO_INT("%.1f"), val);
+
     case CLOUDS_LOW:
         return LOCALE_DOUBLE(loc->clouds_percent[CLOUDS_PERC_LOW],
                              ROUND_TO_INT("%.1f"));
@@ -276,6 +299,7 @@ get_unit(const units_config *units,
     case ALTITUDE:
         return (units->altitude == FEET) ? _("ft") : _("m");
     case TEMPERATURE:
+    case DEWPOINT:
         return (units->temperature == FAHRENHEIT) ? _("°F") : _("°C");
     case PRESSURE:
         switch (units->pressure) {

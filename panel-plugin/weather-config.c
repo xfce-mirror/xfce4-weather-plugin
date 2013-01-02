@@ -32,7 +32,7 @@
 #include "weather-scrollbox.h"
 
 #define UPDATE_TIMER_DELAY 7
-#define OPTIONS_N 13
+#define OPTIONS_N 14
 #define BORDER 4
 #define LOC_NAME_MAX_LEN 50
 
@@ -99,6 +99,7 @@ static const labeloption labeloptions[OPTIONS_N] = {
     {N_("Wind direction (WD)"), WIND_DIRECTION},
     {N_("Wind direction in degrees (WD)"), WIND_DIRECTION_DEG},
     {N_("Humidity (H)"), HUMIDITY},
+    {N_("Dew point (D)"), DEWPOINT},
     {N_("Low clouds (CL)"), CLOUDS_LOW},
     {N_("Medium clouds (CM)"), CLOUDS_MED},
     {N_("High clouds (CH)"), CLOUDS_HIGH},

@@ -32,6 +32,7 @@ typedef enum {
     WIND_DIRECTION,
     WIND_DIRECTION_DEG,
     HUMIDITY,
+    DEWPOINT,
     CLOUDS_LOW,
     CLOUDS_MED,
     CLOUDS_HIGH,
