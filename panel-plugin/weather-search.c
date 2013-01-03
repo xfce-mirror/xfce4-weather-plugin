@@ -353,6 +353,13 @@ get_preferred_units(const gchar *country_code)
     if (!strcmp(country_code, "RU"))          /* Russian Federation */
         units->pressure = TORR;
 
+    if (!strcmp(country_code, "US"))          /* United States */
+        units->apparent_temperature = WINDCHILL_HEATINDEX;
+    else if (!strcmp(country_code, "CA"))     /* Canada */
+        units->apparent_temperature = WINDCHILL_HUMIDEX;
+    else if (!strcmp(country_code, "AU"))     /* Australia */
+        units->apparent_temperature = STEADMAN;
+
     return units;
 }
 

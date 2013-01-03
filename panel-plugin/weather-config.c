@@ -32,7 +32,7 @@
 #include "weather-scrollbox.h"
 
 #define UPDATE_TIMER_DELAY 7
-#define OPTIONS_N 14
+#define OPTIONS_N 15
 #define BORDER 4
 #define LOC_NAME_MAX_LEN 50
 
@@ -100,6 +100,7 @@ static const labeloption labeloptions[OPTIONS_N] = {
     {N_("Wind direction in degrees (WD)"), WIND_DIRECTION_DEG},
     {N_("Humidity (H)"), HUMIDITY},
     {N_("Dew point (D)"), DEWPOINT},
+    {N_("Apparent temperature (A)"), APPARENT_TEMPERATURE},
     {N_("Low clouds (CL)"), CLOUDS_LOW},
     {N_("Medium clouds (CM)"), CLOUDS_MED},
     {N_("High clouds (CH)"), CLOUDS_HIGH},
@@ -311,6 +312,8 @@ setup_units(xfceweather_dialog *dialog,
     SET_COMBO_VALUE(dialog->combo_unit_windspeed, units->windspeed);
     SET_COMBO_VALUE(dialog->combo_unit_precipitations, units->precipitations);
     SET_COMBO_VALUE(dialog->combo_unit_altitude, units->altitude);
+    SET_COMBO_VALUE(dialog->combo_apparent_temperature,
+                    units->apparent_temperature);
 }
 
 
@@ -624,6 +627,18 @@ combo_unit_temperature_changed(GtkWidget *combo,
 
 
 static void
+combo_apparent_temperature_changed(GtkWidget *combo,
+                                   gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    dialog->pd->units->apparent_temperature =
+        gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+    update_scrollbox(dialog->pd, TRUE);
+    update_summary_window(dialog, TRUE);
+}
+
+
+static void
 combo_unit_pressure_changed(GtkWidget *combo,
                             gpointer user_data)
 {
@@ -675,7 +690,7 @@ combo_unit_altitude_changed(GtkWidget *combo,
 static GtkWidget *
 create_units_page(xfceweather_dialog *dialog)
 {
-    GtkWidget *palign, *page, *hbox, *vbox, *label;
+    GtkWidget *palign, *page, *hbox, *vbox, *label, *sep;
     GtkSizeGroup *sg_label;
 
     ADD_PAGE(FALSE);
@@ -738,6 +753,22 @@ create_units_page(xfceweather_dialog *dialog)
                     _("Meters (m)"));
     ADD_COMBO_VALUE(dialog->combo_unit_altitude,
                     _("Feet (ft)"));
+    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
+
+    /* separator */
+    sep = gtk_hseparator_new();
+    gtk_box_pack_start(GTK_BOX(vbox), sep, FALSE, FALSE, BORDER * 2);
+
+    /* apparent temperature model */
+    hbox = gtk_hbox_new(FALSE, BORDER);
+    ADD_LABEL(_("Apparent te_mperature:"), sg_label);
+    ADD_COMBO(dialog->combo_apparent_temperature);
+    ADD_COMBO_VALUE(dialog->combo_apparent_temperature,
+                    _("Windchill/Heat index"));
+    ADD_COMBO_VALUE(dialog->combo_apparent_temperature,
+                    _("Windchill/Humidex"));
+    ADD_COMBO_VALUE(dialog->combo_apparent_temperature, _("Steadman"));
+    ADD_COMBO_VALUE(dialog->combo_apparent_temperature, _("Quayle-Steadman"));
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
 
     /* initialize widgets with current data */
@@ -1408,6 +1439,8 @@ setup_notebook_signals(xfceweather_dialog *dialog)
                      G_CALLBACK(combo_unit_precipitations_changed), dialog);
     g_signal_connect(dialog->combo_unit_altitude, "changed",
                      G_CALLBACK(combo_unit_altitude_changed), dialog);
+    g_signal_connect(dialog->combo_apparent_temperature, "changed",
+                     G_CALLBACK(combo_apparent_temperature_changed), dialog);
 
     /* appearance page */
     g_signal_connect(dialog->combo_icon_theme, "changed",

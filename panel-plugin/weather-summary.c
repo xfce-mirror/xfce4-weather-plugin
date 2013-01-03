@@ -421,6 +421,7 @@ create_summary_tab(plugin_data *data)
     APPEND_BTEXT(_("\nTemperatures\n"));
     APPEND_TEXT_ITEM(_("Temperature"), TEMPERATURE);
     APPEND_TEXT_ITEM(_("Dew point"), DEWPOINT);
+    APPEND_TEXT_ITEM(_("Apparent temperature"), APPARENT_TEMPERATURE);
 
     /* wind */
     APPEND_BTEXT(_("\nWind\n"));
@@ -548,7 +549,9 @@ forecast_cell_get_tooltip_text(plugin_data *data,
     g_free(value);
 
     g_string_append(text, _("<b>Temperatures</b>\n"));
-    APPEND_TOOLTIP_ITEM(_("Dew point:\t\t\t%s%s%s\n\n"), DEWPOINT);
+    APPEND_TOOLTIP_ITEM(_("Dew point:\t\t\t%s%s%s\n"), DEWPOINT);
+    APPEND_TOOLTIP_ITEM(_("Apparent temperature:\t%s%s%s\n\n"),
+                        APPARENT_TEMPERATURE);
 
     g_string_append(text, _("<b>Atmosphere</b>\n"));
     APPEND_TOOLTIP_ITEM(_("Pressure:\t%s%s%s\n"), PRESSURE);

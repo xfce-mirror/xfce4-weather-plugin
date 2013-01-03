@@ -165,6 +165,121 @@ calc_dewpoint(const xml_location *loc)
 }
 
 
+/* Calculate felt air temperature, using the chosen model. */
+static gdouble
+calc_apparent_temperature(const xml_location *loc,
+                          const apparent_temp_models model,
+                          const gboolean night_time)
+{
+    gdouble temp = string_to_double(loc->temperature_value, 0);
+    gdouble windspeed = string_to_double(loc->wind_speed_mps, 0);
+    gdouble humidity = string_to_double(loc->humidity_value, 0);
+    gdouble dp, e;
+
+    switch (model) {
+    case WINDCHILL_HEATINDEX:
+        /* If temperature is lower than 10 °C, use wind chill index,
+           if above 26.7°C use the heat index / Summer Simmer Index. */
+
+        /* wind chill is only defined for wind speeds above 3.0 mph */
+        windspeed *= 3.6;
+        if (windspeed < 4.828032)
+            return temp;
+
+        /* Wind chill, source:
+           http://www.nws.noaa.gov/os/windchill/index.shtml */
+        if (temp <= 10.0)
+            return 13.12 + 0.6215 * temp - 11.37 * pow(windspeed, 0.16)
+                + 0.3965 * temp * pow(windspeed, 0.16);
+
+        if (temp >= 26.7 || (night_time && temp >= 22.0)) {
+            /* humidity needs to be higher than 40% for a valid result */
+            if (humidity < 40)
+                return temp;
+
+            temp = temp * 9.0 / 5.0 + 32.0;  /* both models use Fahrenheit */
+            if (!night_time)
+                /* Heat index, source:
+                   Lans P. Rothfusz. "The Heat Index 'Equation' (or, More
+                   Than You Ever Wanted to Know About Heat Index)",
+                   Scientific Services Division (NWS Southern Region
+                   Headquarters), 1 July 1990.
+                   http://www.srh.noaa.gov/images/ffc/pdf/ta_htindx.PDF
+                */
+                return ((-42.379
+                         + 2.04901523 * temp
+                         + 10.14333127 * humidity
+                         - 0.22475541 * temp * humidity
+                         - 0.00683783 * temp * temp
+                         - 0.05481717 * humidity * humidity
+                         + 0.00122874 * temp * temp * humidity
+                         + 0.00085282 * temp * humidity * humidity
+                         - 0.00000199 * temp * temp * humidity * humidity)
+                        - 32.0) * 5.0 / 9.0;   /* convert back to Celsius */
+            else
+                /* Summer Simmer Index, sources:
+                   http://www.summersimmer.com/home.htm
+                   http://www.gorhamschaffler.com/humidity_formulas.htm */
+                return ((1.98 * (temp - (0.55 - 0.0055 * humidity)
+                                 * (temp - 58)) - 56.83)
+                        - 32.0) * 5.0 / 9.0;   /* convert back to Celsius */
+        }
+
+        /* otherwise simply return the temperature */
+        return temp;
+
+    case WINDCHILL_HUMIDEX:
+        /* If temperature is equal or lower than 0 °C, use wind chill index,
+           if above 20.0 °C use humidex. Source:
+           http://www.weatheroffice.gc.ca/mainmenu/faq_e.html */
+
+        /* wind chill is only defined for wind speeds above 2.0 km/h */
+        windspeed *= 3.6;
+        if (windspeed < 2.0)
+            return temp;
+
+        if (temp <= 0)
+            /* wind chill, source:
+               http://www.nws.noaa.gov/os/windchill/index.shtml */
+            return 13.12 + 0.6215 * temp - 11.37 * pow(windspeed, 0.16)
+                + 0.3965 * temp * pow(windspeed, 0.16);
+
+        if (temp >= 20.0) {
+            /* Canadian humidex, source:
+               http://www.weatheroffice.gc.ca/mainmenu/faq_e.html#weather6 */
+            dp = calc_dewpoint(loc);
+
+            /* dew point needs to be above a certain limit for
+               valid results, see
+               http://www.weatheroffice.gc.ca/mainmenu/faq_e.html#weather5 */
+            if (dp < 0)
+                return temp;
+
+            /* dew point needs to be converted to Kelvin (easy job ;-) */
+            e = 6.11 * exp(5417.7530 * (1/273.16 - 1/(dp + 273.15)));
+            return temp + 0.5555 * (e - 10.0);
+        }
+        return temp;
+
+    case STEADMAN:
+        /* Australians use a different formula. Source:
+           http://www.bom.gov.au/info/thermal_stress/#atapproximation */
+        e = humidity / 100 * 6.105 * exp(17.27 * temp / (237.7 + temp));
+        return temp + 0.33 * e - 0.7 * windspeed - 4.0;
+
+    case QUAYLE_STEADMAN:
+        /* R. G. Quayle, R. G. Steadman: The Steadman wind chill: an
+           improvement over present scales. In: Weather and
+           Forecasting. 13, 1998, S. 1187–1193 */
+        windspeed *= 3.6;
+        if (windspeed < 4.828032)
+            return temp;
+        return 1.41 - 1.162 * windspeed + 0.980 * temp
+            + 0.0124 * windspeed * windspeed + 0.0185 * windspeed * temp;
+    }
+}
+
+
 gchar *
 get_data(const xml_time *timeslice,
          const units_config *units,
@@ -256,6 +371,13 @@ get_data(const xml_time *timeslice,
             val = val * 9.0 / 5.0 + 32.0;
         return g_strdup_printf(ROUND_TO_INT("%.1f"), val);
 
+    case APPARENT_TEMPERATURE:
+        val = calc_apparent_temperature(loc, units->apparent_temperature,
+                                        night_time);
+        if (units->temperature == FAHRENHEIT)
+            val = val * 9.0 / 5.0 + 32.0;
+        return g_strdup_printf(ROUND_TO_INT("%.1f"), val);
+
     case CLOUDS_LOW:
         return LOCALE_DOUBLE(loc->clouds_percent[CLOUDS_PERC_LOW],
                              ROUND_TO_INT("%.1f"));
@@ -301,6 +423,7 @@ get_unit(const units_config *units,
         return (units->altitude == FEET) ? _("ft") : _("m");
     case TEMPERATURE:
     case DEWPOINT:
+    case APPARENT_TEMPERATURE:
         return (units->temperature == FAHRENHEIT) ? _("°F") : _("°C");
     case PRESSURE:
         switch (units->pressure) {

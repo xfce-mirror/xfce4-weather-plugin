@@ -33,6 +33,7 @@ typedef enum {
     WIND_DIRECTION_DEG,
     HUMIDITY,
     DEWPOINT,
+    APPARENT_TEMPERATURE,
     CLOUDS_LOW,
     CLOUDS_MED,
     CLOUDS_HIGH,
@@ -73,6 +74,13 @@ typedef enum {
 } units_altitude;
 
 typedef enum {
+    WINDCHILL_HEATINDEX,
+    WINDCHILL_HUMIDEX,
+    STEADMAN,
+    QUAYLE_STEADMAN
+} apparent_temp_models;
+
+typedef enum {
     MORNING,
     AFTERNOON,
     EVENING,
@@ -81,6 +89,7 @@ typedef enum {
 
 typedef struct {
     gint temperature;
+    gint apparent_temperature;
     gint pressure;
     gint windspeed;
     gint precipitations;

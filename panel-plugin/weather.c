@@ -137,6 +137,9 @@ make_label(const plugin_data *data,
     case DEWPOINT:
         lbl = _("D");
         break;
+    case APPARENT_TEMPERATURE:
+        lbl = _("A");
+        break;
     case CLOUDS_LOW:
         lbl = _("CL");
         break;
