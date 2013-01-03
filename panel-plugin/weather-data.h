@@ -103,7 +103,8 @@ gboolean timeslice_is_interval(xml_time *timeslice);
 gchar *get_data(const xml_time *timeslice,
                 const units_config *units,
                 data_types type,
-                gboolean round);
+                gboolean round,
+                gboolean night_time);
 
 const gchar *get_unit(const units_config *units,
                       data_types type);

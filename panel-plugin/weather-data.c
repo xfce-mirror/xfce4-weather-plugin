@@ -169,7 +169,8 @@ gchar *
 get_data(const xml_time *timeslice,
          const units_config *units,
          const data_types type,
-         gboolean round)
+         const gboolean round,
+         const gboolean night_time)
 {
     const xml_location *loc = NULL;
     gdouble val;

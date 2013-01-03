@@ -50,7 +50,8 @@ lnk_clicked(GtkTextTag *tag,
     g_free(value);
 
 #define APPEND_TEXT_ITEM(text, item)                            \
-    rawvalue = get_data(conditions, data->units, item, FALSE);  \
+    rawvalue = get_data(conditions, data->units, item,          \
+                        FALSE, data->night_time);               \
     unit = get_unit(data->units, item);                         \
     value = g_strdup_printf("\t%s%s%s%s%s\n",                   \
                             text, text ? ": " : "",             \
@@ -84,7 +85,8 @@ lnk_clicked(GtkTextTag *tag,
              pos, pos+1, 0, 1);                         \
 
 #define APPEND_TOOLTIP_ITEM(description, item)                  \
-    value = get_data(fcdata, data->units, item, data->round);   \
+    value = get_data(fcdata, data->units, item,                 \
+                     data->round, data->night_time);            \
     unit = get_unit(data->units, item);                         \
     g_string_append_printf(text, description, value,            \
                            strcmp(unit, "°") ? " " : "",        \
@@ -422,8 +424,10 @@ create_summary_tab(plugin_data *data)
 
     /* wind */
     APPEND_BTEXT(_("\nWind\n"));
-    wind = get_data(conditions, data->units, WIND_SPEED, FALSE);
-    rawvalue = get_data(conditions, data->units, WIND_BEAUFORT, FALSE);
+    wind = get_data(conditions, data->units, WIND_SPEED,
+                    FALSE, data->night_time);
+    rawvalue = get_data(conditions, data->units, WIND_BEAUFORT,
+                        FALSE, data->night_time);
     value = g_strdup_printf(_("\t%s: %s %s (%s on the Beaufort scale)\n"),
                             _("Speed"), wind,
                             get_unit(data->units, WIND_SPEED),
@@ -432,10 +436,12 @@ create_summary_tab(plugin_data *data)
     g_free(wind);
     APPEND_TEXT_ITEM_REAL(value);
 
-    rawvalue = get_data(conditions, data->units, WIND_DIRECTION, FALSE);
+    rawvalue = get_data(conditions, data->units, WIND_DIRECTION,
+                        FALSE, data->night_time);
     wind = translate_wind_direction(rawvalue);
     g_free(rawvalue);
-    rawvalue = get_data(conditions, data->units, WIND_DIRECTION_DEG, FALSE);
+    rawvalue = get_data(conditions, data->units, WIND_DIRECTION_DEG,
+                        FALSE, data->night_time);
     value = g_strdup_printf("\t%s: %s (%s%s)\n", _("Direction"),
                             wind, rawvalue,
                             get_unit(data->units, WIND_DIRECTION_DEG));
@@ -630,7 +636,8 @@ add_forecast_cell(plugin_data *data,
     }
 
     /* symbol */
-    rawvalue = get_data(fcdata, data->units, SYMBOL, FALSE);
+    rawvalue = get_data(fcdata, data->units, SYMBOL,
+                        FALSE, data->night_time);
     icon = get_icon(data->icon_theme, rawvalue, 48, (daytime == NIGHT));
     g_free(rawvalue);
     image = gtk_image_new_from_pixbuf(icon);
@@ -639,7 +646,8 @@ add_forecast_cell(plugin_data *data,
         g_object_unref(G_OBJECT(icon));
 
     /* symbol description */
-    rawvalue = get_data(fcdata, data->units, SYMBOL, FALSE);
+    rawvalue = get_data(fcdata, data->units, SYMBOL,
+                        FALSE, data->night_time);
     value = g_strdup_printf("%s",
                             translate_desc(rawvalue, (daytime == NIGHT)));
     g_free(rawvalue);
@@ -651,8 +659,8 @@ add_forecast_cell(plugin_data *data,
     g_free(value);
 
     /* temperature */
-    rawvalue = get_data(fcdata, data->units,
-                        TEMPERATURE, data->round);
+    rawvalue = get_data(fcdata, data->units, TEMPERATURE,
+                        data->round, data->night_time);
     value = g_strdup_printf("%s %s", rawvalue,
                             get_unit(data->units, TEMPERATURE));
     g_free(rawvalue);
@@ -663,9 +671,11 @@ add_forecast_cell(plugin_data *data,
     g_free(value);
 
     /* wind direction and speed */
-    rawvalue = get_data(fcdata, data->units, WIND_DIRECTION, FALSE);
+    rawvalue = get_data(fcdata, data->units, WIND_DIRECTION,
+                        FALSE, data->night_time);
     wind_direction = translate_wind_direction(rawvalue);
-    wind_speed = get_data(fcdata, data->units, WIND_SPEED, data->round);
+    wind_speed = get_data(fcdata, data->units, WIND_SPEED,
+                          data->round, data->night_time);
     value = g_strdup_printf("%s %s %s", wind_direction, wind_speed,
                             get_unit(data->units, WIND_SPEED));
     g_free(wind_speed);
@@ -879,7 +889,8 @@ create_summary_window(plugin_data *data)
     vbox = gtk_vbox_new(FALSE, 0);
     gtk_box_pack_start(GTK_BOX(GTK_DIALOG(window)->vbox), vbox, TRUE, TRUE, 0);
 
-    symbol = get_data(conditions, data->units, SYMBOL, FALSE);
+    symbol = get_data(conditions, data->units, SYMBOL,
+                      FALSE, data->night_time);
     icon = get_icon(data->icon_theme, symbol, 48, data->night_time);
     g_free(symbol);
 

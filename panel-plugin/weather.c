@@ -50,7 +50,8 @@
 #define UPDATE_INTERVAL (10)
 
 #define DATA_AND_UNIT(var, item)                                    \
-    value = get_data(conditions, data->units, item, data->round);   \
+    value = get_data(conditions, data->units, item,                 \
+                     data->round, data->night_time);                \
     unit = get_unit(data->units, item);                             \
     var = g_strdup_printf("%s%s%s",                                 \
                           value,                                    \
@@ -161,7 +162,8 @@ make_label(const plugin_data *data,
 
     /* get current weather conditions */
     conditions = get_current_conditions(data->weatherdata);
-    rawvalue = get_data(conditions, data->units, type, data->round);
+    rawvalue = get_data(conditions, data->units, type,
+                        data->round, data->night_time);
 
     switch (type) {
     case WIND_DIRECTION:
@@ -261,7 +263,8 @@ update_icon(plugin_data *data)
 
     /* set icon according to current weather conditions */
     conditions = get_current_conditions(data->weatherdata);
-    str = get_data(conditions, data->units, SYMBOL, data->round);
+    str = get_data(conditions, data->units, SYMBOL,
+                   data->round, data->night_time);
     icon = get_icon(data->icon_theme, str, size, data->night_time);
     g_free(str);
     gtk_image_set_from_pixbuf(GTK_IMAGE(data->iconimage), icon);
@@ -1347,7 +1350,7 @@ weather_get_tooltip_text(const plugin_data *data)
     else
         sunval = g_strdup_printf("");
 
-    sym = get_data(conditions, data->units, SYMBOL, FALSE);
+    sym = get_data(conditions, data->units, SYMBOL, FALSE, data->night_time);
     DATA_AND_UNIT(alt, ALTITUDE);
     DATA_AND_UNIT(temp, TEMPERATURE);
     DATA_AND_UNIT(windspeed, WIND_SPEED);
@@ -1456,7 +1459,8 @@ weather_get_tooltip_cb(GtkWidget *widget,
     }
 
     conditions = get_current_conditions(data->weatherdata);
-    rawvalue = get_data(conditions, data->units, SYMBOL, data->round);
+    rawvalue = get_data(conditions, data->units, SYMBOL,
+                        data->round, data->night_time);
     switch (data->tooltip_style) {
     case TOOLTIP_SIMPLE:
         icon_size = 96;
