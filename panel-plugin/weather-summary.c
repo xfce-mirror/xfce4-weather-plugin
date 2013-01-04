@@ -292,7 +292,8 @@ create_summary_tab(plugin_data *data)
     xml_time *conditions;
     const gchar *unit;
     gchar *value, *rawvalue, *wind;
-    gchar *interval_start, *interval_end, *point, *last_weather_update;
+    gchar *last_download, *next_download;
+    gchar *interval_start, *interval_end, *point;
     gchar *sunrise, *sunset, *moonrise, *moonset;
     summary_details *sum;
 
@@ -335,17 +336,39 @@ create_summary_tab(plugin_data *data)
 
     /* TRANSLATORS: Please use as many \t as appropriate to align the
        date/time values as in the original. */
-    APPEND_BTEXT(_("\nTime\n"));
-    last_weather_update = format_date(data->weather_update->last, NULL, TRUE);
-    value = g_strdup_printf(_("\tLast updated:\t%s\n\n"),
-                            last_weather_update);
-    g_free(last_weather_update);
+    APPEND_BTEXT(_("\nDownloads\n"));
+    last_download = format_date(data->weather_update->last, NULL, TRUE);
+    next_download = format_date(data->weather_update->next, NULL, TRUE);
+    value = g_strdup_printf(_("\tWeather data:\n"
+                              "\tLast:\t%s\n"
+                              "\tNext:\t%s\n"
+                              "\tCurrent failed attempts: %d\n\n"),
+                            last_download,
+                            next_download,
+                            data->weather_update->attempt);
+    g_free(last_download);
+    g_free(next_download);
     APPEND_TEXT_ITEM_REAL(value);
 
+    last_download = format_date(data->astro_update->last, NULL, TRUE);
+    next_download = format_date(data->astro_update->next, NULL, TRUE);
+    value = g_strdup_printf(_("\tAstronomical data:\n"
+                              "\tLast:\t%s\n"
+                              "\tNext:\t%s\n"
+                              "\tCurrent failed attempts: %d\n"),
+                            last_download,
+                            next_download,
+                            data->astro_update->attempt);
+    g_free(last_download);
+    g_free(next_download);
+    APPEND_TEXT_ITEM_REAL(value);
+
+    /* calculation times */
+    APPEND_BTEXT(_("\nTimes Used In Calculations\n"));
     point = format_date(conditions->point, NULL, TRUE);
     value = g_strdup_printf
         (_("\tTemperatures, wind, atmosphere and cloud data calculated\n"
-           "\tfor:\t\t\t%s\n"),
+           "\tfor:\t\t%s\n"),
          point);
     g_free(point);
     APPEND_TEXT_ITEM_REAL(value);
@@ -355,8 +378,8 @@ create_summary_tab(plugin_data *data)
     value = g_strdup_printf
         (_("\n\tPrecipitation and the weather symbol have been calculated\n"
            "\tusing the following time interval:\n"
-           "\tStart:\t\t%s\n"
-           "\tEnd:\t\t%s\n"),
+           "\tStart:\t%s\n"
+           "\tEnd:\t%s\n"),
          interval_start,
          interval_end);
     g_free(interval_end);
