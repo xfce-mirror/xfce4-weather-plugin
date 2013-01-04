@@ -44,6 +44,10 @@
 #define CONN_MAX_ATTEMPTS (3)    /* max retry attempts using small interval */
 #define CONN_RETRY_INTERVAL_SMALL (10)
 #define CONN_RETRY_INTERVAL_LARGE (10 * 60)
+/* standard update interval in seconds used as a precaution to deal
+   with suspend/resume events etc., when nothing needs to be updated
+   earlier: */
+#define UPDATE_INTERVAL (10)
 
 #define DATA_AND_UNIT(var, item)                                    \
     value = get_data(conditions, data->units, item, data->round);   \
@@ -626,9 +630,14 @@ schedule_next_wakeup(plugin_data *data)
                                     "sunset icon change");
     }
 
-    /* next wakeup time could not be calculated, so force it to not
-       miss any updates*/
-    if (diff < 0) {
+    if (diff > UPDATE_INTERVAL) {
+        /* next wakeup time is greater than the standard check
+           interval, so call the update handler earlier to deal with
+           cases like system resume events etc. */
+        diff = UPDATE_INTERVAL;
+        data->next_wakeup_reason = "regular check";
+    } else if (diff < 0) {
+        /* last wakeup time expired, force update immediately */
         diff = 0;
         data->next_wakeup_reason = "forced";
     }
@@ -636,7 +645,11 @@ schedule_next_wakeup(plugin_data *data)
     data->update_timer =
         g_timeout_add_seconds((guint) diff,
                               (GSourceFunc) update_handler, data);
-    weather_dump(weather_dump_plugindata, data);
+    if (!strcmp(data->next_wakeup_reason, "regular check"))
+        weather_debug("Running regular check for updates, interval %d secs.",
+                      UPDATE_INTERVAL);
+    else
+        weather_dump(weather_dump_plugindata, data);
 }
 
 
