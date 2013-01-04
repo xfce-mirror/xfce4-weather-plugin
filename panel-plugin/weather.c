@@ -946,6 +946,37 @@ write_cache_file(plugin_data *data)
     CACHE_APPEND("cache_date=%s\n\n", now);
     g_free(now);
 
+    if (data->astrodata) {
+        start = format_date(data->astrodata->sunrise, date_format, FALSE);
+        end = format_date(data->astrodata->sunset, date_format, FALSE);
+        g_string_append_printf(out, "[astrodata]\n");
+        CACHE_APPEND("sunrise=%s\n", start);
+        CACHE_APPEND("sunset=%s\n", end);
+        CACHE_APPEND("sun_never_rises=%s\n",
+                     data->astrodata->sun_never_rises ? "true" : "false");
+        CACHE_APPEND("sun_never_sets=%s\n",
+                     data->astrodata->sun_never_sets ? "true" : "false");
+        g_free(start);
+        g_free(end);
+
+        start = format_date(data->astrodata->moonrise, date_format, FALSE);
+        end = format_date(data->astrodata->moonset, date_format, FALSE);
+        CACHE_APPEND("moonrise=%s\n", start);
+        CACHE_APPEND("moonset=%s\n", end);
+        CACHE_APPEND("moon_never_rises=%s\n",
+                     data->astrodata->moon_never_rises ? "true" : "false");
+        CACHE_APPEND("moon_never_sets=%s\n",
+                     data->astrodata->moon_never_sets ? "true" : "false");
+        CACHE_APPEND("moon_phase=%s\n", data->astrodata->moon_phase);
+        g_free(start);
+        g_free(end);
+
+        now = format_date(now_t, date_format, FALSE);
+        CACHE_APPEND("last_astro_download=%s\n\n", now);
+        g_free(now);
+    } else
+        g_string_append(out, "\n");
+
     for (i = 0; i < wd->timeslices->len; i++) {
         timeslice = g_array_index(wd->timeslices, xml_time *, i);
         if (G_UNLIKELY(timeslice == NULL || timeslice->location == NULL))
@@ -1005,10 +1036,11 @@ read_cache_file(plugin_data *data)
     xml_weather *wd;
     xml_time *timeslice = NULL;
     xml_location *loc = NULL;
-    time_t now_t = time(NULL), cache_date_t;
+    time_t now_t = time(NULL), cache_date_t, astro_data_t;
+    struct tm cache_date_tm;
     gchar *file, *locname = NULL, *lat = NULL, *lon = NULL, *group = NULL;
     gchar *timestring;
-    gdouble timezone;
+    gdouble timezone, diff;
     gint msl, num_timeslices, i, j;
 
     g_assert(data != NULL);
@@ -1070,6 +1102,55 @@ read_cache_file(plugin_data *data)
         weather_debug("Cache file is too old and will not be used.");
         CACHE_FREE_VARS();
         return;
+    }
+
+    /* read cached astrodata if available and up-to-date */
+    group = "astrodata";
+    cache_date_tm = *localtime(&cache_date_t);
+    astro_data_t =
+        time_calc(cache_date_tm, 0, 0, 0, 0 - cache_date_tm.tm_hour,
+                  0 - cache_date_tm.tm_min, 0 - cache_date_tm.tm_sec);
+    diff = difftime(cache_date_t, astro_data_t);
+    if (g_key_file_has_group(keyfile, group)
+        && diff > 0 && diff < 24 * 3600) {
+        weather_debug("Reusing cached astrodata instead of downloading it.");
+
+        /* clear current astro data if present */
+        if (data->astrodata)
+            xml_astro_free(data->astrodata);
+        data->astrodata = g_slice_new0(xml_astro);
+
+        CACHE_READ_STRING(timestring, "sunrise");
+        data->astrodata->sunrise = parse_timestring(timestring, NULL);
+        g_free(timestring);
+        CACHE_READ_STRING(timestring, "sunset");
+        data->astrodata->sunset = parse_timestring(timestring, NULL);
+        g_free(timestring);
+        data->astrodata->sun_never_rises =
+            g_key_file_get_boolean(keyfile, group, "sun_never_rises", NULL);
+        data->astrodata->sun_never_sets =
+            g_key_file_get_boolean(keyfile, group, "sun_never_sets", NULL);
+
+        CACHE_READ_STRING(timestring, "moonrise");
+        data->astrodata->moonrise = parse_timestring(timestring, NULL);
+        g_free(timestring);
+        CACHE_READ_STRING(timestring, "moonset");
+        data->astrodata->moonset = parse_timestring(timestring, NULL);
+        g_free(timestring);
+        CACHE_READ_STRING(data->astrodata->moon_phase, "moon_phase");
+        data->astrodata->moon_never_rises =
+            g_key_file_get_boolean(keyfile, group, "moon_never_rises", NULL);
+        data->astrodata->moon_never_sets =
+            g_key_file_get_boolean(keyfile, group, "moon_never_sets", NULL);
+
+        if (G_LIKELY(data->astro_update)) {
+            CACHE_READ_STRING(timestring, "last_astro_download");
+            data->astro_update->last = parse_timestring(timestring, NULL);
+            g_free(timestring);
+            data->astro_update->next =
+                time_calc(cache_date_tm, 0, 0, 1, 0 - cache_date_tm.tm_hour,
+                          0 - cache_date_tm.tm_min, 0 - cache_date_tm.tm_sec);
+        }
     }
     group = NULL;
 
