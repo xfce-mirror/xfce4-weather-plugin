@@ -701,8 +701,8 @@ create_units_page(xfceweather_dialog *dialog)
     hbox = gtk_hbox_new(FALSE, BORDER);
     ADD_LABEL(_("_Temperature:"), sg_label);
     ADD_COMBO(dialog->combo_unit_temperature);
-    ADD_COMBO_VALUE(dialog->combo_unit_temperature, _("Celcius"));
-    ADD_COMBO_VALUE(dialog->combo_unit_temperature, _("Fahrenheit"));
+    ADD_COMBO_VALUE(dialog->combo_unit_temperature, _("Celcius (°C)"));
+    ADD_COMBO_VALUE(dialog->combo_unit_temperature, _("Fahrenheit (°F)"));
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
 
     /* atmospheric pressure */
