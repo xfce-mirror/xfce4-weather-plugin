@@ -101,7 +101,6 @@ parse_timestring(const gchar *ts,
     struct tm tm;
 
     memset(&t, 0, sizeof(time_t));
-    g_assert(ts != NULL);
     if (G_UNLIKELY(ts == NULL))
         return t;
 
