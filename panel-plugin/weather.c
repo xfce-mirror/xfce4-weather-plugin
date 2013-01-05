@@ -942,6 +942,11 @@ write_cache_file(plugin_data *data)
     value = double_to_string(data->timezone, "%.1f");
     CACHE_APPEND("timezone=%s\n", value);
     g_free(value);
+    if (G_LIKELY(data->weather_update)) {
+        value = format_date(data->weather_update->last, date_format, FALSE);
+        CACHE_APPEND("last_weather_download=%s\n", value);
+        g_free(value);
+    }
     now = format_date(now_t, date_format, FALSE);
     CACHE_APPEND("cache_date=%s\n\n", now);
     g_free(now);
@@ -1102,6 +1107,11 @@ read_cache_file(plugin_data *data)
         weather_debug("Cache file is too old and will not be used.");
         CACHE_FREE_VARS();
         return;
+    }
+    if (G_LIKELY(data->weather_update)) {
+        CACHE_READ_STRING(timestring, "last_weather_download");
+        data->weather_update->last = parse_timestring(timestring, NULL);
+        g_free(timestring);
     }
 
     /* read cached astrodata if available and up-to-date */
