@@ -71,8 +71,7 @@
         g_key_file_free(keyfile);
 
 #define CACHE_READ_STRING(var, key)                             \
-    if (g_key_file_has_key(keyfile, group, key, NULL))          \
-        var = g_key_file_get_string(keyfile, group, key, NULL);
+    var = g_key_file_get_string(keyfile, group, key, NULL);     \
 
 #define SCHEDULE_WAKEUP_COMPARE(var, reason)        \
     if (difftime(var, now_t) < diff) {              \
