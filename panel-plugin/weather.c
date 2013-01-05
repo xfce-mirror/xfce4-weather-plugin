@@ -306,7 +306,8 @@ update_scrollbox(plugin_data *data,
                 type = g_array_index(data->labels, data_types, i + j);
                 label = make_label(data, type);
                 g_string_append_printf(out, "%s%s", label,
-                                       (j < (data->scrollbox_lines - 1)
+                                       (j < (data->scrollbox_lines - 1) &&
+                                        (i + j + 1) < data->labels->len
                                         ? "\n"
                                         : ""));
                 g_free(label);
