@@ -725,12 +725,63 @@ combo_unit_pressure_changed(GtkWidget *combo,
 
 
 static void
+combo_unit_windspeed_set_tooltip(GtkWidget *combo)
+{
+    gchar *text;
+    gint value = gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+
+    switch (value) {
+    case KMH:
+        text = _("Kilometer per hour is a unit of speed, expressing the number "
+                 "of kilometers travelled in one hour. Worldwide, the km/h is "
+                 "the most commonly used speed unit on road signs and car "
+                 "speedometers. While meteorologists measure wind speed in "
+                 "meters per second (m/s), wind speeds in TV or in the news "
+                 "are often provided in km/h.");
+        break;
+    case MPH:
+        text = _("Miles per hour is an imperial unit of speed expressing the "
+                 "number of statute miles covered in one hour. It is currently "
+                 "the standard unit used for speed limits, and to express "
+                 "speeds generally, on roads in the United Kingdom and the "
+                 "United States.");
+        break;
+    case MPS:
+        text = _("Meter per second is a SI derived unit of both speed (scalar) "
+                 "and velocity (vector quantity which specifies both magnitude "
+                 "and a specific direction), defined by distance in meters "
+                 "divided by time in seconds. This is the unit meteorologists "
+                 "use when exchanging information about wind speeds.");
+        break;
+    case FTS:
+        text = _("The foot per second (plural feet per second) is an imperial "
+                 "unit of both speed (scalar) and velocity (vector quantity, "
+                 "which includes direction). It expresses the distance in "
+                 "feet traveled or displaced, divided by the time in seconds. "
+                 "The corresponding unit in the International System of Units "
+                 "(SI) is the meter per second.");
+        break;
+    case KNOTS:
+        text = _("The knot is a unit of speed equal to one international "
+                 "nautical mile (1.852 km) per hour, or approximately "
+                 "1.151 mph, and sees worldwide use in meteorology and "
+                 "in maritime and air navigation. A vessel travelling at "
+                 "1 knot along a meridian travels one minute of geographic "
+                 "latitude in one hour.");
+        break;
+    }
+    gtk_widget_set_tooltip_markup(GTK_WIDGET(combo), text);
+}
+
+
+static void
 combo_unit_windspeed_changed(GtkWidget *combo,
                              gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     dialog->pd->units->windspeed =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+    combo_unit_windspeed_set_tooltip(combo);
     update_scrollbox(dialog->pd, TRUE);
     update_summary_window(dialog, TRUE);
 }
@@ -1647,6 +1698,7 @@ setup_units(xfceweather_dialog *dialog,
     SET_COMBO_VALUE(dialog->combo_unit_pressure, units->pressure);
     combo_unit_pressure_set_tooltip(dialog->combo_unit_pressure);
     SET_COMBO_VALUE(dialog->combo_unit_windspeed, units->windspeed);
+    combo_unit_windspeed_set_tooltip(dialog->combo_unit_windspeed);
     SET_COMBO_VALUE(dialog->combo_unit_precipitations, units->precipitations);
     SET_COMBO_VALUE(dialog->combo_unit_altitude, units->altitude);
     SET_COMBO_VALUE(dialog->combo_apparent_temperature,
