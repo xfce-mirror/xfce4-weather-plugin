@@ -1140,6 +1140,156 @@ option_i(const data_types opt)
 }
 
 
+/* set tooltip according to selection */
+static void
+options_datatypes_set_tooltip(GtkWidget *optmenu)
+{
+    /* TRANSLATORS: Fallback value, usually never shown. */
+    gchar *text = _("Choose the value to add to the list below. "
+                    "Values can be added more than once.");
+    gint history, opt = OPTIONS_N;
+
+    history = gtk_option_menu_get_history(GTK_OPTION_MENU(optmenu));
+    if (G_LIKELY(history > -1) || history < OPTIONS_N)
+        opt = labeloptions[history].number;
+
+    switch (opt) {
+    case TEMPERATURE:
+        text = _("Air temperature, sometimes referred to as dry-bulb "
+                 "temperature. Measured by a thermometer that is freely "
+                 "exposed to the air, yet shielded from radiation and "
+                 "moisture.");
+        break;
+    case PRESSURE:
+        text = _("The air that makes up the atmosphere exerts a pressure "
+                 "on the surface below it, which is known as atmospheric "
+                 "pressure. To make it easier to compare the value to "
+                 "other values for locations with different altitudes, "
+                 "atmospheric pressure is adjusted to the equivalent "
+                 "sea-level pressure and called barometric pressure. "
+                 "Rising barometric pressures generally indicate an "
+                 "improvement in weather conditions, while falling "
+                 "pressures mean deterioration.");
+        break;
+    case WIND_SPEED:
+        text = _("Nowadays wind speed/velocity is measured using an "
+                 "anemometer (Greek <i>anemos</i>, meaning <i>wind</i>) in "
+                 "10 m (33 ft) height. Anemometers usually measure either "
+                 "wind speed or pressure, but will provide both values as "
+                 "they are closely related to and can be deduced from each "
+                 "other.");
+        break;
+    case WIND_BEAUFORT:
+        text = _("Invented by Francis Beaufort in 1805, this empirical "
+                 "scale on wind speed is based on people's observations "
+                 "of specific land or sea conditions, denoting these "
+                 "conditions with numbers from 0 (calm) to 12 (hurricane).");
+        break;
+    case WIND_DIRECTION:
+        text = _("This gives the cardinal direction (North, East, South, "
+                 "West) the wind is coming from.");
+        break;
+    case WIND_DIRECTION_DEG:
+        text = _("This gives the direction the wind is coming from "
+                 "in azimuth degrees (North = 0°, East = 90°, South = 180° "
+                 "and West = 270°).");
+        break;
+    case HUMIDITY:
+        text = _("Humidity is defined as the amount of water vapor in the "
+                 "air and increases the possibility of precipitations, fog "
+                 "and dew. While absolute humidity is the water content of "
+                 "air, relative humidity gives (in %) the current absolute "
+                 "humidity relative to the maximum for that air temperature "
+                 "and pressure.");
+        break;
+    case DEWPOINT:
+        text = _("This is the temperature to which air must be cooled to "
+                 "reach 100% relative humidity, given no change in water "
+                 "content. Reaching the dew point halts the cooling process, "
+                 "as condensation occurs which releases heat into the air. "
+                 "Dewpoint allows the prediction of dew, frost, fog "
+                 "and minimum overnight temperature. A high dewpoint "
+                 "increases the possibility of rain and severe "
+                 "thunderstorms. The Dewpoint has influence on the comfort "
+                 "level one experiences.");
+        break;
+    case APPARENT_TEMPERATURE:
+        text = _("Also known as <i>felt temperature</i>, or what some weather "
+                 "providers declare as <i>feels like</i>. Human temperature "
+                 "sensation is not only based on air temperature, but also on "
+                 "heat flow, physical activity and individual condition. "
+                 "Under these aspects, it is mainly useful for warning about "
+                 "extreme conditions.");
+        break;
+    case CLOUDS_LOW:
+        text = _("This gives the low-level cloud cover in percent. According "
+                 "to WMO definition, low-level clouds can be found at "
+                 "altitudes below 4,000 m (13,000 ft), or 5,000 m (16,000 ft) "
+                 "at the equator, though their basis often lie below 2,000 m "
+                 "(6,500 ft). They are mainly composed of water droplets or "
+                 "ice particles and snow, when temperatures are cold enough.");
+        break;
+    case CLOUDS_MED:
+        text = _("This specifies the mid-level cloud cover in percent. "
+                 "According to WMO definition, mid-level clouds form in "
+                 "heights of 4,000-8,000 m (13,000-26,000 ft), or 5,000-"
+                 "10,000 m (16,000-33,000 ft) at the equator. Like their "
+                 "low-level cousins, they are principally composed of water "
+                 "droplets. When temperatures get low enough, ice particles "
+                 "can replace the droplets.");
+        break;
+    case CLOUDS_HIGH:
+        text = _("This reports the high-level cloud cover in percent. "
+                 "According to WMO definition, high-level clouds can be found "
+                 "in altitudes of 8,000 to 15,000 m (26,000 to 49,000 ft), or "
+                 "18,000 m (59,000 ft) at the equator, where temperatures "
+                 "are so low that they are mainly composed of ice crystals. "
+                 "While typically thin and white in appearance, they can be "
+                 "seen in a magnicient array of colors when the sun is low on "
+                 "the horizon.");
+        break;
+    case CLOUDINESS:
+        text = _("Cloudiness, or cloud cover, defines the fraction of the "
+                 "sky obscured by clouds when observed from a given "
+                 "location. Clouds are both carriers of precipitation and "
+                 "regulator to the amount of solar radiation that reaches "
+                 "the surface. While during daytime they reduce the "
+                 "temperature, at night they have the opposite effect, as "
+                 "water vapor prevents long-wave radiation from escaping "
+                 "into space. Apart from that, clouds reflect light to "
+                 "space and in that way contribute to the cooling of the "
+                 "planet.");
+        break;
+    case FOG:
+        text = _("Fog is a type of low-lying stratus cloud, with the "
+                 "moisture in it often generated locally such as from a "
+                 "nearby lake, river, ocean, or simply moist ground, "
+                 "that forms when the difference between temperature "
+                 "and dew point is below 2.5 °C (4 °F), usually at a "
+                 "relative humidity of 100%. Fog commonly produces "
+                 "precipitations in the form of drizzle or very light "
+                 "snow and reduces visibility to less than 1 km "
+                 "(5/8 statute mile).");
+        break;
+    case PRECIPITATIONS:
+        text = _("The amount of rain, drizzle, sleet, hail, snow, graupel "
+                 "and other forms of water falling from the sky over a "
+                 "specific period.");
+        break;
+    }
+
+    gtk_widget_set_tooltip_markup(GTK_WIDGET(optmenu), text);
+}
+
+
+static void
+options_datatypes_changed(GtkWidget *optmenu,
+                          gpointer user_data)
+{
+    options_datatypes_set_tooltip(optmenu);
+}
+
+
 static gboolean
 button_add_option_clicked(GtkWidget *widget,
                           gpointer user_data)
@@ -1310,10 +1460,8 @@ create_scrollbox_page(xfceweather_dialog *dialog)
     hbox = gtk_hbox_new(FALSE, BORDER);
     sg_button = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
     dialog->options_datatypes = make_label();
-    SET_TOOLTIP(dialog->options_datatypes,
-                _("Choose the value to add to the list below. Values can be "
-                  "added more than once."));
     gtk_box_pack_start(GTK_BOX(hbox), dialog->options_datatypes, TRUE, TRUE, 0);
+    options_datatypes_set_tooltip(dialog->options_datatypes);
     dialog->model_datatypes = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_INT);
     dialog->list_datatypes =
         gtk_tree_view_new_with_model(GTK_TREE_MODEL(dialog->model_datatypes));
@@ -1474,6 +1622,8 @@ setup_notebook_signals(xfceweather_dialog *dialog)
                      dialog);
     g_signal_connect(dialog->button_scrollbox_color, "color-set",
                      G_CALLBACK(button_scrollbox_color_set), dialog);
+    g_signal_connect(dialog->options_datatypes, "changed",
+                     G_CALLBACK(options_datatypes_changed), dialog);
     g_signal_connect(dialog->check_scrollbox_animate, "toggled",
                      G_CALLBACK(check_scrollbox_animate_toggled), dialog);
 
