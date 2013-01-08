@@ -479,8 +479,8 @@ create_summary_tab(plugin_data *data)
 
     /* atmosphere */
     APPEND_BTEXT(_("\nAtmosphere\n"));
-    APPEND_TEXT_ITEM(_("Pressure"), PRESSURE);
-    APPEND_TEXT_ITEM(_("Humidity"), HUMIDITY);
+    APPEND_TEXT_ITEM(_("Barometric pressure"), PRESSURE);
+    APPEND_TEXT_ITEM(_("Relative humidity"), HUMIDITY);
 
     /* clouds */
     APPEND_BTEXT(_("\nClouds\n"));
@@ -577,8 +577,8 @@ forecast_cell_get_tooltip_text(plugin_data *data,
                         APPARENT_TEMPERATURE);
 
     g_string_append(text, _("<b>Atmosphere</b>\n"));
-    APPEND_TOOLTIP_ITEM(_("Pressure:\t%s%s%s\n"), PRESSURE);
-    APPEND_TOOLTIP_ITEM(_("Humidity:\t%s%s%s\n\n"), HUMIDITY);
+    APPEND_TOOLTIP_ITEM(_("Barometric pressure:\t%s%s%s\n"), PRESSURE);
+    APPEND_TOOLTIP_ITEM(_("Relative humidity:\t\t%s%s%s\n\n"), HUMIDITY);
 
     g_string_append(text, _("<b>Precipitations</b>\n"));
     APPEND_TOOLTIP_ITEM(_("Amount:\t\t%s%s%s\n\n"), PRECIPITATIONS);

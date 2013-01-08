@@ -93,7 +93,7 @@ static const labeloption labeloptions[OPTIONS_N] = {
      * letter(s) that make sense and don't use up too much space.
      */
     {N_("Temperature (T)"), TEMPERATURE},
-    {N_("Atmosphere pressure (P)"), PRESSURE},
+    {N_("Barometric pressure (P)"), PRESSURE},
     {N_("Wind speed (WS)"), WIND_SPEED},
     {N_("Wind speed - Beaufort scale (WB)"), WIND_BEAUFORT},
     {N_("Wind direction (WD)"), WIND_DIRECTION},
