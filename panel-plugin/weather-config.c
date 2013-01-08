@@ -667,12 +667,58 @@ combo_apparent_temperature_changed(GtkWidget *combo,
 
 
 static void
+combo_unit_pressure_set_tooltip(GtkWidget *combo)
+{
+    gchar *text;
+    gint value = gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+
+    switch (value) {
+    case HECTOPASCAL:
+        text = _("The pascal, named after mathematician, physicist and "
+                 "philosopher Blaise Pascal, is a SI derived unit and a "
+                 "measure of force per unit area, defined as one newton "
+                 "per square meter. One standard atmosphere (atm) is "
+                 "1013.25 hPa.");
+        break;
+    case INCH_MERCURY:
+        text = _("Inches of mercury is still widely used for barometric "
+                 "pressure in weather reports, refrigeration and aviation "
+                 "in the United States, but seldom used elsewhere. "
+                 "It is defined as the pressure exerted by a 1 inch "
+                 "circular column of mercury of 1 inch in height at "
+                 "32 °F (0 °C) at the standard acceleration of gravity.");
+        break;
+    case PSI:
+        text = _("The pound per square inch is a unit of pressure based on "
+                 "avoirdupois units (a system of weights based on a pound of "
+                 "16 ounces) and the pressure resulting from a force of one "
+                 "pound-force applied to an area of one square inch. It is "
+                 "used in the United States and to varying degrees in "
+                 "everyday life in Canada, the United Kingdom and maybe "
+                 "some former British Colonies.");
+        break;
+    case TORR:
+        text = _("The torr unit was named after the physicist and "
+                 "mathematician Evangelista Torricelli who discovered the "
+                 "principle of the barometer in 1644 and demonstrated the "
+                 "first mercury barometer to the general public. A pressure "
+                 "of 1 torr is approximately equal to one millimeter of "
+                 "mercury, and one standard atmosphere (atm) equals 760 "
+                 "Torr.");
+        break;
+    }
+    gtk_widget_set_tooltip_markup(GTK_WIDGET(combo), text);
+}
+
+
+static void
 combo_unit_pressure_changed(GtkWidget *combo,
                             gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     dialog->pd->units->pressure =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+    combo_unit_pressure_set_tooltip(combo);
     update_scrollbox(dialog->pd, TRUE);
     update_summary_window(dialog, TRUE);
 }
@@ -1599,6 +1645,7 @@ setup_units(xfceweather_dialog *dialog,
     SET_COMBO_VALUE(dialog->combo_unit_temperature, units->temperature);
     combo_unit_temperature_set_tooltip(dialog->combo_unit_temperature);
     SET_COMBO_VALUE(dialog->combo_unit_pressure, units->pressure);
+    combo_unit_pressure_set_tooltip(dialog->combo_unit_pressure);
     SET_COMBO_VALUE(dialog->combo_unit_windspeed, units->windspeed);
     SET_COMBO_VALUE(dialog->combo_unit_precipitations, units->precipitations);
     SET_COMBO_VALUE(dialog->combo_unit_altitude, units->altitude);
