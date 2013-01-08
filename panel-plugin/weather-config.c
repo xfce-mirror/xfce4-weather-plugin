@@ -115,6 +115,11 @@ spin_alt_value_changed(const GtkWidget *spin,
 
 
 static void
+setup_units(xfceweather_dialog *dialog,
+            const units_config *units);
+
+
+static void
 update_summary_window(xfceweather_dialog *dialog,
                       gboolean restore_position)
 {
@@ -297,23 +302,6 @@ lookup_altitude_timezone(const gpointer user_data)
 
     g_free(lonstr);
     g_free(latstr);
-}
-
-
-static void
-setup_units(xfceweather_dialog *dialog,
-            const units_config *units)
-{
-    if (G_UNLIKELY(units == NULL))
-        return;
-
-    SET_COMBO_VALUE(dialog->combo_unit_temperature, units->temperature);
-    SET_COMBO_VALUE(dialog->combo_unit_pressure, units->pressure);
-    SET_COMBO_VALUE(dialog->combo_unit_windspeed, units->windspeed);
-    SET_COMBO_VALUE(dialog->combo_unit_precipitations, units->precipitations);
-    SET_COMBO_VALUE(dialog->combo_unit_altitude, units->altitude);
-    SET_COMBO_VALUE(dialog->combo_apparent_temperature,
-                    units->apparent_temperature);
 }
 
 
@@ -615,12 +603,52 @@ create_location_page(xfceweather_dialog *dialog)
 
 
 static void
+combo_unit_temperature_set_tooltip(GtkWidget *combo)
+{
+    gchar *text;
+    gint value = gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+
+    switch (value) {
+    case CELSIUS:
+        text = _("Named after the astronomer Anders Celsius who invented the "
+                 "original scale in 1742, the Celsius scale is an "
+                 "international standard unit and nowadays defined "
+                 "using the Kelvin scale. 0 °C is equivalent to 273.15 K "
+                 "and 1 °C difference in temperature is exactly the same "
+                 "difference as 1 K. It is defined with the melting point "
+                 "of water being roughly at 0 °C and its boiling point at "
+                 "100 °C at one standard atmosphere (1 atm = 1013.5 hPa)."
+                 "Until 1948, the unit was known as <i>centigrade</i> (from "
+                 "Latin <i>centum</i> (100) and <i>gradus</i> (steps).");
+        break;
+    case FAHRENHEIT:
+        text = _("The current Fahrenheit temperature scale is based on one "
+                 "proposed in 1724 by the physicist Daniel Gabriel Fahrenheit. "
+                 "0 °F was the freezing point of brine on the original scale "
+                 "at standard atmospheric pressure, which was the lowest "
+                 "temperature achievable with this mixture of ice, salt and "
+                 "ammonium chloride.\n"
+                 "The melting point of water on the current is at 32 °F and "
+                 "its boiling point at 212 °F, and the interval between these "
+                 "two points can be divided into 180 equal parts. 180 is a "
+                 "highly composite number, which can be evenly divided into "
+                 "many fractions. The Fahrenheit and Celsius scale intersect "
+                 "at -40 degrees."
+                 );
+        break;
+    }
+    gtk_widget_set_tooltip_markup(GTK_WIDGET(combo), text);
+}
+
+
+static void
 combo_unit_temperature_changed(GtkWidget *combo,
                                gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     dialog->pd->units->temperature =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+    combo_unit_temperature_set_tooltip(combo);
     update_scrollbox(dialog->pd, TRUE);
     update_summary_window(dialog, TRUE);
 }
@@ -1558,6 +1586,24 @@ notebook_page_switched(GtkNotebook *notebook,
     plugin_data *data = (plugin_data *) user_data;
 
     data->config_remember_tab = page_num;
+}
+
+
+static void
+setup_units(xfceweather_dialog *dialog,
+            const units_config *units)
+{
+    if (G_UNLIKELY(units == NULL))
+        return;
+
+    SET_COMBO_VALUE(dialog->combo_unit_temperature, units->temperature);
+    combo_unit_temperature_set_tooltip(dialog->combo_unit_temperature);
+    SET_COMBO_VALUE(dialog->combo_unit_pressure, units->pressure);
+    SET_COMBO_VALUE(dialog->combo_unit_windspeed, units->windspeed);
+    SET_COMBO_VALUE(dialog->combo_unit_precipitations, units->precipitations);
+    SET_COMBO_VALUE(dialog->combo_unit_altitude, units->altitude);
+    SET_COMBO_VALUE(dialog->combo_apparent_temperature,
+                    units->apparent_temperature);
 }
 
 
