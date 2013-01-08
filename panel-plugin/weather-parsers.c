@@ -181,8 +181,8 @@ parse_location(xmlNode *cur_node,
             loc->clouds_percent[CLOUDS_PERC_LOW] = PROP(child_node, "percent");
         }
         if (NODE_IS_TYPE(child_node, "mediumClouds")) {
-            g_free(loc->clouds_percent[CLOUDS_PERC_MED]);
-            loc->clouds_percent[CLOUDS_PERC_MED] = PROP(child_node, "percent");
+            g_free(loc->clouds_percent[CLOUDS_PERC_MID]);
+            loc->clouds_percent[CLOUDS_PERC_MID] = PROP(child_node, "percent");
         }
         if (NODE_IS_TYPE(child_node, "highClouds")) {
             g_free(loc->clouds_percent[CLOUDS_PERC_HIGH]);
@@ -599,7 +599,7 @@ xml_location_free(xml_location *loc)
     g_free(loc->pressure_value);
     g_free(loc->pressure_unit);
     g_free(loc->clouds_percent[CLOUDS_PERC_LOW]);
-    g_free(loc->clouds_percent[CLOUDS_PERC_MED]);
+    g_free(loc->clouds_percent[CLOUDS_PERC_MID]);
     g_free(loc->clouds_percent[CLOUDS_PERC_HIGH]);
     g_free(loc->clouds_percent[CLOUDS_PERC_CLOUDINESS]);
     g_free(loc->fog_percent);

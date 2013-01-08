@@ -35,7 +35,7 @@ typedef enum {
     DEWPOINT,
     APPARENT_TEMPERATURE,
     CLOUDS_LOW,
-    CLOUDS_MED,
+    CLOUDS_MID,
     CLOUDS_HIGH,
     CLOUDINESS,
     FOG,

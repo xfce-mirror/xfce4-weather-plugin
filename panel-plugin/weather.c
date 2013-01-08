@@ -142,7 +142,7 @@ make_label(const plugin_data *data,
     case CLOUDS_LOW:
         lbl = _("CL");
         break;
-    case CLOUDS_MED:
+    case CLOUDS_MID:
         lbl = _("CM");
         break;
     case CLOUDS_HIGH:

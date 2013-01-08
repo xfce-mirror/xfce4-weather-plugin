@@ -102,7 +102,7 @@ static const labeloption labeloptions[OPTIONS_N] = {
     {N_("Dew point (D)"), DEWPOINT},
     {N_("Apparent temperature (A)"), APPARENT_TEMPERATURE},
     {N_("Low clouds (CL)"), CLOUDS_LOW},
-    {N_("Medium clouds (CM)"), CLOUDS_MED},
+    {N_("Middle clouds (CM)"), CLOUDS_MID},
     {N_("High clouds (CH)"), CLOUDS_HIGH},
     {N_("Cloudiness (C)"), CLOUDINESS},
     {N_("Fog (F)"), FOG},
@@ -1513,7 +1513,7 @@ options_datatypes_set_tooltip(GtkWidget *optmenu)
                  "(6,500 ft). They are mainly composed of water droplets or "
                  "ice particles and snow, when temperatures are cold enough.");
         break;
-    case CLOUDS_MED:
+    case CLOUDS_MID:
         text = _("This specifies the mid-level cloud cover in percent. "
                  "According to WMO definition, mid-level clouds form in "
                  "heights of 4,000-8,000 m (13,000-26,000 ft), or 5,000-"

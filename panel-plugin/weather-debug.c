@@ -292,7 +292,7 @@ weather_dump_location(const xml_location *loc,
                             loc->fog_percent,
                             loc->clouds_percent[CLOUDS_PERC_CLOUDINESS],
                             loc->clouds_percent[CLOUDS_PERC_LOW],
-                            loc->clouds_percent[CLOUDS_PERC_MED],
+                            loc->clouds_percent[CLOUDS_PERC_MID],
                             loc->clouds_percent[CLOUDS_PERC_HIGH]);
     return out;
 }

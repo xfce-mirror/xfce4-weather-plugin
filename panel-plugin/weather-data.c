@@ -381,8 +381,8 @@ get_data(const xml_time *timeslice,
         return LOCALE_DOUBLE(loc->clouds_percent[CLOUDS_PERC_LOW],
                              ROUND_TO_INT("%.1f"));
 
-    case CLOUDS_MED:
-        return LOCALE_DOUBLE(loc->clouds_percent[CLOUDS_PERC_MED],
+    case CLOUDS_MID:
+        return LOCALE_DOUBLE(loc->clouds_percent[CLOUDS_PERC_MID],
                              ROUND_TO_INT("%.1f"));
 
     case CLOUDS_HIGH:
@@ -456,7 +456,7 @@ get_unit(const units_config *units,
         return "°";
     case HUMIDITY:
     case CLOUDS_LOW:
-    case CLOUDS_MED:
+    case CLOUDS_MID:
     case CLOUDS_HIGH:
     case CLOUDINESS:
     case FOG:

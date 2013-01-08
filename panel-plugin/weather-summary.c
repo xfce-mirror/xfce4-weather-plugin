@@ -486,7 +486,7 @@ create_summary_tab(plugin_data *data)
     APPEND_BTEXT(_("\nClouds\n"));
     APPEND_TEXT_ITEM(_("Fog"), FOG);
     APPEND_TEXT_ITEM(_("Low clouds"), CLOUDS_LOW);
-    APPEND_TEXT_ITEM(_("Medium clouds"), CLOUDS_MED);
+    APPEND_TEXT_ITEM(_("Middle clouds"), CLOUDS_MID);
     APPEND_TEXT_ITEM(_("High clouds"), CLOUDS_HIGH);
     APPEND_TEXT_ITEM(_("Cloudiness"), CLOUDINESS);
 
@@ -586,7 +586,7 @@ forecast_cell_get_tooltip_text(plugin_data *data,
     g_string_append(text, _("<b>Clouds</b>\n"));
     APPEND_TOOLTIP_ITEM(_("Fog:\t\t%s%s%s\n"), FOG);
     APPEND_TOOLTIP_ITEM(_("Low:\t\t%s%s%s\n"), CLOUDS_LOW);
-    APPEND_TOOLTIP_ITEM(_("Medium\t\t%s%s%s\n"), CLOUDS_MED);
+    APPEND_TOOLTIP_ITEM(_("Middle:\t\t%s%s%s\n"), CLOUDS_MID);
     APPEND_TOOLTIP_ITEM(_("High:\t\t%s%s%s\n"), CLOUDS_HIGH);
     APPEND_TOOLTIP_ITEM(_("Cloudiness:\t%s%s%s"), CLOUDINESS);
 
