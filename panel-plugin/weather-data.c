@@ -398,9 +398,11 @@ get_data(const xml_time *timeslice,
 
     case PRECIPITATIONS:   /* source is in millimeters */
         val = string_to_double(loc->precipitation_value, 0);
-        if (units->precipitations == INCHES)
+        if (units->precipitations == INCHES) {
             val /= 25.4;
-        return g_strdup_printf(ROUND_TO_INT("%.1f"), val);
+            return g_strdup_printf("%.2f", val);
+        } else
+            return g_strdup_printf("%.1f", val);
 
     case SYMBOL:
         return CHK_NULL(loc->symbol);
