@@ -788,12 +788,45 @@ combo_unit_windspeed_changed(GtkWidget *combo,
 
 
 static void
+combo_unit_precipitations_set_tooltip(GtkWidget *combo)
+{
+    gchar *text;
+    gint value = gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+
+    switch (value) {
+    case MILLIMETERS:
+        text = _("The meter is the fundamental unit of length in the "
+                 "International System of Units (SI). Originally intended "
+                 "to be one ten-millionth of the distance from the Earth's "
+                 "equator to the North Pole at sea level, its definition "
+                 "has been periodically refined to reflect growing "
+                 "knowledge of metrology (the science of measurement). "
+                 "Since 1983, it has been defined as the length of the "
+                 "path travelled by light in vacuum during a time interval "
+                 "of 1/299,792,458 of a second. 1 millimeter is one "
+                 "thousandth of a meter, or approximately 0.04 inches.");
+        break;
+    case INCHES:
+        text = _("The English word <i>inch</i> comes from Latin <i>uncia</i> "
+                 "meaning <i>one-twelfth part</i> (in this case, one twelfth "
+                 "of a foot). There have been many different standards of the "
+                 "inch with varying sizes of measure. However, the current "
+                 "internationally accepted value is exactly 25.4 "
+                 "millimeters.");
+        break;
+    }
+    gtk_widget_set_tooltip_markup(GTK_WIDGET(combo), text);
+}
+
+
+static void
 combo_unit_precipitations_changed(GtkWidget *combo,
                                   gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     dialog->pd->units->precipitations =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+    combo_unit_precipitations_set_tooltip(combo);
     update_scrollbox(dialog->pd, TRUE);
     update_summary_window(dialog, TRUE);
 }
@@ -1700,6 +1733,7 @@ setup_units(xfceweather_dialog *dialog,
     SET_COMBO_VALUE(dialog->combo_unit_windspeed, units->windspeed);
     combo_unit_windspeed_set_tooltip(dialog->combo_unit_windspeed);
     SET_COMBO_VALUE(dialog->combo_unit_precipitations, units->precipitations);
+    combo_unit_precipitations_set_tooltip(dialog->combo_unit_precipitations);
     SET_COMBO_VALUE(dialog->combo_unit_altitude, units->altitude);
     SET_COMBO_VALUE(dialog->combo_apparent_temperature,
                     units->apparent_temperature);
