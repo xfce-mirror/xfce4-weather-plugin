@@ -833,6 +833,37 @@ combo_unit_precipitations_changed(GtkWidget *combo,
 
 
 static void
+combo_unit_altitude_set_tooltip(GtkWidget *combo)
+{
+    gchar *text;
+    gint value = gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+
+    switch (value) {
+    case METERS:
+        text = _("The meter is the fundamental unit of length in the "
+                 "International System of Units (SI). Originally intended "
+                 "to be one ten-millionth of the distance from the Earth's "
+                 "equator to the North Pole at sea level, its definition "
+                 "has been periodically refined to reflect growing "
+                 "knowledge of metrology (the science of measurement). "
+                 "Since 1983, it has been defined as the length of the "
+                 "path travelled by light in vacuum during a time interval "
+                 "of 1/299,792,458 of a second.");
+        break;
+    case FEET:
+        text = _("A foot (plural feet) is a unit of length defined as being "
+                 "0.3048 m exactly and used in the imperial system of units "
+                 "and United States customary units. It is subdivided into "
+                 "12 inches. The measurement of altitude in the aviation "
+                 "industry is one of the few areas where the foot is widely "
+                 "used outside the English-speaking world.");
+        break;
+    }
+    gtk_widget_set_tooltip_markup(GTK_WIDGET(combo), text);
+}
+
+
+static void
 combo_unit_altitude_changed(GtkWidget *combo,
                             gpointer user_data)
 {
@@ -840,6 +871,7 @@ combo_unit_altitude_changed(GtkWidget *combo,
 
     dialog->pd->units->altitude =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+    combo_unit_altitude_set_tooltip(combo);
     setup_altitude(dialog);
     update_summary_window(dialog, TRUE);
 }
@@ -1735,6 +1767,7 @@ setup_units(xfceweather_dialog *dialog,
     SET_COMBO_VALUE(dialog->combo_unit_precipitations, units->precipitations);
     combo_unit_precipitations_set_tooltip(dialog->combo_unit_precipitations);
     SET_COMBO_VALUE(dialog->combo_unit_altitude, units->altitude);
+    combo_unit_altitude_set_tooltip(dialog->combo_unit_altitude);
     SET_COMBO_VALUE(dialog->combo_apparent_temperature,
                     units->apparent_temperature);
 }
