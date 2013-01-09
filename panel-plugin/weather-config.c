@@ -655,18 +655,6 @@ combo_unit_temperature_changed(GtkWidget *combo,
 
 
 static void
-combo_apparent_temperature_changed(GtkWidget *combo,
-                                   gpointer user_data)
-{
-    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    dialog->pd->units->apparent_temperature =
-        gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
-    update_scrollbox(dialog->pd, TRUE);
-    update_summary_window(dialog, TRUE);
-}
-
-
-static void
 combo_unit_pressure_set_tooltip(GtkWidget *combo)
 {
     gchar *text;
@@ -873,6 +861,72 @@ combo_unit_altitude_changed(GtkWidget *combo,
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
     combo_unit_altitude_set_tooltip(combo);
     setup_altitude(dialog);
+    update_summary_window(dialog, TRUE);
+}
+
+
+static void
+combo_apparent_temperature_set_tooltip(GtkWidget *combo)
+{
+    gchar *text;
+    gint value = gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+
+    switch (value) {
+    case WINDCHILL_HEATINDEX:
+        text = _("Used in North America, wind chill will be reported for low "
+                 "temperatures and heat index for higher ones. At night, heat "
+                 "index will be replaced by the Summer Simmer Index. For wind "
+                 "chill, wind speeds need to be above 3.0 mph (4.828 km/h) "
+                 "and air temperature below 50.0 °F (10.0 °C). For heat "
+                 "index, air temperature needs to be above 80 °F (26.7 °C) "
+                 "- or above 71.6 °F (22 °C) at night - and relative humidity "
+                 "at least 40%. If these conditions are not met, the air "
+                 "temperature will be shown.") ;
+        break;
+    case WINDCHILL_HUMIDEX:
+        text = _("The Canadian counterpart to the US windchill/heat index, "
+                 "with the wind chill being similar to the previous model "
+                 "but with slightly different constraints. Instead of the "
+                 "heat index <i>humidex</i> will be used. For wind chill "
+                 "to become effective, wind speeds need to be above 2.0 "
+                 "km/h (1.24 mph) and air temperature below or equal to "
+                 "0 °C (32 °F). For humidex, air temperature needs to "
+                 "be at least 20.0 °C (68 °F), with a dewpoint greater than "
+                 "0 °C (32 °F). If these conditions are not met, the air "
+                 "temperature will be shown.");
+        break;
+    case STEADMAN:
+        text = _("This is the model used by the Australian Bureau of "
+                 "Meteorology, especially adapted for the climate of this "
+                 "continent. Possibly used in Central Europe and parts of "
+                 "other continents too, but then windchill and similar values "
+                 "had never gained that much popularity there as in the US "
+                 "or Canada, so information about its usage is scarce or "
+                 "uncertain. It depends on air temperature, wind speed and "
+                 "humidity and can be used for lower and higher "
+                 "temperatures alike.");
+        break;
+    case QUAYLE_STEADMAN:
+        text = _("Improvements by Robert G. Quayle and Robert G. Steadman "
+                 "applied in 1998 to earlier experiments/developments by "
+                 "Steadman. This model only depends on wind speed and "
+                 "temperature, not on relative humidity and can be used "
+                 "for both heat and cold stress.");
+        break;
+    }
+    gtk_widget_set_tooltip_markup(GTK_WIDGET(combo), text);
+}
+
+
+static void
+combo_apparent_temperature_changed(GtkWidget *combo,
+                                   gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    dialog->pd->units->apparent_temperature =
+        gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+    combo_apparent_temperature_set_tooltip(combo);
+    update_scrollbox(dialog->pd, TRUE);
     update_summary_window(dialog, TRUE);
 }
 
@@ -1770,6 +1824,7 @@ setup_units(xfceweather_dialog *dialog,
     combo_unit_altitude_set_tooltip(dialog->combo_unit_altitude);
     SET_COMBO_VALUE(dialog->combo_apparent_temperature,
                     units->apparent_temperature);
+    combo_apparent_temperature_set_tooltip(dialog->combo_apparent_temperature);
 }
 
 
