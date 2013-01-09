@@ -754,6 +754,9 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
         xfce_rc_read_int_entry(rc, "units_precipitations", MILLIMETERS);
     data->units->altitude =
         xfce_rc_read_int_entry(rc, "units_altitude", METERS);
+    data->units->apparent_temperature =
+        xfce_rc_read_int_entry(rc, "model_apparent_temperature",
+                               STEADMAN);
 
     data->round = xfce_rc_read_bool_entry(rc, "round", TRUE);
 
@@ -858,6 +861,8 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
     xfce_rc_write_int_entry(rc, "units_precipitations",
                             data->units->precipitations);
     xfce_rc_write_int_entry(rc, "units_altitude", data->units->altitude);
+    xfce_rc_write_int_entry(rc, "model_apparent_temperature",
+                            data->units->apparent_temperature);
 
     xfce_rc_write_bool_entry(rc, "round", data->round);
 
