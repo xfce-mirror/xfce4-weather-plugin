@@ -273,9 +273,6 @@ calc_apparent_temperature(const xml_location *loc,
         /* R. G. Quayle, R. G. Steadman: The Steadman wind chill: an
            improvement over present scales. In: Weather and
            Forecasting. 13, 1998, S. 1187–1193 */
-        windspeed *= 3.6;
-        if (windspeed < 4.828032)
-            return temp;
         return 1.41 - 1.162 * windspeed + 0.980 * temp
             + 0.0124 * windspeed * windspeed + 0.0185 * windspeed * temp;
     }
