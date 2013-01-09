@@ -181,16 +181,17 @@ calc_apparent_temperature(const xml_location *loc,
         /* If temperature is lower than 10 °C, use wind chill index,
            if above 26.7°C use the heat index / Summer Simmer Index. */
 
-        /* wind chill is only defined for wind speeds above 3.0 mph */
-        windspeed *= 3.6;
-        if (windspeed < 4.828032)
-            return temp;
-
         /* Wind chill, source:
            http://www.nws.noaa.gov/os/windchill/index.shtml */
-        if (temp <= 10.0)
+        if (temp <= 10.0) {
+            /* wind chill is only defined for wind speeds above 3.0 mph */
+            windspeed *= 3.6;
+            if (windspeed < 4.828032)
+                return temp;
+
             return 13.12 + 0.6215 * temp - 11.37 * pow(windspeed, 0.16)
                 + 0.3965 * temp * pow(windspeed, 0.16);
+         }
 
         if (temp >= 26.7 || (night_time && temp >= 22.0)) {
             /* humidity needs to be higher than 40% for a valid result */
@@ -233,16 +234,17 @@ calc_apparent_temperature(const xml_location *loc,
            if above 20.0 °C use humidex. Source:
            http://www.weatheroffice.gc.ca/mainmenu/faq_e.html */
 
-        /* wind chill is only defined for wind speeds above 2.0 km/h */
-        windspeed *= 3.6;
-        if (windspeed < 2.0)
-            return temp;
+        if (temp <= 0) {
+            /* wind chill is only defined for wind speeds above 2.0 km/h */
+            windspeed *= 3.6;
+            if (windspeed < 2.0)
+                return temp;
 
-        if (temp <= 0)
             /* wind chill, source:
                http://www.nws.noaa.gov/os/windchill/index.shtml */
             return 13.12 + 0.6215 * temp - 11.37 * pow(windspeed, 0.16)
                 + 0.3965 * temp * pow(windspeed, 0.16);
+        }
 
         if (temp >= 20.0) {
             /* Canadian humidex, source:
