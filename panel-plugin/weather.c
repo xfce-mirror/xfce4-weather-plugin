@@ -380,8 +380,8 @@ update_current_conditions(plugin_data *data)
 
 
 static time_t
-calc_next_download_time(const update_info *upi) {
-    time_t retry_t = time(NULL);
+calc_next_download_time(const update_info *upi,
+                        time_t retry_t) {
     struct tm retry_tm;
     guint interval;
 
@@ -453,7 +453,8 @@ cb_astro_update(SoupSession *session,
     if (G_UNLIKELY(astro == NULL)) {
         /* download or parsing failed, schedule retry */
         data->astro_update->attempt++;
-        data->astro_update->next = calc_next_download_time(data->astro_update);
+        data->astro_update->next = calc_next_download_time(data->astro_update,
+                                                           now_t);
     }
     schedule_next_wakeup(data);
     weather_dump(weather_dump_astrodata, data->astrodata);
@@ -503,7 +504,8 @@ cb_weather_update(SoupSession *session,
         g_warning
             (_("Download of weather data failed with HTTP Status Code %d, "
                "Reason phrase: %s"), msg->status_code, msg->reason_phrase);
-    data->weather_update->next = calc_next_download_time(data->weather_update);
+    data->weather_update->next = calc_next_download_time(data->weather_update,
+                                                         now_t);
 
     xml_weather_clean(data->weatherdata);
     g_array_sort(data->weatherdata->timeslices,
@@ -1112,6 +1114,9 @@ read_cache_file(plugin_data *data)
     if (G_LIKELY(data->weather_update)) {
         CACHE_READ_STRING(timestring, "last_weather_download");
         data->weather_update->last = parse_timestring(timestring, NULL);
+        data->weather_update->next =
+            calc_next_download_time(data->weather_update,
+                                    data->weather_update->last);
         g_free(timestring);
     }
 
