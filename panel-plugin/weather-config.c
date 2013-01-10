@@ -1087,12 +1087,33 @@ combo_tooltip_style_changed(GtkWidget *combo,
 
 
 static void
+combo_forecast_layout_set_tooltip(GtkWidget *combo)
+{
+    gchar *text;
+    gint value = gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+
+    switch (value) {
+    case FC_LAYOUT_CALENDAR:
+        text = _("A more calendar-like view, with the days in columns and the "
+                 "daytimes (morning, afternoon, evening, night) in rows.");
+        break;
+    case FC_LAYOUT_LIST:
+        text = _("Shows the forecasts in a table with the daytimes (morning, "
+                 "afternoon, evening, night) in columns and the days in rows.");
+        break;
+    }
+    gtk_widget_set_tooltip_markup(GTK_WIDGET(combo), text);
+}
+
+
+static void
 combo_forecast_layout_changed(GtkWidget *combo,
                               gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     dialog->pd->forecast_layout =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
+    combo_forecast_layout_set_tooltip(combo);
     update_summary_window(dialog, FALSE);
 }
 
@@ -1135,6 +1156,13 @@ create_appearance_page(xfceweather_dialog *dialog)
     vbox = gtk_vbox_new(FALSE, BORDER);
     hbox = gtk_hbox_new(FALSE, BORDER);
     ADD_LABEL(_("_Icon theme:"), sg);
+    SET_TOOLTIP(label,
+                _("Available icon themes are listed here. You can add icon "
+                  "themes to $HOME/.config/xfce4/weather/icons (or the "
+                  "equivalent directory on your system). Information about "
+                  "how to create or use icon themes can be found in the "
+                  "README file. New icon themes will be detected everytime "
+                  "you open this config dialog."));
     ADD_COMBO(dialog->combo_icon_theme);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
     dialog->icon_themes = find_icon_themes();
@@ -1156,6 +1184,10 @@ create_appearance_page(xfceweather_dialog *dialog)
     ADD_COMBO_VALUE(dialog->combo_tooltip_style, _("Simple"));
     ADD_COMBO_VALUE(dialog->combo_tooltip_style, _("Verbose"));
     SET_COMBO_VALUE(dialog->combo_tooltip_style, dialog->pd->tooltip_style);
+    SET_TOOLTIP(dialog->combo_tooltip_style,
+                _("Choose your preferred tooltip style. Some styles "
+                  "give a lot of useful data, some are clearer but "
+                  "provide less data on a glance."));
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
 
@@ -1171,6 +1203,7 @@ create_appearance_page(xfceweather_dialog *dialog)
     ADD_COMBO_VALUE(dialog->combo_forecast_layout, _("Days in rows"));
     SET_COMBO_VALUE(dialog->combo_forecast_layout,
                     dialog->pd->forecast_layout);
+    combo_forecast_layout_set_tooltip(dialog->combo_forecast_layout);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
 
     /* number of days shown in forecast */
@@ -1179,6 +1212,13 @@ create_appearance_page(xfceweather_dialog *dialog)
     ADD_SPIN(dialog->spin_forecast_days, 1, MAX_FORECAST_DAYS, 1,
              (dialog->pd->forecast_days ? dialog->pd->forecast_days : 5),
              0, NULL);
+    SET_TOOLTIP(dialog->spin_forecast_days,
+                _("Met.no provides forecast data for up to 10 days in the "
+                  "future. Choose how many days will be shown in the forecast "
+                  "tab in the summary window. On slower computers, a lower "
+                  "number might help against lags when opening the window. "
+                  "Note however that usually forecasts for more than three "
+                  "days in the future are unreliable at best ;-)"));
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
 
@@ -1646,6 +1686,11 @@ create_scrollbox_page(xfceweather_dialog *dialog)
     hbox = gtk_hbox_new(FALSE, BORDER);
     dialog->check_scrollbox_show =
         gtk_check_button_new_with_mnemonic("Show scroll_box");
+    SET_TOOLTIP(dialog->check_scrollbox_show,
+                _("Hide the scrollbox to save valueable space on the panel. "
+                  "Most interesting information is also provided in the "
+                  "tooltip - provided you choose an appropriate tooltip "
+                  "style - that is shown when hovering over the icon."));
     gtk_box_pack_start(GTK_BOX(hbox), dialog->check_scrollbox_show,
                        TRUE, TRUE, 0);
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON
@@ -1658,11 +1703,10 @@ create_scrollbox_page(xfceweather_dialog *dialog)
     gtk_box_pack_start(GTK_BOX(hbox), label, TRUE, TRUE, 0);
     ADD_SPIN(dialog->spin_scrollbox_lines, 1, MAX_SCROLLBOX_LINES, 1,
              dialog->pd->scrollbox_lines, 0, sg_misc);
-    SET_TOOLTIP
-        (dialog->spin_scrollbox_lines,
-         _("Decide how many values should be shown at once in the scrollbox. "
-           "You can choose a smaller font or enlarge the panel to make "
-           "more lines fit."));
+    SET_TOOLTIP(dialog->spin_scrollbox_lines,
+                _("Decide how many values should be shown at once in the "
+                  "scrollbox. You can choose a smaller font or enlarge the "
+                  "panel to make more lines fit."));
     gtk_box_pack_start(GTK_BOX(page), hbox, FALSE, FALSE, 0);
 
     /* font and color */
@@ -1672,11 +1716,10 @@ create_scrollbox_page(xfceweather_dialog *dialog)
     gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
     dialog->button_scrollbox_font =
         gtk_button_new_with_mnemonic(_("Select _font"));
-    SET_TOOLTIP
-        (dialog->button_scrollbox_font,
-         _("Choose a font you like and set it to a smaller or larger size. "
-           "Middle-click on the button to unset the font and use your "
-           "theme's default."));
+    SET_TOOLTIP(dialog->button_scrollbox_font,
+                _("Choose a font you like and set it to a smaller or larger "
+                  "size. Middle-click on the button to unset the font and use "
+                  "your theme's default."));
     gtk_box_pack_start(GTK_BOX(hbox), dialog->button_scrollbox_font,
                        TRUE, TRUE, 0);
     if (dialog->pd->scrollbox_font)
@@ -1685,13 +1728,12 @@ create_scrollbox_page(xfceweather_dialog *dialog)
     dialog->button_scrollbox_color =
         gtk_color_button_new_with_color(&(dialog->pd->scrollbox_color));
     gtk_size_group_add_widget(sg_misc, dialog->button_scrollbox_color);
-    SET_TOOLTIP
-        (dialog->button_scrollbox_color,
-         _("There may be problems with some themes that cause the "
-           "scrollbox text to be hardly readable. If this is the case "
-           "or you simply want it to appear in another color, then "
-           "you can change it using this button. Middle-click on the "
-           "button to unset the scrollbox text color."));
+    SET_TOOLTIP(dialog->button_scrollbox_color,
+                _("There may be problems with some themes that cause the "
+                  "scrollbox text to be hardly readable. If this is the case "
+                  "or you simply want it to appear in another color, then "
+                  "you can change it using this button. Middle-click on the "
+                  "button to unset the scrollbox text color."));
     gtk_box_pack_start(GTK_BOX(hbox), dialog->button_scrollbox_color,
                        FALSE, FALSE, 0 );
     gtk_box_pack_start(GTK_BOX(page), hbox, FALSE, FALSE, 0);
