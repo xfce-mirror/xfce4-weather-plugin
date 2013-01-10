@@ -106,13 +106,16 @@ typedef struct {
 
 static const symbol_desc symbol_to_desc[] = {
     /*
-     * TRANSLATORS: How these symbols are defined is explained at http://api.yr.no/faq.html#symbols.
+     * TRANSLATORS: How these symbols are named and defined is explained at
+     * http://om.yr.no/forklaring/symbol/ and http://api.yr.no/faq.html#symbols.
+     * To be more concise / shorter, the plugin uses names that deviate a bit from yr.no, so that
+     * they fit well in the tooltip, forecast tab etc.
+     *
      * More information can be obtained from the following pages:
      * http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index
      * http://www.theweathernetwork.com/index.php?product=help&placecode=cabc0164&pagecontent=helpicons
      * http://www.mir-co.net/sonstiges/wetterausdruecke.htm
      * The latter page is in German, but it contains a symbol table with Norwegian descriptions.
-     * The ones that are used here are shorter, though, to fit in the tooltip, forecast tab etc.
      */
     {  1, "SUN",                 N_("Sunny"),                      N_("Clear")                      },
     {  2, "LIGHTCLOUD",          N_("Lightly cloudy"),             N_("Lightly cloudy")             },
@@ -140,14 +143,14 @@ static const symbol_desc symbol_to_desc[] = {
     {  7, "SLEETSUN",            N_("Sleet showers"),              N_("Sleet showers")              },
     {  8, "SNOWSUN",             N_("Snow showers"),               N_("Snow showers")               },
 
-    /* It's raining incessantly, but not heavily. */
+    /* It's raining, usually incessantly, but not heavily. */
     {  9, "LIGHTRAIN",           N_("Light rain"),                 N_("Light rain")                 },
 
-    /* Heavy, incessant rain */
+    /* Heavy, usually incessant rain. met.no now uses "heavy rain", but personally I find light
+     * rain and rain somewhat better. Symbol names indicate this is the way met.no did it some
+     * time ago. */
     { 10, "RAIN",                N_("Rain"),                       N_("Rain")                       },
 
-    /* A thunderstorm does not necessarily imply rain, but since the symbol claims it will rain
-     * use "Rain with thunder". */
     { 11, "RAINTHUNDER",         N_("Rain with thunder"),          N_("Rain with thunder")          },
 
     /* Sleet is a mixture of rain and snow, but it's not hail. */
@@ -175,7 +178,7 @@ static const symbol_desc symbol_to_desc[] = {
     /* Same as symbols 1-15, but with thunder */
     { 20, "SLEETSUNTHUNDER",     N_("Sleet showers with thunder"), N_("Sleet showers with thunder") },
     { 21, "SNOWSUNTHUNDER",      N_("Snow showers with thunder"),  N_("Snow showers with thunder")  },
-    { 22, "LIGHTRAINTHUNDER",    N_("Light rain with thunder"),    N_("Light rain with thunder")  },
+    { 22, "LIGHTRAINTHUNDER",    N_("Light rain with thunder"),    N_("Light rain with thunder")    },
     { 23, "SLEETTHUNDER",        N_("Sleet with thunder"),         N_("Sleet with thunder")         },
 };
 
