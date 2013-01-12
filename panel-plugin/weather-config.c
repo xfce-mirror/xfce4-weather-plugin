@@ -1558,7 +1558,29 @@ options_datatypes_set_tooltip(GtkWidget *optmenu)
     case PRECIPITATIONS:
         text = _("The amount of rain, drizzle, sleet, hail, snow, graupel "
                  "and other forms of water falling from the sky over a "
-                 "specific period.");
+                 "specific period.\n\n"
+                 "The values reported by met.no are those of precipitations "
+                 "in the liquid state - or in other words: of rain -, so if "
+                 "snow is expected (but not sleet), then the amount of snow "
+                 "will be <i>guessed</i> by multiplying the original value by "
+                 "a ratio dependent on the air temperature:\n\n<tt><small>"
+                 "                   T &lt; -11.1 °C (12 °F) =&gt; 1:12\n"
+                 "-11.1 °C (12 °F) &lt; T &lt;  -4.4 °C (24 °F) =&gt; 1:10\n"
+                 " -4.4 °C (24 °F) &lt; T &lt;  -2.2 °C (28° F) =&gt; 1:7\n"
+                 " -2.2 °C (28 °F) &lt; T &lt;  -0.6 °C (31 °F) =&gt; 1:5\n"
+                 " -0.6 °C (31 °F) &lt; T                    =&gt; 1:3\n\n"
+                 "</small></tt>"
+                 "Example: If temperature is -5 °C (12 °F), then snow "
+                 "density will be low and a rain to snow ratio of 1:10 will "
+                 "be used for calculation. Assuming the reported value is "
+                 "5 mm, then the calculated amount of snow precipitation is "
+                 "50 mm.\n\n"
+                 "<b>Note</b>: While air temperature is an important factor "
+                 "in this calculation, there are other influencing factors "
+                 "that the plugin doesn't know about like the type of snow "
+                 "and ground temperature. Because of that, these rules will "
+                 "only lead to rough estimates and may not represent the "
+                 "real amount of snow.");
         break;
     }
 

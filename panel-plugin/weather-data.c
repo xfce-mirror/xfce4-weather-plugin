@@ -287,7 +287,7 @@ get_data(const xml_time *timeslice,
          const gboolean night_time)
 {
     const xml_location *loc = NULL;
-    gdouble val;
+    gdouble val, temp;
 
     if (timeslice == NULL || timeslice->location == NULL || units == NULL)
         return g_strdup("");
@@ -398,6 +398,27 @@ get_data(const xml_time *timeslice,
 
     case PRECIPITATIONS:   /* source is in millimeters */
         val = string_to_double(loc->precipitation_value, 0);
+
+        /* For snow, adjust precipitations dependent on temperature. Source:
+           http://answers.yahoo.com/question/index?qid=20061230123635AAAdZAe */
+        if (loc->symbol_id == SYMBOL_SNOWSUN ||
+            loc->symbol_id == SYMBOL_SNOW ||
+            loc->symbol_id == SYMBOL_SNOWTHUNDER ||
+            loc->symbol_id == SYMBOL_SNOWSUN_POLAR ||
+            loc->symbol_id == SYMBOL_SNOWSUNTHUNDER) {
+            temp = string_to_double(loc->temperature_value, 0);
+            if (temp < -11.1111)      /* below 12 °F, low snow density */
+                val *= 12;
+            else if (temp < -4.4444)  /* 12 to 24 °F, still low density */
+                val *= 10;
+            else if (temp < -2.2222)  /* 24 to 28 °F, more density */
+                val *= 7;
+            else if (temp < -0.5556)  /* 28 to 31 °F, wet, dense, melting */
+                val *= 5;
+            else                      /* anything above 31 °F */
+                val *= 3;
+        }
+
         if (units->precipitations == INCHES) {
             val /= 25.4;
             return g_strdup_printf("%.2f", val);
