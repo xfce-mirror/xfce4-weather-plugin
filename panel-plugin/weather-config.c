@@ -735,19 +735,17 @@ combo_unit_windspeed_set_tooltip(GtkWidget *combo)
                  "United States.");
         break;
     case MPS:
-        text = _("Meter per second is a SI derived unit of both speed (scalar) "
-                 "and velocity (vector quantity which specifies both magnitude "
-                 "and a specific direction), defined by distance in meters "
-                 "divided by time in seconds. This is the unit meteorologists "
-                 "use when exchanging information about wind speeds.");
+        text = _("Meter per second is a SI (International System of Units) "
+                 "derived unit of both speed and velocity, defined by distance "
+                 "in meters divided by time in seconds. This is the unit "
+                 "meteorologists use to denote wind speeds.");
         break;
     case FTS:
         text = _("The foot per second (plural feet per second) is an imperial "
-                 "unit of both speed (scalar) and velocity (vector quantity, "
-                 "which includes direction). It expresses the distance in "
+                 "unit of both speed and velocity. It expresses the distance in "
                  "feet traveled or displaced, divided by the time in seconds. "
                  "The corresponding unit in the International System of Units "
-                 "(SI) is the meter per second.");
+                 "is the meter per second.");
         break;
     case KNOTS:
         text = _("The knot is a unit of speed equal to one international "
@@ -784,7 +782,7 @@ combo_unit_precipitations_set_tooltip(GtkWidget *combo)
     switch (value) {
     case MILLIMETERS:
         text = _("The meter is the fundamental unit of length in the "
-                 "International System of Units (SI). Originally intended "
+                 "International System of Units. Originally intended "
                  "to be one ten-millionth of the distance from the Earth's "
                  "equator to the North Pole at sea level, its definition "
                  "has been periodically refined to reflect growing "
@@ -829,7 +827,7 @@ combo_unit_altitude_set_tooltip(GtkWidget *combo)
     switch (value) {
     case METERS:
         text = _("The meter is the fundamental unit of length in the "
-                 "International System of Units (SI). Originally intended "
+                 "International System of Units. Originally intended "
                  "to be one ten-millionth of the distance from the Earth's "
                  "equator to the North Pole at sea level, its definition "
                  "has been periodically refined to reflect growing "
@@ -1147,6 +1145,7 @@ create_appearance_page(xfceweather_dialog *dialog)
     GtkWidget *palign, *page, *sep, *hbox, *vbox, *label;
     GtkSizeGroup *sg;
     icon_theme *theme;
+    gchar *text;
     gint i;
 
     ADD_PAGE(FALSE);
@@ -1212,13 +1211,16 @@ create_appearance_page(xfceweather_dialog *dialog)
     ADD_SPIN(dialog->spin_forecast_days, 1, MAX_FORECAST_DAYS, 1,
              (dialog->pd->forecast_days ? dialog->pd->forecast_days : 5),
              0, NULL);
-    SET_TOOLTIP(dialog->spin_forecast_days,
-                _("Met.no provides forecast data for up to 10 days in the "
-                  "future. Choose how many days will be shown in the forecast "
-                  "tab in the summary window. On slower computers, a lower "
-                  "number might help against lags when opening the window. "
-                  "Note however that usually forecasts for more than three "
-                  "days in the future are unreliable at best ;-)"));
+    text = g_strdup_printf
+        (_("Met.no provides forecast data for up to %d days in the "
+           "future. Choose how many days will be shown in the forecast "
+           "tab in the summary window. On slower computers, a lower "
+           "number might help against lags when opening the window. "
+           "Note however that usually forecasts for more than three "
+           "days in the future are unreliable at best ;-)"),
+         MAX_FORECAST_DAYS);
+    SET_TOOLTIP(dialog->spin_forecast_days, text);
+    g_free(text);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
 
@@ -1464,7 +1466,7 @@ options_datatypes_set_tooltip(GtkWidget *optmenu)
                  "other.");
         break;
     case WIND_BEAUFORT:
-        text = _("Invented by Francis Beaufort in 1805, this empirical "
+        text = _("Invented by Sir Francis Beaufort in 1805, this empirical "
                  "scale on wind speed is based on people's observations "
                  "of specific land or sea conditions, denoting these "
                  "conditions with numbers from 0 (calm) to 12 (hurricane).");
@@ -1491,19 +1493,26 @@ options_datatypes_set_tooltip(GtkWidget *optmenu)
                  "reach 100% relative humidity, given no change in water "
                  "content. Reaching the dew point halts the cooling process, "
                  "as condensation occurs which releases heat into the air. "
-                 "Dewpoint allows the prediction of dew, frost, fog "
-                 "and minimum overnight temperature. A high dewpoint "
-                 "increases the possibility of rain and severe "
-                 "thunderstorms. The Dewpoint has influence on the comfort "
-                 "level one experiences.");
+                 "A high dew point increases the possibility of rain and "
+                 "severe thunderstorms. The dew point allows the prediction "
+                 "of dew, frost, fog and minimum overnight temperature, and "
+                 "has influence on the comfort level one experiences.\n\n"
+                 "<b>Note:</b> This is a calculated value not provided by "
+                 "met.no.");
         break;
     case APPARENT_TEMPERATURE:
-        text = _("Also known as <i>felt temperature</i>, or what some weather "
-                 "providers declare as <i>feels like</i>. Human temperature "
-                 "sensation is not only based on air temperature, but also on "
-                 "heat flow, physical activity and individual condition. "
-                 "Under these aspects, it is mainly useful for warning about "
-                 "extreme conditions.");
+        text = _("Also known as <i>felt temperature</i>, <i>effective "
+                 "temperature</i>, or what some weather providers declare as "
+                 "<i>feels like</i>. Human temperature sensation is not only "
+                 "based on air temperature, but also on heat flow, physical "
+                 "activity and individual condition. While being a highly "
+                 "subjective value, apparent temperature can actually be "
+                 "useful for warning about extreme conditions (cold, "
+                 "heat).\n\n"
+                 "<b>Note:</b> This is a calculated value not provided by "
+                 "met.no. You should use a calculation model appropriate for "
+                 "your local climate and personal preferences on the units "
+                 "page.");
         break;
     case CLOUDS_LOW:
         text = _("This gives the low-level cloud cover in percent. According "
