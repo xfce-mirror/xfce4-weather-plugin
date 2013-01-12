@@ -750,13 +750,6 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
     data->msl = xfce_rc_read_int_entry(rc, "msl", 0);
     constrain_to_limits(&data->msl, -420, 10000);
 
-    value = xfce_rc_read_entry(rc, "timezone", 0);
-    data->timezone = string_to_double(value, 0);
-    if (data->timezone < -25.0)
-        data->timezone = -25;
-    if (data->timezone > 25.0)
-        data->timezone = 25;
-
     data->cache_file_max_age =
         xfce_rc_read_int_entry(rc, "cache_file_max_age", CACHE_FILE_MAX_AGE);
 
@@ -867,10 +860,6 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
 
     xfce_rc_write_int_entry(rc, "msl", data->msl);
 
-    value = double_to_string(data->timezone, "%.1f");
-    xfce_rc_write_entry(rc, "timezone", value);
-    g_free(value);
-
     xfce_rc_write_int_entry(rc, "cache_file_max_age",
                             data->cache_file_max_age);
 
@@ -966,9 +955,6 @@ write_cache_file(plugin_data *data)
     CACHE_APPEND("lon=%s\n", data->lon);
     g_string_append_printf(out, "msl=%d\n", data->msl);
     g_string_append_printf(out, "timeslices=%d\n", wd->timeslices->len);
-    value = double_to_string(data->timezone, "%.1f");
-    CACHE_APPEND("timezone=%s\n", value);
-    g_free(value);
     if (G_LIKELY(data->weather_update)) {
         value = format_date(data->weather_update->last, date_format, FALSE);
         CACHE_APPEND("last_weather_download=%s\n", value);
@@ -1072,7 +1058,7 @@ read_cache_file(plugin_data *data)
     struct tm cache_date_tm;
     gchar *file, *locname = NULL, *lat = NULL, *lon = NULL, *group = NULL;
     gchar *timestring;
-    gdouble timezone, diff;
+    gdouble diff;
     gint msl, num_timeslices, i, j;
 
     g_assert(data != NULL);
@@ -1114,12 +1100,10 @@ read_cache_file(plugin_data *data)
     }
     msl = g_key_file_get_integer(keyfile, group, "msl", err);
     if (!err)
-        timezone = g_key_file_get_double(keyfile, group, "timezone", err);
-    if (!err)
         num_timeslices = g_key_file_get_integer(keyfile, group,
                                                 "timeslices", err);
     if (err || strcmp(lat, data->lat) || strcmp(lon, data->lon) ||
-        msl != data->msl || timezone != data->timezone || num_timeslices < 1) {
+        msl != data->msl || num_timeslices < 1) {
         CACHE_FREE_VARS();
         weather_debug("The required values are not present in the cache file "
                       "or do not match the current plugin data. Reading "
