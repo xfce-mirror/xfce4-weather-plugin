@@ -1,60 +1,46 @@
 Here is a collection of ideas and tasks for future releases, listed in
 categories, but not prioritized or mandatory.
 
-Panel widgets
+Maintenance and optimizing stuff
 ======================================================================
-* Optionally hide scrollbox
-* Use multiple lines in scrollbox (bug #5722)
-* Allow choosing a custom text color for the scrollbox widget to
-  prevent unreadable or hardly readable text with some themes
-  (bug #7488)
-* Use the Xfce hvbox (maybe, need to check)
-* Properly support custom icon themes (bug #6464)
+* Use upower for power saving mode (e.g. stop scrollbox animations).
+* Use the Xfce hvbox (maybe, need to check).
 
 Data
 ======================================================================
-* Use HTTP status codes to warn in time about API changes
-* How about a "follow-me" mode: Auto-determine location
-  based on IP address and adapt to any changes?
-* The plugin uses the local time, which results in wrong forecasts
-  when the user chooses a location in a different timezone. It should
-  be possible to find the timezone of the chosen location and do some
-  math to correct this.
-* Optionally send msl (meters above sea level) parameter when fetching
-  weather data, because sometimes a wrong altitude is returned.
-  Maybe this can be determined correctly by openstreetmap, but I did
-  not see anything like it in the XML.
+* Use HTTP status codes to warn in time about API changes.
+  -> already reported in panel output, maybe in details tab too?
+* Use XML "next run" to schedule data downloads.
+* Rewrite all time-related stuff to be in GMT. Then recalculate the
+  times for the destination timezone. glib provides tools for this,
+  but only beginning with 2.26. Code for determining the timezone of
+  a location is already implemented but temporarily deactivated.
 * Use openweathermap.org for live/historical data when it is a bit
   more developed. Maybe check it again in a year or so, or wait until
   other (open) providers pop up. For the time being, met.no should be
   good enough. Other providers are only slightly better, like
   weather.com returning values that have been reported half an hour
   up to an hour in the past, depending on the location.
-* Optimize data download update intervals. Current update interval is
-  3 hours, but in fact data change more often. Updating data currently
-  deletes point data at the beginning of the nearest available
-  interval (because it is not provided by the XML document), so only
-  temperature at the end of the interval could be shown with a higher
-  update frequency. Caching/special treatment could solve this
-  problem.
+* Implement METAR support. Perhaps.
+* Download and cache astronomical data for several days. Easy to do,
+  since the met.no sunrise API supports ranges.
+* Find out how to calculate symbols by ourselves.
+
+Icon themes
+======================================================================
+* Support icons for polar days, as met.no does.
+
+Configuration dialog
+======================================================================
+* Add option for configuring the scrollbox delays.
 
 Forecast tab
 ======================================================================
-* Show more details for daytime forecasts
-  - maybe tooltips for each entry?
-  - find a good way to indicate amount of precipitation
+* Show day min/max values.
 
 Details tab
 ======================================================================
 
-
-Configuration dialog
-======================================================================
-* Reorganize options, the window's already too large for the small
-  screen size of netbooks
-* Apply options immediately, like in most Xfce apps
-* Allow editing latitude and longitude and meters above sea level
-
 New stuff
 ======================================================================
-* Graph tab showing hourly break-down of forecast data
+* Graph tab showing hourly break-down of forecast data.

@@ -1,3 +1,118 @@
+0.8.3
+=====
+
+- Replace the old buggy weather-http implementation with libsoup.
+  This solves compilation errors on some systems like Solaris and
+  makes the plugin compatible with HTTP-1.1 chunked transfer
+  encoding. Proxy settings are now handled via environment variables
+  if set, which is how most other applications do it. Apart from that,
+  communication is now asynchronous and doesn't block the UI (bug
+  #9636).
+- Fix a rather severe bug in 0.8.2 which caused sending a HTTP request
+  to the forecast service every 15 seconds in case of a download
+  error.
+- Analyze HTTP status codes and implement API deprecation warning.
+  Status codes and deprecation warning are visible as warnings in the
+  panel output.
+- Weather data downloads are performed every 20 minutes, astronomical
+  data updates only once a day. In case of failure, there will be
+  retries in shorter intervals for some time, then the plugin will
+  return to the standard interval.
+- Rewrite the update code. Update events are now processed in time, or
+  in certain unforeseen cases like suspend/resume within an interval
+  of maximum 10 seconds.
+- Implement caching of data. Astronomical for the current day and
+  weather data will be cached and read on startup and when location
+  data is changed. Besides reducing network traffic and a seemingly
+  faster startup, this means the plugin can operate without internet
+  connection for a while. More information about caching is available
+  in the README file.
+- Improve calculation of daytime forecasts and current conditions.
+- Caching of data also improves calculation of current conditions.
+  Data for current conditions is now interpolated and calculated for 5
+  minute intervals. If data for the beginning of the current interval
+  is not available, the plugin reverts to the old, non-interpolating
+  behaviour of being slightly to largely imprecise about the current
+  weather, to a degree depending on the time interval for your
+  location. In short, only data for the end of the current interval
+  will be shown as earlier data is not provided by the forecast
+  service.
+- Add a proper "About" dialog (bug #9379).
+- Remove info button from summary window.
+- Remove forecast entry from plugin context menu (bug #9319).
+- Remember last selected tab in config and summary windows. However,
+  the setting is not saved to the config file.
+- Reformat detailed weather report in summary window.
+- Fix cursor not changing correctly in details tab.
+- Fix met.no icon transparency issue with some themes in details tab.
+- Show tooltips for forecast cells in summary window.
+- Show information about previous and scheduled downloads in the
+  details tab.
+- Update comments for the weather symbol descriptions.
+- New value: Apparent temperature (bug #9564).
+- New value: Dew point.
+- Rename value: Atmospheric pressure is barometric pressure.
+- Rename value: Humidity is relative humidity.
+- Rename value: Medium clouds is middle clouds.
+- Guess amount of snow precipitation from rain.
+- Use more digits for precipitations in inches.
+- The new config dialog applies options immediately and contains
+  explanatory tooltips for nearly every item.
+- New options to set latitude and longitude manually.
+- New option to set the altitude (in meters or feet, depending on
+  the chosen unit on the units page). The met.no elevation model
+  is not very good outside Norway.
+- Altitude is auto-detected using the GeoNames web service, which
+  isn't perfect but better than the met.no elevation model outside
+  Norway and free. GeoNames data can improve over time by receiving
+  voluntary contributions.
+- Rework unit system support. The simple but lacking METRIC/IMPERIAL
+  units option has been replaced with single options for every unit
+  so that the user can create a customized unit system, with more
+  units available than before. It still tries to set up the right
+  "set" at location auto-detection, based on the country code.
+- Use g_timeout_add_seconds for scrollbox updates where applicable
+  instead of g_timeout_add. This has the potential to save CPU time.
+- Add scrollbox toggle option. Saves CPU time significantly.
+- Disabling scrollbox animation reduces CPU time sigificantly.
+- Improve handling of scrollbox updates. Updates don't disturb or
+  restart animations in many cases and seem to happen more seamlessly,
+  except when desired, e.g. on user-provoked data resets.
+- New option to set font size manually and removed code that did it
+  automatically (bug #9369).
+  Font settings can be undone by middle-clicking on the button.
+- Implement scrollbox text color support (bug #7488).
+  Text color can be undone by middle-clicking on the button.
+- Implement scrollbox multi-line support (bug #5722).
+- Option to round values in scrollbox, tooltip and forecast tab, which
+  makes the widgets look a bit cleaner. In the details tab, always the
+  exact values will be shown (bug #9509 and bug #9318).
+- The user may now choose from two different forecast layouts: "Days
+  in columns", a calendar-like variant similar to the one in pre-0.8
+  versions, and "Days in rows" which was used beginning with
+  0.8.0. The latter is still the default.
+- Implement tooltip styles: In addition to the default tooltip that
+  some people might find a bit verbose, a simple tooltip style is now
+  available, showing only some interesting values. This is a bit
+  experimental, and either the current solution will be enhanced,
+  probably by providing more styles, or dropped completely to keep
+  things simple.
+- This version introduces icon theme support! The user can add folders
+  with icon sets to ~/.config/xfce4/weather/icons and select them on
+  the appearance tab on the configuration dialog. Icon themes will also
+  be searched in the THEMEDIR specified at compile time. Please read
+  the docs for more information if you're interested in creating icon
+  themes (bug #6464).
+- Improve liquid icons: Crop the borders and resize the icons while
+  applying sharpness filters etc. This makes them look bigger and
+  easier discernable.
+- New icon theme: "Liquid Dark", a variation of the liquid icon theme
+  better suited for dark panels.
+- Use GArrays for storing timeslices and glib data structures in many
+  other places to improve portability and maintenance.
+- Rewrite and refactor most code, fixing and protecting against
+  possible crashes.
+
 0.8.2
 =====
 - Lots of translations updates.
