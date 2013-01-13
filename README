@@ -4,6 +4,20 @@ You can always find up-to-date information at the plugin homepage:
 http://goodies.xfce.org/projects/panel-plugins/xfce4-weather-plugin
 
 
+CONTENTS
+==========================================================================
+* ABOUT
+* USAGE
+* INFORMATION FOR PACKAGE MAINTAINERS AND DISTRIBUTORS
+* MET.NO API DOCUMENTATION
+* DEBUGGING AND REPORTING BUGS
+* REQUIREMENTS AND DEPENDENCIES
+* EASY BUILD INSTRUCTIONS
+* TRANSLATING THE PLUGIN FOR YOUR LANGUAGE
+* ICON THEMES
+* CACHING
+
+
 ABOUT
 ==========================================================================
 Originally written by Bob Schlärmann, this panel plugin shows
@@ -15,19 +29,32 @@ USAGE
 ==========================================================================
 The first time you open the configuration dialog, the weather plugin
 automatically configures itself to fetch weather data from a place
-which should be near you - based on your IP address.
+which should be near you - based on your IP address. It will also try
+to guess and setup your unit system according to the country code.
 
 You can change this location using the Change... button, and searching
 for the city, country, address, monument etc. you're interested
-in. Only latitude and longitude will be used for the data requests, so
-you can edit the location name to something you like.
+in. Only latitude, longitude and altitude (the latter only matters
+outside of Norway) will be used for the data requests, so you can edit
+the location name to anything you like.
 
-In this configuration screen, you can also choose which information
-you want visible in the panel.
+Besides location parameters, the configuration dialog boasts a variety
+of other configuration options to alter the appearance of icons,
+tooltips and parts of the summary window. On the scrollbox tab you can
+choose and rearrange the values presented by the scrollbox.
+Middle-click on the font or color button unsets a previously set
+font or color.
+
+Tooltips give detailed information about nearly every widget of the
+configuration dialog and will tell you what a certain value
+(temperature, apparent temperature, wind,...) does and how it can be
+interpreted.
 
 On the panel icon, a middle click forces an update, left click brings
-up a forecast and details page. Right-clicking opens the contextual
-menu.
+up the so-called summary window with a forecast page that shows
+forecasts for the next few days and a details page with more
+information on the current and plugin data. Right-clicking opens the
+contextual menu with more actions.
 
 
 INFORMATION FOR PACKAGE MAINTAINERS AND DISTRIBUTORS
@@ -70,6 +97,16 @@ file, because your issue or request might have been reported already
 or be in planning. However, feel free to add any information not yet
 mentioned that you find useful.
 
+First, if you're having trouble with downloading data, then you might
+look at the warnings in the panel output. In case of an error, the
+HTTP status code will be reported, along with a short text given the
+reason, as a result of a download request. It is easy to look up this
+code on the web to find more detailed information. Although if it is a
+download problem and your connection is ok, then most probably the
+service isn't available at the moment due to maintenance or a similar
+reason, so just wait some time and try later. Please do not report
+bugs about such problems.
+
 If you encounter problems like crashes or weird behaviour, it might
 prove insightful to enable panel debugging as follows:
 
@@ -101,6 +138,96 @@ using gdb or any other debugger should the plugin crash:
 6) 'quit' exits the debugger.
 
 
+BUILD REQUIREMENTS AND DEPENDENCIES
+==========================================================================
+To be able to build the plugin, the following requirements have to be
+met in addition to those of XFCE-4.10:
+
+* >=libxml-2.4.0
+* >=libsoup-2.26.0
+
+You might also need developer libraries necessary for building other
+parts of XFCE. Usually autogen.sh / configure will tell you, otherwise
+look at the XFCE build instructions http://docs.xfce.org/xfce/building
+and the release information https://wiki.xfce.org/releng/4.10/roadmap.
+
+
+EASY BUILD INSTRUCTIONS
+==========================================================================
+If you're interesting in building the plugin yourself, these
+instructions provided here will work for most users. If not, please
+look at the INSTALL file or ask at a forum for your linux distribution
+or try the methods explained on http://www.xfce.org/community. Make
+sure you have installed the needed dependencies (see previous section
+BUILD REQUIREMENTS AND DEPENDENCIES).
+
+For the panel being able to find the plugin, it is important to set
+the proper prefix. The prefix is the place in the filesystem where the
+plugin files gets installed. It has to match the prefix used for
+building the panel. There's nothing the plugin can do about that
+requirement. When you're using the panel provided by the package
+management system of your distribution, then the prefix is in most
+cases /usr, otherwise the default prefix is /usr/local.
+
+If you want to install the current version from git, execute the
+following command in the weather plugin project directory (make sure
+you have GNU automake installed!):
+
+1a) ./autogen.sh --prefix=/usr
+
+Otherwise, if you've downloaded the tarball from e.g.
+http://archive.xfce.org/, issue the following command:
+
+1b) ./configure --prefix=/usr
+
+If 1a) or 1b) fail, you should receive an error message telling you
+the cause for the failure (e.g. missings libraries). If you're missing
+a dependency you need to install it using the package management
+system of your distribution. Distributions commonly have two versions
+of a software package: One containing the supplementary files needed
+for compiling other packages, and the other one providing the runtime
+libraries etc. While the latter is usually installed, the former often
+is not, so better check this.
+
+Note: To solve distribution-specific problems the most efficient way
+is to ask at a forum for your distribution, not on a general forum.
+
+Then for both cases:
+2) make
+
+If this fails, file a bug on https://bugzilla.xfce.org, or send a mail
+to the xfce mailing list and provide make output.
+
+Finally, and usually as root:
+3) make install
+
+Note: Depending on your prefix, this might overwrite an existing
+version of the plugin.
+
+You can later uninstall the plugin (as root) with
+4) make uninstall
+
+The panel should then recognize the new plugin, if it doesn't try to
+restart it using xfce4-panel -r. If it still doesn't work after that
+try to ask for help somewhere (forums, mailing lists, #xfce on
+IRC). Please do not report such problems on the bug tracker.
+
+
+TRANSLATING THE PLUGIN FOR YOUR LANGUAGE
+==========================================================================
+If you want to help translating the weather plugin into your language,
+please visit https://translations.xfce.org/ and absorb the information
+that is there, especially on the *Help* page!
+
+However, if you need to start with a translation completely from
+scratch (the po file doesn't exist and isn't listed in transifex),
+then please write a mail to xfce@xfce.org or xfce-i18n@xfce.org or use
+the bug tracker and ask for such a file being added to the project.
+Currently, only the package maintainer or developer of the plugin can
+add this new file and include it in the automake files so that it is
+integrated into the build process.
+
+
 ICON THEMES
 ==========================================================================
 
@@ -113,7 +240,7 @@ symbols definition. Icon sets following the freedesktop.org
 standardized naming scheme are not supported because they lack too
 many icons the plugin would need for the various weather conditions
 provided by met.no, so adhereing to the standard wouldn't make much
-sense (see 2) for more information ).
+sense (see the next section 2) for more information).
 
 If you want to design your own set, please have a look at the default
 Liquid theme that is included in this package to get an idea what the
@@ -122,7 +249,8 @@ where you will find references and explanations for the weather
 symbols.
 
 The plugin searches for icon themes in the following directories, in
-this particular order:
+this particular order (this very same order will be used for listing
+the themes in the configuration dialog):
 $XDG_CONFIG_HOME/xfce/weather/icons
 $(datadir)/icons
 
@@ -143,7 +271,7 @@ Liquid
 \--theme.info
 
 The theme.info file needs to be present, or the plugin will not
-consider the directory a valid icon theme. This file should contain
+consider the directory a valid icon theme. This file may contain
 the following entries:
 ------------------------------- theme.info -------------------------------
 Name=Liquid
@@ -153,14 +281,17 @@ License=GPL-2
 -------------------------- theme.info ends here --------------------------
 
 Make sure that each entry is on one line. Entries may not span
-multiple line, the additional lines will be ignored. These values will
-be shown in the theme selection in the configuration dialog.
+multiple lines, all additional lines will be ignored. You can use \n
+for newlines, though. These values will be shown in the tooltip of the
+theme selection combo box in the configuration dialog. You might want
+to put an extra LICENSE file into your theme directory.
 
-Directories 22, 48 and 128 shall contain the icons at approximately
-the size the directory names suggest. Icon sizes for the panel icon
-will be chosen depending on the panel size. For the tooltip, the icon
-will be taken from the 128 directory, and medium sized icons (48) for
-the forecast window and similar places.
+Directories 22, 48 and 128 shall contain the icons in PNG format (or
+at least with a PNG extension) at approximately the size the directory
+names suggest. Icon sizes for the panel icon will be chosen depending
+on the panel size. For the tooltip, the icon will be taken from the
+128 directory, and medium sized icons (48) for the forecast window and
+similar places.
 
 Here is a list showing which icon sizes are recommended for the
 various panel sizes:
@@ -195,15 +326,21 @@ follows (listed in alphabetical order):
 * sun.png
 
 At night time, the plugin will first look for icons having a "-night"
-suffix, e.g. cloud-night.png, lightrainsun-night.png etc. The rest of
-the filename needs to be the same as for the day icon, and the icons
-should probably look similar, however with brother sun replaced by
-sister moon. Of course, the latter is rather a design decision than a
-technical necessity. If no night icon is provided, the plugin will
-fallback to using the day icon.
+suffix, e.g. partlycloud-night.png, lightrainsun-night.png etc. The
+rest of the filename needs to be the same as for the day icon, and the
+icons should probably look similar, however with brother sun replaced
+by sister moon. Of course, the latter is rather a design decision than
+a technical necessity. If no night variant is provided, the plugin
+will fallback to using the day icon.
 
-An exception is the NODATA icon, which has no night variant. Further,
-it will only be shown when the plugin has not been configured yet -
+Note that not all symbols are expected to have icons for night
+time. For example, the CLOUD symbol is used when there is 100%
+cloudiness and the sun or moon cannot be seen. However, the plugin
+will still look for such night icons, in case the designer has another
+idea how to indicate night time without creating confusion.
+
+The only exception to this is the icon for NODATA, which has no night variant.
+This icon will only be shown when the plugin has not been configured yet -
 but then more likely only the NODATA icon of the default theme will
 appear and not that of your theme -, or when there is no data
 available, for example in case of a network error. It also serves as
@@ -211,12 +348,14 @@ the fallback icon for all missing day icons. Finally, if you do not
 provide a NODATA icon for your theme, then the one of the default
 theme will be used which is assumed to always be present.
 
-As is indirectly conveyed by this list, all files need to be in PNG
-format.
+If the plugin can't find a specific icon, it will remember that it is
+missing and not try to read it again until you restart the panel for
+change the theme. Also, icons for the panel and for the tooltip will
+be cached. These are measures to minimize disk access. Just keep that
+in mind when you work on your icons when the plugin is running.
 
 All icon sets included and distributed in the xfce4-weather-plugin
-package are under GPL by default. If an icon set differs from this
-license, please put an extra LICENSE file in the theme directory.
+package are under GPL by default.
 
 2) Freedesktop standardized naming scheme
 --------------------------------------------------------------------------
@@ -295,3 +434,45 @@ To sum it all up, the icon theme is considered licensed under GPL too,
 though its original author remains unknown. If someone can resolve this,
 please send a mail to the current maintainer of the weather plugin, and
 he/she will give proper credit.
+
+
+CACHING
+==========================================================================
+As of 0.8.3, xfce4-weather-plugin caches downloaded weather and
+astronomical data. Per plugin instance, one file containing that
+cached data is created in the user cache directory, typically in
+$HOME/.cache/xfce4/weather. This file will be generated or overwritten
+on every weather data download and read before any location data
+change. Cached data has a certain expiry date and will not be used if
+it is older than that. There is an option not exposed by the UI to
+change the maximum age; This parameter is called "cache_file_max_age"
+and can be found in the plugin configuration file usually located in
+~/.config/xfce4/panel. It is set to the maximum age in seconds and
+defaults to 48 hours (172800 seconds).
+
+By using caching, some deficiencies of data provided by met.no can be
+worked around:
+
+First, their location forecast service wasn't really meant to provide
+data for the current weather, which the plugin tries to convey.
+However, the forecasts for the next few hours (typically the next 3
+hours or sometimes even the next hour for cities, in any case at max 6
+hours for all locations) are in most cases good enough to fake current
+conditions using interpolation. Note that other weather providers
+often present values for current weather that have been measured half
+an hour or even more ago, so in most cases it won't make a big
+difference.
+
+Second, caching reduces network traffic. Data will only be downloaded
+after the download interval time has expired. Information about
+download times can be seen in the details page of the summary window.
+
+Third, caching data enables the plugin to work without internet
+connection for some time (see the previous paragraph about
+cache_file_max_age for information about configuring this expiry
+time).
+
+Note that refreshing data by middle-clicking the icon or by clicking
+on the appropriate context menu entry does not clear the cache.
+However, data that is download will always overwrite any existing
+data.
