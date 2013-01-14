@@ -66,6 +66,7 @@ typedef struct {
     GtkWidget *vbox_center_scrollbox;
     GtkWidget *iconimage;
     GtkWidget *tooltipbox;
+    GdkPixbuf *tooltip_icon;
     GtkWidget *summary_window;
     summary_details *summary_details;
     guint config_remember_tab;

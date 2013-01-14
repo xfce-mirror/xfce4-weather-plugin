@@ -247,6 +247,19 @@ get_cache_directory(void)
 }
 
 
+static gint
+get_tooltip_icon_size(plugin_data *data)
+{
+    switch (data->tooltip_style) {
+    case TOOLTIP_SIMPLE:
+        return 96;
+    case TOOLTIP_VERBOSE:
+    default:
+        return 128;
+    }
+}
+
+
 void
 update_icon(plugin_data *data)
 {
@@ -263,16 +276,22 @@ update_icon(plugin_data *data)
         size *= 2;
 #endif
 
-    /* set icon according to current weather conditions */
+    /* set panel icon according to current weather conditions */
     conditions = get_current_conditions(data->weatherdata);
     str = get_data(conditions, data->units, SYMBOL,
                    data->round, data->night_time);
     icon = get_icon(data->icon_theme, str, size, data->night_time);
-    g_free(str);
     gtk_image_set_from_pixbuf(GTK_IMAGE(data->iconimage), icon);
     if (G_LIKELY(icon))
         g_object_unref(G_OBJECT(icon));
-    weather_debug("Updated panel icon.");
+
+    /* set tooltip icon too */
+    size = get_tooltip_icon_size(data);
+    if (G_LIKELY(data->tooltip_icon))
+        g_object_unref(G_OBJECT(data->tooltip_icon));
+    data->tooltip_icon = get_icon(data->icon_theme, str, size, data->night_time);
+    g_free(str);
+    weather_debug("Updated panel and tooltip icons.");
 }
 
 
@@ -1549,10 +1568,7 @@ weather_get_tooltip_cb(GtkWidget *widget,
                        GtkTooltip *tooltip,
                        plugin_data *data)
 {
-    GdkPixbuf *icon;
-    xml_time *conditions;
-    gchar *markup_text, *rawvalue;
-    gint icon_size;
+    gchar *markup_text;
 
     if (data->weatherdata == NULL)
         gtk_tooltip_set_text(tooltip, _("Cannot update weather data"));
@@ -1562,23 +1578,7 @@ weather_get_tooltip_cb(GtkWidget *widget,
         g_free(markup_text);
     }
 
-    conditions = get_current_conditions(data->weatherdata);
-    rawvalue = get_data(conditions, data->units, SYMBOL,
-                        data->round, data->night_time);
-    switch (data->tooltip_style) {
-    case TOOLTIP_SIMPLE:
-        icon_size = 96;
-        break;
-    case TOOLTIP_VERBOSE:
-    default:
-        icon_size = 128;
-        break;
-    }
-    icon = get_icon(data->icon_theme, rawvalue, icon_size, data->night_time);
-    g_free(rawvalue);
-    gtk_tooltip_set_icon(tooltip, icon);
-    g_object_unref(G_OBJECT(icon));
-
+    gtk_tooltip_set_icon(tooltip, data->tooltip_icon);
     return TRUE;
 }
 
