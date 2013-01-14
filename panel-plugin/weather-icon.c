@@ -34,18 +34,100 @@
 #define ICON_DIR_SMALL "22"
 #define ICON_DIR_MEDIUM "48"
 #define ICON_DIR_BIG "128"
-#define NODATA "NODATA"
+
+
+static gboolean
+icon_missing(const icon_theme *theme,
+             const gchar *sizedir,
+             const gchar *symbol_name,
+             const gchar *suffix)
+{
+    gchar *missing, *icon;
+    gint i;
+
+    icon = g_strconcat(sizedir, G_DIR_SEPARATOR_S, symbol_name, suffix, NULL);
+    for (i = 0; i < theme->missing_icons->len; i++) {
+        missing = g_array_index(theme->missing_icons, gchar *, i);
+        if (G_UNLIKELY(missing == NULL))
+            continue;
+        if (!strcmp(missing, icon)) {
+            g_free(icon);
+            return TRUE;
+        }
+    }
+    g_free(icon);
+    return FALSE;
+}
+
+
+static void
+remember_missing_icon(const icon_theme *theme,
+                      const gchar *sizedir,
+                      const gchar *symbol_name,
+                      const gchar *suffix)
+{
+    gchar *icon;
+
+    icon = g_strconcat(sizedir, G_DIR_SEPARATOR_S, symbol_name, suffix, NULL);
+    g_array_append_val(theme->missing_icons, icon);
+    weather_debug("Remembered missing icon %s.", icon);
+}
+
+
+static const gchar *
+get_icon_sizedir(const gint size)
+{
+    const gchar *sizedir;
+
+    if (size < 24)
+        sizedir = ICON_DIR_SMALL;
+    else if (size < 49)
+        sizedir = ICON_DIR_MEDIUM;
+    else
+        sizedir = ICON_DIR_BIG;
+    return sizedir;
+}
+
+
+static gchar *
+make_icon_filename(const icon_theme *theme,
+                   const gchar *sizedir,
+                   const gchar *symbol_name,
+                   const gchar *suffix)
+{
+    gchar *filename, *symlow;
+
+    symlow = g_ascii_strdown(symbol_name, -1);
+    filename = g_strconcat(theme->dir, G_DIR_SEPARATOR_S, sizedir,
+                           G_DIR_SEPARATOR_S, symlow, suffix, ".png", NULL);
+    g_free(symlow);
+    return filename;
+}
+
+
+static gchar *
+make_fallback_icon_filename(const gchar *sizedir)
+{
+    gchar *filename, *symlow;
+
+    symlow = g_ascii_strdown(symbol_names[SYMBOL_NODATA], -1);
+    filename = g_strconcat(THEMESDIR, G_DIR_SEPARATOR_S, DEFAULT_W_THEME,
+                           G_DIR_SEPARATOR_S, sizedir, G_DIR_SEPARATOR_S,
+                           symlow, ".png", NULL);
+    g_free(symlow);
+    return filename;
+}
 
 
 GdkPixbuf *
 get_icon(const icon_theme *theme,
-         const gchar *number,
+         const gchar *symbol_name,
          const gint size,
          const gboolean night)
 {
     GdkPixbuf *image = NULL;
-    const gchar* dir;
-    gchar *filename, *suffix = "";
+    const gchar *sizedir;
+    gchar *filename = NULL, *suffix = "";
 
     g_assert(theme != NULL);
     if (G_UNLIKELY(!theme)) {
@@ -53,52 +135,65 @@ get_icon(const icon_theme *theme,
         return NULL;
     }
 
-    /* Try to use optimal size */
-    if (size < 24)
-        dir = ICON_DIR_SMALL;
-    else if (size < 49)
-        dir = ICON_DIR_MEDIUM;
-    else
-        dir = ICON_DIR_BIG;
+    /* choose icons from directory best matching the requested size */
+    sizedir = get_icon_sizedir(size);
 
-    if (number == NULL || strlen(number) == 0)
-        number = NODATA;
+    if (symbol_name == NULL || strlen(symbol_name) == 0)
+        symbol_name = symbol_names[SYMBOL_NODATA];
     else if (night)
         suffix = "-night";
 
-    filename = g_strconcat(theme->dir, G_DIR_SEPARATOR_S,
-                           dir, G_DIR_SEPARATOR_S,
-                           g_ascii_strdown(number, -1),
-                           suffix, ".png", NULL);
+    /* check whether icon has been verified to be missing before */
+    if (!icon_missing(theme, sizedir, symbol_name, suffix)) {
+        filename = make_icon_filename(theme, sizedir, symbol_name, suffix);
+        image = gdk_pixbuf_new_from_file_at_scale(filename, size, size, TRUE, NULL);
+    }
 
-    image = gdk_pixbuf_new_from_file_at_scale(filename, size, size, TRUE, NULL);
-
-    if (G_UNLIKELY(!image)) {
-        weather_debug("Unable to open image: %s", filename);
-        if (number && strcmp(number, NODATA)) {
+    if (image == NULL) {
+        /* remember failure for future lookups */
+        if (filename) {
+            weather_debug("Unable to open image: %s", filename);
+            remember_missing_icon(theme, sizedir, symbol_name, suffix);
             g_free(filename);
+            filename = NULL;
+        }
 
-            /* maybe there is no night icon, so fallback to using day icon */
+        if (strcmp(symbol_name, symbol_names[SYMBOL_NODATA]))
             if (night)
-                return get_icon(theme, number, size, FALSE);
+                /* maybe there is no night icon, so fallback to using day icon... */
+                return get_icon(theme, symbol_name, size, FALSE);
             else
+                /* ... or use NODATA if we tried that already */
                 return get_icon(theme, NULL, size, FALSE);
-        } else {
-            /* last fallback: get NODATA icon from standard theme */
-            g_free(filename);
-            filename = g_strconcat(THEMESDIR, G_DIR_SEPARATOR_S,
-                                   DEFAULT_W_THEME, G_DIR_SEPARATOR_S,
-                                   dir, G_DIR_SEPARATOR_S,
-                                   g_ascii_strdown(NODATA, -1), ".png", NULL);
+        else {
+            /* last chance: get NODATA icon from standard theme */
+            filename = make_fallback_icon_filename(sizedir);
             image = gdk_pixbuf_new_from_file_at_scale(filename, size, size,
                                                       TRUE, NULL);
-            if (G_UNLIKELY(!image))
-                g_warning("Failed to open image: %s", filename);
+            if (G_UNLIKELY(image == NULL))
+                g_warning("Failed to open fallback icon from standard theme: %s",
+                          filename);
         }
     }
     g_free(filename);
 
     return image;
+}
+
+
+/*
+ * Create a new icon theme struct, initializing caches to undefined.
+ */
+static icon_theme *
+make_icon_theme(void)
+{
+    icon_theme *theme = g_slice_new0(icon_theme);
+
+    g_assert(theme != NULL);
+    if (theme == NULL)
+        return NULL;
+    theme->missing_icons = g_array_new(FALSE, TRUE, sizeof(gchar *));
+    return theme;
 }
 
 
@@ -127,7 +222,7 @@ icon_theme_load_info(const gchar *dir)
         if (!rc)
             return NULL;
 
-        if ((theme = g_slice_new0(icon_theme)) == NULL) {
+        if ((theme = make_icon_theme()) == NULL) {
             xfce_rc_close(rc);
             return NULL;
         }
@@ -293,7 +388,7 @@ icon_theme_copy(icon_theme *src)
     if (G_UNLIKELY(src == NULL))
         return NULL;
 
-    dst = g_slice_new0(icon_theme);
+    dst = make_icon_theme();
     if (G_UNLIKELY(dst == NULL))
         return NULL;
 
@@ -314,6 +409,9 @@ icon_theme_copy(icon_theme *src)
 void
 icon_theme_free(icon_theme *theme)
 {
+    gchar *missing;
+    guint i;
+
     g_assert(theme != NULL);
     if (G_UNLIKELY(theme == NULL))
         return;
@@ -322,5 +420,10 @@ icon_theme_free(icon_theme *theme)
     g_free(theme->author);
     g_free(theme->description);
     g_free(theme->license);
+    for (i = 0; i < theme->missing_icons->len; i++) {
+        missing = g_array_index(theme->missing_icons, gchar *, i);
+        g_free(missing);
+    }
+    g_array_free(theme->missing_icons, FALSE);
     g_slice_free(icon_theme, theme);
 }

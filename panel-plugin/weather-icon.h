@@ -82,6 +82,7 @@ typedef struct {
     gchar *author;
     gchar *description;
     gchar *license;
+    GArray *missing_icons;
 } icon_theme;
 
 
