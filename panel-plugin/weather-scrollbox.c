@@ -28,8 +28,9 @@
 
 #include "weather-scrollbox.h"
 
-#define LABEL_SLEEP (3)    /* sleep time in seconds */
-#define LABEL_SPEED (25)   /* animation speed, delay in ms */
+#define LABEL_SLEEP (3)       /* sleep time in seconds */
+#define LABEL_SLEEP_LONG (6)  /* sleep time in seconds for FADE_NONE */
+#define LABEL_SPEED (25)      /* animation speed, delay in ms */
 
 
 static void gtk_scrollbox_finalize(GObject *object);
@@ -392,7 +393,7 @@ gtk_scrollbox_control_loop(gpointer user_data)
             self->offset = GTK_WIDGET(self)->allocation.height;
         else
             self->offset = GTK_WIDGET(self)->allocation.width;
-        self->timeout_id = g_timeout_add_seconds(LABEL_SLEEP,
+        self->timeout_id = g_timeout_add_seconds(LABEL_SLEEP_LONG,
                                                  gtk_scrollbox_control_loop,
                                                  self);
         break;
