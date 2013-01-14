@@ -1436,7 +1436,7 @@ options_datatypes_set_tooltip(GtkWidget *optmenu)
     gint history, opt = OPTIONS_N;
 
     history = gtk_option_menu_get_history(GTK_OPTION_MENU(optmenu));
-    if (G_LIKELY(history > -1) || history < OPTIONS_N)
+    if (G_LIKELY(history > -1) && history < OPTIONS_N)
         opt = labeloptions[history].number;
 
     switch (opt) {
