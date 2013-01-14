@@ -364,7 +364,7 @@ create_summary_tab(plugin_data *data)
     APPEND_TEXT_ITEM_REAL(value);
 
     /* calculation times */
-    APPEND_BTEXT(_("\nTimes Used In Calculations\n"));
+    APPEND_BTEXT(_("\nTimes Used for Calculations\n"));
     point = format_date(conditions->point, NULL, TRUE);
     value = g_strdup_printf
         (_("\tTemperatures, wind, atmosphere and cloud data calculated\n"
@@ -560,7 +560,7 @@ forecast_cell_get_tooltip_text(plugin_data *data,
     const gchar *unit;
 
     /* TRANSLATORS: Please use \t as needed to properly align the values */
-    text = g_string_new(_("<b>Times used for calculation</b>\n"));
+    text = g_string_new(_("<b>Times used for calculations</b>\n"));
     value = format_date(fcdata->start, NULL, TRUE);
     g_string_append_printf(text, _("Interval start:\t\t\t%s\n"), value);
     g_free(value);
@@ -584,11 +584,11 @@ forecast_cell_get_tooltip_text(plugin_data *data,
     APPEND_TOOLTIP_ITEM(_("Amount:\t\t%s%s%s\n\n"), PRECIPITATIONS);
 
     g_string_append(text, _("<b>Clouds</b>\n"));
-    APPEND_TOOLTIP_ITEM(_("Fog:\t\t%s%s%s\n"), FOG);
-    APPEND_TOOLTIP_ITEM(_("Low:\t\t%s%s%s\n"), CLOUDS_LOW);
-    APPEND_TOOLTIP_ITEM(_("Middle:\t\t%s%s%s\n"), CLOUDS_MID);
-    APPEND_TOOLTIP_ITEM(_("High:\t\t%s%s%s\n"), CLOUDS_HIGH);
-    APPEND_TOOLTIP_ITEM(_("Cloudiness:\t%s%s%s"), CLOUDINESS);
+    APPEND_TOOLTIP_ITEM(_("Fog:\t\t\t%s%s%s\n"), FOG);
+    APPEND_TOOLTIP_ITEM(_("Low clouds:\t\t%s%s%s\n"), CLOUDS_LOW);
+    APPEND_TOOLTIP_ITEM(_("Middle clouds:\t%s%s%s\n"), CLOUDS_MID);
+    APPEND_TOOLTIP_ITEM(_("High clouds:\t\t%s%s%s\n"), CLOUDS_HIGH);
+    APPEND_TOOLTIP_ITEM(_("Cloudiness:\t\t%s%s%s"), CLOUDINESS);
 
     /* Free GString only and return its character data */
     result = text->str;

@@ -1521,7 +1521,7 @@ weather_get_tooltip_text(const plugin_data *data)
                "<span size=\"medium\">(%s)</span>\n"
                "<b><span size=\"large\">%s</span></b>\n"
                "<span size=\"smaller\">"
-               "from %s to %s, with %s precipitations</span>\n\n"
+               "from %s to %s, with %s of precipitations</span>\n\n"
                "<b>Temperature:</b> %s\t\t"
                "<span size=\"smaller\">(values at %s)</span>\n"
                "<b>Wind:</b> %s (%son the Beaufort scale) from %s(%s)\n"
