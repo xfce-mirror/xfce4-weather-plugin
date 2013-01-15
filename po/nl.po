@@ -2,7 +2,7 @@
 # Copyright (C) The Xfce development team.
 # This file is distributed under the same license as the xfce4-weather-plugin package.
 # Jasper Huijsmans <jasper@xfce.org>, 2005.
-# Pjotr, 2011.
+# Pjotr, 2011, 2012, 2013.
 # 
 msgid ""
 msgstr ""
@@ -114,7 +114,8 @@ msgstr "Fout bij het verwerken van de weergegevens."
 #, c-format
 msgid ""
 "Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
-msgstr "Het ophalen van weergegevens mislukte met HTTP statuscode %d, reden-zin: %s"
+msgstr ""
+"Het ophalen van weergegevens mislukte met HTTP statuscode %d, reden-zin: %s"
 
 #: ../panel-plugin/weather.c:1366
 #, c-format
@@ -158,14 +159,11 @@ msgid ""
 msgstr ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
 "<b><span size=\"large\">%s</span></b>\n"
-"<span size=\"smaller\">van %s tot %s, met %s neerslag</span>\n"
 "\n"
-"<b>Temperatuur:</b> %s\t\t<span size=\"smaller\">(waarden op %s)</span>\n"
-"<b>Wind:</b> %s (%sop de schaal van Beaufort) van %s(%s)\n"
-"<b>Luchtdruk:</b> %s    <b>Luchtvochtigheid:</b> %s\n"
-"<b>Nevel:</b> %s    <b>Bewolking:</b> %s\n"
-"\n"
-"<span size=\"smaller\">%s</span>"
+"<b>Temperatuur:</b> %s\n"
+"<b>Wind:</b> %s van %s\n"
+"<b>Luchtdruk:</b> %s\n"
+"<b>Luchtvochtigheid:</b> %s\n"
 
 #. * TRANSLATORS: Re-arrange and align at will, optionally using
 #. * abbreviations for labels if desired or necessary. Just take
@@ -282,7 +280,7 @@ msgstr "Neerslag (R)"
 #: ../panel-plugin/weather-config.c:221 ../panel-plugin/weather-config.c:318
 #: ../panel-plugin/weather-config.c:493
 msgid "Unset"
-msgstr "Niet meer ingesteld"
+msgstr "Niet ingesteld"
 
 #: ../panel-plugin/weather-config.c:328
 msgid "Detecting..."
@@ -323,7 +321,9 @@ msgid ""
 "Latitude specifies the north-south position of a point on the Earth's "
 "surface. If you change this value manually, you should provide the correct "
 "altitude too."
-msgstr "Breedtegraad specificeert de noord-zuidpositie van een punt op de oppervlakte van de aarde. Indien u deze waarde handmatig verandert, dan zou u tevens de correcte lengtegraad moeten opgeven."
+msgstr "Breedtegraad specificeert de noord-zuidpositie van een punt op de "
+"oppervlakte van de aarde. Indien u deze waarde handmatig verandert, dan "
+"zou u tevens de correcte lengtegraad moeten opgeven."
 
 #: ../panel-plugin/weather-config.c:516
 msgid "L_ongitude:"
@@ -334,7 +334,9 @@ msgid ""
 "Longitude specifies the east-west position of a point on the Earth's "
 "surface. If you change this value manually, you should provide the correct "
 "altitude too."
-msgstr "Lengtegraad bepaald de oost-westpositie van een punt op de oppervlakte van de aarde. Indien u deze waarde handmatig verandert, dan zou u tevens de correcte lengtegraad moeten opgeven."
+msgstr "Lengtegraad bepaald de oost-westpositie van een punt op de "
+"oppervlakte van de aarde. Indien u deze waarde handmatig verandert, dan "
+"zou u tevens de correcte lengtegraad moeten opgeven."
 
 #: ../panel-plugin/weather-config.c:530
 msgid "_Altitude:"
@@ -548,9 +550,8 @@ msgid ""
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:911
-#, fuzzy
 msgid "_Temperature:"
-msgstr "Temperatuur"
+msgstr "Temperatuur:"
 
 #: ../panel-plugin/weather-config.c:913
 msgid "Celcius (°C)"
