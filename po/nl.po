@@ -321,7 +321,7 @@ msgid ""
 "Latitude specifies the north-south position of a point on the Earth's "
 "surface. If you change this value manually, you should provide the correct "
 "altitude too."
-msgstr "Breedtegraad specificeert de noord-zuidpositie van een punt op de "
+msgstr ""
 "oppervlakte van de aarde. Indien u deze waarde handmatig verandert, dan "
 "zou u tevens de correcte lengtegraad moeten opgeven."
 
@@ -334,7 +334,7 @@ msgid ""
 "Longitude specifies the east-west position of a point on the Earth's "
 "surface. If you change this value manually, you should provide the correct "
 "altitude too."
-msgstr "Lengtegraad bepaald de oost-westpositie van een punt op de "
+msgstr ""
 "oppervlakte van de aarde. Indien u deze waarde handmatig verandert, dan "
 "zou u tevens de correcte lengtegraad moeten opgeven."
 
@@ -357,6 +357,11 @@ msgid ""
 "but small differences will have no influence on the weather data. Inside "
 "Norway, this setting has no effect at all."
 msgstr ""
+" Voor locaties buiten Noorwegen is het verheffingsmodel dat de webdienst Met.no gebruikt niet erg goed, dus is het gewoonlijk nodig om de hoogte als een extra parameter op te geven, anders zullen de gerapporteerde waarden niet correct zijn.\n"
+"\n"
+"De invoegtoepassing probeert om de hoogte automatisch te bespeuren met behulp van de webdienst GeoNames, maar die zou ook weleens niet altijd correct kunnen zijn, dus kunt u het hier veranderen.\n"
+"\n"
+"Hoogte wordt gegeven in meters boven zeeniveau, of anders in voet, door de eenheid te veranderen op de eenhedenpagina. het zou ruwweg moeten overeenkomen met de echte waarde, maar kleine verschillen zullen geen invloed hebben op de weergegevens. Binnen Noorwegen heeft deze instelling totaal geen effect."
 
 #: ../panel-plugin/weather-config.c:556
 msgid ""
@@ -367,6 +372,12 @@ msgid ""
 "<i>Please change the location name to your liking and\n"
 "revise the altitude if not auto-detected correctly.</i>"
 msgstr ""
+"\n"
+"\n"
+"\n"
+"\n"
+"<i>Verander a.u.b. de locatienaam naar uw believen en\n"
+"herzie de hoogte indien die niet automatisch correct wordt bespeurd."
 
 #: ../panel-plugin/weather-config.c:580
 msgid ""
@@ -555,20 +566,19 @@ msgstr "Temperatuur:"
 
 #: ../panel-plugin/weather-config.c:913
 msgid "Celcius (°C)"
-msgstr ""
+msgstr "Celcius (°C)"
 
 #: ../panel-plugin/weather-config.c:914
 msgid "Fahrenheit (°F)"
-msgstr ""
+msgstr "Fahrenheit (°F)"
 
 #: ../panel-plugin/weather-config.c:919
-#, fuzzy
 msgid "Atmospheric _pressure:"
-msgstr "Luchtdruk (D)"
+msgstr "Luchtdruk:"
 
 #: ../panel-plugin/weather-config.c:922
 msgid "Hectopascals (hPa)"
-msgstr ""
+msgstr "Hectopascal (hPa)"
 
 #: ../panel-plugin/weather-config.c:924
 msgid "Inches of mercury (inHg)"
