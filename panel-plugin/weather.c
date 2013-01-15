@@ -1,4 +1,4 @@
-/*  Copyright (c) 2003-2012 Xfce Development Team
+/*  Copyright (c) 2003-2013 Xfce Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -1845,7 +1845,7 @@ xfceweather_show_about(XfcePanelPlugin *plugin,
          "program-name", PACKAGE_NAME,
          "comments", _("Show weather conditions and forecasts"),
          "website", PLUGIN_WEBSITE,
-         "copyright", _("Copyright (c) 2003-2012\n"),
+         "copyright", _("Copyright (c) 2003-2013\n"),
          "authors", auth,
          NULL);
 
