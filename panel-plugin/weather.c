@@ -575,7 +575,7 @@ update_handler(plugin_data *data)
                               now_tm.tm_mday);
 
         /* start receive thread */
-        g_message("getting %s", url);
+        g_message(_("getting %s"), url);
         weather_http_queue_request(data->session, url, cb_astro_update, data);
         g_free(url);
     }
@@ -593,7 +593,7 @@ update_handler(plugin_data *data)
                             data->lat, data->lon, data->msl);
 
         /* start receive thread */
-        g_message("getting %s", url);
+        g_message(_("getting %s"), url);
         weather_http_queue_request(data->session, url,
                                    cb_weather_update, data);
         g_free(url);
@@ -1037,7 +1037,7 @@ write_cache_file(plugin_data *data)
     }
 
     if (!g_file_set_contents(file, out->str, -1, NULL))
-        g_warning("Error writing cache file %s!", file);
+        g_warning(_("Error writing cache file %s!"), file);
     else
         weather_debug("Cache file %s has been written.", file);
 
@@ -1619,8 +1619,8 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
         data->iconimage = gtk_image_new_from_pixbuf(icon);
         g_object_unref(G_OBJECT(icon));
     } else
-        g_warning("No default icon theme? "
-                  "This should not happen, plugin will crash!");
+        g_warning(_("No default icon theme? "
+                    "This should not happen, plugin will crash!"));
 
     data->labels = g_array_new(FALSE, TRUE, sizeof(data_types));
 

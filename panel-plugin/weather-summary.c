@@ -49,11 +49,26 @@ lnk_clicked(GtkTextTag *tag,
                            &iter, text, -1);        \
     g_free(value);
 
+/*
+ * TRANSLATORS: This format string belongs to the macro used for
+ * printing the "Label: Value Unit" lines on the details tab, e.g.
+ * "Temperature: 10 °C" or "Latitude: 95.7°".
+ * The %s stand for:
+ *   - label
+ *   - ": " if label is not empty, else empty
+ *   - value
+ *   - space if unit is not degree "°" (but this is not °C or °F!)
+ *   - unit
+ * Usually, you should leave this unchanged, BUT...
+ * RTL TRANSLATORS: In case you did not translate the measurement
+ * unit, use LRM (left-to-right mark) etc. to align it properly with
+ * its numeric value.
+ */
 #define APPEND_TEXT_ITEM(text, item)                            \
     rawvalue = get_data(conditions, data->units, item,          \
                         FALSE, data->night_time);               \
     unit = get_unit(data->units, item);                         \
-    value = g_strdup_printf("\t%s%s%s%s%s\n",                   \
+    value = g_strdup_printf(_("\t%s%s%s%s%s\n"),                \
                             text, text ? ": " : "",             \
                             rawvalue,                           \
                             strcmp(unit, "°") ? " " : "",       \
@@ -243,8 +258,9 @@ logo_fetched(SoupSession *session,
         GdkPixbuf *pixbuf = NULL;
         if (!g_file_set_contents(path, msg->response_body->data,
                                  msg->response_body->length, &error)) {
-            g_warning("Error downloading met.no logo image to %s, "
-                      "err %s\n", path, error ? error->message : "?");
+            g_warning(_("Error downloading met.no logo image to %s, "
+                        "reason: %s\n"), path,
+                      error ? error->message : _("unknown"));
             g_error_free(error);
             g_free(path);
             return;
@@ -452,9 +468,8 @@ create_summary_tab(plugin_data *data)
                     FALSE, data->night_time);
     rawvalue = get_data(conditions, data->units, WIND_BEAUFORT,
                         FALSE, data->night_time);
-    value = g_strdup_printf(_("\t%s: %s %s (%s on the Beaufort scale)\n"),
-                            _("Speed"), wind,
-                            get_unit(data->units, WIND_SPEED),
+    value = g_strdup_printf(_("\tSpeed: %s %s (%s on the Beaufort scale)\n"),
+                            wind, get_unit(data->units, WIND_SPEED),
                             rawvalue);
     g_free(rawvalue);
     g_free(wind);
@@ -466,7 +481,9 @@ create_summary_tab(plugin_data *data)
     g_free(rawvalue);
     rawvalue = get_data(conditions, data->units, WIND_DIRECTION_DEG,
                         FALSE, data->night_time);
-    value = g_strdup_printf("\t%s: %s (%s%s)\n", _("Direction"),
+
+    /* wind direction */
+    value = g_strdup_printf(_("\tDirection: %s (%s%s)\n"),
                             wind, rawvalue,
                             get_unit(data->units, WIND_DIRECTION_DEG));
     g_free(rawvalue);

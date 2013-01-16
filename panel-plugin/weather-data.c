@@ -447,14 +447,18 @@ get_unit(const units_config *units,
     case WIND_DIRECTION_DEG:
     case LATITUDE:
     case LONGITUDE:
-        return "°";
+        /* TRANSLATORS: The degree sign is used like a unit for
+           latitude, longitude, wind direction */
+        return _("°");
     case HUMIDITY:
     case CLOUDS_LOW:
     case CLOUDS_MID:
     case CLOUDS_HIGH:
     case CLOUDINESS:
     case FOG:
-        return "%";
+        /* TRANSLATORS: Percentage sign is used like a unit for
+           clouds, fog, humidity */
+        return _("%");
     case PRECIPITATIONS:
         return (units->precipitations == INCHES) ? _("in") : _("mm");
     case SYMBOL:

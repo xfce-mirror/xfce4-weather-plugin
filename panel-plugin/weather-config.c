@@ -584,24 +584,31 @@ combo_unit_temperature_set_tooltip(GtkWidget *combo)
                  "and 1 °C difference in temperature is exactly the same "
                  "difference as 1 K. It is defined with the melting point "
                  "of water being roughly at 0 °C and its boiling point at "
-                 "100 °C at one standard atmosphere (1 atm = 1013.5 hPa)."
-                 "Until 1948, the unit was known as <i>centigrade</i> (from "
-                 "Latin <i>centum</i> (100) and <i>gradus</i> (steps).");
+                 "100 °C at one standard atmosphere (1 atm = 1013.5 hPa). "
+                 "Until 1948, the unit was known as <i>centigrade</i> - from "
+                 "Latin <i>centum</i> (100) and <i>gradus</i> (steps).\n"
+                 "In meteorology and everyday life the Celsius scale is "
+                 "very convenient for expressing temperatures because its "
+                 "numbers can be an easy indicator for the formation of "
+                 "black ice and snow.");
         break;
     case FAHRENHEIT:
         text = _("The current Fahrenheit temperature scale is based on one "
-                 "proposed in 1724 by the physicist Daniel Gabriel Fahrenheit. "
-                 "0 °F was the freezing point of brine on the original scale "
-                 "at standard atmospheric pressure, which was the lowest "
-                 "temperature achievable with this mixture of ice, salt and "
-                 "ammonium chloride.\n"
-                 "The melting point of water on the current is at 32 °F and "
-                 "its boiling point at 212 °F, and the interval between these "
-                 "two points can be divided into 180 equal parts. 180 is a "
-                 "highly composite number, which can be evenly divided into "
-                 "many fractions. The Fahrenheit and Celsius scale intersect "
-                 "at -40 degrees."
-                 );
+                 "proposed in 1724 by the physicist Daniel Gabriel "
+                 "Fahrenheit. 0 °F was the freezing point of brine on the "
+                 "original scale at standard atmospheric pressure, which "
+                 "was the lowest temperature achievable with this mixture "
+                 "of ice, salt and ammonium chloride. The melting point of "
+                 "water is at 32 °F and its boiling point at 212 °F. "
+                 "The Fahrenheit and Celsius scales intersect at -40 "
+                 "degrees. Even in cold winters, the temperatures usually "
+                 "do not fall into negative ranges on the Fahrenheit scale.\n"
+                 "With its inventor being a member of the Royal Society in "
+                 "London and having a high reputation, the Fahrenheit scale "
+                 "enjoyed great popularity in many English-speaking countries, "
+                 "but was replaced by the Celsius scale in most of these "
+                 "countries during the metrification process in the mid to "
+                 "late 20th century.");
         break;
     }
     gtk_widget_set_tooltip_markup(GTK_WIDGET(combo), text);
@@ -838,6 +845,11 @@ combo_apparent_temperature_set_tooltip(GtkWidget *combo)
 
     switch (value) {
     case WINDCHILL_HEATINDEX:
+        /*
+         * TRANSLATORS: The Summer Simmer Index is similar to the heat
+         * index, but usually used at night because of its better accuracy
+         * at that time.
+         */
         text = _("Used in North America, wind chill will be reported for low "
                  "temperatures and heat index for higher ones. At night, heat "
                  "index will be replaced by the Summer Simmer Index. For wind "
@@ -910,7 +922,7 @@ create_units_page(xfceweather_dialog *dialog)
     hbox = gtk_hbox_new(FALSE, BORDER);
     ADD_LABEL(_("_Temperature:"), sg_label);
     ADD_COMBO(dialog->combo_unit_temperature);
-    ADD_COMBO_VALUE(dialog->combo_unit_temperature, _("Celcius (°C)"));
+    ADD_COMBO_VALUE(dialog->combo_unit_temperature, _("Celsius (°C)"));
     ADD_COMBO_VALUE(dialog->combo_unit_temperature, _("Fahrenheit (°F)"));
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
 
@@ -941,7 +953,7 @@ create_units_page(xfceweather_dialog *dialog)
     ADD_COMBO_VALUE(dialog->combo_unit_windspeed,
                     _("Feet per second (ft/s)"));
     ADD_COMBO_VALUE(dialog->combo_unit_windspeed,
-                    _("International knots (kt)"));
+                    _("Knots (kt)"));
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
 
     /* precipitations */
@@ -1174,7 +1186,7 @@ create_appearance_page(xfceweather_dialog *dialog)
 
     /* number of days shown in forecast */
     hbox = gtk_hbox_new(FALSE, BORDER);
-    ADD_LABEL(_("_Number of forecast _days:"), sg);
+    ADD_LABEL(_("_Number of forecast days:"), sg);
     ADD_SPIN(dialog->spin_forecast_days, 1, MAX_FORECAST_DAYS, 1,
              (dialog->pd->forecast_days ? dialog->pd->forecast_days : 5),
              0, NULL);
@@ -1414,14 +1426,14 @@ options_datatypes_set_tooltip(GtkWidget *optmenu)
                  "moisture.");
         break;
     case PRESSURE:
-        text = _("The air that makes up the atmosphere exerts a pressure "
-                 "on the surface below it, which is known as atmospheric "
-                 "pressure. To make it easier to compare the value to "
-                 "other values for locations with different altitudes, "
-                 "atmospheric pressure is adjusted to the equivalent "
-                 "sea-level pressure and called barometric pressure. "
-                 "Rising barometric pressures generally indicate an "
-                 "improvement in weather conditions, while falling "
+        text = _("The weight of the air that makes up the atmosphere exerts "
+                 "a pressure on the surface of the Earth, which is known as "
+                 "atmospheric pressure. To make it easier to compare the "
+                 "value to other values for locations with different "
+                 "altitudes, atmospheric pressure is adjusted to the "
+                 "equivalent sea-level pressure and called barometric "
+                 "pressure. Rising barometric pressures generally indicate "
+                 "an improvement in weather conditions, while falling "
                  "pressures mean deterioration.");
         break;
     case WIND_SPEED:
@@ -1505,8 +1517,8 @@ options_datatypes_set_tooltip(GtkWidget *optmenu)
                  "18,000 m (59,000 ft) at the equator, where temperatures "
                  "are so low that they are mainly composed of ice crystals. "
                  "While typically thin and white in appearance, they can be "
-                 "seen in a magnicient array of colors when the sun is low on "
-                 "the horizon.");
+                 "seen in a magnificent array of colors when the sun is low "
+                 "on the horizon.");
         break;
     case CLOUDINESS:
         text = _("Cloudiness, or cloud cover, defines the fraction of the "
@@ -1683,9 +1695,9 @@ create_scrollbox_page(xfceweather_dialog *dialog)
     /* show scrollbox */
     hbox = gtk_hbox_new(FALSE, BORDER);
     dialog->check_scrollbox_show =
-        gtk_check_button_new_with_mnemonic("Show scroll_box");
+        gtk_check_button_new_with_mnemonic(_("Show scroll_box"));
     SET_TOOLTIP(dialog->check_scrollbox_show,
-                _("Hide the scrollbox to save valueable space on the panel. "
+                _("Hide the scrollbox to save valuable space on the panel. "
                   "Most interesting information is also provided in the "
                   "tooltip - provided you choose an appropriate tooltip "
                   "style - that is shown when hovering over the icon."));
@@ -1696,7 +1708,7 @@ create_scrollbox_page(xfceweather_dialog *dialog)
                                  dialog->pd->show_scrollbox);
 
     /* values to show at once (multiple lines) */
-    label = gtk_label_new_with_mnemonic(_("L_ines:"));
+    label = gtk_label_new_with_mnemonic(_("Li_nes:"));
     gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
     gtk_box_pack_start(GTK_BOX(hbox), label, TRUE, TRUE, 0);
     ADD_SPIN(dialog->spin_scrollbox_lines, 1, MAX_SCROLLBOX_LINES, 1,
@@ -1751,7 +1763,7 @@ create_scrollbox_page(xfceweather_dialog *dialog)
         gtk_tree_view_new_with_model(GTK_TREE_MODEL(dialog->model_datatypes));
     renderer = gtk_cell_renderer_text_new();
     column =
-        gtk_tree_view_column_new_with_attributes(_("Labels to _display"),
+        gtk_tree_view_column_new_with_attributes(_("Labels to d_isplay"),
                                                  renderer, "text", 0, NULL);
     SET_TOOLTIP(dialog->list_datatypes,
                 _("These are the values that will be shown in the scrollbox. "
@@ -1761,7 +1773,7 @@ create_scrollbox_page(xfceweather_dialog *dialog)
     gtk_widget_set_size_request(dialog->options_datatypes, 300, -1);
 
     /* button "add" */
-    ADD_LABEL_EDIT_BUTTON(button_add, _("_Add"),
+    ADD_LABEL_EDIT_BUTTON(button_add, _("A_dd"),
                           GTK_STOCK_ADD, button_add_option_clicked);
     SET_TOOLTIP(button_add,
                 _("Add the selected value to the labels that should be "
@@ -1787,7 +1799,7 @@ create_scrollbox_page(xfceweather_dialog *dialog)
     gtk_table_attach_defaults(GTK_TABLE(table), button_del, 0, 1, 0, 1);
 
     /* button "move up" */
-    ADD_LABEL_EDIT_BUTTON(button_up, _("Move _up"),
+    ADD_LABEL_EDIT_BUTTON(button_up, _("Move u_p"),
                           GTK_STOCK_GO_UP, button_up_option_clicked);
     SET_TOOLTIP(button_up,
                 _("Move the selected value up in the list of labels "
@@ -1795,7 +1807,7 @@ create_scrollbox_page(xfceweather_dialog *dialog)
     gtk_table_attach_defaults(GTK_TABLE(table), button_up, 0, 1, 2, 3);
 
     /* button "move down" */
-    ADD_LABEL_EDIT_BUTTON(button_down, _("Move _down"),
+    ADD_LABEL_EDIT_BUTTON(button_down, _("Move do_wn"),
                           GTK_STOCK_GO_DOWN, button_down_option_clicked);
     SET_TOOLTIP(button_down,
                 _("Move the selected value down in the list of labels "
@@ -1954,16 +1966,16 @@ create_config_dialog(plugin_data *data,
     dialog->notebook = gtk_notebook_new();
     gtk_notebook_append_page(GTK_NOTEBOOK(dialog->notebook),
                              create_location_page(dialog),
-                             gtk_label_new_with_mnemonic("_Location"));
+                             gtk_label_new_with_mnemonic(_("_Location")));
     gtk_notebook_append_page(GTK_NOTEBOOK(dialog->notebook),
                              create_units_page(dialog),
-                             gtk_label_new_with_mnemonic("_Units"));
+                             gtk_label_new_with_mnemonic(_("_Units")));
     gtk_notebook_append_page(GTK_NOTEBOOK(dialog->notebook),
                              create_appearance_page(dialog),
-                             gtk_label_new_with_mnemonic("_Appearance"));
+                             gtk_label_new_with_mnemonic(_("_Appearance")));
     gtk_notebook_append_page(GTK_NOTEBOOK(dialog->notebook),
                              create_scrollbox_page(dialog),
-                             gtk_label_new_with_mnemonic("_Scrollbox"));
+                             gtk_label_new_with_mnemonic(_("_Scrollbox")));
     setup_notebook_signals(dialog);
     gtk_box_pack_start(GTK_BOX(vbox), dialog->notebook, TRUE, TRUE, 0);
     gtk_widget_show(GTK_WIDGET(vbox));
