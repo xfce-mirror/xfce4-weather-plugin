@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: xfce4-weather-plugin 0.8.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-01-14 17:10+0100\n"
-"PO-Revision-Date: 2013-01-15 13:00+0100\n"
+"PO-Revision-Date: 2013-01-16 12:41+0100\n"
 "Last-Translator: Piotr Sokół <psokol@jabster.pl>\n"
 "Language-Team: polski <>\n"
 "Language: \n"
@@ -232,7 +232,7 @@ msgstr "Temperatura (T)"
 
 #: ../panel-plugin/weather-config.c:96
 msgid "Barometric pressure (P)"
-msgstr "Ciśnienie atmosferyczne (C)"
+msgstr "Ciśnienie barometryczne (C)"
 
 #: ../panel-plugin/weather-config.c:97
 msgid "Wind speed (WS)"
@@ -301,7 +301,7 @@ msgstr "metrów"
 
 #: ../panel-plugin/weather-config.c:388
 msgid "feet"
-msgstr ""
+msgstr "stóp"
 
 #: ../panel-plugin/weather-config.c:469
 msgid "Location _name:"
@@ -312,6 +312,8 @@ msgid ""
 "Change the name for the location to your liking. It is used for display and "
 "does not affect the location parameters in any way."
 msgstr ""
+"Wprowadza nazwę lokalizacji. Nazwa używana jest jako etykieta i jej zmiana w "
+"żaden sposób nie wpływa na współrzędne lokalizacji."
 
 #: ../panel-plugin/weather-config.c:480
 msgid "Chan_ge..."
@@ -319,7 +321,7 @@ msgstr "_Zmień..."
 
 #: ../panel-plugin/weather-config.c:483
 msgid "Search for a new location and auto-detect its parameters."
-msgstr ""
+msgstr "Wyszukuje nową lokalizację i wykrywa jej współrzędne"
 
 #: ../panel-plugin/weather-config.c:502
 msgid "Latitud_e:"
@@ -331,6 +333,9 @@ msgid ""
 "surface. If you change this value manually, you should provide the correct "
 "altitude too."
 msgstr ""
+"Określa położenie na powierzchni Ziemi pomiędzy kierunkami północnym a "
+"południowym. Ręczne zmodyfikowanie tej wartości wymaga wprowadzenia "
+"poprawnej wartości wysokości bezwzględnej."
 
 #: ../panel-plugin/weather-config.c:516
 msgid "L_ongitude:"
@@ -342,6 +347,9 @@ msgid ""
 "surface. If you change this value manually, you should provide the correct "
 "altitude too."
 msgstr ""
+"Określa położenie na powierzchni Ziemi pomiędzy kierunkami wschodnim i "
+"zachodnim. Ręczne zmodyfikowanie tej wartości wymaga wprowadzenia poprawnej "
+"wartości wysokości bezwzględnej."
 
 #: ../panel-plugin/weather-config.c:530
 msgid "_Altitude:"
@@ -362,6 +370,19 @@ msgid ""
 "but small differences will have no influence on the weather data. Inside "
 "Norway, this setting has no effect at all."
 msgstr ""
+"Określa wysokość nad poziomem morza, wyrażoną w metrach lub stopach. "
+"Wprowadzona wartość powinna odpowiadać rzeczywistej wysokości, jednak "
+"niewielkie różnice nie mają wpływu na dane pogodowe. W przypadku terytorium "
+"Norwegii ten parametr w ogóle nie jest brany pod uwagę.\n"
+"\n"
+"Model ukształtowania terenu poza terytorium Norwegii nie jest doskonały, "
+"dlatego wymagane jest wprowadzenie wysokości bezwzględnej jako dodatkowego "
+"parametru. W przypadku pominięcia tej wartości, komunikaty pogodowe mogą być "
+"nieprawidłowe.\n"
+"\n"
+"Wtyczka wykrywa wysokość bezwzględną położenia używając do tego celu usługi "
+"sieciowej GeoNames. Wykryte wartości mogą być błędne, dlatego istnieje "
+"możliwość ich poprawienia."
 
 #: ../panel-plugin/weather-config.c:556
 msgid ""
@@ -372,6 +393,12 @@ msgid ""
 "<i>Please change the location name to your liking and\n"
 "revise the altitude if not auto-detected correctly.</i>"
 msgstr ""
+"\n"
+"\n"
+"\n"
+"\n"
+"<i>W razie potrzeby, proszę zmienić nazwę wykrytej\n"
+"lokalizacji oraz jej wysokość bezwzględną.</i>"
 
 #: ../panel-plugin/weather-config.c:580
 msgid ""
@@ -568,7 +595,7 @@ msgstr "Fahrenheit (°F)"
 
 #: ../panel-plugin/weather-config.c:919
 msgid "Atmospheric _pressure:"
-msgstr "_Ciśnienie atmosferyczne:"
+msgstr "_Ciśnienie barometryczne:"
 
 #: ../panel-plugin/weather-config.c:922
 msgid "Hectopascals (hPa)"
@@ -647,12 +674,14 @@ msgid "Windchill/Humidex"
 msgstr "Indeks cieplny Humidex"
 
 #: ../panel-plugin/weather-config.c:979
+#, fuzzy
 msgid "Steadman"
-msgstr ""
+msgstr "Skala Steadman'a"
 
 #: ../panel-plugin/weather-config.c:980
+#, fuzzy
 msgid "Quayle-Steadman"
-msgstr ""
+msgstr "Skala Quayle-Steadman'a"
 
 #: ../panel-plugin/weather-config.c:1003
 msgid "Choose an icon theme."
@@ -701,6 +730,10 @@ msgid ""
 "README file. New icon themes will be detected everytime you open this config "
 "dialog."
 msgstr ""
+"Określa styl ikon. Ikony stylów przechowywane są w położeniu $HOME/.config/"
+"xfce4/weather/icons (lub w położeniu równoważnym dla danego systemu). Plik "
+"README zawiera informacje na temat tworzenia i używania stylów ikon. Nowe "
+"style wykrywane są każdorazowo po otwarciu okna właściwości apletu."
 
 #: ../panel-plugin/weather-config.c:1148
 msgid "_Tooltip style:"
@@ -719,6 +752,9 @@ msgid ""
 "Choose your preferred tooltip style. Some styles give a lot of useful data, "
 "some are clearer but provide less data on a glance."
 msgstr ""
+"Określa styl podpowiedzi apletu. Niektóre style udostępniają wielu "
+"użytecznych informacji, niektóre są bardziej przejrzyste, lecz oferują mniej "
+"danych."
 
 #: ../panel-plugin/weather-config.c:1166
 msgid "_Forecast layout:"
@@ -726,11 +762,11 @@ msgstr "Układ p_rognozy:"
 
 #: ../panel-plugin/weather-config.c:1168
 msgid "Days in columns"
-msgstr "Dni w kolumnach"
+msgstr "Dni rozmieszczone w kolumnach"
 
 #: ../panel-plugin/weather-config.c:1169
 msgid "Days in rows"
-msgstr "Dni w wierszach"
+msgstr "Dni rozmieszczone w wierszach"
 
 #: ../panel-plugin/weather-config.c:1177
 msgid "_Number of forecast _days:"
@@ -745,6 +781,11 @@ msgid ""
 "Note however that usually forecasts for more than three days in the future "
 "are unreliable at best ;-)"
 msgstr ""
+"Określa ilość dni wyświetlanych w karcie prognozy okna komunikatu. Witryna "
+"Met.no udostępnia dane prognozy dla %d kolejnych dni. W przypadku słabszych "
+"konfiguracji sprzętowych, mniejsza wartość może przyspieszyć wyświetlanie "
+"okna prognozy. Należy zauważyć, że prognoza pogody dłuższa niż na 3 "
+"najbliższe dni jest bardzo mało wiarygodna."
 
 #: ../panel-plugin/weather-config.c:1200
 msgid "_Round values"
@@ -755,6 +796,7 @@ msgid ""
 "Check to round values everywhere except on the details page in the summary "
 "window."
 msgstr ""
+"Zaokrągla wartości z wyjątkiem danych na karcie szczegółów okna komunikatu"
 
 #: ../panel-plugin/weather-config.c:1252 ../panel-plugin/weather-config.c:1716
 msgid "Select _font"
@@ -770,6 +812,8 @@ msgid ""
 "Choose the value to add to the list below. Values can be added more than "
 "once."
 msgstr ""
+"Wybiera etykietę dodawaną do listy wyświetlanych etykiet. Etykietę można "
+"umieścić na liście wiele razy."
 
 #: ../panel-plugin/weather-config.c:1411
 msgid ""
@@ -934,6 +978,9 @@ msgid ""
 "information is also provided in the tooltip - provided you choose an "
 "appropriate tooltip style - that is shown when hovering over the icon."
 msgstr ""
+"Ukrywa etykiety apletu, aby zmniejszyć ilość miejsca zajmowanego na panelu. "
+"Większość użytecznych informacji jest zawarta w podpowiedzi - w zależności "
+"od użytego stylu - wyświetlanej po wskazaniu apletu kursorem myszy."
 
 #. values to show at once (multiple lines)
 #: ../panel-plugin/weather-config.c:1699
@@ -945,6 +992,9 @@ msgid ""
 "Decide how many values should be shown at once in the scrollbox. You can "
 "choose a smaller font or enlarge the panel to make more lines fit."
 msgstr ""
+"Określa ilość wierszy wyświetlanych jednocześnie w obszarze panelu. Aby "
+"wyświetlić większą ilość wierszy, można użyć mniejszej czcionki lub "
+"zwiększyć rozmiar panelu."
 
 #: ../panel-plugin/weather-config.c:1712
 msgid "Font and color:"
@@ -955,6 +1005,8 @@ msgid ""
 "Choose a font you like and set it to a smaller or larger size. Middle-click "
 "on the button to unset the font and use your theme's default."
 msgstr ""
+"Konfiguruje rodzinę i rozmiar czcionki wyświetlanej na panelu. Kliknięcie "
+"środkowym przyciskiem myszy przywraca domyślne ustawienia stylu."
 
 #: ../panel-plugin/weather-config.c:1730
 msgid ""
@@ -963,6 +1015,9 @@ msgid ""
 "another color, then you can change it using this button. Middle-click on the "
 "button to unset the scrollbox text color."
 msgstr ""
+"Określa kolor tekstu etykiety. Opcja przydatna z niektórymi stylami wyglądu, "
+"które sprawiają, że etykiety stają się nieczytelne. Kliknięcie środkowym "
+"przyciskiem myszy przywraca domyślne ustawienia stylu."
 
 #: ../panel-plugin/weather-config.c:1754
 msgid "Labels to _display"
@@ -974,6 +1029,9 @@ msgid ""
 "value here and click the appropriate button to remove it or move it up and "
 "down in the list."
 msgstr ""
+"Zawiera listę etykiet wyświetlanych w obszarze panelu. Aby przemieścić lub "
+"usunąć pojedynczą etykietę, należy najpierw zaznaczyć kliknięciem "
+"odpowiednią pozycję na liście."
 
 #. button "add"
 #: ../panel-plugin/weather-config.c:1764
@@ -984,7 +1042,7 @@ msgstr "_Dodaj"
 msgid ""
 "Add the selected value to the labels that should be displayed in the "
 "scrollbox."
-msgstr ""
+msgstr "Dodaje wybraną etykietę do listy wyświetlanej w obszarze panelu"
 
 #: ../panel-plugin/weather-config.c:1782
 msgid "_Remove"
@@ -994,27 +1052,25 @@ msgstr "_Usuń"
 msgid ""
 "Select a value in the list of labels to display and click this button to "
 "remove it."
-msgstr ""
+msgstr "Usuwa wybraną etykietę z listy wyświetlanej w obszarze panelu"
 
 #. button "move up"
 #: ../panel-plugin/weather-config.c:1790
-#, fuzzy
 msgid "Move _up"
 msgstr "Przemieść _wyżej"
 
 #: ../panel-plugin/weather-config.c:1793
 msgid "Move the selected value up in the list of labels to display."
-msgstr ""
+msgstr "Przemieszcza wybraną etykietę w górę na liście wyświetlanych etykiet"
 
 #. button "move down"
 #: ../panel-plugin/weather-config.c:1798
-#, fuzzy
 msgid "Move _down"
 msgstr "Przemieść _niżej"
 
 #: ../panel-plugin/weather-config.c:1801
 msgid "Move the selected value down in the list of labels to display."
-msgstr ""
+msgstr "Przemieszcza wybraną etykietę w dół na liście wyświetlanych etykiet"
 
 #: ../panel-plugin/weather-config.c:1818
 msgid "Animate _transitions between labels"
@@ -1213,7 +1269,7 @@ msgid ""
 "\n"
 msgstr ""
 "\tDane pogodowe:\n"
-"\tOstatnie:\t%s\n"
+"\tOstatnie:\t\t%s\n"
 "\tNastępne:\t%s\n"
 "\tIlość nieudanych prób: %d\n"
 "\n"
@@ -1227,7 +1283,7 @@ msgid ""
 "\tCurrent failed attempts: %d\n"
 msgstr ""
 "\tDane astronomiczne:\n"
-"\tOstatnie:\t%s\n"
+"\tOstatnie:\t\t%s\n"
 "\tNastępne:\t%s\n"
 "\tIlość nieudanych prób: %d\n"
 
@@ -1237,14 +1293,16 @@ msgid ""
 "\n"
 "Times Used for Calculations\n"
 msgstr ""
+"\n"
+"Czasy wyznaczenia danych\n"
 
 #: ../panel-plugin/weather-summary.c:370
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\tTemperatures, wind, atmosphere and cloud data calculated\n"
 "\tfor:\t\t%s\n"
 msgstr ""
-"\tTemperatura, wiatr, ciśnienie i dane zachmurzenia wyznaczono dla:\n"
+"\tTemperatura, wiatr, ciśnienie i zachmurzenie:\n"
 "\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:379
@@ -1257,7 +1315,7 @@ msgid ""
 "\tEnd:\t%s\n"
 msgstr ""
 "\n"
-"\tOpady i symbol pogody wyznaczono dla następującego okresu:\n"
+"\tOpady i symbol pogody dla okresu:\n"
 "\tPoczątek:\t%s\n"
 "\tKoniec:\t\t%s\n"
 
@@ -1379,7 +1437,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-summary.c:478
 msgid "Precipitations amount"
-msgstr "Ilość opadów"
+msgstr "Ilość"
 
 #. atmosphere
 #: ../panel-plugin/weather-summary.c:481
@@ -1388,11 +1446,11 @@ msgid ""
 "Atmosphere\n"
 msgstr ""
 "\n"
-"Ciśnienie atmosferyczne\n"
+"Atmosfera\n"
 
 #: ../panel-plugin/weather-summary.c:482
 msgid "Barometric pressure"
-msgstr "Ciśnienie atmosferyczne"
+msgstr "Ciśnienie barometryczne"
 
 #: ../panel-plugin/weather-summary.c:483
 msgid "Relative humidity"
@@ -1453,17 +1511,17 @@ msgstr "Jutro"
 #. TRANSLATORS: Please use \t as needed to properly align the values
 #: ../panel-plugin/weather-summary.c:563
 msgid "<b>Times used for calculations</b>\n"
-msgstr ""
+msgstr "<b>Czasy wyznaczenia danych</b>\n"
 
 #: ../panel-plugin/weather-summary.c:565
 #, c-format
 msgid "Interval start:\t\t\t%s\n"
-msgstr ""
+msgstr "Początek okresu:\t\t\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:568
 #, c-format
 msgid "Interval end:\t\t\t%s\n"
-msgstr ""
+msgstr "Koniec okresu:\t\t\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:571
 #, c-format
@@ -1471,6 +1529,8 @@ msgid ""
 "Data calculated for:\t%s\n"
 "\n"
 msgstr ""
+"Dane wyznaczono dla:\t\t%s\n"
+"\n"
 
 #: ../panel-plugin/weather-summary.c:574
 msgid "<b>Temperatures</b>\n"
@@ -1479,7 +1539,7 @@ msgstr "<b>Temperatury</b>\n"
 #: ../panel-plugin/weather-summary.c:575
 #, c-format
 msgid "Dew point:\t\t\t%s%s%s\n"
-msgstr "Punkt rosy:\t\t\t%s%s%s\n"
+msgstr "Punkt rosy:\t\t\t\t%s%s%s\n"
 
 #: ../panel-plugin/weather-summary.c:576
 #, c-format
@@ -1497,7 +1557,7 @@ msgstr "<b>Atmosfera</b>\n"
 #: ../panel-plugin/weather-summary.c:580
 #, c-format
 msgid "Barometric pressure:\t%s%s%s\n"
-msgstr "Ciśnienie atmosferyczne:\t%s%s%s\n"
+msgstr "Ciśnienie barometryczne:\t%s%s%s\n"
 
 #: ../panel-plugin/weather-summary.c:581
 #, c-format
@@ -1513,12 +1573,12 @@ msgid "<b>Precipitations</b>\n"
 msgstr "<b>Opady</b>\n"
 
 #: ../panel-plugin/weather-summary.c:584
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Amount:\t\t%s%s%s\n"
 "\n"
 msgstr ""
-"Ilość:\t\t%s%s%s\n"
+"Ilość:\t\t\t\t%s%s%s\n"
 "\n"
 
 #: ../panel-plugin/weather-summary.c:586
