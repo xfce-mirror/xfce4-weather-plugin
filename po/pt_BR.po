@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: xfce4-weather-plugin (XFCE 4.4 Goodies)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-01-14 17:10+0100\n"
-"PO-Revision-Date: 2013-01-16 22:02-0300\n"
+"PO-Revision-Date: 2013-01-17 02:54-0300\n"
 "Last-Translator: Rafael Ferreira <rafael.f.f1@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar2.conectiva.com.br>\n"
 "Language: pt_BR\n"
@@ -143,7 +143,7 @@ msgstr "Atualização meteorológicas"
 
 #: ../panel-plugin/weather.c:1434
 msgid "Short-term forecast data unavailable."
-msgstr "Os dados de previsão de curto-termo estão indisponíveis."
+msgstr "Nenhum dado de previsão de curto-termo disponível."
 
 #: ../panel-plugin/weather.c:1446
 msgid "The sun never rises today."
@@ -207,24 +207,24 @@ msgstr ""
 "<b><span size=\"large\">%s</span></b>\n"
 "<span size=\"smaller\">de %s a %s, com %s precipitações</span>\n"
 "\n"
-"<b>Temperatura:</b> %s\t\t<span size=\"smaller\">(valores em %s)</span>\n"
-"<b>Vento:</b> %s (%s na escala de Beaufort) de %s(%s)\n"
-"<b>Pressão:</b> %s    <b>Umidade:</b> %s\n"
-"<b>Nevoeiro:</b> %s    <b>Nebulosidade:</b> %s\n"
+"<b>Temperatura:</b> %s\t     <span size=\"smaller\">(valores em %s)</span>\n"
+"<b>Vento:</b> %s (%s na escala Beaufort) de %s(%s)\n"
+"<b>Pressão:</b> %s    <b>Umidade: </b>%s\n"
+"<b>Nevoeiro:</b> %s       <b>Nebulosidade:</b> %s\n"
 "\n"
 "<span size=\"smaller\">%s</span>"
 
 #: ../panel-plugin/weather.c:1558
 msgid "Cannot update weather data"
-msgstr "Não foi possível atualizar dados climáticos"
+msgstr "Não foi possível obter dados meteorológicos atualizados"
 
 #: ../panel-plugin/weather.c:1846
 msgid "Show weather conditions and forecasts"
-msgstr "Mostra condições e previsões climáticas atuais"
+msgstr "Mostra condições e previsões meteorológicas"
 
 #: ../panel-plugin/weather.c:1848
 msgid "Copyright (c) 2003-2012\n"
-msgstr "Copyright (c) 2003-2012\n"
+msgstr "Copyright (c) 2003-2013\n"
 
 #.
 #. * TRANSLATORS: The abbreviations in parentheses will be shown in
@@ -314,7 +314,7 @@ msgstr "pés"
 
 #: ../panel-plugin/weather-config.c:469
 msgid "Location _name:"
-msgstr "_Nome da Localização:"
+msgstr "No_me da localização:"
 
 #: ../panel-plugin/weather-config.c:476
 msgid ""
@@ -326,7 +326,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-config.c:480
 msgid "Chan_ge..."
-msgstr "_Alterar..."
+msgstr "Al_terar..."
 
 #: ../panel-plugin/weather-config.c:483
 msgid "Search for a new location and auto-detect its parameters."
@@ -335,7 +335,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-config.c:502
 msgid "Latitud_e:"
-msgstr "Latitud_e:"
+msgstr "Latitu_de:"
 
 #: ../panel-plugin/weather-config.c:506
 msgid ""
@@ -363,7 +363,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-config.c:530
 msgid "_Altitude:"
-msgstr "_Altitude:"
+msgstr "Altitud_e:"
 
 #: ../panel-plugin/weather-config.c:534
 msgid ""
@@ -392,8 +392,8 @@ msgstr ""
 "A altitude é dada em metros acima do nível do mar ou, alternativamente, em "
 "pés, o que pode ser alterado na unidade na página de unidades. Ela deveria "
 "corresponder a basicamente o valor real, mas pequenas diferenças não terão "
-"influências nos dados do clima. Dentro de Norway, essa configuração não tem "
-"efeito."
+"influências nos dados meteorológicos. Dentro de Norway, essa configuração "
+"não tem efeito."
 
 #: ../panel-plugin/weather-config.c:556
 msgid ""
@@ -423,10 +423,14 @@ msgid ""
 "Until 1948, the unit was known as <i>centigrade</i> (from Latin <i>centum</"
 "i> (100) and <i>gradus</i> (steps)."
 msgstr ""
-"Chamado após o astrônomo Anders Celsius, que foi quem inventou a escala "
-"original em 1742, a escala Celsius é uma unidade padrão internacional e hoje "
-"em dia é definida usando a escala Kelvin. 0 °C é equivalente a 273,15 K e 1 "
-"°C de diferença na temperatura é exatamente a mesma diferença que 1 K."
+"Chamado assim após o astrônomo Anders Celsius, que foi quem inventou a "
+"escala original em 1742, a escala Celsius é uma unidade padrão internacional "
+"e hoje em dia é definida usando a escala Kelvin. 0 °C é equivalente a 273,15 "
+"K e 1 °C de diferença na temperatura é exatamente a mesma diferença em 1 K. "
+"É definido com o ponto de derretimento do gelo sendo por volta de 0 °C e "
+"ponto de ebulição em 100 °C em uma atmosfera padrão (1 atm = 1013,5 hPa). "
+"Até 1948, a unidade era conhecida como <i>centígrado</i> (de Latim "
+"<i>centum</i> (100) e <i>gradus</i> (passo)."
 
 #: ../panel-plugin/weather-config.c:592
 msgid ""
@@ -443,15 +447,16 @@ msgid ""
 msgstr ""
 "A escala atual de temperatura Fahrenheit é baseada em uma proposta em 1724 "
 "pelo físico Daniel Gabriel Fahrenheit. 0 °F era o ponto de congelamento da "
-"salmoura na escala original em pressão atmosférica padrão, o que era a mais "
+"salmoura na escala original na pressão atmosférica padrão, o que era a mais "
 "baixa temperatura alcançável com esta mistura de gelo, sal e cloreto de "
 "amônio.\n"
 "O ponto de derretimento da água na atual é em 32 °F e seu ponto de fervência "
 "é em 212 °F, e o intervalo entre esses dois pontos pode ser dividido em 180 "
 "partes iguais. 180 é um número altamente composto, o que pode ser dividido "
-"uniformemente em várias frações. As escalas Fahrenheit e Celsius "
-"interceptam  em -40 graus."
+"uniformemente em várias frações. As escalas Fahrenheit e Celsius se "
+"interceptam em -40 graus."
 
+# http://pt.wikipedia.org/wiki/Sistema_Internacional_de_Unidades
 #: ../panel-plugin/weather-config.c:632
 msgid ""
 "The pascal, named after mathematician, physicist and philosopher Blaise "
@@ -459,9 +464,9 @@ msgid ""
 "as one newton per square meter. One standard atmosphere (atm) is 1013.25 hPa."
 msgstr ""
 "O pascal, chamado assim por causa do matemático, físico e filósofo Blaise "
-"Pascal, é uma unidade derivada de SI e uma medida de força por área de "
-"unidade, definida como um newton por metro quadrado. Uma atmosfera padrão "
-"(atm) é 1013.25 hPa."
+"Pascal, é uma unidade derivada do Sistema Internacional de Unidades - SI e é "
+"medida de força por área de unidade, definida como um newton por metro "
+"quadrado. Uma atmosfera padrão (atm) é 1013,25 hPa."
 
 #: ../panel-plugin/weather-config.c:639
 msgid ""
@@ -472,10 +477,10 @@ msgid ""
 "of gravity."
 msgstr ""
 "Polegadas de mercúrio ainda é amplamente usado para pressão barométrica em "
-"relatórios meteorológicos, relatórios e aviação nos Estados Unidades, mas de "
-"vez em quando é usado em outros lugares. É definido como a pressão exercida "
-"por uma coluna circular de 1 polegada de mercúrio de 1 polegada de altura em "
-"32  °F (0 °C) na aceleração padrão da gravidade."
+"relatórios meteorológicos, refrigeração e aviação nos Estados Unidades, mas "
+"de vez em quando é usado em outros lugares. É definido como a pressão "
+"exercida por uma coluna circular de 1 polegada de mercúrio com altura de 1 "
+"polegada em 32  °F (0 °C) na aceleração padrão da gravidade."
 
 #: ../panel-plugin/weather-config.c:647
 msgid ""
@@ -486,10 +491,10 @@ msgid ""
 "life in Canada, the United Kingdom and maybe some former British Colonies."
 msgstr ""
 "A libra por polegada quadrada é uma unidade de pressão baseada em unidades "
-"de avoirdupois (um sistema de pesos baseada em uma libra de 16 onças) e a "
+"de avoirdupois (um sistema de pesos baseado em uma libra de 16 onças) e a "
 "pressão resultante de uma força de uma libra-força aplicada a uma área de "
 "uma polegada quadrada. Ela é usada nos Estados Unidos e em graus variados na "
-"vida cotidiana do Canada, no Reino Unido e talvez em algumas ex-colônias "
+"vida cotidiana do Canadá, no Reino Unido e talvez em algumas ex-colônias "
 "britânicas."
 
 #: ../panel-plugin/weather-config.c:656
@@ -504,7 +509,7 @@ msgstr ""
 "Torricelli, que foi quem descobriu o princípio do barômetro em 1644 e "
 "demonstrou o primeiro barômetro de mercúrio para o público geral. Uma "
 "pressão de 1 torr é aproximadamente igual a um milímetro de mercúrio, e uma "
-"atmosfera padrão (atm) igual a 760 Torr."
+"atmosfera padrão (atm) é igual a 760 Torr."
 
 #: ../panel-plugin/weather-config.c:690
 msgid ""
@@ -514,7 +519,7 @@ msgid ""
 "speed in meters per second (m/s), wind speeds in TV or in the news are often "
 "provided in km/h."
 msgstr ""
-"Quilômetro por hora é uma unidade de velocidade, expressando o número de "
+"Quilômetro por hora é uma unidade de velocidade, que expressa o número de "
 "quilômetros viajados em uma hora. No mundo todo, o km/h é a unidade de "
 "velocidade mais comum nos sinais de rua e velocímetros de carros. Enquanto "
 "os meteorologistas medem a velocidade do vento em metros por segundo (m/s), "
@@ -528,8 +533,8 @@ msgid ""
 "limits, and to express speeds generally, on roads in the United Kingdom and "
 "the United States."
 msgstr ""
-"Metros por hora é uma unidade de velocidade imperial que expressa o número "
-"de milhas terrestres passadas em uma hora. Ela é a unidade padrão atual "
+"Metros por hora é uma unidade imperial de velocidade que expressa o número "
+"de milhas terrestres realizadas em uma hora. Ela é a unidade padrão atual "
 "usada para limites de velocidade, e para expressar velocidades em geral, nas "
 "ruas do Reino Unido e nos Estados Unidos."
 
@@ -540,9 +545,9 @@ msgid ""
 "seconds. This is the unit meteorologists use to denote wind speeds."
 msgstr ""
 "Metro por segundo é uma unidade derivada do SI (Sistema Internacional de "
-"Unidades) de ambas rapidez e velocidade. definida pela distância em metros "
+"Unidades) de ambas rapidez e velocidade, definida pela distância em metros "
 "dividida pelo tempo em segundos. Essa é a unidade que os meteorologistas "
-"usam para denotar as velocidades do vento."
+"usam para indicar as velocidades dos ventos."
 
 #: ../panel-plugin/weather-config.c:711
 msgid ""
@@ -551,10 +556,11 @@ msgid ""
 "divided by the time in seconds. The corresponding unit in the International "
 "System of Units is the meter per second."
 msgstr ""
-"O pé por segundo (plural pés por segundo) é uma unidade imperial de ambas "
-"rapidez e velocidade. Ela expressa a distância em pés viajada ou deslocada, "
-"dividida pelo tempo em segundos. A unidade correspondente no Sistema "
-"Internacional de Unidades é o metro por segundo."
+"O pé por segundo (em inglês \"foot per second\", plural \"feet per second\") "
+"é uma unidade imperial de ambas rapidez e velocidade. Ela expressa a "
+"distância viajada ou deslocada a pés, dividida pelo tempo em segundos. A "
+"unidade correspondente no Sistema Internacional de Unidades - SI é o metro "
+"por segundo."
 
 #: ../panel-plugin/weather-config.c:718
 msgid ""
@@ -564,9 +570,10 @@ msgid ""
 "knot along a meridian travels one minute of geographic latitude in one hour."
 msgstr ""
 "O nó é uma unidade de velocidade igual a uma milha náutica internacional "
-"(1,852 km) por hora, ou aproximadamente 1,151 mph, e é usada no mundo todo "
-"na meteorologia e na navegação marítima e aérea. Um navio viajando a 1 nó ao "
-"longo de um meridiano viaja um minuto da latitude geográfica em uma hora."
+"(1,852 km) por hora, ou aproximadamente 1,151 mph, e vê-se sendo usada por "
+"todo o mundo na meteorologia e na navegação marítima e aérea. Um navio "
+"viajando a 1 nó ao longo de um meridiano viaja um minuto da latitude "
+"geográfica em uma hora."
 
 #: ../panel-plugin/weather-config.c:751
 msgid ""
@@ -580,7 +587,7 @@ msgid ""
 "inches."
 msgstr ""
 "O metro é a unidade fundamental de comprimento no Sistema Internacional de "
-"unidades. Intencionado originalmente para ser um décimo milionésimo da "
+"Unidades. Intencionado originalmente para ser um décimo milionésimo da "
 "distância do equador da Terra para o Polo Norte no nível do mar, sua "
 "definição foi periodicamente refinada para refletir o conhecimento crescente "
 "da metrologia (a ciência de medições). Desde 1983, ela foi definida como o "
@@ -595,11 +602,11 @@ msgid ""
 "different standards of the inch with varying sizes of measure. However, the "
 "current internationally accepted value is exactly 25.4 millimeters."
 msgstr ""
-"A palavra em inglês <i>inch</i> vem do latim <i>uncia</i>, que significa "
-"<i>parte um duodécimo</i> (nesse caso, um duodécimo de um pé). Já houve "
-"vários padrões diferentes de uma polegada com tamanhos variados de medida. "
-"Porém, o valor internacionalmente aceito na atualidade é exatamente 25,4 "
-"milímetros."
+"Polegada em inglês, a palavra <i>inch</i>, tem sua origem no latim <i>uncia</"
+"i>, que significa <i>parte um duodécimo</i> (nesse caso, um duodécimo de um "
+"pé). Já houve vários padrões diferentes de uma polegada com tamanhos "
+"variados de medida. Porém, o valor internacionalmente aceito na atualidade é "
+"exatamente 25,4 milímetros."
 
 #: ../panel-plugin/weather-config.c:796
 msgid ""
@@ -612,7 +619,7 @@ msgid ""
 "second."
 msgstr ""
 "O metro é a unidade fundamental de comprimento no Sistema Internacional de "
-"unidades. Intencionado originalmente para ser um décimo milionésimo da "
+"Unidades. Intencionado originalmente para ser um décimo milionésimo da "
 "distância do equador da Terra para o Polo Norte no nível do mar, sua "
 "definição foi periodicamente refinada para refletir o conhecimento crescente "
 "da metrologia (a ciência de medições). Desde 1983, ela foi definida como o "
@@ -627,11 +634,11 @@ msgid ""
 "industry is one of the few areas where the foot is widely used outside the "
 "English-speaking world."
 msgstr ""
-"Um pé (plural pés) é a unidade de comprimento definida como sendo exatamente "
-"0,3048 m e é usada no sistema imperial de unidades e unidades habituais dos "
-"Estados Unidos. Ela é subdividida em 12 polegadas. A medição de altitude na "
-"indústria de aviação é uma das poucas áreas em que pé é amplamente usada "
-"fora do mundo da língua inglesa."
+"Um pé (do inglês \"foot\", e plural \"feet\") é a unidade de comprimento "
+"definida como sendo exatamente 0,3048 m e é usada no sistema imperial de "
+"unidades e unidades habituais dos Estados Unidos. Ela é subdividida em 12 "
+"polegadas. A medição de altitude na indústria de aviação é uma das poucas "
+"áreas em que pé é amplamente usada fora do mundo da língua inglesa."
 
 # Summer Simmer Index - http://www.summersimmer.com/
 #: ../panel-plugin/weather-config.c:841
@@ -645,14 +652,15 @@ msgid ""
 "met, the air temperature will be shown."
 msgstr ""
 "Usado na América do Norte, vento frio será relatado para índices de baixas "
-"temperaturas e de calor para altas. De noite, o índice de calor vai ser "
-"substituído pelo Summer Simmer Index. Para vento frito, a velocidade do "
-"vento precisa estar acima de 3,0 mph (4,828 km/h) e temperatura do ar abaixo "
-"de 50,0 °F (10,0 °C). Para índice de calor, a temperatura do ar precisa "
-"estar acima de 80 °F (26,7 °C) - ou acima de 71,6 °F (22 °C) de noite - e "
-"com umidade relativa em pelo menos 40%. Se essas condições não ocorrerem, a "
-"temperatura do ar será mostrada."
+"temperaturas e de calor para altas. De noite, o índice de calor será "
+"substituído pelo Summer Simmer Index. Para o vento frito, a velocidade do "
+"vento precisa estar acima de 3,0 mph (4,828 km/h) e a temperatura do ar "
+"abaixo de 50,0 °F (10,0 °C). Para o índice de calor, a temperatura do ar "
+"precisa estar acima de 80 °F (26,7 °C) - ou acima de 71,6 °F (22 °C) de "
+"noite - e com umidade relativa de pelo menos 40%. Se essas condições não "
+"ocorrerem, a temperatura do ar será mostrada."
 
+# humidex != índice de calor
 #: ../panel-plugin/weather-config.c:852
 msgid ""
 "The Canadian counterpart to the US windchill/heat index, with the wind chill "
@@ -663,12 +671,12 @@ msgid ""
 "needs to be at least 20.0 °C (68 °F), with a dewpoint greater than 0 °C (32 "
 "°F). If these conditions are not met, the air temperature will be shown."
 msgstr ""
-"A contrapartida canadense para o índice de vento frio/calor americano, com o "
-"vento frio sendo similar aos modelos anteriores, mas com restrições "
-"levemente diferentes. Ao invés do índice de calor, <i>Humidex</i> vai ser "
-"usado. Para vento frio se tornar efetivo, as velocidades do vento precisam "
-"estar acima de 2,0 km/h (1,23 mph) e temperatura do ar abaixo de 0 °C (32 "
-"°F). para humidex, temperatura do ar precisa estar em pelo menos 20,0 °C (68 "
+"A contrapartida canadense para o índice de calor/vento frio americano, com o "
+"vento frio sendo similar aos modelos anteriores, mas com leves diferenças "
+"nas restrições. Ao invés do índice de calor, o <i>humidex</i> vai ser usado. "
+"Para vento frio se tornar efetivo, as velocidades do vento precisam estar "
+"acima de 2,0 km/h (1,23 mph) e temperatura do ar abaixo de 0 °C (32 °F). "
+"Para o humidex, a temperatura do ar precisa estar em pelo menos 20,0 °C (68 "
 "°F), com um ponto de orvalho maior que 0 °C (32 °F). Se essas condições não "
 "ocorrerem, a temperatura do ar será mostrada."
 
@@ -683,13 +691,14 @@ msgid ""
 "temperature, wind speed and humidity and can be used for lower and higher "
 "temperatures alike."
 msgstr ""
-"Esse é o modelo usado pela Bureau of Meteorology (agência executiva da "
-"Austrália), especialmente adaptado para o clima deste continente. Usado "
-"possivelmente na Europa Central e em partes de outros continentes também, "
-"mas, então, vento frio e valores similares nunca obtiveram tanta "
-"popularidade lá como nos EUA ou Canada. Então, informação sobre seu uso é "
-"escasso e incerto. Depende da temperatura do ar, velocidade do vento, "
-"umidade e pode ser usado em baixas e altas temperaturas da mesma forma."
+"Esse é o modelo usado pela Bureau of Meteorology (agência executiva "
+"meteorológica da Austrália), especialmente adaptado para o clima deste "
+"continente. Possivelmente usado também na Europa Central e em partes de "
+"outros continentes, mas, contudo, o vento frio e valores similares nunca "
+"obtiveram tanta popularidade lá como nos EUA ou Canadá. Então, informação "
+"sobre seu uso é escasso e incerto. Depende da temperatura do ar, velocidade "
+"do vento, umidade e pode ser usado em baixas e altas temperaturas da mesma "
+"forma."
 
 #: ../panel-plugin/weather-config.c:875
 msgid ""
@@ -701,7 +710,7 @@ msgstr ""
 "Melhoramentos por Robert G. Quayle e Robert G. Steadman aplicados em 1998 "
 "aos experimentos/desenvolvimentos anteriores feitos por Steadman. Esse "
 "modelo só depende da velocidade do vento e temperatura, não na umidade "
-"relativa e pode ser usado por tanto estresse de calor quanto frio."
+"relativa e pode ser usado para o estresse de tanto calor quanto frio."
 
 #: ../panel-plugin/weather-config.c:911
 msgid "_Temperature:"
@@ -721,7 +730,7 @@ msgstr "_Pressão atmosférica:"
 
 #: ../panel-plugin/weather-config.c:922
 msgid "Hectopascals (hPa)"
-msgstr "Hetopascais (hPa)"
+msgstr "Hectopascais (hPa)"
 
 #: ../panel-plugin/weather-config.c:924
 msgid "Inches of mercury (inHg)"
@@ -862,7 +871,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-config.c:1148
 msgid "_Tooltip style:"
-msgstr "Estilo de _dica:"
+msgstr "_Estilo de dicas:"
 
 #: ../panel-plugin/weather-config.c:1150
 msgid "Simple"
@@ -870,7 +879,7 @@ msgstr "Simples"
 
 #: ../panel-plugin/weather-config.c:1151
 msgid "Verbose"
-msgstr "Detalhada"
+msgstr "Detalhadas"
 
 #: ../panel-plugin/weather-config.c:1154
 msgid ""
@@ -894,7 +903,7 @@ msgstr "Dias em linhas"
 
 #: ../panel-plugin/weather-config.c:1177
 msgid "_Number of forecast _days:"
-msgstr "_Número de dias de previsão:"
+msgstr "Número de _dias de previsão:"
 
 #: ../panel-plugin/weather-config.c:1182
 #, c-format
@@ -905,27 +914,27 @@ msgid ""
 "Note however that usually forecasts for more than three days in the future "
 "are unreliable at best ;-)"
 msgstr ""
-"Met.no fornece dados de previsão do tempo para até %d dias no futuro. "
-"Escolha quantos dias será mostrado a você na aba de previsão do tempo na "
+"O Met.no fornece dados de previsão do tempo para até %d dias no futuro. "
+"Escolha quantos dias serão mostrados a você na aba de previsão do tempo na "
 "janela de resumo. Para computadores mais lentos, um número menor pode ajudar "
 "a evitar atrasos na abertura da janela. Note, porém, que previsões do tempo "
 "para mais de três dias no futuro não são muito confiáveis ;-)"
 
 #: ../panel-plugin/weather-config.c:1200
 msgid "_Round values"
-msgstr "A_rredondar valores"
+msgstr "Arredondar os _valores"
 
 #: ../panel-plugin/weather-config.c:1202
 msgid ""
 "Check to round values everywhere except on the details page in the summary "
 "window."
 msgstr ""
-"Marque para arredondar valores em todos itens, exceto na página de detalhes "
-"na janela de resumo."
+"Marque para arredondar os valores em todos itens, exceto na página de "
+"detalhes na janela de resumo."
 
 #: ../panel-plugin/weather-config.c:1252 ../panel-plugin/weather-config.c:1716
 msgid "Select _font"
-msgstr "Selecionar _fonte"
+msgstr "_Selecionar fonte"
 
 #: ../panel-plugin/weather-config.c:1269
 msgid "Select font"
@@ -946,8 +955,8 @@ msgid ""
 "a thermometer that is freely exposed to the air, yet shielded from radiation "
 "and moisture."
 msgstr ""
-"Temperatura do ar, algumas vezes referido como temperatura de bulbo seco. "
-"Medido por um termômetro que é exposto livremente ao ar, mas protegido "
+"Temperatura do ar, algumas vezes referida como a temperatura de bulbo seco. "
+"É medida por um termômetro que é exposto livremente ao ar, mas protegido "
 "contra radiação e umidade."
 
 #: ../panel-plugin/weather-config.c:1417
@@ -960,13 +969,13 @@ msgid ""
 "improvement in weather conditions, while falling pressures mean "
 "deterioration."
 msgstr ""
-"O ar que faz a atmosfera exerce uma pressão na superfícies abaixo dela, a "
+"O ar que faz a atmosfera exerce uma pressão na superfície abaixo dela, a "
 "qual é conhecida como pressão atmosférica. Para tornar mais fácil comparar o "
 "valor a outros valores para localizações com altitudes diferentes, a pressão "
 "atmosférica é ajustada ao nível equivalente à pressão do nível do mar e "
 "chamada de pressão barométrica. Pressões barométricas crescentes geralmente "
-"indicam uma melhora nas condições do tempo, enquanto pressões decrescentes "
-"significam deterioração."
+"indicam uma melhora nas condições meteorológicas, enquanto pressões "
+"decrescentes significam deterioração."
 
 #: ../panel-plugin/weather-config.c:1428
 msgid ""
@@ -997,16 +1006,17 @@ msgid ""
 "This gives the cardinal direction (North, East, South, West) the wind is "
 "coming from."
 msgstr ""
-"Isso dá uma direção cardinal (Norte, Leste, Sul, Oeste) de onde o vento está "
-"vindo."
+"Essa opção informa a direção cardinal (Norte, Leste, Sul, Oeste) de onde o "
+"vento está vindo."
 
+# http://pt.wikipedia.org/wiki/Azimute
 #: ../panel-plugin/weather-config.c:1446
 msgid ""
 "This gives the direction the wind is coming from in azimuth degrees (North = "
 "0°, East = 90°, South = 180° and West = 270°)."
 msgstr ""
-"Isso dá a direção de onde o vento está vindo em graus azimute (Norte = 0°, "
-"Leste = 90°, Sul = 180° e Oeste = 270°)."
+"Essa opção informa a direção de onde o vento está vindo em graus azimute "
+"(Norte = 0°, Leste = 90°, Sul = 180° e Oeste = 270°)."
 
 #: ../panel-plugin/weather-config.c:1451
 msgid ""
@@ -1016,8 +1026,8 @@ msgid ""
 "absolute humidity relative to the maximum for that air temperature and "
 "pressure."
 msgstr ""
-"Umidade é definida como a quantidade de vapor de água no ar e aumenta a "
-"possibilidade de precipitações, nevoeiro e condensações. Enquanto umidade "
+"A umidade é definida como a quantidade de vapor d'água no ar e aumenta a "
+"possibilidade de precipitações, nevoeiro e orvalho. Enquanto umidade "
 "absoluta é o conteúdo de água do ar, a umidade relativa dá (em %) a umidade "
 "absoluta atual relativa ao máximo para aquela temperatura e pressão de ar."
 
@@ -1033,14 +1043,14 @@ msgid ""
 "<b>Note:</b> This is a calculated value not provided by met.no."
 msgstr ""
 "Essa é a temperatura a qual o ar deve ser resfriado para alcançar 100% de "
-"umidade relativa, dada nenhuma alteração no conteúdo de água. Alcançando o "
-"ponto de orvalho encerra-se o processo de resfriamento, pois ocorre a "
-"condensação, o que libera o calor para o ar. Um grande ponto de orvalho "
-"aumenta a possibilidade de chuva e tempestades de trovões severas. O ponto "
-"de orvalho permite de orvalho, geada, nevoeiro e uma temperatura durante a "
-"noite mínima, e tem influência no nível de conforto que alguém sente.\n"
+"umidade relativa, não havendo alterações no conteúdo de água. Ao alcançar o "
+"ponto de orvalho, encerra-se o processo de resfriamento, pois ocorre a "
+"condensação, o que libera o calor para o ar. Um ponto de orvalho alto "
+"aumenta a possibilidade de chuva e tempestades de trovão severas. O ponto de "
+"orvalho permite a previsão de orvalho, geada, nevoeiro e temperatura mínima "
+"durante a noite, e tem influência no nível de conforto que alguém sente.\n"
 "\n"
-"<b>Nota:</b> Esse é um valor calculado, e não fornecido pela met.no."
+"<b>Nota:</b> Esse é um valor calculado, não fornecido pela met.no."
 
 #: ../panel-plugin/weather-config.c:1471
 msgid ""
@@ -1061,11 +1071,10 @@ msgstr ""
 "é um valor de alto valor subjetivo, temperatura aparente pode, na verdade, "
 "ser útil para avisar sobre condições extremas (frio, quente).\n"
 "\n"
-"<b>Nota:</b> Esse é um valor calculado, e não um fornecido pelo met.no. Você "
+"<b>Nota:</b> Esse é um valor calculado, não fornecido pela met.no. Você "
 "deveria usar um modelo de cálculo apropriado para suas preferências pessoais "
 "e clima local na página de unidades."
 
-# OMM - Organização Metorológica Mundial
 #: ../panel-plugin/weather-config.c:1485
 msgid ""
 "This gives the low-level cloud cover in percent. According to WMO "
@@ -1074,14 +1083,13 @@ msgid ""
 "below 2,000 m (6,500 ft). They are mainly composed of water droplets or ice "
 "particles and snow, when temperatures are cold enough."
 msgstr ""
-"Isso dá a cobertura de nuvens de baixo nível em percentagem. De acordo com a "
-"definição da OMM, nuvens de baio nível podem ser encontradas em altitudes "
-"abaixo de 4.000 m (13.000 ft) ou 5.000 m (16.000 ft) do equador, apesar de "
-"suas bases geralmente ficam abaixo 2.000 m (6.500 ft). Elas são compostas "
-"principalmente de partículas água ou gelo e neve quando temperaturas estão "
-"fias o suficiente."
+"Isso dá a cobertura de nuvens baixas em percentagem. De acordo com a "
+"definição da Organização Meteorológica Mundial - OMM, nuvens baixas podem "
+"ser encontradas em altitudes abaixo de 4.000 m (13.000 ft) ou 5.000 m "
+"(16.000 ft) do equador, apesar de suas bases geralmente ficarem abaixo 2.000 "
+"m (6.500 ft). Elas são compostas principalmente de partículas água ou gelo e "
+"neve quando as temperaturas estão frias o suficiente."
 
-# OMM - Organização Metorológica Mundial
 #: ../panel-plugin/weather-config.c:1493
 msgid ""
 "This specifies the mid-level cloud cover in percent. According to WMO "
@@ -1090,14 +1098,13 @@ msgid ""
 "level cousins, they are principally composed of water droplets. When "
 "temperatures get low enough, ice particles can replace the droplets."
 msgstr ""
-"Essa opção especifica a cobertura de nuvens de nível médio em percentagem. "
-"De acordo com a definição da OMM, nuvens de nível médio formam-se em alturas "
-"de 4.000-8.000 (13.000-26.000 ft) ou 5.000-10.000 m (16.000-33-000 ft) do "
-"equador. Como suas primas de nível baixo, elas são compostas principalmente "
-"de partículas de água. Quando as temperaturas ficam baixo o suficiente, "
-"partículas de gelo podem substituir as de água."
+"Essa opção especifica a cobertura de nuvens médias em percentagem. De acordo "
+"com a definição da Organização Meteorológica Mundial - OMM, nuvens médias "
+"formam-se em alturas de 4.000-8.000 (13.000-26.000 ft) ou 5.000-10.000 m "
+"(16.000-33-000 ft) do equador. Como suas primas baixas, elas são compostas "
+"principalmente de partículas de água. Quando as temperaturas ficam baixas o "
+"suficiente, partículas de gelo podem substituir as de água."
 
-# OMM - Organização Metorológica Mundial
 #: ../panel-plugin/weather-config.c:1502
 msgid ""
 "This reports the high-level cloud cover in percent. According to WMO "
@@ -1107,13 +1114,13 @@ msgid ""
 "typically thin and white in appearance, they can be seen in a magnicient "
 "array of colors when the sun is low on the horizon."
 msgstr ""
-"Isso relata a cobertura de numbe de nível alto em percentagem. De acordo com "
-"a definição da OMM, nuvens de alto nível pode ser encontradas em altitudes "
-"de 8.000 a 15.000 m (26.000 a 49.000 ft) ou 18.000 m (59.000 ft) do equador, "
-"onde as temperaturas são tão baixas que elas são compostas principalmente de "
-"cristais de gelo. Enquanto normalmente finos e brancos na aparência, elas "
-"também podem ser vistas em um vetor magnificente de cores quando o sol está "
-"baixo no horizonte."
+"Essa opção informa a cobertura de nuvem alta em percentagem. De acordo com a "
+"definição da Organização Meteorológica Mundial - OMM, nuvens altas podem ser "
+"encontradas em altitudes de 8.000 até 15.000 m (26.000 a 49.000 ft) ou "
+"18.000 m (59.000 ft) do equador, onde as temperaturas são tão baixas que "
+"elas são compostas principalmente de cristais de gelo. Enquanto normalmente "
+"finas e brancas na aparência, elas também podem ser vistas em um vetor "
+"magnificente de cores quando o sol está baixo no horizonte."
 
 #: ../panel-plugin/weather-config.c:1512
 msgid ""
@@ -1125,13 +1132,14 @@ msgid ""
 "escaping into space. Apart from that, clouds reflect light to space and in "
 "that way contribute to the cooling of the planet."
 msgstr ""
-"Nebulosidade, ou cobertura de nuvem, define a fração de céu obscurecido por "
-"nuvens quando observado de uma localização dada. Nuvens são ambos transporte "
-"de precipitação e reguladores para a amostra de radiação solar que alcança a "
-"superfície. Enquanto durante o dia elas reduzem a temperatura, de noite elas "
-"têm o efeito oposto, como o vapor de água previne radiação de ondas longas "
-"de escapar para o espaço. Fora isso, as nuvens refletem luz para o espaço e "
-"dessa forma contribui para reduzir a temperatura do ambiente."
+"A nebulosidade, ou cobertura de nuvem, define a fração de céu obscurecido "
+"por nuvens quando observado de uma localização dada. Nuvens são ambos "
+"transporte de precipitação e reguladoras para a amostra de radiação solar "
+"que alcança a superfície. Enquanto durante o dia elas reduzem a temperatura, "
+"de noite elas têm o efeito oposto, como o vapor de água previne radiação de "
+"ondas longas de escapar para o espaço. Fora isso, as nuvens refletem luz "
+"para o espaço e, dessa forma, contribuem para reduzir a temperatura do "
+"planeta."
 
 #: ../panel-plugin/weather-config.c:1524
 msgid ""
@@ -1142,8 +1150,8 @@ msgid ""
 "produces precipitations in the form of drizzle or very light snow and "
 "reduces visibility to less than 1 km (5/8 statute mile)."
 msgstr ""
-"Nevoeiro é um tipo de estrato de nuvem de baixa altitude, com a umidade nele "
-"geralmente gerado localmente como perto de um lago, rio, oceano ou "
+"O nevoeiro é um tipo de estrato de nuvem de baixa altitude, com a umidade "
+"nele geralmente gerado localmente como perto de um lago, rio, oceano ou "
 "simplesmente terra úmida, que é formada quando a diferença entre temperatura "
 "e ponto de orvalho está abaixo de 2,5 °C (4 °F), normalmente em uma umidade "
 "relativa de 100%. Um nevoeiro comumente produz precipitações na forma de "
@@ -1182,9 +1190,9 @@ msgstr ""
 "\n"
 "Os valores relatados pelo met.no são aqueles de precipitações no estado "
 "líquido - ou em outras palavras, de chuva -, e, então, se a neve for "
-"esperada (mas não uma neve-água), então a quantidade de neve será <i>"
-"adivinhada</i> multiplicando o valor original por um dependente da "
-"propoção na temperatura do ar:\n"
+"esperada (mas não uma água-neve), então a quantidade de neve será "
+"<i>adivinhada</i> multiplicando o valor original por um dependente da "
+"proporção na temperatura do ar:\n"
 "\n"
 "<tt><small>                   T &lt; -11,1 °C (12 °F) =&gt; 1:12\n"
 "-11,1 °C (12 °F) &lt; T &lt;  -4,4 °C (24 °F) =&gt; 1:10\n"
@@ -1192,14 +1200,16 @@ msgstr ""
 " -2,2 °C (28 °F) &lt; T &lt;  -0,6 °C (31 °F) =&gt; 1:5\n"
 " -0,6 °C (31 °F) &lt; T                    =&gt; 1:3\n"
 "\n"
-"</small></tt>Exemplo: se a temperatura é -5 °C (12 °F), então a densidade "
-" da neve será baixa e uma proporção de chuva para neve de 1:10 vai ser usada "
-"para o cálculo. Presumindo que o valor relatado é 5 mm, então a quantidade de preciptação de neve é 50 mm.\n"
+"</small></tt>Exemplo: se a temperatura é -5 °C (12 °F), então a densidade da "
+"neve será baixa e uma proporção de chuva para neve de 1:10 vai ser usada "
+"para o cálculo. Presumindo que o valor relatado é 5 mm, então a quantidade "
+"calculada de precipitação de neve é 50 mm.\n"
 "\n"
-"<b>Nota</b>: Enquanto a temperatura do ar é um fator importante neste cálculo "
-", há outros factores influenciadores que o pugin não conhece o tipo de neve e "
-"temperatura da terra. Por causa disso, essas regras somente vão levar a \n"
-"estimativas aproximadas e podeme não representar a quantidade real de neve."
+"<b>Nota</b>: Enquanto a temperatura do ar é um fator importante neste "
+"cálculo, há outros fatores influenciadores que o plugin não conhece, como o "
+"tipo da neve e da temperatura da terra. Por causa disso, essas regras "
+"somente vão levar a estimativas aproximadas e podem não representar a "
+"quantidade real de neve."
 
 #: ../panel-plugin/weather-config.c:1688
 msgid ""
@@ -1207,10 +1217,10 @@ msgid ""
 "information is also provided in the tooltip - provided you choose an "
 "appropriate tooltip style - that is shown when hovering over the icon."
 msgstr ""
-"Esconde a caixa de rolagem para salvar espaço valioso no painel. A "
+"Esconde a caixa de rolagem para economizar um espaço valioso no painel. A "
 "informação mais interessante também é fornecida na dica - desde que você "
-"escolha um estilo de dicas apropriado - que é mostrada quando passando o "
-"mouse em cima do ícone."
+"escolha um estilo de dicas apropriado - que é mostrada ao se passar o mouse "
+"em cima do ícone."
 
 #. values to show at once (multiple lines)
 #: ../panel-plugin/weather-config.c:1699
@@ -1222,8 +1232,8 @@ msgid ""
 "Decide how many values should be shown at once in the scrollbox. You can "
 "choose a smaller font or enlarge the panel to make more lines fit."
 msgstr ""
-"Decida como vários valores devem ser mostrados de uma vez na caixa de "
-"rolagem. Você pode escolher uma fonte menor e aumentar o painel para fazer "
+"Decida quantos valores devem ser mostrados de uma só vez na caixa de "
+"rolagem. Você pode escolher uma fonte menor ou aumentar o painel para fazer "
 "caber mais linhas."
 
 #: ../panel-plugin/weather-config.c:1712
@@ -1236,7 +1246,7 @@ msgid ""
 "on the button to unset the font and use your theme's default."
 msgstr ""
 "Escolha uma fonte que você goste e defina-a para um tamanho menor ou maior. "
-"Clique com o botão do meio no botão para retirar a fonte e usar a padrão do "
+"Clique com o botão do meio do mouse para retirar a fonte e usar a padrão do "
 "seu tema."
 
 #: ../panel-plugin/weather-config.c:1730
@@ -1246,15 +1256,15 @@ msgid ""
 "another color, then you can change it using this button. Middle-click on the "
 "button to unset the scrollbox text color."
 msgstr ""
-"Pode haver problemas com alguns temas que causam ao texto da caixa de "
-"rolagem ficar difícil de ler. Se esse é o caso ou  você simplesmente quer "
-"que apareça em outra cor, então você pode alterá-la usando este botão. "
+"Pode haver problema com alguns temas que fazem com que o texto da caixa de "
+"rolagem fique difícil de ler. Se esse é o seu caso ou se você simplesmente "
+"quer que apareça outra cor, então você pode alterá-la usando este botão. "
 "Clique com o botão do meio do mouse para desmarcar a cor do texto da caixa "
 "de rolagem."
 
 #: ../panel-plugin/weather-config.c:1754
 msgid "Labels to _display"
-msgstr "Rótu_los para exibir"
+msgstr "Rótulos a serem e_xibidos"
 
 #: ../panel-plugin/weather-config.c:1757
 msgid ""
@@ -1269,19 +1279,19 @@ msgstr ""
 #. button "add"
 #: ../panel-plugin/weather-config.c:1764
 msgid "_Add"
-msgstr "_Adicionar"
+msgstr "A_dicionar"
 
 #: ../panel-plugin/weather-config.c:1767
 msgid ""
 "Add the selected value to the labels that should be displayed in the "
 "scrollbox."
 msgstr ""
-"Adicione o valor selecionado aos rótulos que deveria ser exibidos na caixa "
-"de rolagem."
+"Adiciona o valor selecionado aos rótulos que devem ser exibidos na caixa de "
+"rolagem."
 
 #: ../panel-plugin/weather-config.c:1782
 msgid "_Remove"
-msgstr "_Remover"
+msgstr "R_emover"
 
 #: ../panel-plugin/weather-config.c:1785
 msgid ""
@@ -1319,9 +1329,9 @@ msgid ""
 "simply changing them. Uncheck this option if you find the animation too "
 "distracting."
 msgstr ""
-"Role o(s) valor(es) exibidos atualmente para fora e o(s) novo(s) valor(es) "
-"ao invés de simplesmente alterá-los. Desmarque essa opção se você achar a "
-"animação muito distrativa."
+"Rola os valores exibidos no momento e os novos valores, ao invés de "
+"simplesmente trocá-los. Desmarque essa opção, se você achar a animação muito "
+"distrativa."
 
 #: ../panel-plugin/weather-data.c:418
 msgid "ft"
@@ -1508,10 +1518,10 @@ msgid ""
 "\tCurrent failed attempts: %d\n"
 "\n"
 msgstr ""
-"\tDados climáticos:\n"
+"\tDados meteorológicos:\n"
 "\tÚltimo:\t%s\n"
 "\tPróximo:\t%s\n"
-"\tTentativas atuais que falharam: %d\n"
+"\tTentativas fracassadas: %d\n"
 "\n"
 
 #: ../panel-plugin/weather-summary.c:355
@@ -1525,7 +1535,7 @@ msgstr ""
 "\tDados astronômicos:\n"
 "\tÚltimo:\t%s\n"
 "\tPróximo:\t%s\n"
-"\tTentativas atuais que falharam: %d\n"
+"\tTentativas fracassadas: %d\n"
 
 #. calculation times
 #: ../panel-plugin/weather-summary.c:367
@@ -1534,7 +1544,7 @@ msgid ""
 "Times Used for Calculations\n"
 msgstr ""
 "\n"
-"Tempos usados para cálculos\n"
+"Horários usados para cálculos\n"
 
 #: ../panel-plugin/weather-summary.c:370
 #, c-format
@@ -1543,7 +1553,7 @@ msgid ""
 "\tfor:\t\t%s\n"
 msgstr ""
 "\tDados de temperaturas, vento, atmosfera e nuvens calculados\n"
-"\tpara:\t\t%s\n"
+"\tde:\t\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:379
 #, c-format
@@ -1555,10 +1565,10 @@ msgid ""
 "\tEnd:\t%s\n"
 msgstr ""
 "\n"
-"\tPrecipitatações e o símbolo meteorológico foram recalculados\n"
+"\tPrecipitações e o símbolo meteorológico foram recalculados\n"
 "\tusando o seguinte intervalo de tempo:\n"
 "\tInício:\t%s\n"
-"\tFim:\t%s\n"
+"\tFim:\t\t%s\n"
 
 #. sun and moon
 #: ../panel-plugin/weather-summary.c:390
@@ -1567,11 +1577,11 @@ msgid ""
 "Astronomical Data\n"
 msgstr ""
 "\n"
-"Dados astronômico\n"
+"Dados astronômicos\n"
 
 #: ../panel-plugin/weather-summary.c:393
 msgid "\tSunrise:\t\tThe sun never rises today.\n"
-msgstr "\tNascer do Sol:\t\tO Sol não vai nascer hoje.\n"
+msgstr "\tNascer do Sol:\tO Sol não vai nascer hoje.\n"
 
 #: ../panel-plugin/weather-summary.c:396
 msgid "\tSunset:\t\tThe sun never sets today.\n"
@@ -1580,7 +1590,7 @@ msgstr "\tPôr do Sol:\t\tO Sol não vai se pôr hoje.\n"
 #: ../panel-plugin/weather-summary.c:400
 #, c-format
 msgid "\tSunrise:\t\t%s\n"
-msgstr "\tNascer do Sol:\t\t%s\n"
+msgstr "\tNascer do Sol:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:405
 #, c-format
@@ -1594,11 +1604,11 @@ msgstr ""
 #: ../panel-plugin/weather-summary.c:411
 #, c-format
 msgid "\tMoon phase:\t%s\n"
-msgstr "\tFase da lua:\t%s\n"
+msgstr "\tFase da Lua:\t\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:415
 msgid "\tMoon phase:\tUnknown\n"
-msgstr "\tFase da lua:\tDesconhecida\n"
+msgstr "\tFase da Lua:\t\tDesconhecida\n"
 
 #: ../panel-plugin/weather-summary.c:420
 msgid "\tMoonrise:\tThe moon never rises today.\n"
@@ -1606,7 +1616,7 @@ msgstr "\tNascer da Lua:\tA Lua não vai nascer hoje.\n"
 
 #: ../panel-plugin/weather-summary.c:424
 msgid "\tMoonset:\tThe moon never sets today.\n"
-msgstr "\tPôr da Lua:\tA Lua não vai se pôr hoje.\n"
+msgstr "\tPôr da Lua:\t\tA Lua não vai se pôr hoje.\n"
 
 #: ../panel-plugin/weather-summary.c:428
 #, c-format
@@ -1616,7 +1626,7 @@ msgstr "\tNascer da Lua:\t%s\n"
 #: ../panel-plugin/weather-summary.c:433
 #, c-format
 msgid "\tMoonset:\t%s\n"
-msgstr "\tPôr da Lua:\t%s\n"
+msgstr "\tPôr da Lua:\t\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:438
 msgid "\tData not available, will use sane default values for night and day.\n"
@@ -1657,7 +1667,7 @@ msgstr ""
 #: ../panel-plugin/weather-summary.c:455
 #, c-format
 msgid "\t%s: %s %s (%s on the Beaufort scale)\n"
-msgstr "\t%s: %s %s (%s na escala de Beaufort)\n"
+msgstr "\t%s: %s %s (%s na escala Beaufort)\n"
 
 #: ../panel-plugin/weather-summary.c:456
 msgid "Speed"
@@ -1752,17 +1762,17 @@ msgstr "Amanhã"
 #. TRANSLATORS: Please use \t as needed to properly align the values
 #: ../panel-plugin/weather-summary.c:563
 msgid "<b>Times used for calculations</b>\n"
-msgstr "<b>Tempos usados para cálculos</b>\n"
+msgstr "<b>Horários usados para cálculos</b>\n"
 
 #: ../panel-plugin/weather-summary.c:565
 #, c-format
 msgid "Interval start:\t\t\t%s\n"
-msgstr "Início do intervalo:\t\t\t%s\n"
+msgstr "Início do intervalo:\t\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:568
 #, c-format
 msgid "Interval end:\t\t\t%s\n"
-msgstr "Fim do intervalo:\t\t\t%s\n"
+msgstr "Fim do intervalo:\t\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:571
 #, c-format
@@ -1780,7 +1790,7 @@ msgstr "<b>Temperaturas</b>\n"
 #: ../panel-plugin/weather-summary.c:575
 #, c-format
 msgid "Dew point:\t\t\t%s%s%s\n"
-msgstr "Ponto de orvalho:\t\t\t%s%s%s\n"
+msgstr "Ponto de orvalho:\t\t%s%s%s\n"
 
 #: ../panel-plugin/weather-summary.c:576
 #, c-format
@@ -1811,7 +1821,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-summary.c:583
 msgid "<b>Precipitations</b>\n"
-msgstr "<b>Preciptações</b>\n"
+msgstr "<b>Precipitações</b>\n"
 
 #: ../panel-plugin/weather-summary.c:584
 #, c-format
@@ -1839,7 +1849,7 @@ msgstr "Nuvens baixas:\t\t%s%s%s\n"
 #: ../panel-plugin/weather-summary.c:589
 #, c-format
 msgid "Middle clouds:\t%s%s%s\n"
-msgstr "Nuvens médias:\t%s%s%s\n"
+msgstr "Nuvens médias:\t\t%s%s%s\n"
 
 #: ../panel-plugin/weather-summary.c:590
 #, c-format
@@ -1870,11 +1880,11 @@ msgstr "Noite"
 
 #: ../panel-plugin/weather-summary.c:904
 msgid "Weather Report"
-msgstr "Relatório meteorológico: %s"
+msgstr "Relatório meteorológico"
 
 #: ../panel-plugin/weather-summary.c:932
 msgid "Please set a location in the plugin settings."
-msgstr "Por favor, insira uma localização nas configurações do plugin."
+msgstr "Por favor, defina uma localização nas configurações do plugin."
 
 #: ../panel-plugin/weather-summary.c:934
 msgid "Currently no data available."
@@ -1888,34 +1898,42 @@ msgstr "_Previsão"
 msgid "_Details"
 msgstr "_Detalhes"
 
+# su-sudoeste
 #: ../panel-plugin/weather-translate.c:37
 msgid "SSW"
 msgstr "SSO"
 
+# oés-sudoeste
 #: ../panel-plugin/weather-translate.c:39
 msgid "WSW"
 msgstr "OSO"
 
+# oés-noroeste
 #: ../panel-plugin/weather-translate.c:41
 msgid "WNW"
 msgstr "ONO"
 
+# nor-noroeste
 #: ../panel-plugin/weather-translate.c:43
 msgid "NNW"
 msgstr "NNO"
 
+# nor-nordeste
 #: ../panel-plugin/weather-translate.c:45
 msgid "NNE"
 msgstr "NNE"
 
+# lé-nordeste
 #: ../panel-plugin/weather-translate.c:47
 msgid "ENE"
 msgstr "ENE"
 
+# lés-sudeste
 #: ../panel-plugin/weather-translate.c:49
 msgid "ESE"
 msgstr "ESE"
 
+# su-sudeste
 #: ../panel-plugin/weather-translate.c:51
 msgid "SSE"
 msgstr "SSE"
@@ -2080,7 +2098,7 @@ msgstr "Água-neve com trovão"
 
 #: ../panel-plugin/weather.desktop.in.h:2
 msgid "Show current weather conditions"
-msgstr "Mostra condições climáticas atuais"
+msgstr "Mostra condições meteorológicas atuais"
 
 #~ msgid "Please enter proxy settings"
 #~ msgstr "Por favor entre com as configurações de proxy"
