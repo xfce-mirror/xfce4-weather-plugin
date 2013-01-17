@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: xfce4-weather-plugin 0.8.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-01-14 17:10+0100\n"
-"PO-Revision-Date: 2013-01-16 12:41+0100\n"
+"PO-Revision-Date: 2013-01-17 12:18+0100\n"
 "Last-Translator: Piotr Sokół <psokol@jabster.pl>\n"
 "Language-Team: polski <>\n"
 "Language: \n"
@@ -35,7 +35,7 @@ msgstr "PW"
 
 #: ../panel-plugin/weather.c:125
 msgid "WB"
-msgstr "PB"
+msgstr "SW"
 
 #: ../panel-plugin/weather.c:128 ../panel-plugin/weather.c:131
 msgid "WD"
@@ -240,7 +240,7 @@ msgstr "Prędkość wiatru (PW)"
 
 #: ../panel-plugin/weather-config.c:98
 msgid "Wind speed - Beaufort scale (WB)"
-msgstr "Prędkość wiatru - skala Beauforta (PB)"
+msgstr "Siła wiatru - skala Beauforta (SW)"
 
 #: ../panel-plugin/weather-config.c:99
 msgid "Wind direction (WD)"
@@ -711,12 +711,16 @@ msgid ""
 "A more calendar-like view, with the days in columns and the daytimes "
 "(morning, afternoon, evening, night) in rows."
 msgstr ""
+"Wyświetla prognozę w tabeli podobnej do układu kalendarza. Kolumny zawierają "
+"kolejne dni prognozy, a wiersze pory dnia."
 
 #: ../panel-plugin/weather-config.c:1066
 msgid ""
 "Shows the forecasts in a table with the daytimes (morning, afternoon, "
 "evening, night) in columns and the days in rows."
 msgstr ""
+"Wyświetla prognozę w tabeli zawierającej w kolumnach pory dnia, a w "
+"wierszach kolejne dni prognozy"
 
 #: ../panel-plugin/weather-config.c:1124
 msgid "_Icon theme:"
@@ -821,6 +825,10 @@ msgid ""
 "a thermometer that is freely exposed to the air, yet shielded from radiation "
 "and moisture."
 msgstr ""
+"Wypisuje wskazanie temperatury powietrza, wielkości określanej czasem jako "
+"temperatura suchego termometru. Pomiar uzyskuje się za pomocą termometru "
+"wystawionego na powietrzu, ale chronionego przed działaniem promieniowania i "
+"wilgoci."
 
 #: ../panel-plugin/weather-config.c:1417
 msgid ""
@@ -832,6 +840,13 @@ msgid ""
 "improvement in weather conditions, while falling pressures mean "
 "deterioration."
 msgstr ""
+"Wypisuje wskazanie ciśnienia atmosferycznego, rozumianego jako siła, z którą "
+"słup powietrza naciska na powierzchnię znajdującą się poniżej. Aby ułatwić "
+"porównywanie pomiarów odczytanych na różnych wysokościach względnych, "
+"wartość ciśnienia atmosferycznego jest określana względem poziomu morza i "
+"nazywana ciśnieniem barometrycznym. Wzrost ciśnienia barometrycznego "
+"zazwyczaj zapowiada polepszenie warunków pogodowych, natomiast jego spadek - "
+"pogorszenie."
 
 #: ../panel-plugin/weather-config.c:1428
 msgid ""
@@ -840,6 +855,11 @@ msgid ""
 "usually measure either wind speed or pressure, but will provide both values "
 "as they are closely related to and can be deduced from each other."
 msgstr ""
+"Wypisuje wskazania prędkości wiatru. Do pomiaru prędkości wiatru używa się "
+"anemometru (w języku greckim <i>anemos</i> oznacza <i>wiatr</i>), a sam "
+"pomiar przeprowadza się na wysokości 10 metrów. Anemometr zazwyczaj dokonuje "
+"pomiaru prędkości wiatru lub ciśnienia, ale potrafi wskazać wartości obydwu "
+"wielkości, ponieważ są one ze sobą blisko związane."
 
 #: ../panel-plugin/weather-config.c:1436
 msgid ""
@@ -847,18 +867,27 @@ msgid ""
 "is based on people's observations of specific land or sea conditions, "
 "denoting these conditions with numbers from 0 (calm) to 12 (hurricane)."
 msgstr ""
+"Wypisuje wskazania siły wiatru w skali Beauforta. Skalę opracował w 1805 r. "
+"Sir Francis Beaufort, a jej zasadniczą cechą jest możliwość względnej oceny "
+"siły wiatru na podstawie obserwacji powierzchni morza lub obiektów na "
+"lądzie. Siła wiatru opisywana jest za pomocą liczb z przedziału od 0 (cisza, "
+"flauta) do 12 (huragan)."
 
 #: ../panel-plugin/weather-config.c:1442
 msgid ""
 "This gives the cardinal direction (North, East, South, West) the wind is "
 "coming from."
 msgstr ""
+"Wypisuje główny kierunek (północ, wschód, południe, zachód), z którego wieje "
+"wiatr"
 
 #: ../panel-plugin/weather-config.c:1446
 msgid ""
 "This gives the direction the wind is coming from in azimuth degrees (North = "
 "0°, East = 90°, South = 180° and West = 270°)."
 msgstr ""
+"Wypisuje kierunek, z którego wieje wiatr, wyrażony w stopniach azymutu "
+"(północ = 0°, wschód = 90°, południe = 180° i zachód = 270°)"
 
 #: ../panel-plugin/weather-config.c:1451
 msgid ""
@@ -868,6 +897,12 @@ msgid ""
 "absolute humidity relative to the maximum for that air temperature and "
 "pressure."
 msgstr ""
+"Wypisuje wskazania wilgotności, wielkości rozumianej jako ilość pary wodnej "
+"zawartej w powietrzu. Duża wilgotność zwiększa prawdopodobieństwo "
+"wystąpienia opadów, mgły i rosy. Wilgotność bezwzględna wskazuje na "
+"całkowitą ilość wody zawartej w powietrzu, natomiast wilgotność względna "
+"określa aktualną wilgotność bezwzględną w odniesieniu do maksymalnej w danej "
+"temperaturze i ciśnieniu."
 
 #: ../panel-plugin/weather-config.c:1459
 msgid ""
@@ -880,6 +915,17 @@ msgid ""
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no."
 msgstr ""
+"Wypisuje wskazania punktu rosy. Wielkość ta określana jest jako temperatura "
+"powietrza potrzebna do osiągnięcia 100% wilgotności względnej, nie powodując "
+"przy tym skraplania lub resublimacji wody. Osiągnięcie temperatury punktu "
+"rosy zatrzymuje proces ochładzania i tym samym następuje proces kondensacji, "
+"który uwalnia ciepło do atmosfery. Wysoka temperatura punktu rosy zwiększa "
+"prawdopodobieństwo wystąpienia deszczu i lokalnych burz z grzmotami. Punkt "
+"rosy umożliwia prognozowanie rosy, szronu, mgły, najniższej nocnej "
+"temperatury i wpływa na poczucie komfortu.\n"
+"\n"
+"<b>Uwaga:</b> wartość tej wielkości jest wyznaczana i nie pochodzi z serwisu "
+"met.no."
 
 #: ../panel-plugin/weather-config.c:1471
 msgid ""
