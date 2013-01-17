@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: xfce4-weather-plugin (XFCE 4.4 Goodies)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-01-14 17:10+0100\n"
-"PO-Revision-Date: 2013-01-15 02:44-0300\n"
+"PO-Revision-Date: 2013-01-16 22:02-0300\n"
 "Last-Translator: Rafael Ferreira <rafael.f.f1@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar2.conectiva.com.br>\n"
 "Language: pt_BR\n"
@@ -82,7 +82,7 @@ msgstr "R"
 msgid "No Data"
 msgstr "Nenhum dado"
 
-# "sunrise" é o nome da API do Met.no, motivo pelo qual decidi não traduzir este nome.
+# "sunrise" é o nome da API do Met.no, motivo pelo qual não foi traduzida.
 #: ../panel-plugin/weather.c:447
 msgid ""
 "Met.no sunrise API states that this version of the webservice is deprecated, "
@@ -97,7 +97,7 @@ msgstr ""
 
 #: ../panel-plugin/weather.c:466
 msgid "Error parsing astronomical data!"
-msgstr "Erro ao analisar dados astronômico!"
+msgstr "Erro ao analisar os dados astronômico!"
 
 #: ../panel-plugin/weather.c:468
 #, c-format
@@ -105,10 +105,10 @@ msgid ""
 "Download of astronomical data failed with HTTP Status Code %d, Reason "
 "phrase: %s"
 msgstr ""
-"Falha ao baixar dados astronômicos com código de estado HTTP %d, com frase "
-"de motivo: %s"
+"Falha ao baixar os dados astronômicos com código de estado HTTP %d, motivo: "
+"%s"
 
-# "LocationforecastLTS" é o nome da API do Met.no, motivo pelo qual decidi não traduzir este nome.
+# "LocationforecastLTS" é o nome da API do Met.no, motivo pelo qual não foi traduzida.
 #: ../panel-plugin/weather.c:503
 msgid ""
 "Met.no LocationforecastLTS API states that this version of the webservice is "
@@ -117,22 +117,20 @@ msgid ""
 "xfce.org if no one else has done so yet."
 msgstr ""
 "A API \"LocationforecastLTS\" do Met.no informa que essa versão do serviço "
-"web está obsoleto e que o plugin precisa ser adaptado para usar uma versão "
+"web está obsoleta e que o plugin precisa ser adaptado para usar uma versão "
 "mais nova, do contrário vai parar de funcionar dentro de poucos meses. Por "
 "favor, relate um erro em https://bugzilla.xfce.org, se ninguém o fez ainda."
 
 #: ../panel-plugin/weather.c:521
-#, fuzzy
 msgid "Error parsing weather data!"
-msgstr "Não foi possível atualizar dados climáticos"
+msgstr "Erro ao analisar dados meteorológicos!"
 
 #: ../panel-plugin/weather.c:524
 #, c-format
 msgid ""
 "Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
 msgstr ""
-"Falha ao baixar dados do clima com código de estado HTTP %d, com frase de "
-"motivo: %s"
+"Falha ao baixar dados meteorológicos com código de estado HTTP %d, motivo: %s"
 
 #: ../panel-plugin/weather.c:1366
 #, c-format
@@ -141,11 +139,11 @@ msgstr "Não foi possível abrir a seguinte url: %s"
 
 #: ../panel-plugin/weather.c:1397 ../panel-plugin/weather.desktop.in.h:1
 msgid "Weather Update"
-msgstr "Atualização do Clima"
+msgstr "Atualização meteorológicas"
 
 #: ../panel-plugin/weather.c:1434
 msgid "Short-term forecast data unavailable."
-msgstr "A previsão não está disponível."
+msgstr "Os dados de previsão de curto-termo estão indisponíveis."
 
 #: ../panel-plugin/weather.c:1446
 msgid "The sun never rises today."
@@ -165,7 +163,7 @@ msgstr "O nascer do Sol em %s e pôr do Sol em %s."
 #. * look at the verbose tooltip style further below ;-)
 #.
 #: ../panel-plugin/weather.c:1481
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
 "<b><span size=\"large\">%s</span></b>\n"
@@ -177,14 +175,11 @@ msgid ""
 msgstr ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
 "<b><span size=\"large\">%s</span></b>\n"
-"<span size=\"smaller\">de %s a %s, com %s preciptiações</span>\n"
 "\n"
-"<b>Temperatura:</b> %s\t\t<span size=\"smaller\">(valores em %s)</span>\n"
-"<b>Vento:</b> %s (%s na escala de Beaufort) de %s(%s)\n"
-"<b>Pressão:</b> %s    <b>Umidade:</b> %s\n"
-"<b>Neblina:</b> %s    <b>Nuvens:</b> %s\n"
-"\n"
-"<span size=\"smaller\">%s</span>"
+"<b>Temperatura:</b> %s\n"
+"<b>Vento:</b> %s de %s\n"
+"<b>Pressão:</b> %s\n"
+"<b>Umidade:</b> %s\n"
 
 #.
 #. * TRANSLATORS: Re-arrange and align at will, optionally using
@@ -195,7 +190,7 @@ msgstr ""
 #. * good!
 #.
 #: ../panel-plugin/weather.c:1504
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
 "<b><span size=\"large\">%s</span></b>\n"
@@ -210,12 +205,12 @@ msgid ""
 msgstr ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
 "<b><span size=\"large\">%s</span></b>\n"
-"<span size=\"smaller\">de %s a %s, com %s preciptiações</span>\n"
+"<span size=\"smaller\">de %s a %s, com %s precipitações</span>\n"
 "\n"
 "<b>Temperatura:</b> %s\t\t<span size=\"smaller\">(valores em %s)</span>\n"
 "<b>Vento:</b> %s (%s na escala de Beaufort) de %s(%s)\n"
 "<b>Pressão:</b> %s    <b>Umidade:</b> %s\n"
-"<b>Neblina:</b> %s    <b>Nuvens:</b> %s\n"
+"<b>Nevoeiro:</b> %s    <b>Nebulosidade:</b> %s\n"
 "\n"
 "<span size=\"smaller\">%s</span>"
 
@@ -224,9 +219,8 @@ msgid "Cannot update weather data"
 msgstr "Não foi possível atualizar dados climáticos"
 
 #: ../panel-plugin/weather.c:1846
-#, fuzzy
 msgid "Show weather conditions and forecasts"
-msgstr "Mostra condições climáticas atuais"
+msgstr "Mostra condições e previsões climáticas atuais"
 
 #: ../panel-plugin/weather.c:1848
 msgid "Copyright (c) 2003-2012\n"
@@ -246,9 +240,8 @@ msgid "Temperature (T)"
 msgstr "Temperatura (T)"
 
 #: ../panel-plugin/weather-config.c:96
-#, fuzzy
 msgid "Barometric pressure (P)"
-msgstr "Pressão atmosférica (P)"
+msgstr "Pressão barométrica (P)"
 
 #: ../panel-plugin/weather-config.c:97
 msgid "Wind speed (WS)"
@@ -271,21 +264,18 @@ msgid "Humidity (H)"
 msgstr "Umidade (H)"
 
 #: ../panel-plugin/weather-config.c:102
-#, fuzzy
 msgid "Dew point (D)"
 msgstr "Ponto de Orvalho (PO)"
 
 #: ../panel-plugin/weather-config.c:103
-#, fuzzy
 msgid "Apparent temperature (A)"
-msgstr "Temperatura (T)"
+msgstr "Temperatura aparente (A)"
 
 #: ../panel-plugin/weather-config.c:104
 msgid "Low clouds (CL)"
 msgstr "Nuvens baixas (CL)"
 
 #: ../panel-plugin/weather-config.c:105
-#, fuzzy
 msgid "Middle clouds (CM)"
 msgstr "Nuvens médias (CM)"
 
@@ -295,11 +285,11 @@ msgstr "Nuvens altas (CH)"
 
 #: ../panel-plugin/weather-config.c:107
 msgid "Cloudiness (C)"
-msgstr "Nuvens (C)"
+msgstr "Nebulosidade (C)"
 
 #: ../panel-plugin/weather-config.c:108
 msgid "Fog (F)"
-msgstr "Neblina (F)"
+msgstr "Nevoeiro (F)"
 
 #: ../panel-plugin/weather-config.c:109
 msgid "Precipitations (R)"
@@ -323,9 +313,8 @@ msgid "feet"
 msgstr "pés"
 
 #: ../panel-plugin/weather-config.c:469
-#, fuzzy
 msgid "Location _name:"
-msgstr "L_ocalização:"
+msgstr "_Nome da Localização:"
 
 #: ../panel-plugin/weather-config.c:476
 msgid ""
@@ -345,9 +334,8 @@ msgstr ""
 "Pesquise por uma nova localização e detecte automaticamente seus parâmetros."
 
 #: ../panel-plugin/weather-config.c:502
-#, fuzzy
 msgid "Latitud_e:"
-msgstr "Latitude"
+msgstr "Latitud_e:"
 
 #: ../panel-plugin/weather-config.c:506
 msgid ""
@@ -360,9 +348,8 @@ msgstr ""
 "altitude correta também."
 
 #: ../panel-plugin/weather-config.c:516
-#, fuzzy
 msgid "L_ongitude:"
-msgstr "Longitude"
+msgstr "L_ongitude:"
 
 #: ../panel-plugin/weather-config.c:520
 msgid ""
@@ -375,9 +362,8 @@ msgstr ""
 "altitude correta também."
 
 #: ../panel-plugin/weather-config.c:530
-#, fuzzy
 msgid "_Altitude:"
-msgstr "Altitude"
+msgstr "_Altitude:"
 
 #: ../panel-plugin/weather-config.c:534
 msgid ""
@@ -486,7 +472,7 @@ msgid ""
 "of gravity."
 msgstr ""
 "Polegadas de mercúrio ainda é amplamente usado para pressão barométrica em "
-"relatórios, relatórios e aviação para clima, nos Estados Unidades, mas de "
+"relatórios meteorológicos, relatórios e aviação nos Estados Unidades, mas de "
 "vez em quando é usado em outros lugares. É definido como a pressão exercida "
 "por uma coluna circular de 1 polegada de mercúrio de 1 polegada de altura em "
 "32  °F (0 °C) na aceleração padrão da gravidade."
@@ -600,7 +586,7 @@ msgstr ""
 "da metrologia (a ciência de medições). Desde 1983, ela foi definida como o "
 "comprimento do caminho viajado pela luz no vácuo durante um intervalo de "
 "tempo de 1/299.792.458 de um segundo. 1 milímetro é um milésimo de um metro, "
-"ou aproximadamente 0,04 polegadas"
+"ou aproximadamente 0,04 polegadas."
 
 #: ../panel-plugin/weather-config.c:763
 msgid ""
@@ -718,9 +704,8 @@ msgstr ""
 "relativa e pode ser usado por tanto estresse de calor quanto frio."
 
 #: ../panel-plugin/weather-config.c:911
-#, fuzzy
 msgid "_Temperature:"
-msgstr "Temperatura"
+msgstr "_Temperatura:"
 
 #: ../panel-plugin/weather-config.c:913
 msgid "Celcius (°C)"
@@ -731,9 +716,8 @@ msgid "Fahrenheit (°F)"
 msgstr "Fahrenheit (°F)"
 
 #: ../panel-plugin/weather-config.c:919
-#, fuzzy
 msgid "Atmospheric _pressure:"
-msgstr "Pressão atmosférica (P)"
+msgstr "_Pressão atmosférica:"
 
 #: ../panel-plugin/weather-config.c:922
 msgid "Hectopascals (hPa)"
@@ -752,9 +736,8 @@ msgid "Torr (mmHg)"
 msgstr "Torr (mmHg)"
 
 #: ../panel-plugin/weather-config.c:933
-#, fuzzy
 msgid "_Wind speed:"
-msgstr "Velocidade do vento (WS)"
+msgstr "_Velocidade do vento:"
 
 #: ../panel-plugin/weather-config.c:936
 msgid "Kilometers per hour (km/h)"
@@ -777,11 +760,8 @@ msgid "International knots (kt)"
 msgstr "Nós (kt)"
 
 #: ../panel-plugin/weather-config.c:949
-#, fuzzy
 msgid "Prec_ipitations:"
-msgstr ""
-"\n"
-"Preciptações\n"
+msgstr "Prec_ipitações:"
 
 #: ../panel-plugin/weather-config.c:952
 msgid "Millimeters (mm)"
@@ -792,9 +772,8 @@ msgid "Inches (in)"
 msgstr "Polegadas (in)"
 
 #: ../panel-plugin/weather-config.c:959
-#, fuzzy
 msgid "Altitu_de:"
-msgstr "Altitude"
+msgstr "Altitu_de:"
 
 #: ../panel-plugin/weather-config.c:962
 msgid "Meters (m)"
@@ -805,19 +784,16 @@ msgid "Feet (ft)"
 msgstr "Pés (ft)"
 
 #: ../panel-plugin/weather-config.c:973
-#, fuzzy
 msgid "Apparent te_mperature:"
-msgstr "Temperatura"
+msgstr "Te_mperatura aparente:"
 
 #: ../panel-plugin/weather-config.c:976
-#, fuzzy
 msgid "Windchill/Heat index"
-msgstr "Vento frio"
+msgstr "Vento frio/Índice de calor"
 
 #: ../panel-plugin/weather-config.c:978
-#, fuzzy
 msgid "Windchill/Humidex"
-msgstr "Vento frio"
+msgstr "Vento frio/Humidex"
 
 #: ../panel-plugin/weather-config.c:979
 msgid "Steadman"
@@ -867,7 +843,6 @@ msgstr ""
 "tarde, pôr do sol, noite) em colunas e os dias em linhas."
 
 #: ../panel-plugin/weather-config.c:1124
-#, fuzzy
 msgid "_Icon theme:"
 msgstr "_Tema de ícones:"
 
@@ -906,9 +881,8 @@ msgstr ""
 "úteis; outros são mais claros, mas fornecem menos dados."
 
 #: ../panel-plugin/weather-config.c:1166
-#, fuzzy
 msgid "_Forecast layout:"
-msgstr "_Previsão"
+msgstr "Layout de _previsão:"
 
 #: ../panel-plugin/weather-config.c:1168
 msgid "Days in columns"
@@ -919,9 +893,8 @@ msgid "Days in rows"
 msgstr "Dias em linhas"
 
 #: ../panel-plugin/weather-config.c:1177
-#, fuzzy
 msgid "_Number of forecast _days:"
-msgstr "Nº de dias de previsão:"
+msgstr "_Número de dias de previsão:"
 
 #: ../panel-plugin/weather-config.c:1182
 #, c-format
@@ -939,7 +912,6 @@ msgstr ""
 "para mais de três dias no futuro não são muito confiáveis ;-)"
 
 #: ../panel-plugin/weather-config.c:1200
-#, fuzzy
 msgid "_Round values"
 msgstr "A_rredondar valores"
 
@@ -952,9 +924,8 @@ msgstr ""
 "na janela de resumo."
 
 #: ../panel-plugin/weather-config.c:1252 ../panel-plugin/weather-config.c:1716
-#, fuzzy
 msgid "Select _font"
-msgstr "Selecionar a _fonte"
+msgstr "Selecionar _fonte"
 
 #: ../panel-plugin/weather-config.c:1269
 msgid "Select font"
@@ -1046,7 +1017,7 @@ msgid ""
 "pressure."
 msgstr ""
 "Umidade é definida como a quantidade de vapor de água no ar e aumenta a "
-"possibilidade de precipitações, neblinas e condensações. Enquanto umidade "
+"possibilidade de precipitações, nevoeiro e condensações. Enquanto umidade "
 "absoluta é o conteúdo de água do ar, a umidade relativa dá (em %) a umidade "
 "absoluta atual relativa ao máximo para aquela temperatura e pressão de ar."
 
@@ -1094,6 +1065,7 @@ msgstr ""
 "deveria usar um modelo de cálculo apropriado para suas preferências pessoais "
 "e clima local na página de unidades."
 
+# OMM - Organização Metorológica Mundial
 #: ../panel-plugin/weather-config.c:1485
 msgid ""
 "This gives the low-level cloud cover in percent. According to WMO "
@@ -1102,7 +1074,14 @@ msgid ""
 "below 2,000 m (6,500 ft). They are mainly composed of water droplets or ice "
 "particles and snow, when temperatures are cold enough."
 msgstr ""
+"Isso dá a cobertura de nuvens de baixo nível em percentagem. De acordo com a "
+"definição da OMM, nuvens de baio nível podem ser encontradas em altitudes "
+"abaixo de 4.000 m (13.000 ft) ou 5.000 m (16.000 ft) do equador, apesar de "
+"suas bases geralmente ficam abaixo 2.000 m (6.500 ft). Elas são compostas "
+"principalmente de partículas água ou gelo e neve quando temperaturas estão "
+"fias o suficiente."
 
+# OMM - Organização Metorológica Mundial
 #: ../panel-plugin/weather-config.c:1493
 msgid ""
 "This specifies the mid-level cloud cover in percent. According to WMO "
@@ -1111,7 +1090,14 @@ msgid ""
 "level cousins, they are principally composed of water droplets. When "
 "temperatures get low enough, ice particles can replace the droplets."
 msgstr ""
+"Essa opção especifica a cobertura de nuvens de nível médio em percentagem. "
+"De acordo com a definição da OMM, nuvens de nível médio formam-se em alturas "
+"de 4.000-8.000 (13.000-26.000 ft) ou 5.000-10.000 m (16.000-33-000 ft) do "
+"equador. Como suas primas de nível baixo, elas são compostas principalmente "
+"de partículas de água. Quando as temperaturas ficam baixo o suficiente, "
+"partículas de gelo podem substituir as de água."
 
+# OMM - Organização Metorológica Mundial
 #: ../panel-plugin/weather-config.c:1502
 msgid ""
 "This reports the high-level cloud cover in percent. According to WMO "
@@ -1121,6 +1107,13 @@ msgid ""
 "typically thin and white in appearance, they can be seen in a magnicient "
 "array of colors when the sun is low on the horizon."
 msgstr ""
+"Isso relata a cobertura de numbe de nível alto em percentagem. De acordo com "
+"a definição da OMM, nuvens de alto nível pode ser encontradas em altitudes "
+"de 8.000 a 15.000 m (26.000 a 49.000 ft) ou 18.000 m (59.000 ft) do equador, "
+"onde as temperaturas são tão baixas que elas são compostas principalmente de "
+"cristais de gelo. Enquanto normalmente finos e brancos na aparência, elas "
+"também podem ser vistas em um vetor magnificente de cores quando o sol está "
+"baixo no horizonte."
 
 #: ../panel-plugin/weather-config.c:1512
 msgid ""
@@ -1132,6 +1125,13 @@ msgid ""
 "escaping into space. Apart from that, clouds reflect light to space and in "
 "that way contribute to the cooling of the planet."
 msgstr ""
+"Nebulosidade, ou cobertura de nuvem, define a fração de céu obscurecido por "
+"nuvens quando observado de uma localização dada. Nuvens são ambos transporte "
+"de precipitação e reguladores para a amostra de radiação solar que alcança a "
+"superfície. Enquanto durante o dia elas reduzem a temperatura, de noite elas "
+"têm o efeito oposto, como o vapor de água previne radiação de ondas longas "
+"de escapar para o espaço. Fora isso, as nuvens refletem luz para o espaço e "
+"dessa forma contribui para reduzir a temperatura do ambiente."
 
 #: ../panel-plugin/weather-config.c:1524
 msgid ""
@@ -1142,6 +1142,13 @@ msgid ""
 "produces precipitations in the form of drizzle or very light snow and "
 "reduces visibility to less than 1 km (5/8 statute mile)."
 msgstr ""
+"Nevoeiro é um tipo de estrato de nuvem de baixa altitude, com a umidade nele "
+"geralmente gerado localmente como perto de um lago, rio, oceano ou "
+"simplesmente terra úmida, que é formada quando a diferença entre temperatura "
+"e ponto de orvalho está abaixo de 2,5 °C (4 °F), normalmente em uma umidade "
+"relativa de 100%. Um nevoeiro comumente produz precipitações na forma de "
+"chuvisco e neve bem leve e produz visibilidade de menos de 1 km (5/8 milhas "
+"terrestres)."
 
 #: ../panel-plugin/weather-config.c:1535
 msgid ""
@@ -1170,6 +1177,29 @@ msgid ""
 "these rules will only lead to rough estimates and may not represent the real "
 "amount of snow."
 msgstr ""
+"A quantidade de chuva, chuvisco, água-neve, granizo, neve, graupel e outras "
+"formas de queda de água dos céus em um período específico.\n"
+"\n"
+"Os valores relatados pelo met.no são aqueles de precipitações no estado "
+"líquido - ou em outras palavras, de chuva -, e, então, se a neve for "
+"esperada (mas não uma neve-água), então a quantidade de neve será <i>"
+"adivinhada</i> multiplicando o valor original por um dependente da "
+"propoção na temperatura do ar:\n"
+"\n"
+"<tt><small>                   T &lt; -11,1 °C (12 °F) =&gt; 1:12\n"
+"-11,1 °C (12 °F) &lt; T &lt;  -4,4 °C (24 °F) =&gt; 1:10\n"
+" -4,4 °C (24 °F) &lt; T &lt;  -2,2 °C (28° F) =&gt; 1:7\n"
+" -2,2 °C (28 °F) &lt; T &lt;  -0,6 °C (31 °F) =&gt; 1:5\n"
+" -0,6 °C (31 °F) &lt; T                    =&gt; 1:3\n"
+"\n"
+"</small></tt>Exemplo: se a temperatura é -5 °C (12 °F), então a densidade "
+" da neve será baixa e uma proporção de chuva para neve de 1:10 vai ser usada "
+"para o cálculo. Presumindo que o valor relatado é 5 mm, então a quantidade de preciptação de neve é 50 mm.\n"
+"\n"
+"<b>Nota</b>: Enquanto a temperatura do ar é um fator importante neste cálculo "
+", há outros factores influenciadores que o pugin não conhece o tipo de neve e "
+"temperatura da terra. Por causa disso, essas regras somente vão levar a \n"
+"estimativas aproximadas e podeme não representar a quantidade real de neve."
 
 #: ../panel-plugin/weather-config.c:1688
 msgid ""
@@ -1177,27 +1207,37 @@ msgid ""
 "information is also provided in the tooltip - provided you choose an "
 "appropriate tooltip style - that is shown when hovering over the icon."
 msgstr ""
+"Esconde a caixa de rolagem para salvar espaço valioso no painel. A "
+"informação mais interessante também é fornecida na dica - desde que você "
+"escolha um estilo de dicas apropriado - que é mostrada quando passando o "
+"mouse em cima do ícone."
 
 #. values to show at once (multiple lines)
 #: ../panel-plugin/weather-config.c:1699
 msgid "L_ines:"
-msgstr ""
+msgstr "L_inhas:"
 
 #: ../panel-plugin/weather-config.c:1705
 msgid ""
 "Decide how many values should be shown at once in the scrollbox. You can "
 "choose a smaller font or enlarge the panel to make more lines fit."
 msgstr ""
+"Decida como vários valores devem ser mostrados de uma vez na caixa de "
+"rolagem. Você pode escolher uma fonte menor e aumentar o painel para fazer "
+"caber mais linhas."
 
 #: ../panel-plugin/weather-config.c:1712
 msgid "Font and color:"
-msgstr ""
+msgstr "Fonte e cor:"
 
 #: ../panel-plugin/weather-config.c:1718
 msgid ""
 "Choose a font you like and set it to a smaller or larger size. Middle-click "
 "on the button to unset the font and use your theme's default."
 msgstr ""
+"Escolha uma fonte que você goste e defina-a para um tamanho menor ou maior. "
+"Clique com o botão do meio no botão para retirar a fonte e usar a padrão do "
+"seu tema."
 
 #: ../panel-plugin/weather-config.c:1730
 msgid ""
@@ -1206,11 +1246,15 @@ msgid ""
 "another color, then you can change it using this button. Middle-click on the "
 "button to unset the scrollbox text color."
 msgstr ""
+"Pode haver problemas com alguns temas que causam ao texto da caixa de "
+"rolagem ficar difícil de ler. Se esse é o caso ou  você simplesmente quer "
+"que apareça em outra cor, então você pode alterá-la usando este botão. "
+"Clique com o botão do meio do mouse para desmarcar a cor do texto da caixa "
+"de rolagem."
 
 #: ../panel-plugin/weather-config.c:1754
-#, fuzzy
 msgid "Labels to _display"
-msgstr "Rótu_los para exibidos"
+msgstr "Rótu_los para exibir"
 
 #: ../panel-plugin/weather-config.c:1757
 msgid ""
@@ -1218,6 +1262,9 @@ msgid ""
 "value here and click the appropriate button to remove it or move it up and "
 "down in the list."
 msgstr ""
+"Esses são os valores que serão mostrados na caixa de rolagem. Selecione um "
+"único valor aqui e clique no botão apropriado para removê-lo ou movê-lo para "
+"cima ou para baixo na lista."
 
 #. button "add"
 #: ../panel-plugin/weather-config.c:1764
@@ -1229,6 +1276,8 @@ msgid ""
 "Add the selected value to the labels that should be displayed in the "
 "scrollbox."
 msgstr ""
+"Adicione o valor selecionado aos rótulos que deveria ser exibidos na caixa "
+"de rolagem."
 
 #: ../panel-plugin/weather-config.c:1782
 msgid "_Remove"
@@ -1239,26 +1288,26 @@ msgid ""
 "Select a value in the list of labels to display and click this button to "
 "remove it."
 msgstr ""
+"Seleciona um valor na lista de rótulos para exibir e clicar neste botão para "
+"removê-lo."
 
 #. button "move up"
 #: ../panel-plugin/weather-config.c:1790
-#, fuzzy
 msgid "Move _up"
 msgstr "Mover para _cima"
 
 #: ../panel-plugin/weather-config.c:1793
 msgid "Move the selected value up in the list of labels to display."
-msgstr ""
+msgstr "Mova o valor selecionado para cima na lista de rótulos para exibir."
 
 #. button "move down"
 #: ../panel-plugin/weather-config.c:1798
-#, fuzzy
 msgid "Move _down"
 msgstr "Mover para _baixo"
 
 #: ../panel-plugin/weather-config.c:1801
 msgid "Move the selected value down in the list of labels to display."
-msgstr ""
+msgstr "Mover o valor selecionado para baixo na lista de rótulos para exibir."
 
 #: ../panel-plugin/weather-config.c:1818
 msgid "Animate _transitions between labels"
@@ -1270,6 +1319,9 @@ msgid ""
 "simply changing them. Uncheck this option if you find the animation too "
 "distracting."
 msgstr ""
+"Role o(s) valor(es) exibidos atualmente para fora e o(s) novo(s) valor(es) "
+"ao invés de simplesmente alterá-los. Desmarque essa opção se você achar a "
+"animação muito distrativa."
 
 #: ../panel-plugin/weather-data.c:418
 msgid "ft"
@@ -1293,7 +1345,7 @@ msgstr "hPa"
 
 #: ../panel-plugin/weather-data.c:428
 msgid "inHg"
-msgstr ""
+msgstr "inHg"
 
 #: ../panel-plugin/weather-data.c:430
 msgid "psi"
@@ -1301,7 +1353,7 @@ msgstr "psi"
 
 #: ../panel-plugin/weather-data.c:432
 msgid "mmHg"
-msgstr ""
+msgstr "mmHg"
 
 #: ../panel-plugin/weather-data.c:437
 msgid "km/h"
@@ -1313,15 +1365,15 @@ msgstr "mph"
 
 #: ../panel-plugin/weather-data.c:441
 msgid "m/s"
-msgstr ""
+msgstr "m/s"
 
 #: ../panel-plugin/weather-data.c:443
 msgid "ft/s"
-msgstr ""
+msgstr "ft/s"
 
 #: ../panel-plugin/weather-data.c:445
 msgid "kt"
-msgstr ""
+msgstr "kt"
 
 #: ../panel-plugin/weather-data.c:459
 msgid "in"
@@ -1333,7 +1385,7 @@ msgstr "mm"
 
 #: ../panel-plugin/weather-data.c:523
 msgid "North"
-msgstr ""
+msgstr "Norte"
 
 #: ../panel-plugin/weather-data.c:523 ../panel-plugin/weather-translate.c:44
 msgid "N"
@@ -1341,7 +1393,7 @@ msgstr "N"
 
 #: ../panel-plugin/weather-data.c:526
 msgid "North-East"
-msgstr ""
+msgstr "Nordeste"
 
 #: ../panel-plugin/weather-data.c:526 ../panel-plugin/weather-translate.c:46
 msgid "NE"
@@ -1349,7 +1401,7 @@ msgstr "NE"
 
 #: ../panel-plugin/weather-data.c:529
 msgid "East"
-msgstr ""
+msgstr "Leste"
 
 #: ../panel-plugin/weather-data.c:529 ../panel-plugin/weather-translate.c:48
 msgid "E"
@@ -1357,7 +1409,7 @@ msgstr "E"
 
 #: ../panel-plugin/weather-data.c:532
 msgid "South-East"
-msgstr ""
+msgstr "Sudeste"
 
 #: ../panel-plugin/weather-data.c:532 ../panel-plugin/weather-translate.c:50
 msgid "SE"
@@ -1365,7 +1417,7 @@ msgstr "SE"
 
 #: ../panel-plugin/weather-data.c:535
 msgid "South"
-msgstr ""
+msgstr "Sul"
 
 #. TRANSLATORS: Wind directions. It's where the wind comes _from_.
 #: ../panel-plugin/weather-data.c:535 ../panel-plugin/weather-translate.c:36
@@ -1374,7 +1426,7 @@ msgstr "S"
 
 #: ../panel-plugin/weather-data.c:538
 msgid "South-West"
-msgstr ""
+msgstr "Sudoeste"
 
 #: ../panel-plugin/weather-data.c:538 ../panel-plugin/weather-translate.c:38
 msgid "SW"
@@ -1382,7 +1434,7 @@ msgstr "SO"
 
 #: ../panel-plugin/weather-data.c:541
 msgid "West"
-msgstr ""
+msgstr "Oeste"
 
 #: ../panel-plugin/weather-data.c:541 ../panel-plugin/weather-translate.c:40
 msgid "W"
@@ -1390,7 +1442,7 @@ msgstr "O"
 
 #: ../panel-plugin/weather-data.c:544
 msgid "North-West"
-msgstr ""
+msgstr "Noroeste"
 
 #: ../panel-plugin/weather-data.c:544 ../panel-plugin/weather-translate.c:42
 msgid "NW"
@@ -1444,6 +1496,8 @@ msgid ""
 "\n"
 "Downloads\n"
 msgstr ""
+"\n"
+"Downloads\n"
 
 #: ../panel-plugin/weather-summary.c:342
 #, c-format
@@ -1454,6 +1508,11 @@ msgid ""
 "\tCurrent failed attempts: %d\n"
 "\n"
 msgstr ""
+"\tDados climáticos:\n"
+"\tÚltimo:\t%s\n"
+"\tPróximo:\t%s\n"
+"\tTentativas atuais que falharam: %d\n"
+"\n"
 
 #: ../panel-plugin/weather-summary.c:355
 #, c-format
@@ -1463,6 +1522,10 @@ msgid ""
 "\tNext:\t%s\n"
 "\tCurrent failed attempts: %d\n"
 msgstr ""
+"\tDados astronômicos:\n"
+"\tÚltimo:\t%s\n"
+"\tPróximo:\t%s\n"
+"\tTentativas atuais que falharam: %d\n"
 
 #. calculation times
 #: ../panel-plugin/weather-summary.c:367
@@ -1470,18 +1533,20 @@ msgid ""
 "\n"
 "Times Used for Calculations\n"
 msgstr ""
+"\n"
+"Tempos usados para cálculos\n"
 
 #: ../panel-plugin/weather-summary.c:370
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\tTemperatures, wind, atmosphere and cloud data calculated\n"
 "\tfor:\t\t%s\n"
 msgstr ""
-"\tDados de temperatura, vento, atmosfera e nuvens se aplicam a:\n"
-"\t%s\n"
+"\tDados de temperaturas, vento, atmosfera e nuvens calculados\n"
+"\tpara:\t\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:379
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "\tPrecipitation and the weather symbol have been calculated\n"
@@ -1490,8 +1555,8 @@ msgid ""
 "\tEnd:\t%s\n"
 msgstr ""
 "\n"
-"\tPrecipitatações e o símbolo de tempo foram recalculados\n"
-"\tpara o seguinte intervalo de tempo:\n"
+"\tPrecipitatações e o símbolo meteorológico foram recalculados\n"
+"\tusando o seguinte intervalo de tempo:\n"
 "\tInício:\t%s\n"
 "\tFim:\t%s\n"
 
@@ -1561,13 +1626,12 @@ msgstr ""
 
 #. temperatures
 #: ../panel-plugin/weather-summary.c:444
-#, fuzzy
 msgid ""
 "\n"
 "Temperatures\n"
 msgstr ""
 "\n"
-"Temperatura\n"
+"Temperaturas\n"
 
 #: ../panel-plugin/weather-summary.c:445
 msgid "Temperature"
@@ -1578,9 +1642,8 @@ msgid "Dew point"
 msgstr "Ponto de orvalho"
 
 #: ../panel-plugin/weather-summary.c:447
-#, fuzzy
 msgid "Apparent temperature"
-msgstr "Temperatura"
+msgstr "Temperatura aparente"
 
 #. wind
 #: ../panel-plugin/weather-summary.c:450
@@ -1592,9 +1655,9 @@ msgstr ""
 "Vento\n"
 
 #: ../panel-plugin/weather-summary.c:455
-#, fuzzy, c-format
+#, c-format
 msgid "\t%s: %s %s (%s on the Beaufort scale)\n"
-msgstr "\t%s: %s (%s na escala de Beaufort)\n"
+msgstr "\t%s: %s %s (%s na escala de Beaufort)\n"
 
 #: ../panel-plugin/weather-summary.c:456
 msgid "Speed"
@@ -1628,11 +1691,11 @@ msgstr ""
 
 #: ../panel-plugin/weather-summary.c:482
 msgid "Barometric pressure"
-msgstr ""
+msgstr "Pressão barométrica"
 
 #: ../panel-plugin/weather-summary.c:483
 msgid "Relative humidity"
-msgstr ""
+msgstr "Umidade relativa"
 
 #. clouds
 #: ../panel-plugin/weather-summary.c:486
@@ -1646,14 +1709,13 @@ msgstr ""
 #: ../panel-plugin/weather-summary.c:487
 #: ../panel-plugin/weather-translate.c:170
 msgid "Fog"
-msgstr "Neblina"
+msgstr "Nevoeiro"
 
 #: ../panel-plugin/weather-summary.c:488
 msgid "Low clouds"
 msgstr "Nuvens baixas"
 
 #: ../panel-plugin/weather-summary.c:489
-#, fuzzy
 msgid "Middle clouds"
 msgstr "Nuvens médias"
 
@@ -1663,7 +1725,7 @@ msgstr "Nuvens altas"
 
 #: ../panel-plugin/weather-summary.c:491
 msgid "Cloudiness"
-msgstr "Nuvens"
+msgstr "Nebulosidade"
 
 #: ../panel-plugin/weather-summary.c:493
 msgid ""
@@ -1690,21 +1752,17 @@ msgstr "Amanhã"
 #. TRANSLATORS: Please use \t as needed to properly align the values
 #: ../panel-plugin/weather-summary.c:563
 msgid "<b>Times used for calculations</b>\n"
-msgstr ""
+msgstr "<b>Tempos usados para cálculos</b>\n"
 
 #: ../panel-plugin/weather-summary.c:565
-#, fuzzy, c-format
+#, c-format
 msgid "Interval start:\t\t\t%s\n"
-msgstr ""
-"\n"
-"\tOs dados do intervalo aplicam-se a:\n"
-"\tInício:\t%s\n"
-"\tFim:\t%s\n"
+msgstr "Início do intervalo:\t\t\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:568
 #, c-format
 msgid "Interval end:\t\t\t%s\n"
-msgstr ""
+msgstr "Fim do intervalo:\t\t\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:571
 #, c-format
@@ -1712,16 +1770,17 @@ msgid ""
 "Data calculated for:\t%s\n"
 "\n"
 msgstr ""
+"Dados calculados para:\t%s\n"
+"\n"
 
 #: ../panel-plugin/weather-summary.c:574
-#, fuzzy
 msgid "<b>Temperatures</b>\n"
-msgstr "<b>Temperatura</b>"
+msgstr "<b>Temperaturas</b>\n"
 
 #: ../panel-plugin/weather-summary.c:575
-#, fuzzy, c-format
+#, c-format
 msgid "Dew point:\t\t\t%s%s%s\n"
-msgstr "Ponto de orvalho"
+msgstr "Ponto de orvalho:\t\t\t%s%s%s\n"
 
 #: ../panel-plugin/weather-summary.c:576
 #, c-format
@@ -1729,18 +1788,17 @@ msgid ""
 "Apparent temperature:\t%s%s%s\n"
 "\n"
 msgstr ""
+"Temperatura aparente:\t%s%s%s\n"
+"\n"
 
 #: ../panel-plugin/weather-summary.c:579
-#, fuzzy
 msgid "<b>Atmosphere</b>\n"
-msgstr ""
-"\n"
-"Atmosfera\n"
+msgstr "<b>Atmosfera</b>\n"
 
 #: ../panel-plugin/weather-summary.c:580
 #, c-format
 msgid "Barometric pressure:\t%s%s%s\n"
-msgstr ""
+msgstr "Pressão barométrica:\t%s%s%s\n"
 
 #: ../panel-plugin/weather-summary.c:581
 #, c-format
@@ -1748,54 +1806,50 @@ msgid ""
 "Relative humidity:\t\t%s%s%s\n"
 "\n"
 msgstr ""
+"Umidade relativa:\t\t%s%s%s\n"
+"\n"
 
 #: ../panel-plugin/weather-summary.c:583
-#, fuzzy
 msgid "<b>Precipitations</b>\n"
-msgstr ""
-"\n"
-"Preciptações\n"
+msgstr "<b>Preciptações</b>\n"
 
 #: ../panel-plugin/weather-summary.c:584
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Amount:\t\t%s%s%s\n"
 "\n"
 msgstr ""
-"\tPôr do Sol:\t\t%s\n"
+"Quantidade:\t\t%s%s%s\n"
 "\n"
 
 #: ../panel-plugin/weather-summary.c:586
-#, fuzzy
 msgid "<b>Clouds</b>\n"
-msgstr "<b>Vento</b>"
+msgstr "<b>Nuvens</b>\n"
 
 #: ../panel-plugin/weather-summary.c:587
-#, fuzzy, c-format
+#, c-format
 msgid "Fog:\t\t\t%s%s%s\n"
-msgstr ""
-"\tPôr do Sol:\t\t%s\n"
-"\n"
+msgstr "Nevoeiro:\t\t\t%s%s%s\n"
 
 #: ../panel-plugin/weather-summary.c:588
-#, fuzzy, c-format
+#, c-format
 msgid "Low clouds:\t\t%s%s%s\n"
-msgstr "Nuvens"
+msgstr "Nuvens baixas:\t\t%s%s%s\n"
 
 #: ../panel-plugin/weather-summary.c:589
-#, fuzzy, c-format
+#, c-format
 msgid "Middle clouds:\t%s%s%s\n"
-msgstr "Nuvens médias"
+msgstr "Nuvens médias:\t%s%s%s\n"
 
 #: ../panel-plugin/weather-summary.c:590
-#, fuzzy, c-format
+#, c-format
 msgid "High clouds:\t\t%s%s%s\n"
-msgstr "Nuvens altas"
+msgstr "Nuvens altas:\t\t%s%s%s\n"
 
 #: ../panel-plugin/weather-summary.c:591
-#, fuzzy, c-format
+#, c-format
 msgid "Cloudiness:\t\t%s%s%s"
-msgstr "Nuvens"
+msgstr "Nebulosidade:\t\t%s%s%s"
 
 #. daytime headers
 #: ../panel-plugin/weather-summary.c:753
@@ -1815,9 +1869,8 @@ msgid "Night"
 msgstr "Noite"
 
 #: ../panel-plugin/weather-summary.c:904
-#, fuzzy
 msgid "Weather Report"
-msgstr "Relatório meteorológico para: %s"
+msgstr "Relatório meteorológico: %s"
 
 #: ../panel-plugin/weather-summary.c:932
 msgid "Please set a location in the plugin settings."
