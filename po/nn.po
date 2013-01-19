@@ -6,7 +6,7 @@ msgstr ""
 "Project-Id-Version: xfce4-weather-plugin 0.6.0svn-r2842\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-01-14 17:10+0100\n"
-"PO-Revision-Date: 2013-01-16 16:04+0100\n"
+"PO-Revision-Date: 2013-01-19 08:52+0100\n"
 "Last-Translator: Kevin Brubeck Unhammer <unhammer@fsfe.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nb@lister.ping.uio.no>\n"
 "MIME-Version: 1.0\n"
@@ -82,18 +82,18 @@ msgid ""
 "and the plugin needs to be adapted to use a newer version, or it will stop "
 "working within a few month. Please file a bug on https://bugzilla.xfce.org "
 "if no one else has done so yet."
-msgstr ""
+msgstr "API-et frå met.no for soloppgangstider seier at denne utgåva av vevtenesta er utgått, og at programmet må endrast for å bruka ei nyare utgåve, elles vil det slutta å fungera innan eit par månader. Ver venleg og legg inn ein feilrapport på https://bugzilla.xfce.org viss ingen andre har gjort det enno."
 
 #: ../panel-plugin/weather.c:466
 msgid "Error parsing astronomical data!"
-msgstr ""
+msgstr "Feil ved tolking av astronomiske data!"
 
 #: ../panel-plugin/weather.c:468
 #, c-format
 msgid ""
 "Download of astronomical data failed with HTTP Status Code %d, Reason "
 "phrase: %s"
-msgstr ""
+msgstr "Nedlasting av astronomiske data feila med HTTP-status %d, grunn: %s"
 
 #: ../panel-plugin/weather.c:503
 msgid ""
@@ -101,18 +101,17 @@ msgid ""
 "deprecated, and the plugin needs to be adapted to use a newer version, or it "
 "will stop working within a few month. Please file a bug on https://bugzilla."
 "xfce.org if no one else has done so yet."
-msgstr ""
+msgstr "API-et frå met.no for stadsvarsel («LocationforecastLTS») seier at denne utgåva av vevtenesta er utgått, og at programmet må endrast for å bruka ei nyare utgåve, elles vil det slutta å fungera innan eit par månader. Ver venleg og legg inn ein feilrapport på https://bugzilla.xfce.org viss ingen andre har gjort det enno.<"
 
 #: ../panel-plugin/weather.c:521
-#, fuzzy
 msgid "Error parsing weather data!"
-msgstr "Klarte ikkje oppdatera vinddata"
+msgstr "Feil ved tolking av vêrdata!"
 
 #: ../panel-plugin/weather.c:524
 #, c-format
 msgid ""
 "Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
-msgstr ""
+msgstr "Nedlasting av vêrdata feila med HTTP-status %d, grunn: %s"
 
 #: ../panel-plugin/weather.c:1366
 #, c-format
@@ -154,6 +153,13 @@ msgid ""
 "<b>Pressure:</b> %s\n"
 "<b>Humidity:</b> %s\n"
 msgstr ""
+"<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
+"<b><span size=\"large\">%s</span></b>\n"
+"\n"
+"<b>Temperatur:</b> %s\n"
+"<b>Vind:</b> %s frå %s\n"
+"<b>Trykk:</b> %s\n"
+"<b>Fukt:</b> %s\n"
 
 #. * TRANSLATORS: Re-arrange and align at will, optionally using
 #. * abbreviations for labels if desired or necessary. Just take
@@ -192,13 +198,12 @@ msgid "Cannot update weather data"
 msgstr "Klarte ikkje oppdatera vinddata"
 
 #: ../panel-plugin/weather.c:1846
-#, fuzzy
 msgid "Show weather conditions and forecasts"
-msgstr "Vis gjeldande vêrforhold"
+msgstr "Vis vêrforhold og varsel"
 
 #: ../panel-plugin/weather.c:1848
 msgid "Copyright (c) 2003-2012\n"
-msgstr ""
+msgstr "Opphavsrett (c) 2003-2012\n"
 
 #. * TRANSLATORS: The abbreviations in parentheses will be shown in
 #. * the scrollbox together with the values. Keep them in sync with
@@ -293,7 +298,7 @@ msgstr "S_tad:"
 msgid ""
 "Change the name for the location to your liking. It is used for display and "
 "does not affect the location parameters in any way."
-msgstr ""
+msgstr "Endra stadnamnet til kva enn du vil. Det er berre nytta i visninga og endrar ikkje posisjonsparametrane på nokon måte."
 
 #: ../panel-plugin/weather-config.c:480
 msgid "Chan_ge..."
@@ -301,7 +306,7 @@ msgstr "E_ndra …"
 
 #: ../panel-plugin/weather-config.c:483
 msgid "Search for a new location and auto-detect its parameters."
-msgstr ""
+msgstr "Søk etter ein ny stad og oppdag parametrar automatisk."
 
 #: ../panel-plugin/weather-config.c:502
 msgid "Latitud_e:"
@@ -312,7 +317,7 @@ msgid ""
 "Latitude specifies the north-south position of a point on the Earth's "
 "surface. If you change this value manually, you should provide the correct "
 "altitude too."
-msgstr ""
+msgstr "Breiddegrad spesifiserer nord-sør-posisjonen til eit punkt på overflaten av jorda. Viss du endrar denne verdien for hand, må du oppgje korrekt høgd over havet òg."
 
 #: ../panel-plugin/weather-config.c:516
 msgid "L_ongitude:"
@@ -323,7 +328,7 @@ msgid ""
 "Longitude specifies the east-west position of a point on the Earth's "
 "surface. If you change this value manually, you should provide the correct "
 "altitude too."
-msgstr ""
+msgstr "Lengdegrad spesifiserer aust-vest-posisjonen til eit punkt på overflaten av jorda. Viss du endrar denne verdien for hand, må du oppgje korrekt høgd over havet òg."
 
 #: ../panel-plugin/weather-config.c:530
 msgid "_Altitude:"
@@ -344,6 +349,11 @@ msgid ""
 "but small differences will have no influence on the weather data. Inside "
 "Norway, this setting has no effect at all."
 msgstr ""
+"For stader utanfor Noreg er høgdmodellen brukt av met.no-tenesta ikkje spesielt god, så du må vanlegvis spesifisera høgda som ein tilleggsparameter, elles vil dei rapporterte verdiane bli feil.\n"
+"\n"
+"Programmet prøver å oppdaga høgd automatisk med GeoNames-vevtenesta, men den er heller alltid korrekt, så du kan endra høgda her.\n"
+"\n"
+"Høgd er oppgjeve i meter over havet, alternativt i fot ved å endra eining i Einingar-fanen. Høgd bør vera nokolunde lik den faktiske verdien, men små forskjellar har ingen påverknad på vêrdata. Innad i Noreg har denne innstillinga ingen verknad i det heile."
 
 #: ../panel-plugin/weather-config.c:556
 msgid ""
@@ -628,23 +638,23 @@ msgstr "_Opplevd temperatur"
 
 #: ../panel-plugin/weather-config.c:976
 msgid "Windchill/Heat index"
-msgstr ""
+msgstr "Vindavkjølings-/varmeindeks"
 
 #: ../panel-plugin/weather-config.c:978
 msgid "Windchill/Humidex"
-msgstr ""
+msgstr "Vindavkjølings-/humidex"
 
 #: ../panel-plugin/weather-config.c:979
 msgid "Steadman"
-msgstr ""
+msgstr "Steadman"
 
 #: ../panel-plugin/weather-config.c:980
 msgid "Quayle-Steadman"
-msgstr ""
+msgstr "Quayle-Steadman"
 
 #: ../panel-plugin/weather-config.c:1003
 msgid "Choose an icon theme."
-msgstr ""
+msgstr "Vel eit ikontema."
 
 #: ../panel-plugin/weather-config.c:1008
 #, c-format
@@ -657,6 +667,13 @@ msgid ""
 "\n"
 "<b>License:</b> %s"
 msgstr ""
+"<b>Katalog:</b> %s\n"
+"\n"
+"<b>Forfattar:</b> %s\n"
+"\n"
+"<b>Skildring:</b> %s\n"
+"\n"
+"<b>Lisens:</b> %s"
 
 #: ../panel-plugin/weather-config.c:1062
 msgid ""
@@ -1011,9 +1028,8 @@ msgid "ft"
 msgstr "'"
 
 #: ../panel-plugin/weather-data.c:418
-#, fuzzy
 msgid "m"
-msgstr "km"
+msgstr "m"
 
 #: ../panel-plugin/weather-data.c:422
 msgid "°F"
@@ -1283,13 +1299,10 @@ msgstr ""
 
 #. temperatures
 #: ../panel-plugin/weather-summary.c:444
-#, fuzzy
 msgid ""
 "\n"
 "Temperatures\n"
-msgstr ""
-"\n"
-"Temperatur\n"
+msgstr "\nTemperaturar\n"
 
 #: ../panel-plugin/weather-summary.c:445
 msgid "Temperature"
@@ -1300,9 +1313,8 @@ msgid "Dew point"
 msgstr "Duggpunkt"
 
 #: ../panel-plugin/weather-summary.c:447
-#, fuzzy
 msgid "Apparent temperature"
-msgstr "Temperatur"
+msgstr "Opplevd temperatur"
 
 #. wind
 #: ../panel-plugin/weather-summary.c:450
