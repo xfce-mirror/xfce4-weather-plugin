@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: xfce4-weather-plugin 0.8.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-01-14 17:10+0100\n"
-"PO-Revision-Date: 2013-01-20 12:46+0200\n"
+"PO-Revision-Date: 2013-01-20 13:43+0200\n"
 "Last-Translator: Isratine Citizen <genghiskhan@gmx.ca>\n"
 "Language-Team: Rahut <xfce-i18n@xfce.org>\n"
 "Language: he\n"
@@ -28,10 +28,11 @@ msgstr "label"
 msgid "P"
 msgstr "label"
 
-# RTL direction set due to translated unit km/h
+# [INVALID] RTL direction set due to translated unit km/h
 #: ../panel-plugin/weather.c:122
+#, fuzzy
 msgid "WS"
-msgstr "‏WS‏"
+msgstr "label"
 
 # מע.
 #: ../panel-plugin/weather.c:125
@@ -84,7 +85,8 @@ msgstr "label"
 msgid "F"
 msgstr "label"
 
-# RTL direction set due to translated unit mm
+# [to be examined]
+# [INVALID] RTL direction set due to translated unit mm
 #: ../panel-plugin/weather.c:158
 msgid "R"
 msgstr "‏R‏"
@@ -214,7 +216,7 @@ msgstr ""
 "<span size=\"smaller\">מן %s עד %s, עם %s משקעים</span>\n"
 "\n"
 "<b>טמפרטורה:</b> ‎%s\t\t<span size=\"smaller\">(מחושבת בשעה %s)</span>\n"
-"<b>משב:</b> %s (%sבסולם בופורט) מכיוון %s(%s)\n"
+"<b>משב:</b> %s ‏(%sבסולם בופורט) מכיוון %s(%s)\n"
 "<b>לחץ:</b> ‎%s    <b>לחות:</b> %s\n"
 "<b>ערפל:</b> ‎%s    <b>מעוננות:</b> %s\n"
 "\n"
@@ -747,7 +749,7 @@ msgstr "מהירות _משב:"
 # נקודת הנחיה: בתעשיה האווירית בישראל אומרים רגל ולא רגלים ומשכך כל שאר המידות הובעו בצורת יחיד על מנת שתישמר אחידות בין המחרוזות
 #: ../panel-plugin/weather-config.c:936
 msgid "Kilometers per hour (km/h)"
-msgstr "קילומטר לשעה (קמ״ש)"
+msgstr "קילומטר לשעה (km/h)"
 
 # מי״ש
 # [this should not be translated]
@@ -773,7 +775,7 @@ msgstr "מש_קעים:"
 
 #: ../panel-plugin/weather-config.c:952
 msgid "Millimeters (mm)"
-msgstr "מילימטרים (מ״מ)"
+msgstr "מילימטרים (mm)"
 
 #: ../panel-plugin/weather-config.c:954
 msgid "Inches (in)"
@@ -1356,9 +1358,12 @@ msgstr "unit"
 msgid "mmHg"
 msgstr "unit"
 
+# [this should not be translated]
+# RTL issues
 #: ../panel-plugin/weather-data.c:437
+#, fuzzy
 msgid "km/h"
-msgstr "‬קמ״ש"
+msgstr "unit"
 
 # מי״ש
 # [this should not be translated]
@@ -1389,6 +1394,9 @@ msgstr "unit"
 msgid "in"
 msgstr "unit"
 
+# [to be examined]
+# [this should not be translated]
+# RTL issues
 #: ../panel-plugin/weather-data.c:459
 msgid "mm"
 msgstr "מ״מ"
@@ -1668,7 +1676,7 @@ msgstr ""
 #: ../panel-plugin/weather-summary.c:455
 #, c-format
 msgid "\t%s: %s %s (%s on the Beaufort scale)\n"
-msgstr "\t%s: %s %s (%s בסולם בופורט)\n"
+msgstr "\t%s: ‎%s %s ‏(%s בסולם בופורט)\n"
 
 #: ../panel-plugin/weather-summary.c:456
 msgid "Speed"
