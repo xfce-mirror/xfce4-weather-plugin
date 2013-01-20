@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-weather-plugin 0.8.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-14 17:10+0100\n"
+"POT-Creation-Date: 2013-01-20 20:09+0100\n"
 "PO-Revision-Date: 2013-01-20 18:37+0200\n"
 "Last-Translator: Isratine Citizen <genghiskhan@gmx.ca>\n"
 "Language-Team: Rahut <xfce-i18n@xfce.org>\n"
@@ -139,6 +139,18 @@ msgid ""
 "Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
 msgstr "הורדה של נתוני מזג אוויר נכשלה עם HTTP Status Code %d, סיבה: %s"
 
+#. start receive thread
+#: ../panel-plugin/weather.c:578 ../panel-plugin/weather.c:596
+#: ../panel-plugin/weather-search.c:169 ../panel-plugin/weather-search.c:435
+#, c-format
+msgid "getting %s"
+msgstr ""
+
+#: ../panel-plugin/weather.c:1040
+#, c-format
+msgid "Error writing cache file %s!"
+msgstr ""
+
 #: ../panel-plugin/weather.c:1366
 #, c-format
 msgid "Unable to open the following url: %s"
@@ -226,12 +238,17 @@ msgstr ""
 msgid "Cannot update weather data"
 msgstr "לא ניתן לעדכן נתוני מזג אוויר"
 
+#: ../panel-plugin/weather.c:1622
+msgid "No default icon theme? This should not happen, plugin will crash!"
+msgstr ""
+
 #: ../panel-plugin/weather.c:1846
 msgid "Show weather conditions and forecasts"
 msgstr "הצג תנאי מזג אוויר ותחזיות"
 
 #: ../panel-plugin/weather.c:1848
-msgid "Copyright (c) 2003-2012\n"
+#, fuzzy
+msgid "Copyright (c) 2003-2013\n"
 msgstr "זכויות יוצרים (c)‏ 2003-‏2012\n"
 
 #.
@@ -421,15 +438,19 @@ msgstr ""
 # סולם קלווין. (טמפרטורה של) ‎0 °C שקולה
 # melting point of water OR ice?
 #: ../panel-plugin/weather-config.c:580
+#, fuzzy
 msgid ""
 "Named after the astronomer Anders Celsius who invented the original scale in "
 "1742, the Celsius scale is an international standard unit and nowadays "
 "defined using the Kelvin scale. 0 °C is equivalent to 273.15 K and 1 °C "
 "difference in temperature is exactly the same difference as 1 K. It is "
 "defined with the melting point of water being roughly at 0 °C and its "
-"boiling point at 100 °C at one standard atmosphere (1 atm = 1013.5 hPa)."
-"Until 1948, the unit was known as <i>centigrade</i> (from Latin <i>centum</"
-"i> (100) and <i>gradus</i> (steps)."
+"boiling point at 100 °C at one standard atmosphere (1 atm = 1013.5 hPa). "
+"Until 1948, the unit was known as <i>centigrade</i> - from Latin <i>centum</"
+"i> (100) and <i>gradus</i> (steps).\n"
+"In meteorology and everyday life the Celsius scale is very convenient for "
+"expressing temperatures because its numbers can be an easy indicator for the "
+"formation of black ice and snow."
 msgstr ""
 "נקראת על שם האסטרונום אנדרס צלזיוס (Anders Celsius) שהמציא את הסולם המקורי "
 "בשנת 1742, סולם הצלזיוס הוא יחידת תקן בינלאומית וכיום מוגדר בעזרת סולם "
@@ -442,18 +463,22 @@ msgstr ""
 # תִּמְלַחַת = מי מלח
 # בתהליך
 # ההתכה של מים בזרם מצויה
-#: ../panel-plugin/weather-config.c:592
+#: ../panel-plugin/weather-config.c:596
+#, fuzzy
 msgid ""
 "The current Fahrenheit temperature scale is based on one proposed in 1724 by "
 "the physicist Daniel Gabriel Fahrenheit. 0 °F was the freezing point of "
 "brine on the original scale at standard atmospheric pressure, which was the "
 "lowest temperature achievable with this mixture of ice, salt and ammonium "
-"chloride.\n"
-"The melting point of water on the current is at 32 °F and its boiling point "
-"at 212 °F, and the interval between these two points can be divided into 180 "
-"equal parts. 180 is a highly composite number, which can be evenly divided "
-"into many fractions. The Fahrenheit and Celsius scale intersect at -40 "
-"degrees."
+"chloride. The melting point of water is at 32 °F and its boiling point at "
+"212 °F. The Fahrenheit and Celsius scales intersect at -40 degrees. Even in "
+"cold winters, the temperatures usually do not fall into negative ranges on "
+"the Fahrenheit scale.\n"
+"With its inventor being a member of the Royal Society in London and having a "
+"high reputation, the Fahrenheit scale enjoyed great popularity in many "
+"English-speaking countries, but was replaced by the Celsius scale in most of "
+"these countries during the metrification process in the mid to late 20th "
+"century."
 msgstr ""
 "סולם טמפרטורת פרנהייט הנוכחי מבוסס על אחד שהוצע בשנת 1724 על ידי הפיזיקאי "
 "דניאל גבריאל פרנהייט (Daniel Gabriel Fahrenheit). ‏‎0 °F היתה נקודת הקיפאון של "
@@ -464,7 +489,7 @@ msgstr ""
 "180 הוא מספר מורכב מאוד, שיכול להתחלק באופן שווה אל חלקים רבים. הסולם של "
 "פרנהייט וצלזיוס מצטלב ברמה של ‎-40 מעלות."
 
-#: ../panel-plugin/weather-config.c:632
+#: ../panel-plugin/weather-config.c:639
 msgid ""
 "The pascal, named after mathematician, physicist and philosopher Blaise "
 "Pascal, is a SI derived unit and a measure of force per unit area, defined "
@@ -474,7 +499,7 @@ msgstr ""
 "Pascal), היא יחידת SI נגזרת ואמת מידה של כֺח לכל שטח יחידה, מוגדרת כניוטון "
 "אחד לכל מטר מרובע. אטמוספרה תקנית אחת (atm) היא ‎1013.25 hPa."
 
-#: ../panel-plugin/weather-config.c:639
+#: ../panel-plugin/weather-config.c:646
 msgid ""
 "Inches of mercury is still widely used for barometric pressure in weather "
 "reports, refrigeration and aviation in the United States, but seldom used "
@@ -487,7 +512,7 @@ msgstr ""
 "בלחץ שמופעל על ידי טור עיגולי 1 של כספית של אינץ׳ 1 ברמה של ‎32 °F ‏(‎0 °C) "
 "בהאצה רגילה של כֺח משיכה."
 
-#: ../panel-plugin/weather-config.c:647
+#: ../panel-plugin/weather-config.c:654
 msgid ""
 "The pound per square inch is a unit of pressure based on avoirdupois units "
 "(a system of weights based on a pound of 16 ounces) and the pressure "
@@ -501,7 +526,7 @@ msgstr ""
 "נכרת משתנה גם בחיי היומיום בקנדה, בממלכה המאוחדת וייתכן גם בקולוניות בריטיות "
 "לשעבר."
 
-#: ../panel-plugin/weather-config.c:656
+#: ../panel-plugin/weather-config.c:663
 msgid ""
 "The torr unit was named after the physicist and mathematician Evangelista "
 "Torricelli who discovered the principle of the barometer in 1644 and "
@@ -515,7 +540,7 @@ msgstr ""
 "בקירוב למילימטר אחד של כספית, ואטמוספרה תקנית אחת (atm) שווה לערך של 760 טוֹר."
 
 # מדי־מהירות
-#: ../panel-plugin/weather-config.c:690
+#: ../panel-plugin/weather-config.c:697
 msgid ""
 "Kilometer per hour is a unit of speed, expressing the number of kilometers "
 "travelled in one hour. Worldwide, the km/h is the most commonly used speed "
@@ -530,7 +555,7 @@ msgstr ""
 "בקמ״ש."
 
 # מכוסה
-#: ../panel-plugin/weather-config.c:698
+#: ../panel-plugin/weather-config.c:705
 msgid ""
 "Miles per hour is an imperial unit of speed expressing the number of statute "
 "miles covered in one hour. It is currently the standard unit used for speed "
@@ -542,7 +567,7 @@ msgstr ""
 "גבולות מהירות, וגם כדי לבטא מהירויות באופן כללי, בדרכים בארצות הברית ובממלכה "
 "המאוחדת."
 
-#: ../panel-plugin/weather-config.c:705
+#: ../panel-plugin/weather-config.c:712
 msgid ""
 "Meter per second is a SI (International System of Units) derived unit of "
 "both speed and velocity, defined by distance in meters divided by time in "
@@ -552,7 +577,7 @@ msgstr ""
 "החשה והן של מהירות, מוגדרת על ידי מטרים מחולקת בזמן של שניות. זוהי היחידה "
 "שמטאורולוגים מנצלים לציון מהירות משב."
 
-#: ../panel-plugin/weather-config.c:711
+#: ../panel-plugin/weather-config.c:718
 msgid ""
 "The foot per second (plural feet per second) is an imperial unit of both "
 "speed and velocity. It expresses the distance in feet traveled or displaced, "
@@ -564,7 +589,7 @@ msgstr ""
 "מחולקת בזמן של שניות. היחידה המקבילה של מערכת היחידות הבינלאומית היא יחידת "
 "המידה מטר לשנייה."
 
-#: ../panel-plugin/weather-config.c:718
+#: ../panel-plugin/weather-config.c:725
 msgid ""
 "The knot is a unit of speed equal to one international nautical mile (1.852 "
 "km) per hour, or approximately 1.151 mph, and sees worldwide use in "
@@ -577,7 +602,7 @@ msgstr ""
 "אחת."
 
 # משוון זוקקה שהות
-#: ../panel-plugin/weather-config.c:751
+#: ../panel-plugin/weather-config.c:758
 msgid ""
 "The meter is the fundamental unit of length in the International System of "
 "Units. Originally intended to be one ten-millionth of the distance from the "
@@ -598,7 +623,7 @@ msgstr ""
 # באה מן לטינית
 # תריסריון - לא נכון (מעי)
 # תריסריונית - נכון
-#: ../panel-plugin/weather-config.c:763
+#: ../panel-plugin/weather-config.c:770
 msgid ""
 "The English word <i>inch</i> comes from Latin <i>uncia</i> meaning <i>one-"
 "twelfth part</i> (in this case, one twelfth of a foot). There have been many "
@@ -610,7 +635,7 @@ msgstr ""
 "האינץ׳ עם אמות מידה משתנות. ברם, הערך המוסכם בינלאומית הנוכחי עומד בדיוק על "
 "25.4 מילימטרים."
 
-#: ../panel-plugin/weather-config.c:796
+#: ../panel-plugin/weather-config.c:803
 msgid ""
 "The meter is the fundamental unit of length in the International System of "
 "Units. Originally intended to be one ten-millionth of the distance from the "
@@ -629,7 +654,7 @@ msgstr ""
 # Learn how to flight in Israel at Moon Air (Hertzelyya) :-P
 # האזורים הבודדים
 # דוברי השפה האנגלית
-#: ../panel-plugin/weather-config.c:807
+#: ../panel-plugin/weather-config.c:814
 msgid ""
 "A foot (plural feet) is a unit of length defined as being 0.3048 m exactly "
 "and used in the imperial system of units and United States customary units. "
@@ -643,7 +668,12 @@ msgstr ""
 "האזורים האחדים מקום בו יחידת המידה רגל מצויה בשימוש נרחב מחוץ לעולם של דוברי-"
 "אנגלית."
 
-#: ../panel-plugin/weather-config.c:841
+#.
+#. * TRANSLATORS: The Summer Simmer Index is similar to the heat
+#. * index, but usually used at night because of its better accuracy
+#. * at that time.
+#.
+#: ../panel-plugin/weather-config.c:853
 msgid ""
 "Used in North America, wind chill will be reported for low temperatures and "
 "heat index for higher ones. At night, heat index will be replaced by the "
@@ -662,7 +692,7 @@ msgstr ""
 
 # במידה ו
 # היה ו
-#: ../panel-plugin/weather-config.c:852
+#: ../panel-plugin/weather-config.c:864
 msgid ""
 "The Canadian counterpart to the US windchill/heat index, with the wind chill "
 "being similar to the previous model but with slightly different constraints. "
@@ -680,7 +710,7 @@ msgstr ""
 "יותר מן ‎0 °C ‏(‎32 °F). אם תנאים אלו לא מסופקים, טמפרטורת האוויר תוצג."
 
 # windchill
-#: ../panel-plugin/weather-config.c:864
+#: ../panel-plugin/weather-config.c:876
 msgid ""
 "This is the model used by the Australian Bureau of Meteorology, especially "
 "adapted for the climate of this continent. Possibly used in Central Europe "
@@ -698,7 +728,7 @@ msgstr ""
 "בשימוש עבור טמפרטורות נמוכות יותר או גבוהות יותר בצורה שקולה."
 
 # השבחה
-#: ../panel-plugin/weather-config.c:875
+#: ../panel-plugin/weather-config.c:887
 msgid ""
 "Improvements by Robert G. Quayle and Robert G. Steadman applied in 1998 to "
 "earlier experiments/developments by Steadman. This model only depends on "
@@ -710,116 +740,117 @@ msgstr ""
 "תלוי על מהירות משב ועל טמפרטורה בלבד, לא על לחות יחסית ויכול להיות בשימוש "
 "עבור לחץ של חום וגם של קור."
 
-#: ../panel-plugin/weather-config.c:911
+#: ../panel-plugin/weather-config.c:923
 msgid "_Temperature:"
 msgstr "_טמפרטורה:"
 
-#: ../panel-plugin/weather-config.c:913
-msgid "Celcius (°C)"
+#: ../panel-plugin/weather-config.c:925
+#, fuzzy
+msgid "Celsius (°C)"
 msgstr "צלזיוס (‎°C)"
 
-#: ../panel-plugin/weather-config.c:914
+#: ../panel-plugin/weather-config.c:926
 msgid "Fahrenheit (°F)"
 msgstr "פרנהייט (‎°F)"
 
-#: ../panel-plugin/weather-config.c:919
+#: ../panel-plugin/weather-config.c:931
 msgid "Atmospheric _pressure:"
 msgstr "_לחץ אטמוספרי:"
 
-#: ../panel-plugin/weather-config.c:922
+#: ../panel-plugin/weather-config.c:934
 msgid "Hectopascals (hPa)"
 msgstr "פסקל (hPa)"
 
-#: ../panel-plugin/weather-config.c:924
+#: ../panel-plugin/weather-config.c:936
 msgid "Inches of mercury (inHg)"
 msgstr "אינץ׳ של כספית (inHg)"
 
-#: ../panel-plugin/weather-config.c:926
+#: ../panel-plugin/weather-config.c:938
 msgid "Pound-force per square inch (psi)"
 msgstr "כֺח-ליברה לאינץ׳ מרובע (psi)"
 
-#: ../panel-plugin/weather-config.c:928
+#: ../panel-plugin/weather-config.c:940
 msgid "Torr (mmHg)"
 msgstr "טוֹר (mmHg)"
 
-#: ../panel-plugin/weather-config.c:933
+#: ../panel-plugin/weather-config.c:945
 msgid "_Wind speed:"
 msgstr "מהירות _משב:"
 
 # נקודת הנחיה: בתעשיה האווירית בישראל אומרים רגל ולא רגלים ומשכך כל שאר המידות הובעו בצורת יחיד על מנת שתישמר אחידות בין המחרוזות
-#: ../panel-plugin/weather-config.c:936
+#: ../panel-plugin/weather-config.c:948
 msgid "Kilometers per hour (km/h)"
 msgstr "קילומטר לשעה (km/h)"
 
 # מי״ש
 # [this should not be translated]
-#: ../panel-plugin/weather-config.c:938
+#: ../panel-plugin/weather-config.c:950
 msgid "Miles per hour (mph)"
 msgstr "מייל לשעה (mph)"
 
-#: ../panel-plugin/weather-config.c:940
+#: ../panel-plugin/weather-config.c:952
 msgid "Meters per second (m/s)"
 msgstr "מטר לשנייה (m/s)"
 
-#: ../panel-plugin/weather-config.c:942
+#: ../panel-plugin/weather-config.c:954
 msgid "Feet per second (ft/s)"
 msgstr "רגל לשנייה (ft/s)"
 
-#: ../panel-plugin/weather-config.c:944
-msgid "International knots (kt)"
-msgstr "קשר בינלאומי (kt)"
+#: ../panel-plugin/weather-config.c:956
+msgid "Knots (kt)"
+msgstr ""
 
-#: ../panel-plugin/weather-config.c:949
+#: ../panel-plugin/weather-config.c:961
 msgid "Prec_ipitations:"
 msgstr "מש_קעים:"
 
-#: ../panel-plugin/weather-config.c:952
+#: ../panel-plugin/weather-config.c:964
 msgid "Millimeters (mm)"
 msgstr "מילימטרים (mm)"
 
-#: ../panel-plugin/weather-config.c:954
+#: ../panel-plugin/weather-config.c:966
 msgid "Inches (in)"
 msgstr "אינצ׳ים (in)"
 
-#: ../panel-plugin/weather-config.c:959
+#: ../panel-plugin/weather-config.c:971
 msgid "Altitu_de:"
 msgstr "_גובה:"
 
-#: ../panel-plugin/weather-config.c:962
+#: ../panel-plugin/weather-config.c:974
 msgid "Meters (m)"
 msgstr "מטרים (מ׳)"
 
-#: ../panel-plugin/weather-config.c:964
+#: ../panel-plugin/weather-config.c:976
 msgid "Feet (ft)"
 msgstr "רגלים (רגל)"
 
-#: ../panel-plugin/weather-config.c:973
+#: ../panel-plugin/weather-config.c:985
 msgid "Apparent te_mperature:"
 msgstr "_טמפרטורה גלויה:"
 
-#: ../panel-plugin/weather-config.c:976
+#: ../panel-plugin/weather-config.c:988
 msgid "Windchill/Heat index"
 msgstr "משב צינה/עומס חום"
 
-#: ../panel-plugin/weather-config.c:978
+#: ../panel-plugin/weather-config.c:990
 msgid "Windchill/Humidex"
 msgstr "משב צינה/עומס לחות"
 
-#: ../panel-plugin/weather-config.c:979
+#: ../panel-plugin/weather-config.c:991
 msgid "Steadman"
 msgstr "סטדמן"
 
 # מזח - לא!
-#: ../panel-plugin/weather-config.c:980
+#: ../panel-plugin/weather-config.c:992
 msgid "Quayle-Steadman"
 msgstr "קיל-סטדמן"
 
-#: ../panel-plugin/weather-config.c:1003
+#: ../panel-plugin/weather-config.c:1015
 msgid "Choose an icon theme."
 msgstr "בחר מוטיב סמל."
 
 # רשיון
-#: ../panel-plugin/weather-config.c:1008
+#: ../panel-plugin/weather-config.c:1020
 #, c-format
 msgid ""
 "<b>Directory:</b> %s\n"
@@ -838,7 +869,7 @@ msgstr ""
 "\n"
 "<b>רישיון:</b> %s"
 
-#: ../panel-plugin/weather-config.c:1062
+#: ../panel-plugin/weather-config.c:1074
 msgid ""
 "A more calendar-like view, with the days in columns and the daytimes "
 "(morning, afternoon, evening, night) in rows."
@@ -846,7 +877,7 @@ msgstr ""
 "דומה יותר לתצוגה של לוח שנה, עם הימים בטורים ושעות היום (בוקר, אחר הצהריים, "
 "ערב, לילה) בשורות."
 
-#: ../panel-plugin/weather-config.c:1066
+#: ../panel-plugin/weather-config.c:1078
 msgid ""
 "Shows the forecasts in a table with the daytimes (morning, afternoon, "
 "evening, night) in columns and the days in rows."
@@ -854,11 +885,11 @@ msgstr ""
 "מציגה את התחזית בתוך טבלה עם שעות היום (בוקר, אחר הצהריים, ערב, לילה) בטורים "
 "ואת הימים בשורות."
 
-#: ../panel-plugin/weather-config.c:1124
+#: ../panel-plugin/weather-config.c:1136
 msgid "_Icon theme:"
 msgstr "_מוטיב סמל:"
 
-#: ../panel-plugin/weather-config.c:1126
+#: ../panel-plugin/weather-config.c:1138
 msgid ""
 "Available icon themes are listed here. You can add icon themes to $HOME/."
 "config/xfce4/weather/icons (or the equivalent directory on your system). "
@@ -871,21 +902,21 @@ msgstr ""
 "מוטיבי צלמית ניתן למציאה בתוך הקובץ README. מוטיבי צלמית חדשים יאותרו בכל "
 "פעם בו תפתח את דו שיח תצורה זה."
 
-#: ../panel-plugin/weather-config.c:1148
+#: ../panel-plugin/weather-config.c:1160
 msgid "_Tooltip style:"
 msgstr "_סגנון תיבת עזר:"
 
 # לא מורכב
-#: ../panel-plugin/weather-config.c:1150
+#: ../panel-plugin/weather-config.c:1162
 msgid "Simple"
 msgstr "פשוטה"
 
 # מורחב
-#: ../panel-plugin/weather-config.c:1151
+#: ../panel-plugin/weather-config.c:1163
 msgid "Verbose"
 msgstr "מפורטת"
 
-#: ../panel-plugin/weather-config.c:1154
+#: ../panel-plugin/weather-config.c:1166
 msgid ""
 "Choose your preferred tooltip style. Some styles give a lot of useful data, "
 "some are clearer but provide less data on a glance."
@@ -894,24 +925,25 @@ msgstr ""
 "צלולות יותר אך מספקות נתונים מועטים יותר בנצנוץ."
 
 # תסדיר
-#: ../panel-plugin/weather-config.c:1166
+#: ../panel-plugin/weather-config.c:1178
 msgid "_Forecast layout:"
 msgstr "מערך _תחזית:"
 
-#: ../panel-plugin/weather-config.c:1168
+#: ../panel-plugin/weather-config.c:1180
 msgid "Days in columns"
 msgstr "ימים בטורים"
 
-#: ../panel-plugin/weather-config.c:1169
+#: ../panel-plugin/weather-config.c:1181
 msgid "Days in rows"
 msgstr "ימים בשורות"
 
 # ימי חיזוי
-#: ../panel-plugin/weather-config.c:1177
-msgid "_Number of forecast _days:"
+#: ../panel-plugin/weather-config.c:1189
+#, fuzzy
+msgid "_Number of forecast days:"
 msgstr "מס_פר של ימי תחזית:"
 
-#: ../panel-plugin/weather-config.c:1182
+#: ../panel-plugin/weather-config.c:1194
 #, c-format
 msgid ""
 "Met.no provides forecast data for up to %d days in the future. Choose how "
@@ -926,27 +958,27 @@ msgstr ""
 "התווך של שלושה ימים בעתיד אינן מהימנות לכל היותר ;-)"
 
 # ערכים _עגולים - לא, משום שזה verb
-#: ../panel-plugin/weather-config.c:1200
+#: ../panel-plugin/weather-config.c:1212
 msgid "_Round values"
 msgstr "עג_ל ערכים"
 
-#: ../panel-plugin/weather-config.c:1202
+#: ../panel-plugin/weather-config.c:1214
 msgid ""
 "Check to round values everywhere except on the details page in the summary "
 "window."
 msgstr "סמן כדי לעגל ערכים בכל מקום מלבד בעמוד המפורט בחלון הסיכום."
 
 # מצד שני, מדובר בלחצן אז אפשרי לנצל סגנון של Unisex
-#: ../panel-plugin/weather-config.c:1252 ../panel-plugin/weather-config.c:1716
+#: ../panel-plugin/weather-config.c:1264 ../panel-plugin/weather-config.c:1728
 msgid "Select _font"
 msgstr "בחירת _גופן"
 
-#: ../panel-plugin/weather-config.c:1269
+#: ../panel-plugin/weather-config.c:1281
 msgid "Select font"
 msgstr "בחירת גופן"
 
 #. TRANSLATORS: Fallback value, usually never shown.
-#: ../panel-plugin/weather-config.c:1401
+#: ../panel-plugin/weather-config.c:1413
 msgid ""
 "Choose the value to add to the list below. Values can be added more than "
 "once."
@@ -954,7 +986,7 @@ msgstr ""
 "בחר את הערך להוספה אל הרשימה למטה. ערכים יכולים להתווסף ליותר מפעם אחת."
 
 # פקעת-יבשה גלוי
-#: ../panel-plugin/weather-config.c:1411
+#: ../panel-plugin/weather-config.c:1423
 msgid ""
 "Air temperature, sometimes referred to as dry-bulb temperature. Measured by "
 "a thermometer that is freely exposed to the air, yet shielded from radiation "
@@ -964,15 +996,16 @@ msgstr ""
 "בצורה חופשית לאוויר, עם זאת מוגן מקרינה ומרטיבות."
 
 # שלחצים יורדים מצביעים על התדרדרות
-#: ../panel-plugin/weather-config.c:1417
+#: ../panel-plugin/weather-config.c:1429
+#, fuzzy
 msgid ""
-"The air that makes up the atmosphere exerts a pressure on the surface below "
-"it, which is known as atmospheric pressure. To make it easier to compare the "
-"value to other values for locations with different altitudes, atmospheric "
-"pressure is adjusted to the equivalent sea-level pressure and called "
-"barometric pressure. Rising barometric pressures generally indicate an "
-"improvement in weather conditions, while falling pressures mean "
-"deterioration."
+"The weight of the air that makes up the atmosphere exerts a pressure on the "
+"surface of the Earth, which is known as atmospheric pressure. To make it "
+"easier to compare the value to other values for locations with different "
+"altitudes, atmospheric pressure is adjusted to the equivalent sea-level "
+"pressure and called barometric pressure. Rising barometric pressures "
+"generally indicate an improvement in weather conditions, while falling "
+"pressures mean deterioration."
 msgstr ""
 "האוויר שגורם לאטמוספרה להפעיל לחץ על שטח הפנים שמתחתיה, ידוע גם כן כלחץ "
 "אטמוספרי. כדי להפוך זאת לקל יותר להשוות את הערך אל ערכים אחרים עבור מיקומים "
@@ -981,7 +1014,7 @@ msgstr ""
 "שהמשמעות של לחצים יורדים היא הידרדרות."
 
 # וניתנים להקשה
-#: ../panel-plugin/weather-config.c:1428
+#: ../panel-plugin/weather-config.c:1440
 msgid ""
 "Nowadays wind speed/velocity is measured using an anemometer (Greek "
 "<i>anemos</i>, meaning <i>wind</i>) in 10 m (33 ft) height. Anemometers "
@@ -993,7 +1026,7 @@ msgstr ""
 "יספקו את שני הערכים כשם שאלה קשורים בקירוב וניתנים להסקה זה מזה."
 
 # מסוימים מאת אנשים
-#: ../panel-plugin/weather-config.c:1436
+#: ../panel-plugin/weather-config.c:1448
 msgid ""
 "Invented by Sir Francis Beaufort in 1805, this empirical scale on wind speed "
 "is based on people's observations of specific land or sea conditions, "
@@ -1003,13 +1036,13 @@ msgstr ""
 "זה של מהירות משב מבוססת על תצפיות אנשים של תנאי יבשה או ים מסוימים, ציון "
 "תנאים אלו עם מספרים מן 0 (רגוע) עד 12 (הוריקן)."
 
-#: ../panel-plugin/weather-config.c:1442
+#: ../panel-plugin/weather-config.c:1454
 msgid ""
 "This gives the cardinal direction (North, East, South, West) the wind is "
 "coming from."
 msgstr "זו נותנת את הכיוון העיקרי (צפון, מזרח, דרום, מערב) ממנו הרוח מגיעה."
 
-#: ../panel-plugin/weather-config.c:1446
+#: ../panel-plugin/weather-config.c:1458
 msgid ""
 "This gives the direction the wind is coming from in azimuth degrees (North = "
 "0°, East = 90°, South = 180° and West = 270°)."
@@ -1017,7 +1050,7 @@ msgstr ""
 "זו נותנת את הכיוון ממנה הרוח מגיעה במעלות של אזימות (צפון = 0°, מזרח = 90°, "
 "דרום = 180° ומערב = 270°)."
 
-#: ../panel-plugin/weather-config.c:1451
+#: ../panel-plugin/weather-config.c:1463
 msgid ""
 "Humidity is defined as the amount of water vapor in the air and increases "
 "the possibility of precipitations, fog and dew. While absolute humidity is "
@@ -1031,7 +1064,7 @@ msgstr ""
 "והלחץ שלה."
 
 # בהגיעה אל נקודת העיבוי תהליך הצינון מופסק
-#: ../panel-plugin/weather-config.c:1459
+#: ../panel-plugin/weather-config.c:1471
 msgid ""
 "This is the temperature to which air must be cooled to reach 100% relative "
 "humidity, given no change in water content. Reaching the dew point halts the "
@@ -1051,7 +1084,7 @@ msgstr ""
 "<b>הערה:</b> זהו ערך מחושב שלא מסופק על ידי met.no."
 
 # להועיל (תועלת) - להואיל (הסכמה)
-#: ../panel-plugin/weather-config.c:1471
+#: ../panel-plugin/weather-config.c:1483
 msgid ""
 "Also known as <i>felt temperature</i>, <i>effective temperature</i>, or what "
 "some weather providers declare as <i>feels like</i>. Human temperature "
@@ -1074,7 +1107,7 @@ msgstr ""
 "חישוב מתאים לאקלים המקומי וגם להעדפות האישיות שלך בעמוד היחידות."
 
 # בסיסם מצוי לעתים
-#: ../panel-plugin/weather-config.c:1485
+#: ../panel-plugin/weather-config.c:1497
 msgid ""
 "This gives the low-level cloud cover in percent. According to WMO "
 "definition, low-level clouds can be found at altitudes below 4,000 m (13,000 "
@@ -1089,7 +1122,7 @@ msgstr ""
 
 # הטיפונות ענני ביניים
 # מתחוללים בגבהים
-#: ../panel-plugin/weather-config.c:1493
+#: ../panel-plugin/weather-config.c:1505
 msgid ""
 "This specifies the mid-level cloud cover in percent. According to WMO "
 "definition, mid-level clouds form in heights of 4,000-8,000 m (13,000-26,000 "
@@ -1104,13 +1137,14 @@ msgstr ""
 "הטיפות."
 
 # שקופה וצחורה
-#: ../panel-plugin/weather-config.c:1502
+#: ../panel-plugin/weather-config.c:1514
+#, fuzzy
 msgid ""
 "This reports the high-level cloud cover in percent. According to WMO "
 "definition, high-level clouds can be found in altitudes of 8,000 to 15,000 m "
 "(26,000 to 49,000 ft), or 18,000 m (59,000 ft) at the equator, where "
 "temperatures are so low that they are mainly composed of ice crystals. While "
-"typically thin and white in appearance, they can be seen in a magnicient "
+"typically thin and white in appearance, they can be seen in a magnificent "
 "array of colors when the sun is low on the horizon."
 msgstr ""
 "זו מדווחת על עטיפת הענן הגבוה באחוזים. לפי הגדרת WMO, עננים גבוהים ניתנים "
@@ -1123,7 +1157,7 @@ msgstr ""
 # אל החלל
 # הוספה ה"א הידיעה (הזו) משום *that*
 # אם היה רשום this ה"א לא היתה מתווספת
-#: ../panel-plugin/weather-config.c:1512
+#: ../panel-plugin/weather-config.c:1524
 msgid ""
 "Cloudiness, or cloud cover, defines the fraction of the sky obscured by "
 "clouds when observed from a given location. Clouds are both carriers of "
@@ -1140,7 +1174,7 @@ msgstr ""
 "זאת, עננים מחזירים אור לחלל ובדרך הזו תורמים להתקררות של כוכב הלכת."
 
 # נמוך
-#: ../panel-plugin/weather-config.c:1524
+#: ../panel-plugin/weather-config.c:1536
 msgid ""
 "Fog is a type of low-lying stratus cloud, with the moisture in it often "
 "generated locally such as from a nearby lake, river, ocean, or simply moist "
@@ -1155,7 +1189,7 @@ msgstr ""
 "בלחות יחסית של 100%. ערפל באופן שכיח מפיק משקעים בצורה של טפטוף או שלג דל "
 "ביותר ומצמצם ראות אל למטה מן 1 ק״מ (5/8 סטרטוס מייל)."
 
-#: ../panel-plugin/weather-config.c:1535
+#: ../panel-plugin/weather-config.c:1547
 msgid ""
 "The amount of rain, drizzle, sleet, hail, snow, graupel and other forms of "
 "water falling from the sky over a specific period.\n"
@@ -1204,9 +1238,14 @@ msgstr ""
 "משום שכך, חוקים אלו יובילו רק אל הערכות גסות ואלו עשויות שלא לסמל את הכמות "
 "האמיתית של שלג."
 
-#: ../panel-plugin/weather-config.c:1688
+#: ../panel-plugin/weather-config.c:1698
+msgid "Show scroll_box"
+msgstr ""
+
+#: ../panel-plugin/weather-config.c:1700
+#, fuzzy
 msgid ""
-"Hide the scrollbox to save valueable space on the panel. Most interesting "
+"Hide the scrollbox to save valuable space on the panel. Most interesting "
 "information is also provided in the tooltip - provided you choose an "
 "appropriate tooltip style - that is shown when hovering over the icon."
 msgstr ""
@@ -1215,12 +1254,13 @@ msgstr ""
 "הסמל."
 
 #. values to show at once (multiple lines)
-#: ../panel-plugin/weather-config.c:1699
-msgid "L_ines:"
+#: ../panel-plugin/weather-config.c:1711
+#, fuzzy
+msgid "Li_nes:"
 msgstr "שורו_ת:"
 
 # החלט
-#: ../panel-plugin/weather-config.c:1705
+#: ../panel-plugin/weather-config.c:1717
 msgid ""
 "Decide how many values should be shown at once in the scrollbox. You can "
 "choose a smaller font or enlarge the panel to make more lines fit."
@@ -1228,12 +1268,12 @@ msgstr ""
 "כאן באפשרותך להחליט על כמה ערכים להיראות בו זמנית בתוך תיבת הגלילה. ביכולתך "
 "לברור גופן קטן יותר או להגדיל את הלוח כדי להפוך יותר שורות למתאימים."
 
-#: ../panel-plugin/weather-config.c:1712
+#: ../panel-plugin/weather-config.c:1724
 msgid "Font and color:"
 msgstr "גופן וצבע:"
 
 # בגופן המשתמט
-#: ../panel-plugin/weather-config.c:1718
+#: ../panel-plugin/weather-config.c:1730
 msgid ""
 "Choose a font you like and set it to a smaller or larger size. Middle-click "
 "on the button to unset the font and use your theme's default."
@@ -1241,7 +1281,7 @@ msgstr ""
 "בחר גופן שתואם את העדפתך וקבע את גודלו לקטן יותר או גדול יותר. קליקי-אמצעי "
 "על הלחצן כדי לאפס את הגופן ולהשתמש בגופן ברירת מחדל של מוטיבך."
 
-#: ../panel-plugin/weather-config.c:1730
+#: ../panel-plugin/weather-config.c:1742
 msgid ""
 "There may be problems with some themes that cause the scrollbox text to be "
 "hardly readable. If this is the case or you simply want it to appear in "
@@ -1253,11 +1293,12 @@ msgstr ""
 "ביכולתך לשנות אותו באמצעות לחצן זה. באפשרותך ללחוץ עם קליק-אמצעי על הלחצן "
 "כדי לאפס את צבע התמליל של תיבת הגלילה."
 
-#: ../panel-plugin/weather-config.c:1754
-msgid "Labels to _display"
+#: ../panel-plugin/weather-config.c:1766
+#, fuzzy
+msgid "Labels to d_isplay"
 msgstr "_תוויות להצגה"
 
-#: ../panel-plugin/weather-config.c:1757
+#: ../panel-plugin/weather-config.c:1769
 msgid ""
 "These are the values that will be shown in the scrollbox. Select a single "
 "value here and click the appropriate button to remove it or move it up and "
@@ -1267,50 +1308,52 @@ msgstr ""
 "כדי להסירו או להזיזו מעלה ומטה בתוך הרשימה."
 
 #. button "add"
-#: ../panel-plugin/weather-config.c:1764
-msgid "_Add"
-msgstr "הוס_פה"
+#: ../panel-plugin/weather-config.c:1776
+msgid "A_dd"
+msgstr ""
 
-#: ../panel-plugin/weather-config.c:1767
+#: ../panel-plugin/weather-config.c:1779
 msgid ""
 "Add the selected value to the labels that should be displayed in the "
 "scrollbox."
 msgstr "הוסף את הערך הנבחר אל התוויות שאמורות להראות בתוך תיבת הגלילה."
 
-#: ../panel-plugin/weather-config.c:1782
+#: ../panel-plugin/weather-config.c:1794
 msgid "_Remove"
 msgstr "הס_רה"
 
-#: ../panel-plugin/weather-config.c:1785
+#: ../panel-plugin/weather-config.c:1797
 msgid ""
 "Select a value in the list of labels to display and click this button to "
 "remove it."
 msgstr "בחר ערך ברשימה התוויות להצגה והקלק על לחצן זה כדי להסירו."
 
 #. button "move up"
-#: ../panel-plugin/weather-config.c:1790
-msgid "Move _up"
+#: ../panel-plugin/weather-config.c:1802
+#, fuzzy
+msgid "Move u_p"
 msgstr "מע_לה"
 
-#: ../panel-plugin/weather-config.c:1793
+#: ../panel-plugin/weather-config.c:1805
 msgid "Move the selected value up in the list of labels to display."
 msgstr "הזז את הערך הנבחר מעלה ברשימה התוויות להצגה."
 
 #. button "move down"
-#: ../panel-plugin/weather-config.c:1798
-msgid "Move _down"
+#: ../panel-plugin/weather-config.c:1810
+#, fuzzy
+msgid "Move do_wn"
 msgstr "מ_טה"
 
-#: ../panel-plugin/weather-config.c:1801
+#: ../panel-plugin/weather-config.c:1813
 msgid "Move the selected value down in the list of labels to display."
 msgstr "הזז את הערך הנבחר מטה ברשימה התוויות להצגה."
 
-#: ../panel-plugin/weather-config.c:1818
+#: ../panel-plugin/weather-config.c:1830
 msgid "Animate _transitions between labels"
 msgstr "ה_נפש מעברים בין תוויות"
 
 # אם אתה מוצא את
-#: ../panel-plugin/weather-config.c:1823
+#: ../panel-plugin/weather-config.c:1835
 msgid ""
 "Scroll the current displayed value(s) out and the new value(s) in instead of "
 "simply changing them. Uncheck this option if you find the animation too "
@@ -1318,6 +1361,23 @@ msgid ""
 msgstr ""
 "גולל אל הערך(ים) הנוכחים המוצגים החוצה ואת הערך(ים) החדש(ים) פנימה במקום "
 "פשוט לשנותם. אל תסמן את אפשרות זו באם ההנפשה מפריעה לך יותר מדי."
+
+#: ../panel-plugin/weather-config.c:1969
+#, fuzzy
+msgid "_Location"
+msgstr "_שם מיקום:"
+
+#: ../panel-plugin/weather-config.c:1972
+msgid "_Units"
+msgstr ""
+
+#: ../panel-plugin/weather-config.c:1975
+msgid "_Appearance"
+msgstr ""
+
+#: ../panel-plugin/weather-config.c:1978
+msgid "_Scrollbox"
+msgstr ""
 
 #: ../panel-plugin/weather-data.c:418
 msgid "ft"
@@ -1389,7 +1449,20 @@ msgstr "unit"
 msgid "kt"
 msgstr "unit"
 
-#: ../panel-plugin/weather-data.c:459
+#. TRANSLATORS: The degree sign is used like a unit for
+#. latitude, longitude, wind direction
+#: ../panel-plugin/weather-data.c:452
+#, fuzzy
+msgid "°"
+msgstr "unit"
+
+#. TRANSLATORS: Percentage sign is used like a unit for
+#. clouds, fog, humidity
+#: ../panel-plugin/weather-data.c:461
+msgid "%"
+msgstr ""
+
+#: ../panel-plugin/weather-data.c:463
 #, fuzzy
 msgid "in"
 msgstr "unit"
@@ -1398,74 +1471,79 @@ msgstr "unit"
 # [to be examined]
 # [this should not be translated]
 # RTL issues
-#: ../panel-plugin/weather-data.c:459
+#: ../panel-plugin/weather-data.c:463
 msgid "mm"
 msgstr "מ״מ"
 
-#: ../panel-plugin/weather-data.c:523
+#: ../panel-plugin/weather-data.c:527
 msgid "North"
 msgstr "צפון"
 
-#: ../panel-plugin/weather-data.c:523 ../panel-plugin/weather-translate.c:44
+#: ../panel-plugin/weather-data.c:527 ../panel-plugin/weather-translate.c:44
 msgid "N"
 msgstr "צפ׳"
 
-#: ../panel-plugin/weather-data.c:526
+#: ../panel-plugin/weather-data.c:530
 msgid "North-East"
 msgstr "צפון-מזרח"
 
-#: ../panel-plugin/weather-data.c:526 ../panel-plugin/weather-translate.c:46
+#: ../panel-plugin/weather-data.c:530 ../panel-plugin/weather-translate.c:46
 msgid "NE"
 msgstr "צפ׳ מז׳"
 
-#: ../panel-plugin/weather-data.c:529
+#: ../panel-plugin/weather-data.c:533
 msgid "East"
 msgstr "מזרח"
 
-#: ../panel-plugin/weather-data.c:529 ../panel-plugin/weather-translate.c:48
+#: ../panel-plugin/weather-data.c:533 ../panel-plugin/weather-translate.c:48
 msgid "E"
 msgstr "מז׳"
 
-#: ../panel-plugin/weather-data.c:532
+#: ../panel-plugin/weather-data.c:536
 msgid "South-East"
 msgstr "דרום-מזרח"
 
-#: ../panel-plugin/weather-data.c:532 ../panel-plugin/weather-translate.c:50
+#: ../panel-plugin/weather-data.c:536 ../panel-plugin/weather-translate.c:50
 msgid "SE"
 msgstr "דר׳ מז׳"
 
-#: ../panel-plugin/weather-data.c:535
+#: ../panel-plugin/weather-data.c:539
 msgid "South"
 msgstr "דרום"
 
 #. TRANSLATORS: Wind directions. It's where the wind comes _from_.
-#: ../panel-plugin/weather-data.c:535 ../panel-plugin/weather-translate.c:36
+#: ../panel-plugin/weather-data.c:539 ../panel-plugin/weather-translate.c:36
 msgid "S"
 msgstr "דר׳"
 
-#: ../panel-plugin/weather-data.c:538
+#: ../panel-plugin/weather-data.c:542
 msgid "South-West"
 msgstr "דרום-מערב"
 
-#: ../panel-plugin/weather-data.c:538 ../panel-plugin/weather-translate.c:38
+#: ../panel-plugin/weather-data.c:542 ../panel-plugin/weather-translate.c:38
 msgid "SW"
 msgstr "דר׳ מע׳"
 
-#: ../panel-plugin/weather-data.c:541
+#: ../panel-plugin/weather-data.c:545
 msgid "West"
 msgstr "מערב"
 
-#: ../panel-plugin/weather-data.c:541 ../panel-plugin/weather-translate.c:40
+#: ../panel-plugin/weather-data.c:545 ../panel-plugin/weather-translate.c:40
 msgid "W"
 msgstr "מע׳"
 
-#: ../panel-plugin/weather-data.c:544
+#: ../panel-plugin/weather-data.c:548
 msgid "North-West"
 msgstr "צפון-מערב"
 
-#: ../panel-plugin/weather-data.c:544 ../panel-plugin/weather-translate.c:42
+#: ../panel-plugin/weather-data.c:548 ../panel-plugin/weather-translate.c:42
 msgid "NW"
 msgstr "צפ׳ מע׳"
+
+#: ../panel-plugin/weather-icon.c:134
+#, fuzzy
+msgid "No icon theme!"
+msgstr "_מוטיב סמל:"
 
 #: ../panel-plugin/weather-search.c:128 ../panel-plugin/weather-search.c:252
 msgid "Results"
@@ -1492,26 +1570,56 @@ msgstr "הזן שם עיר או כתובת"
 msgid "Unnamed place"
 msgstr "מקום ללא שם"
 
-#: ../panel-plugin/weather-summary.c:332
+# LRO
+#.
+#. * TRANSLATORS: This format string belongs to the macro used for
+#. * printing the "Label: Value Unit" lines on the details tab, e.g.
+#. * "Temperature: 10 °C" or "Latitude: 95.7°".
+#. * The %s stand for:
+#. *   - label
+#. *   - ": " if label is not empty, else empty
+#. *   - value
+#. *   - space if unit is not degree "°" (but this is not °C or °F!)
+#. *   - unit
+#. * Usually, you should leave this unchanged, BUT...
+#. * RTL TRANSLATORS: In case you did not translate the measurement
+#. * unit, use LRM (left-to-right mark) etc. to align it properly with
+#. * its numeric value.
+#.
+#: ../panel-plugin/weather-summary.c:71
+#, fuzzy, c-format
+msgid "\t%s%s%s%s%s\n"
+msgstr "ערפל:‭\t\t\t%s%s%s\n"
+
+#: ../panel-plugin/weather-summary.c:261
+#, c-format
+msgid "Error downloading met.no logo image to %s, reason: %s\n"
+msgstr ""
+
+#: ../panel-plugin/weather-summary.c:263
+msgid "unknown"
+msgstr ""
+
+#: ../panel-plugin/weather-summary.c:348
 msgid "Coordinates\n"
 msgstr "קואורדינטות\n"
 
 # רום
-#: ../panel-plugin/weather-summary.c:333
+#: ../panel-plugin/weather-summary.c:349
 msgid "Altitude"
 msgstr "גובה"
 
-#: ../panel-plugin/weather-summary.c:334
+#: ../panel-plugin/weather-summary.c:350
 msgid "Latitude"
 msgstr "קו רוחב"
 
-#: ../panel-plugin/weather-summary.c:335
+#: ../panel-plugin/weather-summary.c:351
 msgid "Longitude"
 msgstr "קו אורך"
 
 #. TRANSLATORS: Please use as many \t as appropriate to align the
 #. date/time values as in the original.
-#: ../panel-plugin/weather-summary.c:339
+#: ../panel-plugin/weather-summary.c:355
 msgid ""
 "\n"
 "Downloads\n"
@@ -1519,7 +1627,7 @@ msgstr ""
 "\n"
 "הורדות\n"
 
-#: ../panel-plugin/weather-summary.c:342
+#: ../panel-plugin/weather-summary.c:358
 #, c-format
 msgid ""
 "\tWeather data:\n"
@@ -1534,7 +1642,7 @@ msgstr ""
 "\tניסיונות כושלים נוכחיים: %d\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:355
+#: ../panel-plugin/weather-summary.c:371
 #, c-format
 msgid ""
 "\tAstronomical data:\n"
@@ -1548,7 +1656,7 @@ msgstr ""
 "\tניסיונות כושלים נוכחיים: %d\n"
 
 #. calculation times
-#: ../panel-plugin/weather-summary.c:367
+#: ../panel-plugin/weather-summary.c:383
 msgid ""
 "\n"
 "Times Used for Calculations\n"
@@ -1556,7 +1664,7 @@ msgstr ""
 "\n"
 "זמנים ששימשו עבור חישובים\n"
 
-#: ../panel-plugin/weather-summary.c:370
+#: ../panel-plugin/weather-summary.c:386
 #, c-format
 msgid ""
 "\tTemperatures, wind, atmosphere and cloud data calculated\n"
@@ -1565,7 +1673,7 @@ msgstr ""
 "\tנתונים של טמפרטורות, משב, אטמוספרה ועננים חושבו\n"
 "\tלזמן:\t\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:379
+#: ../panel-plugin/weather-summary.c:395
 #, c-format
 msgid ""
 "\n"
@@ -1581,7 +1689,7 @@ msgstr ""
 "\tסוף:\t%s\n"
 
 #. sun and moon
-#: ../panel-plugin/weather-summary.c:390
+#: ../panel-plugin/weather-summary.c:406
 msgid ""
 "\n"
 "Astronomical Data\n"
@@ -1589,20 +1697,20 @@ msgstr ""
 "\n"
 "נתונים אסטרונומיים\n"
 
-#: ../panel-plugin/weather-summary.c:393
+#: ../panel-plugin/weather-summary.c:409
 msgid "\tSunrise:\t\tThe sun never rises today.\n"
 msgstr "\tזריחת השמש:\t\tהשמש לא זורחת היום.\n"
 
-#: ../panel-plugin/weather-summary.c:396
+#: ../panel-plugin/weather-summary.c:412
 msgid "\tSunset:\t\tThe sun never sets today.\n"
 msgstr "\tשקיעת השמש:\t\tהשמש לא שוקעת תהיום.\n"
 
-#: ../panel-plugin/weather-summary.c:400
+#: ../panel-plugin/weather-summary.c:416
 #, c-format
 msgid "\tSunrise:\t\t%s\n"
 msgstr "\tזריחת השמש:\t\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:405
+#: ../panel-plugin/weather-summary.c:421
 #, c-format
 msgid ""
 "\tSunset:\t\t%s\n"
@@ -1611,40 +1719,40 @@ msgstr ""
 "\tשקיעת השמש:\t\t%s\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:411
+#: ../panel-plugin/weather-summary.c:427
 #, c-format
 msgid "\tMoon phase:\t%s\n"
 msgstr "\tמופע ירח:\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:415
+#: ../panel-plugin/weather-summary.c:431
 msgid "\tMoon phase:\tUnknown\n"
 msgstr "\tמופע ירח:\tלא ידוע\n"
 
-#: ../panel-plugin/weather-summary.c:420
+#: ../panel-plugin/weather-summary.c:436
 msgid "\tMoonrise:\tThe moon never rises today.\n"
 msgstr "\tזריחת ירח:\tהירח לא זורח היום.\n"
 
-#: ../panel-plugin/weather-summary.c:424
+#: ../panel-plugin/weather-summary.c:440
 msgid "\tMoonset:\tThe moon never sets today.\n"
 msgstr "\tשקיעת ירח:\tהירח לא שוקעת היום.\n"
 
-#: ../panel-plugin/weather-summary.c:428
+#: ../panel-plugin/weather-summary.c:444
 #, c-format
 msgid "\tMoonrise:\t%s\n"
 msgstr "\tזריחת ירח:\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:433
+#: ../panel-plugin/weather-summary.c:449
 #, c-format
 msgid "\tMoonset:\t%s\n"
 msgstr "\tשקיעת ירח:\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:438
+#: ../panel-plugin/weather-summary.c:454
 msgid "\tData not available, will use sane default values for night and day.\n"
 msgstr ""
 "\tאין נתונים זמינים, ייעשה שימוש בערכים משתמטים שקולים עבור יום וליל.\n"
 
 #. temperatures
-#: ../panel-plugin/weather-summary.c:444
+#: ../panel-plugin/weather-summary.c:460
 msgid ""
 "\n"
 "Temperatures\n"
@@ -1653,20 +1761,20 @@ msgstr ""
 "טמפרטורות\n"
 
 # RTL BUG
-#: ../panel-plugin/weather-summary.c:445
+#: ../panel-plugin/weather-summary.c:461
 msgid "Temperature"
 msgstr "טמפרטורה"
 
-#: ../panel-plugin/weather-summary.c:446
+#: ../panel-plugin/weather-summary.c:462
 msgid "Dew point"
 msgstr "נקודת עיבוי"
 
-#: ../panel-plugin/weather-summary.c:447
+#: ../panel-plugin/weather-summary.c:463
 msgid "Apparent temperature"
 msgstr "טמפרטורה גלויה"
 
 #. wind
-#: ../panel-plugin/weather-summary.c:450
+#: ../panel-plugin/weather-summary.c:466
 msgid ""
 "\n"
 "Wind\n"
@@ -1674,21 +1782,19 @@ msgstr ""
 "\n"
 "משב\n"
 
-#: ../panel-plugin/weather-summary.c:455
-#, c-format
-msgid "\t%s: %s %s (%s on the Beaufort scale)\n"
+#: ../panel-plugin/weather-summary.c:471
+#, fuzzy, c-format
+msgid "\tSpeed: %s %s (%s on the Beaufort scale)\n"
 msgstr "\t%s: ‎%s %s ‏(%s בסולם בופורט)\n"
 
-#: ../panel-plugin/weather-summary.c:456
-msgid "Speed"
-msgstr "מהירות"
-
-#: ../panel-plugin/weather-summary.c:469
-msgid "Direction"
-msgstr "כיוון"
+#. wind direction
+#: ../panel-plugin/weather-summary.c:486
+#, c-format
+msgid "\tDirection: %s (%s%s)\n"
+msgstr ""
 
 #. precipitation
-#: ../panel-plugin/weather-summary.c:477
+#: ../panel-plugin/weather-summary.c:494
 msgid ""
 "\n"
 "Precipitations\n"
@@ -1696,12 +1802,12 @@ msgstr ""
 "\n"
 "משקעים\n"
 
-#: ../panel-plugin/weather-summary.c:478
+#: ../panel-plugin/weather-summary.c:495
 msgid "Precipitations amount"
 msgstr "כמות משקעים"
 
 #. atmosphere
-#: ../panel-plugin/weather-summary.c:481
+#: ../panel-plugin/weather-summary.c:498
 msgid ""
 "\n"
 "Atmosphere\n"
@@ -1709,16 +1815,16 @@ msgstr ""
 "\n"
 "אטמוספרה\n"
 
-#: ../panel-plugin/weather-summary.c:482
+#: ../panel-plugin/weather-summary.c:499
 msgid "Barometric pressure"
 msgstr "לחץ ברומטרי"
 
-#: ../panel-plugin/weather-summary.c:483
+#: ../panel-plugin/weather-summary.c:500
 msgid "Relative humidity"
 msgstr "לחות יחסית"
 
 #. clouds
-#: ../panel-plugin/weather-summary.c:486
+#: ../panel-plugin/weather-summary.c:503
 msgid ""
 "\n"
 "Clouds\n"
@@ -1726,29 +1832,29 @@ msgstr ""
 "\n"
 "עננים\n"
 
-#: ../panel-plugin/weather-summary.c:487
+#: ../panel-plugin/weather-summary.c:504
 #: ../panel-plugin/weather-translate.c:170
 msgid "Fog"
 msgstr "ערפל"
 
-#: ../panel-plugin/weather-summary.c:488
+#: ../panel-plugin/weather-summary.c:505
 msgid "Low clouds"
 msgstr "עננים נמוכים"
 
 # ביניים
-#: ../panel-plugin/weather-summary.c:489
+#: ../panel-plugin/weather-summary.c:506
 msgid "Middle clouds"
 msgstr "עננים בינוניים"
 
-#: ../panel-plugin/weather-summary.c:490
+#: ../panel-plugin/weather-summary.c:507
 msgid "High clouds"
 msgstr "עננים גבוהים"
 
-#: ../panel-plugin/weather-summary.c:491
+#: ../panel-plugin/weather-summary.c:508
 msgid "Cloudiness"
 msgstr "מעוננות"
 
-#: ../panel-plugin/weather-summary.c:493
+#: ../panel-plugin/weather-summary.c:510
 msgid ""
 "\n"
 "Data from The Norwegian Meteorological Institute\n"
@@ -1756,36 +1862,36 @@ msgstr ""
 "\n"
 "נתונים לקוחים מן המכון המטאורולוגי הנורבגי\n"
 
-#: ../panel-plugin/weather-summary.c:496
+#: ../panel-plugin/weather-summary.c:513
 msgid "Thanks to met.no"
 msgstr "תודה למכון המטאורולוגי הנורבגי met.no"
 
-#: ../panel-plugin/weather-summary.c:545
+#: ../panel-plugin/weather-summary.c:562
 #, c-format
 msgid "Today"
 msgstr "היום"
 
-#: ../panel-plugin/weather-summary.c:547
+#: ../panel-plugin/weather-summary.c:564
 #, c-format
 msgid "Tomorrow"
 msgstr "מחר"
 
 #. TRANSLATORS: Please use \t as needed to properly align the values
-#: ../panel-plugin/weather-summary.c:563
+#: ../panel-plugin/weather-summary.c:580
 msgid "<b>Times used for calculations</b>\n"
 msgstr "<b>זמנים ששימשו עבור חישובים</b>\n"
 
-#: ../panel-plugin/weather-summary.c:565
+#: ../panel-plugin/weather-summary.c:582
 #, c-format
 msgid "Interval start:\t\t\t%s\n"
 msgstr "הפוגה מתחילה:\t\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:568
+#: ../panel-plugin/weather-summary.c:585
 #, c-format
 msgid "Interval end:\t\t\t%s\n"
 msgstr "הפוגה נגמרת:\t\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:571
+#: ../panel-plugin/weather-summary.c:588
 #, c-format
 msgid ""
 "Data calculated for:\t%s\n"
@@ -1794,18 +1900,18 @@ msgstr ""
 "נתונים חושבו לזמן:\t%s\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:574
+#: ../panel-plugin/weather-summary.c:591
 msgid "<b>Temperatures</b>\n"
 msgstr "<b>טמפרטורות</b>\n"
 
 # LRO
-#: ../panel-plugin/weather-summary.c:575
+#: ../panel-plugin/weather-summary.c:592
 #, c-format
 msgid "Dew point:\t\t\t%s%s%s\n"
 msgstr "נקודת עיבוי:‭\t\t%s%s%s\n"
 
 # LRO
-#: ../panel-plugin/weather-summary.c:576
+#: ../panel-plugin/weather-summary.c:593
 #, c-format
 msgid ""
 "Apparent temperature:\t%s%s%s\n"
@@ -1814,18 +1920,18 @@ msgstr ""
 "טמפרטורה גלויה:‭\t\t%s%s%s\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:579
+#: ../panel-plugin/weather-summary.c:596
 msgid "<b>Atmosphere</b>\n"
 msgstr "<b>אטמוספרה</b>\n"
 
 # LRO
-#: ../panel-plugin/weather-summary.c:580
+#: ../panel-plugin/weather-summary.c:597
 #, c-format
 msgid "Barometric pressure:\t%s%s%s\n"
 msgstr "לחץ ברומטרי:‭\t\t%s%s%s\n"
 
 # LRO
-#: ../panel-plugin/weather-summary.c:581
+#: ../panel-plugin/weather-summary.c:598
 #, c-format
 msgid ""
 "Relative humidity:\t\t%s%s%s\n"
@@ -1834,12 +1940,12 @@ msgstr ""
 "לחות יחסית:‭\t\t%s%s%s\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:583
+#: ../panel-plugin/weather-summary.c:600
 msgid "<b>Precipitations</b>\n"
 msgstr "<b>משקעים</b>\n"
 
 # Do not insert LRO
-#: ../panel-plugin/weather-summary.c:584
+#: ../panel-plugin/weather-summary.c:601
 #, c-format
 msgid ""
 "Amount:\t\t%s%s%s\n"
@@ -1848,74 +1954,74 @@ msgstr ""
 "כמות:\t\t\t%s%s%s\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:586
+#: ../panel-plugin/weather-summary.c:603
 msgid "<b>Clouds</b>\n"
 msgstr "<b>עננים</b>\n"
 
 # LRO
-#: ../panel-plugin/weather-summary.c:587
+#: ../panel-plugin/weather-summary.c:604
 #, c-format
 msgid "Fog:\t\t\t%s%s%s\n"
 msgstr "ערפל:‭\t\t\t%s%s%s\n"
 
 # LRO
-#: ../panel-plugin/weather-summary.c:588
+#: ../panel-plugin/weather-summary.c:605
 #, c-format
 msgid "Low clouds:\t\t%s%s%s\n"
 msgstr "עננים נמוכים‭:\t\t%s%s%s\n"
 
 # LRO
-#: ../panel-plugin/weather-summary.c:589
+#: ../panel-plugin/weather-summary.c:606
 #, c-format
 msgid "Middle clouds:\t%s%s%s\n"
 msgstr "עננים בינוניים:‭\t\t%s%s%s\n"
 
 # LRO
-#: ../panel-plugin/weather-summary.c:590
+#: ../panel-plugin/weather-summary.c:607
 #, c-format
 msgid "High clouds:\t\t%s%s%s\n"
 msgstr "עננים גבוהים:‭\t\t%s%s%s\n"
 
 # LRO
-#: ../panel-plugin/weather-summary.c:591
+#: ../panel-plugin/weather-summary.c:608
 #, c-format
 msgid "Cloudiness:\t\t%s%s%s"
 msgstr "מעוננות:‭\t\t\t%s%s%s"
 
 #. daytime headers
-#: ../panel-plugin/weather-summary.c:753
+#: ../panel-plugin/weather-summary.c:770
 msgid "Morning"
 msgstr "בוקר"
 
-#: ../panel-plugin/weather-summary.c:754
+#: ../panel-plugin/weather-summary.c:771
 msgid "Afternoon"
 msgstr "אחר הצהריים"
 
-#: ../panel-plugin/weather-summary.c:755
+#: ../panel-plugin/weather-summary.c:772
 msgid "Evening"
 msgstr "ערב"
 
-#: ../panel-plugin/weather-summary.c:756
+#: ../panel-plugin/weather-summary.c:773
 msgid "Night"
 msgstr "לילה"
 
-#: ../panel-plugin/weather-summary.c:904
+#: ../panel-plugin/weather-summary.c:921
 msgid "Weather Report"
 msgstr "דו״ח מזג אוויר"
 
-#: ../panel-plugin/weather-summary.c:932
+#: ../panel-plugin/weather-summary.c:949
 msgid "Please set a location in the plugin settings."
 msgstr "נא לקבוע מיקום בהגדרות התוספת."
 
-#: ../panel-plugin/weather-summary.c:934
+#: ../panel-plugin/weather-summary.c:951
 msgid "Currently no data available."
 msgstr "אין כעת נתונים זמינים"
 
-#: ../panel-plugin/weather-summary.c:946
+#: ../panel-plugin/weather-summary.c:963
 msgid "_Forecast"
 msgstr "_תחזית"
 
-#: ../panel-plugin/weather-summary.c:949
+#: ../panel-plugin/weather-summary.c:966
 msgid "_Details"
 msgstr "_פרטים"
 
@@ -2120,6 +2226,18 @@ msgstr "גשם־שלג עם רעם"
 #: ../panel-plugin/weather.desktop.in.h:2
 msgid "Show current weather conditions"
 msgstr "הצג תנאי מזג אוויר נוכחיים"
+
+#~ msgid "International knots (kt)"
+#~ msgstr "קשר בינלאומי (kt)"
+
+#~ msgid "_Add"
+#~ msgstr "הוס_פה"
+
+#~ msgid "Speed"
+#~ msgstr "מהירות"
+
+#~ msgid "Direction"
+#~ msgstr "כיוון"
 
 #~ msgid "Please enter proxy settings"
 #~ msgstr "נא להזין הגדרות מתווך"
