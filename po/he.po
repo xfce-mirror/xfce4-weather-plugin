@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: xfce4-weather-plugin 0.8.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-01-14 17:10+0100\n"
-"PO-Revision-Date: 2013-01-20 13:43+0200\n"
+"PO-Revision-Date: 2013-01-20 14:57+0200\n"
 "Last-Translator: Isratine Citizen <genghiskhan@gmx.ca>\n"
 "Language-Team: Rahut <xfce-i18n@xfce.org>\n"
 "Language: he\n"
@@ -186,7 +186,7 @@ msgstr ""
 "<b>טמפרטורה:</b> %s\n"
 "<b>משב:</b> %s מכיוון %s\n"
 "<b>לחץ:</b> %s\n"
-"<b>לחות:</b> %s\n"
+"<b>לחות:</b> ‭%s\n"
 
 # מוערכת
 #.
@@ -217,8 +217,8 @@ msgstr ""
 "\n"
 "<b>טמפרטורה:</b> ‎%s\t\t<span size=\"smaller\">(מחושבת בשעה %s)</span>\n"
 "<b>משב:</b> %s ‏(%sבסולם בופורט) מכיוון %s(%s)\n"
-"<b>לחץ:</b> ‎%s    <b>לחות:</b> %s\n"
-"<b>ערפל:</b> ‎%s    <b>מעוננות:</b> %s\n"
+"<b>לחץ:</b> %s    <b>לחות:</b> ‭%s\n"
+"<b>ערפל:</b> ‭%s‬    <b>מעוננות:</b> ‭%s\n"
 "\n"
 "<span size=\"smaller\">%s</span>"
 
@@ -1394,6 +1394,7 @@ msgstr "unit"
 msgid "in"
 msgstr "unit"
 
+# [possibly not to be translated in future releases]
 # [to be examined]
 # [this should not be translated]
 # RTL issues
@@ -1562,7 +1563,7 @@ msgid ""
 "\tfor:\t\t%s\n"
 msgstr ""
 "\tנתונים של טמפרטורות, משב, אטמוספרה ועננים חושבו\n"
-"\tעבור:\t\t%s\n"
+"\tלזמן:\t\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:379
 #, c-format
@@ -1777,12 +1778,12 @@ msgstr "<b>זמנים ששימשו עבור חישובים</b>\n"
 #: ../panel-plugin/weather-summary.c:565
 #, c-format
 msgid "Interval start:\t\t\t%s\n"
-msgstr "הפוגה מתחילה:\t\t\t%s\n"
+msgstr "הפוגה מתחילה:\t\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:568
 #, c-format
 msgid "Interval end:\t\t\t%s\n"
-msgstr "הפוגה נגמרת:\t\t\t%s\n"
+msgstr "הפוגה נגמרת:\t\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:571
 #, c-format
@@ -1790,86 +1791,96 @@ msgid ""
 "Data calculated for:\t%s\n"
 "\n"
 msgstr ""
-"נתונים חושבו עבור:\t%s\n"
+"נתונים חושבו לזמן:\t%s\n"
 "\n"
 
 #: ../panel-plugin/weather-summary.c:574
 msgid "<b>Temperatures</b>\n"
 msgstr "<b>טמפרטורות</b>\n"
 
+# LRO
 #: ../panel-plugin/weather-summary.c:575
 #, c-format
 msgid "Dew point:\t\t\t%s%s%s\n"
-msgstr "נקודת עיבוי:\t\t\t%s%s%s\n"
+msgstr "נקודת עיבוי:‭\t\t%s%s%s\n"
 
+# LRO
 #: ../panel-plugin/weather-summary.c:576
 #, c-format
 msgid ""
 "Apparent temperature:\t%s%s%s\n"
 "\n"
 msgstr ""
-"טמפרטורה גלויה:\t%s%s%s\n"
+"טמפרטורה גלויה:‭\t\t%s%s%s\n"
 "\n"
 
 #: ../panel-plugin/weather-summary.c:579
 msgid "<b>Atmosphere</b>\n"
 msgstr "<b>אטמוספרה</b>\n"
 
+# LRO
 #: ../panel-plugin/weather-summary.c:580
 #, c-format
 msgid "Barometric pressure:\t%s%s%s\n"
-msgstr "לחץ ברומטרי:\t%s%s%s\n"
+msgstr "לחץ ברומטרי:‭\t\t%s%s%s\n"
 
+# LRO
 #: ../panel-plugin/weather-summary.c:581
 #, c-format
 msgid ""
 "Relative humidity:\t\t%s%s%s\n"
 "\n"
 msgstr ""
-"לחות יחסית:\t\t%s%s%s\n"
+"לחות יחסית:‭\t\t%s%s%s\n"
 "\n"
 
 #: ../panel-plugin/weather-summary.c:583
 msgid "<b>Precipitations</b>\n"
 msgstr "<b>משקעים</b>\n"
 
+# Do not insert LRO
 #: ../panel-plugin/weather-summary.c:584
 #, c-format
 msgid ""
 "Amount:\t\t%s%s%s\n"
 "\n"
 msgstr ""
-"כמות:\t\t%s%s%s\n"
+"כמות:\t\t\t%s%s%s\n"
 "\n"
 
 #: ../panel-plugin/weather-summary.c:586
 msgid "<b>Clouds</b>\n"
 msgstr "<b>עננים</b>\n"
 
+# LRO
 #: ../panel-plugin/weather-summary.c:587
 #, c-format
 msgid "Fog:\t\t\t%s%s%s\n"
-msgstr "ערפל:\t\t\t%s%s%s\n"
+msgstr "ערפל:‭\t\t\t%s%s%s\n"
 
+# LRO
 #: ../panel-plugin/weather-summary.c:588
 #, c-format
 msgid "Low clouds:\t\t%s%s%s\n"
-msgstr "עננים נמוכים:\t\t%s%s%s\n"
+msgstr "עננים נמוכים‭:\t\t%s%s%s\n"
 
+# LRO
 #: ../panel-plugin/weather-summary.c:589
 #, c-format
 msgid "Middle clouds:\t%s%s%s\n"
-msgstr "עננים בינוניים:\t%s%s%s\n"
+msgstr "עננים בינוניים:‭\t\t%s%s%s\n"
 
+# LRO
 #: ../panel-plugin/weather-summary.c:590
 #, c-format
 msgid "High clouds:\t\t%s%s%s\n"
-msgstr "עננים גבוהים:\t\t%s%s%s\n"
+msgstr "עננים גבוהים:‭\t\t%s%s%s\n"
 
+# LRO
 #: ../panel-plugin/weather-summary.c:591
 #, c-format
 msgid "Cloudiness:\t\t%s%s%s"
-msgstr "מעוננות:\t\t%s%s%s"
+msgstr "מעוננות:‭\t\t\t%s%s%s"
 
 #. daytime headers
 #: ../panel-plugin/weather-summary.c:753
