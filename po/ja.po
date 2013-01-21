@@ -1,25 +1,28 @@
 # Japanese translation of the xfce-weather-plugin package.
-# Copyright (C) 2006-2012 The Xfce development team.
+# Copyright (C) 2006-2013 The Xfce development team.
 # This file is distributed under the same license as the xfce-weather-plugin package.
 # Yuko Iwamatsu <nigauri@gmail.org>, 2008
 # Nobuhiro Iwamatsu <iwamatsu@nigauri.org>, 2008.
-# Masato Hashimoto <cabezon.hashimoto@gmail.com>, 2011,2012.
+# Masato Hashimoto <cabezon.hashimoto@gmail.com>, 2011-2013.
 #
 # 翻訳メモ:
-# Sunny (日中の晴れ), Clear (夜間の晴れ)
+# Sunny ⇛ 晴れ (日中の晴れ)
+# Clear ⇛ 晴れ (夜間の晴れ)
+# Apparent temperature (見かけ温度) ⇛ 体感温度
 #
 # 天気の種類と意味についての説明など (as of ver. 0.8.2):
 # http://mail.xfce.org/pipermail/xfce-i18n/2012-August/008236.html
+# README も参照のこと。
 #
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce-weather-plugin 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-20 20:09+0100\n"
-"PO-Revision-Date: 2012-08-27 21:38+0900\n"
+"POT-Creation-Date: 2013-01-21 14:57+0900\n"
+"PO-Revision-Date: 2013-01-21 15:53+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
-"Language-Team: Japanese <xfce-i18n@xfce.org>\n"
+"Language-Team: Japanese <xfce-users-jp@googlegroups.com>\n"
 "Language: ja\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -51,13 +54,12 @@ msgid "H"
 msgstr "湿度"
 
 #: ../panel-plugin/weather.c:137
-#, fuzzy
 msgid "D"
-msgstr "風向"
+msgstr "露点"
 
 #: ../panel-plugin/weather.c:140
 msgid "A"
-msgstr ""
+msgstr "体感"
 
 #: ../panel-plugin/weather.c:143
 msgid "CL"
@@ -88,54 +90,43 @@ msgid "No Data"
 msgstr "データ無し"
 
 #: ../panel-plugin/weather.c:447
-msgid ""
-"Met.no sunrise API states that this version of the webservice is deprecated, "
-"and the plugin needs to be adapted to use a newer version, or it will stop "
-"working within a few month. Please file a bug on https://bugzilla.xfce.org "
-"if no one else has done so yet."
-msgstr ""
+msgid "Met.no sunrise API states that this version of the webservice is deprecated, and the plugin needs to be adapted to use a newer version, or it will stop working within a few month. Please file a bug on https://bugzilla.xfce.org if no one else has done so yet."
+msgstr "Met.no Sunrise API は改定されました。本プラグインは新しいバージョンに対応する必要があり、それが行われない場合数ヶ月内に動作を停止します。対応が行われない場合は https://bugzilla.xfce.org まで報告をおねがいします。"
 
 #: ../panel-plugin/weather.c:466
 msgid "Error parsing astronomical data!"
-msgstr ""
+msgstr "天文データの解析でエラーが発生しました!"
 
 #: ../panel-plugin/weather.c:468
 #, c-format
-msgid ""
-"Download of astronomical data failed with HTTP Status Code %d, Reason "
-"phrase: %s"
-msgstr ""
+msgid "Download of astronomical data failed with HTTP Status Code %d, Reason phrase: %s"
+msgstr "天文データのダウンロードに失敗しました。HTTP Status Code %d, Reason phrase: %s"
 
 #: ../panel-plugin/weather.c:503
-msgid ""
-"Met.no LocationforecastLTS API states that this version of the webservice is "
-"deprecated, and the plugin needs to be adapted to use a newer version, or it "
-"will stop working within a few month. Please file a bug on https://bugzilla."
-"xfce.org if no one else has done so yet."
-msgstr ""
+msgid "Met.no LocationforecastLTS API states that this version of the webservice is deprecated, and the plugin needs to be adapted to use a newer version, or it will stop working within a few month. Please file a bug on https://bugzilla.xfce.org if no one else has done so yet."
+msgstr "Met.no LocationforecastLTS API は改定されました。本プラグインは新しいバージョンに対応する必要があり、それが行われない場合数ヶ月内に動作を停止します。対応が行われない場合は https://bugzilla.xfce.org まで報告をおねがいします。"
 
 #: ../panel-plugin/weather.c:521
-#, fuzzy
 msgid "Error parsing weather data!"
-msgstr "気象データを更新できません"
+msgstr "気象データの解析でエラーが発生しました!"
 
 #: ../panel-plugin/weather.c:524
 #, c-format
-msgid ""
-"Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
-msgstr ""
+msgid "Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
+msgstr "気象データのダウンロードに失敗しました。HTTP Status Code %d, Reason phrase: %s"
 
+# Log message
 #. start receive thread
 #: ../panel-plugin/weather.c:578 ../panel-plugin/weather.c:596
 #: ../panel-plugin/weather-search.c:169 ../panel-plugin/weather-search.c:435
 #, c-format
 msgid "getting %s"
-msgstr ""
+msgstr "getting %s"
 
 #: ../panel-plugin/weather.c:1040
 #, c-format
 msgid "Error writing cache file %s!"
-msgstr ""
+msgstr "キャッシュファイル %s への書き込みでエラーです!"
 
 #: ../panel-plugin/weather.c:1366
 #, c-format
@@ -168,7 +159,7 @@ msgstr "日の出は %s、日の入りは %s です。"
 #. * look at the verbose tooltip style further below ;-)
 #.
 #: ../panel-plugin/weather.c:1481
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
 "<b><span size=\"large\">%s</span></b>\n"
@@ -178,17 +169,13 @@ msgid ""
 "<b>Pressure:</b> %s\n"
 "<b>Humidity:</b> %s\n"
 msgstr ""
-"<b><span size=\"large\">%s</span></b> <span size=\"medium\">(海抜 %s)</"
-"span>\n"
+"<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
 "<b><span size=\"large\">%s</span></b>\n"
-"<span size=\"smaller\">%s から %s まで。降水量は %s。</span>\n"
 "\n"
-"<b>気温:</b> %s\t\t<span size=\"smaller\">(%s の予報)</span>\n"
-"<b>風速:</b> %s (風力 %s)\t<b>風向:</b> %s(%s)\n"
-"<b>気圧:</b> %s\t<b>湿度:</b> %s\n"
-"<b>霧:</b> %s\t<b>雲量:</b> %s\n"
-"\n"
-"<span size=\"smaller\">%s</span>"
+"<b>気温:</b> %s\n"
+"<b>風速:</b> %s <b>風向:</b> %s\n"
+"<b>気圧:</b> %s\n"
+"<b>湿度:</b> %s\n"
 
 #.
 #. * TRANSLATORS: Re-arrange and align at will, optionally using
@@ -199,7 +186,7 @@ msgstr ""
 #. * good!
 #.
 #: ../panel-plugin/weather.c:1504
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
 "<b><span size=\"large\">%s</span></b>\n"
@@ -212,15 +199,14 @@ msgid ""
 "\n"
 "<span size=\"smaller\">%s</span>"
 msgstr ""
-"<b><span size=\"large\">%s</span></b> <span size=\"medium\">(海抜 %s)</"
-"span>\n"
+"<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
 "<b><span size=\"large\">%s</span></b>\n"
-"<span size=\"smaller\">%s から %s まで。降水量は %s。</span>\n"
+"<span size=\"smaller\">%s から %s までの降水量は %s です。</span>\n"
 "\n"
-"<b>気温:</b> %s\t\t<span size=\"smaller\">(%s の予報)</span>\n"
-"<b>風速:</b> %s (風力 %s)\t<b>風向:</b> %s(%s)\n"
-"<b>気圧:</b> %s\t<b>湿度:</b> %s\n"
-"<b>霧:</b> %s\t<b>雲量:</b> %s\n"
+"<b>気温:</b> %s\t<span size=\"smaller\">(%s 時点)</span>\n"
+"<b>風速:</b> %s (風力 %s) <b>風向:</b> %s(%s)\n"
+"<b>気圧:</b> %s    <b>湿度:</b> %s\n"
+"<b>霧:</b> %s    <b>雲量:</b> %s\n"
 "\n"
 "<span size=\"smaller\">%s</span>"
 
@@ -230,16 +216,15 @@ msgstr "気象データを更新できません"
 
 #: ../panel-plugin/weather.c:1622
 msgid "No default icon theme? This should not happen, plugin will crash!"
-msgstr ""
+msgstr "デフォルトアイコンテーマがありません。これは想定外の事態のため、プラグインは停止します!"
 
 #: ../panel-plugin/weather.c:1846
-#, fuzzy
 msgid "Show weather conditions and forecasts"
-msgstr "現在の天気状況を表示します。"
+msgstr "天気状況と予報を表示します。"
 
 #: ../panel-plugin/weather.c:1848
 msgid "Copyright (c) 2003-2013\n"
-msgstr ""
+msgstr "Copyright (c) 2003-2013\n"
 
 #.
 #. * TRANSLATORS: The abbreviations in parentheses will be shown in
@@ -255,7 +240,6 @@ msgid "Temperature (T)"
 msgstr "気温 (T)"
 
 #: ../panel-plugin/weather-config.c:96
-#, fuzzy
 msgid "Barometric pressure (P)"
 msgstr "気圧 (P)"
 
@@ -281,19 +265,17 @@ msgstr "湿度 (H)"
 
 #: ../panel-plugin/weather-config.c:102
 msgid "Dew point (D)"
-msgstr ""
+msgstr "露点温度 (D)"
 
 #: ../panel-plugin/weather-config.c:103
-#, fuzzy
 msgid "Apparent temperature (A)"
-msgstr "気温 (T)"
+msgstr "体感温度 (A)"
 
 #: ../panel-plugin/weather-config.c:104
 msgid "Low clouds (CL)"
 msgstr "下層雲量 (CL)"
 
 #: ../panel-plugin/weather-config.c:105
-#, fuzzy
 msgid "Middle clouds (CM)"
 msgstr "中層雲量 (CM)"
 
@@ -324,22 +306,19 @@ msgstr "検出しています..."
 
 #: ../panel-plugin/weather-config.c:379
 msgid "meters"
-msgstr ""
+msgstr "メートル"
 
 #: ../panel-plugin/weather-config.c:388
 msgid "feet"
-msgstr ""
+msgstr "フィート"
 
 #: ../panel-plugin/weather-config.c:469
-#, fuzzy
 msgid "Location _name:"
-msgstr "地域(_O):"
+msgstr "地域(_N):"
 
 #: ../panel-plugin/weather-config.c:476
-msgid ""
-"Change the name for the location to your liking. It is used for display and "
-"does not affect the location parameters in any way."
-msgstr ""
+msgid "Change the name for the location to your liking. It is used for display and does not affect the location parameters in any way."
+msgstr "リンクする地域の名前を変更します。これは表示にのみ使用され、地域パラメーターには作用しません。"
 
 #: ../panel-plugin/weather-config.c:480
 msgid "Chan_ge..."
@@ -347,52 +326,41 @@ msgstr "変更(_G)..."
 
 #: ../panel-plugin/weather-config.c:483
 msgid "Search for a new location and auto-detect its parameters."
-msgstr ""
+msgstr "新しい地域を検索し、パラメーターを自動検出します。"
 
 #: ../panel-plugin/weather-config.c:502
-#, fuzzy
 msgid "Latitud_e:"
-msgstr "緯度"
+msgstr "緯度(_E):"
 
 #: ../panel-plugin/weather-config.c:506
-msgid ""
-"Latitude specifies the north-south position of a point on the Earth's "
-"surface. If you change this value manually, you should provide the correct "
-"altitude too."
-msgstr ""
+msgid "Latitude specifies the north-south position of a point on the Earth's surface. If you change this value manually, you should provide the correct altitude too."
+msgstr "緯度には地球上の南北方向の位置を指定します。この値を直接変更した場合、海抜にも正しい値を設定してください。"
 
 #: ../panel-plugin/weather-config.c:516
-#, fuzzy
 msgid "L_ongitude:"
-msgstr "経度"
+msgstr "経度(_O):"
 
 #: ../panel-plugin/weather-config.c:520
-msgid ""
-"Longitude specifies the east-west position of a point on the Earth's "
-"surface. If you change this value manually, you should provide the correct "
-"altitude too."
-msgstr ""
+msgid "Longitude specifies the east-west position of a point on the Earth's surface. If you change this value manually, you should provide the correct altitude too."
+msgstr "経度には地球上の東西方向の位置を指定します。この値を直接変更した場合、海抜にも正しい値を設定してください。"
 
 #: ../panel-plugin/weather-config.c:530
-#, fuzzy
 msgid "_Altitude:"
-msgstr "海抜"
+msgstr "海抜(_A):"
 
 #: ../panel-plugin/weather-config.c:534
 msgid ""
-"For locations outside Norway the elevation model that's used by the met.no "
-"webservice is not very good, so it's usually necessary to specify the "
-"altitude as an additional parameter, otherwise the reported values will not "
-"be correct.\n"
+"For locations outside Norway the elevation model that's used by the met.no webservice is not very good, so it's usually necessary to specify the altitude as an additional parameter, otherwise the reported values will not be correct.\n"
 "\n"
-"The plugin tries to auto-detect the altitude using the GeoNames webservice, "
-"but that might not always be correct too, so you can change it here.\n"
+"The plugin tries to auto-detect the altitude using the GeoNames webservice, but that might not always be correct too, so you can change it here.\n"
 "\n"
-"Altitude is given in meters above sea level, or alternatively in feet by "
-"changing the unit on the units page. It should match the real value roughly, "
-"but small differences will have no influence on the weather data. Inside "
-"Norway, this setting has no effect at all."
+"Altitude is given in meters above sea level, or alternatively in feet by changing the unit on the units page. It should match the real value roughly, but small differences will have no influence on the weather data. Inside Norway, this setting has no effect at all."
 msgstr ""
+"ノルウェー国外の場合、met.no ウェブサービスで使用される標高モデルはあまりよくありません。そのため、通常は追加パラメーターとして海抜を指定する必要があります。指定しないと正しい予報値にならない場合があります。\n"
+"\n"
+"このプラグインでは GeoNames ウェブサービスを使用して自動検出を試みますが、それも常に正しいとは限りません。正しくなければここで変更してください。\n"
+"\n"
+"海抜には平均海面を 0m としたときの高さをメートルまたはフィートで指定します。単位は「単位」タブで指定できます。高さはだいたいの値で十分です (細かい違いは気象データに影響を与えません)。ノルウェー国内の場合この設定は無視されます。"
 
 #: ../panel-plugin/weather-config.c:556
 msgid ""
@@ -403,152 +371,79 @@ msgid ""
 "<i>Please change the location name to your liking and\n"
 "revise the altitude if not auto-detected correctly.</i>"
 msgstr ""
+"\n"
+"\n"
+"\n"
+"\n"
+"<i>リンクした地域の名前に変更し、海抜が正しく検出されなかった場合は\n"
+"修正してください。</i>"
 
 #: ../panel-plugin/weather-config.c:580
 msgid ""
-"Named after the astronomer Anders Celsius who invented the original scale in "
-"1742, the Celsius scale is an international standard unit and nowadays "
-"defined using the Kelvin scale. 0 °C is equivalent to 273.15 K and 1 °C "
-"difference in temperature is exactly the same difference as 1 K. It is "
-"defined with the melting point of water being roughly at 0 °C and its "
-"boiling point at 100 °C at one standard atmosphere (1 atm = 1013.5 hPa). "
-"Until 1948, the unit was known as <i>centigrade</i> - from Latin <i>centum</"
-"i> (100) and <i>gradus</i> (steps).\n"
-"In meteorology and everyday life the Celsius scale is very convenient for "
-"expressing temperatures because its numbers can be an easy indicator for the "
-"formation of black ice and snow."
-msgstr ""
+"Named after the astronomer Anders Celsius who invented the original scale in 1742, the Celsius scale is an international standard unit and nowadays defined using the Kelvin scale. 0 °C is equivalent to 273.15 K and 1 °C difference in temperature is exactly the same difference as 1 K. It is defined with the melting point of water being roughly at 0 °C and its boiling point at 100 °C at one standard atmosphere (1 atm = 1013.5 hPa). Until 1948, the unit was known as <i>centigrade</i> - from Latin <i>centum</i> (100) and <i>gradus</i> (steps).\n"
+"In meteorology and everyday life the Celsius scale is very convenient for expressing temperatures because its numbers can be an easy indicator for the formation of black ice and snow."
+msgstr "摂氏 (セルシウス度) は国際標準単位であり、ケルビンを基に定義されます。0 ℃は 273.15 K と等しく、1 ℃の差は 1 K と同じです。標準気圧 (1 気圧 = 1013.5hPa) 下において、融点がおよそ 0 ℃、沸点が 100 ℃になります。"
 
 #: ../panel-plugin/weather-config.c:596
 msgid ""
-"The current Fahrenheit temperature scale is based on one proposed in 1724 by "
-"the physicist Daniel Gabriel Fahrenheit. 0 °F was the freezing point of "
-"brine on the original scale at standard atmospheric pressure, which was the "
-"lowest temperature achievable with this mixture of ice, salt and ammonium "
-"chloride. The melting point of water is at 32 °F and its boiling point at "
-"212 °F. The Fahrenheit and Celsius scales intersect at -40 degrees. Even in "
-"cold winters, the temperatures usually do not fall into negative ranges on "
-"the Fahrenheit scale.\n"
-"With its inventor being a member of the Royal Society in London and having a "
-"high reputation, the Fahrenheit scale enjoyed great popularity in many "
-"English-speaking countries, but was replaced by the Celsius scale in most of "
-"these countries during the metrification process in the mid to late 20th "
-"century."
+"The current Fahrenheit temperature scale is based on one proposed in 1724 by the physicist Daniel Gabriel Fahrenheit. 0 °F was the freezing point of brine on the original scale at standard atmospheric pressure, which was the lowest temperature achievable with this mixture of ice, salt and ammonium chloride. The melting point of water is at 32 °F and its boiling point at 212 °F. The Fahrenheit and Celsius scales intersect at -40 degrees. Even in cold winters, the temperatures usually do not fall into negative ranges on the Fahrenheit scale.\n"
+"With its inventor being a member of the Royal Society in London and having a high reputation, the Fahrenheit scale enjoyed great popularity in many English-speaking countries, but was replaced by the Celsius scale in most of these countries during the metrification process in the mid to late 20th century."
 msgstr ""
+"華氏 (ファーレンハイト度) では、融点は 32 ℉、沸点は 212 ℉ になります。摂氏と華氏は -40 度で交差します。\n"
+"\n"
+"華氏はアメリカ、カナダ、イギリスなど英語圏の一部で使用されています。"
 
 #: ../panel-plugin/weather-config.c:639
-msgid ""
-"The pascal, named after mathematician, physicist and philosopher Blaise "
-"Pascal, is a SI derived unit and a measure of force per unit area, defined "
-"as one newton per square meter. One standard atmosphere (atm) is 1013.25 hPa."
-msgstr ""
+msgid "The pascal, named after mathematician, physicist and philosopher Blaise Pascal, is a SI derived unit and a measure of force per unit area, defined as one newton per square meter. One standard atmosphere (atm) is 1013.25 hPa."
+msgstr "パスカルは、国際単位系 (SI) における単位面積にかかる力の単位です。1 パスカルは 1 ㎡につき 1 ニュートンの力がかかる圧力と定義されています。1 標準気圧 (atm) は 1013.25hPa になります。"
 
 #: ../panel-plugin/weather-config.c:646
-msgid ""
-"Inches of mercury is still widely used for barometric pressure in weather "
-"reports, refrigeration and aviation in the United States, but seldom used "
-"elsewhere. It is defined as the pressure exerted by a 1 inch circular column "
-"of mercury of 1 inch in height at 32 °F (0 °C) at the standard acceleration "
-"of gravity."
-msgstr ""
+msgid "Inches of mercury is still widely used for barometric pressure in weather reports, refrigeration and aviation in the United States, but seldom used elsewhere. It is defined as the pressure exerted by a 1 inch circular column of mercury of 1 inch in height at 32 °F (0 °C) at the standard acceleration of gravity."
+msgstr "水銀柱インチは、アメリカ合衆国では現在も広く使われていますが、アメリカ以外ではほとんど使用されていません。1 水銀柱インチは、32 ℉ の標準重力加速度下で高さ 1 インチの水銀柱による圧力と定義されています。"
 
 #: ../panel-plugin/weather-config.c:654
-msgid ""
-"The pound per square inch is a unit of pressure based on avoirdupois units "
-"(a system of weights based on a pound of 16 ounces) and the pressure "
-"resulting from a force of one pound-force applied to an area of one square "
-"inch. It is used in the United States and to varying degrees in everyday "
-"life in Canada, the United Kingdom and maybe some former British Colonies."
-msgstr ""
+msgid "The pound per square inch is a unit of pressure based on avoirdupois units (a system of weights based on a pound of 16 ounces) and the pressure resulting from a force of one pound-force applied to an area of one square inch. It is used in the United States and to varying degrees in everyday life in Canada, the United Kingdom and maybe some former British Colonies."
+msgstr "重量ポンド毎平方インチは、常衡 (1ポンド = 16オンスに基づく質量の単位の系統) ベースの圧力の単位であり、1 平方インチあたりに 1 重量ポンドの力がかかる圧力と定義されています。アメリカ合衆国の他、カナダ、イギリス、および旧イギリス植民地の一部などの日常生活の中で使用されています。"
 
 #: ../panel-plugin/weather-config.c:663
-msgid ""
-"The torr unit was named after the physicist and mathematician Evangelista "
-"Torricelli who discovered the principle of the barometer in 1644 and "
-"demonstrated the first mercury barometer to the general public. A pressure "
-"of 1 torr is approximately equal to one millimeter of mercury, and one "
-"standard atmosphere (atm) equals 760 Torr."
-msgstr ""
+msgid "The torr unit was named after the physicist and mathematician Evangelista Torricelli who discovered the principle of the barometer in 1644 and demonstrated the first mercury barometer to the general public. A pressure of 1 torr is approximately equal to one millimeter of mercury, and one standard atmosphere (atm) equals 760 Torr."
+msgstr "トルはメートル法に基づく圧力の単位です。1 トルは 1 水銀柱ミリメートルとほぼ等価であり、1 標準気圧 (atm) は 760 トルになります。"
 
 #: ../panel-plugin/weather-config.c:697
-msgid ""
-"Kilometer per hour is a unit of speed, expressing the number of kilometers "
-"travelled in one hour. Worldwide, the km/h is the most commonly used speed "
-"unit on road signs and car speedometers. While meteorologists measure wind "
-"speed in meters per second (m/s), wind speeds in TV or in the news are often "
-"provided in km/h."
-msgstr ""
+msgid "Kilometer per hour is a unit of speed, expressing the number of kilometers travelled in one hour. Worldwide, the km/h is the most commonly used speed unit on road signs and car speedometers. While meteorologists measure wind speed in meters per second (m/s), wind speeds in TV or in the news are often provided in km/h."
+msgstr "キロメートル毎時は速さの単位であり、単位時間あたりの移動量をキロメートル数で表します。"
 
 #: ../panel-plugin/weather-config.c:705
-msgid ""
-"Miles per hour is an imperial unit of speed expressing the number of statute "
-"miles covered in one hour. It is currently the standard unit used for speed "
-"limits, and to express speeds generally, on roads in the United Kingdom and "
-"the United States."
-msgstr ""
+msgid "Miles per hour is an imperial unit of speed expressing the number of statute miles covered in one hour. It is currently the standard unit used for speed limits, and to express speeds generally, on roads in the United Kingdom and the United States."
+msgstr "マイル毎時は、ヤード・ポンド法での速さの単位であり、単位時間あたりの移動量を法定マイル数で表します。イギリスおよびアメリカ合衆国において標準単位として使用されています。"
 
 #: ../panel-plugin/weather-config.c:712
-msgid ""
-"Meter per second is a SI (International System of Units) derived unit of "
-"both speed and velocity, defined by distance in meters divided by time in "
-"seconds. This is the unit meteorologists use to denote wind speeds."
-msgstr ""
+msgid "Meter per second is a SI (International System of Units) derived unit of both speed and velocity, defined by distance in meters divided by time in seconds. This is the unit meteorologists use to denote wind speeds."
+msgstr "メートル毎秒は、国際単位系 (SI) の速さおよび速度の単位であり、単位秒あたりの位置の変化をメートルで表します。気象学分野では風速を表すときに使用します。"
 
 #: ../panel-plugin/weather-config.c:718
-msgid ""
-"The foot per second (plural feet per second) is an imperial unit of both "
-"speed and velocity. It expresses the distance in feet traveled or displaced, "
-"divided by the time in seconds. The corresponding unit in the International "
-"System of Units is the meter per second."
-msgstr ""
+msgid "The foot per second (plural feet per second) is an imperial unit of both speed and velocity. It expresses the distance in feet traveled or displaced, divided by the time in seconds. The corresponding unit in the International System of Units is the meter per second."
+msgstr "フィート毎秒はヤード・ポンド法での速さおよび速度の単位であり、単位秒あたりの位置の変化をフィートで表します。国際単位系のメートル毎秒に相当します。"
 
 #: ../panel-plugin/weather-config.c:725
-msgid ""
-"The knot is a unit of speed equal to one international nautical mile (1.852 "
-"km) per hour, or approximately 1.151 mph, and sees worldwide use in "
-"meteorology and in maritime and air navigation. A vessel travelling at 1 "
-"knot along a meridian travels one minute of geographic latitude in one hour."
-msgstr ""
+msgid "The knot is a unit of speed equal to one international nautical mile (1.852 km) per hour, or approximately 1.151 mph, and sees worldwide use in meteorology and in maritime and air navigation. A vessel travelling at 1 knot along a meridian travels one minute of geographic latitude in one hour."
+msgstr "ノットは、1 時間に 1 海里 (1.852 km) 進む速さの単位です。国際的には、気象、海事、および航空分野で使用されています。船舶が子午線上を 1 ノットで航行すると、1 時間で緯度 1 分移動します。"
 
 #: ../panel-plugin/weather-config.c:758
-msgid ""
-"The meter is the fundamental unit of length in the International System of "
-"Units. Originally intended to be one ten-millionth of the distance from the "
-"Earth's equator to the North Pole at sea level, its definition has been "
-"periodically refined to reflect growing knowledge of metrology (the science "
-"of measurement). Since 1983, it has been defined as the length of the path "
-"travelled by light in vacuum during a time interval of 1/299,792,458 of a "
-"second. 1 millimeter is one thousandth of a meter, or approximately 0.04 "
-"inches."
-msgstr ""
+msgid "The meter is the fundamental unit of length in the International System of Units. Originally intended to be one ten-millionth of the distance from the Earth's equator to the North Pole at sea level, its definition has been periodically refined to reflect growing knowledge of metrology (the science of measurement). Since 1983, it has been defined as the length of the path travelled by light in vacuum during a time interval of 1/299,792,458 of a second. 1 millimeter is one thousandth of a meter, or approximately 0.04 inches."
+msgstr "メートルは国際単位系における長さの基本単位です。1/299,792,458 秒の間に光が真空中を移動する距離と定義されています。1 ミリメートルは 1/1000 メートルであり、およそ 0.04 インチです。"
 
 #: ../panel-plugin/weather-config.c:770
-msgid ""
-"The English word <i>inch</i> comes from Latin <i>uncia</i> meaning <i>one-"
-"twelfth part</i> (in this case, one twelfth of a foot). There have been many "
-"different standards of the inch with varying sizes of measure. However, the "
-"current internationally accepted value is exactly 25.4 millimeters."
-msgstr ""
+msgid "The English word <i>inch</i> comes from Latin <i>uncia</i> meaning <i>one-twelfth part</i> (in this case, one twelfth of a foot). There have been many different standards of the inch with varying sizes of measure. However, the current internationally accepted value is exactly 25.4 millimeters."
+msgstr "インチはヤード・ポンド法での長さの単位です。過去にさまざまな標準がありましたが、現在は厳密に 25.4 ミリメートルと定義されています。"
 
 #: ../panel-plugin/weather-config.c:803
-msgid ""
-"The meter is the fundamental unit of length in the International System of "
-"Units. Originally intended to be one ten-millionth of the distance from the "
-"Earth's equator to the North Pole at sea level, its definition has been "
-"periodically refined to reflect growing knowledge of metrology (the science "
-"of measurement). Since 1983, it has been defined as the length of the path "
-"travelled by light in vacuum during a time interval of 1/299,792,458 of a "
-"second."
-msgstr ""
+msgid "The meter is the fundamental unit of length in the International System of Units. Originally intended to be one ten-millionth of the distance from the Earth's equator to the North Pole at sea level, its definition has been periodically refined to reflect growing knowledge of metrology (the science of measurement). Since 1983, it has been defined as the length of the path travelled by light in vacuum during a time interval of 1/299,792,458 of a second."
+msgstr "メートルは国際単位系における長さの基本単位です。1/299,792,458 秒の間に光が真空中を移動する距離と定義されています。"
 
 #: ../panel-plugin/weather-config.c:814
-msgid ""
-"A foot (plural feet) is a unit of length defined as being 0.3048 m exactly "
-"and used in the imperial system of units and United States customary units. "
-"It is subdivided into 12 inches. The measurement of altitude in the aviation "
-"industry is one of the few areas where the foot is widely used outside the "
-"English-speaking world."
-msgstr ""
+msgid "A foot (plural feet) is a unit of length defined as being 0.3048 m exactly and used in the imperial system of units and United States customary units. It is subdivided into 12 inches. The measurement of altitude in the aviation industry is one of the few areas where the foot is widely used outside the English-speaking world."
+msgstr "フィートはヤード・ポンド法および米国慣習単位における長さの単位で、厳密に 0.3048 メートルと定義されています。1 フィートは 12 インチになります。航空分野では国際的に使用されています。"
 
 #.
 #. * TRANSLATORS: The Summer Simmer Index is similar to the heat
@@ -556,157 +451,124 @@ msgstr ""
 #. * at that time.
 #.
 #: ../panel-plugin/weather-config.c:853
-msgid ""
-"Used in North America, wind chill will be reported for low temperatures and "
-"heat index for higher ones. At night, heat index will be replaced by the "
-"Summer Simmer Index. For wind chill, wind speeds need to be above 3.0 mph "
-"(4.828 km/h) and air temperature below 50.0 °F (10.0 °C). For heat index, "
-"air temperature needs to be above 80 °F (26.7 °C) - or above 71.6 °F (22 °C) "
-"at night - and relative humidity at least 40%. If these conditions are not "
-"met, the air temperature will be shown."
-msgstr ""
+msgid "Used in North America, wind chill will be reported for low temperatures and heat index for higher ones. At night, heat index will be replaced by the Summer Simmer Index. For wind chill, wind speeds need to be above 3.0 mph (4.828 km/h) and air temperature below 50.0 °F (10.0 °C). For heat index, air temperature needs to be above 80 °F (26.7 °C) - or above 71.6 °F (22 °C) at night - and relative humidity at least 40%. If these conditions are not met, the air temperature will be shown."
+msgstr "北アメリカで使用されています。風速冷却は低い気温を、熱指数は高い気温を示します。夜間には熱指数の代わりに Summer Simmer Index が使用されます。風速冷却には風速 3.0mph (4.828 km/h) 超、気温 50.0 ℉ (10.0 ℃) 未満である必要があります。熱指数には気温が 80 ℉ (26.7 ℃) 超 ― 夜間は 71.6 ℉ (22 ℃) 超 ―、相対湿度が少なくとも 40% である必要があります。これらの条件が満たされない場合は気温が表示されます。"
 
 #: ../panel-plugin/weather-config.c:864
-msgid ""
-"The Canadian counterpart to the US windchill/heat index, with the wind chill "
-"being similar to the previous model but with slightly different constraints. "
-"Instead of the heat index <i>humidex</i> will be used. For wind chill to "
-"become effective, wind speeds need to be above 2.0 km/h (1.24 mph) and air "
-"temperature below or equal to 0 °C (32 °F). For humidex, air temperature "
-"needs to be at least 20.0 °C (68 °F), with a dewpoint greater than 0 °C (32 "
-"°F). If these conditions are not met, the air temperature will be shown."
-msgstr ""
+msgid "The Canadian counterpart to the US windchill/heat index, with the wind chill being similar to the previous model but with slightly different constraints. Instead of the heat index <i>humidex</i> will be used. For wind chill to become effective, wind speeds need to be above 2.0 km/h (1.24 mph) and air temperature below or equal to 0 °C (32 °F). For humidex, air temperature needs to be at least 20.0 °C (68 °F), with a dewpoint greater than 0 °C (32 °F). If these conditions are not met, the air temperature will be shown."
+msgstr "カナダにおけるアメリカの風速冷却/熱指数に相当するものです。風速冷却は同じモデルを使用しますが、異なる制約があります。熱指数の代わりに<i>湿潤指数</i>が使用されます。風速冷却を効果的にするため、風速は 2.0 km/h (1.24 mph) 超、気温は 0 ℃ (32 ℉) 以下である必要があります。湿潤指数には気温が少なくとも 20.0 ℃ (68 ℉)、露点温度が 0 ℃ (32 ℉) 超である必要があります。これらの条件が満たされない場合、気温が表示されます。"
 
 #: ../panel-plugin/weather-config.c:876
-msgid ""
-"This is the model used by the Australian Bureau of Meteorology, especially "
-"adapted for the climate of this continent. Possibly used in Central Europe "
-"and parts of other continents too, but then windchill and similar values had "
-"never gained that much popularity there as in the US or Canada, so "
-"information about its usage is scarce or uncertain. It depends on air "
-"temperature, wind speed and humidity and can be used for lower and higher "
-"temperatures alike."
-msgstr ""
+msgid "This is the model used by the Australian Bureau of Meteorology, especially adapted for the climate of this continent. Possibly used in Central Europe and parts of other continents too, but then windchill and similar values had never gained that much popularity there as in the US or Canada, so information about its usage is scarce or uncertain. It depends on air temperature, wind speed and humidity and can be used for lower and higher temperatures alike."
+msgstr "このモデルはオーストラリア気象局で使用されており、この大陸の気候に特化しています。場合によっては中央ヨーロッパやその他の地域でも使用できるかもしれませんが、風速冷却や同様の値はアメリカやカナダのように一般的ではないため、その用途はまずないか、不明です。これは気温に依存し、風速および湿度は、低い、および高い温度と同様に使用されます。"
 
 #: ../panel-plugin/weather-config.c:887
-msgid ""
-"Improvements by Robert G. Quayle and Robert G. Steadman applied in 1998 to "
-"earlier experiments/developments by Steadman. This model only depends on "
-"wind speed and temperature, not on relative humidity and can be used for "
-"both heat and cold stress."
-msgstr ""
+msgid "Improvements by Robert G. Quayle and Robert G. Steadman applied in 1998 to earlier experiments/developments by Steadman. This model only depends on wind speed and temperature, not on relative humidity and can be used for both heat and cold stress."
+msgstr "Steadman を改善したもので、そのモデルは風速と気温のみに依存します。高温および低温ストレスに使用されます。"
 
 #: ../panel-plugin/weather-config.c:923
-#, fuzzy
 msgid "_Temperature:"
-msgstr "気温"
+msgstr "温度(_T):"
 
 #: ../panel-plugin/weather-config.c:925
 msgid "Celsius (°C)"
-msgstr ""
+msgstr "摂氏 (℃)"
 
 #: ../panel-plugin/weather-config.c:926
 msgid "Fahrenheit (°F)"
-msgstr ""
+msgstr "華氏 (℉)"
 
 #: ../panel-plugin/weather-config.c:931
-#, fuzzy
 msgid "Atmospheric _pressure:"
-msgstr "気圧 (P)"
+msgstr "気圧(_P):"
 
 #: ../panel-plugin/weather-config.c:934
 msgid "Hectopascals (hPa)"
-msgstr ""
+msgstr "ヘクトパスカル (hPa)"
 
 #: ../panel-plugin/weather-config.c:936
 msgid "Inches of mercury (inHg)"
-msgstr ""
+msgstr "水銀柱インチ (inHg)"
 
 #: ../panel-plugin/weather-config.c:938
 msgid "Pound-force per square inch (psi)"
-msgstr ""
+msgstr "重量ポンド毎平方インチ (psi)"
 
 #: ../panel-plugin/weather-config.c:940
 msgid "Torr (mmHg)"
-msgstr ""
+msgstr "トル (mmHg)"
 
 #: ../panel-plugin/weather-config.c:945
-#, fuzzy
 msgid "_Wind speed:"
-msgstr "風速 (WS)"
+msgstr "風速(_W):"
 
 #: ../panel-plugin/weather-config.c:948
 msgid "Kilometers per hour (km/h)"
-msgstr ""
+msgstr "キロメートル毎時 (km/h)"
 
 #: ../panel-plugin/weather-config.c:950
 msgid "Miles per hour (mph)"
-msgstr ""
+msgstr "マイル毎時 (mph)"
 
 #: ../panel-plugin/weather-config.c:952
 msgid "Meters per second (m/s)"
-msgstr ""
+msgstr "メートル毎秒 (m/s)"
 
 #: ../panel-plugin/weather-config.c:954
 msgid "Feet per second (ft/s)"
-msgstr ""
+msgstr "フィート毎秒 (ft/s)"
 
 #: ../panel-plugin/weather-config.c:956
 msgid "Knots (kt)"
-msgstr ""
+msgstr "ノット (kt)"
 
 #: ../panel-plugin/weather-config.c:961
-#, fuzzy
 msgid "Prec_ipitations:"
-msgstr ""
-"\n"
-"降水\n"
+msgstr "降水量(_I):"
 
 #: ../panel-plugin/weather-config.c:964
 msgid "Millimeters (mm)"
-msgstr ""
+msgstr "ミリメートル (mm)"
 
 #: ../panel-plugin/weather-config.c:966
 msgid "Inches (in)"
-msgstr ""
+msgstr "インチ (in)"
 
 #: ../panel-plugin/weather-config.c:971
-#, fuzzy
 msgid "Altitu_de:"
-msgstr "海抜"
+msgstr "海抜(_D):"
 
 #: ../panel-plugin/weather-config.c:974
 msgid "Meters (m)"
-msgstr ""
+msgstr "メートル (m)"
 
 #: ../panel-plugin/weather-config.c:976
 msgid "Feet (ft)"
-msgstr ""
+msgstr "フィート (ft)"
 
 #: ../panel-plugin/weather-config.c:985
-#, fuzzy
 msgid "Apparent te_mperature:"
-msgstr "気温"
+msgstr "体感温度(_M):"
 
 #: ../panel-plugin/weather-config.c:988
 msgid "Windchill/Heat index"
-msgstr ""
+msgstr "風速冷却/熱指数"
 
 #: ../panel-plugin/weather-config.c:990
 msgid "Windchill/Humidex"
-msgstr ""
+msgstr "風速冷却/湿潤指数"
 
 #: ../panel-plugin/weather-config.c:991
 msgid "Steadman"
-msgstr ""
+msgstr "Steadman"
 
 #: ../panel-plugin/weather-config.c:992
 msgid "Quayle-Steadman"
-msgstr ""
+msgstr "Quayle-Steadman"
 
 #: ../panel-plugin/weather-config.c:1015
 msgid "Choose an icon theme."
-msgstr ""
+msgstr "アイコンテーマを選択してください。"
 
 #: ../panel-plugin/weather-config.c:1020
 #, c-format
@@ -719,241 +581,162 @@ msgid ""
 "\n"
 "<b>License:</b> %s"
 msgstr ""
+"<b>ディレクトリ:</b> %s\n"
+"\n"
+"<b>作者:</b> %s\n"
+"\n"
+"<b>説明:</b> %s\n"
+"\n"
+"<b>ライセンス:</b> %s"
 
 #: ../panel-plugin/weather-config.c:1074
-msgid ""
-"A more calendar-like view, with the days in columns and the daytimes "
-"(morning, afternoon, evening, night) in rows."
-msgstr ""
+msgid "A more calendar-like view, with the days in columns and the daytimes (morning, afternoon, evening, night) in rows."
+msgstr "日を列に、時間帯を行にして表示します。"
 
 #: ../panel-plugin/weather-config.c:1078
-msgid ""
-"Shows the forecasts in a table with the daytimes (morning, afternoon, "
-"evening, night) in columns and the days in rows."
-msgstr ""
+msgid "Shows the forecasts in a table with the daytimes (morning, afternoon, evening, night) in columns and the days in rows."
+msgstr "時間帯を列に、日を行にして表示します。"
 
 #: ../panel-plugin/weather-config.c:1136
 msgid "_Icon theme:"
-msgstr ""
+msgstr "アイコンテーマ(_I):"
 
 #: ../panel-plugin/weather-config.c:1138
-msgid ""
-"Available icon themes are listed here. You can add icon themes to $HOME/."
-"config/xfce4/weather/icons (or the equivalent directory on your system). "
-"Information about how to create or use icon themes can be found in the "
-"README file. New icon themes will be detected everytime you open this config "
-"dialog."
-msgstr ""
+msgid "Available icon themes are listed here. You can add icon themes to $HOME/.config/xfce4/weather/icons (or the equivalent directory on your system). Information about how to create or use icon themes can be found in the README file. New icon themes will be detected everytime you open this config dialog."
+msgstr "利用できるアイコンテーマのリストです。アイコンテーマは $HOME/.config/xfce4/weather/icons (またはシステム上の同様のディレクトリ) に追加することができます。アイコンテーマの作成および使用方法は README ファイルを参照してください。新しいアイコンテーマはこのダイアログを開くときに検出されます。"
 
 #: ../panel-plugin/weather-config.c:1160
 msgid "_Tooltip style:"
-msgstr ""
+msgstr "ツールチップのスタイル(_T):"
 
 #: ../panel-plugin/weather-config.c:1162
 msgid "Simple"
-msgstr ""
+msgstr "簡易"
 
 #: ../panel-plugin/weather-config.c:1163
 msgid "Verbose"
-msgstr ""
+msgstr "詳細"
 
 #: ../panel-plugin/weather-config.c:1166
-msgid ""
-"Choose your preferred tooltip style. Some styles give a lot of useful data, "
-"some are clearer but provide less data on a glance."
-msgstr ""
+msgid "Choose your preferred tooltip style. Some styles give a lot of useful data, some are clearer but provide less data on a glance."
+msgstr "ツールチップのスタイルを選択します。"
 
 #: ../panel-plugin/weather-config.c:1178
-#, fuzzy
 msgid "_Forecast layout:"
-msgstr "予報(_F)"
+msgstr "予報レイアウト(_F):"
 
 #: ../panel-plugin/weather-config.c:1180
 msgid "Days in columns"
-msgstr ""
+msgstr "日を列に"
 
 #: ../panel-plugin/weather-config.c:1181
 msgid "Days in rows"
-msgstr ""
+msgstr "日を行に"
 
 #: ../panel-plugin/weather-config.c:1189
-#, fuzzy
 msgid "_Number of forecast days:"
-msgstr "予報日数(_F):"
+msgstr "予報日数(_N):"
 
 #: ../panel-plugin/weather-config.c:1194
 #, c-format
-msgid ""
-"Met.no provides forecast data for up to %d days in the future. Choose how "
-"many days will be shown in the forecast tab in the summary window. On slower "
-"computers, a lower number might help against lags when opening the window. "
-"Note however that usually forecasts for more than three days in the future "
-"are unreliable at best ;-)"
-msgstr ""
+msgid "Met.no provides forecast data for up to %d days in the future. Choose how many days will be shown in the forecast tab in the summary window. On slower computers, a lower number might help against lags when opening the window. Note however that usually forecasts for more than three days in the future are unreliable at best ;-)"
+msgstr "サマリウィンドウの「予報」タブで表示する予報日数を指定します。met.no は %d 日先までの予報データを提供しています。低速のコンピューターではこの値を大きくするとウィンドウ表示に時間がかかるかもしれません。ただし、予報が信用できるのはせいぜい 3 日先がいいところでしょう ;-)"
 
 #: ../panel-plugin/weather-config.c:1212
 msgid "_Round values"
-msgstr ""
+msgstr "値を丸める(_R)"
 
 #: ../panel-plugin/weather-config.c:1214
-msgid ""
-"Check to round values everywhere except on the details page in the summary "
-"window."
-msgstr ""
+msgid "Check to round values everywhere except on the details page in the summary window."
+msgstr "表示するすべての値を丸めます (サマリウィンドウの詳細ページを除く)。"
 
 #: ../panel-plugin/weather-config.c:1264 ../panel-plugin/weather-config.c:1728
 msgid "Select _font"
-msgstr ""
+msgstr "フォントの選択(_F)"
 
+# Dialog title
 #: ../panel-plugin/weather-config.c:1281
 msgid "Select font"
-msgstr ""
+msgstr "フォントの選択"
 
 #. TRANSLATORS: Fallback value, usually never shown.
 #: ../panel-plugin/weather-config.c:1413
-msgid ""
-"Choose the value to add to the list below. Values can be added more than "
-"once."
-msgstr ""
+msgid "Choose the value to add to the list below. Values can be added more than once."
+msgstr "以下のリストに追加する値を選択してください。複数の値を追加できます。"
 
 #: ../panel-plugin/weather-config.c:1423
-msgid ""
-"Air temperature, sometimes referred to as dry-bulb temperature. Measured by "
-"a thermometer that is freely exposed to the air, yet shielded from radiation "
-"and moisture."
-msgstr ""
+msgid "Air temperature, sometimes referred to as dry-bulb temperature. Measured by a thermometer that is freely exposed to the air, yet shielded from radiation and moisture."
+msgstr "大気の温度です。時々乾球温度を参照します。"
 
 #: ../panel-plugin/weather-config.c:1429
-msgid ""
-"The weight of the air that makes up the atmosphere exerts a pressure on the "
-"surface of the Earth, which is known as atmospheric pressure. To make it "
-"easier to compare the value to other values for locations with different "
-"altitudes, atmospheric pressure is adjusted to the equivalent sea-level "
-"pressure and called barometric pressure. Rising barometric pressures "
-"generally indicate an improvement in weather conditions, while falling "
-"pressures mean deterioration."
-msgstr ""
+msgid "The weight of the air that makes up the atmosphere exerts a pressure on the surface of the Earth, which is known as atmospheric pressure. To make it easier to compare the value to other values for locations with different altitudes, atmospheric pressure is adjusted to the equivalent sea-level pressure and called barometric pressure. Rising barometric pressures generally indicate an improvement in weather conditions, while falling pressures mean deterioration."
+msgstr "大気によって地表にかかる圧力 (大気圧) です。一般に気圧の上昇は天候の好転を、低下は悪化を意味します。"
 
 #: ../panel-plugin/weather-config.c:1440
-msgid ""
-"Nowadays wind speed/velocity is measured using an anemometer (Greek "
-"<i>anemos</i>, meaning <i>wind</i>) in 10 m (33 ft) height. Anemometers "
-"usually measure either wind speed or pressure, but will provide both values "
-"as they are closely related to and can be deduced from each other."
-msgstr ""
+msgid "Nowadays wind speed/velocity is measured using an anemometer (Greek <i>anemos</i>, meaning <i>wind</i>) in 10 m (33 ft) height. Anemometers usually measure either wind speed or pressure, but will provide both values as they are closely related to and can be deduced from each other."
+msgstr "風の速さ/速度です。高度 10m (33ft) で計測されます。"
 
 #: ../panel-plugin/weather-config.c:1448
-msgid ""
-"Invented by Sir Francis Beaufort in 1805, this empirical scale on wind speed "
-"is based on people's observations of specific land or sea conditions, "
-"denoting these conditions with numbers from 0 (calm) to 12 (hurricane)."
-msgstr ""
+msgid "Invented by Sir Francis Beaufort in 1805, this empirical scale on wind speed is based on people's observations of specific land or sea conditions, denoting these conditions with numbers from 0 (calm) to 12 (hurricane)."
+msgstr "風力 (ビューフォート風力階級) です。風の強さを 0 から 12 までの 13 段階で表します。"
 
 #: ../panel-plugin/weather-config.c:1454
-msgid ""
-"This gives the cardinal direction (North, East, South, West) the wind is "
-"coming from."
-msgstr ""
+msgid "This gives the cardinal direction (North, East, South, West) the wind is coming from."
+msgstr "風が吹いてくる基本方位 (東西南北) です。"
 
 #: ../panel-plugin/weather-config.c:1458
-msgid ""
-"This gives the direction the wind is coming from in azimuth degrees (North = "
-"0°, East = 90°, South = 180° and West = 270°)."
-msgstr ""
+msgid "This gives the direction the wind is coming from in azimuth degrees (North = 0°, East = 90°, South = 180° and West = 270°)."
+msgstr "風が吹いてくる方位角 (北 = 0°、東 = 90°、南 = 180°、西 = 270°) です。"
 
 #: ../panel-plugin/weather-config.c:1463
-msgid ""
-"Humidity is defined as the amount of water vapor in the air and increases "
-"the possibility of precipitations, fog and dew. While absolute humidity is "
-"the water content of air, relative humidity gives (in %) the current "
-"absolute humidity relative to the maximum for that air temperature and "
-"pressure."
-msgstr ""
+msgid "Humidity is defined as the amount of water vapor in the air and increases the possibility of precipitations, fog and dew. While absolute humidity is the water content of air, relative humidity gives (in %) the current absolute humidity relative to the maximum for that air temperature and pressure."
+msgstr "湿度は大気中に含まれる水蒸気の割合のことで、これが増加すると降雨、霧の発生、あるいは結露の可能性が高まります。絶対湿度は大気の単位容積あたりの水分量で、重量で表します。相対湿度は飽和水蒸気圧に対する水蒸気の分圧と定義され、百分率で表します。"
 
 #: ../panel-plugin/weather-config.c:1471
 msgid ""
-"This is the temperature to which air must be cooled to reach 100% relative "
-"humidity, given no change in water content. Reaching the dew point halts the "
-"cooling process, as condensation occurs which releases heat into the air. A "
-"high dew point increases the possibility of rain and severe thunderstorms. "
-"The dew point allows the prediction of dew, frost, fog and minimum overnight "
-"temperature, and has influence on the comfort level one experiences.\n"
+"This is the temperature to which air must be cooled to reach 100% relative humidity, given no change in water content. Reaching the dew point halts the cooling process, as condensation occurs which releases heat into the air. A high dew point increases the possibility of rain and severe thunderstorms. The dew point allows the prediction of dew, frost, fog and minimum overnight temperature, and has influence on the comfort level one experiences.\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no."
 msgstr ""
+"露点温度は、大気を冷却していった時に相対湿度が 100% になる温度です。露点温度が高いと、降雨や激しい雷雨の可能性が高まります。\n"
+"\n"
+"<b>注意:</b> この値は本プラグインで計算したもので、met.no が提供する情報ではありません。"
 
 #: ../panel-plugin/weather-config.c:1483
 msgid ""
-"Also known as <i>felt temperature</i>, <i>effective temperature</i>, or what "
-"some weather providers declare as <i>feels like</i>. Human temperature "
-"sensation is not only based on air temperature, but also on heat flow, "
-"physical activity and individual condition. While being a highly subjective "
-"value, apparent temperature can actually be useful for warning about extreme "
-"conditions (cold, heat).\n"
+"Also known as <i>felt temperature</i>, <i>effective temperature</i>, or what some weather providers declare as <i>feels like</i>. Human temperature sensation is not only based on air temperature, but also on heat flow, physical activity and individual condition. While being a highly subjective value, apparent temperature can actually be useful for warning about extreme conditions (cold, heat).\n"
 "\n"
-"<b>Note:</b> This is a calculated value not provided by met.no. You should "
-"use a calculation model appropriate for your local climate and personal "
-"preferences on the units page."
+"<b>Note:</b> This is a calculated value not provided by met.no. You should use a calculation model appropriate for your local climate and personal preferences on the units page."
 msgstr ""
+"<i>実効温度</i>や<i>見かけ温度</i>などとも呼ばれる、人間が肌で感じる温度の感覚を数値化したものです。\n"
+"\n"
+"<b>注意:</b> この値は本プラグインで計算したもので、met.no が提供する情報ではありません。計算モデルは「単位」タブで選択できます。"
 
 #: ../panel-plugin/weather-config.c:1497
-msgid ""
-"This gives the low-level cloud cover in percent. According to WMO "
-"definition, low-level clouds can be found at altitudes below 4,000 m (13,000 "
-"ft), or 5,000 m (16,000 ft) at the equator, though their basis often lie "
-"below 2,000 m (6,500 ft). They are mainly composed of water droplets or ice "
-"particles and snow, when temperatures are cold enough."
-msgstr ""
+msgid "This gives the low-level cloud cover in percent. According to WMO definition, low-level clouds can be found at altitudes below 4,000 m (13,000 ft), or 5,000 m (16,000 ft) at the equator, though their basis often lie below 2,000 m (6,500 ft). They are mainly composed of water droplets or ice particles and snow, when temperatures are cold enough."
+msgstr "下層雲量の割合です。世界気象機関の定義によれば、下層雲は赤道地点で高度 4,000m (13,000ft) または 5,000m (16,000ft) 以下に発生した雲のことですが、2,000m (6,500ft) 以下とされる場合もあります。"
 
 #: ../panel-plugin/weather-config.c:1505
-msgid ""
-"This specifies the mid-level cloud cover in percent. According to WMO "
-"definition, mid-level clouds form in heights of 4,000-8,000 m (13,000-26,000 "
-"ft), or 5,000-10,000 m (16,000-33,000 ft) at the equator. Like their low-"
-"level cousins, they are principally composed of water droplets. When "
-"temperatures get low enough, ice particles can replace the droplets."
-msgstr ""
+msgid "This specifies the mid-level cloud cover in percent. According to WMO definition, mid-level clouds form in heights of 4,000-8,000 m (13,000-26,000 ft), or 5,000-10,000 m (16,000-33,000 ft) at the equator. Like their low-level cousins, they are principally composed of water droplets. When temperatures get low enough, ice particles can replace the droplets."
+msgstr "中層雲量の割合です。世界気象機関の定義によれば、中層雲は赤道地点で高度 4,000 から 8,000m (13,000 から 26,000ft) に発生した雲のことです。"
 
 #: ../panel-plugin/weather-config.c:1514
-msgid ""
-"This reports the high-level cloud cover in percent. According to WMO "
-"definition, high-level clouds can be found in altitudes of 8,000 to 15,000 m "
-"(26,000 to 49,000 ft), or 18,000 m (59,000 ft) at the equator, where "
-"temperatures are so low that they are mainly composed of ice crystals. While "
-"typically thin and white in appearance, they can be seen in a magnificent "
-"array of colors when the sun is low on the horizon."
-msgstr ""
+msgid "This reports the high-level cloud cover in percent. According to WMO definition, high-level clouds can be found in altitudes of 8,000 to 15,000 m (26,000 to 49,000 ft), or 18,000 m (59,000 ft) at the equator, where temperatures are so low that they are mainly composed of ice crystals. While typically thin and white in appearance, they can be seen in a magnificent array of colors when the sun is low on the horizon."
+msgstr "上層雲量の割合です。世界気象機関の定義によれば、上層雲は赤道地点で高度 8,000 (26,000ft) から、15,000m (49,000ft) または 18,000m (59,000ft) までに発生した雲のことです。"
 
 #: ../panel-plugin/weather-config.c:1524
-msgid ""
-"Cloudiness, or cloud cover, defines the fraction of the sky obscured by "
-"clouds when observed from a given location. Clouds are both carriers of "
-"precipitation and regulator to the amount of solar radiation that reaches "
-"the surface. While during daytime they reduce the temperature, at night they "
-"have the opposite effect, as water vapor prevents long-wave radiation from "
-"escaping into space. Apart from that, clouds reflect light to space and in "
-"that way contribute to the cooling of the planet."
-msgstr ""
+msgid "Cloudiness, or cloud cover, defines the fraction of the sky obscured by clouds when observed from a given location. Clouds are both carriers of precipitation and regulator to the amount of solar radiation that reaches the surface. While during daytime they reduce the temperature, at night they have the opposite effect, as water vapor prevents long-wave radiation from escaping into space. Apart from that, clouds reflect light to space and in that way contribute to the cooling of the planet."
+msgstr "雲量は所定の位置から空を観測した時の、雲によって隠される割合です。雲量が大きいと日中は気温の低下につながり、夜間は気温の低下を抑制します。"
 
 #: ../panel-plugin/weather-config.c:1536
-msgid ""
-"Fog is a type of low-lying stratus cloud, with the moisture in it often "
-"generated locally such as from a nearby lake, river, ocean, or simply moist "
-"ground, that forms when the difference between temperature and dew point is "
-"below 2.5 °C (4 °F), usually at a relative humidity of 100%. Fog commonly "
-"produces precipitations in the form of drizzle or very light snow and "
-"reduces visibility to less than 1 km (5/8 statute mile)."
-msgstr ""
+msgid "Fog is a type of low-lying stratus cloud, with the moisture in it often generated locally such as from a nearby lake, river, ocean, or simply moist ground, that forms when the difference between temperature and dew point is below 2.5 °C (4 °F), usually at a relative humidity of 100%. Fog commonly produces precipitations in the form of drizzle or very light snow and reduces visibility to less than 1 km (5/8 statute mile)."
+msgstr "霧は地表付近に発生する雲の一種で、視程が 1 km (5/8 法定マイル) 未満になるものを言い、湖、川、海、あるいは湿地やその周囲でよく見られます。気温と露点温度の差が 2.5 ℃ (4 ℉) 未満で、湿度が 100％ 近くになった時に発生します。"
 
 #: ../panel-plugin/weather-config.c:1547
 msgid ""
-"The amount of rain, drizzle, sleet, hail, snow, graupel and other forms of "
-"water falling from the sky over a specific period.\n"
+"The amount of rain, drizzle, sleet, hail, snow, graupel and other forms of water falling from the sky over a specific period.\n"
 "\n"
-"The values reported by met.no are those of precipitations in the liquid "
-"state - or in other words: of rain -, so if snow is expected (but not "
-"sleet), then the amount of snow will be <i>guessed</i> by multiplying the "
-"original value by a ratio dependent on the air temperature:\n"
+"The values reported by met.no are those of precipitations in the liquid state - or in other words: of rain -, so if snow is expected (but not sleet), then the amount of snow will be <i>guessed</i> by multiplying the original value by a ratio dependent on the air temperature:\n"
 "\n"
 "<tt><small>                   T &lt; -11.1 °C (12 °F) =&gt; 1:12\n"
 "-11.1 °C (12 °F) &lt; T &lt;  -4.4 °C (24 °F) =&gt; 1:10\n"
@@ -961,138 +744,119 @@ msgid ""
 " -2.2 °C (28 °F) &lt; T &lt;  -0.6 °C (31 °F) =&gt; 1:5\n"
 " -0.6 °C (31 °F) &lt; T                    =&gt; 1:3\n"
 "\n"
-"</small></tt>Example: If temperature is -5 °C (12 °F), then snow density "
-"will be low and a rain to snow ratio of 1:10 will be used for calculation. "
-"Assuming the reported value is 5 mm, then the calculated amount of snow "
-"precipitation is 50 mm.\n"
+"</small></tt>Example: If temperature is -5 °C (12 °F), then snow density will be low and a rain to snow ratio of 1:10 will be used for calculation. Assuming the reported value is 5 mm, then the calculated amount of snow precipitation is 50 mm.\n"
 "\n"
-"<b>Note</b>: While air temperature is an important factor in this "
-"calculation, there are other influencing factors that the plugin doesn't "
-"know about like the type of snow and ground temperature. Because of that, "
-"these rules will only lead to rough estimates and may not represent the real "
-"amount of snow."
+"<b>Note</b>: While air temperature is an important factor in this calculation, there are other influencing factors that the plugin doesn't know about like the type of snow and ground temperature. Because of that, these rules will only lead to rough estimates and may not represent the real amount of snow."
 msgstr ""
+"降水量とは、一定期間内に空中から地表に落ちた、雨、雪、霰、雹などの総量を意味します。\n"
+"\n"
+"met.no が提供するのは、これらを液体状態にした場合 (雪などは気温を基にしたオリジナルの計算値による推測) の値になります:\n"
+"\n"
+"<tt><small>                  T &lt; -11.1 ℃ (12 ℉) =&gt; 1:12\n"
+"-11.1 ℃ (12 ℉) &lt; T &lt;  -4.4 ℃ (24 ℉) =&gt; 1:10\n"
+" -4.4 ℃ (24 ℉) &lt; T &lt;  -2.2 ℃ (28 ℉) =&gt; 1:7\n"
+" -2.2 ℃ (28 ℉) &lt; T &lt;  -0.6 ℃ (31 ℉) =&gt; 1:5\n"
+" -0.6 ℃ (31 ℉) &lt; T                   =&gt; 1:3</small></tt>\n"
+"\n"
+"例: 気温が -5 ℃ (12 ℉) の時、雪の密度は「低」とされ、降水量と降雪量の変換比率は「1:10」として計算されます。結果、予報値は 5mm、積雪量は 50mm になります。\n"
+"\n"
+"<b>注意:</b> この計算では気温のみ使用しており、降雪の種類や地表の温度などは考慮されていません。このため、この値は大体の見積り値であり、実際の降雪量を表していません。"
 
 #: ../panel-plugin/weather-config.c:1698
 msgid "Show scroll_box"
-msgstr ""
+msgstr "スクロールボックスを表示する(_B)"
 
 #: ../panel-plugin/weather-config.c:1700
-msgid ""
-"Hide the scrollbox to save valuable space on the panel. Most interesting "
-"information is also provided in the tooltip - provided you choose an "
-"appropriate tooltip style - that is shown when hovering over the icon."
-msgstr ""
+msgid "Hide the scrollbox to save valuable space on the panel. Most interesting information is also provided in the tooltip - provided you choose an appropriate tooltip style - that is shown when hovering over the icon."
+msgstr "パネルにスクロールボックスを表示しません。主な天候情報はツールチップにも表示されます。"
 
 #. values to show at once (multiple lines)
 #: ../panel-plugin/weather-config.c:1711
 msgid "Li_nes:"
-msgstr ""
+msgstr "行数(_N):"
 
 #: ../panel-plugin/weather-config.c:1717
-msgid ""
-"Decide how many values should be shown at once in the scrollbox. You can "
-"choose a smaller font or enlarge the panel to make more lines fit."
-msgstr ""
+msgid "Decide how many values should be shown at once in the scrollbox. You can choose a smaller font or enlarge the panel to make more lines fit."
+msgstr "スクロールボックスに表示する行数を指定します。"
 
 #: ../panel-plugin/weather-config.c:1724
 msgid "Font and color:"
-msgstr ""
+msgstr "フォントと色:"
 
 #: ../panel-plugin/weather-config.c:1730
-msgid ""
-"Choose a font you like and set it to a smaller or larger size. Middle-click "
-"on the button to unset the font and use your theme's default."
-msgstr ""
+msgid "Choose a font you like and set it to a smaller or larger size. Middle-click on the button to unset the font and use your theme's default."
+msgstr "スクロールボックスに使用するフォントの種類とサイズを指定します。マウスの中央クリックでフォントの設定を解除し、テーマのデフォルトに戻します。"
 
 #: ../panel-plugin/weather-config.c:1742
-msgid ""
-"There may be problems with some themes that cause the scrollbox text to be "
-"hardly readable. If this is the case or you simply want it to appear in "
-"another color, then you can change it using this button. Middle-click on the "
-"button to unset the scrollbox text color."
-msgstr ""
+msgid "There may be problems with some themes that cause the scrollbox text to be hardly readable. If this is the case or you simply want it to appear in another color, then you can change it using this button. Middle-click on the button to unset the scrollbox text color."
+msgstr "テーマによってはスクロールボックスに表示された文字が読みにくくなってしまうかもしれません。その場合のフォント色を直接指定してください。マウスの中央クリックでテーマのデフォルト色に戻します。"
 
 #: ../panel-plugin/weather-config.c:1766
-#, fuzzy
 msgid "Labels to d_isplay"
-msgstr "表示するラベル(_L)"
+msgstr "表示するラベル(_I)"
 
 #: ../panel-plugin/weather-config.c:1769
-msgid ""
-"These are the values that will be shown in the scrollbox. Select a single "
-"value here and click the appropriate button to remove it or move it up and "
-"down in the list."
-msgstr ""
+msgid "These are the values that will be shown in the scrollbox. Select a single value here and click the appropriate button to remove it or move it up and down in the list."
+msgstr "スクロールボックスに表示される値です。値をクリックして右のボタンをクリックすると削除や移動が行えます。"
 
 #. button "add"
 #: ../panel-plugin/weather-config.c:1776
 msgid "A_dd"
-msgstr ""
+msgstr "追加(_D)"
 
 #: ../panel-plugin/weather-config.c:1779
-msgid ""
-"Add the selected value to the labels that should be displayed in the "
-"scrollbox."
-msgstr ""
+msgid "Add the selected value to the labels that should be displayed in the scrollbox."
+msgstr "選択した値を表示するラベルに追加します。"
 
 #: ../panel-plugin/weather-config.c:1794
 msgid "_Remove"
 msgstr "削除(_R)"
 
 #: ../panel-plugin/weather-config.c:1797
-msgid ""
-"Select a value in the list of labels to display and click this button to "
-"remove it."
-msgstr ""
+msgid "Select a value in the list of labels to display and click this button to remove it."
+msgstr "選択した値を表示するラベルから削除します。"
 
 #. button "move up"
 #: ../panel-plugin/weather-config.c:1802
-#, fuzzy
 msgid "Move u_p"
-msgstr "上へ(_U)"
+msgstr "上へ(_P)"
 
 #: ../panel-plugin/weather-config.c:1805
 msgid "Move the selected value up in the list of labels to display."
-msgstr ""
+msgstr "選択した値を1つ上に移動します。"
 
 #. button "move down"
 #: ../panel-plugin/weather-config.c:1810
-#, fuzzy
 msgid "Move do_wn"
-msgstr "下へ(_D)"
+msgstr "下へ(_W)"
 
 #: ../panel-plugin/weather-config.c:1813
 msgid "Move the selected value down in the list of labels to display."
-msgstr ""
+msgstr "選択した値を一つ下に移動します。"
 
 #: ../panel-plugin/weather-config.c:1830
 msgid "Animate _transitions between labels"
 msgstr "ラベルの切り換えをアニメーションで行う(_T)"
 
 #: ../panel-plugin/weather-config.c:1835
-msgid ""
-"Scroll the current displayed value(s) out and the new value(s) in instead of "
-"simply changing them. Uncheck this option if you find the animation too "
-"distracting."
-msgstr ""
+msgid "Scroll the current displayed value(s) out and the new value(s) in instead of simply changing them. Uncheck this option if you find the animation too distracting."
+msgstr "スクロールボックスに表示する値をアニメーションで切り替えます。"
 
 #: ../panel-plugin/weather-config.c:1969
-#, fuzzy
 msgid "_Location"
-msgstr "地域(_O):"
+msgstr "地域(_L):"
 
 #: ../panel-plugin/weather-config.c:1972
 msgid "_Units"
-msgstr ""
+msgstr "単位(_U)"
 
 #: ../panel-plugin/weather-config.c:1975
 msgid "_Appearance"
-msgstr ""
+msgstr "外観(_A)"
 
 #: ../panel-plugin/weather-config.c:1978
 msgid "_Scrollbox"
-msgstr ""
+msgstr "スクロールボックス(_S)"
 
 #: ../panel-plugin/weather-data.c:418
 msgid "ft"
@@ -1104,11 +868,11 @@ msgstr "m"
 
 #: ../panel-plugin/weather-data.c:422
 msgid "°F"
-msgstr "°F"
+msgstr " ℉"
 
 #: ../panel-plugin/weather-data.c:422
 msgid "°C"
-msgstr "°C"
+msgstr "℃"
 
 #: ../panel-plugin/weather-data.c:426
 msgid "hPa"
@@ -1116,7 +880,7 @@ msgstr "hPa"
 
 #: ../panel-plugin/weather-data.c:428
 msgid "inHg"
-msgstr ""
+msgstr "inHg"
 
 #: ../panel-plugin/weather-data.c:430
 msgid "psi"
@@ -1124,7 +888,7 @@ msgstr "psi"
 
 #: ../panel-plugin/weather-data.c:432
 msgid "mmHg"
-msgstr ""
+msgstr "mmHg"
 
 #: ../panel-plugin/weather-data.c:437
 msgid "km/h"
@@ -1136,28 +900,27 @@ msgstr "mph"
 
 #: ../panel-plugin/weather-data.c:441
 msgid "m/s"
-msgstr ""
+msgstr "m/s"
 
 #: ../panel-plugin/weather-data.c:443
 msgid "ft/s"
-msgstr ""
+msgstr "ft/s"
 
 #: ../panel-plugin/weather-data.c:445
 msgid "kt"
-msgstr ""
+msgstr "kt"
 
 #. TRANSLATORS: The degree sign is used like a unit for
 #. latitude, longitude, wind direction
 #: ../panel-plugin/weather-data.c:452
-#, fuzzy
 msgid "°"
-msgstr "°F"
+msgstr "°"
 
 #. TRANSLATORS: Percentage sign is used like a unit for
 #. clouds, fog, humidity
 #: ../panel-plugin/weather-data.c:461
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: ../panel-plugin/weather-data.c:463
 msgid "in"
@@ -1169,7 +932,7 @@ msgstr "mm"
 
 #: ../panel-plugin/weather-data.c:527
 msgid "North"
-msgstr ""
+msgstr "北"
 
 #: ../panel-plugin/weather-data.c:527 ../panel-plugin/weather-translate.c:44
 msgid "N"
@@ -1177,7 +940,7 @@ msgstr "北"
 
 #: ../panel-plugin/weather-data.c:530
 msgid "North-East"
-msgstr ""
+msgstr "北東"
 
 #: ../panel-plugin/weather-data.c:530 ../panel-plugin/weather-translate.c:46
 msgid "NE"
@@ -1185,7 +948,7 @@ msgstr "北東"
 
 #: ../panel-plugin/weather-data.c:533
 msgid "East"
-msgstr ""
+msgstr "東"
 
 #: ../panel-plugin/weather-data.c:533 ../panel-plugin/weather-translate.c:48
 msgid "E"
@@ -1193,7 +956,7 @@ msgstr "東"
 
 #: ../panel-plugin/weather-data.c:536
 msgid "South-East"
-msgstr ""
+msgstr "南東"
 
 #: ../panel-plugin/weather-data.c:536 ../panel-plugin/weather-translate.c:50
 msgid "SE"
@@ -1201,7 +964,7 @@ msgstr "南東"
 
 #: ../panel-plugin/weather-data.c:539
 msgid "South"
-msgstr ""
+msgstr "南"
 
 #. TRANSLATORS: Wind directions. It's where the wind comes _from_.
 #: ../panel-plugin/weather-data.c:539 ../panel-plugin/weather-translate.c:36
@@ -1210,7 +973,7 @@ msgstr "南"
 
 #: ../panel-plugin/weather-data.c:542
 msgid "South-West"
-msgstr ""
+msgstr "南西"
 
 #: ../panel-plugin/weather-data.c:542 ../panel-plugin/weather-translate.c:38
 msgid "SW"
@@ -1218,7 +981,7 @@ msgstr "南西"
 
 #: ../panel-plugin/weather-data.c:545
 msgid "West"
-msgstr ""
+msgstr "西"
 
 #: ../panel-plugin/weather-data.c:545 ../panel-plugin/weather-translate.c:40
 msgid "W"
@@ -1226,7 +989,7 @@ msgstr "西"
 
 #: ../panel-plugin/weather-data.c:548
 msgid "North-West"
-msgstr ""
+msgstr "北西"
 
 #: ../panel-plugin/weather-data.c:548 ../panel-plugin/weather-translate.c:42
 msgid "NW"
@@ -1234,7 +997,7 @@ msgstr "北西"
 
 #: ../panel-plugin/weather-icon.c:134
 msgid "No icon theme!"
-msgstr ""
+msgstr "アイコンテーマがありません!"
 
 #: ../panel-plugin/weather-search.c:128 ../panel-plugin/weather-search.c:252
 msgid "Results"
@@ -1277,20 +1040,18 @@ msgstr "無名の地"
 #. * its numeric value.
 #.
 #: ../panel-plugin/weather-summary.c:71
-#, fuzzy, c-format
+#, c-format
 msgid "\t%s%s%s%s%s\n"
-msgstr ""
-"\t日の入り:\t%s\n"
-"\n"
+msgstr "\t%s%s%s%s%s\n"
 
 #: ../panel-plugin/weather-summary.c:261
 #, c-format
 msgid "Error downloading met.no logo image to %s, reason: %s\n"
-msgstr ""
+msgstr "met.no ロゴ画像 %s のダウンロードでエラーです。理由: %s\n"
 
 #: ../panel-plugin/weather-summary.c:263
 msgid "unknown"
-msgstr ""
+msgstr "不明"
 
 #: ../panel-plugin/weather-summary.c:348
 msgid "Coordinates\n"
@@ -1315,6 +1076,8 @@ msgid ""
 "\n"
 "Downloads\n"
 msgstr ""
+"\n"
+"ダウンロード情報\n"
 
 #: ../panel-plugin/weather-summary.c:358
 #, c-format
@@ -1325,6 +1088,11 @@ msgid ""
 "\tCurrent failed attempts: %d\n"
 "\n"
 msgstr ""
+"\t気象データ:\n"
+"\t最新:\t%s\n"
+"\t次回:\t%s\n"
+"\tこれまでの試行失敗回数: %d\n"
+"\n"
 
 #: ../panel-plugin/weather-summary.c:371
 #, c-format
@@ -1334,6 +1102,10 @@ msgid ""
 "\tNext:\t%s\n"
 "\tCurrent failed attempts: %d\n"
 msgstr ""
+"\t天文データ:\n"
+"\t最新:\t%s\n"
+"\t次回:\t%s\n"
+"\tこれまでの試行失敗回数: %d\n"
 
 #. calculation times
 #: ../panel-plugin/weather-summary.c:383
@@ -1341,18 +1113,20 @@ msgid ""
 "\n"
 "Times Used for Calculations\n"
 msgstr ""
+"\n"
+"予報時間帯\n"
 
 #: ../panel-plugin/weather-summary.c:386
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\tTemperatures, wind, atmosphere and cloud data calculated\n"
 "\tfor:\t\t%s\n"
 msgstr ""
-"\t気温、風、大気、および雲の情報は以下の日時の予報です:\n"
-"\t%s\n"
+"\t気温、風、気圧、および雲データの予報時刻\n"
+"\t\t\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:395
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "\tPrecipitation and the weather symbol have been calculated\n"
@@ -1362,8 +1136,8 @@ msgid ""
 msgstr ""
 "\n"
 "\t降水および天気マークは以下の時間帯の予報です:\n"
-"\t%s から\n"
-"\t%s まで\n"
+"\t\t\t%s から\n"
+"\t\t\t%s まで\n"
 
 #. sun and moon
 #: ../panel-plugin/weather-summary.c:406
@@ -1380,7 +1154,7 @@ msgstr "\t日の出:\t本日太陽は昇りません。\n"
 
 #: ../panel-plugin/weather-summary.c:412
 msgid "\tSunset:\t\tThe sun never sets today.\n"
-msgstr "\t日の入り:\t本日太陽は沈みません。\n"
+msgstr "\t日の入り:\t\t本日太陽は沈みません。\n"
 
 #: ../panel-plugin/weather-summary.c:416
 #, c-format
@@ -1425,19 +1199,16 @@ msgstr "\t月の入り:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:454
 msgid "\tData not available, will use sane default values for night and day.\n"
-msgstr ""
-"\tデータが利用できません。昼と夜の情報は妥当と思われるデフォルト値を利用しま"
-"す。\n"
+msgstr "\tデータが利用できません。昼と夜の情報は妥当と思われるデフォルト値を利用します。\n"
 
 #. temperatures
 #: ../panel-plugin/weather-summary.c:460
-#, fuzzy
 msgid ""
 "\n"
 "Temperatures\n"
 msgstr ""
 "\n"
-"気温\n"
+"温度\n"
 
 #: ../panel-plugin/weather-summary.c:461
 msgid "Temperature"
@@ -1445,12 +1216,11 @@ msgstr "気温"
 
 #: ../panel-plugin/weather-summary.c:462
 msgid "Dew point"
-msgstr ""
+msgstr "露点温度"
 
 #: ../panel-plugin/weather-summary.c:463
-#, fuzzy
 msgid "Apparent temperature"
-msgstr "気温"
+msgstr "体感温度"
 
 #. wind
 #: ../panel-plugin/weather-summary.c:466
@@ -1462,15 +1232,15 @@ msgstr ""
 "風\n"
 
 #: ../panel-plugin/weather-summary.c:471
-#, fuzzy, c-format
+#, c-format
 msgid "\tSpeed: %s %s (%s on the Beaufort scale)\n"
-msgstr "\t%s: %s (風力 %s)\n"
+msgstr "\t風速: %s %s (風力 %s)\n"
 
 #. wind direction
 #: ../panel-plugin/weather-summary.c:486
 #, c-format
 msgid "\tDirection: %s (%s%s)\n"
-msgstr ""
+msgstr "\t風向: %s (%s%s)\n"
 
 #. precipitation
 #: ../panel-plugin/weather-summary.c:494
@@ -1496,11 +1266,11 @@ msgstr ""
 
 #: ../panel-plugin/weather-summary.c:499
 msgid "Barometric pressure"
-msgstr ""
+msgstr "気圧"
 
 #: ../panel-plugin/weather-summary.c:500
 msgid "Relative humidity"
-msgstr ""
+msgstr "相対湿度"
 
 #. clouds
 #: ../panel-plugin/weather-summary.c:503
@@ -1521,7 +1291,6 @@ msgid "Low clouds"
 msgstr "下層雲"
 
 #: ../panel-plugin/weather-summary.c:506
-#, fuzzy
 msgid "Middle clouds"
 msgstr "中層雲"
 
@@ -1558,17 +1327,17 @@ msgstr "明日"
 #. TRANSLATORS: Please use \t as needed to properly align the values
 #: ../panel-plugin/weather-summary.c:580
 msgid "<b>Times used for calculations</b>\n"
-msgstr ""
+msgstr "<b>予報時間帯</b>\n"
 
 #: ../panel-plugin/weather-summary.c:582
 #, c-format
 msgid "Interval start:\t\t\t%s\n"
-msgstr ""
+msgstr "\t\t%s から\n"
 
 #: ../panel-plugin/weather-summary.c:585
 #, c-format
 msgid "Interval end:\t\t\t%s\n"
-msgstr ""
+msgstr "\t\t%s まで\n"
 
 #: ../panel-plugin/weather-summary.c:588
 #, c-format
@@ -1576,18 +1345,17 @@ msgid ""
 "Data calculated for:\t%s\n"
 "\n"
 msgstr ""
+"予報時刻:\t%s\n"
+"\n"
 
 #: ../panel-plugin/weather-summary.c:591
-#, fuzzy
 msgid "<b>Temperatures</b>\n"
-msgstr ""
-"\n"
-"気温\n"
+msgstr "<b>温度</b>\n"
 
 #: ../panel-plugin/weather-summary.c:592
 #, c-format
 msgid "Dew point:\t\t\t%s%s%s\n"
-msgstr ""
+msgstr "露点温度:\t\t%s%s%s\n"
 
 #: ../panel-plugin/weather-summary.c:593
 #, c-format
@@ -1595,18 +1363,17 @@ msgid ""
 "Apparent temperature:\t%s%s%s\n"
 "\n"
 msgstr ""
+"体感温度:\t\t%s%s%s\n"
+"\n"
 
 #: ../panel-plugin/weather-summary.c:596
-#, fuzzy
 msgid "<b>Atmosphere</b>\n"
-msgstr ""
-"\n"
-"大気\n"
+msgstr "<b>大気</b>\n"
 
 #: ../panel-plugin/weather-summary.c:597
 #, c-format
 msgid "Barometric pressure:\t%s%s%s\n"
-msgstr ""
+msgstr "気圧:\t%s%s%s\n"
 
 #: ../panel-plugin/weather-summary.c:598
 #, c-format
@@ -1614,56 +1381,50 @@ msgid ""
 "Relative humidity:\t\t%s%s%s\n"
 "\n"
 msgstr ""
+"相対湿度:\t\t%s%s%s\n"
+"\n"
 
 #: ../panel-plugin/weather-summary.c:600
-#, fuzzy
 msgid "<b>Precipitations</b>\n"
-msgstr ""
-"\n"
-"降水\n"
+msgstr "<b>降水</b>\n"
 
 #: ../panel-plugin/weather-summary.c:601
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "Amount:\t\t%s%s%s\n"
 "\n"
 msgstr ""
-"\t日の入り:\t%s\n"
+"降水量:\t\t%s%s%s\n"
 "\n"
 
 #: ../panel-plugin/weather-summary.c:603
-#, fuzzy
 msgid "<b>Clouds</b>\n"
-msgstr ""
-"\n"
-"雲\n"
+msgstr "<b>雲</b>\n"
 
 #: ../panel-plugin/weather-summary.c:604
-#, fuzzy, c-format
+#, c-format
 msgid "Fog:\t\t\t%s%s%s\n"
-msgstr ""
-"\t日の入り:\t%s\n"
-"\n"
+msgstr "霧:\t\t\t%s%s%s\n"
 
 #: ../panel-plugin/weather-summary.c:605
-#, fuzzy, c-format
+#, c-format
 msgid "Low clouds:\t\t%s%s%s\n"
-msgstr "全雲量"
+msgstr "下層雲:\t\t%s%s%s\n"
 
 #: ../panel-plugin/weather-summary.c:606
-#, fuzzy, c-format
+#, c-format
 msgid "Middle clouds:\t%s%s%s\n"
-msgstr "中層雲"
+msgstr "中層雲:\t\t%s%s%s\n"
 
 #: ../panel-plugin/weather-summary.c:607
-#, fuzzy, c-format
+#, c-format
 msgid "High clouds:\t\t%s%s%s\n"
-msgstr "上層雲"
+msgstr "上層雲:\t\t%s%s%s\n"
 
 #: ../panel-plugin/weather-summary.c:608
-#, fuzzy, c-format
+#, c-format
 msgid "Cloudiness:\t\t%s%s%s"
-msgstr "全雲量"
+msgstr "全雲量:\t\t%s%s%s"
 
 #. daytime headers
 #: ../panel-plugin/weather-summary.c:770
@@ -1676,20 +1437,19 @@ msgstr "日中"
 
 #: ../panel-plugin/weather-summary.c:772
 msgid "Evening"
-msgstr "夕方"
+msgstr "夜"
 
 #: ../panel-plugin/weather-summary.c:773
 msgid "Night"
-msgstr "夜"
+msgstr "深夜"
 
 #: ../panel-plugin/weather-summary.c:921
-#, fuzzy
 msgid "Weather Report"
-msgstr "%s の天気情報"
+msgstr "天気情報"
 
 #: ../panel-plugin/weather-summary.c:949
 msgid "Please set a location in the plugin settings."
-msgstr "プラグイン設定の場所を入力してください"
+msgstr "プラグイン設定の場所を設定してください"
 
 #: ../panel-plugin/weather-summary.c:951
 msgid "Currently no data available."
@@ -1898,14 +1658,17 @@ msgstr "雷を伴うみぞれ"
 msgid "Show current weather conditions"
 msgstr "現在の天気状況を表示します。"
 
-#~ msgid "_Add"
-#~ msgstr "追加(_A)"
+#~ msgid "International knots (kt)"
+#~ msgstr "国際ノット (kt)"
 
 #~ msgid "Speed"
 #~ msgstr "風速"
 
 #~ msgid "Direction"
 #~ msgstr "風向"
+
+#~ msgid "_Add"
+#~ msgstr "追加(_A)"
 
 #~ msgid "Please enter proxy settings"
 #~ msgstr "プロキシ設定を入力してください"
