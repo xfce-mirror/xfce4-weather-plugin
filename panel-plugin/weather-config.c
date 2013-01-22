@@ -527,7 +527,7 @@ create_location_page(xfceweather_dialog *dialog)
 
     /* altitude */
     hbox = gtk_hbox_new(FALSE, BORDER);
-    ADD_LABEL(_("_Altitude:"), sg_label);
+    ADD_LABEL(_("Altitu_de:"), sg_label);
     ADD_SPIN(dialog->spin_alt, -420, 10000, 1, dialog->pd->msl, 0, sg_spin);
     SET_TOOLTIP
         (dialog->spin_alt,
