@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce-weather-plugin 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-21 14:57+0900\n"
-"PO-Revision-Date: 2013-01-21 15:53+0900\n"
+"POT-Creation-Date: 2013-01-22 22:33+0900\n"
+"PO-Revision-Date: 2013-01-22 22:32+0900\n"
 "Last-Translator: Masato Hashimoto <cabezon.hashimoto@gmail.com>\n"
 "Language-Team: Japanese <xfce-users-jp@googlegroups.com>\n"
 "Language: ja\n"
@@ -344,9 +344,9 @@ msgstr "経度(_O):"
 msgid "Longitude specifies the east-west position of a point on the Earth's surface. If you change this value manually, you should provide the correct altitude too."
 msgstr "経度には地球上の東西方向の位置を指定します。この値を直接変更した場合、海抜にも正しい値を設定してください。"
 
-#: ../panel-plugin/weather-config.c:530
-msgid "_Altitude:"
-msgstr "海抜(_A):"
+#: ../panel-plugin/weather-config.c:530 ../panel-plugin/weather-config.c:971
+msgid "Altitu_de:"
+msgstr "海抜(_D):"
 
 #: ../panel-plugin/weather-config.c:534
 msgid ""
@@ -533,10 +533,6 @@ msgstr "ミリメートル (mm)"
 #: ../panel-plugin/weather-config.c:966
 msgid "Inches (in)"
 msgstr "インチ (in)"
-
-#: ../panel-plugin/weather-config.c:971
-msgid "Altitu_de:"
-msgstr "海抜(_D):"
 
 #: ../panel-plugin/weather-config.c:974
 msgid "Meters (m)"
@@ -1122,7 +1118,7 @@ msgid ""
 "\tTemperatures, wind, atmosphere and cloud data calculated\n"
 "\tfor:\t\t%s\n"
 msgstr ""
-"\t気温、風、気圧、および雲データの予報時刻\n"
+"\t気温、風、気圧、および雲データの予報日時\n"
 "\t\t\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:395
@@ -1324,142 +1320,146 @@ msgstr "今日"
 msgid "Tomorrow"
 msgstr "明日"
 
-#. TRANSLATORS: Please use \t as needed to properly align the values
-#: ../panel-plugin/weather-summary.c:580
+#. TRANSLATORS: Please use spaces as needed or desired to properly
+#. align the values; Monospace font is enforced with <tt> tags for
+#. alignment, and the text is enclosed in <small> tags because
+#. that looks much better and saves space.
+#.
+#: ../panel-plugin/weather-summary.c:584
 msgid "<b>Times used for calculations</b>\n"
 msgstr "<b>予報時間帯</b>\n"
 
-#: ../panel-plugin/weather-summary.c:582
+#: ../panel-plugin/weather-summary.c:586
 #, c-format
-msgid "Interval start:\t\t\t%s\n"
-msgstr "\t\t%s から\n"
-
-#: ../panel-plugin/weather-summary.c:585
-#, c-format
-msgid "Interval end:\t\t\t%s\n"
-msgstr "\t\t%s まで\n"
-
-#: ../panel-plugin/weather-summary.c:588
-#, c-format
-msgid ""
-"Data calculated for:\t%s\n"
-"\n"
-msgstr ""
-"予報時刻:\t%s\n"
-"\n"
-
-#: ../panel-plugin/weather-summary.c:591
-msgid "<b>Temperatures</b>\n"
-msgstr "<b>温度</b>\n"
+msgid "<tt><small>Interval start:       %s</small></tt>\n"
+msgstr "<tt><small>          %s から</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:592
 #, c-format
-msgid "Dew point:\t\t\t%s%s%s\n"
-msgstr "露点温度:\t\t%s%s%s\n"
-
-#: ../panel-plugin/weather-summary.c:593
-#, c-format
-msgid ""
-"Apparent temperature:\t%s%s%s\n"
-"\n"
-msgstr ""
-"体感温度:\t\t%s%s%s\n"
-"\n"
-
-#: ../panel-plugin/weather-summary.c:596
-msgid "<b>Atmosphere</b>\n"
-msgstr "<b>大気</b>\n"
-
-#: ../panel-plugin/weather-summary.c:597
-#, c-format
-msgid "Barometric pressure:\t%s%s%s\n"
-msgstr "気圧:\t%s%s%s\n"
+msgid "<tt><small>Interval end:         %s</small></tt>\n"
+msgstr "<tt><small>          %s まで</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:598
 #, c-format
 msgid ""
-"Relative humidity:\t\t%s%s%s\n"
+"<tt><small>Data calculated for:  %s</small></tt>\n"
 "\n"
 msgstr ""
-"相対湿度:\t\t%s%s%s\n"
+"<tt><small>予報日時: %s</small></tt>\n"
 "\n"
-
-#: ../panel-plugin/weather-summary.c:600
-msgid "<b>Precipitations</b>\n"
-msgstr "<b>降水</b>\n"
-
-#: ../panel-plugin/weather-summary.c:601
-#, c-format
-msgid ""
-"Amount:\t\t%s%s%s\n"
-"\n"
-msgstr ""
-"降水量:\t\t%s%s%s\n"
-"\n"
-
-#: ../panel-plugin/weather-summary.c:603
-msgid "<b>Clouds</b>\n"
-msgstr "<b>雲</b>\n"
 
 #: ../panel-plugin/weather-summary.c:604
-#, c-format
-msgid "Fog:\t\t\t%s%s%s\n"
-msgstr "霧:\t\t\t%s%s%s\n"
+msgid "<b>Temperatures</b>\n"
+msgstr "<b>温度</b>\n"
 
 #: ../panel-plugin/weather-summary.c:605
 #, c-format
-msgid "Low clouds:\t\t%s%s%s\n"
-msgstr "下層雲:\t\t%s%s%s\n"
+msgid "<tt><small>Dew point:            %s%s%s</small></tt>\n"
+msgstr "<tt><small>露点温度: %s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:606
+#: ../panel-plugin/weather-summary.c:609
 #, c-format
-msgid "Middle clouds:\t%s%s%s\n"
-msgstr "中層雲:\t\t%s%s%s\n"
+msgid ""
+"<tt><small>Apparent temperature: %s%s%s</small></tt>\n"
+"\n"
+msgstr ""
+"<tt><small>体感温度: %s%s%s</small></tt>\n"
+"\n"
 
-#: ../panel-plugin/weather-summary.c:607
-#, c-format
-msgid "High clouds:\t\t%s%s%s\n"
-msgstr "上層雲:\t\t%s%s%s\n"
+#: ../panel-plugin/weather-summary.c:614
+msgid "<b>Atmosphere</b>\n"
+msgstr "<b>大気</b>\n"
 
-#: ../panel-plugin/weather-summary.c:608
+#: ../panel-plugin/weather-summary.c:615
 #, c-format
-msgid "Cloudiness:\t\t%s%s%s"
-msgstr "全雲量:\t\t%s%s%s"
+msgid "<tt><small>Barometric pressure:  %s%s%s</small></tt>\n"
+msgstr "<tt><small>気圧:     %s%s%s</small></tt>\n"
+
+#: ../panel-plugin/weather-summary.c:619
+#, c-format
+msgid ""
+"<tt><small>Relative humidity:    %s%s%s</small></tt>\n"
+"\n"
+msgstr ""
+"<tt><small>相対湿度: %s%s%s</small></tt>\n"
+"\n"
+
+#: ../panel-plugin/weather-summary.c:624
+msgid "<b>Precipitations</b>\n"
+msgstr "<b>降水</b>\n"
+
+#: ../panel-plugin/weather-summary.c:625
+#, c-format
+msgid ""
+"<tt><small>Amount:        %s%s%s</small></tt>\n"
+"\n"
+msgstr ""
+"<tt><small>降水量:   %s%s%s</small></tt>\n"
+"\n"
+
+#: ../panel-plugin/weather-summary.c:630
+msgid "<b>Clouds</b>\n"
+msgstr "<b>雲</b>\n"
+
+#: ../panel-plugin/weather-summary.c:631
+#, c-format
+msgid "<tt><small>Fog:           %s%s%s</small></tt>\n"
+msgstr "<tt><small>霧:       %s%s%s</small></tt>\n"
+
+#: ../panel-plugin/weather-summary.c:634
+#, c-format
+msgid "<tt><small>Low clouds:    %s%s%s</small></tt>\n"
+msgstr "<tt><small>下層雲量: %s%s%s</small></tt>\n"
+
+#: ../panel-plugin/weather-summary.c:637
+#, c-format
+msgid "<tt><small>Middle clouds: %s%s%s</small></tt>\n"
+msgstr "<tt><small>中層雲量: %s%s%s</small></tt>\n"
+
+#: ../panel-plugin/weather-summary.c:640
+#, c-format
+msgid "<tt><small>High clouds:   %s%s%s</small></tt>\n"
+msgstr "<tt><small>上層雲量: %s%s%s</small></tt>\n"
+
+#: ../panel-plugin/weather-summary.c:643
+#, c-format
+msgid "<tt><small>Cloudiness:    %s%s%s</small></tt>"
+msgstr "<tt><small>全雲量:   %s%s%s</small></tt>"
 
 #. daytime headers
-#: ../panel-plugin/weather-summary.c:770
+#: ../panel-plugin/weather-summary.c:807
 msgid "Morning"
 msgstr "朝"
 
-#: ../panel-plugin/weather-summary.c:771
+#: ../panel-plugin/weather-summary.c:808
 msgid "Afternoon"
 msgstr "日中"
 
-#: ../panel-plugin/weather-summary.c:772
+#: ../panel-plugin/weather-summary.c:809
 msgid "Evening"
 msgstr "夜"
 
-#: ../panel-plugin/weather-summary.c:773
+#: ../panel-plugin/weather-summary.c:810
 msgid "Night"
 msgstr "深夜"
 
-#: ../panel-plugin/weather-summary.c:921
+#: ../panel-plugin/weather-summary.c:958
 msgid "Weather Report"
 msgstr "天気情報"
 
-#: ../panel-plugin/weather-summary.c:949
+#: ../panel-plugin/weather-summary.c:986
 msgid "Please set a location in the plugin settings."
 msgstr "プラグイン設定の場所を設定してください"
 
-#: ../panel-plugin/weather-summary.c:951
+#: ../panel-plugin/weather-summary.c:988
 msgid "Currently no data available."
 msgstr "現在利用可能なデータがありません。"
 
-#: ../panel-plugin/weather-summary.c:963
+#: ../panel-plugin/weather-summary.c:1000
 msgid "_Forecast"
 msgstr "予報(_F)"
 
-#: ../panel-plugin/weather-summary.c:966
+#: ../panel-plugin/weather-summary.c:1003
 msgid "_Details"
 msgstr "詳細(_D)"
 
@@ -1657,6 +1657,37 @@ msgstr "雷を伴うみぞれ"
 #: ../panel-plugin/weather.desktop.in.h:2
 msgid "Show current weather conditions"
 msgstr "現在の天気状況を表示します。"
+
+#~ msgid "_Altitude:"
+#~ msgstr "海抜(_A):"
+
+#~ msgid "Interval start:\t\t\t%s\n"
+#~ msgstr "\t\t%s から\n"
+
+#~ msgid "Interval end:\t\t\t%s\n"
+#~ msgstr "\t\t%s まで\n"
+
+#~ msgid "Dew point:\t\t\t%s%s%s\n"
+#~ msgstr "露点温度:\t\t%s%s%s\n"
+
+#~ msgid ""
+#~ "Amount:\t\t%s%s%s\n"
+#~ "\n"
+#~ msgstr ""
+#~ "降水量:\t\t%s%s%s\n"
+#~ "\n"
+
+#~ msgid "Fog:\t\t\t%s%s%s\n"
+#~ msgstr "霧:\t\t\t%s%s%s\n"
+
+#~ msgid "Low clouds:\t\t%s%s%s\n"
+#~ msgstr "下層雲:\t\t%s%s%s\n"
+
+#~ msgid "High clouds:\t\t%s%s%s\n"
+#~ msgstr "上層雲:\t\t%s%s%s\n"
+
+#~ msgid "Cloudiness:\t\t%s%s%s"
+#~ msgstr "全雲量:\t\t%s%s%s"
 
 #~ msgid "International knots (kt)"
 #~ msgstr "国際ノット (kt)"
