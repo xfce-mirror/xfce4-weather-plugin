@@ -102,10 +102,13 @@ lnk_clicked(GtkTextTag *tag,
 #define APPEND_TOOLTIP_ITEM(description, item)                  \
     value = get_data(fcdata, data->units, item,                 \
                      data->round, data->night_time);            \
-    unit = get_unit(data->units, item);                         \
-    g_string_append_printf(text, description, value,            \
-                           strcmp(unit, "°") ? " " : "",        \
-                           unit);                               \
+    if (strcmp(value, "")) {                                    \
+        unit = get_unit(data->units, item);                     \
+        g_string_append_printf(text, description, value,        \
+                               strcmp(unit, "°") ? " " : "",    \
+                               unit);                           \
+    } else                                                      \
+        g_string_append_printf(text, description, "-", "", ""); \
     g_free(value);
 
 

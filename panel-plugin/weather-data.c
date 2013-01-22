@@ -32,6 +32,8 @@
 #define NIGHT_TIME_START 21
 #define NIGHT_TIME_END 5
 
+/* If some value is not present or cannot be computed, return this instead */
+#define INVALID_VALUE -9999
 
 #define CHK_NULL(s) ((s) ? g_strdup(s) : g_strdup(""))
 
@@ -129,10 +131,14 @@ timeslice_is_interval(xml_time *timeslice)
 static gdouble
 calc_dewpoint(const xml_location *loc)
 {
-    gdouble temp = string_to_double(loc->temperature_value, 0);
-    gdouble humidity = string_to_double(loc->humidity_value, 0);
-    gdouble val = log(humidity / 100);
+    gdouble temp, humidity, val;
 
+    if (G_UNLIKELY(loc->humidity_value == NULL))
+        return INVALID_VALUE;
+
+    temp = string_to_double(loc->temperature_value, 0);
+    humidity = string_to_double(loc->humidity_value, 0);
+    val = log(humidity / 100);
     return (241.2 * val + 4222.03716 * temp / (241.2 + temp))
         / (17.5043 - val - 17.5043 * temp / (241.2 + temp));
 }
@@ -227,7 +233,7 @@ calc_apparent_temperature(const xml_location *loc,
             /* dew point needs to be above a certain limit for
                valid results, see
                http://www.weatheroffice.gc.ca/mainmenu/faq_e.html#weather5 */
-            if (dp < 0)
+            if (dp < 0 || dp == INVALID_VALUE)
                 return temp;
 
             /* dew point needs to be converted to Kelvin (easy job ;-) */
@@ -339,6 +345,8 @@ get_data(const xml_time *timeslice,
 
     case DEWPOINT:
         val = calc_dewpoint(loc);
+        if (val == INVALID_VALUE)
+            return g_strdup("");
         if (units->temperature == FAHRENHEIT)
             val = val * 9.0 / 5.0 + 32.0;
         return g_strdup_printf(ROUND_TO_INT("%.1f"), val);
