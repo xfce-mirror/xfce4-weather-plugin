@@ -576,36 +576,73 @@ forecast_cell_get_tooltip_text(plugin_data *data,
     gchar *result, *value;
     const gchar *unit;
 
-    /* TRANSLATORS: Please use \t as needed to properly align the values */
+    /* TRANSLATORS: Please use spaces as needed or desired to properly
+       align the values; Monospace font is enforced with <tt> tags for
+       alignment, and the text is enclosed in <small> tags because
+       that looks much better and saves space.
+     */
     text = g_string_new(_("<b>Times used for calculations</b>\n"));
     value = format_date(fcdata->start, NULL, TRUE);
-    g_string_append_printf(text, _("Interval start:\t\t\t%s\n"), value);
+    g_string_append_printf(text, _("<tt><small>"
+                                   "Interval start:       %s"
+                                   "</small></tt>\n"),
+                           value);
     g_free(value);
     value = format_date(fcdata->end, NULL, TRUE);
-    g_string_append_printf(text, _("Interval end:\t\t\t%s\n"), value);
+    g_string_append_printf(text, _("<tt><small>"
+                                   "Interval end:         %s"
+                                   "</small></tt>\n"),
+                           value);
     g_free(value);
     value = format_date(fcdata->point, NULL, TRUE);
-    g_string_append_printf(text, _("Data calculated for:\t%s\n\n"), value);
+    g_string_append_printf(text, _("<tt><small>"
+                                   "Data calculated for:  %s"
+                                   "</small></tt>\n\n"),
+                           value);
     g_free(value);
 
     g_string_append(text, _("<b>Temperatures</b>\n"));
-    APPEND_TOOLTIP_ITEM(_("Dew point:\t\t\t%s%s%s\n"), DEWPOINT);
-    APPEND_TOOLTIP_ITEM(_("Apparent temperature:\t%s%s%s\n\n"),
+    APPEND_TOOLTIP_ITEM(_("<tt><small>"
+                          "Dew point:            %s%s%s"
+                          "</small></tt>\n"),
+                        DEWPOINT);
+    APPEND_TOOLTIP_ITEM(_("<tt><small>"
+                          "Apparent temperature: %s%s%s"
+                          "</small></tt>\n\n"),
                         APPARENT_TEMPERATURE);
 
     g_string_append(text, _("<b>Atmosphere</b>\n"));
-    APPEND_TOOLTIP_ITEM(_("Barometric pressure:\t%s%s%s\n"), PRESSURE);
-    APPEND_TOOLTIP_ITEM(_("Relative humidity:\t\t%s%s%s\n\n"), HUMIDITY);
+    APPEND_TOOLTIP_ITEM(_("<tt><small>"
+                          "Barometric pressure:  %s%s%s"
+                          "</small></tt>\n"),
+                        PRESSURE);
+    APPEND_TOOLTIP_ITEM(_("<tt><small>"
+                          "Relative humidity:    %s%s%s"
+                          "</small></tt>\n\n"),
+                        HUMIDITY);
 
     g_string_append(text, _("<b>Precipitations</b>\n"));
-    APPEND_TOOLTIP_ITEM(_("Amount:\t\t%s%s%s\n\n"), PRECIPITATIONS);
+    APPEND_TOOLTIP_ITEM(_("<tt><small>"
+                          "Amount:        %s%s%s"
+                          "</small></tt>\n\n"),
+                        PRECIPITATIONS);
 
     g_string_append(text, _("<b>Clouds</b>\n"));
-    APPEND_TOOLTIP_ITEM(_("Fog:\t\t\t%s%s%s\n"), FOG);
-    APPEND_TOOLTIP_ITEM(_("Low clouds:\t\t%s%s%s\n"), CLOUDS_LOW);
-    APPEND_TOOLTIP_ITEM(_("Middle clouds:\t%s%s%s\n"), CLOUDS_MID);
-    APPEND_TOOLTIP_ITEM(_("High clouds:\t\t%s%s%s\n"), CLOUDS_HIGH);
-    APPEND_TOOLTIP_ITEM(_("Cloudiness:\t\t%s%s%s"), CLOUDINESS);
+    APPEND_TOOLTIP_ITEM(_("<tt><small>"
+                          "Fog:           %s%s%s"
+                          "</small></tt>\n"), FOG);
+    APPEND_TOOLTIP_ITEM(_("<tt><small>"
+                          "Low clouds:    %s%s%s"
+                          "</small></tt>\n"), CLOUDS_LOW);
+    APPEND_TOOLTIP_ITEM(_("<tt><small>"
+                          "Middle clouds: %s%s%s"
+                          "</small></tt>\n"), CLOUDS_MID);
+    APPEND_TOOLTIP_ITEM(_("<tt><small>"
+                          "High clouds:   %s%s%s"
+                          "</small></tt>\n"), CLOUDS_HIGH);
+    APPEND_TOOLTIP_ITEM(_("<tt><small>"
+                          "Cloudiness:    %s%s%s"
+                          "</small></tt>"), CLOUDINESS);
 
     /* Free GString only and return its character data */
     result = text->str;
