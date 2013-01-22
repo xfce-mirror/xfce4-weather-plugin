@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-weather-plugin 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-20 20:09+0100\n"
-"PO-Revision-Date: 2013-01-22 00:42+0100\n"
+"POT-Creation-Date: 2013-01-22 13:43+0100\n"
+"PO-Revision-Date: 2013-01-22 15:34+0100\n"
 "Last-Translator: Harald Judt <h.judt@gmx.at>\n"
 "Language-Team: German <xfce-i18n@xfce.org>\n"
 "Language: de\n"
@@ -96,7 +96,7 @@ msgstr ""
 
 #: ../panel-plugin/weather.c:466
 msgid "Error parsing astronomical data!"
-msgstr "Fehler beim Verarbeiten der astronomische Daten!"
+msgstr "Fehler beim Verarbeiten der astronomischen Daten!"
 
 #: ../panel-plugin/weather.c:468
 #, c-format
@@ -378,8 +378,8 @@ msgstr ""
 "Erdoberfläche an. Wenn Sie diesen Wert manuell ändern, sollten Sie auch die "
 "korrekte Höhenlage angeben."
 
-#: ../panel-plugin/weather-config.c:530
-msgid "_Altitude:"
+#: ../panel-plugin/weather-config.c:530 ../panel-plugin/weather-config.c:971
+msgid "Altitu_de:"
 msgstr "Höhenla_ge:"
 
 #: ../panel-plugin/weather-config.c:534
@@ -687,10 +687,6 @@ msgstr "Millimeter (mm)"
 msgid "Inches (in)"
 msgstr "Zoll (in)"
 
-#: ../panel-plugin/weather-config.c:971
-msgid "Altitu_de:"
-msgstr "Höhenla_ge:"
-
 #: ../panel-plugin/weather-config.c:974
 msgid "Meters (m)"
 msgstr "Meter (m)"
@@ -837,7 +833,8 @@ msgid ""
 "Check to round values everywhere except on the details page in the summary "
 "window."
 msgstr ""
-"Runde alle Werte außer auf der Details-Seite im Fenster mit den Vorhersagen."
+"Runde die meisten Werte, ausgenommen die auf der Details-Seite im Fenster "
+"mit den Vorhersagen."
 
 #: ../panel-plugin/weather-config.c:1264 ../panel-plugin/weather-config.c:1728
 msgid "Select _font"
@@ -861,7 +858,7 @@ msgid ""
 "Air temperature, sometimes referred to as dry-bulb temperature. Measured by "
 "a thermometer that is freely exposed to the air, yet shielded from radiation "
 "and moisture."
-msgstr ""
+msgstr "Lufttemperatur (Trockentemperatur, Temperatur bei ungesättigter Luft) wird von einem Thermometer gemessen, welches frei der Luft ausgesetzt, dabei jedoch von Strahlung und Feuchtigkeit abgeschirmt ist."
 
 #: ../panel-plugin/weather-config.c:1429
 msgid ""
@@ -893,13 +890,13 @@ msgstr ""
 msgid ""
 "This gives the cardinal direction (North, East, South, West) the wind is "
 "coming from."
-msgstr ""
+msgstr "Gibt die Himmelsrichtung an (Norden, Osten, Süden, Westen), aus der der Wind kommt."
 
 #: ../panel-plugin/weather-config.c:1458
 msgid ""
 "This gives the direction the wind is coming from in azimuth degrees (North = "
 "0°, East = 90°, South = 180° and West = 270°)."
-msgstr ""
+msgstr "Zeigt die Richtung, aus der der Wind kommt, in Grad (Norden = 0°, Osten = 90°, Süden = 180° und Westen = 270°)."
 
 #: ../panel-plugin/weather-config.c:1463
 msgid ""
@@ -1622,142 +1619,142 @@ msgstr "Heute"
 msgid "Tomorrow"
 msgstr "Morgen"
 
-#. TRANSLATORS: Please use \t as needed to properly align the values
-#: ../panel-plugin/weather-summary.c:580
+#. TRANSLATORS: Please use spaces as needed or desired to properly
+#. align the values; Monospace font is enforced with <tt> tags for
+#. alignment, and the text is enclosed in <small> tags because
+#. that looks much better and saves space.
+#.
+#: ../panel-plugin/weather-summary.c:584
 msgid "<b>Times used for calculations</b>\n"
 msgstr "<b>Zeitpunkte und -intervalle für Berechnungen</b>\n"
 
-#: ../panel-plugin/weather-summary.c:582
+#: ../panel-plugin/weather-summary.c:586
 #, c-format
-msgid "Interval start:\t\t\t%s\n"
-msgstr "Intervallstart:\t\t\t%s\n"
-
-#: ../panel-plugin/weather-summary.c:585
-#, c-format
-msgid "Interval end:\t\t\t%s\n"
-msgstr "Intervallende:\t\t\t%s\n"
-
-#: ../panel-plugin/weather-summary.c:588
-#, c-format
-msgid ""
-"Data calculated for:\t%s\n"
-"\n"
-msgstr ""
-"Daten berechnet für:\t%s\n"
-"\n"
-
-#: ../panel-plugin/weather-summary.c:591
-msgid "<b>Temperatures</b>\n"
-msgstr "<b>Temperaturen</b>\n"
+msgid "<tt><small>Interval start:       %s</small></tt>\n"
+msgstr "<tt><small>Intervallstart:       %s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:592
 #, c-format
-msgid "Dew point:\t\t\t%s%s%s\n"
-msgstr "Taupunkt:\t\t\t%s%s%s\n"
-
-#: ../panel-plugin/weather-summary.c:593
-#, c-format
-msgid ""
-"Apparent temperature:\t%s%s%s\n"
-"\n"
-msgstr ""
-"Gefühlte Temperatur:\t%s%s%s\n"
-"\n"
-
-#: ../panel-plugin/weather-summary.c:596
-msgid "<b>Atmosphere</b>\n"
-msgstr "<b>Atmosphäre</b>\n"
-
-#: ../panel-plugin/weather-summary.c:597
-#, c-format
-msgid "Barometric pressure:\t%s%s%s\n"
-msgstr "Barometrischer Druck:\t\t%s%s%s\n"
+msgid "<tt><small>Interval end:         %s</small></tt>\n"
+msgstr "<tt><small>Intervallende:        %s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:598
 #, c-format
 msgid ""
-"Relative humidity:\t\t%s%s%s\n"
+"<tt><small>Data calculated for:  %s</small></tt>\n"
 "\n"
-msgstr ""
-"Relative Luftfeuchtigkeit:\t%s%s%s\n"
-"\n"
-
-#: ../panel-plugin/weather-summary.c:600
-msgid "<b>Precipitations</b>\n"
-msgstr "<b>Niederschlag</b>\n"
-
-#: ../panel-plugin/weather-summary.c:601
-#, c-format
-msgid ""
-"Amount:\t\t%s%s%s\n"
-"\n"
-msgstr ""
-"Menge:\t\t\t\t%s%s%s\n"
-"\n"
-
-#: ../panel-plugin/weather-summary.c:603
-msgid "<b>Clouds</b>\n"
-msgstr "<b>Wolken</b>\n"
+msgstr "<tt><small>Daten berechnet für:  %s</small></tt>\n\n"
 
 #: ../panel-plugin/weather-summary.c:604
-#, c-format
-msgid "Fog:\t\t\t%s%s%s\n"
-msgstr "Nebel:\t\t\t\t%s%s%s\n"
+msgid "<b>Temperatures</b>\n"
+msgstr "<b>Temperaturen</b>\n"
 
 #: ../panel-plugin/weather-summary.c:605
 #, c-format
-msgid "Low clouds:\t\t%s%s%s\n"
-msgstr "Tiefe Wolken:\t\t\t%s%s%s\n"
+msgid "<tt><small>Dew point:            %s%s%s</small></tt>\n"
+msgstr "<tt><small>Taupunkt:             %s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:606
+#: ../panel-plugin/weather-summary.c:609
 #, c-format
-msgid "Middle clouds:\t%s%s%s\n"
-msgstr "Mittelhohe Wolken:\t\t%s%s%s\n"
+msgid ""
+"<tt><small>Apparent temperature: %s%s%s</small></tt>\n"
+"\n"
+msgstr ""
+"<tt><small>Gefühlte Temperatur:  %s%s%s</small></tt>\n"
+"\n"
 
-#: ../panel-plugin/weather-summary.c:607
-#, c-format
-msgid "High clouds:\t\t%s%s%s\n"
-msgstr "Hohe Wolken:\t\t\t%s%s%s\n"
+#: ../panel-plugin/weather-summary.c:614
+msgid "<b>Atmosphere</b>\n"
+msgstr "<b>Atmosphäre</b>\n"
 
-#: ../panel-plugin/weather-summary.c:608
+#: ../panel-plugin/weather-summary.c:615
 #, c-format
-msgid "Cloudiness:\t\t%s%s%s"
-msgstr "Bewölkung:\t\t\t%s%s%s"
+msgid "<tt><small>Barometric pressure:  %s%s%s</small></tt>\n"
+msgstr "<tt><small>Barometrischer Druck:      %s%s%s</small></tt>\n"
+
+#: ../panel-plugin/weather-summary.c:619
+#, c-format
+msgid ""
+"<tt><small>Relative humidity:    %s%s%s</small></tt>\n"
+"\n"
+msgstr ""
+"<tt><small>Relative Luftfeuchtigkeit: %s%s%s</small></tt>\n"
+"\n"
+
+#: ../panel-plugin/weather-summary.c:624
+msgid "<b>Precipitations</b>\n"
+msgstr "<b>Niederschlag</b>\n"
+
+#: ../panel-plugin/weather-summary.c:625
+#, c-format
+msgid ""
+"<tt><small>Amount:        %s%s%s</small></tt>\n"
+"\n"
+msgstr "<tt><small>Menge:                %s%s%s</small></tt>\n\n"
+
+#: ../panel-plugin/weather-summary.c:630
+msgid "<b>Clouds</b>\n"
+msgstr "<b>Wolken</b>\n"
+
+#: ../panel-plugin/weather-summary.c:631
+#, c-format
+msgid "<tt><small>Fog:           %s%s%s</small></tt>\n"
+msgstr "<tt><small>Nebel:                %s%s%s</small></tt>\n"
+
+#: ../panel-plugin/weather-summary.c:634
+#, c-format
+msgid "<tt><small>Low clouds:    %s%s%s</small></tt>\n"
+msgstr "<tt><small>Tiefe Wolken:         %s%s%s</small></tt>\n"
+
+#: ../panel-plugin/weather-summary.c:637
+#, c-format
+msgid "<tt><small>Middle clouds: %s%s%s</small></tt>\n"
+msgstr "<tt><small>Mittelhohe Wolken:    %s%s%s</small></tt>\n"
+
+#: ../panel-plugin/weather-summary.c:640
+#, c-format
+msgid "<tt><small>High clouds:   %s%s%s</small></tt>\n"
+msgstr "<tt><small>Hohe Wolken:          %s%s%s</small></tt>\n"
+
+#: ../panel-plugin/weather-summary.c:643
+#, c-format
+msgid "<tt><small>Cloudiness:    %s%s%s</small></tt>"
+msgstr "<tt><small>Bewölkung:            %s%s%s</small></tt>"
 
 #. daytime headers
-#: ../panel-plugin/weather-summary.c:770
+#: ../panel-plugin/weather-summary.c:807
 msgid "Morning"
 msgstr "Vormittags"
 
-#: ../panel-plugin/weather-summary.c:771
+#: ../panel-plugin/weather-summary.c:808
 msgid "Afternoon"
 msgstr "Nachmittags"
 
-#: ../panel-plugin/weather-summary.c:772
+#: ../panel-plugin/weather-summary.c:809
 msgid "Evening"
 msgstr "Abends"
 
-#: ../panel-plugin/weather-summary.c:773
+#: ../panel-plugin/weather-summary.c:810
 msgid "Night"
 msgstr "Nachts"
 
-#: ../panel-plugin/weather-summary.c:921
+#: ../panel-plugin/weather-summary.c:958
 msgid "Weather Report"
 msgstr "Wetterbericht"
 
-#: ../panel-plugin/weather-summary.c:949
+#: ../panel-plugin/weather-summary.c:986
 msgid "Please set a location in the plugin settings."
 msgstr "Bitte einen Ort in den Plugin-Einstellungen angeben."
 
-#: ../panel-plugin/weather-summary.c:951
+#: ../panel-plugin/weather-summary.c:988
 msgid "Currently no data available."
 msgstr "Derzeit keine Daten verfügbar."
 
-#: ../panel-plugin/weather-summary.c:963
+#: ../panel-plugin/weather-summary.c:1000
 msgid "_Forecast"
 msgstr "_Vorhersage"
 
-#: ../panel-plugin/weather-summary.c:966
+#: ../panel-plugin/weather-summary.c:1003
 msgid "_Details"
 msgstr "_Details"
 
@@ -1954,6 +1951,37 @@ msgstr "Schneeregen mit Gewitter"
 #: ../panel-plugin/weather.desktop.in.h:2
 msgid "Show current weather conditions"
 msgstr "Zeigt das aktuelle Wetter"
+
+#~ msgid "_Altitude:"
+#~ msgstr "Höhenla_ge:"
+
+#~ msgid "Interval start:\t\t\t%s\n"
+#~ msgstr "Intervallstart:\t\t\t%s\n"
+
+#~ msgid "Interval end:\t\t\t%s\n"
+#~ msgstr "Intervallende:\t\t\t%s\n"
+
+#~ msgid "Dew point:\t\t\t%s%s%s\n"
+#~ msgstr "Taupunkt:\t\t\t%s%s%s\n"
+
+#~ msgid ""
+#~ "Amount:\t\t%s%s%s\n"
+#~ "\n"
+#~ msgstr ""
+#~ "Menge:\t\t\t\t%s%s%s\n"
+#~ "\n"
+
+#~ msgid "Fog:\t\t\t%s%s%s\n"
+#~ msgstr "Nebel:\t\t\t\t%s%s%s\n"
+
+#~ msgid "Low clouds:\t\t%s%s%s\n"
+#~ msgstr "Tiefe Wolken:\t\t\t%s%s%s\n"
+
+#~ msgid "High clouds:\t\t%s%s%s\n"
+#~ msgstr "Hohe Wolken:\t\t\t%s%s%s\n"
+
+#~ msgid "Cloudiness:\t\t%s%s%s"
+#~ msgstr "Bewölkung:\t\t\t%s%s%s"
 
 #~ msgid "_Add"
 #~ msgstr "Hin_zufügen"
