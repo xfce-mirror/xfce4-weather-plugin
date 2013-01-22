@@ -928,7 +928,7 @@ create_units_page(xfceweather_dialog *dialog)
 
     /* atmospheric pressure */
     hbox = gtk_hbox_new(FALSE, BORDER);
-    ADD_LABEL(_("Atmospheric _pressure:"), sg_label);
+    ADD_LABEL(_("Barometric _pressure:"), sg_label);
     ADD_COMBO(dialog->combo_unit_pressure);
     ADD_COMBO_VALUE(dialog->combo_unit_pressure,
                     _("Hectopascals (hPa)"));
