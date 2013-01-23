@@ -474,7 +474,21 @@ cb_astro_update(SoupSession *session,
         data->astro_update->attempt++;
         data->astro_update->next = calc_next_download_time(data->astro_update,
                                                            now_t);
+
+        /* invalidate obsolete sunrise/sunset data */
+        if (data->astrodata != NULL &&
+            difftime(data->astrodata->sunset, now_t) < 0 &&
+            difftime(data->astrodata->sunrise, now_t) < 0) {
+            xml_astro_free(data->astrodata);
+            data->astrodata = NULL;
+            weather_debug("Obsolete astronomical data has been invalidated.");
+        }
     }
+
+    /* update icon */
+    data->night_time = is_night_time(data->astrodata);
+    update_icon(data);
+
     schedule_next_wakeup(data);
     weather_dump(weather_dump_astrodata, data->astrodata);
 }
