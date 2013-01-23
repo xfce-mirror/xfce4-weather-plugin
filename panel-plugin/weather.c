@@ -1499,7 +1499,8 @@ weather_get_tooltip_text(const plugin_data *data)
              * into account the possible size constraints, the centered
              * vertical alignment of the icon - which unfortunately cannot
              * be changed easily - and try to make it compact and look
-             * good!
+             * good! The missing space after "%son the ..." is intentional,
+             * it is included in the %s.
              */
             (_("<b><span size=\"large\">%s</span></b> "
                "<span size=\"medium\">(%s)</span>\n"
