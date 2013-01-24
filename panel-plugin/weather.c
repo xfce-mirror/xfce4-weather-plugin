@@ -1639,34 +1639,35 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
 
     data->labels = g_array_new(FALSE, TRUE, sizeof(data_types));
 
+    /* create panel toggle button which will contain all other widgets */
+    data->button = xfce_create_panel_toggle_button();
+    gtk_container_add(GTK_CONTAINER(plugin), data->button);
+    xfce_panel_plugin_add_action_widget(plugin, data->button);
+    gtk_widget_show(data->button);
+
+    /* create alignment box that can be easily adapted to the panel
+       orientation */
+    data->alignbox = xfce_hvbox_new(GTK_ORIENTATION_HORIZONTAL, FALSE, 0);
+    gtk_container_add(GTK_CONTAINER(data->button), data->alignbox);
+
+    /* add widgets to alignment box */
     data->vbox_center_scrollbox = gtk_vbox_new(FALSE, 0);
-    data->top_hbox = gtk_hbox_new(FALSE, 0);
     gtk_misc_set_alignment(GTK_MISC(data->iconimage), 1, 0.5);
-    gtk_box_pack_start(GTK_BOX(data->top_hbox),
+    gtk_box_pack_start(GTK_BOX(data->alignbox),
                        data->iconimage, TRUE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(data->vbox_center_scrollbox),
                        data->scrollbox, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(data->top_hbox),
+    gtk_box_pack_start(GTK_BOX(data->alignbox),
                        data->vbox_center_scrollbox, TRUE, TRUE, 0);
+    gtk_widget_show_all(data->alignbox);
 
-    data->top_vbox = gtk_vbox_new(FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(data->top_vbox),
-                       data->top_hbox, TRUE, FALSE, 0);
-
-    data->tooltipbox = gtk_event_box_new();
-    gtk_container_add(GTK_CONTAINER(data->tooltipbox), data->top_vbox);
-    gtk_event_box_set_visible_window(GTK_EVENT_BOX(data->tooltipbox), FALSE);
-    gtk_widget_show_all(data->tooltipbox);
-
-    g_object_set(G_OBJECT(data->tooltipbox), "has-tooltip", TRUE, NULL);
-    g_signal_connect(G_OBJECT(data->tooltipbox), "query-tooltip",
-                     G_CALLBACK(weather_get_tooltip_cb),
-                     data);
-    xfce_panel_plugin_add_action_widget(plugin, data->tooltipbox);
-
-    g_signal_connect(G_OBJECT(data->tooltipbox), "button-press-event",
+    /* hook up events for the button */
+    g_object_set(G_OBJECT(data->button), "has-tooltip", TRUE, NULL);
+    g_signal_connect(G_OBJECT(data->button), "query-tooltip",
+                     G_CALLBACK(weather_get_tooltip_cb), data);
+    g_signal_connect(G_OBJECT(data->button), "button-press-event",
                      G_CALLBACK(cb_click), data);
-    g_signal_connect(G_OBJECT(data->tooltipbox), "scroll-event",
+    g_signal_connect(G_OBJECT(data->button), "scroll-event",
                      G_CALLBACK(cb_scroll), data);
     gtk_widget_add_events(data->scrollbox, GDK_BUTTON_PRESS_MASK);
 
@@ -1674,10 +1675,8 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
        the middle mouse click feature */
     refresh = gtk_image_menu_item_new_from_stock("gtk-refresh", NULL);
     gtk_widget_show(refresh);
-
     g_signal_connect(G_OBJECT(refresh), "activate",
                      G_CALLBACK(mi_click), data);
-
     xfce_panel_plugin_menu_insert_item(plugin, GTK_MENU_ITEM(refresh));
 
     /* assign to tempval because g_array_append_val() is using & operator */
@@ -1770,16 +1769,15 @@ xfceweather_set_mode(XfcePanelPlugin *panel,
     data->orientation = (mode != XFCE_PANEL_PLUGIN_MODE_VERTICAL)
         ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL;
 
-    g_object_ref(G_OBJECT(data->vbox_center_scrollbox));
-    gtk_container_remove(GTK_CONTAINER(parent), data->vbox_center_scrollbox);
-
-    if (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_HORIZONTAL)
-        gtk_box_pack_start(GTK_BOX(data->top_hbox),
-                           data->vbox_center_scrollbox, TRUE, FALSE, 0);
-    else
-        gtk_box_pack_start(GTK_BOX(data->top_vbox),
-                           data->vbox_center_scrollbox, TRUE, FALSE, 0);
-    g_object_unref(G_OBJECT(data->vbox_center_scrollbox));
+    if (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_HORIZONTAL) {
+        xfce_hvbox_set_orientation(XFCE_HVBOX(data->alignbox),
+                                   GTK_ORIENTATION_HORIZONTAL);
+        gtk_misc_set_alignment(GTK_MISC(data->iconimage), 1, 0.5);
+    } else {
+        xfce_hvbox_set_orientation(XFCE_HVBOX(data->alignbox),
+                                   GTK_ORIENTATION_VERTICAL);
+        gtk_misc_set_alignment(GTK_MISC(data->iconimage), 0.5, 1);
+    }
 
     if (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_DESKBAR)
         xfce_panel_plugin_set_small(XFCE_PANEL_PLUGIN(panel), FALSE);
@@ -1812,17 +1810,15 @@ xfceweather_set_orientation(XfcePanelPlugin *panel,
     data->orientation = GTK_ORIENTATION_HORIZONTAL;
     data->panel_orientation = orientation;
 
-    g_object_ref(G_OBJECT(data->vbox_center_scrollbox));
-    gtk_container_remove(GTK_CONTAINER(parent), data->vbox_center_scrollbox);
-
-    if (data->panel_orientation == GTK_ORIENTATION_HORIZONTAL)
-        gtk_box_pack_start(GTK_BOX(data->top_hbox),
-                           data->vbox_center_scrollbox, TRUE, FALSE, 0);
-    else
-        gtk_box_pack_start(GTK_BOX(data->top_vbox),
-                           data->vbox_center_scrollbox, TRUE, FALSE, 0);
-    g_object_unref(G_OBJECT(data->vbox_center_scrollbox));
-
+    if (data->panel_orientation == GTK_ORIENTATION_HORIZONTAL) {
+        xfce_hvbox_set_orientation(XFCE_HVBOX(data->alignbox),
+                                   GTK_ORIENTATION_HORIZONTAL);
+        gtk_misc_set_alignment(GTK_MISC(data->iconimage), 1, 0.5);
+    } else {
+        xfce_hvbox_set_orientation(XFCE_HVBOX(data->alignbox),
+                                   GTK_ORIENTATION_VERTICAL);
+        gtk_misc_set_alignment(GTK_MISC(data->iconimage), 0.5, 1);
+    }
     gtk_scrollbox_set_orientation(GTK_SCROLLBOX(data->scrollbox),
                                   data->panel_orientation);
 
@@ -1899,8 +1895,6 @@ weather_construct(XfcePanelPlugin *plugin)
     xfceweather_set_orientation(plugin, xfce_panel_plugin_get_orientation(plugin), data);
 #endif
     xfceweather_set_size(plugin, xfce_panel_plugin_get_size(plugin), data);
-
-    gtk_container_add(GTK_CONTAINER(plugin), data->tooltipbox);
 
     g_signal_connect(G_OBJECT(plugin), "free-data",
                      G_CALLBACK(xfceweather_free), data);

@@ -61,11 +61,10 @@ typedef struct {
 
     SoupSession *session;
 
-    GtkWidget *top_vbox;
-    GtkWidget *top_hbox;
+    GtkWidget *button;
+    GtkWidget *alignbox;
     GtkWidget *vbox_center_scrollbox;
     GtkWidget *iconimage;
-    GtkWidget *tooltipbox;
     GdkPixbuf *tooltip_icon;
     GtkWidget *summary_window;
     summary_details *summary_details;
