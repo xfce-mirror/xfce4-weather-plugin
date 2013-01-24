@@ -1289,6 +1289,24 @@ update_weatherdata_with_reset(plugin_data *data, gboolean clear)
 }
 
 
+/* This is only a dummy handler, the clicks will be processed by
+   cb_click. This is needed to synchronise the toggled state with
+   the existence of the summary window. */
+static gboolean
+cb_toggled(GtkToggleButton *button,
+           gpointer user_data)
+{
+    plugin_data *data = (plugin_data *) user_data;
+    g_signal_handlers_block_by_func(data->button, cb_toggled, data);
+    if (data->summary_window)
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(data->button), TRUE);
+    else
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(data->button), FALSE);
+    g_signal_handlers_unblock_by_func(data->button, cb_toggled, data);
+    return FALSE;
+}
+
+
 static void
 close_summary(GtkWidget *widget,
               gpointer *user_data)
@@ -1299,6 +1317,9 @@ close_summary(GtkWidget *widget,
         summary_details_free(data->summary_details);
     data->summary_details = NULL;
     data->summary_window = NULL;
+
+    /* sync toggle button state */
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(data->button), FALSE);
 }
 
 
@@ -1311,6 +1332,9 @@ forecast_click(GtkWidget *widget,
     if (data->summary_window != NULL)
         gtk_widget_destroy(data->summary_window);
     else {
+        /* sync toggle button state */
+        gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(data->button), TRUE);
+
         data->summary_window = create_summary_window(data);
         g_signal_connect(G_OBJECT(data->summary_window), "destroy",
                          G_CALLBACK(close_summary), data);
@@ -1330,7 +1354,6 @@ cb_click(GtkWidget *widget,
         forecast_click(widget, user_data);
     else if (event->button == 2)
         update_weatherdata_with_reset(data, FALSE);
-
     return FALSE;
 }
 
@@ -1669,6 +1692,8 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
                      G_CALLBACK(cb_click), data);
     g_signal_connect(G_OBJECT(data->button), "scroll-event",
                      G_CALLBACK(cb_scroll), data);
+    g_signal_connect(G_OBJECT(data->button), "toggled",
+                     G_CALLBACK(cb_toggled), data);
     gtk_widget_add_events(data->scrollbox, GDK_BUTTON_PRESS_MASK);
 
     /* add refresh button to right click menu, for people who missed
