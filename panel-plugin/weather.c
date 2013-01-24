@@ -1073,7 +1073,7 @@ read_cache_file(plugin_data *data)
     gchar *file, *locname = NULL, *lat = NULL, *lon = NULL, *group = NULL;
     gchar *timestring;
     gdouble diff;
-    gint msl, num_timeslices, i, j;
+    gint msl, num_timeslices = 0, i, j;
 
     g_assert(data != NULL);
     if (G_UNLIKELY(data == NULL))
