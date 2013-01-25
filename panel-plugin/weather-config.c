@@ -694,32 +694,21 @@ combo_unit_windspeed_set_tooltip(GtkWidget *combo)
 
     switch (value) {
     case KMH:
-        text = _("Kilometer per hour is a unit of speed, expressing the number "
-                 "of kilometers travelled in one hour. Worldwide, the km/h is "
-                 "the most commonly used speed unit on road signs and car "
-                 "speedometers. While meteorologists measure wind speed in "
-                 "meters per second (m/s), wind speeds in TV or in the news "
-                 "are often provided in km/h.");
+        text = _("Wind speeds in TV or in the news are often provided in "
+                 "km/h.");
         break;
     case MPH:
         text = _("Miles per hour is an imperial unit of speed expressing the "
-                 "number of statute miles covered in one hour. It is currently "
-                 "the standard unit used for speed limits, and to express "
-                 "speeds generally, on roads in the United Kingdom and the "
-                 "United States.");
+                 "number of statute miles covered in one hour.");
         break;
     case MPS:
-        text = _("Meter per second is a SI (International System of Units) "
-                 "derived unit of both speed and velocity, defined by distance "
-                 "in meters divided by time in seconds. This is the unit "
-                 "meteorologists use to denote wind speeds.");
+        text = _("Meter per second is <i>the</i> unit typically used by "
+                 "meteorologists to denote wind speeds.");
         break;
     case FTS:
-        text = _("The foot per second (plural feet per second) is an imperial "
-                 "unit of both speed and velocity. It expresses the distance in "
-                 "feet traveled or displaced, divided by the time in seconds. "
-                 "The corresponding unit in the International System of Units "
-                 "is the meter per second.");
+        text = _("The foot per second (pl. feet per second) in the imperial "
+                 "unit system is the counterpart to the meter per second in "
+                 "the International System of Units.");
         break;
     case KNOTS:
         text = _("The knot is a unit of speed equal to one international "
@@ -755,23 +744,16 @@ combo_unit_precipitations_set_tooltip(GtkWidget *combo)
 
     switch (value) {
     case MILLIMETERS:
-        text = _("The meter is the fundamental unit of length in the "
-                 "International System of Units. Originally intended "
-                 "to be one ten-millionth of the distance from the Earth's "
-                 "equator to the North Pole at sea level, its definition "
-                 "has been periodically refined to reflect growing "
-                 "knowledge of metrology (the science of measurement). "
-                 "Since 1983, it has been defined as the length of the "
-                 "path travelled by light in vacuum during a time interval "
-                 "of 1/299,792,458 of a second. 1 millimeter is one "
-                 "thousandth of a meter, or approximately 0.04 inches.");
+        text = _("1 millimeter is one thousandth of a meter - the fundamental "
+                 "unit of length in the International System of Units -, or "
+                 "approximately 0.04 inches.");
         break;
     case INCHES:
         text = _("The English word <i>inch</i> comes from Latin <i>uncia</i> "
                  "meaning <i>one-twelfth part</i> (in this case, one twelfth "
-                 "of a foot). There have been many different standards of the "
-                 "inch with varying sizes of measure. However, the current "
-                 "internationally accepted value is exactly 25.4 "
+                 "of a foot). In the past, there have been many different "
+                 "standards of the inch with varying sizes of measure, but "
+                 "the current internationally accepted value is exactly 25.4 "
                  "millimeters.");
         break;
     }
@@ -805,10 +787,7 @@ combo_unit_altitude_set_tooltip(GtkWidget *combo)
                  "to be one ten-millionth of the distance from the Earth's "
                  "equator to the North Pole at sea level, its definition "
                  "has been periodically refined to reflect growing "
-                 "knowledge of metrology (the science of measurement). "
-                 "Since 1983, it has been defined as the length of the "
-                 "path travelled by light in vacuum during a time interval "
-                 "of 1/299,792,458 of a second.");
+                 "knowledge of metrology (the science of measurement).");
         break;
     case FEET:
         text = _("A foot (plural feet) is a unit of length defined as being "
