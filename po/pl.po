@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: xfce4-weather-plugin 0.8.3\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-01-20 20:09+0100\n"
-"PO-Revision-Date: 2013-01-24 17:34+0100\n"
+"PO-Revision-Date: 2013-01-26 15:07+0100\n"
 "Last-Translator: Piotr Sokół <psokol@jabster.pl>\n"
 "Language-Team: polski <>\n"
 "Language: \n"
@@ -223,15 +223,16 @@ msgstr "Nie można uaktualnić danych pogodowych"
 #: ../panel-plugin/weather.c:1622
 msgid "No default icon theme? This should not happen, plugin will crash!"
 msgstr ""
+"Brak domyślnego stylu ikon? To nie powinno się wydarzyć, wtyczka ulegnie "
+"awarii!"
 
 #: ../panel-plugin/weather.c:1846
 msgid "Show weather conditions and forecasts"
 msgstr "Wyświetla bieżące warunki pogodowe i prognozy"
 
 #: ../panel-plugin/weather.c:1848
-#, fuzzy
 msgid "Copyright (c) 2003-2013\n"
-msgstr "Copyright (c) 2003-2012\n"
+msgstr "Copyright (c) 2003-2013\n"
 
 #.
 #. * TRANSLATORS: The abbreviations in parentheses will be shown in
@@ -613,7 +614,6 @@ msgid "_Temperature:"
 msgstr "_Temperatura:"
 
 #: ../panel-plugin/weather-config.c:925
-#, fuzzy
 msgid "Celsius (°C)"
 msgstr "Celsjusz (°C)"
 
@@ -859,7 +859,6 @@ msgstr ""
 "wilgoci."
 
 #: ../panel-plugin/weather-config.c:1429
-#, fuzzy
 msgid ""
 "The weight of the air that makes up the atmosphere exerts a pressure on the "
 "surface of the Earth, which is known as atmospheric pressure. To make it "
@@ -869,7 +868,7 @@ msgid ""
 "generally indicate an improvement in weather conditions, while falling "
 "pressures mean deterioration."
 msgstr ""
-"Wypisuje wskazanie ciśnienia atmosferycznego, rozumianego jako siła, z którą "
+"Wypisuje wskazanie ciśnienia atmosferycznego, rozumianego jako siła, z jaką "
 "słup powietrza naciska na powierzchnię znajdującą się poniżej. Aby ułatwić "
 "porównywanie pomiarów odczytanych na różnych wysokościach względnych, "
 "wartość ciśnienia atmosferycznego jest określana względem poziomu morza i "
@@ -969,6 +968,16 @@ msgid ""
 "use a calculation model appropriate for your local climate and personal "
 "preferences on the units page."
 msgstr ""
+"Wypisuje wartość szacowanej temperatury odczuwalnej. Na jej wartość ma wpływ "
+"nie tylko temperatura powietrza, lecz także jego ruch, fizyczna aktywność i "
+"uwarunkowania osobiste. Interpretacja tej wielkości jest całkowicie "
+"subiektywna, ale mimo to jej wskazania mogą być użyteczne, informując o "
+"wyjątkowych warunkach pogodowych (zimno, gorąc).\n"
+"\n"
+"<b>Uwaga:</b> wartość tej wielkości jest wyznaczana i nie pochodzi z serwisu "
+"met.no. Aby uzyskać miarodajne wyniki, proszę wybrać jeden z modelów "
+"szacowania wartości znajdujących się na karcie jednostek, dostosowany do "
+"lokalnych warunków atmosferycznych."
 
 #: ../panel-plugin/weather-config.c:1497
 msgid ""
@@ -1046,21 +1055,44 @@ msgid ""
 "these rules will only lead to rough estimates and may not represent the real "
 "amount of snow."
 msgstr ""
+"Wypisuje wskazania wielkości opadów deszczu, mżawki, deszczu ze śniegiem, "
+"gradu, śniegu, krup i innych.\n"
+"\n"
+"Wartość tej wielkości pochodząca z serwisu met.no jest podawana dla stanu "
+"ciekłego - innymi słowy dla deszczu. Jeśli spodziewane są opady śniegu (ale "
+"nie deszczu ze śniegiem), wtedy wielkość opadów zostanie <i>oszacowana</i> "
+"mnożąc jej pierwotną wartość przez wartość zależną od temperatury "
+"powietrza:\n"
+"\n"
+"<tt><small>                   T &lt; -11.1 °C =&gt; 1:12\n"
+"-11.1 °C &lt; T &lt;  -4.4 °C =&gt; 1:10\n"
+" -4.4 °C &lt; T &lt;  -2.2 °C =&gt; 1:7\n"
+" -2.2 °C &lt; T &lt;  -0.6 °C =&gt; 1:5\n"
+" -0.6 °C &lt; T                    =&gt; 1:3\n"
+"\n"
+"</small></tt>Przykład: jeśli wskazanie temperatury wynosi -5 °C, do obliczeń "
+"zostanie przyjęty stosunek 1:10. Zakładając, że podana wielkość opadów "
+"wynosi 5 mm, wartość wielkości opadów śniegu będzie wynosić 50 mm.\n"
+"\n"
+"<b>Uwaga</b>: oprócz temperatury powietrza, ważnymi zmiennymi w tych "
+"obliczeniach są inne wielkości, takie jak rodzaj śniegu i temperatura "
+"podłoża. Wartości tych wielkości nie są znane, dlatego obliczenia dają "
+"wyniki tylko zbliżone do rzeczywistych wartości."
 
 #: ../panel-plugin/weather-config.c:1698
 msgid "Show scroll_box"
-msgstr ""
+msgstr "_Wyświetlanie etykiet"
 
 #: ../panel-plugin/weather-config.c:1700
-#, fuzzy
 msgid ""
 "Hide the scrollbox to save valuable space on the panel. Most interesting "
 "information is also provided in the tooltip - provided you choose an "
 "appropriate tooltip style - that is shown when hovering over the icon."
 msgstr ""
-"Ukrywa etykiety apletu, aby zmniejszyć ilość miejsca zajmowanego na panelu. "
-"Większość użytecznych informacji jest zawarta w podpowiedzi - w zależności "
-"od użytego stylu - wyświetlanej po wskazaniu apletu kursorem myszy."
+"Wyświetla wartości odpowiednich wielkości w postaci etykiet apletu na "
+"panelu. Większość użytecznych informacji jest zawarta w podpowiedzi - w "
+"zależności od użytego stylu - wyświetlanej po wskazaniu apletu kursorem "
+"myszy."
 
 #. values to show at once (multiple lines)
 #: ../panel-plugin/weather-config.c:1711
@@ -1136,7 +1168,6 @@ msgstr "Usuwa wybraną etykietę z listy wyświetlanej w obszarze panelu"
 
 #. button "move up"
 #: ../panel-plugin/weather-config.c:1802
-#, fuzzy
 msgid "Move u_p"
 msgstr "Przemieść _wyżej"
 
@@ -1146,7 +1177,6 @@ msgstr "Przemieszcza wybraną etykietę w górę na liście wyświetlanych etyki
 
 #. button "move down"
 #: ../panel-plugin/weather-config.c:1810
-#, fuzzy
 msgid "Move do_wn"
 msgstr "Przemieść _niżej"
 
@@ -1163,7 +1193,7 @@ msgid ""
 "Scroll the current displayed value(s) out and the new value(s) in instead of "
 "simply changing them. Uncheck this option if you find the animation too "
 "distracting."
-msgstr ""
+msgstr "Wyświetla etykiety wykorzystując efekt animacji"
 
 #: ../panel-plugin/weather-config.c:1969
 msgid "_Location"
@@ -1179,7 +1209,7 @@ msgstr "_Wygląd"
 
 #: ../panel-plugin/weather-config.c:1978
 msgid "_Scrollbox"
-msgstr ""
+msgstr "_Etykiety"
 
 #: ../panel-plugin/weather-data.c:418
 msgid "ft"
@@ -1319,9 +1349,8 @@ msgid "NW"
 msgstr "NW"
 
 #: ../panel-plugin/weather-icon.c:134
-#, fuzzy
 msgid "No icon theme!"
-msgstr "Styl _ikon:"
+msgstr "Brak stylu ikon!"
 
 #: ../panel-plugin/weather-search.c:128 ../panel-plugin/weather-search.c:252
 msgid "Results"
@@ -1371,11 +1400,11 @@ msgstr "\t%s%s%s%s%s\n"
 #: ../panel-plugin/weather-summary.c:261
 #, c-format
 msgid "Error downloading met.no logo image to %s, reason: %s\n"
-msgstr ""
+msgstr "Błąd pobierania obrazu logo %s, powód: %s\n"
 
 #: ../panel-plugin/weather-summary.c:263
 msgid "unknown"
-msgstr ""
+msgstr "nieznany"
 
 #: ../panel-plugin/weather-summary.c:348
 msgid "Coordinates\n"
