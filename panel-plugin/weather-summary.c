@@ -631,20 +631,23 @@ forecast_cell_get_tooltip_text(plugin_data *data,
                         PRECIPITATIONS);
 
     g_string_append(text, _("<b>Clouds</b>\n"));
+    /* TRANSLATORS: Clouds percentages are aligned to the right in the
+       tooltip, the %5s are needed for that and are used both for
+       rounded and unrounded values. */
     APPEND_TOOLTIP_ITEM(_("<tt><small>"
-                          "Fog:           %s%s%s"
+                          "Fog:           %5s%s%s"
                           "</small></tt>\n"), FOG);
     APPEND_TOOLTIP_ITEM(_("<tt><small>"
-                          "Low clouds:    %s%s%s"
+                          "Low clouds:    %5s%s%s"
                           "</small></tt>\n"), CLOUDS_LOW);
     APPEND_TOOLTIP_ITEM(_("<tt><small>"
-                          "Middle clouds: %s%s%s"
+                          "Middle clouds: %5s%s%s"
                           "</small></tt>\n"), CLOUDS_MID);
     APPEND_TOOLTIP_ITEM(_("<tt><small>"
-                          "High clouds:   %s%s%s"
+                          "High clouds:   %5s%s%s"
                           "</small></tt>\n"), CLOUDS_HIGH);
     APPEND_TOOLTIP_ITEM(_("<tt><small>"
-                          "Cloudiness:    %s%s%s"
+                          "Cloudiness:    %5s%s%s"
                           "</small></tt>"), CLOUDINESS);
 
     /* Free GString only and return its character data */
