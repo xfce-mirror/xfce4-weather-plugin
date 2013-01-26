@@ -648,6 +648,7 @@ schedule_next_wakeup(plugin_data *data)
     time_t now_t = time(NULL), future_t;
     struct tm now_tm;
     gdouble diff;
+    gchar *date;
 
     if (data->update_timer) {
         g_source_remove(data->update_timer);
@@ -663,13 +664,16 @@ schedule_next_wakeup(plugin_data *data)
                             "weather data download");
     SCHEDULE_WAKEUP_COMPARE(data->conditions_update->next,
                             "current conditions update");
+
     /* If astronomical data is unavailable, current conditions update
        will usually handle night/day. */
     if (data->astrodata) {
-        if (difftime(data->astrodata->sunrise, now_t) > 0)
+        if (data->night_time &&
+            difftime(data->astrodata->sunrise, now_t) >= 0)
             SCHEDULE_WAKEUP_COMPARE(data->astrodata->sunrise,
                                     "sunrise icon change");
-        if (difftime(data->astrodata->sunset, now_t) > 0)
+        if (!data->night_time &&
+            difftime(data->astrodata->sunset, now_t) >= 0)
             SCHEDULE_WAKEUP_COMPARE(data->astrodata->sunset,
                                     "sunset icon change");
     }
@@ -686,14 +690,19 @@ schedule_next_wakeup(plugin_data *data)
         data->next_wakeup_reason = "forced";
     }
 
+    date = format_date(now_t, "%Y-%m-%d %H:%M:%S", TRUE);
     data->update_timer =
         g_timeout_add_seconds((guint) diff,
                               (GSourceFunc) update_handler, data);
     if (!strcmp(data->next_wakeup_reason, "regular check"))
-        weather_debug("Running regular check for updates, interval %d secs.",
-                      UPDATE_INTERVAL);
-    else
+        weather_debug("[%s]: Running regular check for updates, "
+                      "interval %d secs.", date, UPDATE_INTERVAL);
+    else {
         weather_dump(weather_dump_plugindata, data);
+        weather_debug("[%s]: Next wakeup in %.0f seconds, reason: %s",
+                      date, diff, data->next_wakeup_reason);
+    }
+    g_free(date);
 }
 
 
