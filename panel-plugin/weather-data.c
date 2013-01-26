@@ -502,7 +502,7 @@ is_night_time(const xml_astro *astro)
             return FALSE;
 
         /* Sunrise and sunset are known */
-        if (difftime(astro->sunrise, now_t) >= 0)
+        if (difftime(astro->sunrise, now_t) > 0)
             return TRUE;
 
         if (difftime(astro->sunset, now_t) <= 0)
