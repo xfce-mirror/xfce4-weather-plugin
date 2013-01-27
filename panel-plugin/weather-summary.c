@@ -83,7 +83,8 @@ lnk_clicked(GtkTextTag *tag,
                                      &iter, text, -1, lnk_tag, NULL);   \
     gtk_text_buffer_insert(GTK_TEXT_BUFFER(buffer),                     \
                            &iter, "\n", -1);                            \
-    g_object_set_data_full(G_OBJECT(lnk_tag), "url", g_strdup(url), g_free); \
+    g_object_set_data_full(G_OBJECT(lnk_tag), "url",                    \
+                           g_strdup(url), g_free);                      \
     g_signal_connect(G_OBJECT(lnk_tag), "event",                        \
                      G_CALLBACK(lnk_clicked), NULL);
 
@@ -304,7 +305,7 @@ create_summary_tab(plugin_data *data)
 {
     GtkTextBuffer *buffer;
     GtkTextIter iter;
-    GtkTextTag *btag, *ltag0, *ltag1;
+    GtkTextTag *btag, *ltag0, *ltag1, *ltag2;
     GtkWidget *view, *frame, *scrolled, *icon;
     GtkAdjustment *adj;
     GdkColor lnk_color;
@@ -340,12 +341,6 @@ create_summary_tab(plugin_data *data)
     gtk_text_buffer_get_iter_at_offset(GTK_TEXT_BUFFER(buffer), &iter, 0);
     btag = gtk_text_buffer_create_tag(buffer, NULL, "weight",
                                       PANGO_WEIGHT_BOLD, NULL);
-
-    gdk_color_parse("#0000ff", &lnk_color);
-    ltag0 = gtk_text_buffer_create_tag(buffer, "lnk0",
-                                       "foreground-gdk", &lnk_color, NULL);
-    ltag1 = gtk_text_buffer_create_tag(buffer, "lnk1",
-                                       "foreground-gdk", &lnk_color, NULL);
 
     conditions = get_current_conditions(data->weatherdata);
     APPEND_BTEXT(_("Coordinates\n"));
@@ -510,10 +505,22 @@ create_summary_tab(plugin_data *data)
     APPEND_TEXT_ITEM(_("High clouds"), CLOUDS_HIGH);
     APPEND_TEXT_ITEM(_("Cloudiness"), CLOUDINESS);
 
-    APPEND_BTEXT(_("\nData from The Norwegian Meteorological Institute\n"));
-    value = g_strdup("http://met.no");
-    g_object_set_data_full(G_OBJECT(ltag0), "url", value, g_free);
-    APPEND_LINK_ITEM("\t", _("Thanks to met.no"), "http://met.no/", ltag1);
+    /* credits */
+    gdk_color_parse("#0000ff", &lnk_color);
+    ltag0 = gtk_text_buffer_create_tag(buffer, "lnk0",
+                                       "foreground-gdk", &lnk_color, NULL);
+    ltag1 = gtk_text_buffer_create_tag(buffer, "lnk1",
+                                       "foreground-gdk", &lnk_color, NULL);
+    ltag2 = gtk_text_buffer_create_tag(buffer, "lnk2",
+                                       "foreground-gdk", &lnk_color, NULL);
+    APPEND_BTEXT(_("\nCredits\n"));
+    APPEND_LINK_ITEM(_("\tEncyclopedic information partly taken from\n\t\t"),
+                     _("Wikipedia"), "http://wikipedia.org", ltag2);
+    APPEND_LINK_ITEM(_("\n\tWeather and astronomical data from\n\t\t"),
+                     _("The Norwegian Meteorological Institute"),
+                     "http://met.no/", ltag1);
+    g_object_set_data_full(G_OBJECT(ltag0), "url",   /* url for image */
+                           g_strdup("http://met.no"), g_free);
 
     g_signal_connect(G_OBJECT(view), "motion-notify-event",
                      G_CALLBACK(view_motion_notify), sum);
