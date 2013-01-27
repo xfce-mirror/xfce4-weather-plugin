@@ -215,17 +215,56 @@ IRC). Please do not report such problems on the bug tracker.
 
 TRANSLATING THE PLUGIN FOR YOUR LANGUAGE
 ==========================================================================
-If you want to help translating the weather plugin into your language,
-please visit https://translations.xfce.org/ and absorb the information
-that is there, especially on the *Help* page!
+If you need help getting started with translating the weather plugin
+into your language, please visit https://translations.xfce.org/ and
+absorb the information that is there, especially on the *Help* page!
+There is other useful documentation available on this topic, try this
+wiki page for a start:
+https://wiki.xfce.org/translations/translation_guidance_in_xfce
+
+This plugin provides a lot of descriptions via the tooltips in the
+config dialog. These aim to give short, but interesting explanations
+for the various units and available values. While the conventions
+should be followed for most of the widgets - you might look up such
+agreements and recommendations on the Xfce wiki or ask your
+translation team about them -, the descriptions should be translated
+in a way that they are understandable and comfortable to read in your
+own language, which means that they don't have to be translated
+literally. On the contrary, it is recommended that you use your own
+words and phrases to get the best results. The author believes this
+will make translation much easier and more fun, without denying it can
+be quite tedious sometimes.
+
+If your po file is out of date and doesn't contain all strings that
+appear in the plugin source code, you can use the build system to
+update it for you. See the previous section EASY BUILD INSTRUCTIONS
+for setting up the build system and perform step 1a to clone the
+repository and generate the make files using automake. If this
+succeeds, simply change to the po subdirectory and execute the command
+"make update-po". This will regenerate all po files in the po
+directory and mark changed strings as fuzzy or obsolete, and add new
+strings as untranslated. You can then work on it as usual.
 
 However, if you need to start with a translation completely from
 scratch (the po file doesn't exist and isn't listed in transifex),
 then please write a mail to xfce@xfce.org or xfce-i18n@xfce.org or use
 the bug tracker and ask for such a file being added to the project.
 Currently, only the package maintainer or developer of the plugin can
-add this new file and include it in the automake files so that it is
-integrated into the build process.
+add this new file and include it in the automake files in the git
+repository so that it is integrated into the build process and
+packaged properly.
+
+Korean translator Seong-ho Cho also recommended the following command
+- to be executed in the project's root directory - for creating a
+fresh pot file:
+
+xgettext --keyword=_ --keyword=d_:1 --keyword=P_:1,2 --keyword=P_:1,2 --keyword=N_ --keyword=NP_:1,2 --from-code=UTF-8 --foreign-user --output=xfce4-weather-plugin.master.untitled.pot panel-plugin/*.[ch]
+
+This gives a po-template file with untranslated strings, with the
+advantage being that this only requires the gettext package to be
+installed. Of course, you can always simply ask the developer/package
+maintainer to generate and add a new po file for your language, so
+that you can download it using transifex.
 
 
 ICON THEMES
