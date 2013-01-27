@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-weather-plugin 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-26 15:46+0100\n"
-"PO-Revision-Date: 2013-01-26 16:34+0100\n"
+"POT-Creation-Date: 2013-01-27 22:13+0100\n"
+"PO-Revision-Date: 2013-01-27 22:29+0100\n"
 "Last-Translator: Harald Judt <h.judt@gmx.at>\n"
 "Language-Team: German <xfce-i18n@xfce.org>\n"
 "Language: de\n"
@@ -568,7 +568,7 @@ msgid ""
 "have been many different standards of the inch with varying sizes of "
 "measure, but the current internationally accepted value is exactly 25.4 "
 "millimeters."
-msgstr ""
+msgstr "Das englische Wort <i>inch</i>, zu deutsch <i>Zoll</i> kommt vom Lateinischen <i>uncia</i> und bedeutet <i>der zwölfte Teil</i>, in diesem Fall der zwölfte Teil von einem Fuß. Nach heutigem internationalen Standard ist diese Einheit mit genau 25.4 Millimetern festgelegt."
 
 #: ../panel-plugin/weather-config.c:784
 msgid ""
@@ -1358,34 +1358,47 @@ msgstr "Unbenannter Ort"
 msgid "\t%s%s%s%s%s\n"
 msgstr "\t%s%s%s%s%s\n"
 
-#: ../panel-plugin/weather-summary.c:264
+#. TRANSLATORS: This string is not visible anywhere but
+#. controls the alignment of the met.no image, so usually you
+#. should leave this string untouched (which means it should
+#. be "LTR"). It should be changed only for right-to-left
+#. languages. If you're translating to such a language, then
+#. change "LTR" to "RTL" here. For LTR languages, the image
+#. will be aligned to the right, and for RTL languages, the
+#. image will be aligned to the left.
+#.
+#: ../panel-plugin/weather-summary.c:230
+msgid "LTR"
+msgstr "LTR"
+
+#: ../panel-plugin/weather-summary.c:277
 #, c-format
 msgid "Error downloading met.no logo image to %s, reason: %s\n"
 msgstr "Fehler beim Herunterladen des met.no Logos nach %s, Ursache: %s\n"
 
-#: ../panel-plugin/weather-summary.c:266
+#: ../panel-plugin/weather-summary.c:279
 msgid "unknown"
 msgstr "unbekannt"
 
-#: ../panel-plugin/weather-summary.c:351
+#: ../panel-plugin/weather-summary.c:358
 msgid "Coordinates\n"
 msgstr "Koordinaten\n"
 
-#: ../panel-plugin/weather-summary.c:352
+#: ../panel-plugin/weather-summary.c:359
 msgid "Altitude"
 msgstr "Höhenlage"
 
-#: ../panel-plugin/weather-summary.c:353
+#: ../panel-plugin/weather-summary.c:360
 msgid "Latitude"
 msgstr "Breitengrad"
 
-#: ../panel-plugin/weather-summary.c:354
+#: ../panel-plugin/weather-summary.c:361
 msgid "Longitude"
 msgstr "Längengrad"
 
 #. TRANSLATORS: Please use as many \t as appropriate to align the
 #. date/time values as in the original.
-#: ../panel-plugin/weather-summary.c:358
+#: ../panel-plugin/weather-summary.c:365
 msgid ""
 "\n"
 "Downloads\n"
@@ -1393,7 +1406,7 @@ msgstr ""
 "\n"
 "Downloads\n"
 
-#: ../panel-plugin/weather-summary.c:361
+#: ../panel-plugin/weather-summary.c:368
 #, c-format
 msgid ""
 "\tWeather data:\n"
@@ -1408,7 +1421,7 @@ msgstr ""
 "\tFehlgeschlagene Versuche: %d\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:374
+#: ../panel-plugin/weather-summary.c:381
 #, c-format
 msgid ""
 "\tAstronomical data:\n"
@@ -1422,7 +1435,7 @@ msgstr ""
 "\tFehlgeschlagene Versuche: %d\n"
 
 #. calculation times
-#: ../panel-plugin/weather-summary.c:386
+#: ../panel-plugin/weather-summary.c:393
 msgid ""
 "\n"
 "Times Used for Calculations\n"
@@ -1430,7 +1443,7 @@ msgstr ""
 "\n"
 "Zeitpunkte und -intervalle für Berechnungen\n"
 
-#: ../panel-plugin/weather-summary.c:389
+#: ../panel-plugin/weather-summary.c:396
 #, c-format
 msgid ""
 "\tTemperatures, wind, atmosphere and cloud data calculated\n"
@@ -1439,7 +1452,7 @@ msgstr ""
 "\tTemperatur-, Wind-, Atmosphären- und Wolkendaten gültig\n"
 "\tfür:\t\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:398
+#: ../panel-plugin/weather-summary.c:405
 #, c-format
 msgid ""
 "\n"
@@ -1455,7 +1468,7 @@ msgstr ""
 "\tEnde:\t%s\n"
 
 #. sun and moon
-#: ../panel-plugin/weather-summary.c:409
+#: ../panel-plugin/weather-summary.c:416
 msgid ""
 "\n"
 "Astronomical Data\n"
@@ -1463,20 +1476,20 @@ msgstr ""
 "\n"
 "Astronomische Daten\n"
 
-#: ../panel-plugin/weather-summary.c:412
+#: ../panel-plugin/weather-summary.c:419
 msgid "\tSunrise:\t\tThe sun never rises today.\n"
 msgstr "\tSonnenaufgang:\t\tDie Sonne geht heute nicht auf.\n"
 
-#: ../panel-plugin/weather-summary.c:415
+#: ../panel-plugin/weather-summary.c:422
 msgid "\tSunset:\t\tThe sun never sets today.\n"
 msgstr "\tSonnenuntergang:\t\tDie Sonne geht heute nicht unter.\n"
 
-#: ../panel-plugin/weather-summary.c:419
+#: ../panel-plugin/weather-summary.c:426
 #, c-format
 msgid "\tSunrise:\t\t%s\n"
 msgstr "\tSonnenaufgang:\t\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:424
+#: ../panel-plugin/weather-summary.c:431
 #, c-format
 msgid ""
 "\tSunset:\t\t%s\n"
@@ -1485,41 +1498,41 @@ msgstr ""
 "\tSonnenuntergang:\t\t%s\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:430
+#: ../panel-plugin/weather-summary.c:437
 #, c-format
 msgid "\tMoon phase:\t%s\n"
 msgstr "\tMondphase:\t\t\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:434
+#: ../panel-plugin/weather-summary.c:441
 msgid "\tMoon phase:\tUnknown\n"
 msgstr "\tMondphase:\t\t\tUnbekannt\n"
 
-#: ../panel-plugin/weather-summary.c:439
+#: ../panel-plugin/weather-summary.c:446
 msgid "\tMoonrise:\tThe moon never rises today.\n"
 msgstr "\tMondaufgang:\tDer Mond ist heute nicht zu sehen.\n"
 
-#: ../panel-plugin/weather-summary.c:443
+#: ../panel-plugin/weather-summary.c:450
 msgid "\tMoonset:\tThe moon never sets today.\n"
 msgstr "\tMonduntergang:\tDer Mond ist heute immer zu sehen.\n"
 
-#: ../panel-plugin/weather-summary.c:447
+#: ../panel-plugin/weather-summary.c:454
 #, c-format
 msgid "\tMoonrise:\t%s\n"
 msgstr "\tMondaufgang:\t\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:452
+#: ../panel-plugin/weather-summary.c:459
 #, c-format
 msgid "\tMoonset:\t%s\n"
 msgstr "\tMonduntergang:\t\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:457
+#: ../panel-plugin/weather-summary.c:464
 msgid "\tData not available, will use sane default values for night and day.\n"
 msgstr ""
 "\tDaten nicht verfügbar, benutze vernünftige Standardwerte für Tag und "
 "Nacht.\n"
 
 #. temperatures
-#: ../panel-plugin/weather-summary.c:463
+#: ../panel-plugin/weather-summary.c:470
 msgid ""
 "\n"
 "Temperatures\n"
@@ -1527,20 +1540,20 @@ msgstr ""
 "\n"
 "Temperaturen\n"
 
-#: ../panel-plugin/weather-summary.c:464
+#: ../panel-plugin/weather-summary.c:471
 msgid "Temperature"
 msgstr "Temperatur"
 
-#: ../panel-plugin/weather-summary.c:465
+#: ../panel-plugin/weather-summary.c:472
 msgid "Dew point"
 msgstr "Taupunkt"
 
-#: ../panel-plugin/weather-summary.c:466
+#: ../panel-plugin/weather-summary.c:473
 msgid "Apparent temperature"
 msgstr "Gefühlte Temperatur"
 
 #. wind
-#: ../panel-plugin/weather-summary.c:469
+#: ../panel-plugin/weather-summary.c:476
 msgid ""
 "\n"
 "Wind\n"
@@ -1548,19 +1561,19 @@ msgstr ""
 "\n"
 "Wind\n"
 
-#: ../panel-plugin/weather-summary.c:474
+#: ../panel-plugin/weather-summary.c:481
 #, c-format
 msgid "\tSpeed: %s %s (%s on the Beaufort scale)\n"
-msgstr "\tGeschwindigkeit: %s %s (%s on the Beaufort scale)\n"
+msgstr "\tGeschwindigkeit: %s %s (%s auf der Beaufortskala)\n"
 
 #. wind direction
-#: ../panel-plugin/weather-summary.c:489
+#: ../panel-plugin/weather-summary.c:496
 #, c-format
 msgid "\tDirection: %s (%s%s)\n"
 msgstr "\tRichtung: %s (%s%s)\n"
 
 #. precipitation
-#: ../panel-plugin/weather-summary.c:497
+#: ../panel-plugin/weather-summary.c:504
 msgid ""
 "\n"
 "Precipitations\n"
@@ -1568,12 +1581,12 @@ msgstr ""
 "\n"
 "Niederschlag\n"
 
-#: ../panel-plugin/weather-summary.c:498
+#: ../panel-plugin/weather-summary.c:505
 msgid "Precipitations amount"
 msgstr "Niederschlagsmenge"
 
 #. atmosphere
-#: ../panel-plugin/weather-summary.c:501
+#: ../panel-plugin/weather-summary.c:508
 msgid ""
 "\n"
 "Atmosphere\n"
@@ -1581,16 +1594,16 @@ msgstr ""
 "\n"
 "Atmosphäre\n"
 
-#: ../panel-plugin/weather-summary.c:502
+#: ../panel-plugin/weather-summary.c:509
 msgid "Barometric pressure"
 msgstr "Barometrischer Druck"
 
-#: ../panel-plugin/weather-summary.c:503
+#: ../panel-plugin/weather-summary.c:510
 msgid "Relative humidity"
 msgstr "Relative Luftfeuchtigkeit"
 
 #. clouds
-#: ../panel-plugin/weather-summary.c:506
+#: ../panel-plugin/weather-summary.c:513
 msgid ""
 "\n"
 "Clouds\n"
@@ -1598,45 +1611,65 @@ msgstr ""
 "\n"
 "Wolken\n"
 
-#: ../panel-plugin/weather-summary.c:507
+#: ../panel-plugin/weather-summary.c:514
 #: ../panel-plugin/weather-translate.c:170
 msgid "Fog"
 msgstr "Nebel"
 
-#: ../panel-plugin/weather-summary.c:508
+#: ../panel-plugin/weather-summary.c:515
 msgid "Low clouds"
 msgstr "Tiefe Wolken"
 
-#: ../panel-plugin/weather-summary.c:509
+#: ../panel-plugin/weather-summary.c:516
 msgid "Middle clouds"
 msgstr "Mittelhohe Wolken"
 
-#: ../panel-plugin/weather-summary.c:510
+#: ../panel-plugin/weather-summary.c:517
 msgid "High clouds"
 msgstr "Hohe Wolken"
 
-#: ../panel-plugin/weather-summary.c:511
+#: ../panel-plugin/weather-summary.c:518
 msgid "Cloudiness"
 msgstr "Bewölkung"
 
-#: ../panel-plugin/weather-summary.c:513
+#: ../panel-plugin/weather-summary.c:528
 msgid ""
 "\n"
-"Data from The Norwegian Meteorological Institute\n"
+"Credits\n"
+msgstr "\nDanksagung\n"
+
+#: ../panel-plugin/weather-summary.c:529
+msgid ""
+"\tEncyclopedic information partly taken from\n"
+"\t\t"
+msgstr ""
+"\tEnzyklopädisches Wissen teilweise entnommen von\n"
+"\t\t"
+
+#: ../panel-plugin/weather-summary.c:530
+msgid "Wikipedia"
+msgstr "Wikipedia"
+
+#: ../panel-plugin/weather-summary.c:531
+msgid ""
+"\n"
+"\tWeather and astronomical data from\n"
+"\t\t"
 msgstr ""
 "\n"
-"Daten vom Norwegian Meteorological Institute\n"
+"\tWetter- und astronomische Daten bereitgestellt vom\n"
+"\t\t"
 
-#: ../panel-plugin/weather-summary.c:516
-msgid "Thanks to met.no"
-msgstr "Danke an met.no"
+#: ../panel-plugin/weather-summary.c:532
+msgid "The Norwegian Meteorological Institute"
+msgstr "Norwegischen Meteorologischen Institut"
 
-#: ../panel-plugin/weather-summary.c:565
+#: ../panel-plugin/weather-summary.c:584
 #, c-format
 msgid "Today"
 msgstr "Heute"
 
-#: ../panel-plugin/weather-summary.c:567
+#: ../panel-plugin/weather-summary.c:586
 #, c-format
 msgid "Tomorrow"
 msgstr "Morgen"
@@ -1646,21 +1679,21 @@ msgstr "Morgen"
 #. alignment, and the text is enclosed in <small> tags because
 #. that looks much better and saves space.
 #.
-#: ../panel-plugin/weather-summary.c:587
+#: ../panel-plugin/weather-summary.c:606
 msgid "<b>Times used for calculations</b>\n"
 msgstr "<b>Zeitpunkte und -intervalle für Berechnungen</b>\n"
 
-#: ../panel-plugin/weather-summary.c:589
+#: ../panel-plugin/weather-summary.c:608
 #, c-format
 msgid "<tt><small>Interval start:       %s</small></tt>\n"
 msgstr "<tt><small>Intervallstart:       %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:595
+#: ../panel-plugin/weather-summary.c:614
 #, c-format
 msgid "<tt><small>Interval end:         %s</small></tt>\n"
 msgstr "<tt><small>Intervallende:        %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:601
+#: ../panel-plugin/weather-summary.c:620
 #, c-format
 msgid ""
 "<tt><small>Data calculated for:  %s</small></tt>\n"
@@ -1669,16 +1702,16 @@ msgstr ""
 "<tt><small>Daten berechnet für:  %s</small></tt>\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:607
+#: ../panel-plugin/weather-summary.c:626
 msgid "<b>Temperatures</b>\n"
 msgstr "<b>Temperaturen</b>\n"
 
-#: ../panel-plugin/weather-summary.c:608
+#: ../panel-plugin/weather-summary.c:627
 #, c-format
 msgid "<tt><small>Dew point:            %s%s%s</small></tt>\n"
 msgstr "<tt><small>Taupunkt:             %s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:612
+#: ../panel-plugin/weather-summary.c:631
 #, c-format
 msgid ""
 "<tt><small>Apparent temperature: %s%s%s</small></tt>\n"
@@ -1687,16 +1720,16 @@ msgstr ""
 "<tt><small>Gefühlte Temperatur:  %s%s%s</small></tt>\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:617
+#: ../panel-plugin/weather-summary.c:636
 msgid "<b>Atmosphere</b>\n"
 msgstr "<b>Atmosphäre</b>\n"
 
-#: ../panel-plugin/weather-summary.c:618
+#: ../panel-plugin/weather-summary.c:637
 #, c-format
 msgid "<tt><small>Barometric pressure:  %s%s%s</small></tt>\n"
 msgstr "<tt><small>Barometrischer Druck:      %s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:622
+#: ../panel-plugin/weather-summary.c:641
 #, c-format
 msgid ""
 "<tt><small>Relative humidity:    %s%s%s</small></tt>\n"
@@ -1705,11 +1738,11 @@ msgstr ""
 "<tt><small>Relative Luftfeuchtigkeit: %s%s%s</small></tt>\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:627
+#: ../panel-plugin/weather-summary.c:646
 msgid "<b>Precipitations</b>\n"
 msgstr "<b>Niederschlag</b>\n"
 
-#: ../panel-plugin/weather-summary.c:628
+#: ../panel-plugin/weather-summary.c:647
 #, c-format
 msgid ""
 "<tt><small>Amount:        %s%s%s</small></tt>\n"
@@ -1718,72 +1751,72 @@ msgstr ""
 "<tt><small>Menge:                %s%s%s</small></tt>\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:633
+#: ../panel-plugin/weather-summary.c:652
 msgid "<b>Clouds</b>\n"
 msgstr "<b>Wolken</b>\n"
 
 #. TRANSLATORS: Clouds percentages are aligned to the right in the
 #. tooltip, the %5s are needed for that and are used both for
 #. rounded and unrounded values.
-#: ../panel-plugin/weather-summary.c:637
+#: ../panel-plugin/weather-summary.c:656
 #, c-format
 msgid "<tt><small>Fog:           %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Nebel:                %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:640
+#: ../panel-plugin/weather-summary.c:659
 #, c-format
 msgid "<tt><small>Low clouds:    %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Tiefe Wolken:         %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:643
+#: ../panel-plugin/weather-summary.c:662
 #, c-format
 msgid "<tt><small>Middle clouds: %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Mittelhohe Wolken:    %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:646
+#: ../panel-plugin/weather-summary.c:665
 #, c-format
 msgid "<tt><small>High clouds:   %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Hohe Wolken:          %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:649
+#: ../panel-plugin/weather-summary.c:668
 #, c-format
 msgid "<tt><small>Cloudiness:    %5s%s%s</small></tt>"
 msgstr "<tt><small>Bewölkung:            %5s%s%s</small></tt>"
 
 #. daytime headers
-#: ../panel-plugin/weather-summary.c:813
+#: ../panel-plugin/weather-summary.c:832
 msgid "Morning"
 msgstr "Vormittags"
 
-#: ../panel-plugin/weather-summary.c:814
+#: ../panel-plugin/weather-summary.c:833
 msgid "Afternoon"
 msgstr "Nachmittags"
 
-#: ../panel-plugin/weather-summary.c:815
+#: ../panel-plugin/weather-summary.c:834
 msgid "Evening"
 msgstr "Abends"
 
-#: ../panel-plugin/weather-summary.c:816
+#: ../panel-plugin/weather-summary.c:835
 msgid "Night"
 msgstr "Nachts"
 
-#: ../panel-plugin/weather-summary.c:964
+#: ../panel-plugin/weather-summary.c:983
 msgid "Weather Report"
 msgstr "Wetterbericht"
 
-#: ../panel-plugin/weather-summary.c:992
+#: ../panel-plugin/weather-summary.c:1011
 msgid "Please set a location in the plugin settings."
 msgstr "Bitte einen Ort in den Plugin-Einstellungen angeben."
 
-#: ../panel-plugin/weather-summary.c:994
+#: ../panel-plugin/weather-summary.c:1013
 msgid "Currently no data available."
 msgstr "Derzeit keine Daten verfügbar."
 
-#: ../panel-plugin/weather-summary.c:1006
+#: ../panel-plugin/weather-summary.c:1025
 msgid "_Forecast"
 msgstr "_Vorhersage"
 
-#: ../panel-plugin/weather-summary.c:1009
+#: ../panel-plugin/weather-summary.c:1028
 msgid "_Details"
 msgstr "_Details"
 
@@ -1980,6 +2013,9 @@ msgstr "Schneeregen mit Gewitter"
 #: ../panel-plugin/weather.desktop.in.h:2
 msgid "Show current weather conditions"
 msgstr "Zeigt das aktuelle Wetter"
+
+#~ msgid "Thanks to met.no"
+#~ msgstr "Danke an met.no"
 
 #, fuzzy
 #~ msgid ""
