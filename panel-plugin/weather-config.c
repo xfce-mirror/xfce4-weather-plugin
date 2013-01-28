@@ -652,11 +652,11 @@ combo_unit_pressure_set_tooltip(GtkWidget *combo)
     case PSI:
         text = _("The pound per square inch is a unit of pressure based on "
                  "avoirdupois units (a system of weights based on a pound of "
-                 "16 ounces) and the pressure resulting from a force of one "
-                 "pound-force applied to an area of one square inch. It is "
-                 "used in the United States and to varying degrees in "
-                 "everyday life in Canada, the United Kingdom and maybe "
-                 "some former British Colonies.");
+                 "16 ounces) and defined as the pressure resulting from a "
+                 "force of one pound-force applied to an area of one square "
+                 "inch. It is used in the United States and to varying "
+                 "degrees in everyday life in Canada, the United Kingdom and "
+                 "maybe some former British Colonies.");
         break;
     case TORR:
         text = _("The torr unit was named after the physicist and "
