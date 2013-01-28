@@ -1492,11 +1492,11 @@ options_datatypes_set_tooltip(GtkWidget *optmenu)
         text = _("This reports the high-level cloud cover in percent. "
                  "According to WMO definition, high-level clouds can be found "
                  "in altitudes of 8,000 to 15,000 m (26,000 to 49,000 ft), or "
-                 "18,000 m (59,000 ft) at the equator, where temperatures "
-                 "are so low that they are mainly composed of ice crystals. "
-                 "While typically thin and white in appearance, they can be "
-                 "seen in a magnificent array of colors when the sun is low "
-                 "on the horizon.");
+                 "10,000 m-18,000 m (33,000-59,000 ft) at the equator, where "
+                 "temperatures are so low that they are mainly composed of "
+                 "ice crystals. While typically thin and white in appearance, "
+                 "they can be seen in a magnificent array of colors when the "
+                 "sun is low on the horizon.");
         break;
     case CLOUDINESS:
         text = _("Cloudiness, or cloud cover, defines the fraction of the "
