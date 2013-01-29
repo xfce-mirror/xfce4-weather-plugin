@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-weather-plugin 0.8.3\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-27 22:13+0100\n"
-"PO-Revision-Date: 2013-01-26 15:07+0100\n"
+"POT-Creation-Date: 2013-01-29 11:33+0100\n"
+"PO-Revision-Date: 2013-01-29 11:43+0100\n"
 "Last-Translator: Piotr Sokół <psokol@jabster.pl>\n"
 "Language-Team: polski <>\n"
 "Language: \n"
@@ -20,68 +20,67 @@ msgstr ""
 "%100<10 || n%100>=20)) ? 1 : 2));\n"
 "X-Generator: Gtranslator 2.91.5\n"
 
-#. TRANSLATORS: Keep in sync with labeloptions in weather-config.c
-#: ../panel-plugin/weather.c:116
+#: panel-plugin/weather.c:116
 msgid "T"
 msgstr "T"
 
-#: ../panel-plugin/weather.c:119
+#: panel-plugin/weather.c:119
 msgid "P"
 msgstr "C"
 
-#: ../panel-plugin/weather.c:122
+#: panel-plugin/weather.c:122
 msgid "WS"
 msgstr "PW"
 
-#: ../panel-plugin/weather.c:125
+#: panel-plugin/weather.c:125
 msgid "WB"
 msgstr "SW"
 
-#: ../panel-plugin/weather.c:128 ../panel-plugin/weather.c:131
+#: panel-plugin/weather.c:128 panel-plugin/weather.c:131
 msgid "WD"
 msgstr "KW"
 
-#: ../panel-plugin/weather.c:134
+#: panel-plugin/weather.c:134
 msgid "H"
 msgstr "W"
 
-#: ../panel-plugin/weather.c:137
+#: panel-plugin/weather.c:137
 msgid "D"
 msgstr "P"
 
-#: ../panel-plugin/weather.c:140
+#: panel-plugin/weather.c:140
 msgid "A"
 msgstr "OT"
 
-#: ../panel-plugin/weather.c:143
+#: panel-plugin/weather.c:143
 msgid "CL"
 msgstr "NC"
 
-#: ../panel-plugin/weather.c:146
+#: panel-plugin/weather.c:146
 msgid "CM"
 msgstr "ŚC"
 
-#: ../panel-plugin/weather.c:149
+#: panel-plugin/weather.c:149
 msgid "CH"
 msgstr "WC"
 
-#: ../panel-plugin/weather.c:152
+#: panel-plugin/weather.c:152
 msgid "C"
 msgstr "Z"
 
-#: ../panel-plugin/weather.c:155
+#: panel-plugin/weather.c:155
 msgid "F"
 msgstr "M"
 
-#: ../panel-plugin/weather.c:158
+#: panel-plugin/weather.c:158
 msgid "R"
 msgstr "O"
 
-#: ../panel-plugin/weather.c:343 ../panel-plugin/weather.c:345
+#: panel-plugin/weather.c:343 panel-plugin/weather.c:345
 msgid "No Data"
 msgstr "Brak danych"
 
-#: ../panel-plugin/weather.c:447
+#: panel-plugin/weather.c:447
 msgid ""
 "Met.no sunrise API states that this version of the webservice is deprecated, "
 "and the plugin needs to be adapted to use a newer version, or it will stop "
@@ -89,11 +88,11 @@ msgid ""
 "if no one else has done so yet."
 msgstr ""
 
-#: ../panel-plugin/weather.c:466
+#: panel-plugin/weather.c:466
 msgid "Error parsing astronomical data!"
 msgstr "Błąd przetwarzania danych astronomicznych!"
 
-#: ../panel-plugin/weather.c:468
+#: panel-plugin/weather.c:468
 #, c-format
 msgid ""
 "Download of astronomical data failed with HTTP Status Code %d, Reason "
@@ -102,7 +101,7 @@ msgstr ""
 "Nie udało się pobrać danych astronomicznych. Kod stanu HTTP: %d, komunikat "
 "błędu: %s"
 
-#: ../panel-plugin/weather.c:517
+#: panel-plugin/weather.c:517
 msgid ""
 "Met.no LocationforecastLTS API states that this version of the webservice is "
 "deprecated, and the plugin needs to be adapted to use a newer version, or it "
@@ -110,11 +109,11 @@ msgid ""
 "xfce.org if no one else has done so yet."
 msgstr ""
 
-#: ../panel-plugin/weather.c:535
+#: panel-plugin/weather.c:535
 msgid "Error parsing weather data!"
 msgstr "Błąd przetwarzania danych pogodowych!"
 
-#: ../panel-plugin/weather.c:538
+#: panel-plugin/weather.c:538
 #, c-format
 msgid ""
 "Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
@@ -122,49 +121,44 @@ msgstr ""
 "Nie udało się pobrać danych pogodowych. Kod stanu HTTP: %d, komunikat błędu: "
 "%s"
 
-#. start receive thread
-#: ../panel-plugin/weather.c:592 ../panel-plugin/weather.c:610
-#: ../panel-plugin/weather-search.c:169 ../panel-plugin/weather-search.c:435
+#: panel-plugin/weather.c:592 panel-plugin/weather.c:610
+#: panel-plugin/weather-search.c:169 panel-plugin/weather-search.c:435
 #, c-format
 msgid "getting %s"
 msgstr ""
 
-#: ../panel-plugin/weather.c:1063
+#: panel-plugin/weather.c:1063
 #, c-format
 msgid "Error writing cache file %s!"
 msgstr "Błąd zapisywania pliku pamięci podręcznej %s!"
 
-#: ../panel-plugin/weather.c:1412
+#: panel-plugin/weather.c:1412
 #, c-format
 msgid "Unable to open the following url: %s"
 msgstr "Nie można otworzyć następującego adresu URL: %s"
 
-#: ../panel-plugin/weather.c:1443 ../panel-plugin/weather.desktop.in.h:1
+#: panel-plugin/weather.c:1443
 msgid "Weather Update"
 msgstr "Komunikat pogodowy"
 
-#: ../panel-plugin/weather.c:1480
+#: panel-plugin/weather.c:1480
 msgid "Short-term forecast data unavailable."
 msgstr "Krótkoterminowe dane prognozowe są niedostępne."
 
-#: ../panel-plugin/weather.c:1492
+#: panel-plugin/weather.c:1492
 msgid "The sun never rises today."
 msgstr "Słońce dziś nie wzejdzie."
 
-#: ../panel-plugin/weather.c:1494
+#: panel-plugin/weather.c:1494
 msgid "The sun never sets today."
 msgstr "Słońce dziś nie zajdzie."
 
-#: ../panel-plugin/weather.c:1498
+#: panel-plugin/weather.c:1498
 #, c-format
 msgid "The sun rises at %s and sets at %s."
 msgstr "Słońce wzejdzie o %s i zajdzie o %s."
 
-#.
-#. * TRANSLATORS: This is the simple tooltip. For a bigger challenge,
-#. * look at the verbose tooltip style further below ;-)
-#.
-#: ../panel-plugin/weather.c:1527
+#: panel-plugin/weather.c:1527
 #, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
@@ -183,16 +177,7 @@ msgstr ""
 "<b>Ciśnienie:</b> %s\n"
 "<b>Wilgotność:</b> %s\n"
 
-#.
-#. * TRANSLATORS: Re-arrange and align at will, optionally using
-#. * abbreviations for labels if desired or necessary. Just take
-#. * into account the possible size constraints, the centered
-#. * vertical alignment of the icon - which unfortunately cannot
-#. * be changed easily - and try to make it compact and look
-#. * good! The missing space after "%son the ..." is intentional,
-#. * it is included in the %s.
-#.
-#: ../panel-plugin/weather.c:1551
+#: panel-plugin/weather.c:1551
 #, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
@@ -217,115 +202,106 @@ msgstr ""
 "\n"
 "<span size=\"smaller\">%s</span>"
 
-#: ../panel-plugin/weather.c:1605
+#: panel-plugin/weather.c:1605
 msgid "Cannot update weather data"
 msgstr "Nie można uaktualnić danych pogodowych"
 
-#: ../panel-plugin/weather.c:1669
+#: panel-plugin/weather.c:1669
 msgid "No default icon theme? This should not happen, plugin will crash!"
 msgstr ""
 "Brak domyślnego stylu ikon? To nie powinno się wydarzyć, wtyczka ulegnie "
 "awarii!"
 
-#: ../panel-plugin/weather.c:1891
+#: panel-plugin/weather.c:1891
 msgid "Show weather conditions and forecasts"
 msgstr "Wyświetla bieżące warunki pogodowe i prognozy"
 
-#: ../panel-plugin/weather.c:1893
+#: panel-plugin/weather.c:1893
 msgid "Copyright (c) 2003-2013\n"
 msgstr "Copyright (c) 2003-2013\n"
 
-#.
-#. * TRANSLATORS: The abbreviations in parentheses will be shown in
-#. * the scrollbox together with the values. Keep them in sync with
-#. * those in make_label() in weather.c. Some of them may be
-#. * standardized internationally, like CL, CM, CH, and you might
-#. * read that up somewhere and decide whether you want to use them
-#. * or not. In general, though, you should just try to choose
-#. * letter(s) that make sense and don't use up too much space.
-#.
-#: ../panel-plugin/weather-config.c:95
+#: panel-plugin/weather-config.c:95
 msgid "Temperature (T)"
 msgstr "Temperatura (T)"
 
-#: ../panel-plugin/weather-config.c:96
+#: panel-plugin/weather-config.c:96
 msgid "Barometric pressure (P)"
 msgstr "Ciśnienie barometryczne (C)"
 
-#: ../panel-plugin/weather-config.c:97
+#: panel-plugin/weather-config.c:97
 msgid "Wind speed (WS)"
 msgstr "Prędkość wiatru (PW)"
 
-#: ../panel-plugin/weather-config.c:98
+#: panel-plugin/weather-config.c:98
 msgid "Wind speed - Beaufort scale (WB)"
 msgstr "Siła wiatru - skala Beauforta (SW)"
 
-#: ../panel-plugin/weather-config.c:99
+#: panel-plugin/weather-config.c:99
 msgid "Wind direction (WD)"
 msgstr "Kierunek wiatru (KW)"
 
-#: ../panel-plugin/weather-config.c:100
+#: panel-plugin/weather-config.c:100
 msgid "Wind direction in degrees (WD)"
 msgstr "Kierunek wiatru w stopniach (KW)"
 
-#: ../panel-plugin/weather-config.c:101
+#: panel-plugin/weather-config.c:101
 msgid "Humidity (H)"
 msgstr "Wilgotność (W)"
 
-#: ../panel-plugin/weather-config.c:102
+#: panel-plugin/weather-config.c:102
 msgid "Dew point (D)"
 msgstr "Punkt rosy (P)"
 
-#: ../panel-plugin/weather-config.c:103
+#: panel-plugin/weather-config.c:103
 msgid "Apparent temperature (A)"
 msgstr "Odczuwalna temperatura (OT)"
 
-#: ../panel-plugin/weather-config.c:104
+#: panel-plugin/weather-config.c:104
 msgid "Low clouds (CL)"
 msgstr "Niskie chmury (NC)"
 
-#: ../panel-plugin/weather-config.c:105
+#: panel-plugin/weather-config.c:105
 msgid "Middle clouds (CM)"
 msgstr "Średnie chmury (ŚC)"
 
-#: ../panel-plugin/weather-config.c:106
+#: panel-plugin/weather-config.c:106
 msgid "High clouds (CH)"
 msgstr "Wysokie chmury (WC)"
 
-#: ../panel-plugin/weather-config.c:107
+#: panel-plugin/weather-config.c:107
 msgid "Cloudiness (C)"
 msgstr "Zachmurzenie (Z)"
 
-#: ../panel-plugin/weather-config.c:108
+#: panel-plugin/weather-config.c:108
 msgid "Fog (F)"
 msgstr "Mgła (M)"
 
-#: ../panel-plugin/weather-config.c:109
+#: panel-plugin/weather-config.c:109
 msgid "Precipitations (R)"
 msgstr "Opady (O)"
 
-#: ../panel-plugin/weather-config.c:221 ../panel-plugin/weather-config.c:317
-#: ../panel-plugin/weather-config.c:492
+#: panel-plugin/weather-config.c:221 panel-plugin/weather-config.c:317
+#: panel-plugin/weather-config.c:492
 msgid "Unset"
 msgstr "Nie ustawiono"
 
-#: ../panel-plugin/weather-config.c:327
+#: panel-plugin/weather-config.c:327
 msgid "Detecting..."
 msgstr "Wykrywanie..."
 
-#: ../panel-plugin/weather-config.c:378
+#: panel-plugin/weather-config.c:378
 msgid "meters"
 msgstr "metrów"
 
-#: ../panel-plugin/weather-config.c:387
+#: panel-plugin/weather-config.c:387
 msgid "feet"
 msgstr "stóp"
 
-#: ../panel-plugin/weather-config.c:468
+#: panel-plugin/weather-config.c:468
 msgid "Location _name:"
 msgstr "_Nazwa:"
 
-#: ../panel-plugin/weather-config.c:475
+#: panel-plugin/weather-config.c:475
 msgid ""
 "Change the name for the location to your liking. It is used for display and "
 "does not affect the location parameters in any way."
@@ -333,19 +309,19 @@ msgstr ""
 "Wprowadza nazwę lokalizacji. Nazwa używana jest jako etykieta i jej zmiana w "
 "żaden sposób nie wpływa na współrzędne lokalizacji."
 
-#: ../panel-plugin/weather-config.c:479
+#: panel-plugin/weather-config.c:479
 msgid "Chan_ge..."
 msgstr "_Zmień..."
 
-#: ../panel-plugin/weather-config.c:482
+#: panel-plugin/weather-config.c:482
 msgid "Search for a new location and auto-detect its parameters."
 msgstr "Wyszukuje nową lokalizację i wykrywa jej współrzędne"
 
-#: ../panel-plugin/weather-config.c:501
+#: panel-plugin/weather-config.c:501
 msgid "Latitud_e:"
 msgstr "_Szerokość geograficzna:"
 
-#: ../panel-plugin/weather-config.c:505
+#: panel-plugin/weather-config.c:505
 msgid ""
 "Latitude specifies the north-south position of a point on the Earth's "
 "surface. If you change this value manually, you should provide the correct "
@@ -355,11 +331,11 @@ msgstr ""
 "południowym. Ręczne zmodyfikowanie tej wartości wymaga wprowadzenia "
 "poprawnej wartości wysokości bezwzględnej."
 
-#: ../panel-plugin/weather-config.c:515
+#: panel-plugin/weather-config.c:515
 msgid "L_ongitude:"
 msgstr "_Długość geograficzna:"
 
-#: ../panel-plugin/weather-config.c:519
+#: panel-plugin/weather-config.c:519
 msgid ""
 "Longitude specifies the east-west position of a point on the Earth's "
 "surface. If you change this value manually, you should provide the correct "
@@ -369,11 +345,11 @@ msgstr ""
 "zachodnim. Ręczne zmodyfikowanie tej wartości wymaga wprowadzenia poprawnej "
 "wartości wysokości bezwzględnej."
 
-#: ../panel-plugin/weather-config.c:529 ../panel-plugin/weather-config.c:949
+#: panel-plugin/weather-config.c:529 panel-plugin/weather-config.c:949
 msgid "Altitu_de:"
 msgstr "_Wysokość bezwzględna:"
 
-#: ../panel-plugin/weather-config.c:533
+#: panel-plugin/weather-config.c:533
 msgid ""
 "For locations outside Norway the elevation model that's used by the met.no "
 "webservice is not very good, so it's usually necessary to specify the "
@@ -402,7 +378,7 @@ msgstr ""
 "sieciowej GeoNames. Wykryte wartości mogą być błędne, dlatego istnieje "
 "możliwość ich poprawienia."
 
-#: ../panel-plugin/weather-config.c:555
+#: panel-plugin/weather-config.c:555
 msgid ""
 "\n"
 "\n"
@@ -418,7 +394,7 @@ msgstr ""
 "<i>W razie potrzeby, proszę zmienić nazwę wykrytej\n"
 "lokalizacji oraz jej wysokość bezwzględną.</i>"
 
-#: ../panel-plugin/weather-config.c:579
+#: panel-plugin/weather-config.c:579
 msgid ""
 "Named after the astronomer Anders Celsius who invented the original scale in "
 "1742, the Celsius scale is an international standard unit and nowadays "
@@ -432,8 +408,20 @@ msgid ""
 "expressing temperatures because its numbers can be an easy indicator for the "
 "formation of black ice and snow."
 msgstr ""
+"Wypisuje wskazania temperatury w stopniach Celsjusza. Nazwa jednostki "
+"pochodzi nazwiska Andersa Celsiusa. Skala Celsjusza jest międzynarodowym "
+"standardem zdefiniowanym przy użyciu skali Kelvina. Wartości 0°C odpowiada "
+"273,15 K, a wartość 1°C różnicy temperatur wynosi dokładnie tyle samo, co "
+"1K. W warunkach ciśnienia normalnego jednej atmosfery fizycznej (1 atm = "
+"1013,5 hPa), za temperaturę zamarzania wody przyjmuje się 0°C, a za "
+"temperaturę jej wrzenia 100°C. Do 1948 roku jednostka była znana pod nazwą "
+"<i>centigrade</i> - od łacińskich słów <i>centum</i> (sto) i <i>gradus</i> "
+"(stopnie).\n"
+"Skala Celsujsza jest bardzo poręczna w meteorologii i użyciu codziennym, "
+"ponieważ umożliwia w prosty sposób prognozowanie warunków takich jak opady "
+"śniegu czy gołoledź."
 
-#: ../panel-plugin/weather-config.c:595
+#: panel-plugin/weather-config.c:595
 msgid ""
 "The current Fahrenheit temperature scale is based on one proposed in 1724 by "
 "the physicist Daniel Gabriel Fahrenheit. 0 °F was the freezing point of "
@@ -449,15 +437,28 @@ msgid ""
 "these countries during the metrification process in the mid to late 20th "
 "century."
 msgstr ""
+"Wypisuje wskazania temperatury w stopniach Fahrenheita. Bieżąca skala "
+"Fahrenheita została zaproponowana przez fizyka Daniela Gabriela Fahrenheita "
+"w 1724 roku. Wartość 0 °F jest temperaturą zamarzania solanki w warunkach "
+"ciśnienia normalnego jednej atmosfery fizycznej. W tych samych warunkach "
+"temperatura zamarzania wody wynosi 32 °F, a temperatura jej wrzenia 212 °F. "
+"Wskazania skal Fahrenheita i Celsjusza pokrywają się dla wartości -40 "
+"stopni. Nawet w mroźne zimy temperatury rzadko osiągają ujemną wartość skali "
+"Fahrenheita.\n"
+"Fahrenheit był darzony dużym szacunkiem członkiem towarzystwa naukowego "
+"Royal Society, mieszczącego się w Londynie. Dzięki temu jego skala zdobyła "
+"wielką popularność w wielu anglojęzycznych krajach. W większości z nich "
+"została zastąpiona skalą Celsjusza podczas procesu przejścia na system "
+"metryczny w drugiej połowie XX wieku."
 
-#: ../panel-plugin/weather-config.c:638
+#: panel-plugin/weather-config.c:638
 msgid ""
 "The pascal, named after mathematician, physicist and philosopher Blaise "
 "Pascal, is a SI derived unit and a measure of force per unit area, defined "
 "as one newton per square meter. One standard atmosphere (atm) is 1013.25 hPa."
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:645
+#: panel-plugin/weather-config.c:645
 msgid ""
 "Inches of mercury is still widely used for barometric pressure in weather "
 "reports, refrigeration and aviation in the United States, but seldom used "
@@ -466,16 +467,17 @@ msgid ""
 "of gravity."
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:653
+#: panel-plugin/weather-config.c:653
 msgid ""
 "The pound per square inch is a unit of pressure based on avoirdupois units "
-"(a system of weights based on a pound of 16 ounces) and the pressure "
-"resulting from a force of one pound-force applied to an area of one square "
-"inch. It is used in the United States and to varying degrees in everyday "
-"life in Canada, the United Kingdom and maybe some former British Colonies."
+"(a system of weights based on a pound of 16 ounces) and defined as the "
+"pressure resulting from a force of one pound-force applied to an area of one "
+"square inch. It is used in the United States and to varying degrees in "
+"everyday life in Canada, the United Kingdom and maybe some former British "
+"Colonies."
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:662
+#: panel-plugin/weather-config.c:662
 msgid ""
 "The torr unit was named after the physicist and mathematician Evangelista "
 "Torricelli who discovered the principle of the barometer in 1644 and "
@@ -484,29 +486,29 @@ msgid ""
 "standard atmosphere (atm) equals 760 Torr."
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:696
+#: panel-plugin/weather-config.c:696
 msgid "Wind speeds in TV or in the news are often provided in km/h."
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:700
+#: panel-plugin/weather-config.c:700
 msgid ""
 "Miles per hour is an imperial unit of speed expressing the number of statute "
 "miles covered in one hour."
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:704
+#: panel-plugin/weather-config.c:704
 msgid ""
 "Meter per second is <i>the</i> unit typically used by meteorologists to "
 "denote wind speeds."
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:708
+#: panel-plugin/weather-config.c:708
 msgid ""
 "The foot per second (pl. feet per second) in the imperial unit system is the "
 "counterpart to the meter per second in the International System of Units."
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:713
+#: panel-plugin/weather-config.c:713
 msgid ""
 "The knot is a unit of speed equal to one international nautical mile (1.852 "
 "km) per hour, or approximately 1.151 mph, and sees worldwide use in "
@@ -514,13 +516,13 @@ msgid ""
 "knot along a meridian travels one minute of geographic latitude in one hour."
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:746
+#: panel-plugin/weather-config.c:746
 msgid ""
 "1 millimeter is one thousandth of a meter - the fundamental unit of length "
 "in the International System of Units -, or approximately 0.04 inches."
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:751
+#: panel-plugin/weather-config.c:751
 msgid ""
 "The English word <i>inch</i> comes from Latin <i>uncia</i> meaning <i>one-"
 "twelfth part</i> (in this case, one twelfth of a foot). In the past, there "
@@ -529,7 +531,7 @@ msgid ""
 "millimeters."
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:784
+#: panel-plugin/weather-config.c:784
 msgid ""
 "The meter is the fundamental unit of length in the International System of "
 "Units. Originally intended to be one ten-millionth of the distance from the "
@@ -538,7 +540,7 @@ msgid ""
 "of measurement)."
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:792
+#: panel-plugin/weather-config.c:792
 msgid ""
 "A foot (plural feet) is a unit of length defined as being 0.3048 m exactly "
 "and used in the imperial system of units and United States customary units. "
@@ -547,12 +549,7 @@ msgid ""
 "English-speaking world."
 msgstr ""
 
-#.
-#. * TRANSLATORS: The Summer Simmer Index is similar to the heat
-#. * index, but usually used at night because of its better accuracy
-#. * at that time.
-#.
-#: ../panel-plugin/weather-config.c:831
+#: panel-plugin/weather-config.c:831
 msgid ""
 "Used in North America, wind chill will be reported for low temperatures and "
 "heat index for higher ones. At night, heat index will be replaced by the "
@@ -563,7 +560,7 @@ msgid ""
 "met, the air temperature will be shown."
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:842
+#: panel-plugin/weather-config.c:842
 msgid ""
 "The Canadian counterpart to the US windchill/heat index, with the wind chill "
 "being similar to the previous model but with slightly different constraints. "
@@ -574,7 +571,7 @@ msgid ""
 "°F). If these conditions are not met, the air temperature will be shown."
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:854
+#: panel-plugin/weather-config.c:854
 msgid ""
 "This is the model used by the Australian Bureau of Meteorology, especially "
 "adapted for the climate of this continent. Possibly used in Central Europe "
@@ -585,7 +582,7 @@ msgid ""
 "temperatures alike."
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:865
+#: panel-plugin/weather-config.c:865
 msgid ""
 "Improvements by Robert G. Quayle and Robert G. Steadman applied in 1998 to "
 "earlier experiments/developments by Steadman. This model only depends on "
@@ -593,110 +590,107 @@ msgid ""
 "both heat and cold stress."
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:901
+#: panel-plugin/weather-config.c:901
 msgid "_Temperature:"
 msgstr "_Temperatura:"
 
-#: ../panel-plugin/weather-config.c:903
+#: panel-plugin/weather-config.c:903
 msgid "Celsius (°C)"
-msgstr "Celsjusz (°C)"
+msgstr "Stopień Celsjusza (°C)"
 
-#: ../panel-plugin/weather-config.c:904
+#: panel-plugin/weather-config.c:904
 msgid "Fahrenheit (°F)"
-msgstr "Fahrenheit (°F)"
+msgstr "Stopień Fahrenheita (°F)"
 
-#: ../panel-plugin/weather-config.c:909
-#, fuzzy
+#: panel-plugin/weather-config.c:909
 msgid "Barometric _pressure:"
-msgstr "Ciśnienie barometryczne"
+msgstr "Ciśnienie _barometryczne:"
 
-#: ../panel-plugin/weather-config.c:912
+#: panel-plugin/weather-config.c:912
 msgid "Hectopascals (hPa)"
 msgstr "Hektopaskal (hPa)"
 
-#: ../panel-plugin/weather-config.c:914
+#: panel-plugin/weather-config.c:914
 msgid "Inches of mercury (inHg)"
 msgstr "Cal słupa rtęci (inHg)"
 
-#: ../panel-plugin/weather-config.c:916
+#: panel-plugin/weather-config.c:916
 msgid "Pound-force per square inch (psi)"
 msgstr "Funt na cal kwadratowy (psi)"
 
-#: ../panel-plugin/weather-config.c:918
+#: panel-plugin/weather-config.c:918
 msgid "Torr (mmHg)"
 msgstr "Tor (mmHg)"
 
-#: ../panel-plugin/weather-config.c:923
+#: panel-plugin/weather-config.c:923
 msgid "_Wind speed:"
 msgstr "_Prędkość wiatru:"
 
-#: ../panel-plugin/weather-config.c:926
+#: panel-plugin/weather-config.c:926
 msgid "Kilometers per hour (km/h)"
 msgstr "Kilometr na godzinę (km/h)"
 
-#: ../panel-plugin/weather-config.c:928
+#: panel-plugin/weather-config.c:928
 msgid "Miles per hour (mph)"
 msgstr "Mila na godzinę (mph)"
 
-#: ../panel-plugin/weather-config.c:930
+#: panel-plugin/weather-config.c:930
 msgid "Meters per second (m/s)"
 msgstr "Metr na sekundę (m/s)"
 
-#: ../panel-plugin/weather-config.c:932
+#: panel-plugin/weather-config.c:932
 msgid "Feet per second (ft/s)"
 msgstr "Stopa na sekundę (ft/s)"
 
-#: ../panel-plugin/weather-config.c:934
+#: panel-plugin/weather-config.c:934
 msgid "Knots (kt)"
 msgstr "Węzeł (kt)"
 
-#: ../panel-plugin/weather-config.c:939
+#: panel-plugin/weather-config.c:939
 msgid "Prec_ipitations:"
 msgstr "_Opady:"
 
-#: ../panel-plugin/weather-config.c:942
+#: panel-plugin/weather-config.c:942
 msgid "Millimeters (mm)"
 msgstr "Milimetry (mm)"
 
-#: ../panel-plugin/weather-config.c:944
+#: panel-plugin/weather-config.c:944
 msgid "Inches (in)"
 msgstr "Cale (in)"
 
-#: ../panel-plugin/weather-config.c:952
+#: panel-plugin/weather-config.c:952
 msgid "Meters (m)"
 msgstr "Metry (m)"
 
-#: ../panel-plugin/weather-config.c:954
+#: panel-plugin/weather-config.c:954
 msgid "Feet (ft)"
 msgstr "Stopy (ft)"
 
-#: ../panel-plugin/weather-config.c:963
+#: panel-plugin/weather-config.c:963
 msgid "Apparent te_mperature:"
 msgstr "Odczuwalna t_emperatura:"
 
-#: ../panel-plugin/weather-config.c:966
+#: panel-plugin/weather-config.c:966
 msgid "Windchill/Heat index"
 msgstr "Indeks cieplny Heat index"
 
-#: ../panel-plugin/weather-config.c:968
+#: panel-plugin/weather-config.c:968
 msgid "Windchill/Humidex"
 msgstr "Indeks cieplny Humidex"
 
-#: ../panel-plugin/weather-config.c:969
-#, fuzzy
+#: panel-plugin/weather-config.c:969
 msgid "Steadman"
-msgstr "Skala Steadman'a"
+msgstr "Steadman"
 
-#: ../panel-plugin/weather-config.c:970
-#, fuzzy
+#: panel-plugin/weather-config.c:970
 msgid "Quayle-Steadman"
-msgstr "Skala Quayle-Steadman'a"
+msgstr "Quayle-Steadman"
 
-#: ../panel-plugin/weather-config.c:993
+#: panel-plugin/weather-config.c:993
 msgid "Choose an icon theme."
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:998
+#: panel-plugin/weather-config.c:998
 #, c-format
 msgid ""
 "<b>Directory:</b> %s\n"
@@ -715,7 +709,7 @@ msgstr ""
 "\n"
 "<b>Licencja:</b> %s"
 
-#: ../panel-plugin/weather-config.c:1052
+#: panel-plugin/weather-config.c:1052
 msgid ""
 "A more calendar-like view, with the days in columns and the daytimes "
 "(morning, afternoon, evening, night) in rows."
@@ -723,7 +717,7 @@ msgstr ""
 "Wyświetla prognozę w tabeli podobnej do układu kalendarza. Kolumny zawierają "
 "kolejne dni prognozy, a wiersze pory dnia."
 
-#: ../panel-plugin/weather-config.c:1056
+#: panel-plugin/weather-config.c:1056
 msgid ""
 "Shows the forecasts in a table with the daytimes (morning, afternoon, "
 "evening, night) in columns and the days in rows."
@@ -731,11 +725,11 @@ msgstr ""
 "Wyświetla prognozę w tabeli zawierającej w kolumnach pory dnia, a w "
 "wierszach kolejne dni prognozy"
 
-#: ../panel-plugin/weather-config.c:1114
+#: panel-plugin/weather-config.c:1114
 msgid "_Icon theme:"
 msgstr "Styl _ikon:"
 
-#: ../panel-plugin/weather-config.c:1116
+#: panel-plugin/weather-config.c:1116
 msgid ""
 "Available icon themes are listed here. You can add icon themes to $HOME/."
 "config/xfce4/weather/icons (or the equivalent directory on your system). "
@@ -748,19 +742,19 @@ msgstr ""
 "README zawiera informacje na temat tworzenia i używania stylów ikon. Nowe "
 "style wykrywane są każdorazowo po otwarciu okna właściwości apletu."
 
-#: ../panel-plugin/weather-config.c:1138
+#: panel-plugin/weather-config.c:1138
 msgid "_Tooltip style:"
 msgstr "Styl p_odpowiedzi:"
 
-#: ../panel-plugin/weather-config.c:1140
+#: panel-plugin/weather-config.c:1140
 msgid "Simple"
 msgstr "Prosty"
 
-#: ../panel-plugin/weather-config.c:1141
+#: panel-plugin/weather-config.c:1141
 msgid "Verbose"
 msgstr "Szczegółowy"
 
-#: ../panel-plugin/weather-config.c:1144
+#: panel-plugin/weather-config.c:1144
 msgid ""
 "Choose your preferred tooltip style. Some styles give a lot of useful data, "
 "some are clearer but provide less data on a glance."
@@ -769,23 +763,23 @@ msgstr ""
 "użytecznych informacji, niektóre są bardziej przejrzyste, lecz oferują mniej "
 "danych."
 
-#: ../panel-plugin/weather-config.c:1156
+#: panel-plugin/weather-config.c:1156
 msgid "_Forecast layout:"
 msgstr "Układ p_rognozy:"
 
-#: ../panel-plugin/weather-config.c:1158
+#: panel-plugin/weather-config.c:1158
 msgid "Days in columns"
 msgstr "Dni rozmieszczone w kolumnach"
 
-#: ../panel-plugin/weather-config.c:1159
+#: panel-plugin/weather-config.c:1159
 msgid "Days in rows"
 msgstr "Dni rozmieszczone w wierszach"
 
-#: ../panel-plugin/weather-config.c:1167
+#: panel-plugin/weather-config.c:1167
 msgid "_Number of forecast days:"
 msgstr "_Ilość dni prognozy:"
 
-#: ../panel-plugin/weather-config.c:1172
+#: panel-plugin/weather-config.c:1172
 #, c-format
 msgid ""
 "Met.no provides forecast data for up to %d days in the future. Choose how "
@@ -800,27 +794,26 @@ msgstr ""
 "okna prognozy. Należy zauważyć, że prognoza pogody dłuższa niż na 3 "
 "najbliższe dni jest bardzo mało wiarygodna."
 
-#: ../panel-plugin/weather-config.c:1190
+#: panel-plugin/weather-config.c:1190
 msgid "_Round values"
 msgstr "_Zaokrąglanie wartości"
 
-#: ../panel-plugin/weather-config.c:1192
+#: panel-plugin/weather-config.c:1192
 msgid ""
 "Check to round values everywhere except on the details page in the summary "
 "window."
 msgstr ""
 "Zaokrągla wartości z wyjątkiem danych na karcie szczegółów okna komunikatu"
 
-#: ../panel-plugin/weather-config.c:1242 ../panel-plugin/weather-config.c:1706
+#: panel-plugin/weather-config.c:1242 panel-plugin/weather-config.c:1706
 msgid "Select _font"
 msgstr "Wybierz _czcionkę"
 
-#: ../panel-plugin/weather-config.c:1259
+#: panel-plugin/weather-config.c:1259
 msgid "Select font"
 msgstr "Wybór czcionki"
 
-#. TRANSLATORS: Fallback value, usually never shown.
-#: ../panel-plugin/weather-config.c:1391
+#: panel-plugin/weather-config.c:1391
 msgid ""
 "Choose the value to add to the list below. Values can be added more than "
 "once."
@@ -828,7 +821,7 @@ msgstr ""
 "Wybiera etykietę dodawaną do listy wyświetlanych etykiet. Etykietę można "
 "umieścić na liście wiele razy."
 
-#: ../panel-plugin/weather-config.c:1401
+#: panel-plugin/weather-config.c:1401
 msgid ""
 "Air temperature, sometimes referred to as dry-bulb temperature. Measured by "
 "a thermometer that is freely exposed to the air, yet shielded from radiation "
@@ -839,7 +832,7 @@ msgstr ""
 "wystawionego na powietrzu, ale chronionego przed działaniem promieniowania i "
 "wilgoci."
 
-#: ../panel-plugin/weather-config.c:1407
+#: panel-plugin/weather-config.c:1407
 msgid ""
 "The weight of the air that makes up the atmosphere exerts a pressure on the "
 "surface of the Earth, which is known as atmospheric pressure. To make it "
@@ -857,7 +850,7 @@ msgstr ""
 "zazwyczaj zapowiada polepszenie warunków pogodowych, natomiast jego spadek - "
 "pogorszenie."
 
-#: ../panel-plugin/weather-config.c:1418
+#: panel-plugin/weather-config.c:1418
 msgid ""
 "Nowadays wind speed/velocity is measured using an anemometer (Greek "
 "<i>anemos</i>, meaning <i>wind</i>) in 10 m (33 ft) height. Anemometers "
@@ -870,7 +863,7 @@ msgstr ""
 "pomiaru prędkości wiatru lub ciśnienia, ale potrafi wskazać wartości obydwu "
 "wielkości, ponieważ są one ze sobą blisko związane."
 
-#: ../panel-plugin/weather-config.c:1426
+#: panel-plugin/weather-config.c:1426
 msgid ""
 "Invented by Sir Francis Beaufort in 1805, this empirical scale on wind speed "
 "is based on people's observations of specific land or sea conditions, "
@@ -882,7 +875,7 @@ msgstr ""
 "lądzie. Siła wiatru opisywana jest za pomocą liczb z przedziału od 0 (cisza, "
 "flauta) do 12 (huragan)."
 
-#: ../panel-plugin/weather-config.c:1432
+#: panel-plugin/weather-config.c:1432
 msgid ""
 "This gives the cardinal direction (North, East, South, West) the wind is "
 "coming from."
@@ -890,7 +883,7 @@ msgstr ""
 "Wypisuje główny kierunek (północ, wschód, południe, zachód), z którego wieje "
 "wiatr"
 
-#: ../panel-plugin/weather-config.c:1436
+#: panel-plugin/weather-config.c:1436
 msgid ""
 "This gives the direction the wind is coming from in azimuth degrees (North = "
 "0°, East = 90°, South = 180° and West = 270°)."
@@ -898,7 +891,7 @@ msgstr ""
 "Wypisuje kierunek, z którego wieje wiatr, wyrażony w stopniach azymutu "
 "(północ = 0°, wschód = 90°, południe = 180° i zachód = 270°)"
 
-#: ../panel-plugin/weather-config.c:1441
+#: panel-plugin/weather-config.c:1441
 msgid ""
 "Humidity is defined as the amount of water vapor in the air and increases "
 "the possibility of precipitations, fog and dew. While absolute humidity is "
@@ -913,7 +906,7 @@ msgstr ""
 "określa aktualną wilgotność bezwzględną w odniesieniu do maksymalnej w danej "
 "temperaturze i ciśnieniu."
 
-#: ../panel-plugin/weather-config.c:1449
+#: panel-plugin/weather-config.c:1449
 msgid ""
 "This is the temperature to which air must be cooled to reach 100% relative "
 "humidity, given no change in water content. Reaching the dew point halts the "
@@ -936,7 +929,7 @@ msgstr ""
 "<b>Uwaga:</b> wartość tej wielkości jest wyznaczana i nie pochodzi z serwisu "
 "met.no."
 
-#: ../panel-plugin/weather-config.c:1461
+#: panel-plugin/weather-config.c:1461
 msgid ""
 "Also known as <i>felt temperature</i>, <i>effective temperature</i>, or what "
 "some weather providers declare as <i>feels like</i>. Human temperature "
@@ -960,7 +953,7 @@ msgstr ""
 "szacowania wartości znajdujących się na karcie jednostek, dostosowany do "
 "lokalnych warunków atmosferycznych."
 
-#: ../panel-plugin/weather-config.c:1475
+#: panel-plugin/weather-config.c:1475
 msgid ""
 "This gives the low-level cloud cover in percent. According to WMO "
 "definition, low-level clouds can be found at altitudes below 4,000 m (13,000 "
@@ -969,7 +962,7 @@ msgid ""
 "particles and snow, when temperatures are cold enough."
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:1483
+#: panel-plugin/weather-config.c:1483
 msgid ""
 "This specifies the mid-level cloud cover in percent. According to WMO "
 "definition, mid-level clouds form in heights of 4,000-8,000 m (13,000-26,000 "
@@ -978,17 +971,17 @@ msgid ""
 "temperatures get low enough, ice particles can replace the droplets."
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:1492
+#: panel-plugin/weather-config.c:1492
 msgid ""
 "This reports the high-level cloud cover in percent. According to WMO "
 "definition, high-level clouds can be found in altitudes of 8,000 to 15,000 m "
-"(26,000 to 49,000 ft), or 18,000 m (59,000 ft) at the equator, where "
-"temperatures are so low that they are mainly composed of ice crystals. While "
-"typically thin and white in appearance, they can be seen in a magnificent "
-"array of colors when the sun is low on the horizon."
+"(26,000 to 49,000 ft), or 10,000 m-18,000 m (33,000-59,000 ft) at the "
+"equator, where temperatures are so low that they are mainly composed of ice "
+"crystals. While typically thin and white in appearance, they can be seen in "
+"a magnificent array of colors when the sun is low on the horizon."
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:1502
+#: panel-plugin/weather-config.c:1502
 msgid ""
 "Cloudiness, or cloud cover, defines the fraction of the sky obscured by "
 "clouds when observed from a given location. Clouds are both carriers of "
@@ -999,7 +992,7 @@ msgid ""
 "that way contribute to the cooling of the planet."
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:1514
+#: panel-plugin/weather-config.c:1514
 msgid ""
 "Fog is a type of low-lying stratus cloud, with the moisture in it often "
 "generated locally such as from a nearby lake, river, ocean, or simply moist "
@@ -1009,7 +1002,7 @@ msgid ""
 "reduces visibility to less than 1 km (5/8 statute mile)."
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:1525
+#: panel-plugin/weather-config.c:1525
 msgid ""
 "The amount of rain, drizzle, sleet, hail, snow, graupel and other forms of "
 "water falling from the sky over a specific period.\n"
@@ -1045,13 +1038,13 @@ msgstr ""
 "mnożąc jej pierwotną wartość przez wartość zależną od temperatury "
 "powietrza:\n"
 "\n"
-"<tt><small>                   T &lt; -11.1 °C =&gt; 1:12\n"
-"-11.1 °C &lt; T &lt;  -4.4 °C =&gt; 1:10\n"
-" -4.4 °C &lt; T &lt;  -2.2 °C =&gt; 1:7\n"
-" -2.2 °C &lt; T &lt;  -0.6 °C =&gt; 1:5\n"
-" -0.6 °C &lt; T                    =&gt; 1:3\n"
+"<tt><small>                   T &lt; -11.1°C =&gt; 1:12\n"
+"-11.1°C &lt; T &lt;  -4.4°C =&gt; 1:10\n"
+" -4.4°C &lt; T &lt;  -2.2°C =&gt; 1:7\n"
+" -2.2°C &lt; T &lt;  -0.6°C =&gt; 1:5\n"
+" -0.6°C &lt; T                    =&gt; 1:3\n"
 "\n"
-"</small></tt>Przykład: jeśli wskazanie temperatury wynosi -5 °C, do obliczeń "
+"</small></tt>Przykład: jeśli wskazanie temperatury wynosi -5°C, do obliczeń "
 "zostanie przyjęty stosunek 1:10. Zakładając, że podana wielkość opadów "
 "wynosi 5 mm, wartość wielkości opadów śniegu będzie wynosić 50 mm.\n"
 "\n"
@@ -1060,11 +1053,11 @@ msgstr ""
 "podłoża. Wartości tych wielkości nie są znane, dlatego obliczenia dają "
 "wyniki tylko zbliżone do rzeczywistych wartości."
 
-#: ../panel-plugin/weather-config.c:1676
+#: panel-plugin/weather-config.c:1676
 msgid "Show scroll_box"
 msgstr "_Wyświetlanie etykiet"
 
-#: ../panel-plugin/weather-config.c:1678
+#: panel-plugin/weather-config.c:1678
 msgid ""
 "Hide the scrollbox to save valuable space on the panel. Most interesting "
 "information is also provided in the tooltip - provided you choose an "
@@ -1075,12 +1068,11 @@ msgstr ""
 "zależności od użytego stylu - wyświetlanej po wskazaniu apletu kursorem "
 "myszy."
 
-#. values to show at once (multiple lines)
-#: ../panel-plugin/weather-config.c:1689
+#: panel-plugin/weather-config.c:1689
 msgid "Li_nes:"
 msgstr "Ilość _wierszy:"
 
-#: ../panel-plugin/weather-config.c:1695
+#: panel-plugin/weather-config.c:1695
 msgid ""
 "Decide how many values should be shown at once in the scrollbox. You can "
 "choose a smaller font or enlarge the panel to make more lines fit."
@@ -1089,11 +1081,11 @@ msgstr ""
 "wyświetlić większą ilość wierszy, można użyć mniejszej czcionki lub "
 "zwiększyć rozmiar panelu."
 
-#: ../panel-plugin/weather-config.c:1702
+#: panel-plugin/weather-config.c:1702
 msgid "Font and color:"
 msgstr "Czcionka i kolor:"
 
-#: ../panel-plugin/weather-config.c:1708
+#: panel-plugin/weather-config.c:1708
 msgid ""
 "Choose a font you like and set it to a smaller or larger size. Middle-click "
 "on the button to unset the font and use your theme's default."
@@ -1101,7 +1093,7 @@ msgstr ""
 "Konfiguruje rodzinę i rozmiar czcionki wyświetlanej na panelu. Kliknięcie "
 "środkowym przyciskiem myszy przywraca domyślne ustawienia stylu."
 
-#: ../panel-plugin/weather-config.c:1720
+#: panel-plugin/weather-config.c:1720
 msgid ""
 "There may be problems with some themes that cause the scrollbox text to be "
 "hardly readable. If this is the case or you simply want it to appear in "
@@ -1112,11 +1104,11 @@ msgstr ""
 "które sprawiają, że etykiety stają się nieczytelne. Kliknięcie środkowym "
 "przyciskiem myszy przywraca domyślne ustawienia stylu."
 
-#: ../panel-plugin/weather-config.c:1744
+#: panel-plugin/weather-config.c:1744
 msgid "Labels to d_isplay"
 msgstr "Wyświetlane _etykiety"
 
-#: ../panel-plugin/weather-config.c:1747
+#: panel-plugin/weather-config.c:1747
 msgid ""
 "These are the values that will be shown in the scrollbox. Select a single "
 "value here and click the appropriate button to remove it or move it up and "
@@ -1126,299 +1118,260 @@ msgstr ""
 "usunąć pojedynczą etykietę, należy najpierw zaznaczyć kliknięciem "
 "odpowiednią pozycję na liście."
 
-#. button "add"
-#: ../panel-plugin/weather-config.c:1754
+#: panel-plugin/weather-config.c:1754
 msgid "A_dd"
 msgstr "_Dodaj"
 
-#: ../panel-plugin/weather-config.c:1757
+#: panel-plugin/weather-config.c:1757
 msgid ""
 "Add the selected value to the labels that should be displayed in the "
 "scrollbox."
 msgstr "Dodaje wybraną etykietę do listy wyświetlanej w obszarze panelu"
 
-#: ../panel-plugin/weather-config.c:1772
+#: panel-plugin/weather-config.c:1772
 msgid "_Remove"
 msgstr "_Usuń"
 
-#: ../panel-plugin/weather-config.c:1775
+#: panel-plugin/weather-config.c:1775
 msgid ""
 "Select a value in the list of labels to display and click this button to "
 "remove it."
 msgstr "Usuwa wybraną etykietę z listy wyświetlanej w obszarze panelu"
 
-#. button "move up"
-#: ../panel-plugin/weather-config.c:1780
+#: panel-plugin/weather-config.c:1780
 msgid "Move u_p"
 msgstr "Przemieść _wyżej"
 
-#: ../panel-plugin/weather-config.c:1783
+#: panel-plugin/weather-config.c:1783
 msgid "Move the selected value up in the list of labels to display."
 msgstr "Przemieszcza wybraną etykietę w górę na liście wyświetlanych etykiet"
 
-#. button "move down"
-#: ../panel-plugin/weather-config.c:1788
+#: panel-plugin/weather-config.c:1788
 msgid "Move do_wn"
 msgstr "Przemieść _niżej"
 
-#: ../panel-plugin/weather-config.c:1791
+#: panel-plugin/weather-config.c:1791
 msgid "Move the selected value down in the list of labels to display."
 msgstr "Przemieszcza wybraną etykietę w dół na liście wyświetlanych etykiet"
 
-#: ../panel-plugin/weather-config.c:1808
+#: panel-plugin/weather-config.c:1808
 msgid "Animate _transitions between labels"
 msgstr "_Animowanie zmian etykiet"
 
-#: ../panel-plugin/weather-config.c:1813
+#: panel-plugin/weather-config.c:1813
 msgid ""
 "Scroll the current displayed value(s) out and the new value(s) in instead of "
 "simply changing them. Uncheck this option if you find the animation too "
 "distracting."
 msgstr "Wyświetla etykiety wykorzystując efekt animacji"
 
-#: ../panel-plugin/weather-config.c:1947
+#: panel-plugin/weather-config.c:1947
 msgid "_Location"
 msgstr "_Lokalizacja"
 
-#: ../panel-plugin/weather-config.c:1950
+#: panel-plugin/weather-config.c:1950
 msgid "_Units"
 msgstr "_Jednostki"
 
-#: ../panel-plugin/weather-config.c:1953
+#: panel-plugin/weather-config.c:1953
 msgid "_Appearance"
 msgstr "_Wygląd"
 
-#: ../panel-plugin/weather-config.c:1956
+#: panel-plugin/weather-config.c:1956
 msgid "_Scrollbox"
 msgstr "_Etykiety"
 
-#: ../panel-plugin/weather-data.c:426
+#: panel-plugin/weather-data.c:426
 msgid "ft"
 msgstr "ft"
 
-#: ../panel-plugin/weather-data.c:426
+#: panel-plugin/weather-data.c:426
 msgid "m"
 msgstr "m"
 
-#: ../panel-plugin/weather-data.c:430
+#: panel-plugin/weather-data.c:430
 msgid "°F"
 msgstr "°F"
 
-#: ../panel-plugin/weather-data.c:430
+#: panel-plugin/weather-data.c:430
 msgid "°C"
 msgstr "°C"
 
-#: ../panel-plugin/weather-data.c:434
+#: panel-plugin/weather-data.c:434
 msgid "hPa"
 msgstr "hPa"
 
-#: ../panel-plugin/weather-data.c:436
+#: panel-plugin/weather-data.c:436
 msgid "inHg"
 msgstr "inHg"
 
-#: ../panel-plugin/weather-data.c:438
+#: panel-plugin/weather-data.c:438
 msgid "psi"
 msgstr "psi"
 
-#: ../panel-plugin/weather-data.c:440
+#: panel-plugin/weather-data.c:440
 msgid "mmHg"
 msgstr "mmHg"
 
-#: ../panel-plugin/weather-data.c:445
+#: panel-plugin/weather-data.c:445
 msgid "km/h"
 msgstr "km/h"
 
-#: ../panel-plugin/weather-data.c:447
+#: panel-plugin/weather-data.c:447
 msgid "mph"
 msgstr "mph"
 
-#: ../panel-plugin/weather-data.c:449
+#: panel-plugin/weather-data.c:449
 msgid "m/s"
 msgstr "m/s"
 
-#: ../panel-plugin/weather-data.c:451
+#: panel-plugin/weather-data.c:451
 msgid "ft/s"
 msgstr "ft/s"
 
-#: ../panel-plugin/weather-data.c:453
+#: panel-plugin/weather-data.c:453
 msgid "kt"
 msgstr "kt"
 
-#. TRANSLATORS: The degree sign is used like a unit for
-#. latitude, longitude, wind direction
-#: ../panel-plugin/weather-data.c:460
+#: panel-plugin/weather-data.c:460
 msgid "°"
 msgstr "°"
 
-#. TRANSLATORS: Percentage sign is used like a unit for
-#. clouds, fog, humidity
-#: ../panel-plugin/weather-data.c:469
+#: panel-plugin/weather-data.c:469
 msgid "%"
 msgstr "%"
 
-#: ../panel-plugin/weather-data.c:471
+#: panel-plugin/weather-data.c:471
 msgid "in"
 msgstr "cal"
 
-#: ../panel-plugin/weather-data.c:471
+#: panel-plugin/weather-data.c:471
 msgid "mm"
 msgstr "mm"
 
-#: ../panel-plugin/weather-data.c:535
+#: panel-plugin/weather-data.c:535
 msgid "North"
 msgstr "Północ"
 
-#: ../panel-plugin/weather-data.c:535 ../panel-plugin/weather-translate.c:44
+#: panel-plugin/weather-data.c:535 panel-plugin/weather-translate.c:44
 msgid "N"
 msgstr "N"
 
-#: ../panel-plugin/weather-data.c:538
+#: panel-plugin/weather-data.c:538
 msgid "North-East"
 msgstr "Północny-wschód"
 
-#: ../panel-plugin/weather-data.c:538 ../panel-plugin/weather-translate.c:46
+#: panel-plugin/weather-data.c:538 panel-plugin/weather-translate.c:46
 msgid "NE"
 msgstr "NE"
 
-#: ../panel-plugin/weather-data.c:541
+#: panel-plugin/weather-data.c:541
 msgid "East"
 msgstr "Wschód"
 
-#: ../panel-plugin/weather-data.c:541 ../panel-plugin/weather-translate.c:48
+#: panel-plugin/weather-data.c:541 panel-plugin/weather-translate.c:48
 msgid "E"
 msgstr "E"
 
-#: ../panel-plugin/weather-data.c:544
+#: panel-plugin/weather-data.c:544
 msgid "South-East"
 msgstr "Południowy-wschód"
 
-#: ../panel-plugin/weather-data.c:544 ../panel-plugin/weather-translate.c:50
+#: panel-plugin/weather-data.c:544 panel-plugin/weather-translate.c:50
 msgid "SE"
 msgstr "SE"
 
-#: ../panel-plugin/weather-data.c:547
+#: panel-plugin/weather-data.c:547
 msgid "South"
 msgstr "Południe"
 
-#. TRANSLATORS: Wind directions. It's where the wind comes _from_.
-#: ../panel-plugin/weather-data.c:547 ../panel-plugin/weather-translate.c:36
+#: panel-plugin/weather-data.c:547 panel-plugin/weather-translate.c:36
 msgid "S"
 msgstr "S"
 
-#: ../panel-plugin/weather-data.c:550
+#: panel-plugin/weather-data.c:550
 msgid "South-West"
 msgstr "Południowy-zachód"
 
-#: ../panel-plugin/weather-data.c:550 ../panel-plugin/weather-translate.c:38
+#: panel-plugin/weather-data.c:550 panel-plugin/weather-translate.c:38
 msgid "SW"
 msgstr "SW"
 
-#: ../panel-plugin/weather-data.c:553
+#: panel-plugin/weather-data.c:553
 msgid "West"
 msgstr "Zachód"
 
-#: ../panel-plugin/weather-data.c:553 ../panel-plugin/weather-translate.c:40
+#: panel-plugin/weather-data.c:553 panel-plugin/weather-translate.c:40
 msgid "W"
 msgstr "W"
 
-#: ../panel-plugin/weather-data.c:556
+#: panel-plugin/weather-data.c:556
 msgid "North-West"
 msgstr "Północny-zachód"
 
-#: ../panel-plugin/weather-data.c:556 ../panel-plugin/weather-translate.c:42
+#: panel-plugin/weather-data.c:556 panel-plugin/weather-translate.c:42
 msgid "NW"
 msgstr "NW"
 
-#: ../panel-plugin/weather-icon.c:134
+#: panel-plugin/weather-icon.c:134
 msgid "No icon theme!"
 msgstr "Brak stylu ikon!"
 
-#: ../panel-plugin/weather-search.c:128 ../panel-plugin/weather-search.c:252
+#: panel-plugin/weather-search.c:128 panel-plugin/weather-search.c:252
 msgid "Results"
 msgstr "Wyniki"
 
-#: ../panel-plugin/weather-search.c:168
+#: panel-plugin/weather-search.c:168
 msgid "Searching..."
 msgstr "Wyszukiwanie..."
 
-#: ../panel-plugin/weather-search.c:201
+#: panel-plugin/weather-search.c:201
 msgid "Search location"
 msgstr "Wyszukiwanie lokalizacji"
 
-#: ../panel-plugin/weather-search.c:222
+#: panel-plugin/weather-search.c:222
 msgid "Enter a city name or address"
 msgstr "Wyszukuje lokalizację na podstawie nazwy lub kodu pocztowego"
 
-#.
-#. * TRANSLATORS: Latitude and longitude are known from the
-#. * search results, but not the location name. The user shall
-#. * give the place a name.
-#.
-#: ../panel-plugin/weather-search.c:403
+#: panel-plugin/weather-search.c:403
 msgid "Unnamed place"
 msgstr "Nienazwana lokalizacja"
 
-#.
-#. * TRANSLATORS: This format string belongs to the macro used for
-#. * printing the "Label: Value Unit" lines on the details tab, e.g.
-#. * "Temperature: 10 °C" or "Latitude: 95.7°".
-#. * The %s stand for:
-#. *   - label
-#. *   - ": " if label is not empty, else empty
-#. *   - value
-#. *   - space if unit is not degree "°" (but this is not °C or °F!)
-#. *   - unit
-#. * Usually, you should leave this unchanged, BUT...
-#. * RTL TRANSLATORS: In case you did not translate the measurement
-#. * unit, use LRM (left-to-right mark) etc. to align it properly with
-#. * its numeric value.
-#.
-#: ../panel-plugin/weather-summary.c:71
+#: panel-plugin/weather-summary.c:71
 #, c-format
 msgid "\t%s%s%s%s%s\n"
 msgstr "\t%s%s%s%s%s\n"
 
-#. TRANSLATORS: This string is not visible anywhere but
-#. controls the alignment of the met.no image, so usually you
-#. should leave this string untouched (which means it should
-#. be "LTR"). It should be changed only for right-to-left
-#. languages. If you're translating to such a language, then
-#. change "LTR" to "RTL" here. For LTR languages, the image
-#. will be aligned to the right, and for RTL languages, the
-#. image will be aligned to the left.
-#.
-#: ../panel-plugin/weather-summary.c:230
+#: panel-plugin/weather-summary.c:230
 msgid "LTR"
-msgstr ""
+msgstr "LTR"
 
-#: ../panel-plugin/weather-summary.c:277
+#: panel-plugin/weather-summary.c:277
 #, c-format
 msgid "Error downloading met.no logo image to %s, reason: %s\n"
 msgstr "Błąd pobierania obrazu logo %s, powód: %s\n"
 
-#: ../panel-plugin/weather-summary.c:279
+#: panel-plugin/weather-summary.c:279
 msgid "unknown"
 msgstr "nieznany"
 
-#: ../panel-plugin/weather-summary.c:358
+#: panel-plugin/weather-summary.c:358
 msgid "Coordinates\n"
 msgstr "Współrzędne\n"
 
-#: ../panel-plugin/weather-summary.c:359
+#: panel-plugin/weather-summary.c:359
 msgid "Altitude"
 msgstr "Wysokość bezwzględna"
 
-#: ../panel-plugin/weather-summary.c:360
+#: panel-plugin/weather-summary.c:360
 msgid "Latitude"
 msgstr "Szerokość geograficzna"
 
-#: ../panel-plugin/weather-summary.c:361
+#: panel-plugin/weather-summary.c:361
 msgid "Longitude"
 msgstr "Długość geograficzna"
 
-#. TRANSLATORS: Please use as many \t as appropriate to align the
-#. date/time values as in the original.
-#: ../panel-plugin/weather-summary.c:365
+#: panel-plugin/weather-summary.c:365
 msgid ""
 "\n"
 "Downloads\n"
@@ -1426,7 +1379,7 @@ msgstr ""
 "\n"
 "Pobieranie\n"
 
-#: ../panel-plugin/weather-summary.c:368
+#: panel-plugin/weather-summary.c:368
 #, c-format
 msgid ""
 "\tWeather data:\n"
@@ -1441,7 +1394,7 @@ msgstr ""
 "\tIlość nieudanych prób: %d\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:381
+#: panel-plugin/weather-summary.c:381
 #, c-format
 msgid ""
 "\tAstronomical data:\n"
@@ -1454,8 +1407,7 @@ msgstr ""
 "\tNastępne:\t%s\n"
 "\tIlość nieudanych prób: %d\n"
 
-#. calculation times
-#: ../panel-plugin/weather-summary.c:393
+#: panel-plugin/weather-summary.c:393
 msgid ""
 "\n"
 "Times Used for Calculations\n"
@@ -1463,7 +1415,7 @@ msgstr ""
 "\n"
 "Czasy wyznaczenia danych\n"
 
-#: ../panel-plugin/weather-summary.c:396
+#: panel-plugin/weather-summary.c:396
 #, c-format
 msgid ""
 "\tTemperatures, wind, atmosphere and cloud data calculated\n"
@@ -1472,7 +1424,7 @@ msgstr ""
 "\tTemperatura, wiatr, ciśnienie i zachmurzenie:\n"
 "\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:405
+#: panel-plugin/weather-summary.c:405
 #, c-format
 msgid ""
 "\n"
@@ -1486,8 +1438,7 @@ msgstr ""
 "\tPoczątek:\t%s\n"
 "\tKoniec:\t\t%s\n"
 
-#. sun and moon
-#: ../panel-plugin/weather-summary.c:416
+#: panel-plugin/weather-summary.c:416
 msgid ""
 "\n"
 "Astronomical Data\n"
@@ -1495,20 +1446,20 @@ msgstr ""
 "\n"
 "Dane astronomiczne\n"
 
-#: ../panel-plugin/weather-summary.c:419
+#: panel-plugin/weather-summary.c:419
 msgid "\tSunrise:\t\tThe sun never rises today.\n"
 msgstr "\tWschód słońca:\t\tSłońce dziś nie wschodzi.\n"
 
-#: ../panel-plugin/weather-summary.c:422
+#: panel-plugin/weather-summary.c:422
 msgid "\tSunset:\t\tThe sun never sets today.\n"
 msgstr "\tZachód słońca:\t\tSłońce dziś nie zachodzi.\n"
 
-#: ../panel-plugin/weather-summary.c:426
+#: panel-plugin/weather-summary.c:426
 #, c-format
 msgid "\tSunrise:\t\t%s\n"
 msgstr "\tWschód słońca:\t\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:431
+#: panel-plugin/weather-summary.c:431
 #, c-format
 msgid ""
 "\tSunset:\t\t%s\n"
@@ -1517,41 +1468,40 @@ msgstr ""
 "\tZachód słońca:\t\t%s\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:437
+#: panel-plugin/weather-summary.c:437
 #, c-format
 msgid "\tMoon phase:\t%s\n"
 msgstr "\tFaza Księżyca:\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:441
+#: panel-plugin/weather-summary.c:441
 msgid "\tMoon phase:\tUnknown\n"
 msgstr "\tFaza Księżyca:\tnieznana\n"
 
-#: ../panel-plugin/weather-summary.c:446
+#: panel-plugin/weather-summary.c:446
 msgid "\tMoonrise:\tThe moon never rises today.\n"
 msgstr "\tWschód Księżyca:\tKsiężyc dziś nie wschodzi.\n"
 
-#: ../panel-plugin/weather-summary.c:450
+#: panel-plugin/weather-summary.c:450
 msgid "\tMoonset:\tThe moon never sets today.\n"
 msgstr "\tZachód Księżyca:\tKsiężyc dziś nie zachodzi.\n"
 
-#: ../panel-plugin/weather-summary.c:454
+#: panel-plugin/weather-summary.c:454
 #, c-format
 msgid "\tMoonrise:\t%s\n"
 msgstr "\tWschód Księżyca:\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:459
+#: panel-plugin/weather-summary.c:459
 #, c-format
 msgid "\tMoonset:\t%s\n"
 msgstr "\tZachód Księżyca:\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:464
+#: panel-plugin/weather-summary.c:464
 msgid "\tData not available, will use sane default values for night and day.\n"
 msgstr ""
 "\tDane nie są dostępne, będą używane rozsądne wartości domyślne dla nocy i "
 "dnia.\n"
 
-#. temperatures
-#: ../panel-plugin/weather-summary.c:470
+#: panel-plugin/weather-summary.c:470
 msgid ""
 "\n"
 "Temperatures\n"
@@ -1559,20 +1509,19 @@ msgstr ""
 "\n"
 "Temperatury\n"
 
-#: ../panel-plugin/weather-summary.c:471
+#: panel-plugin/weather-summary.c:471
 msgid "Temperature"
 msgstr "Temperatura"
 
-#: ../panel-plugin/weather-summary.c:472
+#: panel-plugin/weather-summary.c:472
 msgid "Dew point"
 msgstr "Punkt rosy"
 
-#: ../panel-plugin/weather-summary.c:473
+#: panel-plugin/weather-summary.c:473
 msgid "Apparent temperature"
 msgstr "Odczuwalna temperatura"
 
-#. wind
-#: ../panel-plugin/weather-summary.c:476
+#: panel-plugin/weather-summary.c:476
 msgid ""
 "\n"
 "Wind\n"
@@ -1580,19 +1529,17 @@ msgstr ""
 "\n"
 "Wiatr\n"
 
-#: ../panel-plugin/weather-summary.c:481
+#: panel-plugin/weather-summary.c:481
 #, c-format
 msgid "\tSpeed: %s %s (%s on the Beaufort scale)\n"
 msgstr "\tPrędkość: %s %s (%s w skali Beauforta)\n"
 
-#. wind direction
-#: ../panel-plugin/weather-summary.c:496
+#: panel-plugin/weather-summary.c:496
 #, c-format
 msgid "\tDirection: %s (%s%s)\n"
 msgstr "\tKierunek: %s (%s%s)\n"
 
-#. precipitation
-#: ../panel-plugin/weather-summary.c:504
+#: panel-plugin/weather-summary.c:504
 msgid ""
 "\n"
 "Precipitations\n"
@@ -1600,12 +1547,11 @@ msgstr ""
 "\n"
 "Opady\n"
 
-#: ../panel-plugin/weather-summary.c:505
+#: panel-plugin/weather-summary.c:505
 msgid "Precipitations amount"
 msgstr "Ilość"
 
-#. atmosphere
-#: ../panel-plugin/weather-summary.c:508
+#: panel-plugin/weather-summary.c:508
 msgid ""
 "\n"
 "Atmosphere\n"
@@ -1613,16 +1559,15 @@ msgstr ""
 "\n"
 "Atmosfera\n"
 
-#: ../panel-plugin/weather-summary.c:509
+#: panel-plugin/weather-summary.c:509
 msgid "Barometric pressure"
 msgstr "Ciśnienie barometryczne"
 
-#: ../panel-plugin/weather-summary.c:510
+#: panel-plugin/weather-summary.c:510
 msgid "Relative humidity"
 msgstr "Wilgotność względna"
 
-#. clouds
-#: ../panel-plugin/weather-summary.c:513
+#: panel-plugin/weather-summary.c:513
 msgid ""
 "\n"
 "Clouds\n"
@@ -1630,405 +1575,349 @@ msgstr ""
 "\n"
 "Chmury\n"
 
-#: ../panel-plugin/weather-summary.c:514
-#: ../panel-plugin/weather-translate.c:170
+#: panel-plugin/weather-summary.c:514 panel-plugin/weather-translate.c:170
 msgid "Fog"
 msgstr "Mgła"
 
-#: ../panel-plugin/weather-summary.c:515
+#: panel-plugin/weather-summary.c:515
 msgid "Low clouds"
 msgstr "Niskie chmury"
 
-#: ../panel-plugin/weather-summary.c:516
+#: panel-plugin/weather-summary.c:516
 msgid "Middle clouds"
 msgstr "Średnie chmury"
 
-#: ../panel-plugin/weather-summary.c:517
+#: panel-plugin/weather-summary.c:517
 msgid "High clouds"
 msgstr "Wysokie chmury"
 
-#: ../panel-plugin/weather-summary.c:518
+#: panel-plugin/weather-summary.c:518
 msgid "Cloudiness"
 msgstr "Zachmurzenie"
 
-#: ../panel-plugin/weather-summary.c:528
+#: panel-plugin/weather-summary.c:528
 msgid ""
 "\n"
 "Credits\n"
 msgstr ""
+"\n"
+"Twórcy\n"
 
-#: ../panel-plugin/weather-summary.c:529
+#: panel-plugin/weather-summary.c:529
+#, fuzzy
 msgid ""
 "\tEncyclopedic information partly taken from\n"
 "\t\t"
 msgstr ""
+"\tInformacje encyklopedyczne \n"
+"\t\t"
 
-#: ../panel-plugin/weather-summary.c:530
+#: panel-plugin/weather-summary.c:530
 msgid "Wikipedia"
-msgstr ""
+msgstr "Wikipedia"
 
-#: ../panel-plugin/weather-summary.c:531
-#, fuzzy
+#: panel-plugin/weather-summary.c:531
 msgid ""
 "\n"
 "\tWeather and astronomical data from\n"
 "\t\t"
-msgstr "Błąd przetwarzania danych astronomicznych!"
-
-#: ../panel-plugin/weather-summary.c:532
-#, fuzzy
-msgid "The Norwegian Meteorological Institute"
 msgstr ""
 "\n"
-"Dane pochodzą z Norweskiego Instytutu Meteorologicznego\n"
+"\tDane pogodowe i astronomiczne pochodzą z\n"
+"\t\t"
 
-#: ../panel-plugin/weather-summary.c:584
-#, c-format
+#: panel-plugin/weather-summary.c:532
+msgid "The Norwegian Meteorological Institute"
+msgstr "Norweskiego Instytutu Meteorologicznego"
+
+#: panel-plugin/weather-summary.c:584
 msgid "Today"
-msgstr "Dziś"
+msgstr "Dzisiaj"
 
-#: ../panel-plugin/weather-summary.c:586
-#, c-format
+#: panel-plugin/weather-summary.c:586
 msgid "Tomorrow"
 msgstr "Jutro"
 
-#. TRANSLATORS: Please use spaces as needed or desired to properly
-#. align the values; Monospace font is enforced with <tt> tags for
-#. alignment, and the text is enclosed in <small> tags because
-#. that looks much better and saves space.
-#.
-#: ../panel-plugin/weather-summary.c:606
+#: panel-plugin/weather-summary.c:606
 msgid "<b>Times used for calculations</b>\n"
 msgstr "<b>Czasy wyznaczenia danych</b>\n"
 
-#: ../panel-plugin/weather-summary.c:608
+#: panel-plugin/weather-summary.c:608
 #, c-format
 msgid "<tt><small>Interval start:       %s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Początek:       %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:614
+#: panel-plugin/weather-summary.c:614
 #, c-format
 msgid "<tt><small>Interval end:         %s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Koniec:         %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:620
-#, fuzzy, c-format
+#: panel-plugin/weather-summary.c:620
+#, c-format
 msgid ""
 "<tt><small>Data calculated for:  %s</small></tt>\n"
 "\n"
 msgstr ""
-"Dane wyznaczono dla:\t\t%s\n"
+"<tt><small>Dane wyznaczono dla:  %s</small></tt>\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:626
+#: panel-plugin/weather-summary.c:626
 msgid "<b>Temperatures</b>\n"
 msgstr "<b>Temperatury</b>\n"
 
-#: ../panel-plugin/weather-summary.c:627
+#: panel-plugin/weather-summary.c:627
 #, c-format
 msgid "<tt><small>Dew point:            %s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Punkt rosy:            %s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:631
-#, fuzzy, c-format
+#: panel-plugin/weather-summary.c:631
+#, c-format
 msgid ""
 "<tt><small>Apparent temperature: %s%s%s</small></tt>\n"
 "\n"
 msgstr ""
-"Odczuwalna temperatura:\t%s%s%s\n"
+"<tt><small>Odczuwalna temperatura: %s%s%s</small></tt>\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:636
+#: panel-plugin/weather-summary.c:636
 msgid "<b>Atmosphere</b>\n"
 msgstr "<b>Atmosfera</b>\n"
 
-#: ../panel-plugin/weather-summary.c:637
-#, fuzzy, c-format
+#: panel-plugin/weather-summary.c:637
+#, c-format
 msgid "<tt><small>Barometric pressure:  %s%s%s</small></tt>\n"
-msgstr "Ciśnienie barometryczne:\t%s%s%s\n"
+msgstr "<tt><small>Ciśnienie barometryczne:  %s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:641
-#, fuzzy, c-format
+#: panel-plugin/weather-summary.c:641
+#, c-format
 msgid ""
 "<tt><small>Relative humidity:    %s%s%s</small></tt>\n"
 "\n"
 msgstr ""
-"Wilgotność względna:\t\t%s%s%s\n"
+"<tt><small>Wilgotność względna:    %s%s%s</small></tt>\n"
 "\n"
 
-#: ../panel-plugin/weather-summary.c:646
+#: panel-plugin/weather-summary.c:646
 msgid "<b>Precipitations</b>\n"
 msgstr "<b>Opady</b>\n"
 
-#: ../panel-plugin/weather-summary.c:647
+#: panel-plugin/weather-summary.c:647
 #, c-format
 msgid ""
 "<tt><small>Amount:        %s%s%s</small></tt>\n"
 "\n"
 msgstr ""
+"<tt><small>Ilość:        %s%s%s</small></tt>\n"
+"\n"
 
-#: ../panel-plugin/weather-summary.c:652
+#: panel-plugin/weather-summary.c:652
 msgid "<b>Clouds</b>\n"
 msgstr "<b>Chmury</b>\n"
 
-#. TRANSLATORS: Clouds percentages are aligned to the right in the
-#. tooltip, the %5s are needed for that and are used both for
-#. rounded and unrounded values.
-#: ../panel-plugin/weather-summary.c:656
+#: panel-plugin/weather-summary.c:656
 #, c-format
 msgid "<tt><small>Fog:           %5s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Mgła:           %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:659
+#: panel-plugin/weather-summary.c:659
 #, c-format
 msgid "<tt><small>Low clouds:    %5s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Niskie chmury:    %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:662
-#, fuzzy, c-format
+#: panel-plugin/weather-summary.c:662
+#, c-format
 msgid "<tt><small>Middle clouds: %5s%s%s</small></tt>\n"
-msgstr "Średnie chmury:\t\t%s%s%s\n"
+msgstr "<tt><small>Średnie chmury: %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:665
+#: panel-plugin/weather-summary.c:665
 #, c-format
 msgid "<tt><small>High clouds:   %5s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Wysokie chmury:   %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:668
+#: panel-plugin/weather-summary.c:668
 #, c-format
 msgid "<tt><small>Cloudiness:    %5s%s%s</small></tt>"
-msgstr ""
+msgstr "<tt><small>Zachmurzenie:    %5s%s%s</small></tt>"
 
-#. daytime headers
-#: ../panel-plugin/weather-summary.c:832
+#: panel-plugin/weather-summary.c:832
 msgid "Morning"
-msgstr "Poranek"
+msgstr "Rano"
 
-#: ../panel-plugin/weather-summary.c:833
+#: panel-plugin/weather-summary.c:833
 msgid "Afternoon"
 msgstr "Popołudnie"
 
-#: ../panel-plugin/weather-summary.c:834
+#: panel-plugin/weather-summary.c:834
 msgid "Evening"
 msgstr "Wieczór"
 
-#: ../panel-plugin/weather-summary.c:835
+#: panel-plugin/weather-summary.c:835
 msgid "Night"
 msgstr "Noc"
 
-#: ../panel-plugin/weather-summary.c:983
+#: panel-plugin/weather-summary.c:983
 msgid "Weather Report"
 msgstr "Komunikat pogodowy"
 
-#: ../panel-plugin/weather-summary.c:1011
+#: panel-plugin/weather-summary.c:1011
 msgid "Please set a location in the plugin settings."
 msgstr "Proszę ustalić lokalizację w ustawieniach apletu."
 
-#: ../panel-plugin/weather-summary.c:1013
+#: panel-plugin/weather-summary.c:1013
 msgid "Currently no data available."
 msgstr "Aktualnie nie ma dostępnych danych."
 
-#: ../panel-plugin/weather-summary.c:1025
+#: panel-plugin/weather-summary.c:1025
 msgid "_Forecast"
 msgstr "_Prognoza"
 
-#: ../panel-plugin/weather-summary.c:1028
+#: panel-plugin/weather-summary.c:1028
 msgid "_Details"
 msgstr "_Szczegóły"
 
-#: ../panel-plugin/weather-translate.c:37
+#: panel-plugin/weather-translate.c:37
 msgid "SSW"
 msgstr "SSW"
 
-#: ../panel-plugin/weather-translate.c:39
+#: panel-plugin/weather-translate.c:39
 msgid "WSW"
 msgstr "WSW"
 
-#: ../panel-plugin/weather-translate.c:41
+#: panel-plugin/weather-translate.c:41
 msgid "WNW"
 msgstr "WNW"
 
-#: ../panel-plugin/weather-translate.c:43
+#: panel-plugin/weather-translate.c:43
 msgid "NNW"
 msgstr "NNW"
 
-#: ../panel-plugin/weather-translate.c:45
+#: panel-plugin/weather-translate.c:45
 msgid "NNE"
 msgstr "NNE"
 
-#: ../panel-plugin/weather-translate.c:47
+#: panel-plugin/weather-translate.c:47
 msgid "ENE"
 msgstr "ENE"
 
-#: ../panel-plugin/weather-translate.c:49
+#: panel-plugin/weather-translate.c:49
 msgid "ESE"
 msgstr "ESE"
 
-#: ../panel-plugin/weather-translate.c:51
+#: panel-plugin/weather-translate.c:51
 msgid "SSE"
 msgstr "SSE"
 
-#: ../panel-plugin/weather-translate.c:52
+#: panel-plugin/weather-translate.c:52
 msgid "CALM"
 msgstr "POGODNIE"
 
-#. TRANSLATORS: Moon phases
-#: ../panel-plugin/weather-translate.c:58
+#: panel-plugin/weather-translate.c:58
 msgid "New moon"
 msgstr "Nów Księżyca"
 
-#: ../panel-plugin/weather-translate.c:59
+#: panel-plugin/weather-translate.c:59
 msgid "Waxing crescent"
 msgstr "Powiększający się sierp Księżyca"
 
-#: ../panel-plugin/weather-translate.c:60
+#: panel-plugin/weather-translate.c:60
 msgid "First quarter"
 msgstr "Pierwszy kwartał"
 
-#: ../panel-plugin/weather-translate.c:61
+#: panel-plugin/weather-translate.c:61
 msgid "Waxing gibbous"
 msgstr "Powiększający się Księżyc"
 
-#: ../panel-plugin/weather-translate.c:62
+#: panel-plugin/weather-translate.c:62
 msgid "Full moon"
 msgstr "Pełnia Księżyca"
 
-#: ../panel-plugin/weather-translate.c:63
+#: panel-plugin/weather-translate.c:63
 msgid "Waning gibbous"
 msgstr "Zmniejszający się Księżyc"
 
-#: ../panel-plugin/weather-translate.c:64
+#: panel-plugin/weather-translate.c:64
 msgid "Third quarter"
 msgstr "Trzeci kwartał"
 
-#: ../panel-plugin/weather-translate.c:65
+#: panel-plugin/weather-translate.c:65
 msgid "Waning crescent"
 msgstr "Zmniejszający się sierp Księżyca"
 
-#.
-#. * TRANSLATORS: How these symbols are named and defined is explained at
-#. * http://om.yr.no/forklaring/symbol/ and http://api.yr.no/faq.html#symbols.
-#. * To be more concise / shorter, the plugin uses names that deviate a bit from yr.no, so that
-#. * they fit well in the tooltip, forecast tab etc.
-#. *
-#. * More information can be obtained from the following pages:
-#. * http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index
-#. * http://www.theweathernetwork.com/index.php?product=help&placecode=cabc0164&pagecontent=helpicons
-#. * http://www.mir-co.net/sonstiges/wetterausdruecke.htm
-#. * The latter page is in German, but it contains a symbol table with Norwegian descriptions.
-#.
-#. Symbols 16-19 are used for polar days
-#: ../panel-plugin/weather-translate.c:120
-#: ../panel-plugin/weather-translate.c:173
+#: panel-plugin/weather-translate.c:120 panel-plugin/weather-translate.c:173
 msgid "Sunny"
 msgstr "Słonecznie"
 
-#: ../panel-plugin/weather-translate.c:120
-#: ../panel-plugin/weather-translate.c:173
+#: panel-plugin/weather-translate.c:120 panel-plugin/weather-translate.c:173
 msgid "Clear"
 msgstr "Pogodnie"
 
-#: ../panel-plugin/weather-translate.c:121
-#: ../panel-plugin/weather-translate.c:174
+#: panel-plugin/weather-translate.c:121 panel-plugin/weather-translate.c:174
 msgid "Lightly cloudy"
 msgstr "Niewielkie zachmurzenie"
 
-#: ../panel-plugin/weather-translate.c:122
+#: panel-plugin/weather-translate.c:122
 msgid "Partly cloudy"
 msgstr "Umiarkowane zachmurzenie"
 
-#: ../panel-plugin/weather-translate.c:123
+#: panel-plugin/weather-translate.c:123
 msgid "Cloudy"
 msgstr "Pochmurnie"
 
-#.
-#. * http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index:
-#. *   "Showers – Some sun is expected, interspersed with showers from
-#. *    time to time. As opposed to rain, showers describe liquid
-#. *    precipitation that can vary greatly in intensity over a short
-#. *    amount of time. [...] Precipitation may be locally heavy for
-#. *    short amounts of time."
-#.
-#: ../panel-plugin/weather-translate.c:133
-#: ../panel-plugin/weather-translate.c:175
+#: panel-plugin/weather-translate.c:133 panel-plugin/weather-translate.c:175
 msgid "Rain showers"
 msgstr "Przelotny deszcz"
 
-#.
-#. * http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index:
-#. *   "Thunder Showers - Intermittent rain showers with thunder and lightning, generally
-#. *    short-lived."
-#.
-#: ../panel-plugin/weather-translate.c:140
+#: panel-plugin/weather-translate.c:140
 msgid "Thunder showers"
 msgstr "Przelotne burze"
 
-#. Analogues to "Rain showers"
-#: ../panel-plugin/weather-translate.c:143
+#: panel-plugin/weather-translate.c:143
 msgid "Sleet showers"
 msgstr "Przelotne opady deszczu ze śniegiem"
 
-#: ../panel-plugin/weather-translate.c:144
-#: ../panel-plugin/weather-translate.c:176
+#: panel-plugin/weather-translate.c:144 panel-plugin/weather-translate.c:176
 msgid "Snow showers"
 msgstr "Przelotny śnieg"
 
-#. It's raining, usually incessantly, but not heavily.
-#: ../panel-plugin/weather-translate.c:147
+#: panel-plugin/weather-translate.c:147
 msgid "Light rain"
 msgstr "Niewielki deszcz"
 
-#. Heavy, usually incessant rain. met.no now uses "heavy rain", but personally I find light
-#. * rain and rain somewhat better. Symbol names indicate this is the way met.no did it some
-#. * time ago.
-#: ../panel-plugin/weather-translate.c:152
+#: panel-plugin/weather-translate.c:152
 msgid "Rain"
 msgstr "Deszcz"
 
-#: ../panel-plugin/weather-translate.c:154
+#: panel-plugin/weather-translate.c:154
 msgid "Rain with thunder"
 msgstr "Deszcz z grzmotami"
 
-#. Sleet is a mixture of rain and snow, but it's not hail.
-#: ../panel-plugin/weather-translate.c:157
+#: panel-plugin/weather-translate.c:157
 msgid "Sleet"
 msgstr "Deszcz ze śniegiem"
 
-#: ../panel-plugin/weather-translate.c:159
+#: panel-plugin/weather-translate.c:159
 msgid "Snow"
 msgstr "Śnieg"
 
-#.
-#. * http://en.wikipedia.org/wiki/Thundersnow:
-#. *   "Thundersnow, also known as a winter thunderstorm or a thunder snowstorm, is a relatively
-#. *    rare kind of thunderstorm with snow falling as the primary precipitation instead of
-#. *    rain. It typically falls in regions of strong upward motion within the cold sector of an
-#. *    extratropical cyclone."
-#.
-#: ../panel-plugin/weather-translate.c:168
+#: panel-plugin/weather-translate.c:168
 msgid "Thundersnow"
 msgstr "Burza śniegowa"
 
-#. Same as symbols 1-15, but with thunder
-#: ../panel-plugin/weather-translate.c:179
+#: panel-plugin/weather-translate.c:179
 msgid "Sleet showers with thunder"
 msgstr "Przelotny deszcz ze śniegiem z grzmotami"
 
-#: ../panel-plugin/weather-translate.c:180
+#: panel-plugin/weather-translate.c:180
 msgid "Snow showers with thunder"
 msgstr "Przelotny śnieg z grzmotami"
 
-#: ../panel-plugin/weather-translate.c:181
+#: panel-plugin/weather-translate.c:181
 msgid "Light rain with thunder"
 msgstr "Niewielki deszcz z grzmotami"
 
-#: ../panel-plugin/weather-translate.c:182
+#: panel-plugin/weather-translate.c:182
 msgid "Sleet with thunder"
 msgstr "Deszcz ze śniegiem z grzmotami"
-
-#: ../panel-plugin/weather.desktop.in.h:2
-msgid "Show current weather conditions"
-msgstr "Wyświetla bieżące warunki pogodowe"
 
 #~ msgid "_Altitude:"
 #~ msgstr "_Wysokość bezwzględna:"
@@ -2066,6 +1955,9 @@ msgstr "Wyświetla bieżące warunki pogodowe"
 
 #~ msgid "Cloudiness:\t\t%s%s%s"
 #~ msgstr "Zachmurzenie:\t\t%s%s%s"
+
+#~ msgid "Show current weather conditions"
+#~ msgstr "Wyświetla bieżące warunki pogodowe"
 
 #~ msgid "International knots (kt)"
 #~ msgstr "Międzynarodowy węzeł (kt)"
