@@ -218,19 +218,22 @@ view_scrolled_cb(GtkAdjustment *adj,
     gint x, y, x1, y1;
 
     if (sum->icon_ebox) {
-        /* TRANSLATORS: This string is not visible anywhere but
-           controls the alignment of the met.no image, so usually you
-           should leave this string untouched (which means it should
-           be "LTR"). It should be changed only for right-to-left
-           languages. If you're translating to such a language, then
-           change "LTR" to "RTL" here. For LTR languages, the image
-           will be aligned to the right, and for RTL languages, the
-           image will be aligned to the left.
+        /* TRANSLATORS: DO NOT TRANSLATE THIS STRING. This string is
+           not visible to the user but controls the alignment of the
+           met.no image on the details tab in the summary window,
+           which is needed for RTL languages because the text is on
+           the right side.
+           If you are a RTL translator (hebrew, arabic), set this
+           string to "RTL" to align the image to the left.
+           If not, leave this string untouched or untranslated.
+           Whatever you do, it should not have the value "RTL".
+           If you know of a better way to determine LTR/RTL that makes
+           this tweak unnecessary, please tell the developer.
         */
-        if (!strcmp(_("LTR"), "LTR"))
-            x1 = sum->text_view->allocation.width - 191 - 15;
-        else
+        if (!strcmp(_("LTR"), "RTL"))
             x1 = -30;
+        else
+            x1 = sum->text_view->allocation.width - 191 - 15;
         y1 = sum->text_view->requisition.height - 60 - 15;
         gtk_text_view_buffer_to_window_coords(GTK_TEXT_VIEW(sum->text_view),
                                               GTK_TEXT_WINDOW_TEXT,
