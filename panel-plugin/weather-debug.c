@@ -165,19 +165,13 @@ weather_dump_timezone(const xml_timezone *tz)
 
     out = g_strdup_printf("Timezone data:\n"
                           "  --------------------------------------------\n"
-                          "  offset: %s\n"
-                          "  suffix: %s\n"
-                          "  dst: %s\n"
-                          "  localtime: %s\n"
-                          "  isotime: %s\n"
-                          "  utctime: %s\n"
+                          "  country_code: %s\n"
+                          "  country_name: %s\n"
+                          "  timezone_id: %s\n"
                           "  --------------------------------------------",
-                          tz->offset,
-                          tz->suffix,
-                          tz->dst,
-                          tz->localtime,
-                          tz->isotime,
-                          tz->utctime);
+                          tz->country_code,
+                          tz->country_name,
+                          tz->timezone_id);
     return out;
 }
 
@@ -430,7 +424,7 @@ weather_dump_plugindata(const plugin_data *data)
                            "  latitude: %s\n"
                            "  longitude: %s\n"
                            "  msl: %d\n"
-                           "  timezone: %.1f\n"
+                           "  timezone: %s\n"
                            "  night time: %s\n"
                            "  --------------------------------------------\n"
                            "  icon theme dir: %s\n"

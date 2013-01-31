@@ -112,12 +112,9 @@ typedef struct {
 } xml_altitude;
 
 typedef struct {
-    gchar *offset;
-    gchar *suffix;
-    gchar *dst;
-    gchar *localtime;
-    gchar *isotime;
-    gchar *utctime;
+    gchar *country_code;
+    gchar *country_name;
+    gchar *timezone_id;
 } xml_timezone;
 
 

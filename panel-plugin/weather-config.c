@@ -35,6 +35,7 @@
 #define OPTIONS_N 15
 #define BORDER 4
 #define LOC_NAME_MAX_LEN 50
+#define TIMEZONE_MAX_LEN 40
 
 #define ADD_PAGE(homogenous)                                        \
     palign = gtk_alignment_new(0.5, 0.5, 1, 1);                     \
@@ -77,8 +78,8 @@
     g_signal_connect(G_OBJECT(button), "clicked",                   \
                      G_CALLBACK(cb_func), dialog);
 
-#define SET_TOOLTIP(widget, text)                           \
-    gtk_widget_set_tooltip_text(GTK_WIDGET(widget), text);
+#define SET_TOOLTIP(widget, markup)                             \
+    gtk_widget_set_tooltip_markup(GTK_WIDGET(widget), markup);
 
 #define TEXT_UNKNOWN(text) (text ? text : "-")
 
@@ -255,19 +256,17 @@ cb_lookup_timezone(SoupSession *session,
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     xml_timezone *timezone;
-    gdouble tz;
 
     timezone = (xml_timezone *)
         parse_xml_document(msg, (XmlParseFunc) parse_timezone);
     weather_dump(weather_dump_timezone, timezone);
 
     if (timezone) {
-        tz = string_to_double(timezone->offset, -9999);
-        if (tz != -9999)
-            gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_timezone),
-                                      tz);
+        gtk_entry_set_text(GTK_ENTRY(dialog->text_timezone),
+                           timezone->timezone_id);
         xml_timezone_free(timezone);
-    }
+    } else
+        gtk_entry_set_text(GTK_ENTRY(dialog->text_timezone), "");
 }
 
 
@@ -293,8 +292,9 @@ lookup_altitude_timezone(const gpointer user_data)
     g_free(url);
 
     /* lookup timezone */
-    url = g_strdup_printf("http://www.earthtools.org/timezone/%s/%s",
-                          latstr, lonstr);
+    url = g_strdup_printf("http://api.geonames.org"
+                          "/timezone?lat=%s&lng=%s&username=%s",
+                          latstr, lonstr, GEONAMES_USERNAME);
     weather_http_queue_request(dialog->pd->session, url,
                                cb_lookup_timezone, user_data);
     g_free(url);
@@ -460,20 +460,21 @@ spin_alt_value_changed(const GtkWidget *spin,
 
 
 static void
-spin_timezone_value_changed(const GtkWidget *spin,
+text_timezone_changed(const GtkWidget *entry,
                             gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
 
-    dialog->pd->timezone =
-        gtk_spin_button_get_value(GTK_SPIN_BUTTON(spin));
+    if (dialog->pd->timezone)
+        g_free(dialog->pd->timezone);
+    dialog->pd->timezone = g_strdup(gtk_entry_get_text(GTK_ENTRY(entry)));
 }
 
 
 static GtkWidget *
 create_location_page(xfceweather_dialog *dialog)
 {
-    GtkWidget *palign, *page, *hbox, *vbox, *label, *image;
+    GtkWidget *palign, *page, *hbox, *vbox, *label, *image, *sep;
     GtkWidget *button_loc_change;
     GtkSizeGroup *sg_label, *sg_spin;
 
@@ -568,16 +569,32 @@ create_location_page(xfceweather_dialog *dialog)
     /* timezone */
     hbox = gtk_hbox_new(FALSE, BORDER);
     ADD_LABEL(_("_Timezone:"), sg_label);
-    ADD_SPIN(dialog->spin_timezone, -25, 25, 0.5,
-             dialog->pd->timezone, 1, sg_spin);
+    dialog->text_timezone = gtk_entry_new();
+    gtk_entry_set_max_length(GTK_ENTRY(dialog->text_timezone),
+                             LOC_NAME_MAX_LEN);
+    gtk_label_set_mnemonic_widget(GTK_LABEL(label),
+                                  GTK_WIDGET(dialog->text_timezone));
     SET_TOOLTIP
-        (dialog->spin_timezone,
-         _("If the chosen location is not in your current timezone, this "
-           "value which is auto-detected using the EarthTools web service "
-           "will be used for correcting the time differences. Please adjust "
-           "it manually to accomodate for daylight summer time or if it "
-           "is not correct."));
+        (dialog->text_timezone,
+         _("If the chosen location is not in your current timezone, then "
+           "it is necessary to <i>put</i> the plugin into that other "
+           "timezone for the times to be shown correctly. The proper "
+           "timezone will be auto-detected via the GeoNames web service, "
+           "but you might want to correct it if necessary.\n"
+           "Leave this field empty to use the timezone set by your "
+           "system. Invalid entries will cause the use of UTC time, but "
+           "may also depend on your system."));
+    gtk_box_pack_start(GTK_BOX(hbox), dialog->text_timezone, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
+    if (dialog->pd->timezone)
+        gtk_entry_set_text(GTK_ENTRY(dialog->text_timezone),
+                           dialog->pd->timezone);
+    else
+        gtk_entry_set_text(GTK_ENTRY(dialog->text_timezone), "");
+
+    /* separator */
+    sep = gtk_hseparator_new();
+    gtk_box_pack_start(GTK_BOX(vbox), sep, FALSE, FALSE, BORDER * 2);
 
     /* instructions for correction of altitude and timezone */
     hbox = gtk_hbox_new(FALSE, BORDER);
@@ -1903,8 +1920,8 @@ setup_notebook_signals(xfceweather_dialog *dialog)
                      G_CALLBACK(spin_lon_value_changed), dialog);
     g_signal_connect(GTK_SPIN_BUTTON(dialog->spin_alt), "value-changed",
                      G_CALLBACK(spin_alt_value_changed), dialog);
-    g_signal_connect(GTK_SPIN_BUTTON(dialog->spin_timezone), "value-changed",
-                     G_CALLBACK(spin_timezone_value_changed), dialog);
+    g_signal_connect(GTK_EDITABLE(dialog->text_timezone), "changed",
+                     G_CALLBACK(text_timezone_changed), dialog);
 
     /* units page */
     g_signal_connect(dialog->combo_unit_temperature, "changed",

@@ -98,7 +98,7 @@ typedef struct {
     gchar *lat;
     gchar *lon;
     gint msl;
-    gdouble timezone;
+    gchar *timezone;
     gint cache_file_max_age;
     gboolean night_time;
 

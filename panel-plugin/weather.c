@@ -773,12 +773,11 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
     data->msl = xfce_rc_read_int_entry(rc, "msl", 0);
     constrain_to_limits(&data->msl, -420, 10000);
 
-    value = xfce_rc_read_entry(rc, "timezone", 0);
-    data->timezone = string_to_double(value, 0);
-    if (data->timezone < -25.0)
-        data->timezone = -25;
-    if (data->timezone > 25.0)
-        data->timezone = 25;
+    value = xfce_rc_read_entry(rc, "timezone", NULL);
+    if (value) {
+        g_free(data->timezone);
+        data->timezone = g_strdup(value);
+    }
 
     data->cache_file_max_age =
         xfce_rc_read_int_entry(rc, "cache_file_max_age", CACHE_FILE_MAX_AGE);
@@ -890,9 +889,7 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
 
     xfce_rc_write_int_entry(rc, "msl", data->msl);
 
-    value = double_to_string(data->timezone, "%.1f");
-    xfce_rc_write_entry(rc, "timezone", value);
-    g_free(value);
+    xfce_rc_write_entry(rc, "timezone", data->timezone);
 
     xfce_rc_write_int_entry(rc, "cache_file_max_age",
                             data->cache_file_max_age);
@@ -1765,6 +1762,7 @@ xfceweather_free(XfcePanelPlugin *plugin,
     g_free(data->lon);
     g_free(data->location_name);
     g_free(data->scrollbox_font);
+    g_free(data->timezone);
 
     /* free update infos */
     g_slice_free(update_info, data->weather_update);

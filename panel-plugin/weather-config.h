@@ -38,7 +38,7 @@ typedef struct {
     GtkWidget *spin_lon;
     GtkWidget *spin_alt;
     GtkWidget *label_alt_unit;
-    GtkWidget *spin_timezone;
+    GtkWidget *text_timezone;
     GtkWidget *update_spinner;
 
     /* units page */
