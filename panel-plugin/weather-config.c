@@ -272,7 +272,7 @@ cb_lookup_timezone(SoupSession *session,
 
 
 static void
-lookup_altitude(const gpointer user_data)
+lookup_altitude_timezone(const gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     gchar *url, *latstr, *lonstr;
@@ -290,6 +290,13 @@ lookup_altitude(const gpointer user_data)
                           latstr, lonstr, GEONAMES_USERNAME);
     weather_http_queue_request(dialog->pd->session, url,
                                cb_lookup_altitude, user_data);
+    g_free(url);
+
+    /* lookup timezone */
+    url = g_strdup_printf("http://www.earthtools.org/timezone/%s/%s",
+                          latstr, lonstr);
+    weather_http_queue_request(dialog->pd->session, url,
+                               cb_lookup_timezone, user_data);
     g_free(url);
 
     g_free(lonstr);
@@ -312,7 +319,7 @@ auto_locate_cb(const gchar *loc_name,
                                   string_to_double(lat, 0));
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_lon),
                                   string_to_double(lon, 0));
-        lookup_altitude(user_data);
+        lookup_altitude_timezone(user_data);
     } else
         gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name), _("Unset"));
     setup_units(dialog, units);
@@ -359,7 +366,7 @@ cb_findlocation(GtkButton *button,
     }
     free_search_dialog(sdialog);
 
-    lookup_altitude(user_data);
+    lookup_altitude_timezone(user_data);
     gtk_widget_set_sensitive(GTK_WIDGET(button), TRUE);
 
     return FALSE;
@@ -452,6 +459,17 @@ spin_alt_value_changed(const GtkWidget *spin,
 }
 
 
+static void
+spin_timezone_value_changed(const GtkWidget *spin,
+                            gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+
+    dialog->pd->timezone =
+        gtk_spin_button_get_value(GTK_SPIN_BUTTON(spin));
+}
+
+
 static GtkWidget *
 create_location_page(xfceweather_dialog *dialog)
 {
@@ -504,7 +522,7 @@ create_location_page(xfceweather_dialog *dialog)
     SET_TOOLTIP(dialog->spin_lat,
                 _("Latitude specifies the north-south position of a point on "
                   "the Earth's surface. If you change this value manually, "
-                  "you should provide the correct altitude too."));
+                  "you need to provide altitude and timezone manually too."));
     label = gtk_label_new("°");
     gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
     gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
@@ -518,7 +536,7 @@ create_location_page(xfceweather_dialog *dialog)
     SET_TOOLTIP(dialog->spin_lon,
                 _("Longitude specifies the east-west position of a point on "
                   "the Earth's surface. If you change this value manually, "
-                  "you should provide the correct altitude too."));
+                  "you need to provide altitude and timezone manually too."));
     label = gtk_label_new("°");
     gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
     gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
@@ -547,13 +565,28 @@ create_location_page(xfceweather_dialog *dialog)
     gtk_box_pack_start(GTK_BOX(hbox), dialog->label_alt_unit, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
 
-    /* instructions for correction of altitude */
+    /* timezone */
+    hbox = gtk_hbox_new(FALSE, BORDER);
+    ADD_LABEL(_("_Timezone:"), sg_label);
+    ADD_SPIN(dialog->spin_timezone, -25, 25, 0.5,
+             dialog->pd->timezone, 1, sg_spin);
+    SET_TOOLTIP
+        (dialog->spin_timezone,
+         _("If the chosen location is not in your current timezone, this "
+           "value which is auto-detected using the EarthTools web service "
+           "will be used for correcting the time differences. Please adjust "
+           "it manually to accomodate for daylight summer time or if it "
+           "is not correct."));
+    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
+
+    /* instructions for correction of altitude and timezone */
     hbox = gtk_hbox_new(FALSE, BORDER);
     label = gtk_label_new(NULL);
     gtk_label_set_markup
         (GTK_LABEL(label),
-         _("\n\n\n\n<i>Please change the location name to your liking and\n"
-           "revise the altitude if not auto-detected correctly.</i>"));
+         _("<i>Please change location name to your liking and "
+           "correct\naltitude and timezone if they are "
+           "not auto-detected correctly.</i>"));
     gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
     gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, BORDER/2);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER/2);
@@ -1870,6 +1903,8 @@ setup_notebook_signals(xfceweather_dialog *dialog)
                      G_CALLBACK(spin_lon_value_changed), dialog);
     g_signal_connect(GTK_SPIN_BUTTON(dialog->spin_alt), "value-changed",
                      G_CALLBACK(spin_alt_value_changed), dialog);
+    g_signal_connect(GTK_SPIN_BUTTON(dialog->spin_timezone), "value-changed",
+                     G_CALLBACK(spin_timezone_value_changed), dialog);
 
     /* units page */
     g_signal_connect(dialog->combo_unit_temperature, "changed",
