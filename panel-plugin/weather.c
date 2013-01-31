@@ -261,6 +261,20 @@ get_tooltip_icon_size(plugin_data *data)
 
 
 void
+update_timezone(plugin_data *data)
+{
+    if (data->timezone && strlen(data->timezone) > 0)
+        g_setenv("TZ", data->timezone, TRUE);
+    else {
+        if (data->timezone_initial && strlen(data->timezone_initial) > 0)
+            g_setenv("TZ", data->timezone_initial, TRUE);
+        else
+            g_unsetenv("TZ");
+    }
+}
+
+
+void
 update_icon(plugin_data *data)
 {
     GdkPixbuf *icon;
@@ -1289,6 +1303,10 @@ update_weatherdata_with_reset(plugin_data *data, gboolean clear)
         data->update_timer = 0;
     }
 
+    /* set location timezone */
+    if (clear)
+        update_timezone(data);
+
     /* reset update times */
     init_update_infos(data);
 
@@ -1929,6 +1947,7 @@ weather_construct(XfcePanelPlugin *plugin)
     data->timezone_initial = g_strdup(g_getenv("TZ"));
 
     xfceweather_read_config(plugin, data);
+    update_timezone(data);
     read_cache_file(data);
     scrollbox_set_visible(data);
     gtk_scrollbox_set_fontname(GTK_SCROLLBOX(data->scrollbox),

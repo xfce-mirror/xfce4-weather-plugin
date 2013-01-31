@@ -468,6 +468,7 @@ text_timezone_changed(const GtkWidget *entry,
     if (dialog->pd->timezone)
         g_free(dialog->pd->timezone);
     dialog->pd->timezone = g_strdup(gtk_entry_get_text(GTK_ENTRY(entry)));
+    schedule_delayed_data_update(dialog);
 }
 
 
