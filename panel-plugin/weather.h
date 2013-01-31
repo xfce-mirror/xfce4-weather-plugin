@@ -99,6 +99,7 @@ typedef struct {
     gchar *lon;
     gint msl;
     gchar *timezone;
+    gchar *timezone_initial;
     gint cache_file_max_age;
     gboolean night_time;
 

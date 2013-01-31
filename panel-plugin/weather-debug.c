@@ -425,6 +425,7 @@ weather_dump_plugindata(const plugin_data *data)
                            "  longitude: %s\n"
                            "  msl: %d\n"
                            "  timezone: %s\n"
+                           "  initial timezone: %s\n"
                            "  night time: %s\n"
                            "  --------------------------------------------\n"
                            "  icon theme dir: %s\n"
@@ -459,6 +460,7 @@ weather_dump_plugindata(const plugin_data *data)
                            data->lon,
                            data->msl,
                            data->timezone,
+                           data->timezone_initial,
                            YESNO(data->night_time),
                            (data->icon_theme) ? (data->icon_theme->dir) : NULL,
                            data->tooltip_style,

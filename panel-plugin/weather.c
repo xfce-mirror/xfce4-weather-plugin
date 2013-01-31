@@ -1763,6 +1763,7 @@ xfceweather_free(XfcePanelPlugin *plugin,
     g_free(data->location_name);
     g_free(data->scrollbox_font);
     g_free(data->timezone);
+    g_free(data->timezone_initial);
 
     /* free update infos */
     g_slice_free(update_info, data->weather_update);
@@ -1923,6 +1924,10 @@ weather_construct(XfcePanelPlugin *plugin)
 
     xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
     data = xfceweather_create_control(plugin);
+
+    /* save initial timezone so we can reset it later */
+    data->timezone_initial = g_strdup(g_getenv("TZ"));
+
     xfceweather_read_config(plugin, data);
     read_cache_file(data);
     scrollbox_set_visible(data);
