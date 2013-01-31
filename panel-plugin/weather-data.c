@@ -565,7 +565,8 @@ wind_dir_name_by_deg(gchar *degrees, gboolean long_name)
 
 
 static void
-calculate_symbol(xml_time *timeslice)
+calculate_symbol(xml_time *timeslice,
+                 gboolean current_conditions)
 {
     xml_location *loc;
     gdouble fog, cloudiness, precipitation;
@@ -580,14 +581,18 @@ calculate_symbol(xml_time *timeslice)
     if (precipitation > 0)
         return;
 
-    cloudiness =
-        string_to_double(loc->clouds_percent[CLOUDS_PERC_CLOUDINESS], 0);
-    if (cloudiness >= 90)
-        loc->symbol_id = SYMBOL_CLOUD;
-    else if (cloudiness >= 30)
-        loc->symbol_id = SYMBOL_PARTLYCLOUD;
-    else if (cloudiness >= 1.0 / 8.0)
-        loc->symbol_id = SYMBOL_LIGHTCLOUD;
+    /* do some modifications only if we're making a timeslice for
+       current conditions */
+    if (current_conditions) {
+        cloudiness =
+            string_to_double(loc->clouds_percent[CLOUDS_PERC_CLOUDINESS], 0);
+        if (cloudiness >= 90)
+            loc->symbol_id = SYMBOL_CLOUD;
+        else if (cloudiness >= 30)
+            loc->symbol_id = SYMBOL_PARTLYCLOUD;
+        else if (cloudiness >= 1.0 / 8.0)
+            loc->symbol_id = SYMBOL_LIGHTCLOUD;
+    }
 
     fog = string_to_double(loc->fog_percent, 0);
     if (fog >= 80)
@@ -669,7 +674,8 @@ interpolate_gchar_value(gchar *value_start,
 static xml_time *
 make_combined_timeslice(xml_weather *wd,
                         const xml_time *interval,
-                        const time_t *between_t)
+                        const time_t *between_t,
+                        gboolean current_conditions)
 {
     xml_time *comb, *start, *end;
     gboolean ipol = (between_t != NULL) ? TRUE : FALSE;
@@ -744,7 +750,7 @@ make_combined_timeslice(xml_weather *wd,
     comb->location->symbol_id = interval->location->symbol_id;
     comb->location->symbol = g_strdup(interval->location->symbol);
 
-    calculate_symbol(comb);
+    calculate_symbol(comb, current_conditions);
     return comb;
 }
 
@@ -1057,7 +1063,7 @@ make_current_conditions(xml_weather *wd,
     if (interval == NULL)
         return NULL;
 
-    return make_combined_timeslice(wd, interval, &now_t);
+    return make_combined_timeslice(wd, interval, &now_t, TRUE);
 }
 
 
@@ -1255,7 +1261,7 @@ make_forecast_data(xml_weather *wd,
                 continue;
 
             weather_debug("returning valid interval");
-            return make_combined_timeslice(wd, interval, &point_t);
+            return make_combined_timeslice(wd, interval, &point_t, FALSE);
         }
     }
     return NULL;
