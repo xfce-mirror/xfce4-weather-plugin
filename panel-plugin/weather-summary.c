@@ -723,6 +723,7 @@ add_forecast_header(const gchar *text,
 
 static GtkWidget *
 add_forecast_cell(plugin_data *data,
+                  GArray *daydata,
                   gint day,
                   gint daytime)
 {
@@ -734,7 +735,7 @@ add_forecast_cell(plugin_data *data,
 
     box = gtk_vbox_new(FALSE, 0);
 
-    fcdata = make_forecast_data(data->weatherdata, day, daytime);
+    fcdata = make_forecast_data(data->weatherdata, daydata, day, daytime);
     if (fcdata == NULL)
         return box;
 
@@ -813,6 +814,7 @@ make_forecast(plugin_data *data)
     GtkWidget *forecast_box;
     const GdkColor lightbg = {0, 0xeaea, 0xeaea, 0xeaea};
     const GdkColor darkbg = {0, 0x6666, 0x6666, 0x6666};
+    GArray *daydata;
     gchar *dayname;
     gint i;
     daytime daytime;
@@ -853,9 +855,12 @@ make_forecast(plugin_data *data)
             gtk_table_attach_defaults(GTK_TABLE(table), GTK_WIDGET(ebox),
                                       0, 1, i+1, i+2);
 
+        /* to speed up things, first get forecast data for all daytimes */
+        daydata = get_point_data_for_day(data->weatherdata, i);
+
         /* get forecast data for each daytime */
         for (daytime = MORNING; daytime <= NIGHT; daytime++) {
-            forecast_box = add_forecast_cell(data, i, daytime);
+            forecast_box = add_forecast_cell(data, daydata, i, daytime);
             align = gtk_alignment_new(0.5, 0.5, 1, 1);
             gtk_container_set_border_width(GTK_CONTAINER(align), 4);
             gtk_container_add(GTK_CONTAINER(align), GTK_WIDGET(forecast_box));
@@ -873,6 +878,7 @@ make_forecast(plugin_data *data)
                                           GTK_WIDGET(ebox),
                                           1+daytime, 2+daytime, i+1, i+2);
         }
+        g_array_free(daydata, FALSE);
     }
     return table;
 }

@@ -32,6 +32,11 @@
 #define NIGHT_TIME_START 21
 #define NIGHT_TIME_END 5
 
+/* interval used for searching raw data relevant to a day */
+#define DAY_START 3
+#define DAY_END 33
+#define DAYTIME_LEN 6
+
 /* If some value is not present or cannot be computed, return this instead */
 #define INVALID_VALUE -9999
 
@@ -170,7 +175,7 @@ calc_apparent_temperature(const xml_location *loc,
 
             return 13.12 + 0.6215 * temp - 11.37 * pow(windspeed, 0.16)
                 + 0.3965 * temp * pow(windspeed, 0.16);
-         }
+        }
 
         if (temp >= 26.7 || (night_time && temp >= 22.0)) {
             /* humidity needs to be higher than 40% for a valid result */
@@ -991,7 +996,7 @@ find_point_data(const xml_weather *wd,
 
         /* add point data if within limits */
         diff = difftime(timeslice->end, point_t);
-        if (diff < 0) {   /* before point_t */
+        if (diff <= 0) {  /* before point_t */
             diff *= -1;
             if (diff < min_diff || diff > max_diff)
                 continue;
@@ -1056,63 +1061,202 @@ make_current_conditions(xml_weather *wd,
 }
 
 
-static time_t
-get_daytime(int day,
-            daytime dt)
+/*
+ * Get all point data relevant for a given day.
+ */
+GArray *
+get_point_data_for_day(xml_weather *wd,
+                       int day)
 {
-    struct tm point_tm;
-    time_t point_t;
+    GArray *found;
+    xml_time *timeslice;
+    struct tm day_tm;
+    time_t day_t;
+    gint i;
 
-    /* initialize times to the current day */
-    time(&point_t);
-    point_tm = *localtime(&point_t);
+    /* calculate 00:00 for the requested day */
+    time(&day_t);
+    day_tm = *localtime(&day_t);
+    day_tm.tm_mday += day;
+    day_tm.tm_hour = day_tm.tm_min = day_tm.tm_sec = 0;
+    day_tm.tm_isdst = -1;
+    day_t = mktime(&day_tm);
 
-    /* calculate daytime for the requested day */
-    point_tm.tm_mday += day;
-    point_tm.tm_min = point_tm.tm_sec = 0;
-    point_tm.tm_isdst = -1;
-    switch (dt) {
-    case MORNING:
-        point_tm.tm_hour = 9;
-        break;
-    case AFTERNOON:
-        point_tm.tm_hour = 15;
-        break;
-    case EVENING:
-        point_tm.tm_hour = 21;
-        break;
-    case NIGHT:
-        point_tm.tm_hour = 27;
-        break;
+    /* loop over weather data and pick relevant point data */
+    found = g_array_new(FALSE, TRUE, sizeof(xml_time *));
+    g_assert(found != NULL);
+    if (G_UNLIKELY(found == NULL))
+        return NULL;
+
+    weather_debug("Checking %d timeslices for point data relevant to day %d.",
+                  wd->timeslices->len, day);
+    for (i = 0; i < wd->timeslices->len; i++) {
+        timeslice = g_array_index(wd->timeslices, xml_time *, i);
+
+        /* look only for point data, not intervals */
+        if (G_UNLIKELY(timeslice == NULL) || timeslice_is_interval(timeslice))
+            continue;
+
+        if (difftime(timeslice->start, day_t) >= DAY_START * 3600 &&
+            difftime(timeslice->end, day_t) <= DAY_END * 3600) {
+            weather_dump(weather_dump_timeslice, timeslice);
+            g_array_append_val(found, timeslice);
+        }
     }
-    point_t = mktime(&point_tm);
-    return point_t;
+    g_array_sort(found, (GCompareFunc) xml_time_compare);
+    weather_debug("Found %d timeslices for day %d.", found->len, day);
+    return found;
 }
 
 
 /*
- * Get forecast data for a given daytime for the day (today + day).
+ * Return forecast data for a given daytime, using the data provided.
  */
 xml_time *
 make_forecast_data(xml_weather *wd,
-                   int day,
+                   GArray *daydata,
+                   gint day,
                    daytime dt)
 {
-    point_data_results *found = NULL;
-    xml_time *interval = NULL;
-    time_t point_t;
+    xml_time *ts1, *ts2, *interval = NULL;
+    struct tm point_tm, start_tm, end_tm;
+    time_t point_t, start_t, end_t;
+    gint min, max, point, i, j;
 
     g_assert(wd != NULL);
     if (G_UNLIKELY(wd == NULL))
         return NULL;
 
-    point_t = get_daytime(day, dt);
-    found = find_point_data(wd, point_t, 1, 5 * 3600);
-    interval = find_largest_interval(wd, found);
-    point_data_results_free(found);
-    weather_dump(weather_dump_timeslice, interval);
-    if (interval == NULL)
+    g_assert(daydata != NULL);
+    if (G_UNLIKELY(daydata == NULL))
         return NULL;
 
-    return make_combined_timeslice(wd, interval, &point_t);
+    /* choose search interval and desired point in time depending on daytime */
+    switch (dt) {
+    case MORNING:
+        min = 3;
+        max = 15;
+        point = 9;
+        break;
+    case AFTERNOON:
+        min = 9;
+        max = 21;
+        point = 15;
+        break;
+    case EVENING:
+        min = 15;
+        max = 27;
+        point = 21;
+        break;
+    case NIGHT:
+        min = 21;
+        max = 33;
+        point = 27;
+        break;
+    }
+
+    /* initialize times to the current day */
+    time(&point_t);
+    start_tm = end_tm = point_tm = *localtime(&point_t);
+
+    /* calculate daytime limits for the requested day */
+    point_tm.tm_mday += day;
+    point_tm.tm_hour = point;
+    point_tm.tm_min = point_tm.tm_sec = 0;
+    point_tm.tm_isdst = -1;
+    point_t = mktime(&point_tm);
+
+    start_tm.tm_mday += day;
+    start_tm.tm_hour = min;
+    start_tm.tm_min = start_tm.tm_sec = 0;
+    start_tm.tm_isdst = -1;
+    start_t = mktime(&start_tm);
+
+    end_tm.tm_mday += day;
+    end_tm.tm_hour = max;
+    end_tm.tm_min = end_tm.tm_sec = 0;
+    end_tm.tm_isdst = -1;
+    end_t = mktime(&end_tm);
+
+    /* using search criteria, find an appropriate interval */
+    for (i = 0; i < daydata->len; i++) {
+        weather_debug("checking start ts %d", i);
+
+        /* try start timeslice for interval */
+        ts1 = g_array_index(daydata, xml_time *, i);
+
+        if (G_UNLIKELY(ts1 == NULL))
+            continue;
+        weather_debug("start ts is not null");
+
+        /* start timeslice needs to be within max daytime interval */
+        if (difftime(ts1->start, start_t) < 0 ||
+            difftime(end_t, ts1->start) < 0)
+            continue;
+        weather_debug("start ts is in max daytime interval");
+
+        for (j = 0; j < daydata->len; j++) {
+            weather_debug("checking end ts %d", j);
+
+            /* find end timeslice for interval */
+            ts2 = g_array_index(daydata, xml_time *, j);
+
+            if (G_UNLIKELY(ts2 == NULL))
+                continue;
+            weather_debug("end ts is not null");
+
+            /* end timeslice has to be different from the start timeslice */
+            if (ts1 == ts2)
+                continue;
+            weather_debug("start ts is different from end ts");
+
+            /* end timeslice needs to be after start timeslice */
+            if (difftime(ts2->start, ts1->start) <= 0)
+                continue;
+            weather_debug("start ts is before end ts");
+
+            /* end timeslice needs to be in max daytime interval */
+            if (difftime(ts2->start, start_t) < 0 ||
+                difftime(end_t, ts2->start) < 0)
+                continue;
+            weather_debug("end ts is in max daytime interval");
+
+            /* start and end timeslice need to be a 6 hour interval... */
+            if (difftime(ts2->start, ts1->start) != DAYTIME_LEN * 3600)
+                /* ...however we may need to take into account possible dst
+                   difference so let's also try DAYTIME_LEN ±1 hour */
+                if ((difftime(ts2->start, ts1->start) < (DAYTIME_LEN - 1) * 3600 ||
+                     difftime(ts2->start, ts1->start) > (DAYTIME_LEN + 1) * 3600) &&
+                    get_timeslice(wd, ts1->start, ts2->end, NULL) == NULL)
+                    continue;
+            weather_debug("start and end ts are 6 hours apart");
+
+            /* daytime point needs to be within the interval */
+            if (difftime(point_t, ts1->start) < 0 ||
+                difftime(ts2->start, point_t) < 0)
+                continue;
+            weather_debug("daytime point is within the found interval");
+
+            /* we got the interval, but point may be too much near start */
+            if (difftime(point_t, ts1->start) <= 3600)
+                point_t = time_calc_hour(point_tm, 2);
+            else if (difftime(point_t, ts1->start) <= 2 * 3600)
+                point_t = time_calc_hour(point_tm, 1);
+
+            /* we got the interval, but point may be too much near end */
+            if (difftime(ts2->start, point_t) <= 3600)
+                point_t = time_calc_hour(point_tm, -2);
+            else if (difftime(ts2->start, point_t) <= 2 * 3600)
+                point_t = time_calc_hour(point_tm, -1);
+
+            /* combine the interval with interpolated point data */
+            interval = get_timeslice(wd, ts1->start, ts2->end, NULL);
+            if (interval == NULL)
+                continue;
+
+            weather_debug("returning valid interval");
+            return make_combined_timeslice(wd, interval, &point_t);
+        }
+    }
+    return NULL;
 }
