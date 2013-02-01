@@ -84,6 +84,7 @@ typedef struct {
     time_t next_wakeup;
     gchar *next_wakeup_reason;
     guint update_timer;
+    guint summary_update_timer;
 
     GtkWidget *scrollbox;
     gboolean show_scrollbox;

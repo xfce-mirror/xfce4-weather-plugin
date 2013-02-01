@@ -1353,6 +1353,12 @@ close_summary(GtkWidget *widget,
     data->summary_details = NULL;
     data->summary_window = NULL;
 
+    /* deactivate the summary window update timer */
+    if (data->summary_update_timer) {
+        g_source_remove(data->update_timer);
+        data->summary_update_timer = 0;
+    }
+
     /* sync toggle button state */
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(data->button), FALSE);
 }
@@ -1371,6 +1377,10 @@ forecast_click(GtkWidget *widget,
         gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(data->button), TRUE);
 
         data->summary_window = create_summary_window(data);
+
+        /* start the summary window subtitle update timer */
+        update_summary_subtitle(data);
+
         g_signal_connect(G_OBJECT(data->summary_window), "destroy",
                          G_CALLBACK(close_summary), data);
         gtk_widget_show_all(data->summary_window);

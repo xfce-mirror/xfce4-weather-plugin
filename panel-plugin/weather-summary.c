@@ -29,7 +29,6 @@
 #include "weather-translate.h"
 #include "weather-icon.h"
 
-
 static gboolean
 lnk_clicked(GtkTextTag *tag,
             GObject *obj,
@@ -980,13 +979,50 @@ cb_notebook_page_switched(GtkNotebook *notebook,
 }
 
 
+gboolean
+update_summary_subtitle(plugin_data *data)
+{
+    time_t now_t;
+    GTimeVal now;
+    gchar *title, *date;
+    guint update_interval;
+    gint64 now_ms;
+
+    if (data->summary_update_timer) {
+        g_source_remove(data->update_timer);
+        data->summary_update_timer = 0;
+    }
+
+    if (G_UNLIKELY(data->location_name == NULL) ||
+        G_UNLIKELY(data->summary_window == NULL))
+        return FALSE;
+
+    time(&now_t);
+    date = format_date(now_t, "%Y-%m-%d %H:%M:%S %Z", TRUE);
+    title = g_strdup_printf("%s\n%s", data->location_name, date);
+    g_free(date);
+    xfce_titled_dialog_set_subtitle(XFCE_TITLED_DIALOG(data->summary_window),
+                                    title);
+    g_free(title);
+
+    /* compute and schedule the next update */
+    g_get_current_time(&now);
+    now_ms = ((gint64) now.tv_sec * 1000) + ((gint64) now.tv_usec / 1000);
+    update_interval = 1000 - (now_ms % 1000) + 1;
+    data->summary_update_timer =
+        g_timeout_add(update_interval, (GSourceFunc) update_summary_subtitle,
+                      data);
+    return FALSE;
+}
+
+
 GtkWidget *
 create_summary_window(plugin_data *data)
 {
     GtkWidget *window, *notebook, *vbox, *hbox, *label;
-    gchar *title, *symbol;
     GdkPixbuf *icon;
     xml_time *conditions;
+    gchar *title, *symbol;
 
     conditions = get_current_conditions(data->weatherdata);
     window = xfce_titled_dialog_new_with_buttons(_("Weather Report"),
@@ -994,12 +1030,11 @@ create_summary_window(plugin_data *data)
                                                  GTK_DIALOG_NO_SEPARATOR,
                                                  GTK_STOCK_CLOSE,
                                                  GTK_RESPONSE_ACCEPT, NULL);
-    if (data->location_name != NULL) {
-        title = g_strdup_printf("%s", data->location_name);
+    if (G_LIKELY(data->location_name != NULL)) {
+        title = g_strdup_printf("%s\n", data->location_name);
         xfce_titled_dialog_set_subtitle(XFCE_TITLED_DIALOG(window), title);
         g_free(title);
     }
-
     vbox = gtk_vbox_new(FALSE, 0);
     gtk_box_pack_start(GTK_BOX(GTK_DIALOG(window)->vbox), vbox, TRUE, TRUE, 0);
 
