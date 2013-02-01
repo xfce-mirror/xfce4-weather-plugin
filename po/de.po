@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-weather-plugin 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-02-01 16:19+0100\n"
-"PO-Revision-Date: 2013-01-28 23:57+0100\n"
+"POT-Creation-Date: 2013-02-01 16:24+0100\n"
+"PO-Revision-Date: 2013-02-01 16:21+0100\n"
 "Last-Translator: Harald Judt <h.judt@gmx.at>\n"
 "Language-Team: German <xfce-i18n@xfce.org>\n"
 "Language: de\n"
@@ -353,10 +353,9 @@ msgstr "Suche nach einem Ort und erkenne seine Koordinaten automatisch."
 
 #: ../panel-plugin/weather-config.c:521
 msgid "Latitud_e:"
-msgstr "_Breitengrad"
+msgstr "_Breitengrad:"
 
 #: ../panel-plugin/weather-config.c:525
-#, fuzzy
 msgid ""
 "Latitude specifies the north-south position of a point on the Earth's "
 "surface. If you change this value manually, you need to provide altitude and "
@@ -364,14 +363,13 @@ msgid ""
 msgstr ""
 "Der Breitengrad gibt die Nord-Süd Position eines Punktes auf der "
 "Erdoberfläche an. Wenn Sie diesen Wert manuell ändern, sollten Sie auch die "
-"korrekte Höhenlage angeben."
+"korrekte Höhenlage und die Zeitzone angeben."
 
 #: ../panel-plugin/weather-config.c:535
 msgid "L_ongitude:"
 msgstr "_Längengrad:"
 
 #: ../panel-plugin/weather-config.c:539
-#, fuzzy
 msgid ""
 "Longitude specifies the east-west position of a point on the Earth's "
 "surface. If you change this value manually, you need to provide altitude and "
@@ -379,7 +377,7 @@ msgid ""
 msgstr ""
 "Der Längengrad gibt die Ost-West Position eines Punktes auf der "
 "Erdoberfläche an. Wenn Sie diesen Wert manuell ändern, sollten Sie auch die "
-"korrekte Höhenlage angeben."
+"korrekte Höhenlage und die Zeitzone angeben."
 
 #: ../panel-plugin/weather-config.c:549 ../panel-plugin/weather-config.c:1000
 msgid "Altitu_de:"
@@ -416,7 +414,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-config.c:572
 msgid "_Timezone:"
-msgstr ""
+msgstr "_Zeitzone:"
 
 #: ../panel-plugin/weather-config.c:580
 msgid ""
@@ -427,19 +425,23 @@ msgid ""
 "Leave this field empty to use the timezone set by your system. Invalid "
 "entries will cause the use of UTC time, but may also depend on your system."
 msgstr ""
+"Wenn sich der gewählte Ort nicht in der gegenwärtigen Zeitzone befindet, ist "
+"es notwendig, das Plugin in diese andere Zeitzone zu <i>versetzen</i>, damit "
+"die Zeiten richtig angezeigt werden. Wenn die richtige Zeitzone nicht über "
+"das GeoNames Webservice automatisch ermittelt werden konnte, korrigieren Sie "
+"den Eintrag bitte manuell.\n"
+"Lassen Sie das Feld leer, um die vom System vorgegebene Zeitzone zu "
+"verwenden. Ein ungültiger Eintrag bewirkt normalerweise die Verwendung von "
+"UTC-Zeit, dies ist aber möglicherweise abhängig vom System."
 
 #: ../panel-plugin/weather-config.c:605
-#, fuzzy
 msgid ""
 "<i>Please change location name to your liking and correct\n"
 "altitude and timezone if they are not auto-detected correctly.</i>"
 msgstr ""
-"\n"
-"\n"
-"\n"
-"\n"
 "<i>Bitte ändern Sie die Bezeichnung nach Belieben und\n"
-"korrigieren Sie bei Bedarf die automatisch erkannte Höhenlage.</i>"
+"korrigieren Sie bei Bedarf die automatisch erkannte Höhenlage\n"
+"und Zeitzone.</i>"
 
 #: ../panel-plugin/weather-config.c:630
 msgid ""
@@ -1860,10 +1862,13 @@ msgid ""
 "\tElevation and timezone data provided by\n"
 "\t\t"
 msgstr ""
+"\n"
+"\tHöhenlage- und Zeitzonendaten zur Verfügung gestellt von\n"
+"\t\t"
 
 #: ../panel-plugin/weather-summary.c:537
 msgid "GeoNames"
-msgstr ""
+msgstr "GeoNames"
 
 #: ../panel-plugin/weather-summary.c:539
 msgid ""
