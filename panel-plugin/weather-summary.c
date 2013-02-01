@@ -319,7 +319,7 @@ create_summary_tab(plugin_data *data)
 {
     GtkTextBuffer *buffer;
     GtkTextIter iter;
-    GtkTextTag *btag, *ltag0, *ltag1, *ltag2;
+    GtkTextTag *btag, *ltag_img, *ltag_metno, *ltag_wiki, *ltag_geonames;
     GtkWidget *view, *frame, *scrolled, *icon;
     GtkAdjustment *adj;
     GdkColor lnk_color;
@@ -521,19 +521,25 @@ create_summary_tab(plugin_data *data)
 
     /* credits */
     gdk_color_parse("#0000ff", &lnk_color);
-    ltag0 = gtk_text_buffer_create_tag(buffer, "lnk0",
-                                       "foreground-gdk", &lnk_color, NULL);
-    ltag1 = gtk_text_buffer_create_tag(buffer, "lnk1",
-                                       "foreground-gdk", &lnk_color, NULL);
-    ltag2 = gtk_text_buffer_create_tag(buffer, "lnk2",
-                                       "foreground-gdk", &lnk_color, NULL);
+    ltag_img = gtk_text_buffer_create_tag(buffer, "lnk0", "foreground-gdk",
+                                          &lnk_color, NULL);
+    ltag_metno = gtk_text_buffer_create_tag(buffer, "lnk1", "foreground-gdk",
+                                            &lnk_color, NULL);
+    ltag_wiki = gtk_text_buffer_create_tag(buffer, "lnk2", "foreground-gdk",
+                                           &lnk_color, NULL);
+    ltag_geonames = gtk_text_buffer_create_tag(buffer, "lnk3",
+                                               "foreground-gdk",
+                                               &lnk_color, NULL);
     APPEND_BTEXT(_("\nCredits\n"));
     APPEND_LINK_ITEM(_("\tEncyclopedic information partly taken from\n\t\t"),
-                     _("Wikipedia"), "http://wikipedia.org", ltag2);
+                     _("Wikipedia"), "http://wikipedia.org", ltag_wiki);
+    APPEND_LINK_ITEM(_("\n\tElevation and timezone data provided by\n\t\t"),
+                     _("GeoNames"),
+                     "http://geonames.org/", ltag_geonames);
     APPEND_LINK_ITEM(_("\n\tWeather and astronomical data from\n\t\t"),
                      _("The Norwegian Meteorological Institute"),
-                     "http://met.no/", ltag1);
-    g_object_set_data_full(G_OBJECT(ltag0), "url",   /* url for image */
+                     "http://met.no/", ltag_metno);
+    g_object_set_data_full(G_OBJECT(ltag_img), "url",   /* url for image */
                            g_strdup("http://met.no"), g_free);
 
     g_signal_connect(G_OBJECT(view), "motion-notify-event",
@@ -558,7 +564,7 @@ create_summary_tab(plugin_data *data)
         g_signal_connect(G_OBJECT(view), "size_allocate",
                          G_CALLBACK(view_size_allocate_cb), sum);
         g_signal_connect(G_OBJECT(sum->icon_ebox), "button-release-event",
-                         G_CALLBACK(icon_clicked), ltag0);
+                         G_CALLBACK(icon_clicked), ltag_img);
         g_signal_connect(G_OBJECT(sum->icon_ebox), "enter-notify-event",
                          G_CALLBACK(icon_motion_notify), sum);
         g_signal_connect(G_OBJECT(sum->icon_ebox), "motion-notify-event",
