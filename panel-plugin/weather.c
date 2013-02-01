@@ -1835,8 +1835,6 @@ xfceweather_set_mode(XfcePanelPlugin *panel,
                      XfcePanelPluginMode mode,
                      plugin_data *data)
 {
-    GtkWidget *parent = gtk_widget_get_parent(data->vbox_center_scrollbox);
-
     data->panel_orientation = xfce_panel_plugin_get_mode(panel);
     data->orientation = (mode != XFCE_PANEL_PLUGIN_MODE_VERTICAL)
         ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL;
@@ -1877,8 +1875,6 @@ xfceweather_set_orientation(XfcePanelPlugin *panel,
                             GtkOrientation orientation,
                             plugin_data *data)
 {
-    GtkWidget *parent = gtk_widget_get_parent(data->vbox_center_scrollbox);
-
     data->orientation = GTK_ORIENTATION_HORIZONTAL;
     data->panel_orientation = orientation;
 
