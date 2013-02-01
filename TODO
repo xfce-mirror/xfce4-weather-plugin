@@ -4,28 +4,19 @@ categories, but not prioritized or mandatory.
 Maintenance and optimizing stuff
 ======================================================================
 * Use upower for power saving mode (e.g. stop scrollbox animations).
-* Use the Xfce hvbox (maybe, need to check).
-* Search for alternative to tabs used for aligning in tooltips and
-  details tab. Using tabs doesn't work for users of bigger font sizes
-  or different fonts. PangoLayout has a set tabs function, perhaps
-  that could be of help here.
 
 Data
 ======================================================================
 * Use HTTP status codes to warn in time about API changes.
   -> already reported in panel output, maybe in details tab too?
 * Use XML "next run" to schedule data downloads.
-* Rewrite all time-related stuff to be in GMT. Then recalculate the
-  times for the destination timezone. glib provides tools for this,
-  but only beginning with 2.26. Code for determining the timezone of
-  a location is already implemented but temporarily deactivated.
 * Use openweathermap.org for live/historical data when it is a bit
   more developed. Maybe check it again in a year or so, or wait until
   other (open) providers pop up. For the time being, met.no should be
   good enough. Other providers are only slightly better, like
   weather.com returning values that have been reported half an hour
   up to an hour in the past, depending on the location.
-* Implement METAR support. Perhaps.
+  Alternatively, implement METAR support (bug #9309).
 * Download and cache astronomical data for several days. Easy to do,
   since the met.no sunrise API supports ranges.
 * Find out how to calculate symbols by ourselves.
@@ -43,6 +34,7 @@ Forecast tab
 
 Details tab
 ======================================================================
+* Maybe show logos of the other organisations too, not only met.no.
 
 New stuff
 ======================================================================

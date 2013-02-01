@@ -61,13 +61,13 @@ INFORMATION FOR PACKAGE MAINTAINERS AND DISTRIBUTORS
 ==========================================================================
 If you're going to distribute this package, please be so kind and set
 the GEONAMES_USERNAME configure option for the GeoNames web service
-which is used for altitude detection. GeoNames requires you to
-register an account and limits requests on a per-hour and per-day
-basis to prevent misuse of their service. There are no other
+which is used for altitude and timezone detection. GeoNames requires
+you to register an account and limits requests on a per-hour and
+per-day basis to prevent misuse of their service. There are no other
 restrictions and registration is free, uncomplicated and takes less
 than a minute (http://www.geonames.org/export/web-services.html).
-Performing these steps will ensure the altitude detection continues
-to work for all users of the plugin.
+Performing these steps will ensure automatic altitude and timezone
+detection are kept operational for all users of the plugin.
 
 
 MET.NO API DOCUMENTATION
@@ -221,6 +221,12 @@ absorb the information that is there, especially on the *Help* page!
 There is other useful documentation available on this topic, try this
 wiki page for a start:
 https://wiki.xfce.org/translations/translation_guidance_in_xfce
+
+TRANSLATORS, PLEASE MAKE SURE YOU CHECK YOUR FILE FOR ERRORS BEFORE
+UPLOADING IT! Otherwise, it will break compilation of the plugin. It
+is easy to do this with the following command (where file.po is the po
+file of your language):
+msgfmt -c --check-accelerators=_ -v -o /dev/null <file.po>
 
 This plugin provides a lot of descriptions via the tooltips in the
 config dialog. These aim to give short, but interesting explanations

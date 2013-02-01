@@ -37,7 +37,15 @@
   location. In short, only data for the end of the current interval
   will be shown as earlier data is not provided by the forecast
   service.
+- Fix/work around timezone problems by /moving/ the plugin into
+  another timezone. This makes the plugin show local times of the
+  chosen location and probably fixes other bugs that might occur
+  when the user changes the timezone (bug #9524).
 - Add a proper "About" dialog (bug #9379).
+- Use panel toggle button instead of an event box as the main plugin
+  container, to indicate whether forecast window is open or closed,
+  and to give better UI feedback for the user. This is similar to
+  other plugins like the datetime plugin.
 - Remove info button from summary window.
 - Remove forecast entry from plugin context menu (bug #9319).
 - Remember last selected tab in config and summary windows. However,
@@ -108,6 +116,7 @@
   easier discernable.
 - New icon theme: "Liquid Dark", a variation of the liquid icon theme
   better suited for dark panels.
+- Improvements for translators of RTL languages.
 - Use GArrays for storing timeslices and glib data structures in many
   other places to improve portability and maintenance.
 - Rewrite and refactor most code, fixing and protecting against
