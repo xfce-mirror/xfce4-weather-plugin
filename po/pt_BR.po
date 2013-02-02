@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: xfce4-weather-plugin (XFCE 4.4 Goodies)\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-02-01 16:19+0100\n"
-"PO-Revision-Date: 2013-01-28 10:07-0300\n"
+"PO-Revision-Date: 2013-02-02 02:33-0300\n"
 "Last-Translator: Rafael Ferreira <rafael.f.f1@gmail.com>\n"
 "Language-Team: Brazilian Portuguese <ldp-br@bazar2.conectiva.com.br>\n"
 "Language: pt_BR\n"
@@ -357,30 +357,28 @@ msgid "Latitud_e:"
 msgstr "Latitud_e:"
 
 #: ../panel-plugin/weather-config.c:525
-#, fuzzy
 msgid ""
 "Latitude specifies the north-south position of a point on the Earth's "
 "surface. If you change this value manually, you need to provide altitude and "
 "timezone manually too."
 msgstr ""
 "A latitude especifica a posição norte-sul de um ponto da superfície da "
-"Terra. Se você alterar esse valor manualmente, você deveria fornecer a "
-"altitude correta também."
+"Terra. Se você alterar esse valor manualmente, você deve fornecer a altitude "
+"e fuso horário manualmente também."
 
 #: ../panel-plugin/weather-config.c:535
 msgid "L_ongitude:"
 msgstr "L_ongitude:"
 
 #: ../panel-plugin/weather-config.c:539
-#, fuzzy
 msgid ""
 "Longitude specifies the east-west position of a point on the Earth's "
 "surface. If you change this value manually, you need to provide altitude and "
 "timezone manually too."
 msgstr ""
 "A longitude especifica a posição leste-oeste de um ponto da superfície da "
-"Terra. Se você alterar esse valor manualmente, você deveria fornecer a "
-"altitude correta também."
+"Terra. Se você alterar esse valor manualmente, você deve fornecer a altitude "
+"e fuso horário manualmente também."
 
 #: ../panel-plugin/weather-config.c:549 ../panel-plugin/weather-config.c:1000
 msgid "Altitu_de:"
@@ -418,7 +416,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-config.c:572
 msgid "_Timezone:"
-msgstr ""
+msgstr "Fuso _horário:"
 
 #: ../panel-plugin/weather-config.c:580
 msgid ""
@@ -429,20 +427,23 @@ msgid ""
 "Leave this field empty to use the timezone set by your system. Invalid "
 "entries will cause the use of UTC time, but may also depend on your system."
 msgstr ""
+"Se a localização escolhida não estiver no seu fuso horário atual, então é "
+"necessário <i>colocar</i> o plugin naquele outro fuso horário para que os "
+"horários sejam mostrados corretamente. O fuso horário apropriado será "
+"detectado automaticamente via serviço web GeoNames, mas você pode querer "
+"corrigi-lo, se necessário.\n"
+"Deixe este campo em branco para usar o fuso horário definido pelo seu "
+"sistema. Entradas inválidas vão causar o uso do horário UTC, mas também pode "
+"depender do seu sistema."
 
 #: ../panel-plugin/weather-config.c:605
-#, fuzzy
 msgid ""
 "<i>Please change location name to your liking and correct\n"
 "altitude and timezone if they are not auto-detected correctly.</i>"
 msgstr ""
-"\n"
-"\n"
-"\n"
-"\n"
 "<i>Por favor, altere o nome da localização de seu interesse e\n"
-"revise a altitude se não tiver sido detectada automaticamente de forma "
-"correta.</i>"
+"a altitude e o fuso horário corretos, se não tiver sido detectada\n"
+"automaticamente de forma correta.</i>"
 
 #: ../panel-plugin/weather-config.c:630
 msgid ""
@@ -527,7 +528,6 @@ msgstr ""
 "polegada em 32  °F (0 °C) na aceleração padrão da gravidade."
 
 #: ../panel-plugin/weather-config.c:704
-#, fuzzy
 msgid ""
 "The pound per square inch is a unit of pressure based on avoirdupois units "
 "(a system of weights based on a pound of 16 ounces) and defined as the "
@@ -537,11 +537,11 @@ msgid ""
 "Colonies."
 msgstr ""
 "A libra por polegada quadrada é uma unidade de pressão baseada em unidades "
-"de avoirdupois (um sistema de pesos baseado em uma libra de 16 onças) e a "
-"pressão resultante de uma força de uma libra-força aplicada a uma área de "
-"uma polegada quadrada. Ela é usada nos Estados Unidos e em graus variados na "
-"vida cotidiana do Canadá, no Reino Unido e talvez em algumas ex-colônias "
-"britânicas."
+"de avoirdupois (um sistema de pesos baseado em uma libra de 16 onças) e é "
+"definida como a pressão resultante de uma força de uma libra-força aplicada "
+"a uma área de uma polegada quadrada. Ela é usada nos Estados Unidos e em "
+"graus variados na vida cotidiana do Canadá, no Reino Unido e talvez em "
+"algumas ex-colônias britânicas."
 
 #: ../panel-plugin/weather-config.c:713
 msgid ""
@@ -1118,7 +1118,6 @@ msgstr ""
 "suficiente, partículas de gelo podem substituir as de água."
 
 #: ../panel-plugin/weather-config.c:1543
-#, fuzzy
 msgid ""
 "This reports the high-level cloud cover in percent. According to WMO "
 "definition, high-level clouds can be found in altitudes of 8,000 to 15,000 m "
@@ -1129,11 +1128,12 @@ msgid ""
 msgstr ""
 "Essa opção informa a cobertura de nuvem alta em percentagem. De acordo com a "
 "definição da Organização Meteorológica Mundial - OMM, nuvens altas podem ser "
-"encontradas em altitudes de 8.000 até 15.000 m (26.000 a 49.000 ft) ou "
-"18.000 m (59.000 ft) do equador, onde as temperaturas são tão baixas que "
-"elas são compostas principalmente de cristais de gelo. Enquanto normalmente "
-"finas e brancas na aparência, elas também podem ser vistas em um vetor "
-"magnificente de cores quando o sol está baixo no horizonte."
+"encontradas em altitudes de 8.000 até 15.000 m (26.000 até 49.000 ft) ou "
+"10.000 até 18.000 m (33.000 até 59.000 ft) do equador, onde as temperaturas "
+"são tão baixas que elas são compostas principalmente de cristais de gelo. "
+"Enquanto normalmente finas e brancas na aparência, elas também podem ser "
+"vistas em um vetor magnificente de cores quando o sol está baixo no "
+"horizonte."
 
 #: ../panel-plugin/weather-config.c:1553
 msgid ""
@@ -1855,10 +1855,13 @@ msgid ""
 "\tElevation and timezone data provided by\n"
 "\t\t"
 msgstr ""
+"\n"
+"\tDados de elevação e fuso horário fornecidos por\n"
+"\t\t"
 
 #: ../panel-plugin/weather-summary.c:537
 msgid "GeoNames"
-msgstr ""
+msgstr "GeoNames"
 
 #: ../panel-plugin/weather-summary.c:539
 msgid ""
