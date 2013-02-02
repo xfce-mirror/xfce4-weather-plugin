@@ -1125,7 +1125,7 @@ make_forecast_data(xml_weather *wd,
                    daytime dt)
 {
     xml_time *ts1, *ts2, *interval = NULL;
-    struct tm point_tm, start_tm, end_tm;
+    struct tm point_tm, start_tm, end_tm, tm1, tm2;
     time_t point_t, start_t, end_t;
     gint min, max, point, i, j;
 
@@ -1201,6 +1201,12 @@ make_forecast_data(xml_weather *wd,
             continue;
         weather_debug("start ts is in max daytime interval");
 
+        /* start timeslice needs to start at 0, 6, 12, or 18 hours UTC time */
+        tm1 = *gmtime(&ts1->start);
+        if (tm1.tm_hour != 0 && tm1.tm_hour % 6 != 0)
+            continue;
+        weather_debug("start ts does start at 0, 6, 12, 18 hour UTC time");
+
         for (j = 0; j < daydata->len; j++) {
             weather_debug("checking end ts %d", j);
 
@@ -1227,7 +1233,13 @@ make_forecast_data(xml_weather *wd,
                 continue;
             weather_debug("end ts is in max daytime interval");
 
-            /* start and end timeslice need to be a 6 hour interval... */
+            /* end timeslice needs to start at 0, 6, 12, or 18 hours UTC time */
+            tm2 = *gmtime(&ts2->start);
+            if (tm2.tm_hour != 0 && tm2.tm_hour % 6 != 0)
+                continue;
+            weather_debug("end ts does start at 0, 6, 12, 18 hour UTC time");
+
+            /* start and end timeslice need to be a 6 hours interval... */
             if (difftime(ts2->start, ts1->start) != DAYTIME_LEN * 3600)
                 /* ...however we may need to take into account possible dst
                    difference so let's also try DAYTIME_LEN ±1 hour */
@@ -1243,26 +1255,34 @@ make_forecast_data(xml_weather *wd,
                 continue;
             weather_debug("daytime point is within the found interval");
 
-            /* we got the interval, but point may be too much near start */
-            if (difftime(point_t, ts1->start) <= 3600)
-                point_t = time_calc_hour(point_tm, 2);
-            else if (difftime(point_t, ts1->start) <= 2 * 3600)
-                point_t = time_calc_hour(point_tm, 1);
-
-            /* we got the interval, but point may be too much near end */
-            if (difftime(ts2->start, point_t) <= 3600)
-                point_t = time_calc_hour(point_tm, -2);
-            else if (difftime(ts2->start, point_t) <= 2 * 3600)
-                point_t = time_calc_hour(point_tm, -1);
-
-            /* combine the interval with interpolated point data */
+            /* check whether the desired interval exists */
             interval = get_timeslice(wd, ts1->start, ts2->end, NULL);
             if (interval == NULL)
                 continue;
 
+            /* make and return a combined interval with interpolated data */
             weather_debug("returning valid interval");
             return make_combined_timeslice(wd, interval, &point_t, FALSE);
         }
     }
+
+    /* Finding a 6 hours daytime interval failed; maybe current time
+       is within this interval and therefore that 6 hours interval is
+       not available anymore. In that case, simply trying the current
+       conditions interval is better than nothing. */
+    if (wd->current_conditions &&
+        difftime(wd->current_conditions->start, start_t) >= 0 &&
+        difftime(end_t, wd->current_conditions->end) >= 0) {
+        interval = get_timeslice(wd, wd->current_conditions->start,
+                                 wd->current_conditions->end, NULL);
+        weather_debug("returning current conditions interval for daytime %d "
+                      "of day %d", dt, day);
+        return make_combined_timeslice(wd, interval,
+                                       &wd->current_conditions->point, FALSE);
+    }
+
+    /* If we got as far as this, it's very unlikely we find a smaller
+       interval, so just give up. */
+    weather_debug("no forecast data for daytime %d of day %d", dt, day);
     return NULL;
 }
