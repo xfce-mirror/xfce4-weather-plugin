@@ -1355,7 +1355,7 @@ close_summary(GtkWidget *widget,
 
     /* deactivate the summary window update timer */
     if (data->summary_update_timer) {
-        g_source_remove(data->update_timer);
+        g_source_remove(data->summary_update_timer);
         data->summary_update_timer = 0;
     }
 

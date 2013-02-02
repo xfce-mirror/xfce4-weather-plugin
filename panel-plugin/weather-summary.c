@@ -995,7 +995,7 @@ update_summary_subtitle(plugin_data *data)
     gint64 now_ms;
 
     if (data->summary_update_timer) {
-        g_source_remove(data->update_timer);
+        g_source_remove(data->summary_update_timer);
         data->summary_update_timer = 0;
     }
 
