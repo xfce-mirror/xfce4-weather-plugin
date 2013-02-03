@@ -371,7 +371,8 @@ update_scrollbox(plugin_data *data,
 
 
 static void
-update_current_conditions(plugin_data *data)
+update_current_conditions(plugin_data *data,
+                          gboolean immediately)
 {
     struct tm now_tm;
 
@@ -408,6 +409,8 @@ update_current_conditions(plugin_data *data)
     /* update widgets */
     update_icon(data);
     update_scrollbox(data, FALSE);
+    if (immediately)
+        gtk_scrollbox_reset(GTK_SCROLLBOX(data->scrollbox));
     weather_debug("Updated current conditions.");
 }
 
@@ -558,7 +561,7 @@ cb_weather_update(SoupSession *session,
     g_array_sort(data->weatherdata->timeslices,
                  (GCompareFunc) xml_time_compare);
     weather_debug("Updating current conditions.");
-    update_current_conditions(data);
+    update_current_conditions(data, !parsing_error);
     write_cache_file(data);
     schedule_next_wakeup(data);
     weather_dump(weather_dump_weatherdata, data->weatherdata);
@@ -637,7 +640,7 @@ update_handler(plugin_data *data)
            this is to prevent spawning multiple updates in a row */
         data->conditions_update->next = time_calc_hour(now_tm, 1);
         weather_debug("Updating current conditions.");
-        update_current_conditions(data);
+        update_current_conditions(data, FALSE);
         /* update_current_conditions updates day/night time status
            too, so quit here */
         return FALSE;
@@ -1300,8 +1303,10 @@ read_cache_file(plugin_data *data)
 
 
 void
-update_weatherdata_with_reset(plugin_data *data, gboolean clear)
+update_weatherdata_with_reset(plugin_data *data)
 {
+    time_t now_t;
+
     weather_debug("Update weatherdata with reset.");
     g_assert(data != NULL);
     if (G_UNLIKELY(data == NULL))
@@ -1313,22 +1318,30 @@ update_weatherdata_with_reset(plugin_data *data, gboolean clear)
     }
 
     /* set location timezone */
-    if (clear)
-        update_timezone(data);
+    update_timezone(data);
 
-    /* reset update times */
+    /* clear update times */
     init_update_infos(data);
 
-    /* clear existing weather data, needed for location changes */
-    if (clear && data->weatherdata) {
+    /* clear existing weather data */
+    if (data->weatherdata) {
         xml_weather_free(data->weatherdata);
         data->weatherdata = make_weather_data();
-
-        /* make use of previously saved data */
-        read_cache_file(data);
     }
+
+    /* update GUI to display NODATA */
+    update_icon(data);
+    update_scrollbox(data, TRUE);
+
+    /* make use of previously saved data */
+    read_cache_file(data);
+
+    /* schedule downloads immediately */
+    time(&now_t);
+    data->weather_update->next = now_t;
+    data->astro_update->next = now_t;
     schedule_next_wakeup(data);
-    gtk_scrollbox_reset(GTK_SCROLLBOX(data->scrollbox));
+
     weather_debug("Updated weatherdata with reset.");
 }
 
@@ -1407,7 +1420,7 @@ cb_click(GtkWidget *widget,
     if (event->button == 1)
         forecast_click(widget, user_data);
     else if (event->button == 2)
-        update_weatherdata_with_reset(data, FALSE);
+        update_weatherdata_with_reset(data);
     return FALSE;
 }
 
@@ -1434,7 +1447,7 @@ mi_click(GtkWidget *widget,
 {
     plugin_data *data = (plugin_data *) user_data;
 
-    update_weatherdata_with_reset(data, FALSE);
+    update_weatherdata_with_reset(data);
 }
 
 

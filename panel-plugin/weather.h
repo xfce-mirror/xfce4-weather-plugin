@@ -136,8 +136,7 @@ void update_icon(plugin_data *data);
 void update_scrollbox(plugin_data *data,
                       gboolean immediately);
 
-void update_weatherdata_with_reset(plugin_data *data,
-                                   gboolean clear);
+void update_weatherdata_with_reset(plugin_data *data);
 
 GArray *labels_clear(GArray *array);
 
