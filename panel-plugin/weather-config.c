@@ -286,7 +286,9 @@ lookup_altitude_timezone(const gpointer user_data)
     /* lookup altitude */
     url = g_strdup_printf("http://api.geonames.org"
                           "/srtm3XML?lat=%s&lng=%s&username=%s",
-                          latstr, lonstr, GEONAMES_USERNAME);
+                          latstr, lonstr,
+                          dialog->pd->geonames_username
+                          ? dialog->pd->geonames_username : GEONAMES_USERNAME);
     weather_http_queue_request(dialog->pd->session, url,
                                cb_lookup_altitude, user_data);
     g_free(url);
@@ -294,7 +296,9 @@ lookup_altitude_timezone(const gpointer user_data)
     /* lookup timezone */
     url = g_strdup_printf("http://api.geonames.org"
                           "/timezone?lat=%s&lng=%s&username=%s",
-                          latstr, lonstr, GEONAMES_USERNAME);
+                          latstr, lonstr,
+                          dialog->pd->geonames_username
+                          ? dialog->pd->geonames_username : GEONAMES_USERNAME);
     weather_http_queue_request(dialog->pd->session, url,
                                cb_lookup_timezone, user_data);
     g_free(url);

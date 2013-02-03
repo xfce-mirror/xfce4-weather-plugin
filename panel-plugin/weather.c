@@ -793,6 +793,12 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
         data->timezone = g_strdup(value);
     }
 
+    value = xfce_rc_read_entry(rc, "geonames_username", NULL);
+    if (value) {
+        g_free(data->geonames_username);
+        data->geonames_username = g_strdup(value);
+    }
+
     data->cache_file_max_age =
         xfce_rc_read_int_entry(rc, "cache_file_max_age", CACHE_FILE_MAX_AGE);
 
@@ -904,6 +910,9 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
     xfce_rc_write_int_entry(rc, "msl", data->msl);
 
     xfce_rc_write_entry(rc, "timezone", data->timezone);
+
+    if (data->geonames_username)
+        xfce_rc_write_entry(rc, "geonames_username", data->geonames_username);
 
     xfce_rc_write_int_entry(rc, "cache_file_max_age",
                             data->cache_file_max_age);
@@ -1792,6 +1801,7 @@ xfceweather_free(XfcePanelPlugin *plugin,
     g_free(data->scrollbox_font);
     g_free(data->timezone);
     g_free(data->timezone_initial);
+    g_free(data->geonames_username);
 
     /* free update infos */
     g_slice_free(update_info, data->weather_update);

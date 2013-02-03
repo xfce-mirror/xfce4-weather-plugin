@@ -60,6 +60,7 @@ typedef struct {
     XfcePanelPlugin *plugin;
 
     SoupSession *session;
+    gchar *geonames_username;
 
     GtkWidget *button;
     GtkWidget *alignbox;

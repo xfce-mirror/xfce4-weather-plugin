@@ -16,6 +16,7 @@ CONTENTS
 * TRANSLATING THE PLUGIN FOR YOUR LANGUAGE
 * ICON THEMES
 * CACHING
+* HIDDEN OPTIONS
 
 
 ABOUT
@@ -521,3 +522,23 @@ Note that refreshing data by middle-clicking the icon or by clicking
 on the appropriate context menu entry does not clear the cache.
 However, data that is download will always overwrite any existing
 data.
+
+
+HIDDEN OPTIONS
+==========================================================================
+Further options are available which are not exposed via the UI because
+they are usually not needed. To add or edit these, quit the panel with
+"xfce4-panel -q", make the desired modifications to the appropriate
+config file in $HOME/.config/xfce4/panel, then restart the panel with
+"xfce4-panel &".
+
+* cache_file_max_age: Maximum allowed age of the cache file in seconds.
+  See the previous section CACHING for an explanation.
+
+* geonames_username: The GeoNames webservices are credit-based, and
+  although the plugin uses them only for setting up its configuration,
+  the credits could get exhausted if many users use the plugin. This
+  configuration option gives the user the chance to set a registered
+  GeoNames username manually (see INFORMATION FOR PACKAGE MAINTAINERS
+  AND DISTRIBUTORS on how to register). Delete this option completely
+  to use the default GeoNames username set at build time.

@@ -420,6 +420,8 @@ weather_dump_plugindata(const plugin_data *data)
                            "  next scheduled wakeup: %s\n"
                            "  wakeup reason: %s\n"
                            "  --------------------------------------------\n"
+                           "  geonames username set by user: %s\n"
+                           "  --------------------------------------------\n"
                            "  location name: %s\n"
                            "  latitude: %s\n"
                            "  longitude: %s\n"
@@ -455,6 +457,7 @@ weather_dump_plugindata(const plugin_data *data)
                            next_conditions_update,
                            next_wakeup,
                            data->next_wakeup_reason,
+                           YESNO(data->geonames_username),
                            data->location_name,
                            data->lat,
                            data->lon,
