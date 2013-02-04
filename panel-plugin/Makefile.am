@@ -37,6 +37,7 @@ libweather_la_CFLAGS =						\
 	$(LIBXFCE4UTIL_CFLAGS)						\
 	$(GTK_CFLAGS)							\
 	$(SOUP_CFLAGS)							\
+	$(UPOWER_GLIB_CFLAGS)						\
 	$(LIBXML_CFLAGS)
 
 libweather_la_LIBADD =						\
@@ -53,7 +54,8 @@ libweather_la_LDFLAGS = \
 	-module \
 	-no-undefined \
 	-export-symbols-regex '^xfce_panel_module_(preinit|init|construct)' \
-	$(PLATFORM_LDFLAGS)
+	$(PLATFORM_LDFLAGS) \
+	$(UPOWER_GLIB_LIBS)
 
 desktopdir = $(datadir)/xfce4/panel/plugins
 desktop_in_files = weather.desktop.in
