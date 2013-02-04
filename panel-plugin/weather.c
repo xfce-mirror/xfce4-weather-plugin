@@ -44,6 +44,12 @@
 #define CONN_MAX_ATTEMPTS (3)    /* max retry attempts using small interval */
 #define CONN_RETRY_INTERVAL_SMALL (10)
 #define CONN_RETRY_INTERVAL_LARGE (10 * 60)
+
+/* power saving update interval in seconds used as a precaution to
+   deal with suspend/resume events etc., when nothing needs to be
+   updated earlier: */
+#define POWERSAVE_UPDATE_INTERVAL (30)
+
 /* standard update interval in seconds used as a precaution to deal
    with suspend/resume events etc., when nothing needs to be updated
    earlier: */
@@ -312,6 +318,13 @@ update_icon(plugin_data *data)
 void
 scrollbox_set_visible(plugin_data *data)
 {
+#ifdef HAVE_UPOWER_GLIB
+    if (data->upower_lid_closed) {
+        gtk_widget_hide_all(GTK_WIDGET(data->vbox_center_scrollbox));
+        gtk_scrollbox_set_visible(GTK_SCROLLBOX(data->scrollbox), FALSE);
+        return;
+    }
+#endif
     if (data->show_scrollbox && data->labels->len > 0)
         gtk_widget_show_all(GTK_WIDGET(data->vbox_center_scrollbox));
     else
@@ -358,8 +371,13 @@ update_scrollbox(plugin_data *data,
         weather_debug("No weather data available, set single label '%s'.",
                       _("No Data"));
     }
-    gtk_scrollbox_set_animate(GTK_SCROLLBOX(data->scrollbox),
-                              data->scrollbox_animate);
+#ifdef HAVE_UPOWER_GLIB
+    if (data->upower_on_battery)
+        gtk_scrollbox_set_animate(GTK_SCROLLBOX(data->scrollbox), FALSE);
+    else
+#endif
+        gtk_scrollbox_set_animate(GTK_SCROLLBOX(data->scrollbox),
+                                  data->scrollbox_animate);
     /* update labels immediately (mainly used on config change) */
     if (immediately) {
         gtk_scrollbox_prev_label(GTK_SCROLLBOX(data->scrollbox));
@@ -695,6 +713,15 @@ schedule_next_wakeup(plugin_data *data)
                                     "sunset icon change");
     }
 
+#ifdef HAVE_UPOWER_GLIB
+    if (data->upower_on_battery && diff > POWERSAVE_UPDATE_INTERVAL) {
+        /* next wakeup time is greater than the power saving check
+           interval, so call the update handler earlier to deal with
+           cases like system resume events etc. */
+        diff = POWERSAVE_UPDATE_INTERVAL;
+        data->next_wakeup_reason = "regular check (power saving)";
+    } else
+#endif
     if (diff > UPDATE_INTERVAL) {
         /* next wakeup time is greater than the standard check
            interval, so call the update handler earlier to deal with
@@ -1451,6 +1478,39 @@ mi_click(GtkWidget *widget,
 }
 
 
+#ifdef HAVE_UPOWER_GLIB
+static void
+upower_changed_cb(UpClient *client,
+                  plugin_data *data)
+{
+    gboolean on_battery, lid_closed;
+
+    if (G_UNLIKELY(data->upower == NULL))
+        return;
+
+    on_battery = data->upower_on_battery;
+    lid_closed = data->upower_lid_closed;
+    weather_debug("upower old status: on_battery=%d, lid_closed=%d",
+                  on_battery, lid_closed);
+
+    data->upower_on_battery = up_client_get_on_battery(client);
+    data->upower_lid_closed = up_client_get_lid_is_closed(client);
+    weather_debug("upower new status: on_battery=%d, lid_closed=%d",
+                  data->upower_on_battery, data->upower_lid_closed);
+
+    if (data->upower_on_battery != on_battery ||
+        data->upower_lid_closed != lid_closed) {
+        if (data->summary_window)
+            update_summary_subtitle(data);
+
+        update_icon(data);
+        update_scrollbox(data, FALSE);
+        schedule_next_wakeup(data);
+    }
+}
+#endif
+
+
 static void
 xfceweather_dialog_response(GtkWidget *dlg,
                             gint response,
@@ -1684,6 +1744,13 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
 
     /* Initialize with sane default values */
     data->plugin = plugin;
+#ifdef HAVE_UPOWER_GLIB
+    data->upower = up_client_new();
+    if (data->upower) {
+        data->upower_on_battery = up_client_get_on_battery(data->upower);
+        data->upower_lid_closed = up_client_get_lid_is_closed(data->upower);
+    }
+#endif
     data->units = g_slice_new0(units_config);
     data->weatherdata = make_weather_data();
     data->cache_file_max_age = CACHE_FILE_MAX_AGE;
@@ -1795,6 +1862,11 @@ xfceweather_free(XfcePanelPlugin *plugin,
         g_source_remove(data->update_timer);
         data->update_timer = 0;
     }
+
+#ifdef HAVE_UPOWER_GLIB
+    if (data->upower)
+        g_object_unref(data->upower);
+#endif
 
     if (data->weatherdata)
         xml_weather_free(data->weatherdata);
@@ -2012,6 +2084,12 @@ weather_construct(XfcePanelPlugin *plugin)
     xfce_panel_plugin_menu_show_about(plugin);
     g_signal_connect(G_OBJECT(plugin), "about",
                      G_CALLBACK(xfceweather_show_about), data);
+
+#ifdef HAVE_UPOWER_GLIB
+    if (data->upower)
+        g_signal_connect(data->upower, "changed",
+                         G_CALLBACK(upower_changed_cb), data);
+#endif
 
     /* call update handler updates */
     update_handler(data);

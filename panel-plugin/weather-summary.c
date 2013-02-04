@@ -990,7 +990,7 @@ update_summary_subtitle(plugin_data *data)
 {
     time_t now_t;
     GTimeVal now;
-    gchar *title, *date;
+    gchar *title, *date, *date_format;
     guint update_interval;
     gint64 now_ms;
 
@@ -1004,7 +1004,13 @@ update_summary_subtitle(plugin_data *data)
         return FALSE;
 
     time(&now_t);
-    date = format_date(now_t, "%Y-%m-%d %H:%M:%S %z (%Z)", TRUE);
+#ifdef HAVE_UPOWER_GLIB
+    if (data->upower_on_battery || data->upower_lid_closed)
+        date_format = "%Y-%m-%d %H:%M %z (%Z)";
+    else
+#endif
+        date_format = "%Y-%m-%d %H:%M:%S %z (%Z)";
+    date = format_date(now_t, date_format, TRUE);
     title = g_strdup_printf("%s\n%s", data->location_name, date);
     g_free(date);
     xfce_titled_dialog_set_subtitle(XFCE_TITLED_DIALOG(data->summary_window),
@@ -1014,7 +1020,12 @@ update_summary_subtitle(plugin_data *data)
     /* compute and schedule the next update */
     g_get_current_time(&now);
     now_ms = ((gint64) now.tv_sec * 1000) + ((gint64) now.tv_usec / 1000);
-    update_interval = 1000 - (now_ms % 1000) + 1;
+#ifdef HAVE_UPOWER_GLIB
+    if (data->upower_on_battery || data->upower_lid_closed)
+        update_interval = 60000 - (now_ms % 60000) + 1;
+    else
+#endif
+        update_interval = 1000 - (now_ms % 1000) + 1;
     data->summary_update_timer =
         g_timeout_add(update_interval, (GSourceFunc) update_summary_subtitle,
                       data);

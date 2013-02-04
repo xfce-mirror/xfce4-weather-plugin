@@ -22,6 +22,9 @@
 #include <libxfce4panel/libxfce4panel.h>
 #include <libxfce4util/libxfce4util.h>
 #include <libsoup/soup.h>
+#ifdef HAVE_UPOWER_GLIB
+#include <upower.h>
+#endif
 #include "weather-icon.h"
 
 #define PLUGIN_WEBSITE "http://goodies.xfce.org/projects/panel-plugins/xfce4-weather-plugin"
@@ -59,6 +62,11 @@ typedef struct {
 typedef struct {
     XfcePanelPlugin *plugin;
 
+#ifdef HAVE_UPOWER_GLIB
+    UpClient *upower;
+    gboolean upower_on_battery;
+    gboolean upower_lid_closed;
+#endif
     SoupSession *session;
     gchar *geonames_username;
 

@@ -409,6 +409,9 @@ weather_dump_plugindata(const plugin_data *data)
                            "  panel orientation: %d\n"
                            "  plugin orientation: %d\n"
                            "  --------------------------------------------\n"
+                           "  upower on battery: %s\n"
+                           "  upower lid closed: %s\n"
+                           "  --------------------------------------------\n"
                            "  last astro update: %s\n"
                            "  next astro update: %s\n"
                            "  astro download attempts: %d\n"
@@ -447,6 +450,8 @@ weather_dump_plugindata(const plugin_data *data)
                            data->size,
                            data->panel_orientation,
                            data->orientation,
+                           YESNO(data->upower_on_battery),
+                           YESNO(data->upower_lid_closed),
                            last_astro_update,
                            next_astro_update,
                            data->astro_update->attempt,
