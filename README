@@ -146,6 +146,7 @@ met in addition to those of XFCE-4.10:
 
 * >=libxml-2.4.0
 * >=libsoup-2.26.0
+* >=upower-0.9.0 (optional)
 
 You might also need developer libraries necessary for building other
 parts of XFCE. Usually autogen.sh / configure will tell you, otherwise
@@ -542,3 +543,14 @@ config file in $HOME/.config/xfce4/panel, then restart the panel with
   GeoNames username manually (see INFORMATION FOR PACKAGE MAINTAINERS
   AND DISTRIBUTORS on how to register). Delete this option completely
   to use the default GeoNames username set at build time.
+
+* power_saving: If the plugin has been compiled with support for
+  upower, it will try to extend battery life by taking the following
+  measures:
+  1) If the lid is closed, hide the scrollbox.
+  2) If the machine is on battery or the lid is closed,
+     - decrease the regular update interval to 30 seconds,
+     - stop the scrollbox animation and
+     - update the summary window clock only every minute.
+  Setting this value to false will deactivate power saving. If upower
+  support has not been compiled in, then this setting has no effect.
