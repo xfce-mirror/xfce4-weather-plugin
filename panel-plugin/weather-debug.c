@@ -411,6 +411,7 @@ weather_dump_plugindata(const plugin_data *data)
                            "  --------------------------------------------\n"
                            "  upower on battery: %s\n"
                            "  upower lid closed: %s\n"
+                           "  power saving: %s\n"
                            "  --------------------------------------------\n"
                            "  last astro update: %s\n"
                            "  next astro update: %s\n"
@@ -452,6 +453,7 @@ weather_dump_plugindata(const plugin_data *data)
                            data->orientation,
                            YESNO(data->upower_on_battery),
                            YESNO(data->upower_lid_closed),
+                           YESNO(data->power_saving),
                            last_astro_update,
                            next_astro_update,
                            data->astro_update->attempt,

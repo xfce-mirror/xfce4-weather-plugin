@@ -832,6 +832,8 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
     data->cache_file_max_age =
         xfce_rc_read_int_entry(rc, "cache_file_max_age", CACHE_FILE_MAX_AGE);
 
+    data->power_saving = xfce_rc_read_bool_entry(rc, "power_saving", TRUE);
+
     if (data->units)
         g_slice_free(units_config, data->units);
     data->units = g_slice_new0(units_config);
@@ -946,6 +948,8 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
 
     xfce_rc_write_int_entry(rc, "cache_file_max_age",
                             data->cache_file_max_age);
+
+    xfce_rc_write_bool_entry(rc, "power_saving", data->power_saving);
 
     xfce_rc_write_int_entry(rc, "units_temperature", data->units->temperature);
     xfce_rc_write_int_entry(rc, "units_pressure", data->units->pressure);
@@ -1485,7 +1489,7 @@ upower_changed_cb(UpClient *client,
 {
     gboolean on_battery, lid_closed;
 
-    if (G_UNLIKELY(data->upower == NULL))
+    if (G_UNLIKELY(data->upower == NULL) || !data->power_saving)
         return;
 
     on_battery = data->upower_on_battery;

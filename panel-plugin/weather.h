@@ -67,6 +67,7 @@ typedef struct {
     gboolean upower_on_battery;
     gboolean upower_lid_closed;
 #endif
+    gboolean power_saving;
     SoupSession *session;
     gchar *geonames_username;
 
