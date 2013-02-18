@@ -588,7 +588,7 @@ create_location_page(xfceweather_dialog *dialog)
            "but you might want to correct it if necessary.\n"
            "Leave this field empty to use the timezone set by your "
            "system. Invalid entries will cause the use of UTC time, but "
-           "may also depend on your system."));
+           "that may also depend on your system."));
     gtk_box_pack_start(GTK_BOX(hbox), dialog->text_timezone, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
     if (dialog->pd->timezone)
