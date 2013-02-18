@@ -1,40 +1,30 @@
 Here is a collection of ideas and tasks for future releases, listed in
 categories, but not prioritized or mandatory.
 
-Maintenance and optimizing stuff
-======================================================================
-
 Data
 ======================================================================
 * Use HTTP status codes to warn in time about API changes.
   -> already reported in panel output, maybe in details tab too?
 * Use XML "next run" to schedule data downloads.
-* Use openweathermap.org for live/historical data when it is a bit
-  more developed. Maybe check it again in a year or so, or wait until
-  other (open) providers pop up. For the time being, met.no should be
-  good enough. Other providers are only slightly better, like
-  weather.com returning values that have been reported half an hour
-  up to an hour in the past, depending on the location.
-  Alternatively, implement METAR support (bug #9309).
 * Download and cache astronomical data for several days. Easy to do,
   since the met.no sunrise API supports ranges.
+* While met.no is a good forecast provider, it might be better to use
+  another free and non-commercial provider for the current weather.
+  Viable candidates:
+  - openweathermap.org: could be developed a bit more, so check it
+    again in a year or so
+  - find a METAR provider (bug #9309)
 * Find out how to calculate symbols by ourselves.
 
-Icon themes
+Widget and icons
 ======================================================================
-* Support icons for polar days, as met.no does.
+* Support icons for polar days.
+* Add option to set icon always small and next to the scrollbox
+  (useful in deskbar mode).
 
-Configuration dialog
+Summary window
 ======================================================================
-
-Forecast tab
-======================================================================
-* Show day min/max values.
-
-Details tab
-======================================================================
-* Maybe show logos of the other organisations too, not only met.no.
-
-New stuff
-======================================================================
-* Graph tab showing hourly break-down of forecast data.
+* Find a better name for the "Summary" window.
+* Add new graph tab showing hourly break-down of forecast data.
+* Add day/night max values (in red/blue font color).
+* Add forecasts per day.
