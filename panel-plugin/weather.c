@@ -1222,7 +1222,7 @@ read_cache_file(plugin_data *data)
     astro_data_t =
         time_calc(cache_date_tm, 0, 0, 0, 0 - cache_date_tm.tm_hour,
                   0 - cache_date_tm.tm_min, 0 - cache_date_tm.tm_sec);
-    diff = difftime(cache_date_t, astro_data_t);
+    diff = difftime(now_t, astro_data_t);
     if (g_key_file_has_group(keyfile, group)
         && diff > 0 && diff < 24 * 3600) {
         weather_debug("Reusing cached astrodata instead of downloading it.");
