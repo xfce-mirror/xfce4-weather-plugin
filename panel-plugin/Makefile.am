@@ -41,13 +41,13 @@ libweather_la_CFLAGS =						\
 	$(LIBXML_CFLAGS)
 
 libweather_la_LIBADD =						\
+	$(LIBM)                                 \
 	$(LIBXFCE4PANEL_LIBS)						\
 	$(LIBXFCE4UTIL_LIBS)						\
 	$(LIBXFCE4UI_LIBS)						\
 	$(GTK_LIBS)							\
 	$(LIBXML_LIBS)							\
-	$(SOUP_LIBS)						\
-	$(LIBRESOLV)
+	$(SOUP_LIBS)
 
 libweather_la_LDFLAGS = \
 	-avoid-version \

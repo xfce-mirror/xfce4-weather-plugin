@@ -45,9 +45,9 @@ dnl **********************************
 dnl *** Check for standard headers ***
 dnl **********************************
 AC_HEADER_STDC()
-AC_CHECK_HEADERS([string.h fcntl.h errno.h sys/socket.h netdb.h \
-                  netinet/in.h sys/types.h time.h unistd.h stdio.h \
-                  sys/stat.h stddef.h stdlib.h netinet/in.h])
+AC_CHECK_HEADERS([math.h stdarg.h stddef.h stdlib.h string.h sys/stat.h time.h])
+AC_CHECK_LIBM
+AC_SUBST(LIBM)
 
 dnl ******************************
 dnl *** Check for i18n support ***
