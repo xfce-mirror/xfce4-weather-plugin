@@ -295,6 +295,8 @@ update_icon(plugin_data *data)
         data->size != data->panel_size)
         size *= 2;
 #endif
+    /* take into account the border of the toggle button */
+    size -= 2;
 
     /* set panel icon according to current weather conditions */
     conditions = get_current_conditions(data->weatherdata);
