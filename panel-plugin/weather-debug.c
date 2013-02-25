@@ -405,9 +405,9 @@ weather_dump_plugindata(const plugin_data *data)
     g_string_append_printf(out,
                            "  --------------------------------------------\n"
                            "  panel size: %d px\n"
-                           "  plugin size: %d px\n"
+                           "  panel rows: %d px\n"
+                           "  single row: %s\n"
                            "  panel orientation: %d\n"
-                           "  plugin orientation: %d\n"
                            "  --------------------------------------------\n"
 #ifdef HAVE_UPOWER_GLIB
                            "  upower on battery: %s\n"
@@ -450,9 +450,9 @@ weather_dump_plugindata(const plugin_data *data)
                            "  animate scrollbox: %s\n"
                            "  --------------------------------------------",
                            data->panel_size,
-                           data->size,
+                           data->panel_rows,
+                           YESNO(data->single_row),
                            data->panel_orientation,
-                           data->orientation,
 #ifdef HAVE_UPOWER_GLIB
                            YESNO(data->upower_on_battery),
                            YESNO(data->upower_lid_closed),

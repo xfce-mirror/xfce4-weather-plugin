@@ -288,12 +288,11 @@ update_icon(plugin_data *data)
     gchar *str;
     gint size;
 
-    size = data->size;
+    size = data->panel_size;
 #if LIBXFCE4PANEL_CHECK_VERSION(4,9,0)
-    /* make icon double-size in deskbar mode */
-    if (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_DESKBAR &&
-        data->size != data->panel_size)
-        size *= 2;
+    /* make icon smaller when not single-row in multi-row panels */
+    if (!data->single_row && data->panel_rows > 2)
+        size *= 0.80;
 #endif
     /* take into account the border of the toggle button */
     size -= 2;
@@ -855,6 +854,8 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
 
     data->round = xfce_rc_read_bool_entry(rc, "round", TRUE);
 
+    data->single_row = xfce_rc_read_bool_entry(rc, "single_row", TRUE);
+
     data->tooltip_style = xfce_rc_read_int_entry(rc, "tooltip_style",
                                                  TOOLTIP_VERBOSE);
 
@@ -963,6 +964,8 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
                             data->units->apparent_temperature);
 
     xfce_rc_write_bool_entry(rc, "round", data->round);
+
+    xfce_rc_write_bool_entry(rc, "single_row", data->single_row);
 
     xfce_rc_write_int_entry(rc, "tooltip_style", data->tooltip_style);
 
@@ -1790,7 +1793,8 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
 
     data->scrollbox = gtk_scrollbox_new();
 
-    data->size = xfce_panel_plugin_get_size(plugin);
+    data->panel_size = xfce_panel_plugin_get_size(plugin);
+    data->panel_rows = xfce_panel_plugin_get_nrows(plugin);
     data->icon_theme = icon_theme_load(NULL);
     icon = get_icon(data->icon_theme, NULL, 16, FALSE);
     if (G_LIKELY(icon)) {
@@ -1914,11 +1918,12 @@ xfceweather_set_size(XfcePanelPlugin *panel,
                      gint size,
                      plugin_data *data)
 {
-    data->panel_size = size;
 #if LIBXFCE4PANEL_CHECK_VERSION(4,9,0)
-    size /= xfce_panel_plugin_get_nrows(panel);
+    data->panel_rows = xfce_panel_plugin_get_nrows(panel);
+    if (data->single_row)
+        size /= data->panel_rows;
 #endif
-    data->size = size;
+    data->panel_size = size;
 
     update_icon(data);
     update_scrollbox(data, FALSE);
@@ -1931,16 +1936,16 @@ xfceweather_set_size(XfcePanelPlugin *panel,
 
 
 #if LIBXFCE4PANEL_CHECK_VERSION(4,9,0)
-static gboolean
+gboolean
 xfceweather_set_mode(XfcePanelPlugin *panel,
                      XfcePanelPluginMode mode,
                      plugin_data *data)
 {
     data->panel_orientation = xfce_panel_plugin_get_mode(panel);
-    data->orientation = (mode != XFCE_PANEL_PLUGIN_MODE_VERTICAL)
-        ? GTK_ORIENTATION_HORIZONTAL : GTK_ORIENTATION_VERTICAL;
 
-    if (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_HORIZONTAL) {
+    if (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_HORIZONTAL ||
+        (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_DESKBAR &&
+         data->single_row)) {
         xfce_hvbox_set_orientation(XFCE_HVBOX(data->alignbox),
                                    GTK_ORIENTATION_HORIZONTAL);
         gtk_misc_set_alignment(GTK_MISC(data->iconimage), 1, 0.5);
@@ -1950,16 +1955,17 @@ xfceweather_set_mode(XfcePanelPlugin *panel,
         gtk_misc_set_alignment(GTK_MISC(data->iconimage), 0.5, 1);
     }
 
-    if (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_DESKBAR)
-        xfce_panel_plugin_set_small(XFCE_PANEL_PLUGIN(panel), FALSE);
+    if (mode == XFCE_PANEL_PLUGIN_MODE_DESKBAR)
+        xfce_panel_plugin_set_small(panel, FALSE);
     else
-        xfce_panel_plugin_set_small(XFCE_PANEL_PLUGIN(panel), TRUE);
+        xfce_panel_plugin_set_small(panel, data->single_row);
 
     gtk_scrollbox_set_orientation(GTK_SCROLLBOX(data->scrollbox),
-                                  data->orientation);
+                                  (mode != XFCE_PANEL_PLUGIN_MODE_VERTICAL)
+                                  ? GTK_ORIENTATION_HORIZONTAL
+                                  : GTK_ORIENTATION_VERTICAL);
 
-    update_icon(data);
-    update_scrollbox(data, FALSE);
+    xfceweather_set_size(panel, xfce_panel_plugin_get_size(panel), data);
 
     weather_dump(weather_dump_plugindata, data);
 
@@ -1976,7 +1982,6 @@ xfceweather_set_orientation(XfcePanelPlugin *panel,
                             GtkOrientation orientation,
                             plugin_data *data)
 {
-    data->orientation = GTK_ORIENTATION_HORIZONTAL;
     data->panel_orientation = orientation;
 
     if (data->panel_orientation == GTK_ORIENTATION_HORIZONTAL) {
@@ -2068,7 +2073,7 @@ weather_construct(XfcePanelPlugin *plugin)
 #else
     xfceweather_set_orientation(plugin, xfce_panel_plugin_get_orientation(plugin), data);
 #endif
-    xfceweather_set_size(plugin, xfce_panel_plugin_get_size(plugin), data);
+    xfceweather_set_size(plugin, data->panel_size, data);
 
     g_signal_connect(G_OBJECT(plugin), "free-data",
                      G_CALLBACK(xfceweather_free), data);

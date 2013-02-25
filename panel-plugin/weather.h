@@ -82,9 +82,9 @@ typedef struct {
     guint summary_remember_tab;
 
     gint panel_size;
-    gint size;
-    GtkOrientation orientation;
+    guint panel_rows;
     GtkOrientation panel_orientation;
+    gboolean single_row;
     xml_weather *weatherdata;
     xml_astro *astrodata;
 
@@ -148,6 +148,12 @@ void update_scrollbox(plugin_data *data,
 void update_weatherdata_with_reset(plugin_data *data);
 
 GArray *labels_clear(GArray *array);
+
+#if LIBXFCE4PANEL_CHECK_VERSION(4,9,0)
+gboolean xfceweather_set_mode(XfcePanelPlugin *panel,
+                              XfcePanelPluginMode mode,
+                              plugin_data *data);
+#endif
 
 G_END_DECLS
 

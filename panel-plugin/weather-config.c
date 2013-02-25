@@ -1088,6 +1088,21 @@ combo_icon_theme_changed(GtkWidget *combo,
 
 
 static void
+check_single_row_toggled(GtkWidget *button,
+                         gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    dialog->pd->single_row =
+        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button));
+#if LIBXFCE4PANEL_CHECK_VERSION(4,9,0)
+    xfceweather_set_mode(dialog->pd->plugin,
+                         xfce_panel_plugin_get_mode(dialog->pd->plugin),
+                         dialog->pd);
+#endif
+}
+
+
+static void
 combo_tooltip_style_changed(GtkWidget *combo,
                             gpointer user_data)
 {
@@ -1188,8 +1203,26 @@ create_appearance_page(xfceweather_dialog *dialog)
         }
     }
 
+    /* always use small icon in panel */
+    hbox = gtk_hbox_new(FALSE, BORDER);
+    dialog->check_single_row =
+        gtk_check_button_new_with_mnemonic(_("Use only a single _panel row"));
+    SET_TOOLTIP(dialog->check_single_row,
+                _("Check to always use only a single row on a multi-row panel "
+                  "and a small icon in deskbar mode."));
+    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dialog->check_single_row),
+                                 dialog->pd->single_row);
+    gtk_box_pack_start(GTK_BOX(hbox), dialog->check_single_row,
+                       FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
+
+    sep = gtk_hseparator_new();
+    gtk_box_pack_start(GTK_BOX(page), sep, FALSE, FALSE, BORDER * 2);
+
     /* tooltip style */
     hbox = gtk_hbox_new(FALSE, BORDER);
+    vbox = gtk_vbox_new(FALSE, BORDER);
     ADD_LABEL(_("_Tooltip style:"), sg);
     ADD_COMBO(dialog->combo_tooltip_style);
     ADD_COMBO_VALUE(dialog->combo_tooltip_style, _("Simple"));
@@ -1951,6 +1984,8 @@ setup_notebook_signals(xfceweather_dialog *dialog)
     /* appearance page */
     g_signal_connect(dialog->combo_icon_theme, "changed",
                      G_CALLBACK(combo_icon_theme_changed), dialog);
+    g_signal_connect(dialog->check_single_row, "toggled",
+                     G_CALLBACK(check_single_row_toggled), dialog);
     g_signal_connect(dialog->combo_tooltip_style, "changed",
                      G_CALLBACK(combo_tooltip_style_changed), dialog);
     g_signal_connect(dialog->combo_forecast_layout, "changed",
@@ -2021,6 +2056,9 @@ create_config_dialog(plugin_data *data,
     gtk_box_pack_start(GTK_BOX(vbox), dialog->notebook, TRUE, TRUE, 0);
     gtk_widget_show(GTK_WIDGET(vbox));
     gtk_widget_hide(GTK_WIDGET(dialog->update_spinner));
+#if !LIBXFCE4PANEL_CHECK_VERSION(4,9,0)
+    gtk_widget_hide(GTK_WIDGET(dialog->check_single_row));
+#endif
 
     /* automatically detect current location if it is yet unknown */
     if (!(dialog->pd->lat && dialog->pd->lon))
