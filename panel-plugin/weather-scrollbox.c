@@ -473,7 +473,7 @@ gtk_scrollbox_set_visible(GtkScrollbox *self,
             (void) gtk_scrollbox_control_loop(self);
         } else {
             /* update immediately if there's only one or no label,
-             typically this is the case at startup */
+               typically this is the case at startup */
             if (self->active == NULL || self->labels_len <= 1)
                 (void) gtk_scrollbox_control_loop(self);
         }

@@ -55,14 +55,14 @@
    earlier: */
 #define UPDATE_INTERVAL (10)
 
-#define DATA_AND_UNIT(var, item)                                    \
-    value = get_data(conditions, data->units, item,                 \
-                     data->round, data->night_time);                \
-    unit = get_unit(data->units, item);                             \
-    var = g_strdup_printf("%s%s%s",                                 \
-                          value,                                    \
-                          strcmp(unit, "°") ? " " : "",             \
-                          unit);                                    \
+#define DATA_AND_UNIT(var, item)                        \
+    value = get_data(conditions, data->units, item,     \
+                     data->round, data->night_time);    \
+    unit = get_unit(data->units, item);                 \
+    var = g_strdup_printf("%s%s%s",                     \
+                          value,                        \
+                          strcmp(unit, "°") ? " " : "", \
+                          unit);                        \
     g_free(value);
 
 #define CACHE_APPEND(str, val)                  \
@@ -76,8 +76,8 @@
     if (keyfile)                                \
         g_key_file_free(keyfile);
 
-#define CACHE_READ_STRING(var, key)                             \
-    var = g_key_file_get_string(keyfile, group, key, NULL);     \
+#define CACHE_READ_STRING(var, key)                         \
+    var = g_key_file_get_string(keyfile, group, key, NULL); \
 
 #define SCHEDULE_WAKEUP_COMPARE(var, reason)        \
     if (difftime(var, now_t) < diff) {              \

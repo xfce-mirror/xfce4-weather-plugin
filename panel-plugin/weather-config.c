@@ -465,7 +465,7 @@ spin_alt_value_changed(const GtkWidget *spin,
 
 static void
 text_timezone_changed(const GtkWidget *entry,
-                            gpointer user_data)
+                      gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
 
@@ -1054,10 +1054,10 @@ combo_icon_theme_set_tooltip(GtkWidget *combo,
            "<b>Author:</b> %s\n\n"
            "<b>Description:</b> %s\n\n"
            "<b>License:</b> %s"),
-           TEXT_UNKNOWN(dialog->pd->icon_theme->dir),
-           TEXT_UNKNOWN(dialog->pd->icon_theme->author),
-           TEXT_UNKNOWN(dialog->pd->icon_theme->description),
-           TEXT_UNKNOWN(dialog->pd->icon_theme->license));
+         TEXT_UNKNOWN(dialog->pd->icon_theme->dir),
+         TEXT_UNKNOWN(dialog->pd->icon_theme->author),
+         TEXT_UNKNOWN(dialog->pd->icon_theme->description),
+         TEXT_UNKNOWN(dialog->pd->icon_theme->license));
     gtk_widget_set_tooltip_markup(GTK_WIDGET(combo), text);
     g_free(text);
 }

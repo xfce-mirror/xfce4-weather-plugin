@@ -63,16 +63,16 @@ lnk_clicked(GtkTextTag *tag,
  * unit, use LRM (left-to-right mark) etc. to align it properly with
  * its numeric value.
  */
-#define APPEND_TEXT_ITEM(text, item)                            \
-    rawvalue = get_data(conditions, data->units, item,          \
-                        FALSE, data->night_time);               \
-    unit = get_unit(data->units, item);                         \
-    value = g_strdup_printf(_("\t%s%s%s%s%s\n"),                \
-                            text, text ? ": " : "",             \
-                            rawvalue,                           \
-                            strcmp(unit, "°") ? " " : "",       \
-                            unit);                              \
-    g_free(rawvalue);                                           \
+#define APPEND_TEXT_ITEM(text, item)                        \
+    rawvalue = get_data(conditions, data->units, item,      \
+                        FALSE, data->night_time);           \
+    unit = get_unit(data->units, item);                     \
+    value = g_strdup_printf(_("\t%s%s%s%s%s\n"),            \
+                            text, text ? ": " : "",         \
+                            rawvalue,                       \
+                            strcmp(unit, "°") ? " " : "",   \
+                            unit);                          \
+    g_free(rawvalue);                                       \
     APPEND_TEXT_ITEM_REAL(value);
 
 #define APPEND_LINK_ITEM(prefix, text, url, lnk_tag)                    \
@@ -610,7 +610,7 @@ forecast_cell_get_tooltip_text(plugin_data *data,
        align the values; Monospace font is enforced with <tt> tags for
        alignment, and the text is enclosed in <small> tags because
        that looks much better and saves space.
-     */
+    */
     text = g_string_new(_("<b>Times used for calculations</b>\n"));
     value = format_date(fcdata->start, NULL, TRUE);
     g_string_append_printf(text, _("<tt><small>"
