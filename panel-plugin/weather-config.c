@@ -384,15 +384,6 @@ setup_altitude(xfceweather_dialog *dialog)
                                     G_CALLBACK(spin_alt_value_changed),
                                     dialog);
     switch (dialog->pd->units->altitude) {
-    case METERS:
-        gtk_label_set_text(GTK_LABEL(dialog->label_alt_unit),
-                           _("meters"));
-        gtk_spin_button_set_range(GTK_SPIN_BUTTON(dialog->spin_alt),
-                                  -420, 10000);
-        gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_alt),
-                                  (gdouble) (dialog->pd->msl));
-        break;
-
     case FEET:
         gtk_label_set_text(GTK_LABEL(dialog->label_alt_unit),
                            _("feet"));
@@ -400,6 +391,16 @@ setup_altitude(xfceweather_dialog *dialog)
                                   -1378.0, 32808);
         gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_alt),
                                   (gdouble) dialog->pd->msl / 0.3048);
+        break;
+
+    case METERS:
+    default:
+        gtk_label_set_text(GTK_LABEL(dialog->label_alt_unit),
+                           _("meters"));
+        gtk_spin_button_set_range(GTK_SPIN_BUTTON(dialog->spin_alt),
+                                  -420, 10000);
+        gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_alt),
+                                  (gdouble) (dialog->pd->msl));
         break;
     }
     g_signal_handlers_unblock_by_func(dialog->spin_alt,
@@ -626,7 +627,7 @@ create_location_page(xfceweather_dialog *dialog)
 static void
 combo_unit_temperature_set_tooltip(GtkWidget *combo)
 {
-    gchar *text;
+    gchar *text = NULL;
     gint value = gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
 
     switch (value) {
@@ -685,7 +686,7 @@ combo_unit_temperature_changed(GtkWidget *combo,
 static void
 combo_unit_pressure_set_tooltip(GtkWidget *combo)
 {
-    gchar *text;
+    gchar *text = NULL;
     gint value = gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
 
     switch (value) {
@@ -743,7 +744,7 @@ combo_unit_pressure_changed(GtkWidget *combo,
 static void
 combo_unit_windspeed_set_tooltip(GtkWidget *combo)
 {
-    gchar *text;
+    gchar *text = NULL;
     gint value = gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
 
     switch (value) {
@@ -793,7 +794,7 @@ combo_unit_windspeed_changed(GtkWidget *combo,
 static void
 combo_unit_precipitations_set_tooltip(GtkWidget *combo)
 {
-    gchar *text;
+    gchar *text = NULL;
     gint value = gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
 
     switch (value) {
@@ -831,7 +832,7 @@ combo_unit_precipitations_changed(GtkWidget *combo,
 static void
 combo_unit_altitude_set_tooltip(GtkWidget *combo)
 {
-    gchar *text;
+    gchar *text = NULL;
     gint value = gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
 
     switch (value) {
@@ -873,7 +874,7 @@ combo_unit_altitude_changed(GtkWidget *combo,
 static void
 combo_apparent_temperature_set_tooltip(GtkWidget *combo)
 {
-    gchar *text;
+    gchar *text = NULL;
     gint value = gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
 
     switch (value) {
@@ -1114,7 +1115,7 @@ combo_tooltip_style_changed(GtkWidget *combo,
 static void
 combo_forecast_layout_set_tooltip(GtkWidget *combo)
 {
-    gchar *text;
+    gchar *text = NULL;
     gint value = gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
 
     switch (value) {

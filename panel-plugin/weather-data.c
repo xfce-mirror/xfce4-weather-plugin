@@ -259,6 +259,9 @@ calc_apparent_temperature(const xml_location *loc,
            Forecasting. 13, 1998, S. 1187–1193 */
         return 1.41 - 1.162 * windspeed + 0.980 * temp
             + 0.0124 * windspeed * windspeed + 0.0185 * windspeed * temp;
+
+    default:
+        return temp;
     }
 }
 
@@ -1127,7 +1130,7 @@ make_forecast_data(xml_weather *wd,
     xml_time *ts1, *ts2, *interval = NULL;
     struct tm point_tm, start_tm, end_tm, tm1, tm2;
     time_t point_t, start_t, end_t;
-    gint min, max, point, i, j;
+    gint min = 0, max = 0, point = 0, i, j;
 
     g_assert(wd != NULL);
     if (G_UNLIKELY(wd == NULL))
