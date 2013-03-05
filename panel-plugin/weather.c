@@ -1770,6 +1770,7 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     data->forecast_layout = FC_LAYOUT_LIST;
     data->forecast_days = DEFAULT_FORECAST_DAYS;
     data->round = TRUE;
+    data->single_row = TRUE;
 
     /* Setup update infos */
     init_update_infos(data);
