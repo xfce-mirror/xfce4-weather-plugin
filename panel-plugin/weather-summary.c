@@ -487,14 +487,11 @@ create_summary_tab(plugin_data *data)
     g_free(wind);
     APPEND_TEXT_ITEM_REAL(value);
 
-    rawvalue = get_data(conditions, data->units, WIND_DIRECTION,
-                        FALSE, data->night_time);
-    wind = translate_wind_direction(rawvalue);
-    g_free(rawvalue);
+    /* wind direction */
     rawvalue = get_data(conditions, data->units, WIND_DIRECTION_DEG,
                         FALSE, data->night_time);
-
-    /* wind direction */
+    wind = get_data(conditions, data->units, WIND_DIRECTION,
+                        FALSE, data->night_time);
     value = g_strdup_printf(_("\tDirection: %s (%s%s)\n"),
                             wind, rawvalue,
                             get_unit(data->units, WIND_DIRECTION_DEG));
@@ -785,16 +782,14 @@ add_forecast_cell(plugin_data *data,
     g_free(value);
 
     /* wind direction and speed */
-    rawvalue = get_data(fcdata, data->units, WIND_DIRECTION,
-                        FALSE, data->night_time);
-    wind_direction = translate_wind_direction(rawvalue);
+    wind_direction = get_data(fcdata, data->units, WIND_DIRECTION,
+                              FALSE, data->night_time);
     wind_speed = get_data(fcdata, data->units, WIND_SPEED,
                           data->round, data->night_time);
     value = g_strdup_printf("%s %s %s", wind_direction, wind_speed,
                             get_unit(data->units, WIND_SPEED));
     g_free(wind_speed);
     g_free(wind_direction);
-    g_free(rawvalue);
     label = gtk_label_new(value);
     if (!(day % 2))
         gtk_widget_modify_fg(GTK_WIDGET(label), GTK_STATE_NORMAL, &black);

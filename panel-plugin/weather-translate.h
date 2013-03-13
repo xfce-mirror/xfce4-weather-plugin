@@ -32,8 +32,6 @@ const gchar *translate_moon_phase(const gchar *moon_phase);
 /* these return a newly allocated string, that should be freed */
 gchar *translate_day(gint weekday);
 
-gchar *translate_wind_direction(const gchar *wdir);
-
 G_END_DECLS
 
 #endif

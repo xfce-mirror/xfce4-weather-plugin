@@ -266,6 +266,48 @@ calc_apparent_temperature(const xml_location *loc,
 }
 
 
+/*
+ * Return wind direction name for wind degrees, which gives the
+ * direction the wind is coming _from_.
+ */
+static gchar*
+wind_dir_name_by_deg(gchar *degrees, gboolean long_name)
+{
+    gdouble deg;
+
+    if (G_UNLIKELY(degrees == NULL))
+        return "";
+
+    deg = string_to_double(degrees, 0);
+
+    if (deg >= 360 - 22.5 || deg < 45 - 22.5)
+        return (long_name) ? _("North") : _("N");
+
+    if (deg >= 45 - 22.5 && deg < 45 + 22.5)
+        return (long_name) ? _("North-East") : _("NE");
+
+    if (deg >= 90 - 22.5 && deg < 90 + 22.5)
+        return (long_name) ? _("East") : _("E");
+
+    if (deg >= 135 - 22.5 && deg < 135 + 22.5)
+        return (long_name) ? _("South-East") : _("SE");
+
+    if (deg >= 180 - 22.5 && deg < 180 + 22.5)
+        return (long_name) ? _("South") : _("S");
+
+    if (deg >= 225 - 22.5 && deg < 225 + 22.5)
+        return (long_name) ? _("South-West") : _("SW");
+
+    if (deg >= 270 - 22.5 && deg < 270 + 22.5)
+        return (long_name) ? _("West") : _("W");
+
+    if (deg >= 315 - 22.5 && deg < 315 + 22.5)
+        return (long_name) ? _("North-West") : _("NW");
+
+    return "";
+}
+
+
 gchar *
 get_data(const xml_time *timeslice,
          const units_config *units,
@@ -343,7 +385,7 @@ get_data(const xml_time *timeslice,
         return g_strdup_printf("%.0f", val);
 
     case WIND_DIRECTION:
-        return CHK_NULL(loc->wind_dir_name);
+        return g_strdup(wind_dir_name_by_deg(loc->wind_dir_deg, FALSE));
 
     case WIND_DIRECTION_DEG:
         return LOCALE_DOUBLE(loc->wind_dir_deg, ROUND_TO_INT("%.1f"));
@@ -523,47 +565,6 @@ is_night_time(const xml_astro *astro)
     now_tm = *localtime(&now_t);
     return (now_tm.tm_hour >= NIGHT_TIME_START ||
             now_tm.tm_hour < NIGHT_TIME_END);
-}
-
-
-/*
- * Return wind direction name (S, N, W,...) for wind degrees.
- */
-static gchar*
-wind_dir_name_by_deg(gchar *degrees, gboolean long_name)
-{
-    gdouble deg;
-
-    if (G_UNLIKELY(degrees == NULL))
-        return "";
-
-    deg = string_to_double(degrees, 0);
-
-    if (deg >= 360 - 22.5 || deg < 45 - 22.5)
-        return (long_name) ? _("North") : _("N");
-
-    if (deg >= 45 - 22.5 && deg < 45 + 22.5)
-        return (long_name) ? _("North-East") : _("NE");
-
-    if (deg >= 90 - 22.5 && deg < 90 + 22.5)
-        return (long_name) ? _("East") : _("E");
-
-    if (deg >= 135 - 22.5 && deg < 135 + 22.5)
-        return (long_name) ? _("South-East") : _("SE");
-
-    if (deg >= 180 - 22.5 && deg < 180 + 22.5)
-        return (long_name) ? _("South") : _("S");
-
-    if (deg >= 225 - 22.5 && deg < 225 + 22.5)
-        return (long_name) ? _("South-West") : _("SW");
-
-    if (deg >= 270 - 22.5 && deg < 270 + 22.5)
-        return (long_name) ? _("West") : _("W");
-
-    if (deg >= 315 - 22.5 && deg < 315 + 22.5)
-        return (long_name) ? _("North-West") : _("NW");
-
-    return "";
 }
 
 

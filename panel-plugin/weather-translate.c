@@ -31,28 +31,6 @@
 #define DAY_LOC_N (sizeof(gchar) * 100)
 
 
-static const gchar *wdirs[] = {
-    /* TRANSLATORS: Wind directions. It's where the wind comes _from_. */
-    N_("S"),
-    N_("SSW"),
-    N_("SW"),
-    N_("WSW"),
-    N_("W"),
-    N_("WNW"),
-    N_("NW"),
-    N_("NNW"),
-    N_("N"),
-    N_("NNE"),
-    N_("NE"),
-    N_("ENE"),
-    N_("E"),
-    N_("ESE"),
-    N_("SE"),
-    N_("SSE"),
-    N_("CALM"),
-    NULL
-};
-
 static const gchar *moon_phases[] = {
     /* TRANSLATORS: Moon phases */
     N_("New moon"),
@@ -236,38 +214,4 @@ translate_day(const gint weekday)
     }
 
     return day_loc;
-}
-
-
-gchar *
-translate_wind_direction(const gchar *wdir)
-{
-    gchar *wdir_loc, *tmp, wdir_i[2];
-    gint i;
-
-    if (wdir == NULL || strlen(wdir) < 1)
-        return NULL;
-
-    /*
-     * If the direction can be translated, then translate the whole
-     * code so that it can be correctly translated to CJK (and
-     * possibly Finnish). If not, use the old behaviour where
-     * individual direction codes are successively translated.
-     */
-    if (g_ascii_strcasecmp(wdir, _(wdir)) != 0)
-        wdir_loc = g_strdup(_(wdir));
-    else {
-        wdir_loc = g_strdup("");
-        for (i = 0; i < strlen(wdir); i++) {
-            wdir_i[0] = wdir[i];
-            wdir_i[1] = '\0';
-
-            tmp = g_strdup_printf("%s%s", wdir_loc,
-                                  translate_str(wdirs, wdir_i));
-            g_free(wdir_loc);
-            wdir_loc = tmp;
-        }
-
-    }
-    return wdir_loc;
 }

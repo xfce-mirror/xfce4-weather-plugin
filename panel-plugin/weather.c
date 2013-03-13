@@ -114,7 +114,7 @@ make_label(const plugin_data *data,
 {
     xml_time *conditions;
     const gchar *lbl, *unit;
-    gchar *str, *value, *rawvalue;
+    gchar *str, *value;
 
     switch (type) {
     case TEMPERATURE:
@@ -170,38 +170,19 @@ make_label(const plugin_data *data,
 
     /* get current weather conditions */
     conditions = get_current_conditions(data->weatherdata);
-    rawvalue = get_data(conditions, data->units, type,
-                        data->round, data->night_time);
+    unit = get_unit(data->units, type);
+    value = get_data(conditions, data->units, type,
+                     data->round, data->night_time);
 
-    switch (type) {
-    case WIND_DIRECTION:
-        value = translate_wind_direction(rawvalue);
-        break;
-    default:
-        value = NULL;
-        break;
-    }
-
-    if (data->labels->len > 1) {
-        if (value != NULL) {
-            str = g_strdup_printf("%s: %s", lbl, value);
-            g_free(value);
-        } else {
-            unit = get_unit(data->units, type);
-            str = g_strdup_printf("%s: %s%s%s", lbl, rawvalue,
-                                  strcmp(unit, "°") ? " " : "", unit);
-        }
-    } else {
-        if (value != NULL) {
-            str = g_strdup_printf("%s", value);
-            g_free(value);
-        } else {
-            unit = get_unit(data->units, type);
-            str = g_strdup_printf("%s%s%s", rawvalue,
-                                  strcmp(unit, "°") ? " " : "", unit);
-        }
-    }
-    g_free(rawvalue);
+    if (data->labels->len > 1)
+        str = g_strdup_printf("%s: %s%s%s", lbl, value,
+                              strcmp(unit, "°") || strcmp(unit, "")
+                              ? " " : "", unit);
+    else
+        str = g_strdup_printf("%s%s%s", value,
+                              strcmp(unit, "°") || strcmp(unit, "")
+                              ? " " : "", unit);
+    g_free(value);
     return str;
 }
 
@@ -1596,7 +1577,7 @@ weather_get_tooltip_text(const plugin_data *data)
 {
     xml_time *conditions;
     gchar *text, *sym, *alt, *temp;
-    gchar *windspeed, *windbeau, *winddir, *winddir_trans, *winddeg;
+    gchar *windspeed, *windbeau, *winddir, *winddeg;
     gchar *pressure, *humidity, *precipitations;
     gchar *fog, *cloudiness, *sunval, *value;
     gchar *point, *interval_start, *interval_end, *sunrise, *sunset;
@@ -1636,7 +1617,6 @@ weather_get_tooltip_text(const plugin_data *data)
     DATA_AND_UNIT(windspeed, WIND_SPEED);
     DATA_AND_UNIT(windbeau, WIND_BEAUFORT);
     DATA_AND_UNIT(winddir, WIND_DIRECTION);
-    winddir_trans = translate_wind_direction(winddir);
     DATA_AND_UNIT(winddeg, WIND_DIRECTION_DEG);
     DATA_AND_UNIT(pressure, PRESSURE);
     DATA_AND_UNIT(humidity, HUMIDITY);
@@ -1660,7 +1640,7 @@ weather_get_tooltip_text(const plugin_data *data)
                "<b>Humidity:</b> %s\n"),
              data->location_name, alt,
              translate_desc(sym, data->night_time),
-             temp, windspeed, winddir_trans, pressure, humidity);
+             temp, windspeed, winddir, pressure, humidity);
         break;
 
     case TOOLTIP_VERBOSE:
@@ -1691,7 +1671,7 @@ weather_get_tooltip_text(const plugin_data *data)
              interval_start, interval_end,
              precipitations,
              temp, point,
-             windspeed, windbeau, winddir_trans, winddeg,
+             windspeed, windbeau, winddir, winddeg,
              pressure, humidity,
              fog, cloudiness,
              sunval);
@@ -1706,7 +1686,6 @@ weather_get_tooltip_text(const plugin_data *data)
     g_free(point);
     g_free(windspeed);
     g_free(windbeau);
-    g_free(winddir_trans);
     g_free(winddir);
     g_free(winddeg);
     g_free(pressure);
