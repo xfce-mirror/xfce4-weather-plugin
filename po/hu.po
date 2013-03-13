@@ -4,21 +4,22 @@
 #
 # SZERVÁC Attila <sas@321.hu>, 2007.
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2006, 2009, 2012.
+# Benedek Imre <nucleo at indamail.hu>, 2013.
 msgid ""
 msgstr ""
 "Project-Id-Version: xfce4-weather-plugin\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-02-01 16:19+0100\n"
-"PO-Revision-Date: 2012-11-24 03:33+0100\n"
+"PO-Revision-Date: 2013-03-13 01:37+0100\n"
 "Last-Translator: Imre Benedek <nucleo@indamail.hu>\n"
-"Language-Team: Hungarian <gnome-hu-list at gnome dot org>\n"
-"Language: \n"
+"Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
+"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2009-07-23 16:44+0000\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: KBabel 1.11.4\n"
+"X-Generator: Lokalize 1.4\n"
 
 #. TRANSLATORS: Keep in sync with labeloptions in weather-config.c
 #: ../panel-plugin/weather.c:116
@@ -37,7 +38,8 @@ msgstr "SzS"
 msgid "WB"
 msgstr "SzB"
 
-#: ../panel-plugin/weather.c:128 ../panel-plugin/weather.c:131
+#: ../panel-plugin/weather.c:128
+#: ../panel-plugin/weather.c:131
 msgid "WD"
 msgstr "SzI"
 
@@ -46,13 +48,12 @@ msgid "H"
 msgstr "P"
 
 #: ../panel-plugin/weather.c:137
-#, fuzzy
 msgid "D"
-msgstr "SzI"
+msgstr "Hp"
 
 #: ../panel-plugin/weather.c:140
 msgid "A"
-msgstr ""
+msgstr "Hrz"
 
 #: ../panel-plugin/weather.c:143
 msgid "CL"
@@ -78,66 +79,58 @@ msgstr "Kd"
 msgid "R"
 msgstr "Cs"
 
-#: ../panel-plugin/weather.c:357 ../panel-plugin/weather.c:359
+#: ../panel-plugin/weather.c:357
+#: ../panel-plugin/weather.c:359
 msgid "No Data"
 msgstr "Nincs adat"
 
 #: ../panel-plugin/weather.c:461
-msgid ""
-"Met.no sunrise API states that this version of the webservice is deprecated, "
-"and the plugin needs to be adapted to use a newer version, or it will stop "
-"working within a few month. Please file a bug on https://bugzilla.xfce.org "
-"if no one else has done so yet."
-msgstr ""
+msgid "Met.no sunrise API states that this version of the webservice is deprecated, and the plugin needs to be adapted to use a newer version, or it will stop working within a few month. Please file a bug on https://bugzilla.xfce.org if no one else has done so yet."
+msgstr "A Met.no napkelte API szerint a webszolgáltatás ezen változata elavult, és a bővítményt egy újabb verzióhoz kell igazítani, vagy működése le fog állni pár hónapon belül. Hibajelentést a https://bugzilla.xfce.org címen tehet, ha más még nem tette meg."
 
 #: ../panel-plugin/weather.c:480
 msgid "Error parsing astronomical data!"
-msgstr ""
+msgstr "Hiba a csillagászati adatok elemzése közben!"
 
 #: ../panel-plugin/weather.c:482
 #, c-format
-msgid ""
-"Download of astronomical data failed with HTTP Status Code %d, Reason "
-"phrase: %s"
-msgstr ""
+msgid "Download of astronomical data failed with HTTP Status Code %d, Reason phrase: %s"
+msgstr "A csillagászati adatok letöltése meghiúsult. HTTP állapotkód: %d, oka: %s"
 
 #: ../panel-plugin/weather.c:531
-msgid ""
-"Met.no LocationforecastLTS API states that this version of the webservice is "
-"deprecated, and the plugin needs to be adapted to use a newer version, or it "
-"will stop working within a few month. Please file a bug on https://bugzilla."
-"xfce.org if no one else has done so yet."
-msgstr ""
+msgid "Met.no LocationforecastLTS API states that this version of the webservice is deprecated, and the plugin needs to be adapted to use a newer version, or it will stop working within a few month. Please file a bug on https://bugzilla.xfce.org if no one else has done so yet."
+msgstr "A Met.no LocationforecastLTS API szerint a webszolgáltatás ezen változata elavult, és a bővítményt egy újabb verzióhoz kell igazítani, vagy működése le fog állni pár hónapon belül. Hibajelentést a https://bugzilla.xfce.org címen tehet, ha más még nem tette meg."
 
 #: ../panel-plugin/weather.c:549
-#, fuzzy
 msgid "Error parsing weather data!"
-msgstr "Nem lehet frissíteni az időjárási adatokat"
+msgstr "Hiba az időjárási adatok elemzése közben!"
 
 #: ../panel-plugin/weather.c:552
 #, c-format
-msgid ""
-"Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
-msgstr ""
+msgid "Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
+msgstr "Az időjárási adatok letöltése meghiúsult. HTTP állapotkód: %d, oka: %s"
 
 #. start receive thread
-#: ../panel-plugin/weather.c:606 ../panel-plugin/weather.c:624
-#: ../panel-plugin/weather-search.c:169 ../panel-plugin/weather-search.c:435
+#: ../panel-plugin/weather.c:606
+#: ../panel-plugin/weather.c:624
+#: ../panel-plugin/weather-search.c:169
+#: ../panel-plugin/weather-search.c:435
 #, c-format
 msgid "getting %s"
-msgstr ""
+msgstr "kérés %s"
 
 #: ../panel-plugin/weather.c:1085
 #, c-format
 msgid "Error writing cache file %s!"
-msgstr ""
+msgstr "Hiba a gyorsítótárfájl írásakor %s!"
 
 #: ../panel-plugin/weather.c:1448
 #, c-format
 msgid "Unable to open the following url: %s"
 msgstr "A következő URL megnyitása meghiúsult: %s"
 
-#: ../panel-plugin/weather.c:1479 ../panel-plugin/weather.desktop.in.h:1
+#: ../panel-plugin/weather.c:1479
+#: ../panel-plugin/weather.desktop.in.h:1
 msgid "Weather Update"
 msgstr "Időjárási adatok frissítése"
 
@@ -163,7 +156,7 @@ msgstr "Napkelte időpontja: %s, napnyugta időpontja: %s."
 #. * look at the verbose tooltip style further below ;-)
 #.
 #: ../panel-plugin/weather.c:1563
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
 "<b><span size=\"large\">%s</span></b>\n"
@@ -175,15 +168,11 @@ msgid ""
 msgstr ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
 "<b><span size=\"large\">%s</span></b>\n"
-"<span size=\"smaller\">ettől: %s eddig: %s, %s csapadékkal</span>\n"
 "\n"
-"<b>Hőmérséklet:</b> %s\t\t<span size=\"smaller\">(értékek időpontja: %s)</"
-"span>\n"
-"<b>Szél:</b> %s (%sa Beaufort skálán) %s(%s) irányból\n"
-"<b>Légnyomás:</b> %s <b>Páratartalom:</b> %s\n"
-"<b>Köd:</b> %s <b>Felhőzet:</b> %s\n"
-"\n"
-"<span size=\"smaller\">%s</span>"
+"<b>Hőmérséklet:</b> %s\n"
+"<b>Szél:</b> %s innen %s\n"
+"<b>Légnyomás:</b> %s\n"
+"<b>Páratartalom:</b> %s\n"
 
 #.
 #. * TRANSLATORS: Re-arrange and align at will, optionally using
@@ -195,7 +184,7 @@ msgstr ""
 #. * it is included in the %s.
 #.
 #: ../panel-plugin/weather.c:1587
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
 "<b><span size=\"large\">%s</span></b>\n"
@@ -212,11 +201,10 @@ msgstr ""
 "<b><span size=\"large\">%s</span></b>\n"
 "<span size=\"smaller\">ettől: %s eddig: %s, %s csapadékkal</span>\n"
 "\n"
-"<b>Hőmérséklet:</b> %s\t\t<span size=\"smaller\">(értékek időpontja: %s)</"
-"span>\n"
+"<b>Hőmérséklet:</b> %s\t\t<span size=\"smaller\">(értékek időpontja: %s)</span>\n"
 "<b>Szél:</b> %s (%sa Beaufort skálán) %s(%s) irányból\n"
-"<b>Légnyomás:</b> %s <b>Páratartalom:</b> %s\n"
-"<b>Köd:</b> %s <b>Felhőzet:</b> %s\n"
+"<b>Légnyomás:</b> %s    <b>Páratartalom:</b> %s\n"
+"<b>Köd:</b> %s    <b>Felhőzet:</b> %s\n"
 "\n"
 "<span size=\"smaller\">%s</span>"
 
@@ -226,16 +214,15 @@ msgstr "Nem lehet frissíteni az időjárási adatokat"
 
 #: ../panel-plugin/weather.c:1705
 msgid "No default icon theme? This should not happen, plugin will crash!"
-msgstr ""
+msgstr "Nincs alapértelmezett ikontéma? Ez nem történhet meg, a bővítmény össze fog omlani!"
 
 #: ../panel-plugin/weather.c:1925
-#, fuzzy
 msgid "Show weather conditions and forecasts"
-msgstr "A jelenlegi időjárási helyzet megjelenítése"
+msgstr "Az időjárási helyzet és az előrejelzés megjelenítése"
 
 #: ../panel-plugin/weather.c:1927
 msgid "Copyright (c) 2003-2013\n"
-msgstr ""
+msgstr "Copyright (c) 2003-2013\n"
 
 #.
 #. * TRANSLATORS: The abbreviations in parentheses will be shown in
@@ -251,9 +238,8 @@ msgid "Temperature (T)"
 msgstr "Hőmérséklet (H)"
 
 #: ../panel-plugin/weather-config.c:97
-#, fuzzy
 msgid "Barometric pressure (P)"
-msgstr "Légnyomás (LNy)"
+msgstr "Légnyomás (LNy) "
 
 #: ../panel-plugin/weather-config.c:98
 msgid "Wind speed (WS)"
@@ -277,19 +263,17 @@ msgstr "Páratartalom (P)"
 
 #: ../panel-plugin/weather-config.c:103
 msgid "Dew point (D)"
-msgstr ""
+msgstr "Harmatpont (Hp)"
 
 #: ../panel-plugin/weather-config.c:104
-#, fuzzy
 msgid "Apparent temperature (A)"
-msgstr "Hőmérséklet (H)"
+msgstr "Hőérzet (Hrz)"
 
 #: ../panel-plugin/weather-config.c:105
 msgid "Low clouds (CL)"
 msgstr "Alacsony szintű felhők (FA)"
 
 #: ../panel-plugin/weather-config.c:106
-#, fuzzy
 msgid "Middle clouds (CM)"
 msgstr "Közepes szintű felhők (FK)"
 
@@ -309,7 +293,8 @@ msgstr "Köd (Kd)"
 msgid "Precipitations (R)"
 msgstr "Csapadék (Cs)"
 
-#: ../panel-plugin/weather-config.c:222 ../panel-plugin/weather-config.c:324
+#: ../panel-plugin/weather-config.c:222
+#: ../panel-plugin/weather-config.c:324
 #: ../panel-plugin/weather-config.c:512
 msgid "Unset"
 msgstr "Visszaállítás"
@@ -320,22 +305,19 @@ msgstr "Észlelés…"
 
 #: ../panel-plugin/weather-config.c:385
 msgid "meters"
-msgstr ""
+msgstr "méter"
 
 #: ../panel-plugin/weather-config.c:394
 msgid "feet"
-msgstr ""
+msgstr "láb"
 
 #: ../panel-plugin/weather-config.c:488
-#, fuzzy
 msgid "Location _name:"
-msgstr "_Hely:"
+msgstr "He_ly:"
 
 #: ../panel-plugin/weather-config.c:495
-msgid ""
-"Change the name for the location to your liking. It is used for display and "
-"does not affect the location parameters in any way."
-msgstr ""
+msgid "Change the name for the location to your liking. It is used for display and does not affect the location parameters in any way."
+msgstr "Változtassa meg a hely nevét tetszése szerint. Ez csak a megjelenítéshez használatos és semmilyen módon nem befolyásolja a hely paramétereit."
 
 #: ../panel-plugin/weather-config.c:499
 msgid "Chan_ge..."
@@ -343,138 +325,89 @@ msgstr "_Változtatás…"
 
 #: ../panel-plugin/weather-config.c:502
 msgid "Search for a new location and auto-detect its parameters."
-msgstr ""
+msgstr "Új hely keresése és paramétereinek automatikus érzékelése."
 
 #: ../panel-plugin/weather-config.c:521
-#, fuzzy
 msgid "Latitud_e:"
-msgstr "Szélesség"
+msgstr "Szél_esség:"
 
 #: ../panel-plugin/weather-config.c:525
-msgid ""
-"Latitude specifies the north-south position of a point on the Earth's "
-"surface. If you change this value manually, you need to provide altitude and "
-"timezone manually too."
-msgstr ""
+msgid "Latitude specifies the north-south position of a point on the Earth's surface. If you change this value manually, you need to provide altitude and timezone manually too."
+msgstr "A földrajzi szélesség egy pont észak-déli helyzetét határozza meg a Föld felszínén. Ha manuálisan változtatja ezt az értéket, akkor a magasságot és az időzónát is manuálisan kell megadnia."
 
 #: ../panel-plugin/weather-config.c:535
-#, fuzzy
 msgid "L_ongitude:"
-msgstr "Hosszúság"
+msgstr "H_osszúság:"
 
 #: ../panel-plugin/weather-config.c:539
-msgid ""
-"Longitude specifies the east-west position of a point on the Earth's "
-"surface. If you change this value manually, you need to provide altitude and "
-"timezone manually too."
-msgstr ""
+msgid "Longitude specifies the east-west position of a point on the Earth's surface. If you change this value manually, you need to provide altitude and timezone manually too."
+msgstr "A földrajzi hosszúság egy pont kelet-nyugati helyzetét határozza meg a Föld felszínén. Ha manuálisan változtatja ezt az értéket, akkor a magasságot és az időzónát is manuálisan kell megadnia."
 
-#: ../panel-plugin/weather-config.c:549 ../panel-plugin/weather-config.c:1000
-#, fuzzy
+#: ../panel-plugin/weather-config.c:549
+#: ../panel-plugin/weather-config.c:1000
 msgid "Altitu_de:"
-msgstr "Magasság"
+msgstr "M_agasság:"
 
 #: ../panel-plugin/weather-config.c:553
 msgid ""
-"For locations outside Norway the elevation model that's used by the met.no "
-"webservice is not very good, so it's usually necessary to specify the "
-"altitude as an additional parameter, otherwise the reported values will not "
-"be correct.\n"
+"For locations outside Norway the elevation model that's used by the met.no webservice is not very good, so it's usually necessary to specify the altitude as an additional parameter, otherwise the reported values will not be correct.\n"
 "\n"
-"The plugin tries to auto-detect the altitude using the GeoNames webservice, "
-"but that might not always be correct too, so you can change it here.\n"
+"The plugin tries to auto-detect the altitude using the GeoNames webservice, but that might not always be correct too, so you can change it here.\n"
 "\n"
-"Altitude is given in meters above sea level, or alternatively in feet by "
-"changing the unit on the units page. It should match the real value roughly, "
-"but small differences will have no influence on the weather data. Inside "
-"Norway, this setting has no effect at all."
+"Altitude is given in meters above sea level, or alternatively in feet by changing the unit on the units page. It should match the real value roughly, but small differences will have no influence on the weather data. Inside Norway, this setting has no effect at all."
 msgstr ""
+"A Norvégián kívüli helyek esetében a met.no webszolgáltatás által használt domborzati modell nem túl jó, így általában érdemes meghatározni a tengerszint feletti magasságot kiegészítő paraméterként, ellenkező esetben a megjelenített értékek nem lesznek helytállóak.\n"
+"\n"
+"A bővítmény megpróbálja automatikusan érzékelni a magasságot a GeoNames webszolgáltatás segítségével, de mivel ez nem ad mindig helyes eredményt, meg tudja változtatni itt.\n"
+"\n"
+"A tengerszint feletti magasság méterben van megadva, esetleg lábban – ha a mértékegységek oldalon ez van beállítva. Nagyjából a valós értékkel kell megegyeznie, kisebb eltérések nem befolyásolják az időjárási adatokat. Norvégiában ennek a beállításnak nincs hatása."
 
 #: ../panel-plugin/weather-config.c:572
 msgid "_Timezone:"
-msgstr ""
+msgstr "_Időzóna:"
 
 #: ../panel-plugin/weather-config.c:580
 msgid ""
-"If the chosen location is not in your current timezone, then it is necessary "
-"to <i>put</i> the plugin into that other timezone for the times to be shown "
-"correctly. The proper timezone will be auto-detected via the GeoNames web "
-"service, but you might want to correct it if necessary.\n"
-"Leave this field empty to use the timezone set by your system. Invalid "
-"entries will cause the use of UTC time, but that may also depend on your system."
+"If the chosen location is not in your current timezone, then it is necessary to <i>put</i> the plugin into that other timezone for the times to be shown correctly. The proper timezone will be auto-detected via the GeoNames web service, but you might want to correct it if necessary.\n"
+"Leave this field empty to use the timezone set by your system. Invalid entries will cause the use of UTC time, but may also depend on your system."
 msgstr ""
+"Ha a kiválasztott hely nem az ön jelenlegi időzónájában van, akkor a bővítményt abba az időzónába kell <i>állítani<i>, hogy az időpontok helyesen jelenjenek meg. A helyes időzóna a GeoNames webszolgáltatás segítségével automatikusan beállításra kerül, de ezt korrigálhatja ha szükséges.\n"
+"Hagyja ezt a mezőt üresen a rendszer által beállított időzóna használatához. Érvénytelen bejegyzések az UTC idő használatát eredményezik, de ez függ az ön rendszerétől is."
 
 #: ../panel-plugin/weather-config.c:605
 msgid ""
 "<i>Please change location name to your liking and correct\n"
 "altitude and timezone if they are not auto-detected correctly.</i>"
 msgstr ""
+"<i>Változtassa meg a hely nevét tetszése szerint és javítsa ki a magasságot\n"
+"és az időzónát, ha azok automatikus érzékelése hibás.</i>"
 
 #: ../panel-plugin/weather-config.c:630
 msgid ""
-"Named after the astronomer Anders Celsius who invented the original scale in "
-"1742, the Celsius scale is an international standard unit and nowadays "
-"defined using the Kelvin scale. 0 °C is equivalent to 273.15 K and 1 °C "
-"difference in temperature is exactly the same difference as 1 K. It is "
-"defined with the melting point of water being roughly at 0 °C and its "
-"boiling point at 100 °C at one standard atmosphere (1 atm = 1013.5 hPa). "
-"Until 1948, the unit was known as <i>centigrade</i> - from Latin <i>centum</"
-"i> (100) and <i>gradus</i> (steps).\n"
-"In meteorology and everyday life the Celsius scale is very convenient for "
-"expressing temperatures because its numbers can be an easy indicator for the "
-"formation of black ice and snow."
+"Named after the astronomer Anders Celsius who invented the original scale in 1742, the Celsius scale is an international standard unit and nowadays defined using the Kelvin scale. 0 °C is equivalent to 273.15 K and 1 °C difference in temperature is exactly the same difference as 1 K. It is defined with the melting point of water being roughly at 0 °C and its boiling point at 100 °C at one standard atmosphere (1 atm = 1013.5 hPa). Until 1948, the unit was known as <i>centigrade</i> - from Latin <i>centum</i> (100) and <i>gradus</i> (steps).\n"
+"In meteorology and everyday life the Celsius scale is very convenient for expressing temperatures because its numbers can be an easy indicator for the formation of black ice and snow."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:646
 msgid ""
-"The current Fahrenheit temperature scale is based on one proposed in 1724 by "
-"the physicist Daniel Gabriel Fahrenheit. 0 °F was the freezing point of "
-"brine on the original scale at standard atmospheric pressure, which was the "
-"lowest temperature achievable with this mixture of ice, salt and ammonium "
-"chloride. The melting point of water is at 32 °F and its boiling point at "
-"212 °F. The Fahrenheit and Celsius scales intersect at -40 degrees. Even in "
-"cold winters, the temperatures usually do not fall into negative ranges on "
-"the Fahrenheit scale.\n"
-"With its inventor being a member of the Royal Society in London and having a "
-"high reputation, the Fahrenheit scale enjoyed great popularity in many "
-"English-speaking countries, but was replaced by the Celsius scale in most of "
-"these countries during the metrification process in the mid to late 20th "
-"century."
+"The current Fahrenheit temperature scale is based on one proposed in 1724 by the physicist Daniel Gabriel Fahrenheit. 0 °F was the freezing point of brine on the original scale at standard atmospheric pressure, which was the lowest temperature achievable with this mixture of ice, salt and ammonium chloride. The melting point of water is at 32 °F and its boiling point at 212 °F. The Fahrenheit and Celsius scales intersect at -40 degrees. Even in cold winters, the temperatures usually do not fall into negative ranges on the Fahrenheit scale.\n"
+"With its inventor being a member of the Royal Society in London and having a high reputation, the Fahrenheit scale enjoyed great popularity in many English-speaking countries, but was replaced by the Celsius scale in most of these countries during the metrification process in the mid to late 20th century."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:689
-msgid ""
-"The pascal, named after mathematician, physicist and philosopher Blaise "
-"Pascal, is a SI derived unit and a measure of force per unit area, defined "
-"as one newton per square meter. One standard atmosphere (atm) is 1013.25 hPa."
+msgid "The pascal, named after mathematician, physicist and philosopher Blaise Pascal, is a SI derived unit and a measure of force per unit area, defined as one newton per square meter. One standard atmosphere (atm) is 1013.25 hPa."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:696
-msgid ""
-"Inches of mercury is still widely used for barometric pressure in weather "
-"reports, refrigeration and aviation in the United States, but seldom used "
-"elsewhere. It is defined as the pressure exerted by a 1 inch circular column "
-"of mercury of 1 inch in height at 32 °F (0 °C) at the standard acceleration "
-"of gravity."
+msgid "Inches of mercury is still widely used for barometric pressure in weather reports, refrigeration and aviation in the United States, but seldom used elsewhere. It is defined as the pressure exerted by a 1 inch circular column of mercury of 1 inch in height at 32 °F (0 °C) at the standard acceleration of gravity."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:704
-msgid ""
-"The pound per square inch is a unit of pressure based on avoirdupois units "
-"(a system of weights based on a pound of 16 ounces) and defined as the "
-"pressure resulting from a force of one pound-force applied to an area of one "
-"square inch. It is used in the United States and to varying degrees in "
-"everyday life in Canada, the United Kingdom and maybe some former British "
-"Colonies."
+msgid "The pound per square inch is a unit of pressure based on avoirdupois units (a system of weights based on a pound of 16 ounces) and defined as the pressure resulting from a force of one pound-force applied to an area of one square inch. It is used in the United States and to varying degrees in everyday life in Canada, the United Kingdom and maybe some former British Colonies."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:713
-msgid ""
-"The torr unit was named after the physicist and mathematician Evangelista "
-"Torricelli who discovered the principle of the barometer in 1644 and "
-"demonstrated the first mercury barometer to the general public. A pressure "
-"of 1 torr is approximately equal to one millimeter of mercury, and one "
-"standard atmosphere (atm) equals 760 Torr."
+msgid "The torr unit was named after the physicist and mathematician Evangelista Torricelli who discovered the principle of the barometer in 1644 and demonstrated the first mercury barometer to the general public. A pressure of 1 torr is approximately equal to one millimeter of mercury, and one standard atmosphere (atm) equals 760 Torr."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:747
@@ -482,62 +415,35 @@ msgid "Wind speeds in TV or in the news are often provided in km/h."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:751
-msgid ""
-"Miles per hour is an imperial unit of speed expressing the number of statute "
-"miles covered in one hour."
+msgid "Miles per hour is an imperial unit of speed expressing the number of statute miles covered in one hour."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:755
-msgid ""
-"Meter per second is <i>the</i> unit typically used by meteorologists to "
-"denote wind speeds."
+msgid "Meter per second is <i>the</i> unit typically used by meteorologists to denote wind speeds."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:759
-msgid ""
-"The foot per second (pl. feet per second) in the imperial unit system is the "
-"counterpart to the meter per second in the International System of Units."
+msgid "The foot per second (pl. feet per second) in the imperial unit system is the counterpart to the meter per second in the International System of Units."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:764
-msgid ""
-"The knot is a unit of speed equal to one international nautical mile (1.852 "
-"km) per hour, or approximately 1.151 mph, and sees worldwide use in "
-"meteorology and in maritime and air navigation. A vessel travelling at 1 "
-"knot along a meridian travels one minute of geographic latitude in one hour."
+msgid "The knot is a unit of speed equal to one international nautical mile (1.852 km) per hour, or approximately 1.151 mph, and sees worldwide use in meteorology and in maritime and air navigation. A vessel travelling at 1 knot along a meridian travels one minute of geographic latitude in one hour."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:797
-msgid ""
-"1 millimeter is one thousandth of a meter - the fundamental unit of length "
-"in the International System of Units -, or approximately 0.04 inches."
+msgid "1 millimeter is one thousandth of a meter - the fundamental unit of length in the International System of Units -, or approximately 0.04 inches."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:802
-msgid ""
-"The English word <i>inch</i> comes from Latin <i>uncia</i> meaning <i>one-"
-"twelfth part</i> (in this case, one twelfth of a foot). In the past, there "
-"have been many different standards of the inch with varying sizes of "
-"measure, but the current internationally accepted value is exactly 25.4 "
-"millimeters."
+msgid "The English word <i>inch</i> comes from Latin <i>uncia</i> meaning <i>one-twelfth part</i> (in this case, one twelfth of a foot). In the past, there have been many different standards of the inch with varying sizes of measure, but the current internationally accepted value is exactly 25.4 millimeters."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:835
-msgid ""
-"The meter is the fundamental unit of length in the International System of "
-"Units. Originally intended to be one ten-millionth of the distance from the "
-"Earth's equator to the North Pole at sea level, its definition has been "
-"periodically refined to reflect growing knowledge of metrology (the science "
-"of measurement)."
+msgid "The meter is the fundamental unit of length in the International System of Units. Originally intended to be one ten-millionth of the distance from the Earth's equator to the North Pole at sea level, its definition has been periodically refined to reflect growing knowledge of metrology (the science of measurement)."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:843
-msgid ""
-"A foot (plural feet) is a unit of length defined as being 0.3048 m exactly "
-"and used in the imperial system of units and United States customary units. "
-"It is subdivided into 12 inches. The measurement of altitude in the aviation "
-"industry is one of the few areas where the foot is widely used outside the "
-"English-speaking world."
+msgid "A foot (plural feet) is a unit of length defined as being 0.3048 m exactly and used in the imperial system of units and United States customary units. It is subdivided into 12 inches. The measurement of altitude in the aviation industry is one of the few areas where the foot is widely used outside the English-speaking world."
 msgstr ""
 
 #.
@@ -546,152 +452,120 @@ msgstr ""
 #. * at that time.
 #.
 #: ../panel-plugin/weather-config.c:882
-msgid ""
-"Used in North America, wind chill will be reported for low temperatures and "
-"heat index for higher ones. At night, heat index will be replaced by the "
-"Summer Simmer Index. For wind chill, wind speeds need to be above 3.0 mph "
-"(4.828 km/h) and air temperature below 50.0 °F (10.0 °C). For heat index, "
-"air temperature needs to be above 80 °F (26.7 °C) - or above 71.6 °F (22 °C) "
-"at night - and relative humidity at least 40%. If these conditions are not "
-"met, the air temperature will be shown."
+msgid "Used in North America, wind chill will be reported for low temperatures and heat index for higher ones. At night, heat index will be replaced by the Summer Simmer Index. For wind chill, wind speeds need to be above 3.0 mph (4.828 km/h) and air temperature below 50.0 °F (10.0 °C). For heat index, air temperature needs to be above 80 °F (26.7 °C) - or above 71.6 °F (22 °C) at night - and relative humidity at least 40%. If these conditions are not met, the air temperature will be shown."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:893
-msgid ""
-"The Canadian counterpart to the US windchill/heat index, with the wind chill "
-"being similar to the previous model but with slightly different constraints. "
-"Instead of the heat index <i>humidex</i> will be used. For wind chill to "
-"become effective, wind speeds need to be above 2.0 km/h (1.24 mph) and air "
-"temperature below or equal to 0 °C (32 °F). For humidex, air temperature "
-"needs to be at least 20.0 °C (68 °F), with a dewpoint greater than 0 °C (32 "
-"°F). If these conditions are not met, the air temperature will be shown."
+msgid "The Canadian counterpart to the US windchill/heat index, with the wind chill being similar to the previous model but with slightly different constraints. Instead of the heat index <i>humidex</i> will be used. For wind chill to become effective, wind speeds need to be above 2.0 km/h (1.24 mph) and air temperature below or equal to 0 °C (32 °F). For humidex, air temperature needs to be at least 20.0 °C (68 °F), with a dewpoint greater than 0 °C (32 °F). If these conditions are not met, the air temperature will be shown."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:905
-msgid ""
-"This is the model used by the Australian Bureau of Meteorology, especially "
-"adapted for the climate of this continent. Possibly used in Central Europe "
-"and parts of other continents too, but then windchill and similar values had "
-"never gained that much popularity there as in the US or Canada, so "
-"information about its usage is scarce or uncertain. It depends on air "
-"temperature, wind speed and humidity and can be used for lower and higher "
-"temperatures alike."
+msgid "This is the model used by the Australian Bureau of Meteorology, especially adapted for the climate of this continent. Possibly used in Central Europe and parts of other continents too, but then windchill and similar values had never gained that much popularity there as in the US or Canada, so information about its usage is scarce or uncertain. It depends on air temperature, wind speed and humidity and can be used for lower and higher temperatures alike."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:916
-msgid ""
-"Improvements by Robert G. Quayle and Robert G. Steadman applied in 1998 to "
-"earlier experiments/developments by Steadman. This model only depends on "
-"wind speed and temperature, not on relative humidity and can be used for "
-"both heat and cold stress."
+msgid "Improvements by Robert G. Quayle and Robert G. Steadman applied in 1998 to earlier experiments/developments by Steadman. This model only depends on wind speed and temperature, not on relative humidity and can be used for both heat and cold stress."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:952
-#, fuzzy
 msgid "_Temperature:"
-msgstr "Hőmérséklet"
+msgstr "Hőmérsékle_t:"
 
 #: ../panel-plugin/weather-config.c:954
 msgid "Celsius (°C)"
-msgstr ""
+msgstr "Celsius (°C)"
 
 #: ../panel-plugin/weather-config.c:955
 msgid "Fahrenheit (°F)"
-msgstr ""
+msgstr "Fahrenheit (°F)"
 
 #: ../panel-plugin/weather-config.c:960
-#, fuzzy
 msgid "Barometric _pressure:"
-msgstr "Légnyomás (LNy)"
+msgstr "Lég_nyomás:"
 
 #: ../panel-plugin/weather-config.c:963
 msgid "Hectopascals (hPa)"
-msgstr ""
+msgstr "Hektopascal (hPa)"
 
 #: ../panel-plugin/weather-config.c:965
 msgid "Inches of mercury (inHg)"
-msgstr ""
+msgstr "Higanyhüvelyk (inHg)"
 
 #: ../panel-plugin/weather-config.c:967
 msgid "Pound-force per square inch (psi)"
-msgstr ""
+msgstr "Font/négyzethüvelyk (psi)"
 
 #: ../panel-plugin/weather-config.c:969
 msgid "Torr (mmHg)"
-msgstr ""
+msgstr "Higanymilliméter (Hgmm)"
 
 #: ../panel-plugin/weather-config.c:974
-#, fuzzy
 msgid "_Wind speed:"
-msgstr "Szélsebesség (SzS)"
+msgstr "_Szélsebesség:"
 
 #: ../panel-plugin/weather-config.c:977
 msgid "Kilometers per hour (km/h)"
-msgstr ""
+msgstr "Kilométer/óra (km/h)"
 
 #: ../panel-plugin/weather-config.c:979
 msgid "Miles per hour (mph)"
-msgstr ""
+msgstr "Mérföld/óra (mph)"
 
 #: ../panel-plugin/weather-config.c:981
 msgid "Meters per second (m/s)"
-msgstr ""
+msgstr "Méter/másodperc (m/s)"
 
 #: ../panel-plugin/weather-config.c:983
 msgid "Feet per second (ft/s)"
-msgstr ""
+msgstr "Láb/másodperc (ft/s)"
 
 #: ../panel-plugin/weather-config.c:985
 msgid "Knots (kt)"
-msgstr ""
+msgstr "Csomó (kt)"
 
 #: ../panel-plugin/weather-config.c:990
-#, fuzzy
 msgid "Prec_ipitations:"
-msgstr ""
-"\n"
-"Csapadék\n"
+msgstr "_Csapadék:"
 
 #: ../panel-plugin/weather-config.c:993
 msgid "Millimeters (mm)"
-msgstr ""
+msgstr "Milliméter (mm)"
 
 #: ../panel-plugin/weather-config.c:995
 msgid "Inches (in)"
-msgstr ""
+msgstr "Hüvelyk (in)"
 
 #: ../panel-plugin/weather-config.c:1003
 msgid "Meters (m)"
-msgstr ""
+msgstr "Méter (m)"
 
 #: ../panel-plugin/weather-config.c:1005
 msgid "Feet (ft)"
-msgstr ""
+msgstr "Láb (ft)"
 
 #: ../panel-plugin/weather-config.c:1014
-#, fuzzy
 msgid "Apparent te_mperature:"
-msgstr "Hőmérséklet"
+msgstr "Hőé_rzet:"
 
 #: ../panel-plugin/weather-config.c:1017
 msgid "Windchill/Heat index"
-msgstr ""
+msgstr "Windchill/Heat index"
 
 #: ../panel-plugin/weather-config.c:1019
 msgid "Windchill/Humidex"
-msgstr ""
+msgstr "Windchill/Humidex"
 
 #: ../panel-plugin/weather-config.c:1020
 msgid "Steadman"
-msgstr ""
+msgstr "Steadman"
 
 #: ../panel-plugin/weather-config.c:1021
 msgid "Quayle-Steadman"
-msgstr ""
+msgstr "Quayle-Steadman"
 
 #: ../panel-plugin/weather-config.c:1044
 msgid "Choose an icon theme."
-msgstr ""
+msgstr "Válasszon egy ikontémát!"
 
 #: ../panel-plugin/weather-config.c:1049
 #, c-format
@@ -704,241 +578,156 @@ msgid ""
 "\n"
 "<b>License:</b> %s"
 msgstr ""
+"<b>Könyvtár:</b> %s\n"
+"\n"
+"<b>Szerző:</b> %s\n"
+"\n"
+"<b>Leírás:</b> %s\n"
+"\n"
+"<b>Licensz:</b> %s"
 
 #: ../panel-plugin/weather-config.c:1103
-msgid ""
-"A more calendar-like view, with the days in columns and the daytimes "
-"(morning, afternoon, evening, night) in rows."
-msgstr ""
+msgid "A more calendar-like view, with the days in columns and the daytimes (morning, afternoon, evening, night) in rows."
+msgstr "Inkább naptár-szerű nézet; a napok oszlopokba, a napszakok sorokba rendezve."
 
 #: ../panel-plugin/weather-config.c:1107
-msgid ""
-"Shows the forecasts in a table with the daytimes (morning, afternoon, "
-"evening, night) in columns and the days in rows."
-msgstr ""
+msgid "Shows the forecasts in a table with the daytimes (morning, afternoon, evening, night) in columns and the days in rows."
+msgstr "Az előrejelzés megjelenítése táblázatban; a napszakok oszlopokba, a napok sorokba rendezve."
 
 #: ../panel-plugin/weather-config.c:1165
 msgid "_Icon theme:"
-msgstr ""
+msgstr "_Ikon téma:"
 
 #: ../panel-plugin/weather-config.c:1167
-msgid ""
-"Available icon themes are listed here. You can add icon themes to $HOME/."
-"config/xfce4/weather/icons (or the equivalent directory on your system). "
-"Information about how to create or use icon themes can be found in the "
-"README file. New icon themes will be detected everytime you open this config "
-"dialog."
-msgstr ""
+msgid "Available icon themes are listed here. You can add icon themes to $HOME/.config/xfce4/weather/icons (or the equivalent directory on your system). Information about how to create or use icon themes can be found in the README file. New icon themes will be detected everytime you open this config dialog."
+msgstr "Itt láthatók az elérhető ikontémák. Ikontémákat a $HOME/.config/xfce4/weather/icons (vagy az ön rendszerén ennek megfelelő) könyvtárhoz adhat. Az ikontémák készítéséről és felhasználásáról a README fájlban talál információt. Az új ikontémák észlelése minden alkalommal megtörténik, ha megnyitja ezt a párbeszédablakot."
 
 #: ../panel-plugin/weather-config.c:1189
 msgid "_Tooltip style:"
-msgstr ""
+msgstr "Buboréksúgó s_tílus:"
 
 #: ../panel-plugin/weather-config.c:1191
 msgid "Simple"
-msgstr ""
+msgstr "Egyszerű"
 
 #: ../panel-plugin/weather-config.c:1192
 msgid "Verbose"
-msgstr ""
+msgstr "Bővített"
 
 #: ../panel-plugin/weather-config.c:1195
-msgid ""
-"Choose your preferred tooltip style. Some styles give a lot of useful data, "
-"some are clearer but provide less data on a glance."
-msgstr ""
+msgid "Choose your preferred tooltip style. Some styles give a lot of useful data, some are clearer but provide less data on a glance."
+msgstr "Válassza ki a buboréksúgó stílusát. Bizonyos stílusok sok hasznos adattal szolgálnak, mások letisztultabb megjelenésűek, de elsőre kevesebb adatot közölnek."
 
 #: ../panel-plugin/weather-config.c:1207
-#, fuzzy
 msgid "_Forecast layout:"
-msgstr "_Előrejelzés"
+msgstr "_Előrejelzés elrendezés:"
 
 #: ../panel-plugin/weather-config.c:1209
 msgid "Days in columns"
-msgstr ""
+msgstr "Napok oszlopokban"
 
 #: ../panel-plugin/weather-config.c:1210
 msgid "Days in rows"
-msgstr ""
+msgstr "Napok sorokban"
 
 #: ../panel-plugin/weather-config.c:1218
-#, fuzzy
 msgid "_Number of forecast days:"
-msgstr "_Előrejelzett napok száma:"
+msgstr "Előrejelzett _napok száma:"
 
 #: ../panel-plugin/weather-config.c:1223
 #, c-format
-msgid ""
-"Met.no provides forecast data for up to %d days in the future. Choose how "
-"many days will be shown in the forecast tab in the summary window. On slower "
-"computers, a lower number might help against lags when opening the window. "
-"Note however that usually forecasts for more than three days in the future "
-"are unreliable at best ;-)"
-msgstr ""
+msgid "Met.no provides forecast data for up to %d days in the future. Choose how many days will be shown in the forecast tab in the summary window. On slower computers, a lower number might help against lags when opening the window. Note however that usually forecasts for more than three days in the future are unreliable at best ;-)"
+msgstr "A Met.no %d napos előrejelzést biztosít. Válassza ki, hány nap jelenjen meg az előrejelzés lapon az összefoglaló ablakban. Lassabb számítógépeken alacsonyabb értékkel megelőzheti az ablak megnyitásának késlekedését. Ne feledje, hogy több mint három napos előrejelzés a jövőre nézve igencsak megbízhatatlan."
 
 #: ../panel-plugin/weather-config.c:1241
 msgid "_Round values"
-msgstr ""
+msgstr "Ke_rekített értékek"
 
 #: ../panel-plugin/weather-config.c:1243
-msgid ""
-"Check to round values everywhere except on the details page in the summary "
-"window."
-msgstr ""
+msgid "Check to round values everywhere except on the details page in the summary window."
+msgstr "Jelölje be kerekített értékekhez (mindenhol, kivéve a részletek lapot az összefoglaló ablakban)."
 
-#: ../panel-plugin/weather-config.c:1293 ../panel-plugin/weather-config.c:1757
+#: ../panel-plugin/weather-config.c:1293
+#: ../panel-plugin/weather-config.c:1757
 msgid "Select _font"
-msgstr ""
+msgstr "Betűkészlet k_iválasztása"
 
 #: ../panel-plugin/weather-config.c:1310
 msgid "Select font"
-msgstr ""
+msgstr "Betűkészlet kiválasztása"
 
 #. TRANSLATORS: Fallback value, usually never shown.
 #: ../panel-plugin/weather-config.c:1442
-msgid ""
-"Choose the value to add to the list below. Values can be added more than "
-"once."
-msgstr ""
+msgid "Choose the value to add to the list below. Values can be added more than once."
+msgstr "Válassza ki az értéket hogy hozzáadja az alábbi listához. Az értékek többször is hozzáadhatók."
 
 #: ../panel-plugin/weather-config.c:1452
-msgid ""
-"Air temperature, sometimes referred to as dry-bulb temperature. Measured by "
-"a thermometer that is freely exposed to the air, yet shielded from radiation "
-"and moisture."
+msgid "Air temperature, sometimes referred to as dry-bulb temperature. Measured by a thermometer that is freely exposed to the air, yet shielded from radiation and moisture."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:1458
-msgid ""
-"The weight of the air that makes up the atmosphere exerts a pressure on the "
-"surface of the Earth, which is known as atmospheric pressure. To make it "
-"easier to compare the value to other values for locations with different "
-"altitudes, atmospheric pressure is adjusted to the equivalent sea-level "
-"pressure and called barometric pressure. Rising barometric pressures "
-"generally indicate an improvement in weather conditions, while falling "
-"pressures mean deterioration."
+msgid "The weight of the air that makes up the atmosphere exerts a pressure on the surface of the Earth, which is known as atmospheric pressure. To make it easier to compare the value to other values for locations with different altitudes, atmospheric pressure is adjusted to the equivalent sea-level pressure and called barometric pressure. Rising barometric pressures generally indicate an improvement in weather conditions, while falling pressures mean deterioration."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:1469
-msgid ""
-"Nowadays wind speed/velocity is measured using an anemometer (Greek "
-"<i>anemos</i>, meaning <i>wind</i>) in 10 m (33 ft) height. Anemometers "
-"usually measure either wind speed or pressure, but will provide both values "
-"as they are closely related to and can be deduced from each other."
+msgid "Nowadays wind speed/velocity is measured using an anemometer (Greek <i>anemos</i>, meaning <i>wind</i>) in 10 m (33 ft) height. Anemometers usually measure either wind speed or pressure, but will provide both values as they are closely related to and can be deduced from each other."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:1477
-msgid ""
-"Invented by Sir Francis Beaufort in 1805, this empirical scale on wind speed "
-"is based on people's observations of specific land or sea conditions, "
-"denoting these conditions with numbers from 0 (calm) to 12 (hurricane)."
+msgid "Invented by Sir Francis Beaufort in 1805, this empirical scale on wind speed is based on people's observations of specific land or sea conditions, denoting these conditions with numbers from 0 (calm) to 12 (hurricane)."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:1483
-msgid ""
-"This gives the cardinal direction (North, East, South, West) the wind is "
-"coming from."
+msgid "This gives the cardinal direction (North, East, South, West) the wind is coming from."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:1487
-msgid ""
-"This gives the direction the wind is coming from in azimuth degrees (North = "
-"0°, East = 90°, South = 180° and West = 270°)."
+msgid "This gives the direction the wind is coming from in azimuth degrees (North = 0°, East = 90°, South = 180° and West = 270°)."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:1492
-msgid ""
-"Humidity is defined as the amount of water vapor in the air and increases "
-"the possibility of precipitations, fog and dew. While absolute humidity is "
-"the water content of air, relative humidity gives (in %) the current "
-"absolute humidity relative to the maximum for that air temperature and "
-"pressure."
+msgid "Humidity is defined as the amount of water vapor in the air and increases the possibility of precipitations, fog and dew. While absolute humidity is the water content of air, relative humidity gives (in %) the current absolute humidity relative to the maximum for that air temperature and pressure."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:1500
 msgid ""
-"This is the temperature to which air must be cooled to reach 100% relative "
-"humidity, given no change in water content. Reaching the dew point halts the "
-"cooling process, as condensation occurs which releases heat into the air. A "
-"high dew point increases the possibility of rain and severe thunderstorms. "
-"The dew point allows the prediction of dew, frost, fog and minimum overnight "
-"temperature, and has influence on the comfort level one experiences.\n"
+"This is the temperature to which air must be cooled to reach 100% relative humidity, given no change in water content. Reaching the dew point halts the cooling process, as condensation occurs which releases heat into the air. A high dew point increases the possibility of rain and severe thunderstorms. The dew point allows the prediction of dew, frost, fog and minimum overnight temperature, and has influence on the comfort level one experiences.\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:1512
 msgid ""
-"Also known as <i>felt temperature</i>, <i>effective temperature</i>, or what "
-"some weather providers declare as <i>feels like</i>. Human temperature "
-"sensation is not only based on air temperature, but also on heat flow, "
-"physical activity and individual condition. While being a highly subjective "
-"value, apparent temperature can actually be useful for warning about extreme "
-"conditions (cold, heat).\n"
+"Also known as <i>felt temperature</i>, <i>effective temperature</i>, or what some weather providers declare as <i>feels like</i>. Human temperature sensation is not only based on air temperature, but also on heat flow, physical activity and individual condition. While being a highly subjective value, apparent temperature can actually be useful for warning about extreme conditions (cold, heat).\n"
 "\n"
-"<b>Note:</b> This is a calculated value not provided by met.no. You should "
-"use a calculation model appropriate for your local climate and personal "
-"preferences on the units page."
+"<b>Note:</b> This is a calculated value not provided by met.no. You should use a calculation model appropriate for your local climate and personal preferences on the units page."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:1526
-msgid ""
-"This gives the low-level cloud cover in percent. According to WMO "
-"definition, low-level clouds can be found at altitudes below 4,000 m (13,000 "
-"ft), or 5,000 m (16,000 ft) at the equator, though their basis often lie "
-"below 2,000 m (6,500 ft). They are mainly composed of water droplets or ice "
-"particles and snow, when temperatures are cold enough."
+msgid "This gives the low-level cloud cover in percent. According to WMO definition, low-level clouds can be found at altitudes below 4,000 m (13,000 ft), or 5,000 m (16,000 ft) at the equator, though their basis often lie below 2,000 m (6,500 ft). They are mainly composed of water droplets or ice particles and snow, when temperatures are cold enough."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:1534
-msgid ""
-"This specifies the mid-level cloud cover in percent. According to WMO "
-"definition, mid-level clouds form in heights of 4,000-8,000 m (13,000-26,000 "
-"ft), or 5,000-10,000 m (16,000-33,000 ft) at the equator. Like their low-"
-"level cousins, they are principally composed of water droplets. When "
-"temperatures get low enough, ice particles can replace the droplets."
+msgid "This specifies the mid-level cloud cover in percent. According to WMO definition, mid-level clouds form in heights of 4,000-8,000 m (13,000-26,000 ft), or 5,000-10,000 m (16,000-33,000 ft) at the equator. Like their low-level cousins, they are principally composed of water droplets. When temperatures get low enough, ice particles can replace the droplets."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:1543
-msgid ""
-"This reports the high-level cloud cover in percent. According to WMO "
-"definition, high-level clouds can be found in altitudes of 8,000 to 15,000 m "
-"(26,000 to 49,000 ft), or 10,000 m-18,000 m (33,000-59,000 ft) at the "
-"equator, where temperatures are so low that they are mainly composed of ice "
-"crystals. While typically thin and white in appearance, they can be seen in "
-"a magnificent array of colors when the sun is low on the horizon."
+msgid "This reports the high-level cloud cover in percent. According to WMO definition, high-level clouds can be found in altitudes of 8,000 to 15,000 m (26,000 to 49,000 ft), or 10,000 m-18,000 m (33,000-59,000 ft) at the equator, where temperatures are so low that they are mainly composed of ice crystals. While typically thin and white in appearance, they can be seen in a magnificent array of colors when the sun is low on the horizon."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:1553
-msgid ""
-"Cloudiness, or cloud cover, defines the fraction of the sky obscured by "
-"clouds when observed from a given location. Clouds are both carriers of "
-"precipitation and regulator to the amount of solar radiation that reaches "
-"the surface. While during daytime they reduce the temperature, at night they "
-"have the opposite effect, as water vapor prevents long-wave radiation from "
-"escaping into space. Apart from that, clouds reflect light to space and in "
-"that way contribute to the cooling of the planet."
+msgid "Cloudiness, or cloud cover, defines the fraction of the sky obscured by clouds when observed from a given location. Clouds are both carriers of precipitation and regulator to the amount of solar radiation that reaches the surface. While during daytime they reduce the temperature, at night they have the opposite effect, as water vapor prevents long-wave radiation from escaping into space. Apart from that, clouds reflect light to space and in that way contribute to the cooling of the planet."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:1565
-msgid ""
-"Fog is a type of low-lying stratus cloud, with the moisture in it often "
-"generated locally such as from a nearby lake, river, ocean, or simply moist "
-"ground, that forms when the difference between temperature and dew point is "
-"below 2.5 °C (4 °F), usually at a relative humidity of 100%. Fog commonly "
-"produces precipitations in the form of drizzle or very light snow and "
-"reduces visibility to less than 1 km (5/8 statute mile)."
+msgid "Fog is a type of low-lying stratus cloud, with the moisture in it often generated locally such as from a nearby lake, river, ocean, or simply moist ground, that forms when the difference between temperature and dew point is below 2.5 °C (4 °F), usually at a relative humidity of 100%. Fog commonly produces precipitations in the form of drizzle or very light snow and reduces visibility to less than 1 km (5/8 statute mile)."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:1576
 msgid ""
-"The amount of rain, drizzle, sleet, hail, snow, graupel and other forms of "
-"water falling from the sky over a specific period.\n"
+"The amount of rain, drizzle, sleet, hail, snow, graupel and other forms of water falling from the sky over a specific period.\n"
 "\n"
-"The values reported by met.no are those of precipitations in the liquid "
-"state - or in other words: of rain -, so if snow is expected (but not "
-"sleet), then the amount of snow will be <i>guessed</i> by multiplying the "
-"original value by a ratio dependent on the air temperature:\n"
+"The values reported by met.no are those of precipitations in the liquid state - or in other words: of rain -, so if snow is expected (but not sleet), then the amount of snow will be <i>guessed</i> by multiplying the original value by a ratio dependent on the air temperature:\n"
 "\n"
 "<tt><small>                   T &lt; -11.1 °C (12 °F) =&gt; 1:12\n"
 "-11.1 °C (12 °F) &lt; T &lt;  -4.4 °C (24 °F) =&gt; 1:10\n"
@@ -946,138 +735,106 @@ msgid ""
 " -2.2 °C (28 °F) &lt; T &lt;  -0.6 °C (31 °F) =&gt; 1:5\n"
 " -0.6 °C (31 °F) &lt; T                    =&gt; 1:3\n"
 "\n"
-"</small></tt>Example: If temperature is -5 °C (12 °F), then snow density "
-"will be low and a rain to snow ratio of 1:10 will be used for calculation. "
-"Assuming the reported value is 5 mm, then the calculated amount of snow "
-"precipitation is 50 mm.\n"
+"</small></tt>Example: If temperature is -5 °C (12 °F), then snow density will be low and a rain to snow ratio of 1:10 will be used for calculation. Assuming the reported value is 5 mm, then the calculated amount of snow precipitation is 50 mm.\n"
 "\n"
-"<b>Note</b>: While air temperature is an important factor in this "
-"calculation, there are other influencing factors that the plugin doesn't "
-"know about like the type of snow and ground temperature. Because of that, "
-"these rules will only lead to rough estimates and may not represent the real "
-"amount of snow."
+"<b>Note</b>: While air temperature is an important factor in this calculation, there are other influencing factors that the plugin doesn't know about like the type of snow and ground temperature. Because of that, these rules will only lead to rough estimates and may not represent the real amount of snow."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:1727
 msgid "Show scroll_box"
-msgstr ""
+msgstr "Gö_rgetődoboz megjelenítése"
 
 #: ../panel-plugin/weather-config.c:1729
-msgid ""
-"Hide the scrollbox to save valuable space on the panel. Most interesting "
-"information is also provided in the tooltip - provided you choose an "
-"appropriate tooltip style - that is shown when hovering over the icon."
-msgstr ""
+msgid "Hide the scrollbox to save valuable space on the panel. Most interesting information is also provided in the tooltip - provided you choose an appropriate tooltip style - that is shown when hovering over the icon."
+msgstr "Rejtse el a görgetődobozt, hogy helyet spóroljon a panelen. A legérdekesebb információkat a buboréksúgó is biztosítja – feltéve, hogy egy megfelelő stílust választ –, mely az ikonra történő rámutatáskor megjelenik."
 
 #. values to show at once (multiple lines)
 #: ../panel-plugin/weather-config.c:1740
 msgid "Li_nes:"
-msgstr ""
+msgstr "S_orok:"
 
 #: ../panel-plugin/weather-config.c:1746
-msgid ""
-"Decide how many values should be shown at once in the scrollbox. You can "
-"choose a smaller font or enlarge the panel to make more lines fit."
-msgstr ""
+msgid "Decide how many values should be shown at once in the scrollbox. You can choose a smaller font or enlarge the panel to make more lines fit."
+msgstr "Válassza ki hány értéket mutasson egyszerre a görgetődoboz. Beállíthat kisebb betűméretet vagy növelheti a panel méretét, hogy több sor férjen el."
 
 #: ../panel-plugin/weather-config.c:1753
 msgid "Font and color:"
-msgstr ""
+msgstr "Betűkészlet és szín:"
 
 #: ../panel-plugin/weather-config.c:1759
-msgid ""
-"Choose a font you like and set it to a smaller or larger size. Middle-click "
-"on the button to unset the font and use your theme's default."
-msgstr ""
+msgid "Choose a font you like and set it to a smaller or larger size. Middle-click on the button to unset the font and use your theme's default."
+msgstr "Válasszon ki egy betűcsaládot és állítsa kisebb vagy nagyobb méretűre. A középső kattintás visszavonja a beállítást és a téma alapértelmezettjét használja."
 
 #: ../panel-plugin/weather-config.c:1771
-msgid ""
-"There may be problems with some themes that cause the scrollbox text to be "
-"hardly readable. If this is the case or you simply want it to appear in "
-"another color, then you can change it using this button. Middle-click on the "
-"button to unset the scrollbox text color."
-msgstr ""
+msgid "There may be problems with some themes that cause the scrollbox text to be hardly readable. If this is the case or you simply want it to appear in another color, then you can change it using this button. Middle-click on the button to unset the scrollbox text color."
+msgstr "Egyes témákkal problémák lehetnek, nehezen olvashatóvá válhat a görgetődoboz szövege. Ebben az esetben, vagy ha egyszerűen csak más színben szeretné megjeleníteni azt, ezzel a gombbal megváltoztathatja. A középső kattintás visszavonja a görgetődoboz szövegének színbeállítását."
 
 #: ../panel-plugin/weather-config.c:1795
-#, fuzzy
 msgid "Labels to d_isplay"
 msgstr "Megjelenítendő _címkék"
 
 #: ../panel-plugin/weather-config.c:1798
-msgid ""
-"These are the values that will be shown in the scrollbox. Select a single "
-"value here and click the appropriate button to remove it or move it up and "
-"down in the list."
-msgstr ""
+msgid "These are the values that will be shown in the scrollbox. Select a single value here and click the appropriate button to remove it or move it up and down in the list."
+msgstr "Ezeket az értékeket jeleníti meg a görgetődoboz. Válasszon ki egy értéket és a megfelelő gomb használatával távolítsa el, vagy mozgassa a listában."
 
 #. button "add"
 #: ../panel-plugin/weather-config.c:1805
 msgid "A_dd"
-msgstr ""
+msgstr "Hozzáa_dás"
 
 #: ../panel-plugin/weather-config.c:1808
-msgid ""
-"Add the selected value to the labels that should be displayed in the "
-"scrollbox."
-msgstr ""
+msgid "Add the selected value to the labels that should be displayed in the scrollbox."
+msgstr "A kiválasztott érték hozzáadása a görgetődobozban megjelenítendő címkék listájához."
 
 #: ../panel-plugin/weather-config.c:1823
 msgid "_Remove"
 msgstr "_Eltávolítás"
 
 #: ../panel-plugin/weather-config.c:1826
-msgid ""
-"Select a value in the list of labels to display and click this button to "
-"remove it."
-msgstr ""
+msgid "Select a value in the list of labels to display and click this button to remove it."
+msgstr "Válasszon egy értéket a megjelenítendő címkék listájából és kattintson erre a gombra az eltávolításhoz."
 
 #. button "move up"
 #: ../panel-plugin/weather-config.c:1831
-#, fuzzy
 msgid "Move u_p"
 msgstr "_Felfelé"
 
 #: ../panel-plugin/weather-config.c:1834
 msgid "Move the selected value up in the list of labels to display."
-msgstr ""
+msgstr "A kiválasztott érték felfelé mozgatása a megjelenítendő címkék listájában."
 
 #. button "move down"
 #: ../panel-plugin/weather-config.c:1839
-#, fuzzy
 msgid "Move do_wn"
 msgstr "_Lefelé"
 
 #: ../panel-plugin/weather-config.c:1842
 msgid "Move the selected value down in the list of labels to display."
-msgstr ""
+msgstr "A kiválasztott érték lefelé mozgatása a megjelenítendő címkék listájában."
 
 #: ../panel-plugin/weather-config.c:1859
 msgid "Animate _transitions between labels"
 msgstr "Átmenetek _animálása címkék közt"
 
 #: ../panel-plugin/weather-config.c:1864
-msgid ""
-"Scroll the current displayed value(s) out and the new value(s) in instead of "
-"simply changing them. Uncheck this option if you find the animation too "
-"distracting."
-msgstr ""
+msgid "Scroll the current displayed value(s) out and the new value(s) in instead of simply changing them. Uncheck this option if you find the animation too distracting."
+msgstr "A megjelenített értékek görgetése egyszerű cseréjük helyett. Törölje a jelölést ha zavarónak találja az animációt."
 
 #: ../panel-plugin/weather-config.c:2000
-#, fuzzy
 msgid "_Location"
-msgstr "_Hely:"
+msgstr "_Hely"
 
 #: ../panel-plugin/weather-config.c:2003
 msgid "_Units"
-msgstr ""
+msgstr "Mérté_kegységek"
 
 #: ../panel-plugin/weather-config.c:2006
 msgid "_Appearance"
-msgstr ""
+msgstr "_Megjelenés"
 
 #: ../panel-plugin/weather-config.c:2009
 msgid "_Scrollbox"
-msgstr ""
+msgstr "_Görgetődoboz"
 
 #: ../panel-plugin/weather-data.c:431
 msgid "ft"
@@ -1101,7 +858,7 @@ msgstr "hPa"
 
 #: ../panel-plugin/weather-data.c:441
 msgid "inHg"
-msgstr ""
+msgstr "inHg"
 
 #: ../panel-plugin/weather-data.c:443
 msgid "psi"
@@ -1109,7 +866,7 @@ msgstr "font/négyzethüvelyk"
 
 #: ../panel-plugin/weather-data.c:445
 msgid "mmHg"
-msgstr ""
+msgstr "Hgmm"
 
 #: ../panel-plugin/weather-data.c:450
 msgid "km/h"
@@ -1121,28 +878,27 @@ msgstr "mph"
 
 #: ../panel-plugin/weather-data.c:454
 msgid "m/s"
-msgstr ""
+msgstr "m/s"
 
 #: ../panel-plugin/weather-data.c:456
 msgid "ft/s"
-msgstr ""
+msgstr "ft/s"
 
 #: ../panel-plugin/weather-data.c:458
 msgid "kt"
-msgstr ""
+msgstr "kt"
 
 #. TRANSLATORS: The degree sign is used like a unit for
 #. latitude, longitude, wind direction
 #: ../panel-plugin/weather-data.c:465
-#, fuzzy
 msgid "°"
-msgstr "°F"
+msgstr "°"
 
 #. TRANSLATORS: Percentage sign is used like a unit for
 #. clouds, fog, humidity
 #: ../panel-plugin/weather-data.c:474
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: ../panel-plugin/weather-data.c:476
 msgid "in"
@@ -1154,74 +910,83 @@ msgstr "mm"
 
 #: ../panel-plugin/weather-data.c:540
 msgid "North"
-msgstr ""
+msgstr "Észak"
 
-#: ../panel-plugin/weather-data.c:540 ../panel-plugin/weather-translate.c:44
+#: ../panel-plugin/weather-data.c:540
+#: ../panel-plugin/weather-translate.c:44
 msgid "N"
 msgstr "É"
 
 #: ../panel-plugin/weather-data.c:543
 msgid "North-East"
-msgstr ""
+msgstr "Észak-Kelet"
 
-#: ../panel-plugin/weather-data.c:543 ../panel-plugin/weather-translate.c:46
+#: ../panel-plugin/weather-data.c:543
+#: ../panel-plugin/weather-translate.c:46
 msgid "NE"
 msgstr "ÉK"
 
 #: ../panel-plugin/weather-data.c:546
 msgid "East"
-msgstr ""
+msgstr "Kelet"
 
-#: ../panel-plugin/weather-data.c:546 ../panel-plugin/weather-translate.c:48
+#: ../panel-plugin/weather-data.c:546
+#: ../panel-plugin/weather-translate.c:48
 msgid "E"
 msgstr "K"
 
 #: ../panel-plugin/weather-data.c:549
 msgid "South-East"
-msgstr ""
+msgstr "Dél-Kelet"
 
-#: ../panel-plugin/weather-data.c:549 ../panel-plugin/weather-translate.c:50
+#: ../panel-plugin/weather-data.c:549
+#: ../panel-plugin/weather-translate.c:50
 msgid "SE"
 msgstr "DK"
 
 #: ../panel-plugin/weather-data.c:552
 msgid "South"
-msgstr ""
+msgstr "Dél"
 
 #. TRANSLATORS: Wind directions. It's where the wind comes _from_.
-#: ../panel-plugin/weather-data.c:552 ../panel-plugin/weather-translate.c:36
+#: ../panel-plugin/weather-data.c:552
+#: ../panel-plugin/weather-translate.c:36
 msgid "S"
 msgstr "D"
 
 #: ../panel-plugin/weather-data.c:555
 msgid "South-West"
-msgstr ""
+msgstr "Dél-Nyugat"
 
-#: ../panel-plugin/weather-data.c:555 ../panel-plugin/weather-translate.c:38
+#: ../panel-plugin/weather-data.c:555
+#: ../panel-plugin/weather-translate.c:38
 msgid "SW"
 msgstr "DNy"
 
 #: ../panel-plugin/weather-data.c:558
 msgid "West"
-msgstr ""
+msgstr "Nyugat"
 
-#: ../panel-plugin/weather-data.c:558 ../panel-plugin/weather-translate.c:40
+#: ../panel-plugin/weather-data.c:558
+#: ../panel-plugin/weather-translate.c:40
 msgid "W"
 msgstr "Ny"
 
 #: ../panel-plugin/weather-data.c:561
 msgid "North-West"
-msgstr ""
+msgstr "Észak-Nyugat"
 
-#: ../panel-plugin/weather-data.c:561 ../panel-plugin/weather-translate.c:42
+#: ../panel-plugin/weather-data.c:561
+#: ../panel-plugin/weather-translate.c:42
 msgid "NW"
 msgstr "ÉNy"
 
 #: ../panel-plugin/weather-icon.c:134
 msgid "No icon theme!"
-msgstr ""
+msgstr "Nincs ikontéma!"
 
-#: ../panel-plugin/weather-search.c:128 ../panel-plugin/weather-search.c:252
+#: ../panel-plugin/weather-search.c:128
+#: ../panel-plugin/weather-search.c:252
 msgid "Results"
 msgstr "Eredmények"
 
@@ -1262,11 +1027,9 @@ msgstr "Névtelen hely"
 #. * its numeric value.
 #.
 #: ../panel-plugin/weather-summary.c:70
-#, fuzzy, c-format
+#, c-format
 msgid "\t%s%s%s%s%s\n"
-msgstr ""
-"\tNapnyugta:\t\t%s\n"
-"\n"
+msgstr "\t%s%s%s%s%s\n"
 
 #. TRANSLATORS: DO NOT TRANSLATE THIS STRING. This string is
 #. not visible to the user but controls the alignment of the
@@ -1287,11 +1050,11 @@ msgstr ""
 #: ../panel-plugin/weather-summary.c:279
 #, c-format
 msgid "Error downloading met.no logo image to %s, reason: %s\n"
-msgstr ""
+msgstr "Hiba a met.no logo ide %s történő letöltése közben, oka: %s\n"
 
 #: ../panel-plugin/weather-summary.c:281
 msgid "unknown"
-msgstr ""
+msgstr "ismeretlen"
 
 #: ../panel-plugin/weather-summary.c:360
 msgid "Coordinates\n"
@@ -1316,6 +1079,8 @@ msgid ""
 "\n"
 "Downloads\n"
 msgstr ""
+"\n"
+"Letöltések\n"
 
 #: ../panel-plugin/weather-summary.c:370
 #, c-format
@@ -1326,6 +1091,11 @@ msgid ""
 "\tCurrent failed attempts: %d\n"
 "\n"
 msgstr ""
+"\tIdőjárási adatok:\n"
+"\tUtolsó:\t\t%s\n"
+"\tKövetkező:\t%s\n"
+"\tJelenlegi sikertelen próbálkozások: %d\n"
+"\n"
 
 #: ../panel-plugin/weather-summary.c:383
 #, c-format
@@ -1335,6 +1105,10 @@ msgid ""
 "\tNext:\t%s\n"
 "\tCurrent failed attempts: %d\n"
 msgstr ""
+"\tCsillagászati adatok:\n"
+"\tUtolsó:\t\t%s\n"
+"\tKövetkező:\t%s\n"
+"\tJelenlegi sikertelen próbálkozások: %d\n"
 
 #. calculation times
 #: ../panel-plugin/weather-summary.c:395
@@ -1342,18 +1116,20 @@ msgid ""
 "\n"
 "Times Used for Calculations\n"
 msgstr ""
+"\n"
+"A számításokhoz használt időpontok\n"
 
 #: ../panel-plugin/weather-summary.c:398
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\tTemperatures, wind, atmosphere and cloud data calculated\n"
 "\tfor:\t\t%s\n"
 msgstr ""
 "\tA hőmérséklet, szél, légköri és felhőzeti adatok erre érvényesek:\n"
-"\t%s\n"
+"\t\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:407
-#, fuzzy, c-format
+#, c-format
 msgid ""
 "\n"
 "\tPrecipitation and the weather symbol have been calculated\n"
@@ -1363,7 +1139,7 @@ msgid ""
 msgstr ""
 "\n"
 "\tA csapadék és az időjárás szimbóluma a következő időszakra vonatkozik:\n"
-"\tKezdet:\t%s\n"
+"\tKezdet:\t\t%s\n"
 "\tBefejezés:\t%s\n"
 
 #. sun and moon
@@ -1377,16 +1153,16 @@ msgstr ""
 
 #: ../panel-plugin/weather-summary.c:421
 msgid "\tSunrise:\t\tThe sun never rises today.\n"
-msgstr "\tNapkelte:\t\tMa a Nap nem kel fel.\n"
+msgstr "\tNapkelte:\tMa a Nap nem kel fel.\n"
 
 #: ../panel-plugin/weather-summary.c:424
 msgid "\tSunset:\t\tThe sun never sets today.\n"
-msgstr "\tNapnyugta:\t\tMa a Nap nem nyugszik le.\n"
+msgstr "\tNapnyugta:\tMa a Nap nem nyugszik le.\n"
 
 #: ../panel-plugin/weather-summary.c:428
 #, c-format
 msgid "\tSunrise:\t\t%s\n"
-msgstr "\tNapkelte:\t\t%s\n"
+msgstr "\tNapkelte:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:433
 #, c-format
@@ -1394,7 +1170,7 @@ msgid ""
 "\tSunset:\t\t%s\n"
 "\n"
 msgstr ""
-"\tNapnyugta:\t\t%s\n"
+"\tNapnyugta:\t%s\n"
 "\n"
 
 #: ../panel-plugin/weather-summary.c:439
@@ -1426,18 +1202,16 @@ msgstr "\tHoldnyugta:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:466
 msgid "\tData not available, will use sane default values for night and day.\n"
-msgstr ""
-"\tNem érhetők el adatok, ésszerű értékek lesznek alkalmazva éjjel, nappal.\n"
+msgstr "\tNem érhetők el adatok, ésszerű értékek lesznek alkalmazva éjjel, nappal.\n"
 
 #. temperatures
 #: ../panel-plugin/weather-summary.c:472
-#, fuzzy
 msgid ""
 "\n"
 "Temperatures\n"
 msgstr ""
 "\n"
-"Hőmérséklet\n"
+"Hőmérsékletek\n"
 
 #: ../panel-plugin/weather-summary.c:473
 msgid "Temperature"
@@ -1445,12 +1219,11 @@ msgstr "Hőmérséklet"
 
 #: ../panel-plugin/weather-summary.c:474
 msgid "Dew point"
-msgstr ""
+msgstr "Harmatpont"
 
 #: ../panel-plugin/weather-summary.c:475
-#, fuzzy
 msgid "Apparent temperature"
-msgstr "Hőmérséklet"
+msgstr "Hőérzet"
 
 #. wind
 #: ../panel-plugin/weather-summary.c:478
@@ -1462,15 +1235,15 @@ msgstr ""
 "Szél\n"
 
 #: ../panel-plugin/weather-summary.c:483
-#, fuzzy, c-format
+#, c-format
 msgid "\tSpeed: %s %s (%s on the Beaufort scale)\n"
-msgstr "\t%s: %s (%s a Beaufort skálán)\n"
+msgstr "\tSebesség: %s %s (%s a Beaufort skálán)\n"
 
 #. wind direction
 #: ../panel-plugin/weather-summary.c:498
 #, c-format
 msgid "\tDirection: %s (%s%s)\n"
-msgstr ""
+msgstr "\tIrány: %s (%s%s)\n"
 
 #. precipitation
 #: ../panel-plugin/weather-summary.c:506
@@ -1496,11 +1269,11 @@ msgstr ""
 
 #: ../panel-plugin/weather-summary.c:511
 msgid "Barometric pressure"
-msgstr ""
+msgstr "Légnyomás"
 
 #: ../panel-plugin/weather-summary.c:512
 msgid "Relative humidity"
-msgstr ""
+msgstr "Relatív páratartalom"
 
 #. clouds
 #: ../panel-plugin/weather-summary.c:515
@@ -1521,7 +1294,6 @@ msgid "Low clouds"
 msgstr "Alacsony szintű felhők"
 
 #: ../panel-plugin/weather-summary.c:518
-#, fuzzy
 msgid "Middle clouds"
 msgstr "Közepes szintű felhők"
 
@@ -1538,16 +1310,20 @@ msgid ""
 "\n"
 "Credits\n"
 msgstr ""
+"\n"
+"Köszönet\n"
 
 #: ../panel-plugin/weather-summary.c:534
 msgid ""
 "\tEncyclopedic information partly taken from\n"
 "\t\t"
 msgstr ""
+"\tA lexikális információk részben innen származnak:\n"
+"\t\t"
 
 #: ../panel-plugin/weather-summary.c:535
 msgid "Wikipedia"
-msgstr ""
+msgstr "Wikipedia"
 
 #: ../panel-plugin/weather-summary.c:536
 msgid ""
@@ -1555,10 +1331,13 @@ msgid ""
 "\tElevation and timezone data provided by\n"
 "\t\t"
 msgstr ""
+"\n"
+"\tA magassági és időzóna adatokat biztosítja:\n"
+"\t\t"
 
 #: ../panel-plugin/weather-summary.c:537
 msgid "GeoNames"
-msgstr ""
+msgstr "GeoNames"
 
 #: ../panel-plugin/weather-summary.c:539
 msgid ""
@@ -1566,13 +1345,13 @@ msgid ""
 "\tWeather and astronomical data from\n"
 "\t\t"
 msgstr ""
+"\n"
+"\tAz időjárási és csillagászati adatok innen származnak:\n"
+"\t\t"
 
 #: ../panel-plugin/weather-summary.c:540
-#, fuzzy
 msgid "The Norwegian Meteorological Institute"
-msgstr ""
-"\n"
-"Adatok a Norvég Meteorológiai Intézettől\n"
+msgstr "Norvég Meteorológiai Intézet"
 
 #: ../panel-plugin/weather-summary.c:592
 #, c-format
@@ -1591,17 +1370,17 @@ msgstr "Holnap"
 #.
 #: ../panel-plugin/weather-summary.c:614
 msgid "<b>Times used for calculations</b>\n"
-msgstr ""
+msgstr "<b>A számításokhoz használt időpontok</b>\n"
 
 #: ../panel-plugin/weather-summary.c:616
 #, c-format
 msgid "<tt><small>Interval start:       %s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Intervallum kezdete:  %s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:622
 #, c-format
 msgid "<tt><small>Interval end:         %s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Intervallum vége:  %s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:628
 #, c-format
@@ -1609,18 +1388,17 @@ msgid ""
 "<tt><small>Data calculated for:  %s</small></tt>\n"
 "\n"
 msgstr ""
+"<tt><small>Az adatok erre vonatkoznak:  %s</small></tt>\n"
+"\n"
 
 #: ../panel-plugin/weather-summary.c:634
-#, fuzzy
 msgid "<b>Temperatures</b>\n"
-msgstr ""
-"\n"
-"Hőmérséklet\n"
+msgstr "<b>Hőmérsékletek</b>\n"
 
 #: ../panel-plugin/weather-summary.c:635
 #, c-format
 msgid "<tt><small>Dew point:            %s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Harmatpont: %s%s%s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:639
 #, c-format
@@ -1628,18 +1406,17 @@ msgid ""
 "<tt><small>Apparent temperature: %s%s%s</small></tt>\n"
 "\n"
 msgstr ""
+"<tt><small>Hőérzet: %s%s%s</small></tt>\n"
+"\n"
 
 #: ../panel-plugin/weather-summary.c:644
-#, fuzzy
 msgid "<b>Atmosphere</b>\n"
-msgstr ""
-"\n"
-"Légnyomás\n"
+msgstr "<b>Légnyomás</b>\n"
 
 #: ../panel-plugin/weather-summary.c:645
 #, c-format
 msgid "<tt><small>Barometric pressure:  %s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Légnyomás: %s%s%s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:649
 #, c-format
@@ -1647,13 +1424,12 @@ msgid ""
 "<tt><small>Relative humidity:    %s%s%s</small></tt>\n"
 "\n"
 msgstr ""
+"<tt><small>Relatív páratartalom: %s%s%s</small></tt>\n"
+"\n"
 
 #: ../panel-plugin/weather-summary.c:654
-#, fuzzy
 msgid "<b>Precipitations</b>\n"
-msgstr ""
-"\n"
-"Csapadék\n"
+msgstr "<b>Csapadék</b>\n"
 
 #: ../panel-plugin/weather-summary.c:655
 #, c-format
@@ -1661,13 +1437,12 @@ msgid ""
 "<tt><small>Amount:        %s%s%s</small></tt>\n"
 "\n"
 msgstr ""
+"<tt><small>Mennyiség: %s%s%s</small></tt>\n"
+"\n"
 
 #: ../panel-plugin/weather-summary.c:660
-#, fuzzy
 msgid "<b>Clouds</b>\n"
-msgstr ""
-"\n"
-"Felhők\n"
+msgstr "<b>Felhők</b>\n"
 
 #. TRANSLATORS: Clouds percentages are aligned to the right in the
 #. tooltip, the %5s are needed for that and are used both for
@@ -1675,27 +1450,27 @@ msgstr ""
 #: ../panel-plugin/weather-summary.c:664
 #, c-format
 msgid "<tt><small>Fog:           %5s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Köd: %5s%s%s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:667
 #, c-format
 msgid "<tt><small>Low clouds:    %5s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Alacsony szintű felhők: %5s%s%s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:670
-#, fuzzy, c-format
+#, c-format
 msgid "<tt><small>Middle clouds: %5s%s%s</small></tt>\n"
-msgstr "Közepes szintű felhők"
+msgstr "<tt><small>Közepes szintű felhők: %5s%s%s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:673
 #, c-format
 msgid "<tt><small>High clouds:   %5s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Magas szintű felhők: %5s%s%s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:676
 #, c-format
 msgid "<tt><small>Cloudiness:    %5s%s%s</small></tt>"
-msgstr ""
+msgstr "<tt><small>Felhőzet: %5s%s%s</small></tt>"
 
 #. daytime headers
 #: ../panel-plugin/weather-summary.c:842
@@ -1715,9 +1490,8 @@ msgid "Night"
 msgstr "Éjszaka"
 
 #: ../panel-plugin/weather-summary.c:1034
-#, fuzzy
 msgid "Weather Report"
-msgstr "Időjárás-jelentés a következőhöz: %s"
+msgstr "Időjárás-jelentés"
 
 #: ../panel-plugin/weather-summary.c:1061
 msgid "Please set a location in the plugin settings."
