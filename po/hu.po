@@ -1,7 +1,7 @@
 # Hungarian translation of xfce4-weather-plugin
 # Copyright 2006, 2009. Free Software Foundation, Inc.
 # This file is distributed under the same license as the xfce4-weather-plugin package.
-#
+# 
 # SZERVÁC Attila <sas@321.hu>, 2007.
 # Gabor Kelemen <kelemeng at gnome dot hu>, 2006, 2009, 2012.
 # Benedek Imre <nucleo at indamail.hu>, 2013.
@@ -13,13 +13,13 @@ msgstr ""
 "PO-Revision-Date: 2013-03-13 01:37+0100\n"
 "Last-Translator: Imre Benedek <nucleo@indamail.hu>\n"
 "Language-Team: Hungarian <kde-l10n-hu@kde.org>\n"
-"Language: hu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Launchpad-Export-Date: 2009-07-23 16:44+0000\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Language: hu\n"
 "X-Generator: Lokalize 1.4\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. TRANSLATORS: Keep in sync with labeloptions in weather-config.c
 #: ../panel-plugin/weather.c:116
@@ -38,8 +38,7 @@ msgstr "SzS"
 msgid "WB"
 msgstr "SzB"
 
-#: ../panel-plugin/weather.c:128
-#: ../panel-plugin/weather.c:131
+#: ../panel-plugin/weather.c:128 ../panel-plugin/weather.c:131
 msgid "WD"
 msgstr "SzI"
 
@@ -79,8 +78,7 @@ msgstr "Kd"
 msgid "R"
 msgstr "Cs"
 
-#: ../panel-plugin/weather.c:357
-#: ../panel-plugin/weather.c:359
+#: ../panel-plugin/weather.c:357 ../panel-plugin/weather.c:359
 msgid "No Data"
 msgstr "Nincs adat"
 
@@ -111,26 +109,23 @@ msgid "Download of weather data failed with HTTP Status Code %d, Reason phrase: 
 msgstr "Az időjárási adatok letöltése meghiúsult. HTTP állapotkód: %d, oka: %s"
 
 #. start receive thread
-#: ../panel-plugin/weather.c:606
-#: ../panel-plugin/weather.c:624
-#: ../panel-plugin/weather-search.c:169
-#: ../panel-plugin/weather-search.c:435
+#: ../panel-plugin/weather.c:606 ../panel-plugin/weather.c:624
+#: ../panel-plugin/weather-search.c:169 ../panel-plugin/weather-search.c:435
 #, c-format
 msgid "getting %s"
-msgstr "kérés %s"
+msgstr "%s lekérése"
 
 #: ../panel-plugin/weather.c:1085
 #, c-format
 msgid "Error writing cache file %s!"
-msgstr "Hiba a gyorsítótárfájl írásakor %s!"
+msgstr "Hiba a gyorsítótárfájl (%s) írásakor!"
 
 #: ../panel-plugin/weather.c:1448
 #, c-format
 msgid "Unable to open the following url: %s"
 msgstr "A következő URL megnyitása meghiúsult: %s"
 
-#: ../panel-plugin/weather.c:1479
-#: ../panel-plugin/weather.desktop.in.h:1
+#: ../panel-plugin/weather.c:1479 ../panel-plugin/weather.desktop.in.h:1
 msgid "Weather Update"
 msgstr "Időjárási adatok frissítése"
 
@@ -151,10 +146,9 @@ msgstr "Ma a Nap nem nyugszik le."
 msgid "The sun rises at %s and sets at %s."
 msgstr "Napkelte időpontja: %s, napnyugta időpontja: %s."
 
-#.
 #. * TRANSLATORS: This is the simple tooltip. For a bigger challenge,
 #. * look at the verbose tooltip style further below ;-)
-#.
+#. 
 #: ../panel-plugin/weather.c:1563
 #, c-format
 msgid ""
@@ -174,7 +168,6 @@ msgstr ""
 "<b>Légnyomás:</b> %s\n"
 "<b>Páratartalom:</b> %s\n"
 
-#.
 #. * TRANSLATORS: Re-arrange and align at will, optionally using
 #. * abbreviations for labels if desired or necessary. Just take
 #. * into account the possible size constraints, the centered
@@ -182,7 +175,7 @@ msgstr ""
 #. * be changed easily - and try to make it compact and look
 #. * good! The missing space after "%son the ..." is intentional,
 #. * it is included in the %s.
-#.
+#. 
 #: ../panel-plugin/weather.c:1587
 #, c-format
 msgid ""
@@ -224,7 +217,6 @@ msgstr "Az időjárási helyzet és az előrejelzés megjelenítése"
 msgid "Copyright (c) 2003-2013\n"
 msgstr "Copyright (c) 2003-2013\n"
 
-#.
 #. * TRANSLATORS: The abbreviations in parentheses will be shown in
 #. * the scrollbox together with the values. Keep them in sync with
 #. * those in make_label() in weather.c. Some of them may be
@@ -232,7 +224,7 @@ msgstr "Copyright (c) 2003-2013\n"
 #. * read that up somewhere and decide whether you want to use them
 #. * or not. In general, though, you should just try to choose
 #. * letter(s) that make sense and don't use up too much space.
-#.
+#. 
 #: ../panel-plugin/weather-config.c:96
 msgid "Temperature (T)"
 msgstr "Hőmérséklet (H)"
@@ -293,8 +285,7 @@ msgstr "Köd (Kd)"
 msgid "Precipitations (R)"
 msgstr "Csapadék (Cs)"
 
-#: ../panel-plugin/weather-config.c:222
-#: ../panel-plugin/weather-config.c:324
+#: ../panel-plugin/weather-config.c:222 ../panel-plugin/weather-config.c:324
 #: ../panel-plugin/weather-config.c:512
 msgid "Unset"
 msgstr "Visszaállítás"
@@ -343,8 +334,7 @@ msgstr "H_osszúság:"
 msgid "Longitude specifies the east-west position of a point on the Earth's surface. If you change this value manually, you need to provide altitude and timezone manually too."
 msgstr "A földrajzi hosszúság egy pont kelet-nyugati helyzetét határozza meg a Föld felszínén. Ha manuálisan változtatja ezt az értéket, akkor a magasságot és az időzónát is manuálisan kell megadnia."
 
-#: ../panel-plugin/weather-config.c:549
-#: ../panel-plugin/weather-config.c:1000
+#: ../panel-plugin/weather-config.c:549 ../panel-plugin/weather-config.c:1000
 msgid "Altitu_de:"
 msgstr "M_agasság:"
 
@@ -446,11 +436,10 @@ msgstr ""
 msgid "A foot (plural feet) is a unit of length defined as being 0.3048 m exactly and used in the imperial system of units and United States customary units. It is subdivided into 12 inches. The measurement of altitude in the aviation industry is one of the few areas where the foot is widely used outside the English-speaking world."
 msgstr ""
 
-#.
 #. * TRANSLATORS: The Summer Simmer Index is similar to the heat
 #. * index, but usually used at night because of its better accuracy
 #. * at that time.
-#.
+#. 
 #: ../panel-plugin/weather-config.c:882
 msgid "Used in North America, wind chill will be reported for low temperatures and heat index for higher ones. At night, heat index will be replaced by the Summer Simmer Index. For wind chill, wind speeds need to be above 3.0 mph (4.828 km/h) and air temperature below 50.0 °F (10.0 °C). For heat index, air temperature needs to be above 80 °F (26.7 °C) - or above 71.6 °F (22 °C) at night - and relative humidity at least 40%. If these conditions are not met, the air temperature will be shown."
 msgstr ""
@@ -588,7 +577,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-config.c:1103
 msgid "A more calendar-like view, with the days in columns and the daytimes (morning, afternoon, evening, night) in rows."
-msgstr "Inkább naptár-szerű nézet; a napok oszlopokba, a napszakok sorokba rendezve."
+msgstr "Inkább naptárszerű nézet; a napok oszlopokba, a napszakok sorokba rendezve."
 
 #: ../panel-plugin/weather-config.c:1107
 msgid "Shows the forecasts in a table with the daytimes (morning, afternoon, evening, night) in columns and the days in rows."
@@ -596,7 +585,7 @@ msgstr "Az előrejelzés megjelenítése táblázatban; a napszakok oszlopokba, 
 
 #: ../panel-plugin/weather-config.c:1165
 msgid "_Icon theme:"
-msgstr "_Ikon téma:"
+msgstr "_Ikontéma:"
 
 #: ../panel-plugin/weather-config.c:1167
 msgid "Available icon themes are listed here. You can add icon themes to $HOME/.config/xfce4/weather/icons (or the equivalent directory on your system). Information about how to create or use icon themes can be found in the README file. New icon themes will be detected everytime you open this config dialog."
@@ -612,7 +601,7 @@ msgstr "Egyszerű"
 
 #: ../panel-plugin/weather-config.c:1192
 msgid "Verbose"
-msgstr "Bővített"
+msgstr "Részletes"
 
 #: ../panel-plugin/weather-config.c:1195
 msgid "Choose your preferred tooltip style. Some styles give a lot of useful data, some are clearer but provide less data on a glance."
@@ -620,7 +609,7 @@ msgstr "Válassza ki a buboréksúgó stílusát. Bizonyos stílusok sok hasznos
 
 #: ../panel-plugin/weather-config.c:1207
 msgid "_Forecast layout:"
-msgstr "_Előrejelzés elrendezés:"
+msgstr "_Előrejelzés elrendezése:"
 
 #: ../panel-plugin/weather-config.c:1209
 msgid "Days in columns"
@@ -645,10 +634,9 @@ msgstr "Ke_rekített értékek"
 
 #: ../panel-plugin/weather-config.c:1243
 msgid "Check to round values everywhere except on the details page in the summary window."
-msgstr "Jelölje be kerekített értékekhez (mindenhol, kivéve a részletek lapot az összefoglaló ablakban)."
+msgstr "Jelölje be az értékek kerekítéséhez (az összefoglaló ablak részletek lapját kivéve mindenhol)."
 
-#: ../panel-plugin/weather-config.c:1293
-#: ../panel-plugin/weather-config.c:1757
+#: ../panel-plugin/weather-config.c:1293 ../panel-plugin/weather-config.c:1757
 msgid "Select _font"
 msgstr "Betűkészlet k_iválasztása"
 
@@ -659,7 +647,7 @@ msgstr "Betűkészlet kiválasztása"
 #. TRANSLATORS: Fallback value, usually never shown.
 #: ../panel-plugin/weather-config.c:1442
 msgid "Choose the value to add to the list below. Values can be added more than once."
-msgstr "Válassza ki az értéket hogy hozzáadja az alábbi listához. Az értékek többször is hozzáadhatók."
+msgstr "Válassza ki az értéket az alábbi listához adandó értéket. Az értékek többször is hozzáadhatók."
 
 #: ../panel-plugin/weather-config.c:1452
 msgid "Air temperature, sometimes referred to as dry-bulb temperature. Measured by a thermometer that is freely exposed to the air, yet shielded from radiation and moisture."
@@ -763,7 +751,7 @@ msgstr "Betűkészlet és szín:"
 
 #: ../panel-plugin/weather-config.c:1759
 msgid "Choose a font you like and set it to a smaller or larger size. Middle-click on the button to unset the font and use your theme's default."
-msgstr "Válasszon ki egy betűcsaládot és állítsa kisebb vagy nagyobb méretűre. A középső kattintás visszavonja a beállítást és a téma alapértelmezettjét használja."
+msgstr "Válasszon ki egy betűcsaládot és állítsa kisebb vagy nagyobb méretűre. A középső kattintás visszavonja a beállítást, és a téma alapértelmezettjét használja."
 
 #: ../panel-plugin/weather-config.c:1771
 msgid "There may be problems with some themes that cause the scrollbox text to be hardly readable. If this is the case or you simply want it to appear in another color, then you can change it using this button. Middle-click on the button to unset the scrollbox text color."
@@ -775,7 +763,7 @@ msgstr "Megjelenítendő _címkék"
 
 #: ../panel-plugin/weather-config.c:1798
 msgid "These are the values that will be shown in the scrollbox. Select a single value here and click the appropriate button to remove it or move it up and down in the list."
-msgstr "Ezeket az értékeket jeleníti meg a görgetődoboz. Válasszon ki egy értéket és a megfelelő gomb használatával távolítsa el, vagy mozgassa a listában."
+msgstr "Ezeket az értékeket jeleníti meg a görgetődoboz. Válasszon ki egy értéket, és a megfelelő gomb használatával távolítsa el, vagy mozgassa a listában."
 
 #. button "add"
 #: ../panel-plugin/weather-config.c:1805
@@ -792,7 +780,7 @@ msgstr "_Eltávolítás"
 
 #: ../panel-plugin/weather-config.c:1826
 msgid "Select a value in the list of labels to display and click this button to remove it."
-msgstr "Válasszon egy értéket a megjelenítendő címkék listájából és kattintson erre a gombra az eltávolításhoz."
+msgstr "Válasszon egy értéket a megjelenítendő címkék listájából, és kattintson erre a gombra az eltávolításhoz."
 
 #. button "move up"
 #: ../panel-plugin/weather-config.c:1831
@@ -818,7 +806,7 @@ msgstr "Átmenetek _animálása címkék közt"
 
 #: ../panel-plugin/weather-config.c:1864
 msgid "Scroll the current displayed value(s) out and the new value(s) in instead of simply changing them. Uncheck this option if you find the animation too distracting."
-msgstr "A megjelenített értékek görgetése egyszerű cseréjük helyett. Törölje a jelölést ha zavarónak találja az animációt."
+msgstr "A megjelenített értékek görgetése egyszerű cseréjük helyett. Törölje a jelölést, ha zavarónak találja az animációt."
 
 #: ../panel-plugin/weather-config.c:2000
 msgid "_Location"
@@ -912,17 +900,15 @@ msgstr "mm"
 msgid "North"
 msgstr "Észak"
 
-#: ../panel-plugin/weather-data.c:540
-#: ../panel-plugin/weather-translate.c:44
+#: ../panel-plugin/weather-data.c:540 ../panel-plugin/weather-translate.c:44
 msgid "N"
 msgstr "É"
 
 #: ../panel-plugin/weather-data.c:543
 msgid "North-East"
-msgstr "Észak-Kelet"
+msgstr "Északkelet"
 
-#: ../panel-plugin/weather-data.c:543
-#: ../panel-plugin/weather-translate.c:46
+#: ../panel-plugin/weather-data.c:543 ../panel-plugin/weather-translate.c:46
 msgid "NE"
 msgstr "ÉK"
 
@@ -930,17 +916,15 @@ msgstr "ÉK"
 msgid "East"
 msgstr "Kelet"
 
-#: ../panel-plugin/weather-data.c:546
-#: ../panel-plugin/weather-translate.c:48
+#: ../panel-plugin/weather-data.c:546 ../panel-plugin/weather-translate.c:48
 msgid "E"
 msgstr "K"
 
 #: ../panel-plugin/weather-data.c:549
 msgid "South-East"
-msgstr "Dél-Kelet"
+msgstr "Délkelet"
 
-#: ../panel-plugin/weather-data.c:549
-#: ../panel-plugin/weather-translate.c:50
+#: ../panel-plugin/weather-data.c:549 ../panel-plugin/weather-translate.c:50
 msgid "SE"
 msgstr "DK"
 
@@ -949,17 +933,15 @@ msgid "South"
 msgstr "Dél"
 
 #. TRANSLATORS: Wind directions. It's where the wind comes _from_.
-#: ../panel-plugin/weather-data.c:552
-#: ../panel-plugin/weather-translate.c:36
+#: ../panel-plugin/weather-data.c:552 ../panel-plugin/weather-translate.c:36
 msgid "S"
 msgstr "D"
 
 #: ../panel-plugin/weather-data.c:555
 msgid "South-West"
-msgstr "Dél-Nyugat"
+msgstr "Délnyugat"
 
-#: ../panel-plugin/weather-data.c:555
-#: ../panel-plugin/weather-translate.c:38
+#: ../panel-plugin/weather-data.c:555 ../panel-plugin/weather-translate.c:38
 msgid "SW"
 msgstr "DNy"
 
@@ -967,17 +949,15 @@ msgstr "DNy"
 msgid "West"
 msgstr "Nyugat"
 
-#: ../panel-plugin/weather-data.c:558
-#: ../panel-plugin/weather-translate.c:40
+#: ../panel-plugin/weather-data.c:558 ../panel-plugin/weather-translate.c:40
 msgid "W"
 msgstr "Ny"
 
 #: ../panel-plugin/weather-data.c:561
 msgid "North-West"
-msgstr "Észak-Nyugat"
+msgstr "Északnyugat"
 
-#: ../panel-plugin/weather-data.c:561
-#: ../panel-plugin/weather-translate.c:42
+#: ../panel-plugin/weather-data.c:561 ../panel-plugin/weather-translate.c:42
 msgid "NW"
 msgstr "ÉNy"
 
@@ -985,10 +965,9 @@ msgstr "ÉNy"
 msgid "No icon theme!"
 msgstr "Nincs ikontéma!"
 
-#: ../panel-plugin/weather-search.c:128
-#: ../panel-plugin/weather-search.c:252
+#: ../panel-plugin/weather-search.c:128 ../panel-plugin/weather-search.c:252
 msgid "Results"
-msgstr "Eredmények"
+msgstr "Találatok"
 
 #: ../panel-plugin/weather-search.c:168
 msgid "Searching..."
@@ -1002,16 +981,14 @@ msgstr "Hely keresése"
 msgid "Enter a city name or address"
 msgstr "Adja meg egy város nevét vagy egy címet"
 
-#.
 #. * TRANSLATORS: Latitude and longitude are known from the
 #. * search results, but not the location name. The user shall
 #. * give the place a name.
-#.
+#. 
 #: ../panel-plugin/weather-search.c:403
 msgid "Unnamed place"
 msgstr "Névtelen hely"
 
-#.
 #. * TRANSLATORS: This format string belongs to the macro used for
 #. * printing the "Label: Value Unit" lines on the details tab, e.g.
 #. * "Temperature: 10 °C" or "Latitude: 95.7°".
@@ -1025,7 +1002,7 @@ msgstr "Névtelen hely"
 #. * RTL TRANSLATORS: In case you did not translate the measurement
 #. * unit, use LRM (left-to-right mark) etc. to align it properly with
 #. * its numeric value.
-#.
+#. 
 #: ../panel-plugin/weather-summary.c:70
 #, c-format
 msgid "\t%s%s%s%s%s\n"
@@ -1042,7 +1019,7 @@ msgstr "\t%s%s%s%s%s\n"
 #. Whatever you do, it should not have the value "RTL".
 #. If you know of a better way to determine LTR/RTL that makes
 #. this tweak unnecessary, please tell the developer.
-#.
+#. 
 #: ../panel-plugin/weather-summary.c:232
 msgid "LTR"
 msgstr ""
@@ -1050,7 +1027,7 @@ msgstr ""
 #: ../panel-plugin/weather-summary.c:279
 #, c-format
 msgid "Error downloading met.no logo image to %s, reason: %s\n"
-msgstr "Hiba a met.no logo ide %s történő letöltése közben, oka: %s\n"
+msgstr "Hiba a met.no logó letöltése közben ide: %s, oka: %s\n"
 
 #: ../panel-plugin/weather-summary.c:281
 msgid "unknown"
@@ -1367,7 +1344,7 @@ msgstr "Holnap"
 #. align the values; Monospace font is enforced with <tt> tags for
 #. alignment, and the text is enclosed in <small> tags because
 #. that looks much better and saves space.
-#.
+#. 
 #: ../panel-plugin/weather-summary.c:614
 msgid "<b>Times used for calculations</b>\n"
 msgstr "<b>A számításokhoz használt időpontok</b>\n"
@@ -1578,18 +1555,21 @@ msgstr "Utolsó negyed"
 msgid "Waning crescent"
 msgstr "Fogyó félhold"
 
-#.
 #. * TRANSLATORS: How these symbols are named and defined is explained at
 #. * http://om.yr.no/forklaring/symbol/ and http://api.yr.no/faq.html#symbols.
-#. * To be more concise / shorter, the plugin uses names that deviate a bit from yr.no, so that
+#. * To be more concise / shorter, the plugin uses names that deviate a bit
+#. from yr.no, so that
 #. * they fit well in the tooltip, forecast tab etc.
 #. *
 #. * More information can be obtained from the following pages:
-#. * http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index
-#. * http://www.theweathernetwork.com/index.php?product=help&placecode=cabc0164&pagecontent=helpicons
+#. *
+#. http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index
+#. *
+#. http://www.theweathernetwork.com/index.php?product=help&placecode=cabc0164&pagecontent=helpicons
 #. * http://www.mir-co.net/sonstiges/wetterausdruecke.htm
-#. * The latter page is in German, but it contains a symbol table with Norwegian descriptions.
-#.
+#. * The latter page is in German, but it contains a symbol table with
+#. Norwegian descriptions.
+#. 
 #. Symbols 16-19 are used for polar days
 #: ../panel-plugin/weather-translate.c:120
 #: ../panel-plugin/weather-translate.c:173
@@ -1614,24 +1594,25 @@ msgstr "Részlegesen felhős"
 msgid "Cloudy"
 msgstr "Felhős"
 
-#.
-#. * http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index:
+#. *
+#. http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index:
 #. *   "Showers – Some sun is expected, interspersed with showers from
 #. *    time to time. As opposed to rain, showers describe liquid
 #. *    precipitation that can vary greatly in intensity over a short
 #. *    amount of time. [...] Precipitation may be locally heavy for
 #. *    short amounts of time."
-#.
+#. 
 #: ../panel-plugin/weather-translate.c:133
 #: ../panel-plugin/weather-translate.c:175
 msgid "Rain showers"
 msgstr "Zápor"
 
-#.
-#. * http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index:
-#. *   "Thunder Showers - Intermittent rain showers with thunder and lightning, generally
+#. *
+#. http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index:
+#. *   "Thunder Showers - Intermittent rain showers with thunder and
+#. lightning, generally
 #. *    short-lived."
-#.
+#. 
 #: ../panel-plugin/weather-translate.c:140
 msgid "Thunder showers"
 msgstr "Zivatar"
@@ -1651,8 +1632,10 @@ msgstr "Hózápor"
 msgid "Light rain"
 msgstr "Csendes eső"
 
-#. Heavy, usually incessant rain. met.no now uses "heavy rain", but personally I find light
-#. * rain and rain somewhat better. Symbol names indicate this is the way met.no did it some
+#. Heavy, usually incessant rain. met.no now uses "heavy rain", but personally
+#. I find light
+#. * rain and rain somewhat better. Symbol names indicate this is the way
+#. met.no did it some
 #. * time ago.
 #: ../panel-plugin/weather-translate.c:152
 msgid "Rain"
@@ -1671,13 +1654,15 @@ msgstr "Ónos eső, jégdara"
 msgid "Snow"
 msgstr "Havazás"
 
-#.
 #. * http://en.wikipedia.org/wiki/Thundersnow:
-#. *   "Thundersnow, also known as a winter thunderstorm or a thunder snowstorm, is a relatively
-#. *    rare kind of thunderstorm with snow falling as the primary precipitation instead of
-#. *    rain. It typically falls in regions of strong upward motion within the cold sector of an
+#. *   "Thundersnow, also known as a winter thunderstorm or a thunder
+#. snowstorm, is a relatively
+#. *    rare kind of thunderstorm with snow falling as the primary
+#. precipitation instead of
+#. *    rain. It typically falls in regions of strong upward motion within the
+#. cold sector of an
 #. *    extratropical cyclone."
-#.
+#. 
 #: ../panel-plugin/weather-translate.c:168
 msgid "Thundersnow"
 msgstr "Hózivatar"
@@ -1703,18 +1688,15 @@ msgstr "Ónos eső, zivatar"
 msgid "Show current weather conditions"
 msgstr "A jelenlegi időjárási helyzet megjelenítése"
 
-#, fuzzy
 #~ msgid "_Altitude:"
 #~ msgstr "Magasság"
 
-#, fuzzy
 #~ msgid "Atmospheric _pressure:"
 #~ msgstr "Légnyomás (LNy)"
 
 #~ msgid "Thanks to met.no"
 #~ msgstr "Köszönet a met.no-nak"
 
-#, fuzzy
 #~ msgid ""
 #~ "Amount:\t\t%s%s%s\n"
 #~ "\n"
@@ -1722,21 +1704,17 @@ msgstr "A jelenlegi időjárási helyzet megjelenítése"
 #~ "\tNapnyugta:\t\t%s\n"
 #~ "\n"
 
-#, fuzzy
 #~ msgid "Fog:\t\t\t%s%s%s\n"
 #~ msgstr ""
 #~ "\tNapnyugta:\t\t%s\n"
 #~ "\n"
 
-#, fuzzy
 #~ msgid "Low clouds:\t\t%s%s%s\n"
 #~ msgstr "Felhőzet"
 
-#, fuzzy
 #~ msgid "High clouds:\t\t%s%s%s\n"
 #~ msgstr "Magas szintű felhők"
 
-#, fuzzy
 #~ msgid "Cloudiness:\t\t%s%s%s"
 #~ msgstr "Felhőzet"
 
