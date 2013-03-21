@@ -1726,9 +1726,9 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     plugin_data *data = g_slice_new0(plugin_data);
     SoupURI *soup_proxy_uri;
     const gchar *proxy_uri;
-    GtkWidget *refresh;
-    data_types lbl;
+    GtkWidget *refresh, *refresh_icon;
     GdkPixbuf *icon = NULL;
+    data_types lbl;
 
     /* Initialize with sane default values */
     data->plugin = plugin;
@@ -1822,7 +1822,10 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
 
     /* add refresh button to right click menu, for people who missed
        the middle mouse click feature */
-    refresh = gtk_image_menu_item_new_from_stock("gtk-refresh", NULL);
+    refresh = gtk_image_menu_item_new_with_mnemonic(_("Re_fresh"));
+    refresh_icon = gtk_image_new_from_stock(GTK_STOCK_REFRESH,
+                                            GTK_ICON_SIZE_MENU);
+    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(refresh), refresh_icon);
     gtk_widget_show(refresh);
     g_signal_connect(G_OBJECT(refresh), "activate",
                      G_CALLBACK(mi_click), data);
