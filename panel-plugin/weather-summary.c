@@ -1017,10 +1017,10 @@ update_summary_subtitle(plugin_data *data)
     now_ms = ((gint64) now.tv_sec * 1000) + ((gint64) now.tv_usec / 1000);
 #ifdef HAVE_UPOWER_GLIB
     if (data->upower_on_battery || data->upower_lid_closed)
-        update_interval = 60000 - (now_ms % 60000) + 1;
+        update_interval = 60000 - (now_ms % 60000) + 10;
     else
 #endif
-        update_interval = 1000 - (now_ms % 1000) + 1;
+        update_interval = 1000 - (now_ms % 1000) + 10;
     data->summary_update_timer =
         g_timeout_add(update_interval, (GSourceFunc) update_summary_subtitle,
                       data);
