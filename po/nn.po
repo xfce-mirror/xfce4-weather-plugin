@@ -9,10 +9,10 @@ msgstr ""
 "PO-Revision-Date: 2013-01-19 08:52+0100\n"
 "Last-Translator: Kevin Brubeck Unhammer <unhammer@fsfe.org>\n"
 "Language-Team: Norwegian Nynorsk <i18n-nb@lister.ping.uio.no>\n"
-"Language: nn\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: nn\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #. TRANSLATORS: Keep in sync with labeloptions in weather-config.c
@@ -127,12 +127,12 @@ msgstr "Nedlasting av vêrdata feila med HTTP-status %d, grunn: %s"
 #: ../panel-plugin/weather-search.c:169 ../panel-plugin/weather-search.c:435
 #, c-format
 msgid "getting %s"
-msgstr ""
+msgstr "hentar %s"
 
 #: ../panel-plugin/weather.c:1085
 #, c-format
 msgid "Error writing cache file %s!"
-msgstr ""
+msgstr "Klarte ikkje å skriva til den midlertidige fila %s!"
 
 #: ../panel-plugin/weather.c:1448
 #, c-format
@@ -160,10 +160,9 @@ msgstr "Sola går ikkje ned i dag."
 msgid "The sun rises at %s and sets at %s."
 msgstr "Sola står opp %s og går ned %s."
 
-#.
 #. * TRANSLATORS: This is the simple tooltip. For a bigger challenge,
 #. * look at the verbose tooltip style further below ;-)
-#.
+#. 
 #: ../panel-plugin/weather.c:1563
 #, c-format
 msgid ""
@@ -183,7 +182,6 @@ msgstr ""
 "<b>Trykk:</b> %s\n"
 "<b>Fukt:</b> %s\n"
 
-#.
 #. * TRANSLATORS: Re-arrange and align at will, optionally using
 #. * abbreviations for labels if desired or necessary. Just take
 #. * into account the possible size constraints, the centered
@@ -191,7 +189,7 @@ msgstr ""
 #. * be changed easily - and try to make it compact and look
 #. * good! The missing space after "%son the ..." is intentional,
 #. * it is included in the %s.
-#.
+#. 
 #: ../panel-plugin/weather.c:1587
 #, c-format
 msgid ""
@@ -223,18 +221,16 @@ msgstr "Klarte ikkje oppdatera vinddata"
 
 #: ../panel-plugin/weather.c:1705
 msgid "No default icon theme? This should not happen, plugin will crash!"
-msgstr ""
+msgstr "Ikkje noko standard ikontema? Dette burde ikkje skje, programmet kjem til å krasja!"
 
 #: ../panel-plugin/weather.c:1925
 msgid "Show weather conditions and forecasts"
 msgstr "Vis vêrforhold og varsel"
 
 #: ../panel-plugin/weather.c:1927
-#, fuzzy
 msgid "Copyright (c) 2003-2013\n"
 msgstr "Opphavsrett (c) 2003-2012\n"
 
-#.
 #. * TRANSLATORS: The abbreviations in parentheses will be shown in
 #. * the scrollbox together with the values. Keep them in sync with
 #. * those in make_label() in weather.c. Some of them may be
@@ -242,7 +238,7 @@ msgstr "Opphavsrett (c) 2003-2012\n"
 #. * read that up somewhere and decide whether you want to use them
 #. * or not. In general, though, you should just try to choose
 #. * letter(s) that make sense and don't use up too much space.
-#.
+#. 
 #: ../panel-plugin/weather-config.c:96
 msgid "Temperature (T)"
 msgstr "Temperatur (T)"
@@ -345,7 +341,6 @@ msgid "Latitud_e:"
 msgstr "_Breiddegrad:"
 
 #: ../panel-plugin/weather-config.c:525
-#, fuzzy
 msgid ""
 "Latitude specifies the north-south position of a point on the Earth's "
 "surface. If you change this value manually, you need to provide altitude and "
@@ -360,7 +355,6 @@ msgid "L_ongitude:"
 msgstr "Len_gdegrad:"
 
 #: ../panel-plugin/weather-config.c:539
-#, fuzzy
 msgid ""
 "Longitude specifies the east-west position of a point on the Earth's "
 "surface. If you change this value manually, you need to provide altitude and "
@@ -403,7 +397,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-config.c:572
 msgid "_Timezone:"
-msgstr ""
+msgstr "_Tidssone:"
 
 #: ../panel-plugin/weather-config.c:580
 msgid ""
@@ -416,7 +410,6 @@ msgid ""
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:605
-#, fuzzy
 msgid ""
 "<i>Please change location name to your liking and correct\n"
 "altitude and timezone if they are not auto-detected correctly.</i>"
@@ -558,11 +551,10 @@ msgid ""
 "English-speaking world."
 msgstr ""
 
-#.
 #. * TRANSLATORS: The Summer Simmer Index is similar to the heat
 #. * index, but usually used at night because of its better accuracy
 #. * at that time.
-#.
+#. 
 #: ../panel-plugin/weather-config.c:882
 msgid ""
 "Used in North America, wind chill will be reported for low temperatures and "
@@ -1258,16 +1250,14 @@ msgstr "Søk etter stad"
 msgid "Enter a city name or address"
 msgstr "Skriv eit bynamn eller ei adresse"
 
-#.
 #. * TRANSLATORS: Latitude and longitude are known from the
 #. * search results, but not the location name. The user shall
 #. * give the place a name.
-#.
+#. 
 #: ../panel-plugin/weather-search.c:403
 msgid "Unnamed place"
 msgstr "Stad utan namn"
 
-#.
 #. * TRANSLATORS: This format string belongs to the macro used for
 #. * printing the "Label: Value Unit" lines on the details tab, e.g.
 #. * "Temperature: 10 °C" or "Latitude: 95.7°".
@@ -1281,7 +1271,7 @@ msgstr "Stad utan namn"
 #. * RTL TRANSLATORS: In case you did not translate the measurement
 #. * unit, use LRM (left-to-right mark) etc. to align it properly with
 #. * its numeric value.
-#.
+#. 
 #: ../panel-plugin/weather-summary.c:70
 #, fuzzy, c-format
 msgid "\t%s%s%s%s%s\n"
@@ -1298,7 +1288,7 @@ msgstr "Tåke:\t\t\t%s%s%s\n"
 #. Whatever you do, it should not have the value "RTL".
 #. If you know of a better way to determine LTR/RTL that makes
 #. this tweak unnecessary, please tell the developer.
-#.
+#. 
 #: ../panel-plugin/weather-summary.c:232
 msgid "LTR"
 msgstr ""
@@ -1591,7 +1581,7 @@ msgstr "I morgon"
 #. align the values; Monospace font is enforced with <tt> tags for
 #. alignment, and the text is enclosed in <small> tags because
 #. that looks much better and saves space.
-#.
+#. 
 #: ../panel-plugin/weather-summary.c:614
 msgid "<b>Times used for calculations</b>\n"
 msgstr ""
@@ -1798,18 +1788,21 @@ msgstr "Halvmåne i ne"
 msgid "Waning crescent"
 msgstr "Månesigd i ne"
 
-#.
 #. * TRANSLATORS: How these symbols are named and defined is explained at
 #. * http://om.yr.no/forklaring/symbol/ and http://api.yr.no/faq.html#symbols.
-#. * To be more concise / shorter, the plugin uses names that deviate a bit from yr.no, so that
+#. * To be more concise / shorter, the plugin uses names that deviate a bit
+#. from yr.no, so that
 #. * they fit well in the tooltip, forecast tab etc.
 #. *
 #. * More information can be obtained from the following pages:
-#. * http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index
-#. * http://www.theweathernetwork.com/index.php?product=help&placecode=cabc0164&pagecontent=helpicons
+#. *
+#. http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index
+#. *
+#. http://www.theweathernetwork.com/index.php?product=help&placecode=cabc0164&pagecontent=helpicons
 #. * http://www.mir-co.net/sonstiges/wetterausdruecke.htm
-#. * The latter page is in German, but it contains a symbol table with Norwegian descriptions.
-#.
+#. * The latter page is in German, but it contains a symbol table with
+#. Norwegian descriptions.
+#. 
 #. Symbols 16-19 are used for polar days
 #: ../panel-plugin/weather-translate.c:120
 #: ../panel-plugin/weather-translate.c:173
@@ -1834,24 +1827,25 @@ msgstr "Til dels skya"
 msgid "Cloudy"
 msgstr "Skya"
 
-#.
-#. * http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index:
+#. *
+#. http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index:
 #. *   "Showers – Some sun is expected, interspersed with showers from
 #. *    time to time. As opposed to rain, showers describe liquid
 #. *    precipitation that can vary greatly in intensity over a short
 #. *    amount of time. [...] Precipitation may be locally heavy for
 #. *    short amounts of time."
-#.
+#. 
 #: ../panel-plugin/weather-translate.c:133
 #: ../panel-plugin/weather-translate.c:175
 msgid "Rain showers"
 msgstr "Regnbøyer"
 
-#.
-#. * http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index:
-#. *   "Thunder Showers - Intermittent rain showers with thunder and lightning, generally
+#. *
+#. http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index:
+#. *   "Thunder Showers - Intermittent rain showers with thunder and
+#. lightning, generally
 #. *    short-lived."
-#.
+#. 
 #: ../panel-plugin/weather-translate.c:140
 msgid "Thunder showers"
 msgstr "Torebøyer"
@@ -1871,8 +1865,10 @@ msgstr "Snøbøyer"
 msgid "Light rain"
 msgstr "Lett regn"
 
-#. Heavy, usually incessant rain. met.no now uses "heavy rain", but personally I find light
-#. * rain and rain somewhat better. Symbol names indicate this is the way met.no did it some
+#. Heavy, usually incessant rain. met.no now uses "heavy rain", but personally
+#. I find light
+#. * rain and rain somewhat better. Symbol names indicate this is the way
+#. met.no did it some
 #. * time ago.
 #: ../panel-plugin/weather-translate.c:152
 msgid "Rain"
@@ -1891,13 +1887,15 @@ msgstr "Sludd"
 msgid "Snow"
 msgstr "Snø"
 
-#.
 #. * http://en.wikipedia.org/wiki/Thundersnow:
-#. *   "Thundersnow, also known as a winter thunderstorm or a thunder snowstorm, is a relatively
-#. *    rare kind of thunderstorm with snow falling as the primary precipitation instead of
-#. *    rain. It typically falls in regions of strong upward motion within the cold sector of an
+#. *   "Thundersnow, also known as a winter thunderstorm or a thunder
+#. snowstorm, is a relatively
+#. *    rare kind of thunderstorm with snow falling as the primary
+#. precipitation instead of
+#. *    rain. It typically falls in regions of strong upward motion within the
+#. cold sector of an
 #. *    extratropical cyclone."
-#.
+#. 
 #: ../panel-plugin/weather-translate.c:168
 msgid "Thundersnow"
 msgstr "Toresnø"
