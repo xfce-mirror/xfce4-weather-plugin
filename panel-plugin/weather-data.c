@@ -427,10 +427,10 @@ get_data(const xml_time *timeslice,
     case FOG:
         return LOCALE_DOUBLE(loc->fog_percent, ROUND_TO_INT("%.1f"));
 
-    case PRECIPITATIONS:   /* source is in millimeters */
+    case PRECIPITATION:   /* source is in millimeters */
         val = string_to_double(loc->precipitation_value, 0);
 
-        /* For snow, adjust precipitations dependent on temperature. Source:
+        /* For snow, adjust precipitation dependent on temperature. Source:
            http://answers.yahoo.com/question/index?qid=20061230123635AAAdZAe */
         if (loc->symbol_id == SYMBOL_SNOWSUN ||
             loc->symbol_id == SYMBOL_SNOW ||
@@ -450,7 +450,7 @@ get_data(const xml_time *timeslice,
                 val *= 3;
         }
 
-        if (units->precipitations == INCHES) {
+        if (units->precipitation == INCHES) {
             val /= 25.4;
             return g_strdup_printf("%.2f", val);
         } else
@@ -517,8 +517,8 @@ get_unit(const units_config *units,
         /* TRANSLATORS: Percentage sign is used like a unit for
            clouds, fog, humidity */
         return _("%");
-    case PRECIPITATIONS:
-        return (units->precipitations == INCHES) ? _("in") : _("mm");
+    case PRECIPITATION:
+        return (units->precipitation == INCHES) ? _("in") : _("mm");
     case SYMBOL:
     case WIND_BEAUFORT:
     case WIND_DIRECTION:

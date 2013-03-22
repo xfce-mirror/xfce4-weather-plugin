@@ -107,7 +107,7 @@ static const labeloption labeloptions[OPTIONS_N] = {
     {N_("High clouds (CH)"), CLOUDS_HIGH},
     {N_("Cloudiness (C)"), CLOUDINESS},
     {N_("Fog (F)"), FOG},
-    {N_("Precipitations (R)"), PRECIPITATIONS},
+    {N_("Precipitation (R)"), PRECIPITATION},
 };
 
 static void
@@ -792,7 +792,7 @@ combo_unit_windspeed_changed(GtkWidget *combo,
 
 
 static void
-combo_unit_precipitations_set_tooltip(GtkWidget *combo)
+combo_unit_precipitation_set_tooltip(GtkWidget *combo)
 {
     gchar *text = NULL;
     gint value = gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
@@ -817,13 +817,13 @@ combo_unit_precipitations_set_tooltip(GtkWidget *combo)
 
 
 static void
-combo_unit_precipitations_changed(GtkWidget *combo,
-                                  gpointer user_data)
+combo_unit_precipitation_changed(GtkWidget *combo,
+                                 gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    dialog->pd->units->precipitations =
+    dialog->pd->units->precipitation =
         gtk_combo_box_get_active(GTK_COMBO_BOX(combo));
-    combo_unit_precipitations_set_tooltip(combo);
+    combo_unit_precipitation_set_tooltip(combo);
     update_scrollbox(dialog->pd, TRUE);
     update_summary_window(dialog, TRUE);
 }
@@ -990,13 +990,13 @@ create_units_page(xfceweather_dialog *dialog)
                     _("Knots (kt)"));
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
 
-    /* precipitations */
+    /* precipitation */
     hbox = gtk_hbox_new(FALSE, BORDER);
     ADD_LABEL(_("Prec_ipitations:"), sg_label);
-    ADD_COMBO(dialog->combo_unit_precipitations);
-    ADD_COMBO_VALUE(dialog->combo_unit_precipitations,
+    ADD_COMBO(dialog->combo_unit_precipitation);
+    ADD_COMBO_VALUE(dialog->combo_unit_precipitation,
                     _("Millimeters (mm)"));
-    ADD_COMBO_VALUE(dialog->combo_unit_precipitations,
+    ADD_COMBO_VALUE(dialog->combo_unit_precipitation,
                     _("Inches (in)"));
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
 
@@ -1528,7 +1528,7 @@ options_datatypes_set_tooltip(GtkWidget *optmenu)
         break;
     case HUMIDITY:
         text = _("Humidity is defined as the amount of water vapor in the "
-                 "air and increases the possibility of precipitations, fog "
+                 "air and increases the possibility of precipitation, fog "
                  "and dew. While absolute humidity is the water content of "
                  "air, relative humidity gives (in %) the current absolute "
                  "humidity relative to the maximum for that air temperature "
@@ -1606,15 +1606,15 @@ options_datatypes_set_tooltip(GtkWidget *optmenu)
                  "that forms when the difference between temperature "
                  "and dew point is below 2.5 °C (4 °F), usually at a "
                  "relative humidity of 100%. Fog commonly produces "
-                 "precipitations in the form of drizzle or very light "
+                 "precipitation in the form of drizzle or very light "
                  "snow and reduces visibility to less than 1 km "
                  "(5/8 statute mile).");
         break;
-    case PRECIPITATIONS:
+    case PRECIPITATION:
         text = _("The amount of rain, drizzle, sleet, hail, snow, graupel "
                  "and other forms of water falling from the sky over a "
                  "specific period.\n\n"
-                 "The values reported by met.no are those of precipitations "
+                 "The values reported by met.no are those of precipitation "
                  "in the liquid state - or in other words: of rain -, so if "
                  "snow is expected (but not sleet), then the amount of snow "
                  "will be <i>guessed</i> by multiplying the original value by "
@@ -1943,8 +1943,8 @@ setup_units(xfceweather_dialog *dialog,
     combo_unit_pressure_set_tooltip(dialog->combo_unit_pressure);
     SET_COMBO_VALUE(dialog->combo_unit_windspeed, units->windspeed);
     combo_unit_windspeed_set_tooltip(dialog->combo_unit_windspeed);
-    SET_COMBO_VALUE(dialog->combo_unit_precipitations, units->precipitations);
-    combo_unit_precipitations_set_tooltip(dialog->combo_unit_precipitations);
+    SET_COMBO_VALUE(dialog->combo_unit_precipitation, units->precipitation);
+    combo_unit_precipitation_set_tooltip(dialog->combo_unit_precipitation);
     SET_COMBO_VALUE(dialog->combo_unit_altitude, units->altitude);
     combo_unit_altitude_set_tooltip(dialog->combo_unit_altitude);
     SET_COMBO_VALUE(dialog->combo_apparent_temperature,
@@ -1975,8 +1975,8 @@ setup_notebook_signals(xfceweather_dialog *dialog)
                      G_CALLBACK(combo_unit_pressure_changed), dialog);
     g_signal_connect(dialog->combo_unit_windspeed, "changed",
                      G_CALLBACK(combo_unit_windspeed_changed), dialog);
-    g_signal_connect(dialog->combo_unit_precipitations, "changed",
-                     G_CALLBACK(combo_unit_precipitations_changed), dialog);
+    g_signal_connect(dialog->combo_unit_precipitation, "changed",
+                     G_CALLBACK(combo_unit_precipitation_changed), dialog);
     g_signal_connect(dialog->combo_unit_altitude, "changed",
                      G_CALLBACK(combo_unit_altitude_changed), dialog);
     g_signal_connect(dialog->combo_apparent_temperature, "changed",

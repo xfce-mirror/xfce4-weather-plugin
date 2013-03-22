@@ -45,7 +45,7 @@ typedef struct {
     GtkWidget *combo_unit_temperature;
     GtkWidget *combo_unit_pressure;
     GtkWidget *combo_unit_windspeed;
-    GtkWidget *combo_unit_precipitations;
+    GtkWidget *combo_unit_precipitation;
     GtkWidget *combo_unit_altitude;
     GtkWidget *combo_apparent_temperature;
 

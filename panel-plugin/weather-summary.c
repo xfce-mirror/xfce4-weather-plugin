@@ -500,8 +500,8 @@ create_summary_tab(plugin_data *data)
     APPEND_TEXT_ITEM_REAL(value);
 
     /* precipitation */
-    APPEND_BTEXT(_("\nPrecipitations\n"));
-    APPEND_TEXT_ITEM(_("Precipitations amount"), PRECIPITATIONS);
+    APPEND_BTEXT(_("\nPrecipitation\n"));
+    APPEND_TEXT_ITEM(_("Precipitation amount"), PRECIPITATION);
 
     /* atmosphere */
     APPEND_BTEXT(_("\nAtmosphere\n"));
@@ -648,11 +648,11 @@ forecast_cell_get_tooltip_text(plugin_data *data,
                           "</small></tt>\n\n"),
                         HUMIDITY);
 
-    g_string_append(text, _("<b>Precipitations</b>\n"));
+    g_string_append(text, _("<b>Precipitation</b>\n"));
     APPEND_TOOLTIP_ITEM(_("<tt><small>"
                           "Amount:        %s%s%s"
                           "</small></tt>\n\n"),
-                        PRECIPITATIONS);
+                        PRECIPITATION);
 
     g_string_append(text, _("<b>Clouds</b>\n"));
     /* TRANSLATORS: Clouds percentages are aligned to the right in the

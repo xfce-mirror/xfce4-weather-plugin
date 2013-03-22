@@ -39,7 +39,7 @@ typedef enum {
     CLOUDS_HIGH,
     CLOUDINESS,
     FOG,
-    PRECIPITATIONS,
+    PRECIPITATION,
     SYMBOL
 } data_types;
 
@@ -66,7 +66,7 @@ typedef enum {
 typedef enum {
     MILLIMETERS,
     INCHES
-} units_precipitations;
+} units_precipitation;
 
 typedef enum {
     METERS,
@@ -92,7 +92,7 @@ typedef struct {
     gint apparent_temperature;
     gint pressure;
     gint windspeed;
-    gint precipitations;
+    gint precipitation;
     gint altitude;
 } units_config;
 

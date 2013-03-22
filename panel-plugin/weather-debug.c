@@ -305,13 +305,13 @@ weather_dump_units_config(const units_config *units)
                           "  Temperature: %d\n"
                           "  Atmospheric pressure: %d\n"
                           "  Windspeed: %d\n"
-                          "  Precipitations: %d\n"
+                          "  Precipitation: %d\n"
                           "  Altitude: %d\n"
                           "  --------------------------------------------",
                           units->temperature,
                           units->pressure,
                           units->windspeed,
-                          units->precipitations,
+                          units->precipitation,
                           units->altitude);
     return out;
 }

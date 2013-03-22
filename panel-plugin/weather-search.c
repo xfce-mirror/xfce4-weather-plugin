@@ -334,12 +334,12 @@ get_preferred_units(const gchar *country_code)
         !strcmp(country_code, "MM")) {        /* Myanmar(Burma) */
         units->pressure = PSI;
         units->windspeed = MPH;
-        units->precipitations = INCHES;
+        units->precipitation = INCHES;
         units->altitude = FEET;
     } else {
         units->pressure = HECTOPASCAL;
         units->windspeed = KMH;
-        units->precipitations = MILLIMETERS;
+        units->precipitation = MILLIMETERS;
         units->altitude = METERS;
     }
 

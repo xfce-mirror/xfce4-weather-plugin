@@ -160,7 +160,7 @@ make_label(const plugin_data *data,
     case FOG:
         lbl = _("F");
         break;
-    case PRECIPITATIONS:
+    case PRECIPITATION:
         lbl = _("R");
         break;
     default:
@@ -825,8 +825,8 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
         xfce_rc_read_int_entry(rc, "units_pressure", HECTOPASCAL);
     data->units->windspeed =
         xfce_rc_read_int_entry(rc, "units_windspeed", KMH);
-    data->units->precipitations =
-        xfce_rc_read_int_entry(rc, "units_precipitations", MILLIMETERS);
+    data->units->precipitation =
+        xfce_rc_read_int_entry(rc, "units_precipitation", MILLIMETERS);
     data->units->altitude =
         xfce_rc_read_int_entry(rc, "units_altitude", METERS);
     data->units->apparent_temperature =
@@ -938,8 +938,8 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
     xfce_rc_write_int_entry(rc, "units_temperature", data->units->temperature);
     xfce_rc_write_int_entry(rc, "units_pressure", data->units->pressure);
     xfce_rc_write_int_entry(rc, "units_windspeed", data->units->windspeed);
-    xfce_rc_write_int_entry(rc, "units_precipitations",
-                            data->units->precipitations);
+    xfce_rc_write_int_entry(rc, "units_precipitation",
+                            data->units->precipitation);
     xfce_rc_write_int_entry(rc, "units_altitude", data->units->altitude);
     xfce_rc_write_int_entry(rc, "model_apparent_temperature",
                             data->units->apparent_temperature);
@@ -1578,7 +1578,7 @@ weather_get_tooltip_text(const plugin_data *data)
     xml_time *conditions;
     gchar *text, *sym, *alt, *temp;
     gchar *windspeed, *windbeau, *winddir, *winddeg;
-    gchar *pressure, *humidity, *precipitations;
+    gchar *pressure, *humidity, *precipitation;
     gchar *fog, *cloudiness, *sunval, *value;
     gchar *point, *interval_start, *interval_end, *sunrise, *sunset;
     const gchar *unit;
@@ -1620,7 +1620,7 @@ weather_get_tooltip_text(const plugin_data *data)
     DATA_AND_UNIT(winddeg, WIND_DIRECTION_DEG);
     DATA_AND_UNIT(pressure, PRESSURE);
     DATA_AND_UNIT(humidity, HUMIDITY);
-    DATA_AND_UNIT(precipitations, PRECIPITATIONS);
+    DATA_AND_UNIT(precipitation, PRECIPITATION);
     DATA_AND_UNIT(fog, FOG);
     DATA_AND_UNIT(cloudiness, CLOUDINESS);
 
@@ -1659,7 +1659,7 @@ weather_get_tooltip_text(const plugin_data *data)
                "<span size=\"medium\">(%s)</span>\n"
                "<b><span size=\"large\">%s</span></b>\n"
                "<span size=\"smaller\">"
-               "from %s to %s, with %s of precipitations</span>\n\n"
+               "from %s to %s, with %s of precipitation</span>\n\n"
                "<b>Temperature:</b> %s\t\t"
                "<span size=\"smaller\">(values at %s)</span>\n"
                "<b>Wind:</b> %s (%son the Beaufort scale) from %s(%s)\n"
@@ -1669,7 +1669,7 @@ weather_get_tooltip_text(const plugin_data *data)
              data->location_name, alt,
              translate_desc(sym, data->night_time),
              interval_start, interval_end,
-             precipitations,
+             precipitation,
              temp, point,
              windspeed, windbeau, winddir, winddeg,
              pressure, humidity,
@@ -1690,7 +1690,7 @@ weather_get_tooltip_text(const plugin_data *data)
     g_free(winddeg);
     g_free(pressure);
     g_free(humidity);
-    g_free(precipitations);
+    g_free(precipitation);
     g_free(fog);
     g_free(cloudiness);
     return text;
