@@ -84,7 +84,7 @@ msgid ""
 "and the plugin needs to be adapted to use a newer version, or it will stop "
 "working within a few month. Please file a bug on https://bugzilla.xfce.org "
 "if no one else has done so yet."
-msgstr ""
+msgstr "El estado API de Met.no para la salida del sol que en esta versión del servicio de web está obsoleto, y el complemento necesita adaptarse para utilizar una versión más moderna, o ya no funcionará dentro de unos pocos meses. Por favor, envíe un informe de error a la dirección https://bugzilla.xfce.org si nadie lo ha hecho todavía."
 
 #: ../panel-plugin/weather.c:480
 msgid "Error parsing astronomical data!"
@@ -103,7 +103,7 @@ msgid ""
 "deprecated, and the plugin needs to be adapted to use a newer version, or it "
 "will stop working within a few month. Please file a bug on https://bugzilla."
 "xfce.org if no one else has done so yet."
-msgstr ""
+msgstr "El estado de la localización del API ecastLTS de Met.no que esta versión del servicio web es obsoleto, y el complemento necesita adaptarse para utilizar una versión nueva, o dejará de funcionar dentro de unos pocos meses. Por favor, envíe un informe de error a la dirección https://bugzilla.xfce.org si nadie no lo ha hecho todavía."
 
 #: ../panel-plugin/weather.c:549
 msgid "Error parsing weather data!"
@@ -113,7 +113,7 @@ msgstr "Se ha producido un error al analizar los datos meteorológicos."
 #, c-format
 msgid ""
 "Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
-msgstr ""
+msgstr "Descarga de datos meteorológico falló con el Código de estado HTML %d, frase de explicación: %s"
 
 #. start receive thread
 #: ../panel-plugin/weather.c:606 ../panel-plugin/weather.c:624
@@ -265,8 +265,9 @@ msgid "High clouds (CH)"
 msgstr "_Zona de hora:"
 
 #: ../panel-plugin/weather-config.c:108
+#, fuzzy
 msgid "Cloudiness (C)"
-msgstr ""
+msgstr "Nubosidad ()"
 
 #: ../panel-plugin/weather-config.c:109
 msgid "Fog (F)"
@@ -279,7 +280,7 @@ msgstr "Precipitación (P)"
 #: ../panel-plugin/weather-config.c:222 ../panel-plugin/weather-config.c:324
 #: ../panel-plugin/weather-config.c:512
 msgid "Unset"
-msgstr ""
+msgstr "Desestablecer"
 
 #: ../panel-plugin/weather-config.c:334
 msgid "Detecting..."
@@ -301,7 +302,7 @@ msgstr "_Nombre de localización:"
 msgid ""
 "Change the name for the location to your liking. It is used for display and "
 "does not affect the location parameters in any way."
-msgstr ""
+msgstr "Cambie el nombre para la localización a su gusto. Se utiliza para visualizar y no afecta nada a los parámetros locales."
 
 #: ../panel-plugin/weather-config.c:499
 msgid "Chan_ge..."
@@ -309,7 +310,7 @@ msgstr "_Cambiar..."
 
 #: ../panel-plugin/weather-config.c:502
 msgid "Search for a new location and auto-detect its parameters."
-msgstr ""
+msgstr "Busque una localización y autodetecta sus parámetros."
 
 #: ../panel-plugin/weather-config.c:521
 msgid "Latitud_e:"
@@ -320,7 +321,7 @@ msgid ""
 "Latitude specifies the north-south position of a point on the Earth's "
 "surface. If you change this value manually, you need to provide altitude and "
 "timezone manually too."
-msgstr ""
+msgstr "La latitud especifica la posición norte-sur de un punto en la superficie de la Tierra. Si cambia este valor manualmente, también necesitará proporcionar manualmente la altutud y la zona horaria. "
 
 #: ../panel-plugin/weather-config.c:535
 msgid "L_ongitude:"
@@ -331,7 +332,7 @@ msgid ""
 "Longitude specifies the east-west position of a point on the Earth's "
 "surface. If you change this value manually, you need to provide altitude and "
 "timezone manually too."
-msgstr ""
+msgstr "La longitud especifica la posición de este a oeste de un punto en la superficie de la Tierra. Si cambia este valor manualmente, también necesitará proporcionar la altitud y la zona horaria."
 
 #: ../panel-plugin/weather-config.c:549 ../panel-plugin/weather-config.c:1000
 msgid "Altitu_de:"
@@ -352,6 +353,9 @@ msgid ""
 "but small differences will have no influence on the weather data. Inside "
 "Norway, this setting has no effect at all."
 msgstr ""
+"Para localizaciones exteriores de Noruega el modelo de elevación que se utiliza en el servicio web de met.no no es muy bueno, así que normalmente necesitará especificar la altitud como un parámetro adicional, en otro caso los valores devueltos no serán correctos.\n"
+"\n"
+"El complemento intentará detectar la altura automáticamente utilizando el servicio web de GeoNames, pero eso también no dan información correcto siempre. Debería coincidir con los datos reales a grandes rasgos, pero las diferencias pequeñas no tendrán influencia en los datos de meteorología. Dentro de Noruega, este escenario no tiene nada de efecto."
 
 #: ../panel-plugin/weather-config.c:572
 msgid "_Timezone:"
