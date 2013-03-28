@@ -1089,6 +1089,23 @@ combo_icon_theme_changed(GtkWidget *combo,
 
 
 static void
+button_icons_dir_clicked(GtkWidget *button,
+                         gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    gchar *dir, *command;
+
+    dir = get_user_icons_dir();
+    g_mkdir_with_parents(dir, 0755);
+    command = g_strdup_printf("exo-open %s", dir);
+    g_free(dir);
+    xfce_spawn_command_line_on_screen(gdk_screen_get_default(),
+                                      command, FALSE, TRUE, NULL);
+    g_free(command);
+}
+
+
+static void
 check_single_row_toggled(GtkWidget *button,
                          gpointer user_data)
 {
@@ -1170,8 +1187,9 @@ check_round_values_toggled(GtkWidget *button,
 static GtkWidget *
 create_appearance_page(xfceweather_dialog *dialog)
 {
-    GtkWidget *palign, *page, *sep, *hbox, *vbox, *label;
+    GtkWidget *palign, *page, *sep, *hbox, *vbox, *label, *image;
     GtkSizeGroup *sg;
+    GtkSettings *default_settings;
     icon_theme *theme;
     gchar *text;
     gint i;
@@ -1192,6 +1210,18 @@ create_appearance_page(xfceweather_dialog *dialog)
                   "you open this config dialog."));
     ADD_COMBO(dialog->combo_icon_theme);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
+    default_settings = gtk_settings_get_default();
+    g_object_set(default_settings, "gtk-button-images", TRUE, NULL);
+    image = gtk_image_new();
+    gtk_image_set_from_stock(GTK_IMAGE(image), GTK_STOCK_OPEN,
+                             GTK_ICON_SIZE_BUTTON);
+    dialog->button_icons_dir = gtk_button_new();
+    gtk_button_set_image(GTK_BUTTON(dialog->button_icons_dir), image);
+    gtk_box_pack_start(GTK_BOX(hbox), dialog->button_icons_dir,
+                       FALSE, FALSE, 0);
+    SET_TOOLTIP(dialog->button_icons_dir,
+                _("Open the user icon themes directory in your file manager, "
+                  "creating it if necessary."));
     dialog->icon_themes = find_icon_themes();
     for (i = 0; i < dialog->icon_themes->len; i++) {
         theme = g_array_index(dialog->icon_themes, icon_theme *, i);
@@ -1985,6 +2015,8 @@ setup_notebook_signals(xfceweather_dialog *dialog)
     /* appearance page */
     g_signal_connect(dialog->combo_icon_theme, "changed",
                      G_CALLBACK(combo_icon_theme_changed), dialog);
+    g_signal_connect(dialog->button_icons_dir, "clicked",
+                     G_CALLBACK(button_icons_dir_clicked), dialog);
     g_signal_connect(dialog->check_single_row, "toggled",
                      G_CALLBACK(check_single_row_toggled), dialog);
     g_signal_connect(dialog->combo_tooltip_style, "changed",

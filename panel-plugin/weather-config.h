@@ -52,6 +52,7 @@ typedef struct {
     /* appearance page */
     GtkWidget *combo_icon_theme;
     GArray *icon_themes;
+    GtkWidget *button_icons_dir;
     GtkWidget *combo_tooltip_style;
     GtkWidget *combo_forecast_layout;
     GtkWidget *spin_forecast_days;
