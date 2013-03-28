@@ -305,6 +305,30 @@ icon_theme_load(const gchar *dir)
 }
 
 
+/*
+ * Compare two icon_theme structs using their path names, returning
+ * the result as a qsort()-style comparison function (less than zero
+ * for first arg is less than second arg, zero for equal, greater zero
+ * if first arg is greater than second arg).
+ */
+static gint
+icon_theme_compare(gconstpointer a,
+                   gconstpointer b)
+{
+    icon_theme *it1 = *(icon_theme **) a;
+    icon_theme *it2 = *(icon_theme **) b;
+
+    if (G_UNLIKELY(it1 == NULL && it2 == NULL))
+        return 0;
+    if (G_UNLIKELY(it1 == NULL))
+        return -1;
+    if (G_UNLIKELY(it2 == NULL))
+        return 1;
+
+    return g_strcmp0(it1->dir, it2->dir);
+}
+
+
 static GArray *
 find_themes_in_dir(const gchar *path)
 {
@@ -339,6 +363,7 @@ find_themes_in_dir(const gchar *path)
         weather_debug("Found %d icon theme(s) in %s.", themes->len, path);
     } else
         weather_debug("Could not list directory %s.", path);
+    g_array_sort(themes, (GCompareFunc) icon_theme_compare);
     return themes;
 }
 
