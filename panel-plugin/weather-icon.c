@@ -369,6 +369,19 @@ find_themes_in_dir(const gchar *path)
 
 
 /*
+ * Returns the user icon theme directory as a string which needs to be
+ * freed by the calling function.
+ */
+gchar *
+get_user_icons_dir(void)
+{
+    return g_strconcat(g_get_user_config_dir(), G_DIR_SEPARATOR_S,
+                       "xfce4", G_DIR_SEPARATOR_S, "weather",
+                       G_DIR_SEPARATOR_S, "icons", NULL);
+}
+
+
+/*
  * Find all available themes in user's config dir and at the install
  * location.
  */
@@ -381,9 +394,7 @@ find_icon_themes(void)
     themes = g_array_new(FALSE, TRUE, sizeof(icon_theme *));
 
     /* look in user directory first */
-    dir = g_strconcat(g_get_user_config_dir(), G_DIR_SEPARATOR_S,
-                      "xfce4", G_DIR_SEPARATOR_S, "weather",
-                      G_DIR_SEPARATOR_S, "icons", NULL);
+    dir = get_user_icons_dir();
     found = find_themes_in_dir(dir);
     g_free(dir);
     if (found) {

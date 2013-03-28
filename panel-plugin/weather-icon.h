@@ -95,6 +95,8 @@ icon_theme *icon_theme_load_info(const gchar *dir);
 
 icon_theme *icon_theme_load(const gchar *dir);
 
+gchar *get_user_icons_dir(void);
+
 GArray *find_icon_themes(void);
 
 icon_theme *icon_theme_copy(icon_theme *src);
