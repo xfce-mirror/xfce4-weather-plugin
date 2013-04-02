@@ -68,8 +68,6 @@ XDT_CHECK_PACKAGE([SOUP], [libsoup-2.4], [2.26.0])
 XDT_CHECK_OPTIONAL_PACKAGE([UPOWER_GLIB], [upower-glib], [0.9.0], [upower],
                            [upower for adapting update interval to power state])
 
-AC_CHECK_LIB(resolv, res_query, [LIBRESOLV=-lresolv])
-AC_SUBST(LIBRESOLV)
 
 dnl ************************************
 dnl *** Special compile time options ***
