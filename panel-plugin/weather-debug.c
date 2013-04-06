@@ -204,17 +204,20 @@ weather_dump_icon_theme(const icon_theme *theme)
 gchar *
 weather_dump_astrodata(const xml_astro *astro)
 {
-    gchar *out, *sunrise, *sunset, *moonrise, *moonset;
+    gchar *out, *day, *sunrise, *sunset, *moonrise, *moonset;
 
     if (!astro)
         return g_strdup("No astronomical data.");
 
+    day = format_date(astro->day, "%Y-%m-%d", TRUE);
     sunrise = format_date(astro->sunrise, "%c", TRUE);
     sunset = format_date(astro->sunset, "%c", TRUE);
     moonrise = format_date(astro->moonrise, "%c", TRUE);
     moonset = format_date(astro->moonset, "%c", TRUE);
 
     out = g_strdup_printf("Astronomical data:\n"
+                          "  --------------------------------------------\n"
+                          "  day: %s\n"
                           "  --------------------------------------------\n"
                           "  sunrise: %s\n"
                           "  sunset: %s\n"
@@ -227,6 +230,7 @@ weather_dump_astrodata(const xml_astro *astro)
                           "  moon never sets: %s\n"
                           "  moon phase: %s\n"
                           "  --------------------------------------------",
+                          day,
                           sunrise,
                           sunset,
                           YESNO(astro->sun_never_rises),
@@ -236,6 +240,7 @@ weather_dump_astrodata(const xml_astro *astro)
                           YESNO(astro->moon_never_rises),
                           YESNO(astro->moon_never_sets),
                           astro->moon_phase);
+    g_free(day);
     g_free(sunrise);
     g_free(sunset);
     g_free(moonrise);

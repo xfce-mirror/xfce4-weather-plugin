@@ -94,6 +94,30 @@ get_timeslice(xml_weather *wd,
 }
 
 
+xml_astro *
+get_astro(const GArray *astrodata,
+          const time_t day_t,
+          guint *index)
+{
+    xml_astro *astro;
+    gint i;
+
+    g_assert(astrodata != NULL);
+    if (G_UNLIKELY(astrodata == NULL))
+        return NULL;
+
+    for (i = 0; i < astrodata->len; i++) {
+        astro = g_array_index(astrodata, xml_astro *, i);
+        if (astro && astro->day == day_t) {
+            if (index != NULL)
+                *index = i;
+            return astro;
+        }
+    }
+    return NULL;
+}
+
+
 time_t
 parse_timestring(const gchar *ts,
                  gchar *format) {
@@ -404,37 +428,58 @@ parse_astro_location(xmlNode *cur_node,
 }
 
 
-/*
- * Look at http://api.yr.no/weatherapi/sunrise/1.0/schema for information
- * of elements and attributes to expect.
- */
-xml_astro *
-parse_astro(xmlNode *cur_node)
+static xml_astro *
+parse_astro_time(xmlNode *cur_node)
 {
-    xmlNode *child_node, *time_node = NULL;
+    xmlNode *child_node;
     xml_astro *astro;
-
-    g_assert(cur_node != NULL);
-    if (G_UNLIKELY(cur_node == NULL || !NODE_IS_TYPE(cur_node, "astrodata")))
-        return NULL;
+    gchar *date;
 
     astro = g_slice_new0(xml_astro);
     if (G_UNLIKELY(astro == NULL))
         return NULL;
 
+    date = PROP(cur_node, "date");
+    astro->day = parse_timestring(date, "%Y-%m-%d");
+    astro->day = day_at_midnight(astro->day, 0);
+    xmlFree(date);
+
+    for (child_node = cur_node->children; child_node;
+         child_node = child_node->next)
+        if (NODE_IS_TYPE(child_node, "location"))
+            parse_astro_location(child_node, astro);
+    return astro;
+}
+
+
+/*
+ * Look at http://api.yr.no/weatherapi/sunrise/1.0/schema for information
+ * of elements and attributes to expect.
+ */
+gboolean
+parse_astrodata(xmlNode *cur_node,
+                GArray *astrodata)
+{
+    xmlNode *child_node;
+    xml_astro *astro;
+
+    g_assert(astrodata != NULL);
+    if (G_UNLIKELY(astrodata == NULL))
+        return FALSE;
+
+    g_assert(cur_node != NULL);
+    if (G_UNLIKELY(cur_node == NULL || !NODE_IS_TYPE(cur_node, "astrodata")))
+        return FALSE;
+
     for (child_node = cur_node->children; child_node;
          child_node = child_node->next)
         if (NODE_IS_TYPE(child_node, "time")) {
-            time_node = child_node;
-            break;
+            if ((astro = parse_astro_time(child_node))) {
+                merge_astro(astrodata, astro);
+                xml_astro_free(astro);
+            }
         }
-
-    if (G_LIKELY(time_node))
-        for (child_node = time_node->children; child_node;
-             child_node = child_node->next)
-            if (NODE_IS_TYPE(child_node, "location"))
-                parse_astro_location(child_node, astro);
-    return astro;
+    return TRUE;
 }
 
 
@@ -614,6 +659,36 @@ xml_location_free(xml_location *loc)
 
 
 /*
+ * Deep copy xml_astro struct.
+ */
+xml_astro *
+xml_astro_copy(const xml_astro *src)
+{
+    xml_astro *dst;
+
+    if (G_UNLIKELY(src == NULL))
+        return NULL;
+
+    dst = g_slice_new0(xml_astro);
+    g_assert(dst != NULL);
+    if (G_UNLIKELY(dst == NULL))
+        return NULL;
+
+    dst->day = src->day;
+    dst->sunrise = src->sunrise;
+    dst->sunset = src->sunset;
+    dst->sun_never_rises = src->sun_never_rises;
+    dst->sun_never_sets = src->sun_never_sets;
+    dst->moonrise = src->moonrise;
+    dst->moonset = src->moonset;
+    dst->moon_never_rises = src->moon_never_rises;
+    dst->moon_never_sets = src->moon_never_sets;
+    dst->moon_phase = g_strdup(src->moon_phase);
+    return dst;
+}
+
+
+/*
  * Deep copy xml_time struct.
  */
 xml_time *
@@ -745,6 +820,23 @@ xml_astro_free(xml_astro *astro)
         return;
     g_free(astro->moon_phase);
     g_slice_free(xml_astro, astro);
+}
+
+
+void
+astrodata_free(GArray *astrodata)
+{
+    xml_astro *astro;
+    gint i;
+
+    if (G_UNLIKELY(astrodata == NULL))
+        return;
+    for (i = 0; i < astrodata->len; i++) {
+        astro = g_array_index(astrodata, xml_astro *, i);
+        if (astro)
+            xml_astro_free(astro);
+    }
+    g_array_free(astrodata, FALSE);
 }
 
 

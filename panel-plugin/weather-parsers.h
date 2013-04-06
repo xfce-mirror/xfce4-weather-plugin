@@ -80,6 +80,8 @@ typedef struct {
 } xml_weather;
 
 typedef struct {
+    time_t day;
+
     time_t sunrise;
     time_t sunset;
     gboolean sun_never_rises;
@@ -143,10 +145,16 @@ xml_time *get_timeslice(xml_weather *wd,
                         const time_t end_t,
                         guint *index);
 
+xml_astro *get_astro(const GArray *astrodata,
+                     const time_t day_t,
+                     guint *index);
+
 xmlDoc *get_xml_document(SoupMessage *msg);
 
 gpointer parse_xml_document(SoupMessage *msg,
                             XmlParseFunc parse_func);
+
+xml_astro *xml_astro_copy(const xml_astro *src);
 
 xml_time *xml_time_copy(const xml_time *src);
 
@@ -157,6 +165,8 @@ void xml_weather_free(xml_weather *wd);
 void xml_weather_clean(xml_weather *wd);
 
 void xml_astro_free(xml_astro *astro);
+
+void astrodata_free(GArray *astrodata);
 
 void xml_geolocation_free(xml_geolocation *geo);
 

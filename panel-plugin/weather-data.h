@@ -134,8 +134,14 @@ time_t time_calc_hour(struct tm time_tm,
 time_t time_calc_day(struct tm time_tm,
                      gint days);
 
+gint xml_astro_compare(gconstpointer a,
+                       gconstpointer b);
+
 gint xml_time_compare(gconstpointer a,
                       gconstpointer b);
+
+void merge_astro(GArray *astrodata,
+                 const xml_astro *astro);
 
 void merge_timeslice(xml_weather *wd,
                      const xml_time *timeslice);
@@ -145,8 +151,14 @@ xml_time *get_current_conditions(const xml_weather *wd);
 xml_time *make_current_conditions(xml_weather *wd,
                                   time_t now_t);
 
+time_t day_at_midnight(time_t day_t,
+                       const gint add_days);
+
+xml_astro *get_astro_data_for_day(const GArray *astrodata,
+                                  const gint day_t);
+
 GArray *get_point_data_for_day(xml_weather *wd,
-                               int day);
+                               const gint day);
 
 xml_time *make_forecast_data(xml_weather *wd,
                              GArray *daydata,

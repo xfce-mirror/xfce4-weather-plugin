@@ -45,6 +45,12 @@
 #define CONN_RETRY_INTERVAL_SMALL (10)
 #define CONN_RETRY_INTERVAL_LARGE (10 * 60)
 
+/* met.no sunrise API returns data for up to 30 days in the future and
+   will return an error page if too many days are requested. Let's
+   play it safe and request fewer than that, since we can only get a
+   10 days forecast too. */
+#define ASTRODATA_MAX_DAYS 25
+
 /* power saving update interval in seconds used as a precaution to
    deal with suspend/resume events etc., when nothing needs to be
    updated earlier: */
@@ -370,6 +376,22 @@ update_scrollbox(plugin_data *data,
 }
 
 
+/* get the present day's astrodata */
+static void
+update_current_astrodata(plugin_data *data)
+{
+    time_t now_t = time(NULL);
+
+    if ((data->current_astro == NULL && data->astrodata) ||
+        (data->current_astro &&
+         difftime(data->current_astro->day, now_t) >= 24 * 3600)) {
+        data->current_astro = get_astro_data_for_day(data->astrodata, 0);
+        weather_debug("Updated astrodata for the present day.");
+        weather_dump(weather_dump_astrodata, data->current_astro);
+    }
+}
+
+
 static void
 update_current_conditions(plugin_data *data,
                           gboolean immediately)
@@ -400,10 +422,13 @@ update_current_conditions(plugin_data *data,
         make_current_conditions(data->weatherdata,
                                 data->conditions_update->last);
 
+    /* update astrodata for the present day */
+    update_current_astrodata(data);
+
     /* schedule next update */
     now_tm.tm_min += 5;
     data->conditions_update->next = mktime(&now_tm);
-    data->night_time = is_night_time(data->astrodata);
+    data->night_time = is_night_time(data->current_astro);
     schedule_next_wakeup(data);
 
     /* update widgets */
@@ -452,12 +477,13 @@ cb_astro_update(SoupSession *session,
                 gpointer user_data)
 {
     plugin_data *data = user_data;
-    xml_astro *astro = NULL;
+    xmlDoc *doc;
+    xmlNode *root_node;
     time_t now_t;
-    struct tm now_tm;
+    gboolean parsing_error = TRUE;
 
     time(&now_t);
-    now_tm = *localtime(&now_t);
+    data->astro_update->attempt++;
     if ((msg->status_code == 200 || msg->status_code == 203)) {
         if (msg->status_code == 203)
             g_warning
@@ -467,47 +493,38 @@ cb_astro_update(SoupSession *session,
                    "within a few month. Please file a bug on "
                    "https://bugzilla.xfce.org if no one else has done so "
                    "yet."));
-        if ((astro = (xml_astro *)
-             parse_xml_document(msg, (XmlParseFunc) parse_astro))) {
-            if (data->astrodata)
-                xml_astro_free(data->astrodata);
-            data->astrodata = astro;
 
-            /* schedule next update at 00:00 of the next day */
-            data->astro_update->last = now_t;
-            data->astro_update->next =
-                time_calc(now_tm, 0, 0, 1, 0 - now_tm.tm_hour,
-                          0 - now_tm.tm_min, 0 - now_tm.tm_sec);
-            data->astro_update->attempt = 0;
-        } else
+        doc = get_xml_document(msg);
+        if (G_LIKELY(doc)) {
+            root_node = xmlDocGetRootElement(doc);
+            if (G_LIKELY(root_node))
+                if (parse_astrodata(root_node, data->astrodata)) {
+                    /* schedule next update */
+                    data->astro_update->attempt = 0;
+                    data->astro_update->last = now_t;
+                    parsing_error = FALSE;
+                }
+            xmlFreeDoc(doc);
+        }
+        if (parsing_error)
             g_warning(_("Error parsing astronomical data!"));
     } else
         g_warning(_("Download of astronomical data failed with "
                     "HTTP Status Code %d, Reason phrase: %s"),
                   msg->status_code, msg->reason_phrase);
+    data->astro_update->next = calc_next_download_time(data->astro_update,
+                                                       now_t);
 
-    if (G_UNLIKELY(astro == NULL)) {
-        /* download or parsing failed, schedule retry */
-        data->astro_update->attempt++;
-        data->astro_update->next = calc_next_download_time(data->astro_update,
-                                                           now_t);
-
-        /* invalidate obsolete sunrise/sunset data */
-        if (data->astrodata != NULL &&
-            difftime(data->astrodata->sunset, now_t) < 0 &&
-            difftime(data->astrodata->sunrise, now_t) < 0) {
-            xml_astro_free(data->astrodata);
-            data->astrodata = NULL;
-            weather_debug("Obsolete astronomical data has been invalidated.");
-        }
-    }
+    astrodata_clean(data->astrodata);
+    g_array_sort(data->astrodata, (GCompareFunc) xml_astro_compare);
+    update_current_astrodata(data);
 
     /* update icon */
-    data->night_time = is_night_time(data->astrodata);
+    data->night_time = is_night_time(data->current_astro);
     update_icon(data);
 
     schedule_next_wakeup(data);
-    weather_dump(weather_dump_astrodata, data->astrodata);
+    weather_dump(weather_dump_astrodata, data->current_astro);
 }
 
 
@@ -573,8 +590,8 @@ update_handler(plugin_data *data)
 {
     gchar *url;
     gboolean night_time;
-    time_t now_t;
-    struct tm now_tm;
+    time_t now_t, end_t;
+    struct tm now_tm, end_tm;
 
     g_assert(data != NULL);
     if (G_UNLIKELY(data == NULL))
@@ -597,13 +614,22 @@ update_handler(plugin_data *data)
            this is to prevent spawning multiple updates in a row */
         data->astro_update->next = time_calc_hour(now_tm, 1);
 
+        /* calculate date range for request */
+        end_t = time_calc_day(now_tm, ASTRODATA_MAX_DAYS);
+        end_tm = *localtime(&end_t);
+
         /* build url */
         url = g_strdup_printf("http://api.yr.no/weatherapi/sunrise/1.0/?"
-                              "lat=%s;lon=%s;date=%04d-%02d-%02d",
+                              "lat=%s;lon=%s;"
+                              "from=%04d-%02d-%02d;"
+                              "to=%04d-%02d-%02d",
                               data->lat, data->lon,
                               now_tm.tm_year + 1900,
                               now_tm.tm_mon + 1,
-                              now_tm.tm_mday);
+                              now_tm.tm_mday,
+                              end_tm.tm_year + 1900,
+                              end_tm.tm_mon + 1,
+                              end_tm.tm_mday);
 
         /* start receive thread */
         g_message(_("getting %s"), url);
@@ -647,7 +673,8 @@ update_handler(plugin_data *data)
     }
 
     /* update night time status and icon */
-    night_time = is_night_time(data->astrodata);
+    update_current_astrodata(data);
+    night_time = is_night_time(data->current_astro);
     if (data->night_time != night_time) {
         weather_debug("Night time status changed, updating icon.");
         data->night_time = night_time;
@@ -684,14 +711,14 @@ schedule_next_wakeup(plugin_data *data)
 
     /* If astronomical data is unavailable, current conditions update
        will usually handle night/day. */
-    if (data->astrodata) {
+    if (data->current_astro) {
         if (data->night_time &&
-            difftime(data->astrodata->sunrise, now_t) >= 0)
-            SCHEDULE_WAKEUP_COMPARE(data->astrodata->sunrise,
+            difftime(data->current_astro->sunrise, now_t) >= 0)
+            SCHEDULE_WAKEUP_COMPARE(data->current_astro->sunrise,
                                     "sunrise icon change");
         if (!data->night_time &&
-            difftime(data->astrodata->sunset, now_t) >= 0)
-            SCHEDULE_WAKEUP_COMPARE(data->astrodata->sunset,
+            difftime(data->current_astro->sunset, now_t) >= 0)
+            SCHEDULE_WAKEUP_COMPARE(data->current_astro->sunset,
                                     "sunset icon change");
     }
 
@@ -1013,6 +1040,7 @@ write_cache_file(plugin_data *data)
     xml_weather *wd = data->weatherdata;
     xml_time *timeslice;
     xml_location *loc;
+    xml_astro *astro;
     gchar *file, *start, *end, *point, *now, *value;
     gchar *date_format = "%Y-%m-%dT%H:%M:%SZ";
     time_t now_t = time(NULL);
@@ -1034,38 +1062,49 @@ write_cache_file(plugin_data *data)
         CACHE_APPEND("last_weather_download=%s\n", value);
         g_free(value);
     }
+    if (G_LIKELY(data->astro_update)) {
+        value = format_date(data->astro_update->last, date_format, FALSE);
+        CACHE_APPEND("last_astro_download=%s\n", value);
+        g_free(value);
+    }
     now = format_date(now_t, date_format, FALSE);
     CACHE_APPEND("cache_date=%s\n\n", now);
     g_free(now);
 
     if (data->astrodata) {
-        start = format_date(data->astrodata->sunrise, date_format, FALSE);
-        end = format_date(data->astrodata->sunset, date_format, FALSE);
-        g_string_append_printf(out, "[astrodata]\n");
-        CACHE_APPEND("sunrise=%s\n", start);
-        CACHE_APPEND("sunset=%s\n", end);
-        CACHE_APPEND("sun_never_rises=%s\n",
-                     data->astrodata->sun_never_rises ? "true" : "false");
-        CACHE_APPEND("sun_never_sets=%s\n",
-                     data->astrodata->sun_never_sets ? "true" : "false");
-        g_free(start);
-        g_free(end);
+        for (i = 0; i < data->astrodata->len; i++) {
+            astro = g_array_index(data->astrodata, xml_astro *, i);
+            if (G_UNLIKELY(astro == NULL))
+                continue;
+            value = format_date(astro->day, date_format, TRUE);
+            start = format_date(astro->sunrise, date_format, FALSE);
+            end = format_date(astro->sunset, date_format, FALSE);
+            g_string_append_printf(out, "[astrodata%d]\n", i);
+            CACHE_APPEND("day=%s\n", value);
+            CACHE_APPEND("sunrise=%s\n", start);
+            CACHE_APPEND("sunset=%s\n", end);
+            CACHE_APPEND("sun_never_rises=%s\n",
+                         astro->sun_never_rises ? "true" : "false");
+            CACHE_APPEND("sun_never_sets=%s\n",
+                         astro->sun_never_sets ? "true" : "false");
+            g_free(value);
+            g_free(start);
+            g_free(end);
 
-        start = format_date(data->astrodata->moonrise, date_format, FALSE);
-        end = format_date(data->astrodata->moonset, date_format, FALSE);
-        CACHE_APPEND("moonrise=%s\n", start);
-        CACHE_APPEND("moonset=%s\n", end);
-        CACHE_APPEND("moon_never_rises=%s\n",
-                     data->astrodata->moon_never_rises ? "true" : "false");
-        CACHE_APPEND("moon_never_sets=%s\n",
-                     data->astrodata->moon_never_sets ? "true" : "false");
-        CACHE_APPEND("moon_phase=%s\n", data->astrodata->moon_phase);
-        g_free(start);
-        g_free(end);
+            start = format_date(astro->moonrise, date_format, FALSE);
+            end = format_date(astro->moonset, date_format, FALSE);
+            CACHE_APPEND("moonrise=%s\n", start);
+            CACHE_APPEND("moonset=%s\n", end);
+            CACHE_APPEND("moon_never_rises=%s\n",
+                         astro->moon_never_rises ? "true" : "false");
+            CACHE_APPEND("moon_never_sets=%s\n",
+                         astro->moon_never_sets ? "true" : "false");
+            CACHE_APPEND("moon_phase=%s\n", astro->moon_phase);
+            g_free(start);
+            g_free(end);
 
-        now = format_date(now_t, date_format, FALSE);
-        CACHE_APPEND("last_astro_download=%s\n\n", now);
-        g_free(now);
+            g_string_append(out, "\n");
+        }
     } else
         g_string_append(out, "\n");
 
@@ -1128,11 +1167,10 @@ read_cache_file(plugin_data *data)
     xml_weather *wd;
     xml_time *timeslice = NULL;
     xml_location *loc = NULL;
-    time_t now_t = time(NULL), cache_date_t, astro_data_t;
-    struct tm cache_date_tm;
+    xml_astro *astro = NULL;
+    time_t now_t = time(NULL), cache_date_t;
     gchar *file, *locname = NULL, *lat = NULL, *lon = NULL, *group = NULL;
     gchar *timestring;
-    gdouble diff;
     gint msl, num_timeslices = 0, i, j;
 
     g_assert(data != NULL);
@@ -1201,55 +1239,60 @@ read_cache_file(plugin_data *data)
                                     data->weather_update->last);
         g_free(timestring);
     }
+    if (G_LIKELY(data->astro_update)) {
+        CACHE_READ_STRING(timestring, "last_astro_download");
+        data->astro_update->last = parse_timestring(timestring, NULL);
+        data->astro_update->next =
+            calc_next_download_time(data->astro_update,
+                                    data->astro_update->last);
+        g_free(timestring);
+    }
 
     /* read cached astrodata if available and up-to-date */
-    group = "astrodata";
-    cache_date_tm = *localtime(&cache_date_t);
-    astro_data_t =
-        time_calc(cache_date_tm, 0, 0, 0, 0 - cache_date_tm.tm_hour,
-                  0 - cache_date_tm.tm_min, 0 - cache_date_tm.tm_sec);
-    diff = difftime(now_t, astro_data_t);
-    if (g_key_file_has_group(keyfile, group)
-        && diff > 0 && diff < 24 * 3600) {
-        weather_debug("Reusing cached astrodata instead of downloading it.");
+    i = 0;
+    group = g_strdup_printf("astrodata%d", i);
+    while (g_key_file_has_group(keyfile, group)) {
+        if (i == 0)
+            weather_debug("Reusing cached astrodata instead of downloading it.");
 
-        /* clear current astro data if present */
-        if (data->astrodata)
-            xml_astro_free(data->astrodata);
-        data->astrodata = g_slice_new0(xml_astro);
+        astro = g_slice_new0(xml_astro);
+        if (G_UNLIKELY(astro == NULL))
+            break;
 
+        CACHE_READ_STRING(timestring, "day");
+        astro->day = parse_timestring(timestring, NULL);
+        astro->day = day_at_midnight(astro->day, 0);
+        g_free(timestring);
         CACHE_READ_STRING(timestring, "sunrise");
-        data->astrodata->sunrise = parse_timestring(timestring, NULL);
+        astro->sunrise = parse_timestring(timestring, NULL);
         g_free(timestring);
         CACHE_READ_STRING(timestring, "sunset");
-        data->astrodata->sunset = parse_timestring(timestring, NULL);
+        astro->sunset = parse_timestring(timestring, NULL);
         g_free(timestring);
-        data->astrodata->sun_never_rises =
+        astro->sun_never_rises =
             g_key_file_get_boolean(keyfile, group, "sun_never_rises", NULL);
-        data->astrodata->sun_never_sets =
+        astro->sun_never_sets =
             g_key_file_get_boolean(keyfile, group, "sun_never_sets", NULL);
 
         CACHE_READ_STRING(timestring, "moonrise");
-        data->astrodata->moonrise = parse_timestring(timestring, NULL);
+        astro->moonrise = parse_timestring(timestring, NULL);
         g_free(timestring);
         CACHE_READ_STRING(timestring, "moonset");
-        data->astrodata->moonset = parse_timestring(timestring, NULL);
+        astro->moonset = parse_timestring(timestring, NULL);
         g_free(timestring);
-        CACHE_READ_STRING(data->astrodata->moon_phase, "moon_phase");
-        data->astrodata->moon_never_rises =
+        CACHE_READ_STRING(astro->moon_phase, "moon_phase");
+        astro->moon_never_rises =
             g_key_file_get_boolean(keyfile, group, "moon_never_rises", NULL);
-        data->astrodata->moon_never_sets =
+        astro->moon_never_sets =
             g_key_file_get_boolean(keyfile, group, "moon_never_sets", NULL);
 
-        if (G_LIKELY(data->astro_update)) {
-            CACHE_READ_STRING(timestring, "last_astro_download");
-            data->astro_update->last = parse_timestring(timestring, NULL);
-            g_free(timestring);
-            data->astro_update->next =
-                time_calc(cache_date_tm, 0, 0, 1, 0 - cache_date_tm.tm_hour,
-                          0 - cache_date_tm.tm_min, 0 - cache_date_tm.tm_sec);
-        }
+        merge_astro(data->astrodata, astro);
+        xml_astro_free(astro);
+
+        g_free(group);
+        group = g_strdup_printf("astrodata%d", ++i);
     }
+    g_free(group);
     group = NULL;
 
     /* parse available timeslices */
@@ -1352,6 +1395,7 @@ update_weatherdata_with_reset(plugin_data *data)
 
     /* make use of previously saved data */
     read_cache_file(data);
+    update_current_astrodata(data);
 
     /* schedule downloads immediately */
     time(&now_t);
@@ -1595,16 +1639,19 @@ weather_get_tooltip_text(const plugin_data *data)
     interval_end = format_date(conditions->end, "%H:%M", TRUE);
 
     /* use sunrise and sunset times if available */
-    if (data->astrodata)
-        if (data->astrodata->sun_never_rises) {
+    if (data->current_astro)
+        if (data->current_astro->sun_never_rises) {
             sunval = g_strdup(_("The sun never rises today."));
-        } else if (data->astrodata->sun_never_sets) {
+        } else if (data->current_astro->sun_never_sets) {
             sunval = g_strdup(_("The sun never sets today."));
         } else {
-            sunrise = format_date(data->astrodata->sunrise, "%H:%M:%S", TRUE);
-            sunset = format_date(data->astrodata->sunset, "%H:%M:%S", TRUE);
-            sunval = g_strdup_printf(_("The sun rises at %s and sets at %s."),
-                                     sunrise, sunset);
+            sunrise = format_date(data->current_astro->sunrise,
+                                  "%H:%M:%S", TRUE);
+            sunset = format_date(data->current_astro->sunset,
+                                 "%H:%M:%S", TRUE);
+            sunval =
+                g_strdup_printf(_("The sun rises at %s and sets at %s."),
+                                sunrise, sunset);
             g_free(sunrise);
             g_free(sunset);
         }
@@ -1741,6 +1788,7 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
 #endif
     data->units = g_slice_new0(units_config);
     data->weatherdata = make_weather_data();
+    data->astrodata = g_array_sized_new(FALSE, TRUE, sizeof(xml_astro *), 30);
     data->cache_file_max_age = CACHE_FILE_MAX_AGE;
     data->show_scrollbox = TRUE;
     data->scrollbox_lines = 1;
@@ -1864,9 +1912,6 @@ xfceweather_free(XfcePanelPlugin *plugin,
     if (data->weatherdata)
         xml_weather_free(data->weatherdata);
 
-    if (data->astrodata)
-        xml_astro_free(data->astrodata);
-
     if (data->units)
         g_slice_free(units_config, data->units);
 
@@ -1886,8 +1931,12 @@ xfceweather_free(XfcePanelPlugin *plugin,
     g_slice_free(update_info, data->astro_update);
     g_slice_free(update_info, data->conditions_update);
 
-    /* free label array */
+    /* free current data */
+    data->current_astro = NULL;
+
+    /* free arrays */
     g_array_free(data->labels, TRUE);
+    astrodata_free(data->astrodata);
 
     /* free icon theme */
     icon_theme_free(data->icon_theme);
@@ -2044,6 +2093,7 @@ weather_construct(XfcePanelPlugin *plugin)
     xfceweather_read_config(plugin, data);
     update_timezone(data);
     read_cache_file(data);
+    update_current_astrodata(data);
     scrollbox_set_visible(data);
     gtk_scrollbox_set_fontname(GTK_SCROLLBOX(data->scrollbox),
                                data->scrollbox_font);

@@ -760,6 +760,33 @@ make_combined_timeslice(xml_weather *wd,
 
 
 void
+merge_astro(GArray *astrodata,
+            const xml_astro *astro)
+{
+    xml_astro *old_astro, *new_astro;
+    guint index;
+
+    g_assert(astrodata != NULL);
+    if (G_UNLIKELY(astrodata == NULL))
+        return;
+
+    /* copy astro, as it may be deleted by the calling function */
+    new_astro = xml_astro_copy(astro);
+
+    /* check for and replace existing astrodata of the same date */
+    if ((old_astro = get_astro(astrodata, astro->day, &index))) {
+        xml_astro_free(old_astro);
+        g_array_remove_index(astrodata, index);
+        g_array_insert_val(astrodata, index, new_astro);
+        weather_debug("Replaced existing astrodata at %d.", index);
+    } else {
+        g_array_append_val(astrodata, new_astro);
+        weather_debug("Appended new astrodata to the existing data.");
+    }
+}
+
+
+void
 merge_timeslice(xml_weather *wd,
                 const xml_time *timeslice)
 {
@@ -847,6 +874,52 @@ time_calc_day(const struct tm time_tm,
               const gint days)
 {
     return time_calc(time_tm, 0, 0, days, 0, 0, 0);
+}
+
+
+/*
+ * Compare two xml_astro structs using their date (days) field.
+ */
+gint
+xml_astro_compare(gconstpointer a,
+                  gconstpointer b)
+{
+    xml_astro *a1 = *(xml_astro **) a;
+    xml_astro *a2 = *(xml_astro **) b;
+
+    if (G_UNLIKELY(a1 == NULL && a2 == NULL))
+        return 0;
+    if (G_UNLIKELY(a1 == NULL))
+        return 1;
+    if (G_UNLIKELY(a2 == NULL))
+        return -1;
+
+    return (gint) difftime(a2->day, a1->day) * -1;
+}
+
+
+void
+astrodata_clean(GArray *astrodata)
+{
+    xml_astro *astro;
+    time_t now_t = time(NULL);
+    gint i;
+
+    if (G_UNLIKELY(astrodata == NULL))
+        return;
+
+    for (i = 0; i < astrodata->len; i++) {
+        astro = g_array_index(astrodata, xml_astro *, i);
+        if (G_UNLIKELY(astro == NULL))
+            continue;
+        if (difftime(now_t, astro->day) >= 24 * 3600) {
+            weather_debug("Removing expired astrodata:");
+            weather_dump(weather_dump_astrodata, astro);
+            xml_astro_free(astro);
+            g_array_remove_index(astrodata, i--);
+            weather_debug("Remaining astrodata entries: %d", astrodata->len);
+        }
+    }
 }
 
 
@@ -1072,25 +1145,62 @@ make_current_conditions(xml_weather *wd,
 
 
 /*
+ * Add days to time_t and set the calculated day to midnight.
+ */
+time_t
+day_at_midnight(time_t day_t,
+                const gint add_days)
+{
+    struct tm day_tm;
+
+    day_tm = *localtime(&day_t);
+    day_tm.tm_mday += add_days;
+    day_tm.tm_hour = day_tm.tm_min = day_tm.tm_sec = 0;
+    day_tm.tm_isdst = -1;
+    day_t = mktime(&day_tm);
+    return day_t;
+}
+
+
+/*
+ * Returns astro data for a given day.
+ */
+xml_astro *
+get_astro_data_for_day(const GArray *astrodata,
+                       const gint day)
+{
+    xml_astro *astro;
+    time_t day_t = time(NULL);
+    gint i;
+
+    if (G_UNLIKELY(astrodata == NULL))
+        return NULL;
+
+    day_t = day_at_midnight(day_t, day);
+
+    for (i = 0; i < astrodata->len; i++) {
+        astro = g_array_index(astrodata, xml_astro *, i);
+        if (astro && (difftime(astro->day, day_t) == 0))
+            return astro;
+    }
+
+    return NULL;
+}
+
+
+/*
  * Get all point data relevant for a given day.
  */
 GArray *
 get_point_data_for_day(xml_weather *wd,
-                       int day)
+                       gint day)
 {
     GArray *found;
     xml_time *timeslice;
-    struct tm day_tm;
-    time_t day_t;
+    time_t day_t = time(NULL);
     gint i;
 
-    /* calculate 00:00 for the requested day */
-    time(&day_t);
-    day_tm = *localtime(&day_t);
-    day_tm.tm_mday += day;
-    day_tm.tm_hour = day_tm.tm_min = day_tm.tm_sec = 0;
-    day_tm.tm_isdst = -1;
-    day_t = mktime(&day_tm);
+    day_t = day_at_midnight(day_t, day);
 
     /* loop over weather data and pick relevant point data */
     found = g_array_new(FALSE, TRUE, sizeof(xml_time *));

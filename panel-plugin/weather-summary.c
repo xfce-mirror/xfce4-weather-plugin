@@ -416,48 +416,48 @@ create_summary_tab(plugin_data *data)
 
     /* sun and moon */
     APPEND_BTEXT(_("\nAstronomical Data\n"));
-    if (data->astrodata) {
-        if (data->astrodata->sun_never_rises) {
+    if (data->current_astro) {
+        if (data->current_astro->sun_never_rises) {
             value = g_strdup(_("\tSunrise:\t\tThe sun never rises today.\n"));
             APPEND_TEXT_ITEM_REAL(value);
-        } else if (data->astrodata->sun_never_sets) {
+        } else if (data->current_astro->sun_never_sets) {
             value = g_strdup(_("\tSunset:\t\tThe sun never sets today.\n"));
             APPEND_TEXT_ITEM_REAL(value);
         } else {
-            sunrise = format_date(data->astrodata->sunrise, NULL, TRUE);
+            sunrise = format_date(data->current_astro->sunrise, NULL, TRUE);
             value = g_strdup_printf(_("\tSunrise:\t\t%s\n"), sunrise);
             g_free(sunrise);
             APPEND_TEXT_ITEM_REAL(value);
 
-            sunset = format_date(data->astrodata->sunset, NULL, TRUE);
+            sunset = format_date(data->current_astro->sunset, NULL, TRUE);
             value = g_strdup_printf(_("\tSunset:\t\t%s\n\n"), sunset);
             g_free(sunset);
             APPEND_TEXT_ITEM_REAL(value);
         }
 
-        if (data->astrodata->moon_phase)
+        if (data->current_astro->moon_phase)
             value = g_strdup_printf(_("\tMoon phase:\t%s\n"),
                                     translate_moon_phase
-                                    (data->astrodata->moon_phase));
+                                    (data->current_astro->moon_phase));
         else
             value = g_strdup(_("\tMoon phase:\tUnknown\n"));
         APPEND_TEXT_ITEM_REAL(value);
 
-        if (data->astrodata->moon_never_rises) {
+        if (data->current_astro->moon_never_rises) {
             value =
                 g_strdup(_("\tMoonrise:\tThe moon never rises today.\n"));
             APPEND_TEXT_ITEM_REAL(value);
-        } else if (data->astrodata->moon_never_sets) {
+        } else if (data->current_astro->moon_never_sets) {
             value =
                 g_strdup(_("\tMoonset:\tThe moon never sets today.\n"));
             APPEND_TEXT_ITEM_REAL(value);
         } else {
-            moonrise = format_date(data->astrodata->moonrise, NULL, TRUE);
+            moonrise = format_date(data->current_astro->moonrise, NULL, TRUE);
             value = g_strdup_printf(_("\tMoonrise:\t%s\n"), moonrise);
             g_free(moonrise);
             APPEND_TEXT_ITEM_REAL(value);
 
-            moonset = format_date(data->astrodata->moonset, NULL, TRUE);
+            moonset = format_date(data->current_astro->moonset, NULL, TRUE);
             value = g_strdup_printf(_("\tMoonset:\t%s\n"), moonset);
             g_free(moonset);
             APPEND_TEXT_ITEM_REAL(value);

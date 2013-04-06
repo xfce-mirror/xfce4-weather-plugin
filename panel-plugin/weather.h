@@ -86,7 +86,8 @@ typedef struct {
     GtkOrientation panel_orientation;
     gboolean single_row;
     xml_weather *weatherdata;
-    xml_astro *astrodata;
+    GArray *astrodata;
+    xml_astro *current_astro;
 
     update_info *astro_update;
     update_info *weather_update;
