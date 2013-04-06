@@ -60,15 +60,24 @@ contextual menu with more actions.
 
 INFORMATION FOR PACKAGE MAINTAINERS AND DISTRIBUTORS
 ==========================================================================
-If you're going to distribute this package, please be so kind and set
-the GEONAMES_USERNAME configure option for the GeoNames web service
-which is used for altitude and timezone detection. GeoNames requires
-you to register an account and limits requests on a per-hour and
-per-day basis to prevent misuse of their service. There are no other
+If you're going to distribute this package, and legal concerns and
+principles allow you to do it, please be so kind and set the
+GEONAMES_USERNAME configure option for the GeoNames web service which
+is used for altitude and timezone detection. GeoNames requires one to
+register an account and limits requests on a per-hour and per-day
+basis to prevent misuse of their service. There are no other
 restrictions and registration is free, uncomplicated and takes less
 than a minute (http://www.geonames.org/export/web-services.html).
 Performing these steps will ensure automatic altitude and timezone
-detection are kept operational for all users of the plugin.
+detection are kept operational for all users of the plugin. Currently,
+it is no big deal and only a precaution, as there are likely not that
+many users setting up the plugin within the same hour and exhausting
+the credits. Still, if it is ok with you to register a username
+yourself for the users of your package, then it would certainly help
+should that unlikely case become true. While the user can also set
+this via a hidden option, the developer/maintainer of the plugin
+thinks the user should not be bothered with it, as every user would
+need to do it by default, and that would hurt user experience.
 
 
 MET.NO API DOCUMENTATION
@@ -187,9 +196,9 @@ the cause for the failure (e.g. missings libraries). If you're missing
 a dependency you need to install it using the package management
 system of your distribution. Distributions commonly have two versions
 of a software package: One containing the supplementary files needed
-for compiling other packages, and the other one providing the runtime
-libraries etc. While the latter is usually installed, the former often
-is not, so better check this.
+for compiling other packages (usually called "dev"-packages), and the
+other one providing the runtime libraries etc. While the latter is
+usually installed, the former often is not, so better check this.
 
 Note: To solve distribution-specific problems the most efficient way
 is to ask at a forum for your distribution, not on a general forum.
