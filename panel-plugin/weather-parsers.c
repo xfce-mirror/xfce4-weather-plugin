@@ -623,16 +623,20 @@ xml_time_copy(const xml_time *src)
     xml_location *loc;
     gint i;
 
-    if (src == NULL)
+    if (G_UNLIKELY(src == NULL))
         return NULL;
 
     dst = g_slice_new0(xml_time);
-    if (dst == NULL)
+    g_assert(dst != NULL);
+    if (G_UNLIKELY(dst == NULL))
         return NULL;
 
     loc = g_slice_new0(xml_location);
-    if (loc == NULL)
-        return dst;
+    g_assert(loc != NULL);
+    if (loc == NULL) {
+        g_slice_free(xml_time, dst);
+        return NULL;
+    }
 
     dst->start = src->start;
     dst->end = src->end;
