@@ -2,7 +2,7 @@
 # Basque translation of the xfce-weather-plugin package.
 # Copyright (C) 2006-2007 The Xfce development team.
 # This file is distributed under the same license as the xfce-weather-plugin package.
-#
+# 
 # Piarres Beobide <pi@beobide.net> 2005,2006, 2008, 2009.
 msgid ""
 msgstr ""
@@ -12,10 +12,10 @@ msgstr ""
 "PO-Revision-Date: 2009-07-22 23:05+0200\n"
 "Last-Translator: Piarres Beobide <pi@beobide.net>\n"
 "Language-Team: Basque <kde-i18n-doc@kde.org>\n"
-"Language: eu\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: eu\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Lokalize 0.3\n"
 
@@ -123,12 +123,12 @@ msgstr ""
 #: ../panel-plugin/weather-search.c:169 ../panel-plugin/weather-search.c:435
 #, c-format
 msgid "getting %s"
-msgstr ""
+msgstr "%s eskuratzen"
 
 #: ../panel-plugin/weather.c:1085
 #, c-format
 msgid "Error writing cache file %s!"
-msgstr ""
+msgstr "Errorea %d katxe fitxategia idaztean!"
 
 #: ../panel-plugin/weather.c:1448
 #, c-format
@@ -156,10 +156,9 @@ msgstr "Eguzkia ez da inoiz ezkutatuko gaur"
 msgid "The sun rises at %s and sets at %s."
 msgstr "Eguzkia %s-tan irten eta %s-tan sartuko da."
 
-#.
 #. * TRANSLATORS: This is the simple tooltip. For a bigger challenge,
 #. * look at the verbose tooltip style further below ;-)
-#.
+#. 
 #: ../panel-plugin/weather.c:1563
 #, c-format
 msgid ""
@@ -171,8 +170,14 @@ msgid ""
 "<b>Pressure:</b> %s\n"
 "<b>Humidity:</b> %s\n"
 msgstr ""
+"<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
+"<b><span size=\"large\">%s</span></b>\n"
+"\n"
+"<b>Tenperatura:</b> %s\n"
+"<b>Haizea:</b> %s from %s\n"
+"<b>Presioa:</b> %s\n"
+"<b>Hezetasuna:</b> %s\n"
 
-#.
 #. * TRANSLATORS: Re-arrange and align at will, optionally using
 #. * abbreviations for labels if desired or necessary. Just take
 #. * into account the possible size constraints, the centered
@@ -180,7 +185,7 @@ msgstr ""
 #. * be changed easily - and try to make it compact and look
 #. * good! The missing space after "%son the ..." is intentional,
 #. * it is included in the %s.
-#.
+#. 
 #: ../panel-plugin/weather.c:1587
 #, c-format
 msgid ""
@@ -205,15 +210,13 @@ msgid "No default icon theme? This should not happen, plugin will crash!"
 msgstr ""
 
 #: ../panel-plugin/weather.c:1925
-#, fuzzy
 msgid "Show weather conditions and forecasts"
-msgstr "Ikusi dauden eguraldi baldintzak"
+msgstr "Ikusi eguraldi baldintzak eta aurreikuspenak"
 
 #: ../panel-plugin/weather.c:1927
 msgid "Copyright (c) 2003-2013\n"
-msgstr ""
+msgstr "Copyright (c) 2003-2013\n"
 
-#.
 #. * TRANSLATORS: The abbreviations in parentheses will be shown in
 #. * the scrollbox together with the values. Keep them in sync with
 #. * those in make_label() in weather.c. Some of them may be
@@ -221,15 +224,14 @@ msgstr ""
 #. * read that up somewhere and decide whether you want to use them
 #. * or not. In general, though, you should just try to choose
 #. * letter(s) that make sense and don't use up too much space.
-#.
+#. 
 #: ../panel-plugin/weather-config.c:96
 msgid "Temperature (T)"
 msgstr "Tenperatura (T)"
 
 #: ../panel-plugin/weather-config.c:97
-#, fuzzy
 msgid "Barometric pressure (P)"
-msgstr "Presio atmosferikoa (P)"
+msgstr "Presio barometrikoa (P)"
 
 #: ../panel-plugin/weather-config.c:98
 msgid "Wind speed (WS)"
@@ -252,23 +254,20 @@ msgid "Humidity (H)"
 msgstr "Hezetasuna (H)"
 
 #: ../panel-plugin/weather-config.c:103
-#, fuzzy
 msgid "Dew point (D)"
-msgstr "Ihintz-puntua (DP)"
+msgstr "Ihintz-puntua (D)"
 
 #: ../panel-plugin/weather-config.c:104
-#, fuzzy
 msgid "Apparent temperature (A)"
-msgstr "Tenperatura (T)"
+msgstr "Itxurazko tenperatura (T)"
 
 #: ../panel-plugin/weather-config.c:105
 msgid "Low clouds (CL)"
 msgstr "Behe-hodeiak (BH)"
 
 #: ../panel-plugin/weather-config.c:106
-#, fuzzy
 msgid "Middle clouds (CM)"
-msgstr "Erdi mailako hodeiak (EMH)"
+msgstr "Erdi mailako hodeiak (CM)"
 
 #: ../panel-plugin/weather-config.c:107
 msgid "High clouds (CH)"
@@ -297,16 +296,15 @@ msgstr "Detektatzen..."
 
 #: ../panel-plugin/weather-config.c:385
 msgid "meters"
-msgstr ""
+msgstr "metro"
 
 #: ../panel-plugin/weather-config.c:394
 msgid "feet"
-msgstr ""
+msgstr "oin"
 
 #: ../panel-plugin/weather-config.c:488
-#, fuzzy
 msgid "Location _name:"
-msgstr "_Kokalekua:"
+msgstr "Kokaleku ize_na:"
 
 #: ../panel-plugin/weather-config.c:495
 msgid ""
@@ -517,11 +515,10 @@ msgid ""
 "English-speaking world."
 msgstr ""
 
-#.
 #. * TRANSLATORS: The Summer Simmer Index is similar to the heat
 #. * index, but usually used at night because of its better accuracy
 #. * at that time.
-#.
+#. 
 #: ../panel-plugin/weather-config.c:882
 msgid ""
 "Used in North America, wind chill will be reported for low temperatures and "
@@ -1215,16 +1212,14 @@ msgstr "Bilatu kokalekua"
 msgid "Enter a city name or address"
 msgstr "Idatzi hiriaren izena edo helbidea"
 
-#.
 #. * TRANSLATORS: Latitude and longitude are known from the
 #. * search results, but not the location name. The user shall
 #. * give the place a name.
-#.
+#. 
 #: ../panel-plugin/weather-search.c:403
 msgid "Unnamed place"
 msgstr "Izenik gabeko lekua"
 
-#.
 #. * TRANSLATORS: This format string belongs to the macro used for
 #. * printing the "Label: Value Unit" lines on the details tab, e.g.
 #. * "Temperature: 10 °C" or "Latitude: 95.7°".
@@ -1238,7 +1233,7 @@ msgstr "Izenik gabeko lekua"
 #. * RTL TRANSLATORS: In case you did not translate the measurement
 #. * unit, use LRM (left-to-right mark) etc. to align it properly with
 #. * its numeric value.
-#.
+#. 
 #: ../panel-plugin/weather-summary.c:70
 #, fuzzy, c-format
 msgid "\t%s%s%s%s%s\n"
@@ -1255,7 +1250,7 @@ msgstr "\tEguzki-sarrera:\t\t%s\n"
 #. Whatever you do, it should not have the value "RTL".
 #. If you know of a better way to determine LTR/RTL that makes
 #. this tweak unnecessary, please tell the developer.
-#.
+#. 
 #: ../panel-plugin/weather-summary.c:232
 msgid "LTR"
 msgstr ""
@@ -1552,7 +1547,7 @@ msgstr "Bihar"
 #. align the values; Monospace font is enforced with <tt> tags for
 #. alignment, and the text is enclosed in <small> tags because
 #. that looks much better and saves space.
-#.
+#. 
 #: ../panel-plugin/weather-summary.c:614
 msgid "<b>Times used for calculations</b>\n"
 msgstr ""
@@ -1764,18 +1759,21 @@ msgstr ""
 msgid "Waning crescent"
 msgstr ""
 
-#.
 #. * TRANSLATORS: How these symbols are named and defined is explained at
 #. * http://om.yr.no/forklaring/symbol/ and http://api.yr.no/faq.html#symbols.
-#. * To be more concise / shorter, the plugin uses names that deviate a bit from yr.no, so that
+#. * To be more concise / shorter, the plugin uses names that deviate a bit
+#. from yr.no, so that
 #. * they fit well in the tooltip, forecast tab etc.
 #. *
 #. * More information can be obtained from the following pages:
-#. * http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index
-#. * http://www.theweathernetwork.com/index.php?product=help&placecode=cabc0164&pagecontent=helpicons
+#. *
+#. http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index
+#. *
+#. http://www.theweathernetwork.com/index.php?product=help&placecode=cabc0164&pagecontent=helpicons
 #. * http://www.mir-co.net/sonstiges/wetterausdruecke.htm
-#. * The latter page is in German, but it contains a symbol table with Norwegian descriptions.
-#.
+#. * The latter page is in German, but it contains a symbol table with
+#. Norwegian descriptions.
+#. 
 #. Symbols 16-19 are used for polar days
 #: ../panel-plugin/weather-translate.c:120
 #: ../panel-plugin/weather-translate.c:173
@@ -1802,25 +1800,26 @@ msgstr "Neurri batean lainotua"
 msgid "Cloudy"
 msgstr "Hodeitsu"
 
-#.
-#. * http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index:
+#. *
+#. http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index:
 #. *   "Showers – Some sun is expected, interspersed with showers from
 #. *    time to time. As opposed to rain, showers describe liquid
 #. *    precipitation that can vary greatly in intensity over a short
 #. *    amount of time. [...] Precipitation may be locally heavy for
 #. *    short amounts of time."
-#.
+#. 
 #: ../panel-plugin/weather-translate.c:133
 #: ../panel-plugin/weather-translate.c:175
 #, fuzzy
 msgid "Rain showers"
 msgstr "Euri zaparradak"
 
-#.
-#. * http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index:
-#. *   "Thunder Showers - Intermittent rain showers with thunder and lightning, generally
+#. *
+#. http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index:
+#. *   "Thunder Showers - Intermittent rain showers with thunder and
+#. lightning, generally
 #. *    short-lived."
-#.
+#. 
 #: ../panel-plugin/weather-translate.c:140
 #, fuzzy
 msgid "Thunder showers"
@@ -1843,8 +1842,10 @@ msgstr "Elur zaparradak"
 msgid "Light rain"
 msgstr "Euri arina"
 
-#. Heavy, usually incessant rain. met.no now uses "heavy rain", but personally I find light
-#. * rain and rain somewhat better. Symbol names indicate this is the way met.no did it some
+#. Heavy, usually incessant rain. met.no now uses "heavy rain", but personally
+#. I find light
+#. * rain and rain somewhat better. Symbol names indicate this is the way
+#. met.no did it some
 #. * time ago.
 #: ../panel-plugin/weather-translate.c:152
 msgid "Rain"
@@ -1863,13 +1864,15 @@ msgstr "Elurbustia"
 msgid "Snow"
 msgstr "Elurra"
 
-#.
 #. * http://en.wikipedia.org/wiki/Thundersnow:
-#. *   "Thundersnow, also known as a winter thunderstorm or a thunder snowstorm, is a relatively
-#. *    rare kind of thunderstorm with snow falling as the primary precipitation instead of
-#. *    rain. It typically falls in regions of strong upward motion within the cold sector of an
+#. *   "Thundersnow, also known as a winter thunderstorm or a thunder
+#. snowstorm, is a relatively
+#. *    rare kind of thunderstorm with snow falling as the primary
+#. precipitation instead of
+#. *    rain. It typically falls in regions of strong upward motion within the
+#. cold sector of an
 #. *    extratropical cyclone."
-#.
+#. 
 #: ../panel-plugin/weather-translate.c:168
 msgid "Thundersnow"
 msgstr "Elur ekaitza"
@@ -1895,40 +1898,32 @@ msgstr "Elurbustia eta trumoiak"
 msgid "Show current weather conditions"
 msgstr "Ikusi dauden eguraldi baldintzak"
 
-#, fuzzy
 #~ msgid "_Altitude:"
 #~ msgstr "Altitudea"
 
-#, fuzzy
 #~ msgid "Atmospheric _pressure:"
 #~ msgstr "Presio atmosferikoa (P)"
 
 #~ msgid "Thanks to met.no"
 #~ msgstr "Eskerrak met.no-ri"
 
-#, fuzzy
 #~ msgid "Dew point:\t\t\t%s%s%s\n"
 #~ msgstr "Ihintz-puntua"
 
-#, fuzzy
 #~ msgid ""
 #~ "Amount:\t\t%s%s%s\n"
 #~ "\n"
 #~ msgstr "\tEguzki-sarrera:\t\t%s\n"
 
-#, fuzzy
 #~ msgid "Fog:\t\t\t%s%s%s\n"
 #~ msgstr "\tEguzki-sarrera:\t\t%s\n"
 
-#, fuzzy
 #~ msgid "Low clouds:\t\t%s%s%s\n"
 #~ msgstr "Hodeitza"
 
-#, fuzzy
 #~ msgid "High clouds:\t\t%s%s%s\n"
 #~ msgstr "Goi-hodeiak"
 
-#, fuzzy
 #~ msgid "Cloudiness:\t\t%s%s%s"
 #~ msgstr "Hodeitza"
 
