@@ -138,7 +138,7 @@ msgstr "Actualización meteorológica"
 
 #: ../panel-plugin/weather.c:1516
 msgid "Short-term forecast data unavailable."
-msgstr ""
+msgstr "Datos de predicción breve no disponibles."
 
 #: ../panel-plugin/weather.c:1528
 msgid "The sun never rises today."
@@ -167,6 +167,13 @@ msgid ""
 "<b>Pressure:</b> %s\n"
 "<b>Humidity:</b> %s\n"
 msgstr ""
+"<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
+"<b><span size=\"large\">%s</span></b>\n"
+"\n"
+"<b>Temperatura:</b> %s\n"
+"<b>Viento:</b> %s desde %s\n"
+"<b>Presión:</b> %s\n"
+"<b>Humedad:</b> %s\n"
 
 #. * TRANSLATORS: Re-arrange and align at will, optionally using
 #. * abbreviations for labels if desired or necessary. Just take
@@ -190,6 +197,16 @@ msgid ""
 "\n"
 "<span size=\"smaller\">%s</span>"
 msgstr ""
+"<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
+"<b><span size=\"large\">%s</span></b>\n"
+"<span size=\"smaller\">desde %s a %s, con %s de precipitación</span>\n"
+"\n"
+"<b>Temperatura:</b> %s\t\t<span size=\"smaller\">(valores en %s)</span>\n"
+"<b>Viento:</b> %s (%sen la escala de Beaufort) desde %s(%s)\n"
+"<b>Presión:</b> %s    <b>Humedad:</b> %s\n"
+"<b>Niebla:</b> %s    <b>Nubosidad:</b> %s\n"
+"\n"
+"<span size=\"smaller\">%s</span>"
 
 #: ../panel-plugin/weather.c:1641
 msgid "Cannot update weather data"
@@ -197,16 +214,15 @@ msgstr "Precipitaciones (R)"
 
 #: ../panel-plugin/weather.c:1705
 msgid "No default icon theme? This should not happen, plugin will crash!"
-msgstr ""
+msgstr "¿No hay un tema de iconos predeterminado? ¡Ésto, no debería ocurrir, el complemento podría bloquearse!"
 
 #: ../panel-plugin/weather.c:1925
 msgid "Show weather conditions and forecasts"
 msgstr "Detectando..."
 
 #: ../panel-plugin/weather.c:1927
-#, fuzzy
 msgid "Copyright (c) 2003-2013\n"
-msgstr "Copyright  2003-2013\n"
+msgstr "Copyright© 2003-2013\n"
 
 #. * TRANSLATORS: The abbreviations in parentheses will be shown in
 #. * the scrollbox together with the values. Keep them in sync with
@@ -267,7 +283,7 @@ msgstr "_Zona de hora:"
 #: ../panel-plugin/weather-config.c:108
 #, fuzzy
 msgid "Cloudiness (C)"
-msgstr "Nubosidad ()"
+msgstr "Nubosidad (N)"
 
 #: ../panel-plugin/weather-config.c:109
 msgid "Fog (F)"
@@ -370,6 +386,8 @@ msgid ""
 "Leave this field empty to use the timezone set by your system. Invalid "
 "entries will cause the use of UTC time, but that may also depend on your system."
 msgstr ""
+"Si la localización seleccionada no está en su zona horaria actual, es necesario <i>activar</i> el complemento dentro de esa zona horaria para que las horas se vean correctamente. La zona horaria apropiada se detectará automáticamente a través del servicio web de «GeoNames», pero quizá quiera corregirlo si es necesario.\n"
+"Deje este campo vacío para utilizar la activación de la zona horaria por su sistema. Las entradas invalidadas harán que se utilice la hora UTC, pero, además puede depender de su sistema."
 
 #: ../panel-plugin/weather-config.c:605
 msgid ""
@@ -416,7 +434,7 @@ msgid ""
 "The pascal, named after mathematician, physicist and philosopher Blaise "
 "Pascal, is a SI derived unit and a measure of force per unit area, defined "
 "as one newton per square meter. One standard atmosphere (atm) is 1013.25 hPa."
-msgstr ""
+msgstr "El pascal, nombrado después de matemáticas, física y filosofía Blaise Pascal, es una unidad SI derivado y una medida de fuerza por unidad de área, definida como un newton por metro cuadrado. Una atmósfera estandarizada (atm) son 1013.25 hPa."
 
 #: ../panel-plugin/weather-config.c:696
 msgid ""
@@ -454,19 +472,19 @@ msgstr ""
 msgid ""
 "Miles per hour is an imperial unit of speed expressing the number of statute "
 "miles covered in one hour."
-msgstr ""
+msgstr "Millas por hora es una unidad imperial británica utilizada para expresar la velocidad utilizando las millas recorridas durante una hora."
 
 #: ../panel-plugin/weather-config.c:755
 msgid ""
 "Meter per second is <i>the</i> unit typically used by meteorologists to "
 "denote wind speeds."
-msgstr ""
+msgstr "Metro por segundo es <i>la</i> unidad utilizada típicamente por los meteorólogos para medir las velocidades del viento."
 
 #: ../panel-plugin/weather-config.c:759
 msgid ""
 "The foot per second (pl. feet per second) in the imperial unit system is the "
 "counterpart to the meter per second in the International System of Units."
-msgstr ""
+msgstr "El pie por segundo en el sistema de unidad imperial británico es la contraparte al metro por segundo en el Sistema Internacional de Unidades."
 
 #: ../panel-plugin/weather-config.c:764
 msgid ""
