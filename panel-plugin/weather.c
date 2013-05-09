@@ -524,6 +524,7 @@ cb_astro_update(SoupSession *session,
     update_icon(data);
 
     schedule_next_wakeup(data);
+    data->astro_update->finished = TRUE;
     weather_dump(weather_dump_astrodata, data->current_astro);
 }
 
@@ -579,8 +580,8 @@ cb_weather_update(SoupSession *session,
                  (GCompareFunc) xml_time_compare);
     weather_debug("Updating current conditions.");
     update_current_conditions(data, !parsing_error);
-    write_cache_file(data);
     schedule_next_wakeup(data);
+    data->weather_update->finished = TRUE;
     weather_dump(weather_dump_weatherdata, data->weatherdata);
 }
 
@@ -608,11 +609,23 @@ update_handler(plugin_data *data)
     now_t = time(NULL);
     now_tm = *localtime(&now_t);
 
+    /* check if all started downloads are finished and the cache file
+       can be written */
+    if (data->astro_update->started && data->astro_update->finished &&
+        data->weather_update->started && data->weather_update->finished) {
+        data->astro_update->started = FALSE;
+        data->astro_update->finished = FALSE;
+        data->weather_update->started = FALSE;
+        data->weather_update->finished = FALSE;
+        write_cache_file(data);
+    }
+
     /* fetch astronomical data */
     if (difftime(data->astro_update->next, now_t) <= 0) {
         /* real next update time will be calculated when update is finished,
            this is to prevent spawning multiple updates in a row */
         data->astro_update->next = time_calc_hour(now_tm, 1);
+        data->astro_update->started = TRUE;
 
         /* calculate date range for request */
         end_t = time_calc_day(now_tm, ASTRODATA_MAX_DAYS);
@@ -642,6 +655,7 @@ update_handler(plugin_data *data)
         /* real next update time will be calculated when update is finished,
            this is to prevent spawning multiple updates in a row */
         data->weather_update->next = time_calc_hour(now_tm, 1);
+        data->weather_update->started = TRUE;
 
         /* build url */
         url =

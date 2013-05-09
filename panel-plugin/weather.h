@@ -57,6 +57,8 @@ typedef struct {
     time_t next;
     guint attempt;
     guint check_interval;
+    gboolean started;
+    gboolean finished;
 } update_info;
 
 typedef struct {
