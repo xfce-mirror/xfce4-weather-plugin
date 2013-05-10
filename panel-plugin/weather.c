@@ -525,7 +525,6 @@ cb_astro_update(SoupSession *session,
 
     schedule_next_wakeup(data);
     data->astro_update->finished = TRUE;
-    weather_dump(weather_dump_astrodata, data->current_astro);
 }
 
 
