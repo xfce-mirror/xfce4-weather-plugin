@@ -1092,7 +1092,6 @@ static void
 button_icons_dir_clicked(GtkWidget *button,
                          gpointer user_data)
 {
-    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     gchar *dir, *command;
 
     dir = get_user_icons_dir();
