@@ -45,36 +45,6 @@ static const gchar *moon_phases[] = {
 };
 #define NUM_MOON_PHASES (sizeof(moon_phases) / sizeof(gchar *))
 
-static const gchar *
-translate_str(const gchar **loc_strings,
-              const gchar *str)
-{
-    gint loc_string_len, str_len, i;
-
-    if (str == NULL)
-        return "?";
-
-    str_len = strlen(str);
-
-    if (str_len < 1)
-        return "?";
-
-    for (i = 0; loc_strings[i] != NULL; i++) {
-        loc_string_len = strlen(loc_strings[i]);
-
-        if (str_len != loc_string_len)
-            continue;
-
-        if (str[0] != loc_strings[i][0])
-            continue;
-
-        if (!g_ascii_strncasecmp(loc_strings[i], str, str_len))
-            return _(loc_strings[i]);
-    }
-    return str;
-}
-
-
 typedef struct {
     gint id;
     gchar *symbol;
