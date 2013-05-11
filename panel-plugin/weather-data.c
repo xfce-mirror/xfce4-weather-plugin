@@ -914,7 +914,7 @@ astrodata_clean(GArray *astrodata)
             continue;
         if (difftime(now_t, astro->day) >= 24 * 3600) {
             weather_debug("Removing expired astrodata:");
-            weather_dump(weather_dump_astrodata, astro);
+            weather_dump(weather_dump_astro, astro);
             xml_astro_free(astro);
             g_array_remove_index(astrodata, i--);
             weather_debug("Remaining astrodata entries: %d", astrodata->len);

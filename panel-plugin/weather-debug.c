@@ -202,34 +202,47 @@ weather_dump_icon_theme(const icon_theme *theme)
 
 
 gchar *
-weather_dump_astrodata(const xml_astro *astro)
+weather_dump_astrodata(const GArray *astrodata)
+{
+    GString *out;
+    gchar *result, *line;
+    xml_astro *astro;
+    gint i;
+
+    if (!astrodata || astrodata->len <= 0)
+        return g_strdup("No astronomical data available.");
+
+    out = g_string_sized_new(1024);
+    g_string_assign(out, "Astronomical data:\n");
+    for (i = 0; i < astrodata->len; i++) {
+        astro = g_array_index(astrodata, xml_astro *, i);
+        line = weather_dump_astro(astro);
+        g_string_append(out, line);
+        g_free(line);
+    }
+    /* Free GString only and return its character data */
+    result = out->str;
+    g_string_free(out, FALSE);
+    return result;
+}
+
+
+gchar *
+weather_dump_astro(const xml_astro *astro)
 {
     gchar *out, *day, *sunrise, *sunset, *moonrise, *moonset;
 
     if (!astro)
-        return g_strdup("No astronomical data.");
+        return g_strdup("Astrodata: NULL.");
 
-    day = format_date(astro->day, "%Y-%m-%d", TRUE);
+    day = format_date(astro->day, "%c", TRUE);
     sunrise = format_date(astro->sunrise, "%c", TRUE);
     sunset = format_date(astro->sunset, "%c", TRUE);
     moonrise = format_date(astro->moonrise, "%c", TRUE);
     moonset = format_date(astro->moonset, "%c", TRUE);
 
-    out = g_strdup_printf("Astronomical data:\n"
-                          "  --------------------------------------------\n"
-                          "  day: %s\n"
-                          "  --------------------------------------------\n"
-                          "  sunrise: %s\n"
-                          "  sunset: %s\n"
-                          "  sun never rises: %s\n"
-                          "  sun never sets: %s\n"
-                          "  --------------------------------------------\n"
-                          "  moonrise: %s\n"
-                          "  moonset: %s\n"
-                          "  moon never rises: %s\n"
-                          "  moon never sets: %s\n"
-                          "  moon phase: %s\n"
-                          "  --------------------------------------------",
+    out = g_strdup_printf("day=%s, sun={%s, %s, %s, %s}, "
+                          "moon={%s, %s, %s, %s, %s}\n",
                           day,
                           sunrise,
                           sunset,
@@ -240,6 +253,7 @@ weather_dump_astrodata(const xml_astro *astro)
                           YESNO(astro->moon_never_rises),
                           YESNO(astro->moon_never_sets),
                           astro->moon_phase);
+
     g_free(day);
     g_free(sunrise);
     g_free(sunset);

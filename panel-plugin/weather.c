@@ -387,7 +387,7 @@ update_current_astrodata(plugin_data *data)
          difftime(data->current_astro->day, now_t) >= 24 * 3600)) {
         data->current_astro = get_astro_data_for_day(data->astrodata, 0);
         weather_debug("Updated astrodata for the present day.");
-        weather_dump(weather_dump_astrodata, data->current_astro);
+        weather_dump(weather_dump_astro, data->current_astro);
     }
 }
 
@@ -518,6 +518,8 @@ cb_astro_update(SoupSession *session,
     astrodata_clean(data->astrodata);
     g_array_sort(data->astrodata, (GCompareFunc) xml_astro_compare);
     update_current_astrodata(data);
+    if (! parsing_error)
+        weather_dump(weather_dump_astrodata, data->astrodata);
 
     /* update icon */
     data->night_time = is_night_time(data->current_astro);

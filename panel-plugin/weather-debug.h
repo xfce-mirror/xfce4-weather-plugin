@@ -66,7 +66,9 @@ gchar *weather_dump_timezone(const xml_timezone *timezone);
 
 gchar *weather_dump_icon_theme(const icon_theme *theme);
 
-gchar *weather_dump_astrodata(const xml_astro *astrodata);
+gchar *weather_dump_astrodata(const GArray *astrodata);
+
+gchar *weather_dump_astro(const xml_astro *astro);
 
 gchar *weather_dump_units_config(const units_config *units);
 
