@@ -376,19 +376,26 @@ update_scrollbox(plugin_data *data,
 }
 
 
-/* get the present day's astrodata */
+/* get astrodata for the current day */
 static void
 update_current_astrodata(plugin_data *data)
 {
     time_t now_t = time(NULL);
 
-    if ((data->current_astro == NULL && data->astrodata) ||
-        (data->current_astro &&
-         difftime(data->current_astro->day, now_t) >= 24 * 3600)) {
-        data->current_astro = get_astro_data_for_day(data->astrodata, 0);
-        weather_debug("Updated astrodata for the present day.");
-        weather_dump(weather_dump_astro, data->current_astro);
+    if (G_UNLIKELY(data->astrodata == NULL)) {
+        data->current_astro = NULL;
+        return;
     }
+
+   if (data->current_astro == NULL ||
+       difftime(now_t, data->current_astro->day) >= 24 * 3600) {
+       data->current_astro = get_astro_data_for_day(data->astrodata, 0);
+       if (G_UNLIKELY(data->current_astro == NULL))
+           return;
+
+       weather_debug("Updated current astrodata.");
+       weather_dump(weather_dump_astro, data->current_astro);
+   }
 }
 
 
@@ -422,20 +429,21 @@ update_current_conditions(plugin_data *data,
         make_current_conditions(data->weatherdata,
                                 data->conditions_update->last);
 
-    /* update astrodata for the present day */
+    /* update current astrodata */
     update_current_astrodata(data);
-
-    /* schedule next update */
-    now_tm.tm_min += 5;
-    data->conditions_update->next = mktime(&now_tm);
     data->night_time = is_night_time(data->current_astro);
-    schedule_next_wakeup(data);
 
     /* update widgets */
     update_icon(data);
     update_scrollbox(data, FALSE);
     if (immediately)
         gtk_scrollbox_reset(GTK_SCROLLBOX(data->scrollbox));
+
+    /* schedule next update */
+    now_tm.tm_min += 5;
+    data->conditions_update->next = mktime(&now_tm);
+    schedule_next_wakeup(data);
+
     weather_debug("Updated current conditions.");
 }
 
@@ -525,7 +533,6 @@ cb_astro_update(SoupSession *session,
     data->night_time = is_night_time(data->current_astro);
     update_icon(data);
 
-    schedule_next_wakeup(data);
     data->astro_update->finished = TRUE;
 }
 
@@ -581,7 +588,6 @@ cb_weather_update(SoupSession *session,
                  (GCompareFunc) xml_time_compare);
     weather_debug("Updating current conditions.");
     update_current_conditions(data, !parsing_error);
-    schedule_next_wakeup(data);
     data->weather_update->finished = TRUE;
     weather_dump(weather_dump_weatherdata, data->weatherdata);
 }
@@ -704,7 +710,7 @@ update_handler(plugin_data *data)
 static void
 schedule_next_wakeup(plugin_data *data)
 {
-    time_t now_t = time(NULL), future_t;
+    time_t now_t = time(NULL), next_day_t;
     struct tm now_tm;
     gdouble diff;
     gchar *date;
@@ -714,9 +720,9 @@ schedule_next_wakeup(plugin_data *data)
         data->update_timer = 0;
     }
 
-    now_tm = *localtime(&now_t);
-    future_t = time_calc_day(now_tm, 3);
-    diff = difftime(future_t, now_t);
+    next_day_t = day_at_midnight(now_t, 1);
+    diff = difftime(next_day_t, now_t);
+	data->next_wakeup_reason = "current astro data update";
     SCHEDULE_WAKEUP_COMPARE(data->astro_update->next,
                             "astro data download");
     SCHEDULE_WAKEUP_COMPARE(data->weather_update->next,
@@ -2108,7 +2114,7 @@ weather_construct(XfcePanelPlugin *plugin)
     xfceweather_read_config(plugin, data);
     update_timezone(data);
     read_cache_file(data);
-    update_current_astrodata(data);
+    update_current_conditions(data, TRUE);
     scrollbox_set_visible(data);
     gtk_scrollbox_set_fontname(GTK_SCROLLBOX(data->scrollbox),
                                data->scrollbox_font);
@@ -2149,9 +2155,6 @@ weather_construct(XfcePanelPlugin *plugin)
         g_signal_connect(data->upower, "changed",
                          G_CALLBACK(upower_changed_cb), data);
 #endif
-
-    /* call update handler updates */
-    update_handler(data);
 
     weather_dump(weather_dump_plugindata, data);
 }
