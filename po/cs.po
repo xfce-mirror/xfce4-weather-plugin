@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: xfce4-weather-plugin 0.6.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-02-01 16:19+0100\n"
-"PO-Revision-Date: 2012-01-09 00:18+0100\n"
+"PO-Revision-Date: 2013-04-14 21:22+0100\n"
 "Last-Translator: Michal Várady <miko.vaji@gmail.com>\n"
 "Language-Team: Czech <xfce-i18n@xfce.org>\n"
 "Language: cs\n"
@@ -16,6 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;\n"
+"X-Generator: Poedit 1.5.5\n"
 
 #. TRANSLATORS: Keep in sync with labeloptions in weather-config.c
 #: ../panel-plugin/weather.c:116
@@ -24,7 +25,7 @@ msgstr "T"
 
 #: ../panel-plugin/weather.c:119
 msgid "P"
-msgstr "TL"
+msgstr "AT"
 
 #: ../panel-plugin/weather.c:122
 msgid "WS"
@@ -48,7 +49,7 @@ msgstr "D"
 
 #: ../panel-plugin/weather.c:140
 msgid "A"
-msgstr ""
+msgstr "Z"
 
 #: ../panel-plugin/weather.c:143
 msgid "CL"
@@ -85,17 +86,22 @@ msgid ""
 "working within a few month. Please file a bug on https://bugzilla.xfce.org "
 "if no one else has done so yet."
 msgstr ""
+"Rozhraní API služby Met.no sunrise informuje, že tato verze webové služby je "
+"zastaralá a tento zásuvný modul vyžaduje úpravu pro použití s jeho novou "
+"verzí, jinak během jednoho měsíce přestane pracovat. Prosíme o vyplnění "
+"hlášení o chybě na adrese https://bugzilla.xfce.org, pokud tak již neučinil "
+"někdo před vámi."
 
 #: ../panel-plugin/weather.c:480
 msgid "Error parsing astronomical data!"
-msgstr ""
+msgstr "Chyba při zpracování astronomických dat."
 
 #: ../panel-plugin/weather.c:482
 #, c-format
 msgid ""
 "Download of astronomical data failed with HTTP Status Code %d, Reason "
 "phrase: %s"
-msgstr ""
+msgstr "Stažení astronomických dat se nezdařilo, kód stavu HTTP: %d, důvod: %s"
 
 #: ../panel-plugin/weather.c:531
 msgid ""
@@ -104,29 +110,33 @@ msgid ""
 "will stop working within a few month. Please file a bug on https://bugzilla."
 "xfce.org if no one else has done so yet."
 msgstr ""
+"Rozhraní API LocationforecastLTS služby Met.no informuje,  že tato verze "
+"webové služby je zastaralá a tento zásuvný modul vyžaduje úpravu pro použití "
+"s jeho novou verzí, jinak během jednoho měsíce přestane pracovat. Prosíme o "
+"vyplnění hlášení o chybě na adrese https://bugzilla.xfce.org, pokud tak již "
+"neučinil někdo před vámi."
 
 #: ../panel-plugin/weather.c:549
-#, fuzzy
 msgid "Error parsing weather data!"
-msgstr "Nelze aktualizovat informace o počasí"
+msgstr "Nelze zpracovat informace o počasí"
 
 #: ../panel-plugin/weather.c:552
 #, c-format
 msgid ""
 "Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
-msgstr ""
+msgstr "Stažení dat o počasí se nezdařilo, kód stavu HTTP: %d, důvod: %s"
 
 #. start receive thread
 #: ../panel-plugin/weather.c:606 ../panel-plugin/weather.c:624
 #: ../panel-plugin/weather-search.c:169 ../panel-plugin/weather-search.c:435
 #, c-format
 msgid "getting %s"
-msgstr ""
+msgstr "získávání %s"
 
 #: ../panel-plugin/weather.c:1085
 #, c-format
 msgid "Error writing cache file %s!"
-msgstr ""
+msgstr "Chyba při zápisu vyrovnávacího souboru %s"
 
 #: ../panel-plugin/weather.c:1448
 #, c-format
@@ -221,6 +231,8 @@ msgstr "Nelze aktualizovat informace o počasí"
 #: ../panel-plugin/weather.c:1705
 msgid "No default icon theme? This should not happen, plugin will crash!"
 msgstr ""
+"Žádný výchozí motiv ikon? Toto by se nemělo stát, zásuvný modul přestane "
+"pracovat!"
 
 #: ../panel-plugin/weather.c:1925
 #, fuzzy
@@ -229,7 +241,7 @@ msgstr "Sleduje aktuální počasí a předpovědi"
 
 #: ../panel-plugin/weather.c:1927
 msgid "Copyright (c) 2003-2013\n"
-msgstr ""
+msgstr "Copyright (c) 2003-2013\n"
 
 #.
 #. * TRANSLATORS: The abbreviations in parentheses will be shown in
@@ -245,13 +257,12 @@ msgid "Temperature (T)"
 msgstr "Teplota (T)"
 
 #: ../panel-plugin/weather-config.c:97
-#, fuzzy
 msgid "Barometric pressure (P)"
-msgstr "Atmosférický tlak (P)"
+msgstr "Atmosférický tlak (AT)"
 
 #: ../panel-plugin/weather-config.c:98
 msgid "Wind speed (WS)"
-msgstr "Rychlost větru (WS)"
+msgstr "Rychlost větru (RV)"
 
 #: ../panel-plugin/weather-config.c:99
 msgid "Wind speed - Beaufort scale (WB)"
@@ -263,28 +274,25 @@ msgstr "Směr větru (SV)"
 
 #: ../panel-plugin/weather-config.c:101
 msgid "Wind direction in degrees (WD)"
-msgstr "Směr větru ve stupních(SV)"
+msgstr "Směr větru ve stupních (SV)"
 
 #: ../panel-plugin/weather-config.c:102
 msgid "Humidity (H)"
 msgstr "Vlhkost (V)"
 
 #: ../panel-plugin/weather-config.c:103
-#, fuzzy
 msgid "Dew point (D)"
-msgstr "Rosný bod (DP)"
+msgstr "Rosný bod (R)"
 
 #: ../panel-plugin/weather-config.c:104
-#, fuzzy
 msgid "Apparent temperature (A)"
-msgstr "Teplota (T)"
+msgstr "Zdánlivá teplota (Z)"
 
 #: ../panel-plugin/weather-config.c:105
 msgid "Low clouds (CL)"
 msgstr "Nízká oblačnost (NO)"
 
 #: ../panel-plugin/weather-config.c:106
-#, fuzzy
 msgid "Middle clouds (CM)"
 msgstr "Středně vysoká oblačnost (SVO)"
 
@@ -315,11 +323,11 @@ msgstr "Hledání..."
 
 #: ../panel-plugin/weather-config.c:385
 msgid "meters"
-msgstr ""
+msgstr "metry"
 
 #: ../panel-plugin/weather-config.c:394
 msgid "feet"
-msgstr ""
+msgstr "stopy"
 
 #: ../panel-plugin/weather-config.c:488
 #, fuzzy
@@ -331,6 +339,8 @@ msgid ""
 "Change the name for the location to your liking. It is used for display and "
 "does not affect the location parameters in any way."
 msgstr ""
+"Změňte název umístění podle vašich představ. Název se používá pouze ke "
+"zobrazení a žádným způsobem neovlivňuje parametry umístění."
 
 #: ../panel-plugin/weather-config.c:499
 msgid "Chan_ge..."
@@ -338,7 +348,7 @@ msgstr "Změnit..."
 
 #: ../panel-plugin/weather-config.c:502
 msgid "Search for a new location and auto-detect its parameters."
-msgstr ""
+msgstr "Hledat nové umístění a automaticky najít jeho parametry."
 
 #: ../panel-plugin/weather-config.c:521
 #, fuzzy
@@ -351,6 +361,9 @@ msgid ""
 "surface. If you change this value manually, you need to provide altitude and "
 "timezone manually too."
 msgstr ""
+"Zeměpisná šířka určuje severojižní pozici bodu na zemském povrchu. Pokud "
+"tuto hodnotu změníte ručně, bude nutné vložit také zeměpisnou délku a časové "
+"pásmo."
 
 #: ../panel-plugin/weather-config.c:535
 #, fuzzy
@@ -363,6 +376,9 @@ msgid ""
 "surface. If you change this value manually, you need to provide altitude and "
 "timezone manually too."
 msgstr ""
+"Zeměpisná délka určuje východozápadní pozici bodu na zemském povrchu. Pokud "
+"tuto hodnotu změnít ručně, bude nutné vložit také zeměpisnou šířku a časové "
+"pásmo."
 
 #: ../panel-plugin/weather-config.c:549 ../panel-plugin/weather-config.c:1000
 #, fuzzy
@@ -384,28 +400,52 @@ msgid ""
 "but small differences will have no influence on the weather data. Inside "
 "Norway, this setting has no effect at all."
 msgstr ""
+"Model terénu použitý webovou službou met.no není příliš vhodný pro uzemí "
+"nacházející se mimo Norsko, je tedy nezbytné zadat nadmořskou výšku jako "
+"dodatečný parametr, jinak nebudou poskytované hodnoty správné.\n"
+"\n"
+"Zásuvný modul se pokusí automaticky zjistit nadmořskou výšku pomocí webové "
+"služby GeoNames, ale ani ta nemusí být vždy přesná, proto ji můžete změnit "
+"zde.\n"
+"\n"
+"Nadmořská výška je určena v metrech nad mořem, případně ve stopách, pokud "
+"změníte typ jednotek délky na stránce jednotek. Měla by přibližně odpovídat "
+"skutečné hodnotě, drobné rozdíly mít však vliv na údaje o počasí nebudou. V "
+"Norsku nemá toto nastavení žádný vliv."
 
 #: ../panel-plugin/weather-config.c:572
 msgid "_Timezone:"
-msgstr ""
+msgstr "Časové :pásmo:"
 
 #: ../panel-plugin/weather-config.c:580
+#, fuzzy
 msgid ""
 "If the chosen location is not in your current timezone, then it is necessary "
 "to <i>put</i> the plugin into that other timezone for the times to be shown "
 "correctly. The proper timezone will be auto-detected via the GeoNames web "
 "service, but you might want to correct it if necessary.\n"
 "Leave this field empty to use the timezone set by your system. Invalid "
-"entries will cause the use of UTC time, but that may also depend on your system."
+"entries will cause the use of UTC time, but that may also depend on your "
+"system."
 msgstr ""
+"Pokud se zvolené umístění nenachází ve vašem časovém pásmu, je nezbytné "
+"<i>umístit</i> tento zásuvný modul do jiného časového pásma, aby se časy "
+"zobrazovaly správně. Správné časové pásmo se automaticky detekuje pomocí "
+"webové služby GeoNames, ale v případě potřeby jej můžete opravit.\n"
+"Toto pole ponechte prázdné, pokud chcete, aby časové pásmo nastavil systém. "
+"Neplatné záznamy způsobí přepnutí na univerzální čas UTC, který může být "
+"také závislý na systému."
 
 #: ../panel-plugin/weather-config.c:605
 msgid ""
 "<i>Please change location name to your liking and correct\n"
 "altitude and timezone if they are not auto-detected correctly.</i>"
 msgstr ""
+"<i>Změňte název umístění podle vašich představ a upravte\n"
+"zeměpisnou délku a šířku, pokud nebyly automaticky nalezeny správně</i>"
 
 #: ../panel-plugin/weather-config.c:630
+#, fuzzy
 msgid ""
 "Named after the astronomer Anders Celsius who invented the original scale in "
 "1742, the Celsius scale is an international standard unit and nowadays "
@@ -419,6 +459,17 @@ msgid ""
 "expressing temperatures because its numbers can be an easy indicator for the "
 "formation of black ice and snow."
 msgstr ""
+"Jednotka byla pojmenováva po astronomovi Andersovi Celsiovi, který v roce "
+"1742 vynalezl původní stupnici. Celsiova stupnice je mezinárodní standardní "
+"jednotkou, dnes definovaná Kelvinovou stupnicí. 0 °C odpovídá teplotě 273,15 "
+"K a změna teploty o jeden stupeň Celsia odpovídá změně o jeden Kelvin. Je "
+"definována bodem tání vody při 0 °C a bodem varu při 100 °C při normální "
+"atmosférickém tlaku (1 atm = 1013,5 hPa). Až do roku 1948 byla jednotka "
+"známá jako <i>centigrad</i>, z lat. <i>centum</i> (sto) a <i>gradus</i> "
+"(stupeň).\n"
+"V meteorologii i běžném životě je Celsiova stupnice velmi pohodlná pro "
+"vyjádření teplot, protože jsou její údaje jednoduchým indikátorem tvorby "
+"ledu a sněhu."
 
 #: ../panel-plugin/weather-config.c:646
 msgid ""
@@ -436,6 +487,19 @@ msgid ""
 "these countries during the metrification process in the mid to late 20th "
 "century."
 msgstr ""
+"Současná Fahrenheitova teplotní stupnice je založena na původní stupnici "
+"fyzika Daniela Gabriela Fahrenheita z roku 1724. 0 °F byla na původní "
+"stupnici teplota tání solného roztoku při normálním atmosférickém tlaku, což "
+"byla nejnižší dosažitelná teplota tohoto roztoku ledu, soli a chloridu "
+"amonného. Teplota tání vody je 32 °F a její teplota varu je 212 °F. "
+"Fahrenheitova a Celsiova stupnice se protínají v -40 stupních. Teploty na "
+"Fahrenheitově stupnici obvykle neklesají do záporných hodnot ani při "
+"chladných zimách.\n"
+"Díky vynálezcově vysoké reputaci a jeho členství v Londýnské Královské "
+"společnosti se Fahrenheitova stupnice těšila velké popularitě v mnoha "
+"anglicky mluvících zemích, ale ve většině z těchto zemí byla během přechodu "
+"na metrický systém ve druhé polovině 20. století nahrazena stupnicí "
+"Celsiovou."
 
 #: ../panel-plugin/weather-config.c:689
 msgid ""
@@ -443,8 +507,13 @@ msgid ""
 "Pascal, is a SI derived unit and a measure of force per unit area, defined "
 "as one newton per square meter. One standard atmosphere (atm) is 1013.25 hPa."
 msgstr ""
+"Pascal, pojmenovaný po matematikovi, fyzikovi a filozofovi Blaise Pascalovi, "
+"je odvozená jednotka soustavy SI, vyjadřující sílu působící na jednotku "
+"plochy, definovaná jako jeden newton na metr čtvereční. Jedna atmosféra "
+"(atm) je 1013,25 hPa."
 
 #: ../panel-plugin/weather-config.c:696
+#, fuzzy
 msgid ""
 "Inches of mercury is still widely used for barometric pressure in weather "
 "reports, refrigeration and aviation in the United States, but seldom used "
@@ -452,8 +521,14 @@ msgid ""
 "of mercury of 1 inch in height at 32 °F (0 °C) at the standard acceleration "
 "of gravity."
 msgstr ""
+"Jednotka palce rtuťového sloupce je stále široce využívaná v informacích o "
+"počasí, ochlazování a v letectví ve Spojených státech. mimo ně se však "
+"používá jen zřídka. Je definovaná jako tlak působený kruhovým sloupcem rtuti "
+"o průměru a výšce jednoho palce při teplotě 32 °F (0 °C) při standardním "
+"tíhovém zrychlení."
 
 #: ../panel-plugin/weather-config.c:704
+#, fuzzy
 msgid ""
 "The pound per square inch is a unit of pressure based on avoirdupois units "
 "(a system of weights based on a pound of 16 ounces) and defined as the "
@@ -462,6 +537,11 @@ msgid ""
 "everyday life in Canada, the United Kingdom and maybe some former British "
 "Colonies."
 msgstr ""
+"Libra na palec čtvereční je jednotka tlaku založená na jednotkách "
+"avoirdupois (váhové soustavě založené na libře o 16 uncích) a je definovaná "
+"jako tlak, který působí jedna libra na plochu jednoho čtverečního palce. "
+"Používá se ve Spojených státech, do určité míry v běžném životě v Kanadě, "
+"Spojeném království a v některých bývalých britských koloniích."
 
 #: ../panel-plugin/weather-config.c:713
 msgid ""
@@ -471,28 +551,40 @@ msgid ""
 "of 1 torr is approximately equal to one millimeter of mercury, and one "
 "standard atmosphere (atm) equals 760 Torr."
 msgstr ""
+"Jednotka torr byla pojmenována po fyzikovi a matematikovi Evangelistovi "
+"Torricellim, který v roce 1644 objevil princip barometru a představil "
+"veřejnosti první rtuťový barometr. Tlak jednoho torru odpovídá přibližně "
+"jednomu milimentru rtuti a jedna atmosféra (atm) je 760 torrů."
 
 #: ../panel-plugin/weather-config.c:747
 msgid "Wind speeds in TV or in the news are often provided in km/h."
 msgstr ""
+"O rychlostech větru se v televizi nebo v novinách většinou informuje v km/h"
 
 #: ../panel-plugin/weather-config.c:751
+#, fuzzy
 msgid ""
 "Miles per hour is an imperial unit of speed expressing the number of statute "
 "miles covered in one hour."
 msgstr ""
+"Míle za hodinu jsou imperiální jednotkou rychlosti vyjadřující počet mil za "
+"jednu hodinu."
 
 #: ../panel-plugin/weather-config.c:755
 msgid ""
 "Meter per second is <i>the</i> unit typically used by meteorologists to "
 "denote wind speeds."
 msgstr ""
+"Metr za sekund je jednotka užívaná meteorology pro měření rychlosti větru."
 
 #: ../panel-plugin/weather-config.c:759
+#, fuzzy
 msgid ""
 "The foot per second (pl. feet per second) in the imperial unit system is the "
 "counterpart to the meter per second in the International System of Units."
 msgstr ""
+"Stopa za sekundu je v imperiální soustavě jednotek doplňková jednotka v "
+"soustavě jednotek SI."
 
 #: ../panel-plugin/weather-config.c:764
 msgid ""
@@ -501,12 +593,19 @@ msgid ""
 "meteorology and in maritime and air navigation. A vessel travelling at 1 "
 "knot along a meridian travels one minute of geographic latitude in one hour."
 msgstr ""
+"Uzel je jednotka rychlosti odpovídající jedné námořní míli (1,852 km) za "
+"hodinu, tedy přibližně 1,152 mil/h. Je mezinárodně užívanou jednotkou v "
+"meteorologii a v námořní a letecké navigaci. Plavidlo, plující rychlostí "
+"jednoho uzlu podél poledníku, urazí za jednu hodinu vzdálenost jednoho "
+"stupně zeměpisné šířky."
 
 #: ../panel-plugin/weather-config.c:797
 msgid ""
 "1 millimeter is one thousandth of a meter - the fundamental unit of length "
 "in the International System of Units -, or approximately 0.04 inches."
 msgstr ""
+"Jeden milimetr je jedna tisícina metru (základní jednotky délky soustavy "
+"SI), přibližně 0,04 palce."
 
 #: ../panel-plugin/weather-config.c:802
 msgid ""
@@ -516,6 +615,10 @@ msgid ""
 "measure, but the current internationally accepted value is exactly 25.4 "
 "millimeters."
 msgstr ""
+"Anglické slovo <i>inch</i> (česky palec) pochází z latinského <i>uncia</i> - "
+"<i>dvanáctina</i> (v tomto případě dvanáctina stopy). V minulosti existovalo "
+"mnoho různých standardů pro palec, lišící se velikostí, ale v současnosti je "
+"mezinárodně uznávanou hodnotou přesně 25,4 milimetru."
 
 #: ../panel-plugin/weather-config.c:835
 msgid ""
@@ -525,6 +628,10 @@ msgid ""
 "periodically refined to reflect growing knowledge of metrology (the science "
 "of measurement)."
 msgstr ""
+"Metr je základní jednotkou délky soustavy jednotek SI. Původní záměr byl, "
+"aby jednotka odpovídala jedné desetimiliontině vzdálenosti rovníku od "
+"Severního pólu v úrovni moře, jeho definice však byla několikrát změněna "
+"tak, aby odpovídala rostoucím znalostem metrologie (vědě o měření)."
 
 #: ../panel-plugin/weather-config.c:843
 msgid ""
@@ -588,11 +695,11 @@ msgstr "Teplota"
 
 #: ../panel-plugin/weather-config.c:954
 msgid "Celsius (°C)"
-msgstr ""
+msgstr "Stupně Celsia (°C)"
 
 #: ../panel-plugin/weather-config.c:955
 msgid "Fahrenheit (°F)"
-msgstr ""
+msgstr "Stupně Fahrenheita (°F)"
 
 #: ../panel-plugin/weather-config.c:960
 #, fuzzy
@@ -601,19 +708,19 @@ msgstr "Atmosférický tlak (P)"
 
 #: ../panel-plugin/weather-config.c:963
 msgid "Hectopascals (hPa)"
-msgstr ""
+msgstr "Hektopascaly (hPa)"
 
 #: ../panel-plugin/weather-config.c:965
 msgid "Inches of mercury (inHg)"
-msgstr ""
+msgstr "Palce rtuťového sloupce (inHg)"
 
 #: ../panel-plugin/weather-config.c:967
 msgid "Pound-force per square inch (psi)"
-msgstr ""
+msgstr "Libry na čtvereční palec (psi)"
 
 #: ../panel-plugin/weather-config.c:969
 msgid "Torr (mmHg)"
-msgstr ""
+msgstr "Torr (mmHg)"
 
 #: ../panel-plugin/weather-config.c:974
 #, fuzzy
@@ -622,23 +729,23 @@ msgstr "Rychlost větru (WS)"
 
 #: ../panel-plugin/weather-config.c:977
 msgid "Kilometers per hour (km/h)"
-msgstr ""
+msgstr "Kilometry za hodinu (km/h)"
 
 #: ../panel-plugin/weather-config.c:979
 msgid "Miles per hour (mph)"
-msgstr ""
+msgstr "Míle za hodinu (mil/h)"
 
 #: ../panel-plugin/weather-config.c:981
 msgid "Meters per second (m/s)"
-msgstr ""
+msgstr "Metry za sekundu (m/s)"
 
 #: ../panel-plugin/weather-config.c:983
 msgid "Feet per second (ft/s)"
-msgstr ""
+msgstr "Stopy za sekundu (ft/s)"
 
 #: ../panel-plugin/weather-config.c:985
 msgid "Knots (kt)"
-msgstr ""
+msgstr "Uzly (kt)"
 
 #: ../panel-plugin/weather-config.c:990
 #, fuzzy
@@ -649,19 +756,19 @@ msgstr ""
 
 #: ../panel-plugin/weather-config.c:993
 msgid "Millimeters (mm)"
-msgstr ""
+msgstr "Milimetry (mm)"
 
 #: ../panel-plugin/weather-config.c:995
 msgid "Inches (in)"
-msgstr ""
+msgstr "Palce (in)"
 
 #: ../panel-plugin/weather-config.c:1003
 msgid "Meters (m)"
-msgstr ""
+msgstr "Metry (m)"
 
 #: ../panel-plugin/weather-config.c:1005
 msgid "Feet (ft)"
-msgstr ""
+msgstr "Stopy (ft)"
 
 #: ../panel-plugin/weather-config.c:1014
 #, fuzzy
@@ -680,15 +787,15 @@ msgstr "Teplota větru"
 
 #: ../panel-plugin/weather-config.c:1020
 msgid "Steadman"
-msgstr ""
+msgstr "Steadman"
 
 #: ../panel-plugin/weather-config.c:1021
 msgid "Quayle-Steadman"
-msgstr ""
+msgstr "Quayle-Steadman"
 
 #: ../panel-plugin/weather-config.c:1044
 msgid "Choose an icon theme."
-msgstr ""
+msgstr "Zvolte motiv ikon."
 
 #: ../panel-plugin/weather-config.c:1049
 #, c-format
@@ -716,7 +823,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-config.c:1165
 msgid "_Icon theme:"
-msgstr ""
+msgstr "Motiv _ikon:"
 
 #: ../panel-plugin/weather-config.c:1167
 msgid ""
@@ -726,24 +833,32 @@ msgid ""
 "README file. New icon themes will be detected everytime you open this config "
 "dialog."
 msgstr ""
+"Zde jsou vypsány dostupné motivy ikon. Motivy ikon můžete přidat do adresáře "
+"$HOME/.config/xfce4/weather/icons (nebo do odpovídajícího adresáře systému). "
+"Informace o vytváření motivů ikon naleznete v souboru README. Nové motivy "
+"ikon budou nalezeny při každém spuštění tohoto konfiguračního dialogového "
+"okna."
 
 #: ../panel-plugin/weather-config.c:1189
 msgid "_Tooltip style:"
-msgstr ""
+msgstr "_Styl tipu:"
 
 #: ../panel-plugin/weather-config.c:1191
 msgid "Simple"
-msgstr ""
+msgstr "Jednoduchý"
 
 #: ../panel-plugin/weather-config.c:1192
 msgid "Verbose"
-msgstr ""
+msgstr "Podrobný"
 
 #: ../panel-plugin/weather-config.c:1195
+#, fuzzy
 msgid ""
 "Choose your preferred tooltip style. Some styles give a lot of useful data, "
 "some are clearer but provide less data on a glance."
 msgstr ""
+"Zvolte si upřednostňovaný styl tipů. Některé styly poskytují mnoho "
+"užitečných dat, některé jsou čistější, ale poskytují jich méně."
 
 #: ../panel-plugin/weather-config.c:1207
 #, fuzzy
@@ -752,11 +867,11 @@ msgstr "_Předpověď počasí"
 
 #: ../panel-plugin/weather-config.c:1209
 msgid "Days in columns"
-msgstr ""
+msgstr "Dny ve sloupcích"
 
 #: ../panel-plugin/weather-config.c:1210
 msgid "Days in rows"
-msgstr ""
+msgstr "Dny v řádcích"
 
 #: ../panel-plugin/weather-config.c:1218
 #, fuzzy
@@ -775,21 +890,24 @@ msgstr ""
 
 #: ../panel-plugin/weather-config.c:1241
 msgid "_Round values"
-msgstr ""
+msgstr "_Zaokrouhlit hodnoty"
 
 #: ../panel-plugin/weather-config.c:1243
+#, fuzzy
 msgid ""
 "Check to round values everywhere except on the details page in the summary "
 "window."
 msgstr ""
+"Tuto možnost zaškrtněte pro zaokrouhlení všech hodnot kromě stránky s "
+"podrobnostmi v okně celkového přehledu"
 
 #: ../panel-plugin/weather-config.c:1293 ../panel-plugin/weather-config.c:1757
 msgid "Select _font"
-msgstr ""
+msgstr "Vybrat _písmo"
 
 #: ../panel-plugin/weather-config.c:1310
 msgid "Select font"
-msgstr ""
+msgstr "Vybrat písmo"
 
 #. TRANSLATORS: Fallback value, usually never shown.
 #: ../panel-plugin/weather-config.c:1442
@@ -923,8 +1041,8 @@ msgid ""
 "generated locally such as from a nearby lake, river, ocean, or simply moist "
 "ground, that forms when the difference between temperature and dew point is "
 "below 2.5 °C (4 °F), usually at a relative humidity of 100%. Fog commonly "
-"produces precipitation in the form of drizzle or very light snow and "
-"reduces visibility to less than 1 km (5/8 statute mile)."
+"produces precipitation in the form of drizzle or very light snow and reduces "
+"visibility to less than 1 km (5/8 statute mile)."
 msgstr ""
 
 #: ../panel-plugin/weather-config.c:1576
@@ -932,10 +1050,10 @@ msgid ""
 "The amount of rain, drizzle, sleet, hail, snow, graupel and other forms of "
 "water falling from the sky over a specific period.\n"
 "\n"
-"The values reported by met.no are those of precipitation in the liquid "
-"state - or in other words: of rain -, so if snow is expected (but not "
-"sleet), then the amount of snow will be <i>guessed</i> by multiplying the "
-"original value by a ratio dependent on the air temperature:\n"
+"The values reported by met.no are those of precipitation in the liquid state "
+"- or in other words: of rain -, so if snow is expected (but not sleet), then "
+"the amount of snow will be <i>guessed</i> by multiplying the original value "
+"by a ratio dependent on the air temperature:\n"
 "\n"
 "<tt><small>                   T &lt; -11.1 °C (12 °F) =&gt; 1:12\n"
 "-11.1 °C (12 °F) &lt; T &lt;  -4.4 °C (24 °F) =&gt; 1:10\n"
@@ -1066,11 +1184,11 @@ msgstr "_Umístění:"
 
 #: ../panel-plugin/weather-config.c:2003
 msgid "_Units"
-msgstr ""
+msgstr "_Jednotky"
 
 #: ../panel-plugin/weather-config.c:2006
 msgid "_Appearance"
-msgstr ""
+msgstr "_Vzhled"
 
 #: ../panel-plugin/weather-config.c:2009
 msgid "_Scrollbox"
@@ -1098,7 +1216,7 @@ msgstr "hPa"
 
 #: ../panel-plugin/weather-data.c:441
 msgid "inHg"
-msgstr ""
+msgstr "inHg"
 
 #: ../panel-plugin/weather-data.c:443
 msgid "psi"
@@ -1106,7 +1224,7 @@ msgstr "psi"
 
 #: ../panel-plugin/weather-data.c:445
 msgid "mmHg"
-msgstr ""
+msgstr "mmHg"
 
 #: ../panel-plugin/weather-data.c:450
 msgid "km/h"
@@ -1118,15 +1236,15 @@ msgstr "mi/h"
 
 #: ../panel-plugin/weather-data.c:454
 msgid "m/s"
-msgstr ""
+msgstr "m/s"
 
 #: ../panel-plugin/weather-data.c:456
 msgid "ft/s"
-msgstr ""
+msgstr "ft/s"
 
 #: ../panel-plugin/weather-data.c:458
 msgid "kt"
-msgstr ""
+msgstr "kt"
 
 #. TRANSLATORS: The degree sign is used like a unit for
 #. latitude, longitude, wind direction
@@ -1139,7 +1257,7 @@ msgstr "°F"
 #. clouds, fog, humidity
 #: ../panel-plugin/weather-data.c:474
 msgid "%"
-msgstr ""
+msgstr "%"
 
 #: ../panel-plugin/weather-data.c:476
 msgid "in"
@@ -1151,7 +1269,7 @@ msgstr "mm"
 
 #: ../panel-plugin/weather-data.c:540
 msgid "North"
-msgstr ""
+msgstr "Sever"
 
 #: ../panel-plugin/weather-data.c:540 ../panel-plugin/weather-translate.c:44
 msgid "N"
@@ -1159,7 +1277,7 @@ msgstr "S"
 
 #: ../panel-plugin/weather-data.c:543
 msgid "North-East"
-msgstr ""
+msgstr "Severovýchod"
 
 #: ../panel-plugin/weather-data.c:543 ../panel-plugin/weather-translate.c:46
 msgid "NE"
@@ -1167,7 +1285,7 @@ msgstr "SV"
 
 #: ../panel-plugin/weather-data.c:546
 msgid "East"
-msgstr ""
+msgstr "Východ"
 
 #: ../panel-plugin/weather-data.c:546 ../panel-plugin/weather-translate.c:48
 msgid "E"
@@ -1175,7 +1293,7 @@ msgstr "V"
 
 #: ../panel-plugin/weather-data.c:549
 msgid "South-East"
-msgstr ""
+msgstr "Jihovýchod"
 
 #: ../panel-plugin/weather-data.c:549 ../panel-plugin/weather-translate.c:50
 msgid "SE"
@@ -1183,7 +1301,7 @@ msgstr "JV"
 
 #: ../panel-plugin/weather-data.c:552
 msgid "South"
-msgstr ""
+msgstr "Jih"
 
 #. TRANSLATORS: Wind directions. It's where the wind comes _from_.
 #: ../panel-plugin/weather-data.c:552 ../panel-plugin/weather-translate.c:36
@@ -1192,7 +1310,7 @@ msgstr "J"
 
 #: ../panel-plugin/weather-data.c:555
 msgid "South-West"
-msgstr ""
+msgstr "Jihozápad"
 
 #: ../panel-plugin/weather-data.c:555 ../panel-plugin/weather-translate.c:38
 msgid "SW"
@@ -1200,7 +1318,7 @@ msgstr "JZ"
 
 #: ../panel-plugin/weather-data.c:558
 msgid "West"
-msgstr ""
+msgstr "Západ"
 
 #: ../panel-plugin/weather-data.c:558 ../panel-plugin/weather-translate.c:40
 msgid "W"
@@ -1208,7 +1326,7 @@ msgstr "Z"
 
 #: ../panel-plugin/weather-data.c:561
 msgid "North-West"
-msgstr ""
+msgstr "Severozápad"
 
 #: ../panel-plugin/weather-data.c:561 ../panel-plugin/weather-translate.c:42
 msgid "NW"
@@ -1216,7 +1334,7 @@ msgstr "SZ"
 
 #: ../panel-plugin/weather-icon.c:134
 msgid "No icon theme!"
-msgstr ""
+msgstr "Žádný motiv ikon"
 
 #: ../panel-plugin/weather-search.c:128 ../panel-plugin/weather-search.c:252
 msgid "Results"
@@ -1277,7 +1395,7 @@ msgstr "\tZápad slunce:\t\t%s\n"
 #.
 #: ../panel-plugin/weather-summary.c:232
 msgid "LTR"
-msgstr ""
+msgstr "LTR"
 
 #: ../panel-plugin/weather-summary.c:279
 #, c-format
@@ -1515,7 +1633,6 @@ msgid "Low clouds"
 msgstr "Nízká oblačnost"
 
 #: ../panel-plugin/weather-summary.c:518
-#, fuzzy
 msgid "Middle clouds"
 msgstr "Středně vysoká oblačnost"
 
@@ -1562,11 +1679,8 @@ msgid ""
 msgstr ""
 
 #: ../panel-plugin/weather-summary.c:540
-#, fuzzy
 msgid "The Norwegian Meteorological Institute"
-msgstr ""
-"\n"
-"Údaje z Norského meteorologického ústavu\n"
+msgstr "Norský meteorologický ústav"
 
 #: ../panel-plugin/weather-summary.c:592
 #, c-format
@@ -1605,9 +1719,8 @@ msgid ""
 msgstr ""
 
 #: ../panel-plugin/weather-summary.c:634
-#, fuzzy
 msgid "<b>Temperatures</b>\n"
-msgstr "<b>Teplota</b>"
+msgstr "<b>Teploty</b>\n"
 
 #: ../panel-plugin/weather-summary.c:635
 #, c-format
@@ -1622,11 +1735,8 @@ msgid ""
 msgstr ""
 
 #: ../panel-plugin/weather-summary.c:644
-#, fuzzy
 msgid "<b>Atmosphere</b>\n"
-msgstr ""
-"\n"
-"Atmosférický tlak\n"
+msgstr "<b>Atmosférický tlak</b>\n"
 
 #: ../panel-plugin/weather-summary.c:645
 #, c-format
@@ -1641,11 +1751,8 @@ msgid ""
 msgstr ""
 
 #: ../panel-plugin/weather-summary.c:654
-#, fuzzy
 msgid "<b>Precipitation</b>\n"
-msgstr ""
-"\n"
-"Srážky\n"
+msgstr "<b>Srážky</b>\n"
 
 #: ../panel-plugin/weather-summary.c:655
 #, c-format
@@ -1655,9 +1762,8 @@ msgid ""
 msgstr ""
 
 #: ../panel-plugin/weather-summary.c:660
-#, fuzzy
 msgid "<b>Clouds</b>\n"
-msgstr "<b>Vítr</b>"
+msgstr "<b>Oblačnost</b>\n"
 
 #. TRANSLATORS: Clouds percentages are aligned to the right in the
 #. tooltip, the %5s are needed for that and are used both for
@@ -1673,9 +1779,9 @@ msgid "<tt><small>Low clouds:    %5s%s%s</small></tt>\n"
 msgstr ""
 
 #: ../panel-plugin/weather-summary.c:670
-#, fuzzy, c-format
+#, c-format
 msgid "<tt><small>Middle clouds: %5s%s%s</small></tt>\n"
-msgstr "Středně vysoká oblačnost"
+msgstr "<tt><small>Středně vysoká oblačnost: %5s%s%s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:673
 #, c-format
@@ -1705,9 +1811,8 @@ msgid "Night"
 msgstr "Noc"
 
 #: ../panel-plugin/weather-summary.c:1034
-#, fuzzy
 msgid "Weather Report"
-msgstr "Informace o počasí pro: %s"
+msgstr "Informace o počasí"
 
 #: ../panel-plugin/weather-summary.c:1061
 msgid "Please set a location in the plugin settings."
