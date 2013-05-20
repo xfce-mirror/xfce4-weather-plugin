@@ -681,6 +681,87 @@ forecast_cell_get_tooltip_text(plugin_data *data,
 }
 
 
+static gchar *
+forecast_day_header_tooltip_text(xml_astro *astro)
+{
+    GString *text;
+    gchar *result, *day, *sunrise, *sunset, *moonrise, *moonset, *moonphase;
+
+    /* TRANSLATORS: Please use spaces as needed or desired to properly
+       align the values; Monospace font is enforced with <tt> tags for
+       alignment, and the text is enclosed in <small> tags because
+       that looks much better and saves space.
+    */
+
+    text = g_string_new("");
+    if (astro) {
+        day = format_date(astro->day, "%Y-%m-%d", TRUE);
+        g_string_append_printf(text, _("<b>%s</b>\n"), day);
+        g_free(day);
+
+        if (astro->sun_never_rises)
+            g_string_append(text, _("<tt><small>"
+                                    "Sunrise: The sun never rises this day."
+                                    "</small></tt>\n"));
+        else if (astro->sun_never_sets)
+            g_string_append(text, _("<tt><small>"
+                                    "Sunset: The sun never sets this day."
+                                    "</small></tt>\n"));
+        else {
+            sunrise = format_date(astro->sunrise, NULL, TRUE);
+            g_string_append_printf(text, _("<tt><small>"
+                                           "Sunrise: %s"
+                                           "</small></tt>\n"), sunrise);
+            g_free(sunrise);
+
+            sunset = format_date(astro->sunset, NULL, TRUE);
+            g_string_append_printf(text, _("<tt><small>"
+                                           "Sunset:  %s"
+                                           "</small></tt>\n\n"), sunset);
+            g_free(sunset);
+        }
+
+        if (astro->moon_phase)
+            g_string_append_printf(text, _("<tt><small>"
+                                           "Moon phase: %s"
+                                           "</small></tt>\n"),
+                                   translate_moon_phase(astro->moon_phase));
+        else
+            g_string_append(text, _("<tt><small>"
+                                    "Moon phase: Unknown"
+                                    "</small></tt>\n"));
+
+        if (astro->moon_never_rises)
+            g_string_append(text, _("<tt><small>"
+                                    "Moonrise: The moon never rises this day."
+                                    "</small></tt>\n"));
+        else if (astro->moon_never_sets)
+            g_string_append(text,
+                            _("<tt><small>"
+                              "Moonset: The moon never sets this day."
+                              "</small></tt>\n"));
+        else {
+            moonrise = format_date(astro->moonrise, NULL, TRUE);
+            g_string_append_printf(text, _("<tt><small>"
+                                           "Moonrise: %s"
+                                           "</small></tt>\n"), moonrise);
+            g_free(moonrise);
+
+            moonset = format_date(astro->moonset, NULL, TRUE);
+            g_string_append_printf(text, _("<tt><small>"
+                                           "Moonset:  %s"
+                                           "</small></tt>"), moonset);
+            g_free(moonset);
+        }
+    }
+
+    /* Free GString only and return its character data */
+    result = text->str;
+    g_string_free(text, FALSE);
+    return result;
+}
+
+
 static GtkWidget *
 wrap_forecast_cell(const GtkWidget *widget,
                    const GdkColor *color)
@@ -815,7 +896,8 @@ make_forecast(plugin_data *data)
     const GdkColor lightbg = {0, 0xeaea, 0xeaea, 0xeaea};
     const GdkColor darkbg = {0, 0x6666, 0x6666, 0x6666};
     GArray *daydata;
-    gchar *dayname;
+    xml_astro *astro;
+    gchar *dayname, *text;
     gint i;
     daytime daytime;
 
@@ -847,6 +929,11 @@ make_forecast(plugin_data *data)
         else
             ebox = add_forecast_header(dayname, 90.0, &darkbg);
         g_free(dayname);
+
+        /* add tooltip to forecast day header */
+        astro = get_astro_data_for_day(data->astrodata, i);
+        text = forecast_day_header_tooltip_text(astro);
+        gtk_widget_set_tooltip_markup(GTK_WIDGET(ebox), text);
 
         if (data->forecast_layout == FC_LAYOUT_CALENDAR)
             gtk_table_attach_defaults(GTK_TABLE(table), GTK_WIDGET(ebox),
