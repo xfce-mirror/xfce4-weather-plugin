@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-03 21:29+0200\n"
-"PO-Revision-Date: 2013-07-07 10:41+0000\n"
+"PO-Revision-Date: 2013-07-13 10:02+0000\n"
 "Last-Translator: Darkcircle <darkcircle.0426@gmail.com>\n"
 "Language-Team: Korean (http://www.transifex.com/projects/p/xfce/language/ko/)\n"
 "MIME-Version: 1.0\n"
@@ -191,7 +191,7 @@ msgid ""
 "<b>Fog:</b> %s    <b>Cloudiness:</b> %s\n"
 "\n"
 "<span size=\"smaller\">%s</span>"
-msgstr ""
+msgstr "<b><span size=\"large\">%1$s</span></b> <span size=\"medium\">(%2$s)</span>\n<b><span size=\"large\">%3$s</span></b>\n<span size=\"smaller\">%4$s부터 %5$s까지, 강수량: %6$s</span>\n\n<b>기온:</b> %7$s⇥⇥<span size=\"smaller\">(%8$s의 값)</span>\n<b>바람:</b> %11$s(%12$s) 에서 %9$s (보포르 규모 %10$s)\n<b>기압:</b> %13$s <b>습도:</b> %14$s\n<b>안개:</b> %15$s <b>운량:</b> %16$s\n\n<span size=\"smaller\">%17$s</span>"
 
 #: ../panel-plugin/weather.c:1711
 msgid "Cannot update weather data"
@@ -361,7 +361,7 @@ msgstr "시간대(_T):"
 msgid ""
 "If the chosen location is not in your current timezone, then it is necessary to <i>put</i> the plugin into that other timezone for the times to be shown correctly. The proper timezone will be auto-detected via the GeoNames web service, but you might want to correct it if necessary.\n"
 "Leave this field empty to use the timezone set by your system. Invalid entries will cause the use of UTC time, but that may also depend on your system."
-msgstr ""
+msgstr "선택한 지역이 현재 시간대가 아니라면, 시간이 올바르게 나타나도록 다른 시간대 정보를 플러그인에 <i>입력</i>해야 합니다. 적당한 시간대는 GeoNames 웹서비스를 통해 자동으로 감지하지만, 필요한 경우 올바르게 수정할 필요도 있습니다.\n시스템에서 설정한 시간대를 사용하시려면 빈 상태로 두십시오. 잘못된 항목 내용으로 말미암아 UTC 시간대를 사용하게끔 하겠지만, 이 또한 역시 시스템 상태에 따라 결정됩니다."
 
 #: ../panel-plugin/weather-config.c:610
 msgid ""
@@ -677,7 +677,7 @@ msgstr "단일 패널 행만 사용(_P)"
 msgid ""
 "Check to always use only a single row on a multi-row panel and a small icon "
 "in deskbar mode."
-msgstr ""
+msgstr "데스크 막대 모드에서 다중 행 패널 및 작은 아이콘 상태일때 단일 행 만을 항상 사용하려면 표시하십시오."
 
 #: ../panel-plugin/weather-config.c:1257
 msgid "_Tooltip style:"
@@ -800,7 +800,7 @@ msgid ""
 "the water content of air, relative humidity gives (in %) the current "
 "absolute humidity relative to the maximum for that air temperature and "
 "pressure."
-msgstr ""
+msgstr "습도는 공기중의 수분 분포양으로 정의하며, 강수, 안개, 이슬 확률과 함께 증가합니다. 절대 습도는 공기중의 수분의 양이며, 상대 습도는 기온과 기압에 대한 최대 상대 습도에 대한 현재 절대 습도(% 단위)로 나타냅니다."
 
 #: ../panel-plugin/weather-config.c:1568
 msgid ""
@@ -863,7 +863,7 @@ msgid ""
 "below 2.5 °C (4 °F), usually at a relative humidity of 100%. Fog commonly "
 "produces precipitation in the form of drizzle or very light snow and reduces"
 " visibility to less than 1 km (5/8 statute mile)."
-msgstr ""
+msgstr "안개는 낮게 깔린 구름의 형태이며, 보통 온도와 이슬점의 차가 2.5 °C (4 °F)이고, 상대습도가 100%일 경우, 호수, 강가, 바닷가 또는 습지 주변에서 지역적으로 습기를 동반하여 발생합니다. 안개는 보통 이슬 형태 또는 아주 적은 양의 눈으로 내리고, 가시거리를 1km(5/8 법정 마일) 내로 줄입니다."
 
 #: ../panel-plugin/weather-config.c:1644
 msgid ""
@@ -880,7 +880,7 @@ msgid ""
 "</small></tt>Example: If temperature is -5 °C (12 °F), then snow density will be low and a rain to snow ratio of 1:10 will be used for calculation. Assuming the reported value is 5 mm, then the calculated amount of snow precipitation is 50 mm.\n"
 "\n"
 "<b>Note</b>: While air temperature is an important factor in this calculation, there are other influencing factors that the plugin doesn't know about like the type of snow and ground temperature. Because of that, these rules will only lead to rough estimates and may not represent the real amount of snow."
-msgstr ""
+msgstr "비, 이슬비, 진눈깨비, 우박, 싸락눈 등 하늘에서 주기적으로 물이 떨어지는 양입니다.\n\nmet.no에서 알려주는 값은 액체의 상태에 따른 강수량입니다. 다른 말로 비의 양이라고도 합니다. 따라서 (진눈깨비가 아닌)눈이 예상된다면, 강설량은 대기 상태에 따른 비율 값을 곱하여 <i>추정</i>합니다.\n\n<tt><small> T &lt; -11.1 °C (12 °F) =&gt; 1:12\n-11.1 °C (12 °F) &lt; T &lt; -4.4 °C (24 °F) =&gt; 1:10\n-4.4 °C (24 °F) &lt; T &lt; -2.2 °C (28° F) =&gt; 1:7\n-2.2 °C (28 °F) &lt; T &lt; -0.6 °C (31 °F) =&gt; 1:5\n-0.6 °C (31 °F) &lt; T =&gt; 1:3\n\n</small></tt>예제: 온도가 -5 °C (12 °F)이면, 강설 밀도는 줄어들고 비 올 확률 대 눈 올 확률 비율 1:10을 계산에 사용합니다. 알려진 값을 5mm라고 하면 계산한 강설량은 50mm가 됩니다.\n\n<b>참고</b>: 이 계산에서 온도는 중요한 상수이지만 강설 형태와 지상 온도와 같은 다른 알 수 없는 영향 인자요소도 있습니다. 왜냐면 이 규칙은 대략적인 값을 구할 뿐이며, 실제 강설량을 표현하는 것은 아니기 때문입니다."
 
 #: ../panel-plugin/weather-config.c:1801
 msgid "Show scroll_box"
