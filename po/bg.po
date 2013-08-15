@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-03 21:29+0200\n"
-"PO-Revision-Date: 2013-08-14 11:42+0000\n"
+"PO-Revision-Date: 2013-08-15 13:31+0000\n"
 "Last-Translator: cybercop <cybercop_montana@abv.bg>\n"
 "Language-Team: Bulgarian (http://www.transifex.com/projects/p/xfce/language/bg/)\n"
 "MIME-Version: 1.0\n"
@@ -107,13 +107,13 @@ msgstr ""
 
 #: ../panel-plugin/weather.c:552
 msgid "Error parsing weather data!"
-msgstr ""
+msgstr "Грешка при получаване на данни за времето!"
 
 #: ../panel-plugin/weather.c:555
 #, c-format
 msgid ""
 "Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
-msgstr ""
+msgstr "Неуспешно изтегляне на данни за времето с HTTP Състояние %d, Причина: %s"
 
 #. start receive thread
 #: ../panel-plugin/weather.c:609 ../panel-plugin/weather.c:627
@@ -189,15 +189,15 @@ msgid ""
 "<b>Fog:</b> %s    <b>Cloudiness:</b> %s\n"
 "\n"
 "<span size=\"smaller\">%s</span>"
-msgstr ""
+msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n<b><span size=\"large\">%s</span></b>\n<span size=\"smaller\">от %s до %s, с %s на валежите</span>\n\n<b>Температура:</b> %s\t\t<span size=\"smaller\">(стийност в %s)</span>\n<b>Вятър:</b> %s (%sпо скалата на Бофорт) от %s(%s)\n<b>Налягане:</b> %s    <b>Влажност:</b> %s\n<b>Мъгла:</b> %s    <b>Облачност:</b> %s\n\n<span size=\"smaller\">%s</span>"
 
 #: ../panel-plugin/weather.c:1711
 msgid "Cannot update weather data"
-msgstr ""
+msgstr "Неуспешна актуализация на данните за времето"
 
 #: ../panel-plugin/weather.c:1784
 msgid "No default icon theme? This should not happen, plugin will crash!"
-msgstr ""
+msgstr "Няма налична икона? Това не трябва да се допуска, защото разширението няма да работи!"
 
 #. add refresh button to right click menu, for people who missed
 #. the middle mouse click feature
@@ -882,7 +882,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-config.c:1801
 msgid "Show scroll_box"
-msgstr ""
+msgstr "Покаци плъзгача"
 
 #: ../panel-plugin/weather-config.c:1803
 msgid ""
@@ -900,7 +900,7 @@ msgstr "Линии:"
 msgid ""
 "Decide how many values should be shown at once in the scrollbox. You can "
 "choose a smaller font or enlarge the panel to make more lines fit."
-msgstr ""
+msgstr "Определете, кои стойности следва да се отразяват веднага в кутията на плъзгача. Можете да изберете по-малък шрифт или увеличите панела, за да се поберат повече редове."
 
 #: ../panel-plugin/weather-config.c:1827
 msgid "Font and color:"
@@ -910,7 +910,7 @@ msgstr "Шрифт и цвят:"
 msgid ""
 "Choose a font you like and set it to a smaller or larger size. Middle-click "
 "on the button to unset the font and use your theme's default."
-msgstr ""
+msgstr "Изберете шрифт, ако искате да го настроите на по-малък или по-голям размер. Средния бутон на мишката върху бутона, за да махнете шрифта и да се използва по подразбиране за вашата тема."
 
 #: ../panel-plugin/weather-config.c:1845
 msgid ""
@@ -918,18 +918,18 @@ msgid ""
 "hardly readable. If this is the case or you simply want it to appear in "
 "another color, then you can change it using this button. Middle-click on the"
 " button to unset the scrollbox text color."
-msgstr ""
+msgstr "Може да има проблеми с някои теми, които предизвикват текста в кутията на плъзгача да бъде трудно разбираем. Ако това е така, или просто искате да се появи в друг цвят, след това можете да го промените чрез този бутон. Средния бутон на мишката върху бутона, за да премахнете оцветяването на текста в кутията на плъзгача."
 
 #: ../panel-plugin/weather-config.c:1869
 msgid "Labels to d_isplay"
-msgstr ""
+msgstr "Няма етикети"
 
 #: ../panel-plugin/weather-config.c:1872
 msgid ""
 "These are the values that will be shown in the scrollbox. Select a single "
 "value here and click the appropriate button to remove it or move it up and "
 "down in the list."
-msgstr ""
+msgstr "Това са стойностите, които ще бъдат показани в кутията на плъзгача. Изберете една стойност и щракнете върху съответния бутон, за да я премахнете или да я придвижите нагоре и надолу в списъка."
 
 #. button "add"
 #: ../panel-plugin/weather-config.c:1879
@@ -979,7 +979,7 @@ msgid ""
 "Scroll the current displayed value(s) out and the new value(s) in instead of"
 " simply changing them. Uncheck this option if you find the animation too "
 "distracting."
-msgstr ""
+msgstr "Превърта текущата показаната стойност(и) навън и новата стойност(и) навътре вместо просто да ги променя. Махнете отметката от тази опция, ако намерите анимацията за твърде разсейваща."
 
 #: ../panel-plugin/weather-config.c:2078
 msgid "_Location"
@@ -1246,21 +1246,21 @@ msgid ""
 "\tLast:\t%s\n"
 "\tNext:\t%s\n"
 "\tCurrent failed attempts: %d\n"
-msgstr ""
+msgstr "\tАстрономични данни:\n\tПредишни:\t%s\n\tСледващи:\t%s\n\tТекущи неуспешни опити: %d\n"
 
 #. calculation times
 #: ../panel-plugin/weather-summary.c:395
 msgid ""
 "\n"
 "Times Used for Calculations\n"
-msgstr ""
+msgstr "\nВремена, използвани за изчисленията\n"
 
 #: ../panel-plugin/weather-summary.c:398
 #, c-format
 msgid ""
 "\tTemperatures, wind, atmosphere and cloud data calculated\n"
 "\tfor:\t\t%s\n"
-msgstr ""
+msgstr "\tДанните за температурата, вятъра, атмосферата и облачността са изчислени\n\tза:\t\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:407
 #, c-format
@@ -1270,7 +1270,7 @@ msgid ""
 "\tusing the following time interval:\n"
 "\tStart:\t%s\n"
 "\tEnd:\t%s\n"
-msgstr ""
+msgstr "\n\tВалежите и времевите символи са изчислени\n\tкато се използва следният интервал от време:\n\tНачало:\t%s\n\tКрай:\t%s\n"
 
 #. sun and moon
 #: ../panel-plugin/weather-summary.c:418
@@ -1430,7 +1430,7 @@ msgstr "\nKiril Kirilov <cybercop_montana@abv.bg\n"
 msgid ""
 "\tEncyclopedic information partly taken from\n"
 "\t\t"
-msgstr ""
+msgstr "\tЧаст от енциклопедичната информация е взета от\n\t\t"
 
 #: ../panel-plugin/weather-summary.c:532
 msgid "Wikipedia"
@@ -1475,71 +1475,71 @@ msgstr "Утре"
 #. 
 #: ../panel-plugin/weather-summary.c:611
 msgid "<b>Times used for calculations</b>\n"
-msgstr ""
+msgstr "<b>Времена, използвани за изчисленията</b>\n"
 
 #: ../panel-plugin/weather-summary.c:613
 #, c-format
 msgid "<tt><small>Interval start:       %s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Начален интервал:       %s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:619
 #, c-format
 msgid "<tt><small>Interval end:         %s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Краен интрвал:         %s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:625
 #, c-format
 msgid ""
 "<tt><small>Data calculated for:  %s</small></tt>\n"
 "\n"
-msgstr ""
+msgstr "<tt><small>Данни, изчислени за:  %s</small></tt>\n\n"
 
 #: ../panel-plugin/weather-summary.c:631
 msgid "<b>Temperatures</b>\n"
-msgstr ""
+msgstr "<b>Температури</b>\n"
 
 #: ../panel-plugin/weather-summary.c:632
 #, c-format
 msgid "<tt><small>Dew point:            %s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Точка на оросяване:            %s%s%s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:636
 #, c-format
 msgid ""
 "<tt><small>Apparent temperature: %s%s%s</small></tt>\n"
 "\n"
-msgstr ""
+msgstr "<tt><small>Телесна температура: %s%s%s</small></tt>\n\n"
 
 #: ../panel-plugin/weather-summary.c:641
 msgid "<b>Atmosphere</b>\n"
-msgstr ""
+msgstr "<b>Атмосфера</b>\n"
 
 #: ../panel-plugin/weather-summary.c:642
 #, c-format
 msgid "<tt><small>Barometric pressure:  %s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Барометрично налягане:  %s%s%s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:646
 #, c-format
 msgid ""
 "<tt><small>Relative humidity:    %s%s%s</small></tt>\n"
 "\n"
-msgstr ""
+msgstr "<tt><small>Относителна влажност на въздуха:    %s%s%s</small></tt>\n\n"
 
 #: ../panel-plugin/weather-summary.c:651
 msgid "<b>Precipitation</b>\n"
-msgstr ""
+msgstr "<b>Валежи</b>\n"
 
 #: ../panel-plugin/weather-summary.c:652
 #, c-format
 msgid ""
 "<tt><small>Amount:        %s%s%s</small></tt>\n"
 "\n"
-msgstr ""
+msgstr "<tt><small>Количество:        %s%s%s</small></tt>\n\n"
 
 #: ../panel-plugin/weather-summary.c:657
 msgid "<b>Clouds</b>\n"
-msgstr ""
+msgstr "<b>Облаци</b>\n"
 
 #. TRANSLATORS: Clouds percentages are aligned to the right in the
 #. tooltip, the %5s are needed for that and are used both for
@@ -1547,97 +1547,97 @@ msgstr ""
 #: ../panel-plugin/weather-summary.c:661
 #, c-format
 msgid "<tt><small>Fog:           %5s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><Мъгла>Fog:           %5s%s%s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:664
 #, c-format
 msgid "<tt><small>Low clouds:    %5s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Ниска облачност:    %5s%s%s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:667
 #, c-format
 msgid "<tt><small>Middle clouds: %5s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Средно- висока облачност: %5s%s%s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:670
 #, c-format
 msgid "<tt><small>High clouds:   %5s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Висока облачност:   %5s%s%s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:673
 #, c-format
 msgid "<tt><small>Cloudiness:    %5s%s%s</small></tt>"
-msgstr ""
+msgstr "<tt><small>Облачно:    %5s%s%s</small></tt>"
 
 #. daytime headers
 #: ../panel-plugin/weather-summary.c:837
 msgid "Morning"
-msgstr ""
+msgstr "Сутрин"
 
 #: ../panel-plugin/weather-summary.c:838
 msgid "Afternoon"
-msgstr ""
+msgstr "Следобяд"
 
 #: ../panel-plugin/weather-summary.c:839
 msgid "Evening"
-msgstr ""
+msgstr "Вечер"
 
 #: ../panel-plugin/weather-summary.c:840
 msgid "Night"
-msgstr ""
+msgstr "Нощ"
 
 #: ../panel-plugin/weather-summary.c:1040
 msgid "Weather Report"
-msgstr ""
+msgstr "Метеорологични сведения"
 
 #: ../panel-plugin/weather-summary.c:1067
 msgid "Please set a location in the plugin settings."
-msgstr ""
+msgstr "Моля, задайте местоположение в настройките на разширението."
 
 #: ../panel-plugin/weather-summary.c:1069
 msgid "Currently no data available."
-msgstr ""
+msgstr "В момента няма налични данни."
 
 #: ../panel-plugin/weather-summary.c:1081
 msgid "_Forecast"
-msgstr ""
+msgstr "Прогноза"
 
 #: ../panel-plugin/weather-summary.c:1084
 msgid "_Details"
-msgstr ""
+msgstr "Подробности"
 
 #. TRANSLATORS: Moon phases
 #: ../panel-plugin/weather-translate.c:36
 msgid "New moon"
-msgstr ""
+msgstr "Новолуние"
 
 #: ../panel-plugin/weather-translate.c:37
 msgid "Waxing crescent"
-msgstr ""
+msgstr "Нарастващ полумесец"
 
 #: ../panel-plugin/weather-translate.c:38
 msgid "First quarter"
-msgstr ""
+msgstr "Първата четвърт"
 
 #: ../panel-plugin/weather-translate.c:39
 msgid "Waxing gibbous"
-msgstr ""
+msgstr "Нарастваща полупълна"
 
 #: ../panel-plugin/weather-translate.c:40
 msgid "Full moon"
-msgstr ""
+msgstr "Пълнолуние"
 
 #: ../panel-plugin/weather-translate.c:41
 msgid "Waning gibbous"
-msgstr ""
+msgstr "Намаляваща полупълна"
 
 #: ../panel-plugin/weather-translate.c:42
 msgid "Third quarter"
-msgstr ""
+msgstr "Трета четвърт"
 
 #: ../panel-plugin/weather-translate.c:43
 msgid "Waning crescent"
-msgstr ""
+msgstr "Намаляващ полумесец"
 
 #. * TRANSLATORS: How these symbols are named and defined is explained at
 #. * http://om.yr.no/forklaring/symbol/ and http://api.yr.no/faq.html#symbols.
@@ -1658,25 +1658,25 @@ msgstr ""
 #: ../panel-plugin/weather-translate.c:98
 #: ../panel-plugin/weather-translate.c:151
 msgid "Sunny"
-msgstr ""
+msgstr "Слънчево"
 
 #: ../panel-plugin/weather-translate.c:98
 #: ../panel-plugin/weather-translate.c:151
 msgid "Clear"
-msgstr ""
+msgstr "Ясно"
 
 #: ../panel-plugin/weather-translate.c:99
 #: ../panel-plugin/weather-translate.c:152
 msgid "Lightly cloudy"
-msgstr ""
+msgstr "Лека облачност"
 
 #: ../panel-plugin/weather-translate.c:100
 msgid "Partly cloudy"
-msgstr ""
+msgstr "Предимно облачно"
 
 #: ../panel-plugin/weather-translate.c:101
 msgid "Cloudy"
-msgstr ""
+msgstr "Облачно"
 
 #. *
 #. http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index:
@@ -1689,7 +1689,7 @@ msgstr ""
 #: ../panel-plugin/weather-translate.c:111
 #: ../panel-plugin/weather-translate.c:153
 msgid "Rain showers"
-msgstr ""
+msgstr "Преваляване"
 
 #. *
 #. http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index:
@@ -1699,22 +1699,22 @@ msgstr ""
 #. 
 #: ../panel-plugin/weather-translate.c:118
 msgid "Thunder showers"
-msgstr ""
+msgstr "Валеж с гръмотевици"
 
 #. Analogues to "Rain showers"
 #: ../panel-plugin/weather-translate.c:121
 msgid "Sleet showers"
-msgstr ""
+msgstr "Валеж от суграшица"
 
 #: ../panel-plugin/weather-translate.c:122
 #: ../panel-plugin/weather-translate.c:154
 msgid "Snow showers"
-msgstr ""
+msgstr "Снеговалеж"
 
 #. It's raining, usually incessantly, but not heavily.
 #: ../panel-plugin/weather-translate.c:125
 msgid "Light rain"
-msgstr ""
+msgstr "Лек дъжд"
 
 #. Heavy, usually incessant rain. met.no now uses "heavy rain", but personally
 #. I find light
@@ -1723,20 +1723,20 @@ msgstr ""
 #. * time ago.
 #: ../panel-plugin/weather-translate.c:130
 msgid "Rain"
-msgstr ""
+msgstr "Дъжд"
 
 #: ../panel-plugin/weather-translate.c:132
 msgid "Rain with thunder"
-msgstr ""
+msgstr "Дъжд и гръмотевици"
 
 #. Sleet is a mixture of rain and snow, but it's not hail.
 #: ../panel-plugin/weather-translate.c:135
 msgid "Sleet"
-msgstr ""
+msgstr "Суграшица"
 
 #: ../panel-plugin/weather-translate.c:137
 msgid "Snow"
-msgstr ""
+msgstr "Сняг"
 
 #. * http://en.wikipedia.org/wiki/Thundersnow:
 #. *   "Thundersnow, also known as a winter thunderstorm or a thunder
@@ -1749,25 +1749,25 @@ msgstr ""
 #. 
 #: ../panel-plugin/weather-translate.c:146
 msgid "Thundersnow"
-msgstr ""
+msgstr "Снежна буря"
 
 #. Same as symbols 1-15, but with thunder
 #: ../panel-plugin/weather-translate.c:157
 msgid "Sleet showers with thunder"
-msgstr ""
+msgstr "Суграшица с гръмотевици"
 
 #: ../panel-plugin/weather-translate.c:158
 msgid "Snow showers with thunder"
-msgstr ""
+msgstr "Снеговалеж с гръмотевици"
 
 #: ../panel-plugin/weather-translate.c:159
 msgid "Light rain with thunder"
-msgstr ""
+msgstr "Лек дъжд с гръмотевици"
 
 #: ../panel-plugin/weather-translate.c:160
 msgid "Sleet with thunder"
-msgstr ""
+msgstr "Суграшица с гръмотевици"
 
 #: ../panel-plugin/weather.desktop.in.h:2
 msgid "Show current weather conditions"
-msgstr ""
+msgstr "Покажи състоянието на времето в момента"
