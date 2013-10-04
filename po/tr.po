@@ -14,8 +14,8 @@ msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-03 21:29+0200\n"
-"PO-Revision-Date: 2013-09-24 00:46+0000\n"
-"Last-Translator: Fatih Erdem <93.fatiherdem@gmail.com>\n"
+"PO-Revision-Date: 2013-10-04 13:00+0000\n"
+"Last-Translator: Necdet Yücel <necdetyucel@gmail.com>\n"
 "Language-Team: Turkish (http://www.transifex.com/projects/p/xfce/language/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -172,7 +172,7 @@ msgid ""
 "<b>Wind:</b> %s from %s\n"
 "<b>Pressure:</b> %s\n"
 "<b>Humidity:</b> %s\n"
-msgstr ""
+msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n<b><span size=\"large\">%s</span></b>\n\n<b>Sıcaklık:</b> %s\n<b>Rüzgar:</b> %s ile %s\n<b>Basınç:</b> %s\n<b>Nem:</b> %s\n"
 
 #. * TRANSLATORS: Re-arrange and align at will, optionally using
 #. * abbreviations for labels if desired or necessary. Just take
@@ -195,7 +195,7 @@ msgid ""
 "<b>Fog:</b> %s    <b>Cloudiness:</b> %s\n"
 "\n"
 "<span size=\"smaller\">%s</span>"
-msgstr ""
+msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n<b><span size=\"large\">%s</span></b>\n<span size=\"smaller\">%s ile %s arasında, %s yağış ile</span>\n\n<b>Sıcaklık:</b> %s\t\t<span size=\"smaller\">(%s değerleriyle)</span>\n<b>Rüzgar:</b> %s (%son Beaufort ölçeğiyle) %s(%s)'den başlayarak\n<b>Basınç:</b> %s    <b>Nem:</b> %s\n<b>Sis:</b> %s    <b>Bulutluluk:</b> %s\n\n<span size=\"smaller\">%s</span>"
 
 #: ../panel-plugin/weather.c:1711
 msgid "Cannot update weather data"
@@ -203,7 +203,7 @@ msgstr "Hava durumu bilgileri güncellenemedi."
 
 #: ../panel-plugin/weather.c:1784
 msgid "No default icon theme? This should not happen, plugin will crash!"
-msgstr ""
+msgstr "Simge teması yüklü değil mi? Böyle olmamalı, eklenti çalışmayacaktır!"
 
 #. add refresh button to right click menu, for people who missed
 #. the middle mouse click feature
@@ -423,7 +423,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-config.c:752
 msgid "Wind speeds in TV or in the news are often provided in km/h."
-msgstr ""
+msgstr "TV'deki ve haberlerdeki rüzgar hızı genellikle km/h cinsinden verilmektedir."
 
 #: ../panel-plugin/weather-config.c:756
 msgid ""
@@ -532,7 +532,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-config.c:957
 msgid "_Temperature:"
-msgstr ""
+msgstr "_Sıcaklık:"
 
 #: ../panel-plugin/weather-config.c:959
 msgid "Celsius (°C)"
@@ -544,7 +544,7 @@ msgstr "Fahrenhayt (°F)"
 
 #: ../panel-plugin/weather-config.c:965
 msgid "Barometric _pressure:"
-msgstr ""
+msgstr "Barometrik _basınç:"
 
 #: ../panel-plugin/weather-config.c:968
 msgid "Hectopascals (hPa)"
@@ -552,7 +552,7 @@ msgstr "Hektopaskal (hPa)"
 
 #: ../panel-plugin/weather-config.c:970
 msgid "Inches of mercury (inHg)"
-msgstr ""
+msgstr "Civa İnç (inHg)"
 
 #: ../panel-plugin/weather-config.c:972
 msgid "Pound-force per square inch (psi)"
@@ -564,27 +564,27 @@ msgstr "Tor (mmHg)"
 
 #: ../panel-plugin/weather-config.c:979
 msgid "_Wind speed:"
-msgstr ""
+msgstr "_Rüzgar hızı:"
 
 #: ../panel-plugin/weather-config.c:982
 msgid "Kilometers per hour (km/h)"
-msgstr ""
+msgstr "Saatte kilometre olarak (km/h)"
 
 #: ../panel-plugin/weather-config.c:984
 msgid "Miles per hour (mph)"
-msgstr ""
+msgstr "Saatte mil olarak (mph)"
 
 #: ../panel-plugin/weather-config.c:986
 msgid "Meters per second (m/s)"
-msgstr ""
+msgstr "Saniyede metre olarak (m/s)"
 
 #: ../panel-plugin/weather-config.c:988
 msgid "Feet per second (ft/s)"
-msgstr ""
+msgstr "Saniyede feet olarak (ft/s)"
 
 #: ../panel-plugin/weather-config.c:990
 msgid "Knots (kt)"
-msgstr ""
+msgstr "Knots (kt)"
 
 #: ../panel-plugin/weather-config.c:995
 msgid "Prec_ipitations:"
@@ -900,7 +900,7 @@ msgstr ""
 #. values to show at once (multiple lines)
 #: ../panel-plugin/weather-config.c:1814
 msgid "Li_nes:"
-msgstr ""
+msgstr "_Satırlar:"
 
 #: ../panel-plugin/weather-config.c:1820
 msgid ""
@@ -940,7 +940,7 @@ msgstr ""
 #. button "add"
 #: ../panel-plugin/weather-config.c:1879
 msgid "A_dd"
-msgstr ""
+msgstr "_Ekle"
 
 #: ../panel-plugin/weather-config.c:1882
 msgid ""
@@ -961,7 +961,7 @@ msgstr ""
 #. button "move up"
 #: ../panel-plugin/weather-config.c:1905
 msgid "Move u_p"
-msgstr ""
+msgstr "Yukarı _taşı"
 
 #: ../panel-plugin/weather-config.c:1908
 msgid "Move the selected value up in the list of labels to display."
@@ -970,7 +970,7 @@ msgstr ""
 #. button "move down"
 #: ../panel-plugin/weather-config.c:1913
 msgid "Move do_wn"
-msgstr ""
+msgstr "Aşağı taşı"
 
 #: ../panel-plugin/weather-config.c:1916
 msgid "Move the selected value down in the list of labels to display."
@@ -1209,7 +1209,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-summary.c:281
 msgid "unknown"
-msgstr ""
+msgstr "bilinmeyen"
 
 #: ../panel-plugin/weather-summary.c:360
 msgid "Coordinates\n"
