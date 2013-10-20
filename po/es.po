@@ -4,6 +4,7 @@
 # 
 # Translators:
 # Rayonant <davidseg@gmail.com>, 2013
+# fserrador <fserrador@gmail.com>, 2013
 # MC <correomc2000-ing@yahoo.es>, 2013
 # Pablo Lezaeta <prflr88@gmail.com>, 2013
 msgid ""
@@ -11,8 +12,8 @@ msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-03 21:29+0200\n"
-"PO-Revision-Date: 2013-08-23 19:47+0000\n"
-"Last-Translator: Pablo Lezaeta <prflr88@gmail.com>\n"
+"PO-Revision-Date: 2013-10-20 10:29+0000\n"
+"Last-Translator: fserrador <fserrador@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/xfce/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -98,7 +99,7 @@ msgstr "¡Error analizando datos astronómicos!"
 msgid ""
 "Download of astronomical data failed with HTTP Status Code %d, Reason "
 "phrase: %s"
-msgstr ""
+msgstr "La descarga de datos de meteorología han fallado con el Código de Estado HTTP %d, Frase marcada: %s"
 
 #: ../panel-plugin/weather.c:534
 msgid ""
@@ -116,7 +117,7 @@ msgstr "¡Error analizando datos meteorológicos!"
 #, c-format
 msgid ""
 "Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
-msgstr ""
+msgstr "La descarga de datos de meteorología han fallado con el Código de Estado HTTP %d, Frase marcada: %s"
 
 #. start receive thread
 #: ../panel-plugin/weather.c:609 ../panel-plugin/weather.c:627
@@ -169,7 +170,7 @@ msgid ""
 "<b>Wind:</b> %s from %s\n"
 "<b>Pressure:</b> %s\n"
 "<b>Humidity:</b> %s\n"
-msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n<b><span size=\"large\">%s</span></b>\n\n<b>Temperatura:</b> %s\n<b>Viento:</b> %s from %s\n<b>Presión:</b> %s\n<b>Humedad:</b> %s\n"
+msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n<b><span size=\"large\">%s</span></b>\n\n<b>Temperatura:</b> %s\n<b>Viento:</b> %s desde %s\n<b>Presión:</b> %s\n<b>Humedad:</b> %s\n"
 
 #. * TRANSLATORS: Re-arrange and align at will, optionally using
 #. * abbreviations for labels if desired or necessary. Just take
@@ -192,7 +193,7 @@ msgid ""
 "<b>Fog:</b> %s    <b>Cloudiness:</b> %s\n"
 "\n"
 "<span size=\"smaller\">%s</span>"
-msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n<b><span size=\"large\">%s</span></b>\n<span size=\"smaller\">desde %s hasta %s, con precipitaciones de %s </span>\n\n<b>Temperatura:</b> %s\t\t<span size=\"smaller\">(valores en %s)</span>\n<b>Viento:</b> %s (%s en la escala Beaufort) de %s(%s)\n<b>Presión:</b> %s    <b>Humedad:</b> %s\n<b>Niebla:</b> %s    <b>Nubosidad:</b> %s\n\n<span size=\"smaller\">%s</span>"
+msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n<b><span size=\"large\">%s</span></b>\n<span size=\"smaller\">desde %s hasta %s, con precipitaciones de %s </span>\n\n<b>Temperatura:</b> %s⇥⇥<span size=\"smaller\">(valores en %s)</span>\n<b>Viento:</b> %s (%sen la escala Beaufort) de %s(%s)\n<b>Presión:</b> %s <b>Humedad:</b> %s\n<b>Niebla:</b> %s <b>Nubosidad:</b> %s\n\n<span size=\"smaller\">%s</span>"
 
 #: ../panel-plugin/weather.c:1711
 msgid "Cannot update weather data"
@@ -200,7 +201,7 @@ msgstr "No se puede actalizar los datos meteorológicos"
 
 #: ../panel-plugin/weather.c:1784
 msgid "No default icon theme? This should not happen, plugin will crash!"
-msgstr ""
+msgstr "¿No tiene un tema de iconos predeterminado? ¡Esto no debería pasar, los complementos se bloquearán!"
 
 #. add refresh button to right click menu, for people who missed
 #. the middle mouse click feature
@@ -362,13 +363,13 @@ msgstr "Zona _Horaria:"
 msgid ""
 "If the chosen location is not in your current timezone, then it is necessary to <i>put</i> the plugin into that other timezone for the times to be shown correctly. The proper timezone will be auto-detected via the GeoNames web service, but you might want to correct it if necessary.\n"
 "Leave this field empty to use the timezone set by your system. Invalid entries will cause the use of UTC time, but that may also depend on your system."
-msgstr ""
+msgstr "Si la localización no está en su zona horaria actual, entonces es necesario <i>poner</i> el complemento en otra zona horaria para que dicha hora se muestre correctamente. La zona horaria se proporciona a través del servicio web GeoNames, pero quizá prefiera corregirla si lo necesita.\nDeje este campo vacío para utilizar la zona horaria establecida por su sistema. Las entradas erróneas devolverán la hora de UTC, pero puee depender también de su sistema."
 
 #: ../panel-plugin/weather-config.c:610
 msgid ""
 "<i>Please change location name to your liking and correct\n"
 "altitude and timezone if they are not auto-detected correctly.</i>"
-msgstr ""
+msgstr "<i>Por favor, cambie el nombre de la localización a su zona\ny corrija la altitud y zona de hora si no se ha detectado.</i>"
 
 #: ../panel-plugin/weather-config.c:635
 msgid ""
@@ -1273,7 +1274,7 @@ msgid ""
 "\tusing the following time interval:\n"
 "\tStart:\t%s\n"
 "\tEnd:\t%s\n"
-msgstr ""
+msgstr "\nPrecipitación y símbolo meteorológico han sido calculados\nutilizando el siguiente intervalo de tiempo:\nInicio: %s\nFin: %s\n"
 
 #. sun and moon
 #: ../panel-plugin/weather-summary.c:418
@@ -1769,7 +1770,7 @@ msgstr "Lluvia ligera con truenos"
 
 #: ../panel-plugin/weather-translate.c:160
 msgid "Sleet with thunder"
-msgstr ""
+msgstr "Aguanieve con truenos"
 
 #: ../panel-plugin/weather.desktop.in.h:2
 msgid "Show current weather conditions"
