@@ -10,7 +10,7 @@ msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2013-07-03 21:29+0200\n"
-"PO-Revision-Date: 2013-09-16 11:41+0000\n"
+"PO-Revision-Date: 2013-10-24 07:15+0000\n"
 "Last-Translator: mohammad alhargan <malham1@hotmail.com>\n"
 "Language-Team: Arabic (http://www.transifex.com/projects/p/xfce/language/ar/)\n"
 "MIME-Version: 1.0\n"
@@ -105,7 +105,7 @@ msgid ""
 " deprecated, and the plugin needs to be adapted to use a newer version, or "
 "it will stop working within a few month. Please file a bug on "
 "https://bugzilla.xfce.org if no one else has done so yet."
-msgstr ""
+msgstr "Met.no LocationforecastLTS API يخبر أنه تم إهمال هذا الإصدار من webservice، ويحتاج البرنامج المساعد لتكييفها لاستخدام إصدار أحدث، أو أنها ستتوقف عن العمل خلال أشهر قليلة. الرجاء الإبلاغ عن خلل في https://bugzilla.xfce.org إذا كان ذلك ممكن."
 
 #: ../panel-plugin/weather.c:552
 msgid "Error parsing weather data!"
@@ -168,7 +168,7 @@ msgid ""
 "<b>Wind:</b> %s from %s\n"
 "<b>Pressure:</b> %s\n"
 "<b>Humidity:</b> %s\n"
-msgstr ""
+msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n<b><span size=\"large\">%s</span></b>\n\n<b>درجة الحرارة:</b> %s\n<b>الرياح:</b> %s من %s\n<b>الضغط:</b> %s\n<b>الرطوبة:</b> %s\n"
 
 #. * TRANSLATORS: Re-arrange and align at will, optionally using
 #. * abbreviations for labels if desired or necessary. Just take
@@ -191,7 +191,7 @@ msgid ""
 "<b>Fog:</b> %s    <b>Cloudiness:</b> %s\n"
 "\n"
 "<span size=\"smaller\">%s</span>"
-msgstr ""
+msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n<b><span size=\"large\">%s</span></b>\n<span size=\"smaller\">من %s إلى %s، مع %s لهطول أمطار</span>\n\n<b>درجة الحرارة:</b> %s\t\t<span size=\"smaller\">(القيم في %s)</span>\n<b>الريح:</b> %s (%sعلى مقياس بوفورت) من %s(%s)\n<b>الضغط:</b> %s    <b>الرطوبة:</b> %s\n<b>الضباب:</b> %s    <b>التغييم:</b> %s\n\n<span size=\"smaller\">%s</span>"
 
 #: ../panel-plugin/weather.c:1711
 msgid "Cannot update weather data"
@@ -351,7 +351,7 @@ msgid ""
 "The plugin tries to auto-detect the altitude using the GeoNames webservice, but that might not always be correct too, so you can change it here.\n"
 "\n"
 "Altitude is given in meters above sea level, or alternatively in feet by changing the unit on the units page. It should match the real value roughly, but small differences will have no influence on the weather data. Inside Norway, this setting has no effect at all."
-msgstr ""
+msgstr "للمواقع خارج النرويج نموذج الارتفاع المستخدمة من قبل met.no webservice ليست جيدة جداً، حيث أنها عادة ما تكون ضرورية لتحديد الارتفاع كمعلومة إضافية، عادة تكون قيمها غير صحيحة.\n\nيحاول البرنامج المساعد الكشف تلقائياً عن الارتفاع باستخدام خادم webservice، ولكنها أيضاً قد لا تكون دائماً صحيحة، حيث يمكنك تغييرها هنا.\n\nالعلو المعطى بوحدة متر فوق مستوى سطح البحر، أو بالقدم بتغيير الوحدة في صفحة الوحدات. يجب أن يتطابق مع القيمة الحقيقية تقريبا، الاختلافات الصغيرة لن يكون لها تأثير على بيانات الطقس. داخل النرويج، هذا الإعداد ليس له أي تأثير على الإطلاق."
 
 #: ../panel-plugin/weather-config.c:577
 msgid "_Timezone:"
@@ -361,25 +361,25 @@ msgstr "_المنطقة الزّمنيّة:"
 msgid ""
 "If the chosen location is not in your current timezone, then it is necessary to <i>put</i> the plugin into that other timezone for the times to be shown correctly. The proper timezone will be auto-detected via the GeoNames web service, but you might want to correct it if necessary.\n"
 "Leave this field empty to use the timezone set by your system. Invalid entries will cause the use of UTC time, but that may also depend on your system."
-msgstr ""
+msgstr "إذا لم يكن الموقع المحدد هو المنطقة الزمنية الحالية لك، من الضروري <i>ضبط</i> البرنامج المساعد للمنطقة الزمنية لإظهارها بشكل صحيح. سيتم الكشف عن المنطقة الزمنية الصحيحة تلقائياً عبر خدمة GeoNames، ولكن قد ترغب في تصحيحها عند الضرورة.\nاترك هذا الحقل فارغاً لاستخدام المنطقة الزمنية التي يحددها النظام. الإدخالات غير الصالحة ستسبب استخدام التوقيت العالمي، ولكن أيضاً قد تعتمد على النظام الخاص بك."
 
 #: ../panel-plugin/weather-config.c:610
 msgid ""
 "<i>Please change location name to your liking and correct\n"
 "altitude and timezone if they are not auto-detected correctly.</i>"
-msgstr ""
+msgstr "<i>الرجاء تغيير اسم الموقع الصحيح والمنطقة الزمنية الخاصة بك\nإذا لم يتم تلقائي-التعرف عليها بشكل صحيح.</i>"
 
 #: ../panel-plugin/weather-config.c:635
 msgid ""
 "Named after the astronomer Anders Celsius who invented the original scale in 1742, the Celsius scale is an international standard unit and nowadays defined using the Kelvin scale. 0 °C is equivalent to 273.15 K and 1 °C difference in temperature is exactly the same difference as 1 K. It is defined with the melting point of water being roughly at 0 °C and its boiling point at 100 °C at one standard atmosphere (1 atm = 1013.5 hPa). Until 1948, the unit was known as <i>centigrade</i> - from Latin <i>centum</i> (100) and <i>gradus</i> (steps).\n"
 "In meteorology and everyday life the Celsius scale is very convenient for expressing temperatures because its numbers can be an easy indicator for the formation of black ice and snow."
-msgstr ""
+msgstr "سميت باسم عالم الفلك أندرس الذي اخترع الجدول الأصلي في 1742، مقياس المئوية هو وحدة قياسية دولية وتعريف في الوقت الحاضر باستخدام مقياس كلفن. 0 درجة مئوية ما يعادل 273.15 ك و1 درجة مئوية تساوي بالضبط 1 كالفن. يتم تعريفه بنقطة تجمد الماء تقريبا في 0 درجة مئوية ونقطة الغليان عند 100 درجة مئوية في جو قياسي واحدة (1 atm = 1013.5 hPa). حتى عام 1948، كان معروفا الوحدة <i>مئوية</i> - من اللاتينية <i>سينتوم</i> (100) <i>جرادوس</i> (خطوات).\nفي الأرصاد الجوية والحياة اليومية مئوية مقياس مناسب جداً للتعبير عن درجات الحرارة لأن الأرقام يمكن أن تكون مؤشرا سهلة لتتعرف على لتشكيل الجليد والثلوج."
 
 #: ../panel-plugin/weather-config.c:651
 msgid ""
 "The current Fahrenheit temperature scale is based on one proposed in 1724 by the physicist Daniel Gabriel Fahrenheit. 0 °F was the freezing point of brine on the original scale at standard atmospheric pressure, which was the lowest temperature achievable with this mixture of ice, salt and ammonium chloride. The melting point of water is at 32 °F and its boiling point at 212 °F. The Fahrenheit and Celsius scales intersect at -40 degrees. Even in cold winters, the temperatures usually do not fall into negative ranges on the Fahrenheit scale.\n"
 "With its inventor being a member of the Royal Society in London and having a high reputation, the Fahrenheit scale enjoyed great popularity in many English-speaking countries, but was replaced by the Celsius scale in most of these countries during the metrification process in the mid to late 20th century."
-msgstr ""
+msgstr "فهرنهايت الحالي يستند مقياس الحرارة الذي اقترحه الفيزيائي دانيال غابرييل فهرنهايت في 1724. 0 ° و كان نقطة التجمد للماء المالح في الجدول الأصلي عند الضغط الجوي القياسي، الذي كان أدنى درجة حرارة يمكن تحقيقها مع هذا الخليط من الجليد والملح وكلوريد الأمونيوم. نقطة تجمد الماء هي 32 درجة فهرنهايت ونقطة الغليان في 212 ° f. جداول فهرنهيت ومئويه تتقاطع عند درجة-40. حتى في فصول الشتاء الباردة، درجات الحرارة عادة لا تتعطي قيم سالبة على مقياس فهرنهايت.\nولأن المخترع عضوا في الجمعية الملكية في لندن اللتي لها سمعة عالية، فمقياس فهرنهايت يتمتع بشعبية كبيرة في العديد من البلدان الناطقة بالانكليزية، لكنه استبدل بالمقياس المئوي في معظم هذه البلدان أثناء عملية التحول للنظام المتري في منتصف إلى أواخر القرن العشرين20."
 
 #: ../panel-plugin/weather-config.c:694
 msgid ""
@@ -387,7 +387,7 @@ msgid ""
 "Pascal, is a SI derived unit and a measure of force per unit area, defined "
 "as one newton per square meter. One standard atmosphere (atm) is 1013.25 "
 "hPa."
-msgstr ""
+msgstr "باسكال، سميت باسم عالم الرياضيات والفيزيائي والفيلسوف بليز باسكال، وحدة ومقياسا للقوة في وحدة المساحة، وتعادل نيوتن واحد في المتر المربع. وحدة الغلاف الجوي القياسية (atm) هي 1013.25 hPa."
 
 #: ../panel-plugin/weather-config.c:701
 msgid ""
@@ -396,7 +396,7 @@ msgid ""
 "elsewhere. It is defined as the pressure exerted by a 1 inch circular column"
 " of mercury of 1 inch in height at 32 °F (0 °C) at the standard acceleration"
 " of gravity."
-msgstr ""
+msgstr "بوصة من الزئبق تستخدم للضغط الجوي في تقارير الطقس، والتبريد، والطيران في الولايات المتحدة، ولكن نادراً ما تستخدم في أماكن أخرى. ومن وتعادل الضغط التي تمارسها عمود دائري 1 بوصة من الزئبق من 1 بوصة في الارتفاع في 32 درجة فهرنهايت (0 درجة مئوية) في تسارع الجاذبية القياسية."
 
 #: ../panel-plugin/weather-config.c:709
 msgid ""
@@ -406,7 +406,7 @@ msgid ""
 " square inch. It is used in the United States and to varying degrees in "
 "everyday life in Canada, the United Kingdom and maybe some former British "
 "Colonies."
-msgstr ""
+msgstr "رطل لكل بوصة مربعة وحدة قياس الضغط على أساس وحدات الافواردوبوي (نظام الأوزان يقسم الرطل إلى 16 أوقية) ويعادل الضغط الناجم عن قوة واحدة رطل-القوة المطبقة على مساحة بوصة مربعة واحدة. يتم استخدامه في الولايات المتحدة، وإلى درجات متفاوتة في الحياة اليومية في كندا، والمملكة المتحدة، وربما بعض المستعمرات البريطانية السابقة."
 
 #: ../panel-plugin/weather-config.c:718
 msgid ""
@@ -415,7 +415,7 @@ msgid ""
 "demonstrated the first mercury barometer to the general public. A pressure "
 "of 1 torr is approximately equal to one millimeter of mercury, and one "
 "standard atmosphere (atm) equals 760 Torr."
-msgstr ""
+msgstr "سميت وحدة ميلليمتر زئبقي في الفيزياء والرياضيات بعد إكتشاف توريسيلي ايفانجليستا والذي اكتشف مبدأ البارومتر في 1644 وأظهر مقياس الزئبق الأولى للجمهور. ضغط من 1 ميلليمتر زئبق يساوي حوالي ملليمتر واحد من الزئبق، والغلاف الجوي القياسي واحد (atm) يساوي 760 ميلليمتر زئبق."
 
 #: ../panel-plugin/weather-config.c:752
 msgid "Wind speeds in TV or in the news are often provided in km/h."
@@ -437,7 +437,7 @@ msgstr "متر في الثانية الواحدة وحدة <i></i> يستخدم 
 msgid ""
 "The foot per second (pl. feet per second) in the imperial unit system is the"
 " counterpart to the meter per second in the International System of Units."
-msgstr ""
+msgstr "قدم في الثانية (قدم في كل ثانية واحدة) في النظام الإمبراطوري تناضر المتر في الثانية في النظام الدولي للوحدات."
 
 #: ../panel-plugin/weather-config.c:769
 msgid ""
@@ -445,13 +445,13 @@ msgid ""
 "km) per hour, or approximately 1.151 mph, and sees worldwide use in "
 "meteorology and in maritime and air navigation. A vessel travelling at 1 "
 "knot along a meridian travels one minute of geographic latitude in one hour."
-msgstr ""
+msgstr "العقدة وحدة سرعة تساوي ميل بحري واحد (1.852 كيلومتر) كل ساعة، أو حوالي 1.151 ميل في الساعة، تستخدم في جميع أنحاء العالم في الأرصاد الجوية والبحرية والجوية الملاحة. وتقطع السفينة في عقده 1 على دقيقة واحدة من خط العرض الجغرافي في ساعة واحدة."
 
 #: ../panel-plugin/weather-config.c:802
 msgid ""
 "1 millimeter is one thousandth of a meter - the fundamental unit of length "
 "in the International System of Units -, or approximately 0.04 inches."
-msgstr ""
+msgstr "1 ملليمتر جزء من الألف من المتر-الوحد الأساسية للطول في النظام الدولي للوحدات، أو حوالي 0.04 بوصة."
 
 #: ../panel-plugin/weather-config.c:807
 msgid ""
@@ -460,7 +460,7 @@ msgid ""
 "have been many different standards of the inch with varying sizes of "
 "measure, but the current internationally accepted value is exactly 25.4 "
 "millimeters."
-msgstr ""
+msgstr "الكلمة الإنكليزية <i>بوصة</i> تأتي من اللاتينية <i>أونسيا</i> معنى <i>واحد من اثني عشر جزءا</i> (في هذه الحالة، واحد على اثني عشر من القدم). في الماضي، كان هناك العديد من المعايير مختلفة من البوصة بأحجام متفاوتة ، ولكن وحدت دوليا الآن على قيمة 25.4 ملليمتر."
 
 #: ../panel-plugin/weather-config.c:840
 msgid ""
@@ -469,7 +469,7 @@ msgid ""
 "Earth's equator to the North Pole at sea level, its definition has been "
 "periodically refined to reflect growing knowledge of metrology (the science "
 "of measurement)."
-msgstr ""
+msgstr "المتر هو وحدة الأساسية للطول في النظام الدولي للوحدات. ويعادل جزء واحد من عشرة مليون جزء من المسافة من خط الاستواء للأرض إلى القطب الشمالي في مستوى سطح البحر، وقد تم تعريفها وصقلها بشكل دوري لتعكس تزايد المعرفة من المقاييس (علم القياس)."
 
 #: ../panel-plugin/weather-config.c:848
 msgid ""
@@ -478,7 +478,7 @@ msgid ""
 "It is subdivided into 12 inches. The measurement of altitude in the aviation"
 " industry is one of the few areas where the foot is widely used outside the "
 "English-speaking world."
-msgstr ""
+msgstr "قدم (جمعها أقدام) وحدة طول تعرف بأنها 0.3048 متر بالضبط ويستخدم في النظام الإمبراطوري وحدات والوحدات العرفية في الولايات المتحدة. ينقسم إلى 12 بوصة. قياس الارتفاع في الطيران هو أحد المجالات القليلة حيث تستخدمه على نطاق واسع خارج العالم الناطق باللغة الإنكليزية."
 
 #. * TRANSLATORS: The Summer Simmer Index is similar to the heat
 #. * index, but usually used at night because of its better accuracy
@@ -493,7 +493,7 @@ msgid ""
 "air temperature needs to be above 80 °F (26.7 °C) - or above 71.6 °F (22 °C)"
 " at night - and relative humidity at least 40%. If these conditions are not "
 "met, the air temperature will be shown."
-msgstr ""
+msgstr "تستخدم في أمريكا الشمالية، تدل على برودة الرياح ودرجات حرارة منخفضة. في الليل، يتم استبدال مؤشر الحرارة عن طريق مؤشر اضطرب الصيف. لفتور الرياح، سرعة الرياح يجب أن تتجاوز 3.0 ميل (4.828 كم/ساعة) ودرجة حرارة الهواء أقل من 50.0 درجة فهرنهايت (10.0 درجة مئوية). لمؤشر الحرارة، ويحتاج إلى درجة حرارة الهواء يكون فوق 80 ° F (26.7 درجة مئوية) - أو فوق 71.6 ° F (22 ° C) ليلا - والرطوبة النسبية 40٪ على الأقل. إذا لم يتم استيفاء هذه الشروط، عرض درجة حرارة الهواء."
 
 #: ../panel-plugin/weather-config.c:898
 msgid ""
@@ -505,7 +505,7 @@ msgid ""
 "temperature needs to be at least 20.0 °C (68 °F), with a dewpoint greater "
 "than 0 °C (32 °F). If these conditions are not met, the air temperature will"
 " be shown."
-msgstr ""
+msgstr "النظير الكندي إلى مؤشر رياح باردة/الحرارة في الولايات المتحدة، لبرودة الرياح يجري وهو مشابه للنموذج السابق ولكن مع قيود مختلفة قليلاً. سيتم استخدام مؤشر <i>humidex</i> بدلاً من الحرارة. للبرد الرياح تصبح فعالة، تحتاج إلى سرعات الرياح فوق 2.0 كيلومتر/ساعة (1.24 ميلا في الساعة) ودرجة حرارة الهواء أدناه أو يساوي 0 درجة مئوية (32 درجة فهرنهايت). لاستخدام humidex درجة حرارة الهواء يجب أن يكون على الأقل 20.0 درجة مئوية (68 درجة فهرنهايت)، مع ديوبوينت أكبر من 0 درجة مئوية (32 درجة فهرنهايت). إذا لم يتم الوفاء بهذه الشروط، سوف تظهر درجة حرارة الهواء."
 
 #: ../panel-plugin/weather-config.c:910
 msgid ""
@@ -516,7 +516,7 @@ msgid ""
 "information about its usage is scarce or uncertain. It depends on air "
 "temperature, wind speed and humidity and can be used for lower and higher "
 "temperatures alike."
-msgstr ""
+msgstr "هذا هو النموذج المستخدمة من قبل المكتب الأسترالي للأرصاد الجوية، يتكيف مع مناخ هذه القارة. قد يستخدم في أوروبا الوسطى وأجزاء من قارات أخرى أيضا، ولكن لوجود رياح باردة وقيم مماثلة اكتسب شعبية كبيرة هناك كما هو الحال في الولايات المتحدة أو كندا، للحصول على معلومات حول الاستخدام الخاصة بها نادرة وغير مؤكد. فإنه يعتمد على درجة حرارة الجو وسرعة الرياح والرطوبة، ويمكن استخدامه لدرجات الحرارة الدنيا والعليا على حد سواء."
 
 #: ../panel-plugin/weather-config.c:921
 msgid ""
@@ -524,7 +524,7 @@ msgid ""
 "earlier experiments/developments by Steadman. This model only depends on "
 "wind speed and temperature, not on relative humidity and can be used for "
 "both heat and cold stress."
-msgstr ""
+msgstr "تطبق تحسينات بروبرت ج. كويل وروبرت زاي ستيدمان في عام 1998 لتجارب ستيدمان السابقة وتطويراته. هذا النموذج يعتمد على سرعة الرياح ودرجة الحرارة، لا الرطوبة النسبية فقط. ويمكن استخدامها لكل من الحرارة والضغط البارد."
 
 #: ../panel-plugin/weather-config.c:957
 msgid "_Temperature:"
@@ -552,7 +552,7 @@ msgstr "بوصة من الزئبق (اينج)"
 
 #: ../panel-plugin/weather-config.c:972
 msgid "Pound-force per square inch (psi)"
-msgstr ""
+msgstr "قوة ضغط الباوند لكل بوصة مربعة (psi)"
 
 #: ../panel-plugin/weather-config.c:974
 msgid "Torr (mmHg)"
@@ -608,19 +608,19 @@ msgstr "درجة الحرارة المحسوسة:"
 
 #: ../panel-plugin/weather-config.c:1022
 msgid "Windchill/Heat index"
-msgstr ""
+msgstr "مؤشر الحرارة/الرياح"
 
 #: ../panel-plugin/weather-config.c:1024
 msgid "Windchill/Humidex"
-msgstr ""
+msgstr "مؤشر الحرارة/الرطوبة"
 
 #: ../panel-plugin/weather-config.c:1025
 msgid "Steadman"
-msgstr ""
+msgstr "Steadman"
 
 #: ../panel-plugin/weather-config.c:1026
 msgid "Quayle-Steadman"
-msgstr ""
+msgstr "Quayle-Steadman"
 
 #: ../panel-plugin/weather-config.c:1049
 msgid "Choose an icon theme."
@@ -642,17 +642,17 @@ msgstr "<b>المجلد:</b> %s\n\n<b>المؤلف:</b> %s\n\n<b>الوصف:</b>
 msgid ""
 "A more calendar-like view, with the days in columns and the daytimes "
 "(morning, afternoon, evening, night) in rows."
-msgstr ""
+msgstr "طريقة عرض التقويم، مع عرض توقيت اليوم (صباح، بعد الظهر، المساء، ليلة) في الصفوف والأعمدة."
 
 #: ../panel-plugin/weather-config.c:1144
 msgid ""
 "Shows the forecasts in a table with the daytimes (morning, afternoon, "
 "evening, night) in columns and the days in rows."
-msgstr ""
+msgstr "يبين التوقعات الواردة في جدول مع عرض توقيت اليوم (صباح، بعد الظهر، المساء، ليلة) في الصفوف والأعمدة."
 
 #: ../panel-plugin/weather-config.c:1203
 msgid "_Icon theme:"
-msgstr ""
+msgstr "_سِمة الأيقونات:"
 
 #: ../panel-plugin/weather-config.c:1205
 msgid ""
@@ -661,57 +661,57 @@ msgid ""
 "system). Information about how to create or use icon themes can be found in "
 "the README file. New icon themes will be detected everytime you open this "
 "config dialog."
-msgstr ""
+msgstr "يتم عرض السمات المتاحة هنا. يمكنك إضافة أيقونة في $HOME/.config/xfce4/weather/icons (أو المجلد المقابل على النظام). يمكن العثور على معلومات حول كيفية إنشاء أو استخدام السمات في ملف التعليمات. رموز الجديدة ستكتشفها كل مرة تفتح مربع الحوار config."
 
 #: ../panel-plugin/weather-config.c:1223
 msgid ""
 "Open the user icon themes directory in your file manager, creating it if "
 "necessary."
-msgstr ""
+msgstr "افتح مجلد السمات المستخدم في مدير الملفات، قم بإنشائها إذا لزم الأمر."
 
 #: ../panel-plugin/weather-config.c:1240
 msgid "Use only a single _panel row"
-msgstr ""
+msgstr "استخدم فقط صف لوحة واحد"
 
 #: ../panel-plugin/weather-config.c:1242
 msgid ""
 "Check to always use only a single row on a multi-row panel and a small icon "
 "in deskbar mode."
-msgstr ""
+msgstr "تحقق دائماً من استخدام صف واحد فقط في لوحة الصف المتعددة ورمز صغير في وضع شريط المكتب."
 
 #: ../panel-plugin/weather-config.c:1257
 msgid "_Tooltip style:"
-msgstr ""
+msgstr "_نمط تلميح الأدوات:"
 
 #: ../panel-plugin/weather-config.c:1259
 msgid "Simple"
-msgstr ""
+msgstr "بسيط"
 
 #: ../panel-plugin/weather-config.c:1260
 msgid "Verbose"
-msgstr ""
+msgstr "مطول"
 
 #: ../panel-plugin/weather-config.c:1263
 msgid ""
 "Choose your preferred tooltip style. Some styles give a lot of useful data, "
 "some are clearer but provide less data on a glance."
-msgstr ""
+msgstr "اختر نمط تلميح الأداة المفضلة. بعض الأنماط تعطي الكثير من البيانات المفيدة، وبعضها أكثر وضوحاً ولكنها توفر بيانات أقل."
 
 #: ../panel-plugin/weather-config.c:1275
 msgid "_Forecast layout:"
-msgstr ""
+msgstr "_خطط التوقعات:"
 
 #: ../panel-plugin/weather-config.c:1277
 msgid "Days in columns"
-msgstr ""
+msgstr "أيام في الأعمدة"
 
 #: ../panel-plugin/weather-config.c:1278
 msgid "Days in rows"
-msgstr ""
+msgstr "أيام في صفوف"
 
 #: ../panel-plugin/weather-config.c:1286
 msgid "_Number of forecast days:"
-msgstr ""
+msgstr "_عدد أيام التوقع:"
 
 #: ../panel-plugin/weather-config.c:1291
 #, c-format
@@ -721,39 +721,39 @@ msgid ""
 " computers, a lower number might help against lags when opening the window. "
 "Note however that usually forecasts for more than three days in the future "
 "are unreliable at best ;-)"
-msgstr ""
+msgstr "يوفر بيانات التوقع حتى %d يوما في المستقبل. اختر عدد الأيام سيظهر في علامة التبويب التوقع في إطار الملخص. على أجهزة الكمبيوتر القديمة, سيساعد عددا أقل من أيام التوقع في فتح النافذة بشكا أسرع. لاحظ أيضاً أن التوقعات لأكثر من ثلاثة أيام في المستقبل في الغالب غير موثوق بها;-)"
 
 #: ../panel-plugin/weather-config.c:1309
 msgid "_Round values"
-msgstr ""
+msgstr "_قيم الجولة"
 
 #: ../panel-plugin/weather-config.c:1311
 msgid ""
 "Check to round values everywhere except on the details page in the summary "
 "window."
-msgstr ""
+msgstr "حدد لتقريب القيم في كل مكان ما عدا في صفحة التفاصيل في إطار الملخص."
 
 #: ../panel-plugin/weather-config.c:1361 ../panel-plugin/weather-config.c:1831
 msgid "Select _font"
-msgstr ""
+msgstr "اختر خط"
 
 #: ../panel-plugin/weather-config.c:1378
 msgid "Select font"
-msgstr ""
+msgstr "اختر خط"
 
 #. TRANSLATORS: Fallback value, usually never shown.
 #: ../panel-plugin/weather-config.c:1510
 msgid ""
 "Choose the value to add to the list below. Values can be added more than "
 "once."
-msgstr ""
+msgstr "اختر قيمة لإضافتها للقائمة أدناه. يمكن إضافة القيمة أكثر من مرة."
 
 #: ../panel-plugin/weather-config.c:1520
 msgid ""
 "Air temperature, sometimes referred to as dry-bulb temperature. Measured by "
 "a thermometer that is freely exposed to the air, yet shielded from radiation"
 " and moisture."
-msgstr ""
+msgstr "درجة حرارة الهواء، يشار إليه أحياناً كدرجة حرارة المصباح الجاف. تقاس بمقياس حرارة بحري معرضة للهواء، لكنه معزول عن الإشعاع والرطوبة."
 
 #: ../panel-plugin/weather-config.c:1526
 msgid ""
@@ -764,7 +764,7 @@ msgid ""
 "pressure and called barometric pressure. Rising barometric pressures "
 "generally indicate an improvement in weather conditions, while falling "
 "pressures mean deterioration."
-msgstr ""
+msgstr "وزن الهواء الذي يجعل أعلى الغلاف الجوي يمارس ضغطاً على سطح الأرض، والذي يعرف باسم الضغط الجوي. لجعل مقارنة القيمة بقيم أخرى أسهل للمواقع مع ارتفاعات مختلفة، يتم تعديلها إلى ضغط مستوى سطح البحر يعادل الضغط الجوي ويسمى الضغط الجوي. ارتفاع الضغوط عموما تشير إلى حدوث تحسن في الأحوال الجوية، بينما إنخفاظ الضغط يعني طقس سيئ."
 
 #: ../panel-plugin/weather-config.c:1537
 msgid ""
@@ -772,26 +772,26 @@ msgid ""
 "<i>anemos</i>, meaning <i>wind</i>) in 10 m (33 ft) height. Anemometers "
 "usually measure either wind speed or pressure, but will provide both values "
 "as they are closely related to and can be deduced from each other."
-msgstr ""
+msgstr "سرعة الرياح/السرعة في الوقت الحالي وتقاس. باستخدام شدة الريح (اليونانية <i>anemos</i>، وتعني <i>الرياح</i>) بارتفاع 10 متر (33 قدم) مقاييس شدة الريح عادة إما قياس سرعة الرياح أو الضغط، ولكن سوف نقدم كل القيم لأنها ترتبط ارتباطا وثيقا ويمكن استنتاجها من بعضها البعض."
 
 #: ../panel-plugin/weather-config.c:1545
 msgid ""
 "Invented by Sir Francis Beaufort in 1805, this empirical scale on wind speed"
 " is based on people's observations of specific land or sea conditions, "
 "denoting these conditions with numbers from 0 (calm) to 12 (hurricane)."
-msgstr ""
+msgstr "اخترعها السير فرانسيس بوفورت في 1805، يستند هذا المقياس التجريبي على ملاحظات الناس لسرعة الرياح في ظروف محددة برا أو بحرا، تدل قيم الأرقام على 0 (الهدوء) 12 (إعصار)."
 
 #: ../panel-plugin/weather-config.c:1551
 msgid ""
 "This gives the cardinal direction (North, East, South, West) the wind is "
 "coming from."
-msgstr ""
+msgstr "هذا يعطي الاتجاه الرئيسي (شمال، شرق، جنوب، غرب) لجهة هبوب الريح."
 
 #: ../panel-plugin/weather-config.c:1555
 msgid ""
 "This gives the direction the wind is coming from in azimuth degrees (North ="
 " 0°, East = 90°, South = 180° and West = 270°)."
-msgstr ""
+msgstr "هذا يعطي اتجاه الريح قادم بالدرجات (شمال = 0°, شرق = 90°, جنوب = 180° والغرب = 270°)."
 
 #: ../panel-plugin/weather-config.c:1560
 msgid ""
@@ -800,7 +800,7 @@ msgid ""
 "the water content of air, relative humidity gives (in %) the current "
 "absolute humidity relative to the maximum for that air temperature and "
 "pressure."
-msgstr ""
+msgstr "الرطوبة هي كمية بخار الماء في الهواء زيادتاه تزيد من احتمال هطول الأمطار والضباب والندى. الرطوبة المطلقة هي محتوى الهواء من الماء، الرطوبة النسبية تعطي (٪) الرطوبة النسبية الحالية المطلقة بالنسبة للحد الأقصى لدرجة حرارة الهواء والضغط."
 
 #: ../panel-plugin/weather-config.c:1568
 msgid ""
@@ -884,7 +884,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-config.c:1801
 msgid "Show scroll_box"
-msgstr ""
+msgstr "اعرض الصندوق المنزلق"
 
 #: ../panel-plugin/weather-config.c:1803
 msgid ""
@@ -896,7 +896,7 @@ msgstr ""
 #. values to show at once (multiple lines)
 #: ../panel-plugin/weather-config.c:1814
 msgid "Li_nes:"
-msgstr ""
+msgstr "الأسطر:"
 
 #: ../panel-plugin/weather-config.c:1820
 msgid ""
@@ -906,7 +906,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-config.c:1827
 msgid "Font and color:"
-msgstr ""
+msgstr "الخط واللون:"
 
 #: ../panel-plugin/weather-config.c:1833
 msgid ""
@@ -924,7 +924,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-config.c:1869
 msgid "Labels to d_isplay"
-msgstr ""
+msgstr "تسميات للعرض"
 
 #: ../panel-plugin/weather-config.c:1872
 msgid ""
@@ -936,7 +936,7 @@ msgstr ""
 #. button "add"
 #: ../panel-plugin/weather-config.c:1879
 msgid "A_dd"
-msgstr ""
+msgstr "أضف"
 
 #: ../panel-plugin/weather-config.c:1882
 msgid ""
@@ -952,25 +952,25 @@ msgstr "_احذف"
 msgid ""
 "Select a value in the list of labels to display and click this button to "
 "remove it."
-msgstr ""
+msgstr "قم بتحديد قيمة في قائمة التسميات لعرضها ثم انقر فوق هذا الزر لإزالتها."
 
 #. button "move up"
 #: ../panel-plugin/weather-config.c:1905
 msgid "Move u_p"
-msgstr ""
+msgstr "أنقل للأعلى"
 
 #: ../panel-plugin/weather-config.c:1908
 msgid "Move the selected value up in the list of labels to display."
-msgstr ""
+msgstr "تحريك القيمة المحددة للأعلى في قائمة عرض التسميات."
 
 #. button "move down"
 #: ../panel-plugin/weather-config.c:1913
 msgid "Move do_wn"
-msgstr ""
+msgstr "انقل للأسفل"
 
 #: ../panel-plugin/weather-config.c:1916
 msgid "Move the selected value down in the list of labels to display."
-msgstr ""
+msgstr "تحريك القيمة المحددة للأسفل في قائمة عرض التسميات."
 
 #: ../panel-plugin/weather-config.c:1933
 msgid "Animate _transitions between labels"
@@ -985,23 +985,23 @@ msgstr ""
 
 #: ../panel-plugin/weather-config.c:2078
 msgid "_Location"
-msgstr ""
+msgstr "_الموقع"
 
 #: ../panel-plugin/weather-config.c:2081
 msgid "_Units"
-msgstr ""
+msgstr "_الوحدات"
 
 #: ../panel-plugin/weather-config.c:2084
 msgid "_Appearance"
-msgstr ""
+msgstr "_المظهر"
 
 #: ../panel-plugin/weather-config.c:2087
 msgid "_Scrollbox"
-msgstr ""
+msgstr "_صندوق التمرير"
 
 #: ../panel-plugin/weather-data.c:284
 msgid "North"
-msgstr ""
+msgstr "شمال"
 
 #: ../panel-plugin/weather-data.c:284
 msgid "N"
@@ -1009,7 +1009,7 @@ msgstr "ش"
 
 #: ../panel-plugin/weather-data.c:287
 msgid "North-East"
-msgstr ""
+msgstr "شمال شرق"
 
 #: ../panel-plugin/weather-data.c:287
 msgid "NE"
@@ -1017,7 +1017,7 @@ msgstr "شمال شرقي"
 
 #: ../panel-plugin/weather-data.c:290
 msgid "East"
-msgstr ""
+msgstr "شرق"
 
 #: ../panel-plugin/weather-data.c:290
 msgid "E"
@@ -1025,7 +1025,7 @@ msgstr "شر"
 
 #: ../panel-plugin/weather-data.c:293
 msgid "South-East"
-msgstr ""
+msgstr "جنوب شرق"
 
 #: ../panel-plugin/weather-data.c:293
 msgid "SE"
@@ -1033,7 +1033,7 @@ msgstr "جنوب شرقي"
 
 #: ../panel-plugin/weather-data.c:296
 msgid "South"
-msgstr ""
+msgstr "جنوب"
 
 #: ../panel-plugin/weather-data.c:296
 msgid "S"
@@ -1041,7 +1041,7 @@ msgstr "ج"
 
 #: ../panel-plugin/weather-data.c:299
 msgid "South-West"
-msgstr ""
+msgstr "جنوب غرب"
 
 #: ../panel-plugin/weather-data.c:299
 msgid "SW"
@@ -1049,7 +1049,7 @@ msgstr "جنوب غرب"
 
 #: ../panel-plugin/weather-data.c:302
 msgid "West"
-msgstr ""
+msgstr "غرب"
 
 #: ../panel-plugin/weather-data.c:302
 msgid "W"
@@ -1057,7 +1057,7 @@ msgstr "غ"
 
 #: ../panel-plugin/weather-data.c:305
 msgid "North-West"
-msgstr ""
+msgstr "شمال غرب"
 
 #: ../panel-plugin/weather-data.c:305
 msgid "NW"
@@ -1085,7 +1085,7 @@ msgstr "ه‍.باسكال"
 
 #: ../panel-plugin/weather-data.c:486
 msgid "inHg"
-msgstr ""
+msgstr "بوصة زئبق"
 
 #: ../panel-plugin/weather-data.c:488
 msgid "psi"
