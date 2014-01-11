@@ -685,7 +685,7 @@ static gchar *
 forecast_day_header_tooltip_text(xml_astro *astro)
 {
     GString *text;
-    gchar *result, *day, *sunrise, *sunset, *moonrise, *moonset, *moonphase;
+    gchar *result, *day, *sunrise, *sunset, *moonrise, *moonset;
 
     /* TRANSLATORS: Please use spaces as needed or desired to properly
        align the values; Monospace font is enforced with <tt> tags for

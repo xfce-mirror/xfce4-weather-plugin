@@ -711,7 +711,6 @@ static void
 schedule_next_wakeup(plugin_data *data)
 {
     time_t now_t = time(NULL), next_day_t;
-    struct tm now_tm;
     gdouble diff;
     gchar *date;
 
