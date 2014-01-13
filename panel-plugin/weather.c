@@ -306,13 +306,6 @@ update_icon(plugin_data *data)
 void
 scrollbox_set_visible(plugin_data *data)
 {
-#ifdef HAVE_UPOWER_GLIB
-    if (data->upower_lid_closed) {
-        gtk_widget_hide_all(GTK_WIDGET(data->vbox_center_scrollbox));
-        gtk_scrollbox_set_visible(GTK_SCROLLBOX(data->scrollbox), FALSE);
-        return;
-    }
-#endif
     if (data->show_scrollbox && data->labels->len > 0)
         gtk_widget_show_all(GTK_WIDGET(data->vbox_center_scrollbox));
     else
@@ -1537,23 +1530,18 @@ static void
 upower_changed_cb(UpClient *client,
                   plugin_data *data)
 {
-    gboolean on_battery, lid_closed;
+    gboolean on_battery;
 
     if (G_UNLIKELY(data->upower == NULL) || !data->power_saving)
         return;
 
     on_battery = data->upower_on_battery;
-    lid_closed = data->upower_lid_closed;
-    weather_debug("upower old status: on_battery=%d, lid_closed=%d",
-                  on_battery, lid_closed);
+    weather_debug("upower old status: on_battery=%d", on_battery);
 
     data->upower_on_battery = up_client_get_on_battery(client);
-    data->upower_lid_closed = up_client_get_lid_is_closed(client);
-    weather_debug("upower new status: on_battery=%d, lid_closed=%d",
-                  data->upower_on_battery, data->upower_lid_closed);
+    weather_debug("upower new status: on_battery=%d", data->upower_on_battery);
 
-    if (data->upower_on_battery != on_battery ||
-        data->upower_lid_closed != lid_closed) {
+    if (data->upower_on_battery != on_battery) {
         if (data->summary_window)
             update_summary_subtitle(data);
 
@@ -1801,10 +1789,8 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     data->plugin = plugin;
 #ifdef HAVE_UPOWER_GLIB
     data->upower = up_client_new();
-    if (data->upower) {
+    if (data->upower)
         data->upower_on_battery = up_client_get_on_battery(data->upower);
-        data->upower_lid_closed = up_client_get_lid_is_closed(data->upower);
-    }
 #endif
     data->units = g_slice_new0(units_config);
     data->weatherdata = make_weather_data();

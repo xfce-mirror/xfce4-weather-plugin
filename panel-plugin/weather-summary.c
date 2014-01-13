@@ -1087,7 +1087,7 @@ update_summary_subtitle(plugin_data *data)
 
     time(&now_t);
 #ifdef HAVE_UPOWER_GLIB
-    if (data->upower_on_battery || data->upower_lid_closed)
+    if (data->upower_on_battery)
         date_format = "%Y-%m-%d %H:%M %z (%Z)";
     else
 #endif
@@ -1103,7 +1103,7 @@ update_summary_subtitle(plugin_data *data)
     g_get_current_time(&now);
     now_ms = ((gint64) now.tv_sec * 1000) + ((gint64) now.tv_usec / 1000);
 #ifdef HAVE_UPOWER_GLIB
-    if (data->upower_on_battery || data->upower_lid_closed)
+    if (data->upower_on_battery)
         update_interval = 60000 - (now_ms % 60000) + 10;
     else
 #endif

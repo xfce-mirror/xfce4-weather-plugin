@@ -430,7 +430,6 @@ weather_dump_plugindata(const plugin_data *data)
                            "  --------------------------------------------\n"
 #ifdef HAVE_UPOWER_GLIB
                            "  upower on battery: %s\n"
-                           "  upower lid closed: %s\n"
 #endif
                            "  power saving: %s\n"
                            "  --------------------------------------------\n"
@@ -474,7 +473,6 @@ weather_dump_plugindata(const plugin_data *data)
                            data->panel_orientation,
 #ifdef HAVE_UPOWER_GLIB
                            YESNO(data->upower_on_battery),
-                           YESNO(data->upower_lid_closed),
 #endif
                            YESNO(data->power_saving),
                            last_astro_update,
