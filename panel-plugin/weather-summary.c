@@ -987,7 +987,7 @@ create_forecast_tab(plugin_data *data)
      * maximum height we may use, subtracting some sane value just to
      * be on the safe side. */
     window = GDK_WINDOW(gtk_widget_get_window(GTK_WIDGET(data->iconimage)));
-    screen = GDK_SCREEN(gdk_window_get_screen(window));
+    screen = GDK_SCREEN(gtk_widget_get_screen(GTK_WIDGET(data->iconimage)));
     if (G_LIKELY(window && screen))
         monitor_num = gdk_screen_get_monitor_at_window(screen, window);
     gdk_screen_get_monitor_geometry(screen, monitor_num, &rect);
