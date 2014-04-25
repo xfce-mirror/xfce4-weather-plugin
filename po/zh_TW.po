@@ -5,14 +5,15 @@
 # Translators:
 # Ambrose Li <acli@ada.dhs.org>, 2005
 # Walter Cheuk <wwycheuk@gmail.com>, 2013-2014
+# 柏諺 黃 <s8321414@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-01-12 06:31+0100\n"
-"PO-Revision-Date: 2014-03-31 06:18+0000\n"
-"Last-Translator: Walter Cheuk <wwycheuk@gmail.com>\n"
-"Language-Team: Chinese (Taiwan) (http://www.transifex.com/projects/p/xfce/language/zh_TW/)\n"
+"PO-Revision-Date: 2014-04-25 03:04+0000\n"
+"Last-Translator: 柏諺 黃 <s8321414@gmail.com>\n"
+"Language-Team: Chinese (Taiwan) (http://www.transifex.com/projects/p/xfce-panel-plugins/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -86,18 +87,18 @@ msgid ""
 " and the plugin needs to be adapted to use a newer version, or it will stop "
 "working within a few month. Please file a bug on https://bugzilla.xfce.org "
 "if no one else has done so yet."
-msgstr ""
+msgstr "Met.no sunrise API 指出這個版本的網路服務是過時的，且插件需要需要調整以使用較新的版本，否則將會在數個月內停止運作。如果還沒有其他人在 https://bugzilla.xfce.org 上提交 bug 的話請提交一個。"
 
 #: ../panel-plugin/weather.c:518
 msgid "Error parsing astronomical data!"
-msgstr ""
+msgstr "分析天文資料時發生錯誤！"
 
 #: ../panel-plugin/weather.c:520
 #, c-format
 msgid ""
 "Download of astronomical data failed with HTTP Status Code %d, Reason "
 "phrase: %s"
-msgstr ""
+msgstr "天文資料下載失敗，HTTP 狀態碼 %d ，分析原因： %s"
 
 #: ../panel-plugin/weather.c:560
 msgid ""
@@ -105,17 +106,17 @@ msgid ""
 " deprecated, and the plugin needs to be adapted to use a newer version, or "
 "it will stop working within a few month. Please file a bug on "
 "https://bugzilla.xfce.org if no one else has done so yet."
-msgstr ""
+msgstr "Met.no LocationforecastLTS API 指出這個版本的網路服務是過時的，且插件需要需要調整以使用較新的版本，否則將會在數個月內停止運作。如果還沒有其他人在 https://bugzilla.xfce.org 上提交 bug 的話請提交一個。"
 
 #: ../panel-plugin/weather.c:578
 msgid "Error parsing weather data!"
-msgstr ""
+msgstr "分析天氣資料時發生錯誤！"
 
 #: ../panel-plugin/weather.c:581
 #, c-format
 msgid ""
 "Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
-msgstr ""
+msgstr "天氣資料下載失敗，HTTP 狀態碼 %d ，分析原因： %s"
 
 #. start receive thread
 #: ../panel-plugin/weather.c:655 ../panel-plugin/weather.c:674
@@ -127,7 +128,7 @@ msgstr "正在取得 %s"
 #: ../panel-plugin/weather.c:1173
 #, c-format
 msgid "Error writing cache file %s!"
-msgstr ""
+msgstr "寫入快取檔 %s 時發生錯誤！"
 
 #: ../panel-plugin/weather.c:1584
 #, c-format
@@ -324,7 +325,7 @@ msgid ""
 "Latitude specifies the north-south position of a point on the Earth's "
 "surface. If you change this value manually, you need to provide altitude and"
 " timezone manually too."
-msgstr ""
+msgstr "緯度指定了地球表面上的一個點的南-北位置。如果您手動修改了這個值，您就必須手動提供高度及時區。"
 
 #: ../panel-plugin/weather-config.c:540
 msgid "L_ongitude:"
@@ -335,7 +336,7 @@ msgid ""
 "Longitude specifies the east-west position of a point on the Earth's "
 "surface. If you change this value manually, you need to provide altitude and"
 " timezone manually too."
-msgstr ""
+msgstr "經度指定了地球表面上的一個點的東-西位置。如果您手動修改了這個值，您就必須手動提供高度及時區。"
 
 #: ../panel-plugin/weather-config.c:554 ../panel-plugin/weather-config.c:1005
 msgid "Altitu_de:"
@@ -348,7 +349,7 @@ msgid ""
 "The plugin tries to auto-detect the altitude using the GeoNames webservice, but that might not always be correct too, so you can change it here.\n"
 "\n"
 "Altitude is given in meters above sea level, or alternatively in feet by changing the unit on the units page. It should match the real value roughly, but small differences will have no influence on the weather data. Inside Norway, this setting has no effect at all."
-msgstr ""
+msgstr "met.no 網路服務在挪威以外的地方所使用的高度模型並不是很好，所以通常還需要額外指定高度參數，否則回傳的數值可能會不正確。\n\n此插件使用 GeoNames 網路服務嘗試自動偵測高度，但它並不總是正確，所以您可以在這裡修該它。\n\n海拔高度是以海平面為基準，以公尺為單位的高度，或是以呎為單位，如果您在單位頁面中更改的話。它應該跟真正的數值大致符合，但微小的差異應該對天氣資料沒有影響。在挪威，這個設定不會有任何效果。"
 
 #: ../panel-plugin/weather-config.c:577
 msgid "_Timezone:"
@@ -358,25 +359,25 @@ msgstr "時區(_T)："
 msgid ""
 "If the chosen location is not in your current timezone, then it is necessary to <i>put</i> the plugin into that other timezone for the times to be shown correctly. The proper timezone will be auto-detected via the GeoNames web service, but you might want to correct it if necessary.\n"
 "Leave this field empty to use the timezone set by your system. Invalid entries will cause the use of UTC time, but that may also depend on your system."
-msgstr ""
+msgstr "如果已選擇的時區並非您目前所在的時區的話，請把插件 <i>更改</i> 到正確的時區，讓時間可以正確的顯示。通常 GeoNames 網路服務可以自動偵測到正確的時區，但您可以在它偵測不正確的情況下修改它。\n此欄位留空將會使用您的系統時區。填入無效的項目將會使用 UTC 時間，但也可能取決於您的系統。"
 
 #: ../panel-plugin/weather-config.c:610
 msgid ""
 "<i>Please change location name to your liking and correct\n"
 "altitude and timezone if they are not auto-detected correctly.</i>"
-msgstr ""
+msgstr "<i>如果它們自動偵測不正確的話，請依照您的喜好更改位置名稱\n，並修正海拔高度及時區。</i>"
 
 #: ../panel-plugin/weather-config.c:635
 msgid ""
 "Named after the astronomer Anders Celsius who invented the original scale in 1742, the Celsius scale is an international standard unit and nowadays defined using the Kelvin scale. 0 °C is equivalent to 273.15 K and 1 °C difference in temperature is exactly the same difference as 1 K. It is defined with the melting point of water being roughly at 0 °C and its boiling point at 100 °C at one standard atmosphere (1 atm = 1013.5 hPa). Until 1948, the unit was known as <i>centigrade</i> - from Latin <i>centum</i> (100) and <i>gradus</i> (steps).\n"
 "In meteorology and everyday life the Celsius scale is very convenient for expressing temperatures because its numbers can be an easy indicator for the formation of black ice and snow."
-msgstr ""
+msgstr "天文學家安德斯·攝爾修斯在1742年發明了原始的攝式溫標，攝式溫標是現今的國際標準單位，並被用來定義熱力學溫標。0 °C 相當於273.15 K 且1 °C 的刻度與1 K相同。它被定義為，在一大氣壓(一大氣壓 = 1013.5百帕)下，水的熔點大約是0 °C，而沸點則是100 °C。直到1948年，此單位被稱為 <i>攝氏度</i> ─ 來自拉丁文的 <i>centum</i> (100)及 <i>gradus</i> (度)。\n在氣象學及日常生活中，攝氏溫標用來表示溫度非常方便，因為它的數值可以簡單的作為薄冰和雪形成的指標。"
 
 #: ../panel-plugin/weather-config.c:651
 msgid ""
 "The current Fahrenheit temperature scale is based on one proposed in 1724 by the physicist Daniel Gabriel Fahrenheit. 0 °F was the freezing point of brine on the original scale at standard atmospheric pressure, which was the lowest temperature achievable with this mixture of ice, salt and ammonium chloride. The melting point of water is at 32 °F and its boiling point at 212 °F. The Fahrenheit and Celsius scales intersect at -40 degrees. Even in cold winters, the temperatures usually do not fall into negative ranges on the Fahrenheit scale.\n"
 "With its inventor being a member of the Royal Society in London and having a high reputation, the Fahrenheit scale enjoyed great popularity in many English-speaking countries, but was replaced by the Celsius scale in most of these countries during the metrification process in the mid to late 20th century."
-msgstr ""
+msgstr "現今的華氏溫標是基於在1724年由物理學家丹尼爾·加布里埃爾·華倫海特所提出的溫標。0 °F 在原始的華氏溫標下曾是冰點，這是由冰，鹽和氯化銨在一大氣壓下混合所得到的最低溫度。水的凝固點是32 °F ，而沸點則是212 °F。華氏溫標和攝氏溫標會在-40度處相交。即使是在寒冷的冬天，華氏溫標的溫度通常也不會落入負值的範圍。\n因為它的發明者是英國皇家學會院士，有相當高的聲譽，華氏溫標在許多英語系國家中大受歡迎，但在20世紀中到晚期的改用十進制過程中被攝氏溫標逐漸的替換掉。"
 
 #: ../panel-plugin/weather-config.c:694
 msgid ""
@@ -384,7 +385,7 @@ msgid ""
 "Pascal, is a SI derived unit and a measure of force per unit area, defined "
 "as one newton per square meter. One standard atmosphere (atm) is 1013.25 "
 "hPa."
-msgstr ""
+msgstr "帕斯卡，簡稱為帕，以數學家、物理學家以及哲學家布萊茲·帕斯卡命名，是一個 SI 導出單位，用來表示每單位面積上的力，定義為每平方公尺一牛頓。一個標準大氣壓(atm)是1013.25 百帕。"
 
 #: ../panel-plugin/weather-config.c:701
 msgid ""
@@ -393,7 +394,7 @@ msgid ""
 "elsewhere. It is defined as the pressure exerted by a 1 inch circular column"
 " of mercury of 1 inch in height at 32 °F (0 °C) at the standard acceleration"
 " of gravity."
-msgstr ""
+msgstr "英吋汞柱仍廣泛用於在美國的天氣預報、製冷業及航空業的氣壓單位，但在其他地方很少使用。它被定義為一英吋的圓柱狀水銀在一英吋高度、32 °F (0 °C)及標準重力加速度的情形下所師加的壓力。"
 
 #: ../panel-plugin/weather-config.c:709
 msgid ""
