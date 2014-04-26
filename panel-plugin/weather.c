@@ -1524,6 +1524,32 @@ mi_click(GtkWidget *widget,
     update_weatherdata_with_reset(data);
 }
 
+static void
+proxy_auth(SoupSession *session,
+           SoupMessage *msg,
+           SoupAuth *auth,
+           gboolean retrying,
+           gpointer user_data)
+{
+    SoupURI *soup_proxy_uri;
+    const gchar *proxy_uri;
+
+    if (!retrying) {
+        if (msg->status_code == SOUP_STATUS_PROXY_AUTHENTICATION_REQUIRED) {
+            proxy_uri = g_getenv("HTTP_PROXY");
+            if (!proxy_uri)
+                proxy_uri = g_getenv("http_proxy");
+            if (proxy_uri) {
+                soup_proxy_uri = soup_uri_new(proxy_uri);
+                soup_auth_authenticate(auth,
+                                       soup_uri_get_user(soup_proxy_uri),
+                                       soup_uri_get_password(soup_proxy_uri));
+                soup_uri_free(soup_proxy_uri);
+            }
+        }
+    }
+}
+
 
 #ifdef HAVE_UPOWER_GLIB
 static void
@@ -1781,6 +1807,7 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     plugin_data *data = g_slice_new0(plugin_data);
     SoupURI *soup_proxy_uri;
     const gchar *proxy_uri;
+    const gchar *proxy_user;
     GtkWidget *refresh, *refresh_icon;
     GdkPixbuf *icon = NULL;
     data_types lbl;
@@ -1819,9 +1846,17 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     if (!proxy_uri)
         proxy_uri = g_getenv("http_proxy");
     if (proxy_uri) {
-        soup_proxy_uri = soup_uri_new (proxy_uri);
+        soup_proxy_uri = soup_uri_new(proxy_uri);
         g_object_set(data->session, SOUP_SESSION_PROXY_URI,
                      soup_proxy_uri, NULL);
+
+        /* check if uri contains authentication info */
+        proxy_user = soup_uri_get_user(soup_proxy_uri);
+        if (proxy_user && strlen(proxy_user) > 0) {
+            g_signal_connect(G_OBJECT(data->session), "authenticate",
+                             G_CALLBACK(proxy_auth), NULL);
+        }
+
         soup_uri_free(soup_proxy_uri);
     }
 
