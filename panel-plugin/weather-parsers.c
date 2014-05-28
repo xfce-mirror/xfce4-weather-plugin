@@ -28,6 +28,7 @@
 #define _XOPEN_SOURCE
 #define _XOPEN_SOURCE_EXTENDED 1
 #include "weather-parsers.h"
+#include "weather-translate.h"
 #include "weather-debug.h"
 
 #include <time.h>
@@ -220,8 +221,8 @@ parse_location(xmlNode *cur_node,
         }
         if (NODE_IS_TYPE(child_node, "symbol")) {
             g_free(loc->symbol);
-            loc->symbol = PROP(child_node, "id");
             loc->symbol_id = strtol(PROP(child_node, "number"), NULL, 10);
+            loc->symbol = g_strdup(get_symbol_for_id(loc->symbol_id));
         }
     }
 
