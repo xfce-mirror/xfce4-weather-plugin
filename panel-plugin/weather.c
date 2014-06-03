@@ -660,7 +660,7 @@ update_handler(plugin_data *data)
         /* build url */
         url =
             g_strdup_printf("http://api.yr.no/weatherapi"
-                            "/locationforecastlts/1.1/?lat=%s;lon=%s;msl=%d",
+                            "/locationforecastlts/1.2/?lat=%s;lon=%s;msl=%d",
                             data->lat, data->lon, data->msl);
 
         /* start receive thread */
