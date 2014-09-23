@@ -706,10 +706,14 @@ schedule_next_wakeup(plugin_data *data)
     time_t now_t = time(NULL), next_day_t;
     gdouble diff;
     gchar *date;
+    GSource *source;
 
     if (data->update_timer) {
-        g_source_remove(data->update_timer);
-        data->update_timer = 0;
+        source = g_main_context_find_source_by_id(NULL, data->update_timer);
+        if (source) {
+            g_source_destroy(source);
+            data->update_timer = 0;
+        }
     }
 
     next_day_t = day_at_midnight(now_t, 1);
@@ -1379,6 +1383,7 @@ void
 update_weatherdata_with_reset(plugin_data *data)
 {
     time_t now_t;
+    GSource *source;
 
     weather_debug("Update weatherdata with reset.");
     g_assert(data != NULL);
@@ -1386,8 +1391,11 @@ update_weatherdata_with_reset(plugin_data *data)
         return;
 
     if (data->update_timer) {
-        g_source_remove(data->update_timer);
-        data->update_timer = 0;
+        source = g_main_context_find_source_by_id(NULL, data->update_timer);
+        if (source) {
+            g_source_destroy(source);
+            data->update_timer = 0;
+        }
     }
 
     /* set location timezone */
@@ -1443,6 +1451,7 @@ close_summary(GtkWidget *widget,
               gpointer *user_data)
 {
     plugin_data *data = (plugin_data *) user_data;
+    GSource *source;
 
     if (data->summary_details)
         summary_details_free(data->summary_details);
@@ -1451,8 +1460,12 @@ close_summary(GtkWidget *widget,
 
     /* deactivate the summary window update timer */
     if (data->summary_update_timer) {
-        g_source_remove(data->summary_update_timer);
-        data->summary_update_timer = 0;
+        source = g_main_context_find_source_by_id(NULL,
+                                                  data->summary_update_timer);
+        if (source) {
+            g_source_destroy(source);
+            data->summary_update_timer = 0;
+        }
     }
 
     /* sync toggle button state */
@@ -1943,12 +1956,17 @@ static void
 xfceweather_free(XfcePanelPlugin *plugin,
                  plugin_data *data)
 {
+    GSource *source;
+
     weather_debug("Freeing plugin data.");
     g_assert(data != NULL);
 
     if (data->update_timer) {
-        g_source_remove(data->update_timer);
-        data->update_timer = 0;
+        source = g_main_context_find_source_by_id(NULL, data->update_timer);
+        if (source) {
+            g_source_destroy(source);
+            data->update_timer = 0;
+        }
     }
 
 #ifdef HAVE_UPOWER_GLIB
