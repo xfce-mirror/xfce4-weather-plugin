@@ -374,21 +374,23 @@ static void
 update_current_astrodata(plugin_data *data)
 {
     time_t now_t = time(NULL);
+    gdouble tdiff = -99999;
 
     if (G_UNLIKELY(data->astrodata == NULL)) {
         data->current_astro = NULL;
         return;
     }
 
-   if (data->current_astro == NULL ||
-       difftime(now_t, data->current_astro->day) >= 24 * 3600) {
-       data->current_astro = get_astro_data_for_day(data->astrodata, 0);
-       if (G_UNLIKELY(data->current_astro == NULL))
-           return;
+    if (data->current_astro)
+        tdiff = difftime(now_t, data->current_astro->day);
 
-       weather_debug("Updated current astrodata.");
-       weather_dump(weather_dump_astro, data->current_astro);
-   }
+    if (data->current_astro == NULL || tdiff >= 24 * 3600 || tdiff < 0) {
+        data->current_astro = get_astro_data_for_day(data->astrodata, 0);
+        if (G_UNLIKELY(data->current_astro == NULL))
+            weather_debug("No current astrodata available.");
+        else
+            weather_debug("Updated current astrodata.");
+    }
 }
 
 
