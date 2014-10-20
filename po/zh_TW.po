@@ -4,15 +4,16 @@
 # 
 # Translators:
 # Ambrose Li <acli@ada.dhs.org>, 2005
+# Jeff Huang <s8321414@gmail.com>, 2014
 # Walter Cheuk <wwycheuk@gmail.com>, 2013-2014
-# 柏諺 黃 <s8321414@gmail.com>, 2014
+# Jeff Huang <s8321414@gmail.com>, 2014
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-01-12 06:31+0100\n"
-"PO-Revision-Date: 2014-05-13 00:29+0000\n"
-"Last-Translator: 柏諺 黃 <s8321414@gmail.com>\n"
+"POT-Creation-Date: 2014-10-19 18:32+0200\n"
+"PO-Revision-Date: 2014-10-19 23:12+0000\n"
+"Last-Translator: Jeff Huang <s8321414@gmail.com>\n"
 "Language-Team: Chinese (Taiwan) (http://www.transifex.com/projects/p/xfce-panel-plugins/language/zh_TW/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -77,11 +78,11 @@ msgstr "風凍"
 msgid "R"
 msgstr "降水"
 
-#: ../panel-plugin/weather.c:358 ../panel-plugin/weather.c:360
+#: ../panel-plugin/weather.c:351 ../panel-plugin/weather.c:353
 msgid "No Data"
 msgstr "無資料"
 
-#: ../panel-plugin/weather.c:498
+#: ../panel-plugin/weather.c:493
 msgid ""
 "Met.no sunrise API states that this version of the webservice is deprecated,"
 " and the plugin needs to be adapted to use a newer version, or it will stop "
@@ -89,18 +90,18 @@ msgid ""
 "if no one else has done so yet."
 msgstr "Met.no sunrise API 指出這個版本的網路服務是過時的，且插件需要需要調整以使用較新的版本，否則將會在數個月內停止運作。如果還沒有其他人在 https://bugzilla.xfce.org 上提交 bug 的話請提交一個。"
 
-#: ../panel-plugin/weather.c:518
+#: ../panel-plugin/weather.c:513
 msgid "Error parsing astronomical data!"
 msgstr "分析天文資料時發生錯誤！"
 
-#: ../panel-plugin/weather.c:520
+#: ../panel-plugin/weather.c:515
 #, c-format
 msgid ""
 "Download of astronomical data failed with HTTP Status Code %d, Reason "
 "phrase: %s"
 msgstr "天文資料下載失敗，HTTP 狀態碼 %d ，分析原因： %s"
 
-#: ../panel-plugin/weather.c:560
+#: ../panel-plugin/weather.c:555
 msgid ""
 "Met.no LocationforecastLTS API states that this version of the webservice is"
 " deprecated, and the plugin needs to be adapted to use a newer version, or "
@@ -108,57 +109,57 @@ msgid ""
 "https://bugzilla.xfce.org if no one else has done so yet."
 msgstr "Met.no LocationforecastLTS API 指出這個版本的網路服務是過時的，且插件需要需要調整以使用較新的版本，否則將會在數個月內停止運作。如果還沒有其他人在 https://bugzilla.xfce.org 上提交 bug 的話請提交一個。"
 
-#: ../panel-plugin/weather.c:578
+#: ../panel-plugin/weather.c:573
 msgid "Error parsing weather data!"
 msgstr "分析天氣資料時發生錯誤！"
 
-#: ../panel-plugin/weather.c:581
+#: ../panel-plugin/weather.c:576
 #, c-format
 msgid ""
 "Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
 msgstr "天氣資料下載失敗，HTTP 狀態碼 %d ，分析原因： %s"
 
 #. start receive thread
-#: ../panel-plugin/weather.c:655 ../panel-plugin/weather.c:674
+#: ../panel-plugin/weather.c:650 ../panel-plugin/weather.c:669
 #: ../panel-plugin/weather-search.c:169 ../panel-plugin/weather-search.c:435
 #, c-format
 msgid "getting %s"
 msgstr "正在取得 %s"
 
-#: ../panel-plugin/weather.c:1173
+#: ../panel-plugin/weather.c:1172
 #, c-format
 msgid "Error writing cache file %s!"
 msgstr "寫入快取檔 %s 時發生錯誤！"
 
-#: ../panel-plugin/weather.c:1584
+#: ../panel-plugin/weather.c:1619
 #, c-format
 msgid "Unable to open the following url: %s"
 msgstr "無法開啟下列網址：%s"
 
-#: ../panel-plugin/weather.c:1615 ../panel-plugin/weather.desktop.in.h:1
+#: ../panel-plugin/weather.c:1650 ../panel-plugin/weather.desktop.in.h:1
 msgid "Weather Update"
 msgstr "天氣更新"
 
-#: ../panel-plugin/weather.c:1652
+#: ../panel-plugin/weather.c:1687
 msgid "Short-term forecast data unavailable."
 msgstr "目前尚未有短期預測。"
 
-#: ../panel-plugin/weather.c:1664
+#: ../panel-plugin/weather.c:1699
 msgid "The sun never rises today."
 msgstr "今天沒有日出。"
 
-#: ../panel-plugin/weather.c:1666
+#: ../panel-plugin/weather.c:1701
 msgid "The sun never sets today."
 msgstr "今天沒有日落。"
 
-#: ../panel-plugin/weather.c:1673
+#: ../panel-plugin/weather.c:1708
 #, c-format
 msgid "The sun rises at %s and sets at %s."
 msgstr "%s 日出，%s 日落。"
 
 #. * TRANSLATORS: This is the simple tooltip. For a bigger challenge,
 #. * look at the verbose tooltip style further below ;-)
-#: ../panel-plugin/weather.c:1701
+#: ../panel-plugin/weather.c:1736
 #, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
@@ -177,7 +178,7 @@ msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\
 #. * be changed easily - and try to make it compact and look
 #. * good! The missing space after "%son the ..." is intentional,
 #. * it is included in the %s.
-#: ../panel-plugin/weather.c:1725
+#: ../panel-plugin/weather.c:1760
 #, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
@@ -192,27 +193,27 @@ msgid ""
 "<span size=\"smaller\">%s</span>"
 msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n<b><span size=\"large\">%s</span></b>\n<span size=\"smaller\">由 %s 至 %s，有 %s 降水</span>\n\n<b>氣溫：</b> %s\t\t<span size=\"smaller\">(%s 的值)</span>\n<b>風速：</b> %s (蒲福風級 %s 級) 由%s面吹來(%s)\n<b>氣壓：</b> %s    <b>濕度：</b> %s\n<b>霧量：</b> %s    <b>雲量：</b> %s\n\n<span size=\"smaller\">%s</span>"
 
-#: ../panel-plugin/weather.c:1778
+#: ../panel-plugin/weather.c:1813
 msgid "Cannot update weather data"
 msgstr "無法更新天氣資料"
 
-#: ../panel-plugin/weather.c:1852
+#: ../panel-plugin/weather.c:1894
 msgid "No default icon theme? This should not happen, plugin will crash!"
 msgstr "沒有預設圖示佈景主題？這可不行！本插件會垮掉！"
 
 #. add refresh button to right click menu, for people who missed
 #. the middle mouse click feature
-#: ../panel-plugin/weather.c:1893
+#: ../panel-plugin/weather.c:1935
 msgid "Re_fresh"
 msgstr "重刷(_F)"
 
-#: ../panel-plugin/weather.c:2083
+#: ../panel-plugin/weather.c:2130
 msgid "Show weather conditions and forecasts"
 msgstr "顯示天氣及預測"
 
-#: ../panel-plugin/weather.c:2085
+#: ../panel-plugin/weather.c:2132
 msgid "Copyright (c) 2003-2014\n"
-msgstr "著作權 (c) 2003-2014\n"
+msgstr "Copyright (c) 2003-2014\n"
 
 #. * TRANSLATORS: The abbreviations in parentheses will be shown in
 #. * the scrollbox together with the values. Keep them in sync with
@@ -1396,7 +1397,7 @@ msgid ""
 msgstr "\n有雲\n"
 
 #: ../panel-plugin/weather-summary.c:513
-#: ../panel-plugin/weather-translate.c:118
+#: ../panel-plugin/weather-translate.c:119
 msgid "Fog"
 msgstr "有霧"
 
@@ -1654,35 +1655,35 @@ msgid "_Details"
 msgstr "詳細資料(_D)"
 
 #. TRANSLATORS: Moon phases
-#: ../panel-plugin/weather-translate.c:36
+#: ../panel-plugin/weather-translate.c:37
 msgid "New moon"
 msgstr "新月"
 
-#: ../panel-plugin/weather-translate.c:37
+#: ../panel-plugin/weather-translate.c:38
 msgid "Waxing crescent"
 msgstr "娥眉月"
 
-#: ../panel-plugin/weather-translate.c:38
+#: ../panel-plugin/weather-translate.c:39
 msgid "First quarter"
 msgstr "上弦月"
 
-#: ../panel-plugin/weather-translate.c:39
+#: ../panel-plugin/weather-translate.c:40
 msgid "Waxing gibbous"
 msgstr "盈凸月"
 
-#: ../panel-plugin/weather-translate.c:40
+#: ../panel-plugin/weather-translate.c:41
 msgid "Full moon"
 msgstr "滿月"
 
-#: ../panel-plugin/weather-translate.c:41
+#: ../panel-plugin/weather-translate.c:42
 msgid "Waning gibbous"
 msgstr "虧凸月"
 
-#: ../panel-plugin/weather-translate.c:42
+#: ../panel-plugin/weather-translate.c:43
 msgid "Third quarter"
 msgstr "下弦月"
 
-#: ../panel-plugin/weather-translate.c:43
+#: ../panel-plugin/weather-translate.c:44
 msgid "Waning crescent"
 msgstr "殘月"
 
@@ -1700,27 +1701,28 @@ msgstr "殘月"
 #. * http://www.mir-co.net/sonstiges/wetterausdruecke.htm
 #. * The latter page is in German, but it contains a symbol table with
 #. Norwegian descriptions.
-#. Symbols 16-19 are used for polar days
-#: ../panel-plugin/weather-translate.c:68
-#: ../panel-plugin/weather-translate.c:121
+#. Symbols 16-19 are used for polar days (unused beginning with API version
+#. 1.2)
+#: ../panel-plugin/weather-translate.c:69
+#: ../panel-plugin/weather-translate.c:122
 msgid "Sunny"
 msgstr "陽光普照"
 
-#: ../panel-plugin/weather-translate.c:68
-#: ../panel-plugin/weather-translate.c:121
+#: ../panel-plugin/weather-translate.c:69
+#: ../panel-plugin/weather-translate.c:122
 msgid "Clear"
 msgstr "明朗"
 
-#: ../panel-plugin/weather-translate.c:69
-#: ../panel-plugin/weather-translate.c:122
+#: ../panel-plugin/weather-translate.c:70
+#: ../panel-plugin/weather-translate.c:123
 msgid "Lightly cloudy"
 msgstr "少雲"
 
-#: ../panel-plugin/weather-translate.c:70
+#: ../panel-plugin/weather-translate.c:71
 msgid "Partly cloudy"
 msgstr "部分多雲"
 
-#: ../panel-plugin/weather-translate.c:71
+#: ../panel-plugin/weather-translate.c:72
 msgid "Cloudy"
 msgstr "多雲"
 
@@ -1731,8 +1733,8 @@ msgstr "多雲"
 #. *    precipitation that can vary greatly in intensity over a short
 #. *    amount of time. [...] Precipitation may be locally heavy for
 #. *    short amounts of time."
-#: ../panel-plugin/weather-translate.c:81
-#: ../panel-plugin/weather-translate.c:123
+#: ../panel-plugin/weather-translate.c:82
+#: ../panel-plugin/weather-translate.c:124
 msgid "Rain showers"
 msgstr "驟雨"
 
@@ -1741,22 +1743,22 @@ msgstr "驟雨"
 #. *   "Thunder Showers - Intermittent rain showers with thunder and
 #. lightning, generally
 #. *    short-lived."
-#: ../panel-plugin/weather-translate.c:88
+#: ../panel-plugin/weather-translate.c:89
 msgid "Thunder showers"
 msgstr "雷陣雨"
 
 #. Analogues to "Rain showers"
-#: ../panel-plugin/weather-translate.c:91
+#: ../panel-plugin/weather-translate.c:92
 msgid "Sleet showers"
 msgstr "凍雨"
 
-#: ../panel-plugin/weather-translate.c:92
-#: ../panel-plugin/weather-translate.c:124
+#: ../panel-plugin/weather-translate.c:93
+#: ../panel-plugin/weather-translate.c:125
 msgid "Snow showers"
 msgstr "雨雪"
 
 #. It's raining, usually incessantly, but not heavily.
-#: ../panel-plugin/weather-translate.c:95
+#: ../panel-plugin/weather-translate.c:96
 msgid "Light rain"
 msgstr "小雨"
 
@@ -1765,20 +1767,20 @@ msgstr "小雨"
 #. * rain and rain somewhat better. Symbol names indicate this is the way
 #. met.no did it some
 #. * time ago.
-#: ../panel-plugin/weather-translate.c:100
+#: ../panel-plugin/weather-translate.c:101
 msgid "Rain"
 msgstr "有雨"
 
-#: ../panel-plugin/weather-translate.c:102
+#: ../panel-plugin/weather-translate.c:103
 msgid "Rain with thunder"
 msgstr "雷雨"
 
 #. Sleet is a mixture of rain and snow, but it's not hail.
-#: ../panel-plugin/weather-translate.c:105
+#: ../panel-plugin/weather-translate.c:106
 msgid "Sleet"
 msgstr "落雹"
 
-#: ../panel-plugin/weather-translate.c:107
+#: ../panel-plugin/weather-translate.c:108
 msgid "Snow"
 msgstr "雪"
 
@@ -1790,24 +1792,24 @@ msgstr "雪"
 #. *    rain. It typically falls in regions of strong upward motion within the
 #. cold sector of an
 #. *    extratropical cyclone."
-#: ../panel-plugin/weather-translate.c:116
+#: ../panel-plugin/weather-translate.c:117
 msgid "Thundersnow"
 msgstr "雷雪"
 
 #. Same as symbols 1-15, but with thunder
-#: ../panel-plugin/weather-translate.c:127
+#: ../panel-plugin/weather-translate.c:128
 msgid "Sleet showers with thunder"
 msgstr "凍雨有雷"
 
-#: ../panel-plugin/weather-translate.c:128
+#: ../panel-plugin/weather-translate.c:129
 msgid "Snow showers with thunder"
 msgstr "雨雪有雷"
 
-#: ../panel-plugin/weather-translate.c:129
+#: ../panel-plugin/weather-translate.c:130
 msgid "Light rain with thunder"
 msgstr "小雨有雷"
 
-#: ../panel-plugin/weather-translate.c:130
+#: ../panel-plugin/weather-translate.c:131
 msgid "Sleet with thunder"
 msgstr "落雹有雷"
 
