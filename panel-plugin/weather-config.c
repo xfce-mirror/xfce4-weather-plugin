@@ -166,17 +166,25 @@ schedule_data_update(gpointer user_data)
 static void
 schedule_delayed_data_update(xfceweather_dialog *dialog)
 {
+    GSource *source;
+
     weather_debug("Starting delayed data update.");
     /* cancel any update that was scheduled before */
     if (dialog->timer_id) {
-        g_source_remove(dialog->timer_id);
-        dialog->timer_id = 0;
+        source = g_main_context_find_source_by_id(NULL, dialog->timer_id);
+        if (source) {
+            g_source_destroy(source);
+            dialog->timer_id = 0;
+        }
     }
 
     /* stop any updates that could be performed by weather.c */
     if (dialog->pd->update_timer) {
-        g_source_remove(dialog->pd->update_timer);
-        dialog->pd->update_timer = 0;
+        source = g_main_context_find_source_by_id(NULL, dialog->pd->update_timer);
+        if (source) {
+            g_source_destroy(source);
+            dialog->pd->update_timer = 0;
+        }
     }
 
     gtk_widget_show(GTK_WIDGET(dialog->update_spinner));
