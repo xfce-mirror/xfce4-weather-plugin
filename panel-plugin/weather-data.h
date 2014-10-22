@@ -155,7 +155,7 @@ time_t day_at_midnight(time_t day_t,
                        const gint add_days);
 
 xml_astro *get_astro_data_for_day(const GArray *astrodata,
-                                  const gint day_t);
+                                  const gint day);
 
 GArray *get_point_data_for_day(xml_weather *wd,
                                const gint day);
