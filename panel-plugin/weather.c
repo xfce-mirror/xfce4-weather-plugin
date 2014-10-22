@@ -1095,7 +1095,7 @@ write_cache_file(plugin_data *data)
             astro = g_array_index(data->astrodata, xml_astro *, i);
             if (G_UNLIKELY(astro == NULL))
                 continue;
-            value = format_date(astro->day, date_format, TRUE);
+            value = format_date(astro->day, "%Y-%m-%d", TRUE);
             start = format_date(astro->sunrise, date_format, FALSE);
             end = format_date(astro->sunset, date_format, FALSE);
             g_string_append_printf(out, "[astrodata%d]\n", i);
@@ -1243,7 +1243,7 @@ read_cache_file(plugin_data *data)
     }
     /* read cache creation date and check if cache file is not too old */
     CACHE_READ_STRING(timestring, "cache_date");
-    cache_date_t = parse_timestring(timestring, NULL);
+    cache_date_t = parse_timestring(timestring, NULL, FALSE);
     g_free(timestring);
     if (difftime(now_t, cache_date_t) > data->cache_file_max_age) {
         weather_debug("Cache file is too old and will not be used.");
@@ -1252,7 +1252,7 @@ read_cache_file(plugin_data *data)
     }
     if (G_LIKELY(data->weather_update)) {
         CACHE_READ_STRING(timestring, "last_weather_download");
-        data->weather_update->last = parse_timestring(timestring, NULL);
+        data->weather_update->last = parse_timestring(timestring, NULL, FALSE);
         data->weather_update->next =
             calc_next_download_time(data->weather_update,
                                     data->weather_update->last);
@@ -1260,7 +1260,7 @@ read_cache_file(plugin_data *data)
     }
     if (G_LIKELY(data->astro_update)) {
         CACHE_READ_STRING(timestring, "last_astro_download");
-        data->astro_update->last = parse_timestring(timestring, NULL);
+        data->astro_update->last = parse_timestring(timestring, NULL, FALSE);
         data->astro_update->next =
             calc_next_download_time(data->astro_update,
                                     data->astro_update->last);
@@ -1279,14 +1279,13 @@ read_cache_file(plugin_data *data)
             break;
 
         CACHE_READ_STRING(timestring, "day");
-        astro->day = parse_timestring(timestring, NULL);
-        astro->day = day_at_midnight(astro->day, 0);
+        astro->day = parse_timestring(timestring, "%Y-%m-%d", TRUE);
         g_free(timestring);
         CACHE_READ_STRING(timestring, "sunrise");
-        astro->sunrise = parse_timestring(timestring, NULL);
+        astro->sunrise = parse_timestring(timestring, NULL, FALSE);
         g_free(timestring);
         CACHE_READ_STRING(timestring, "sunset");
-        astro->sunset = parse_timestring(timestring, NULL);
+        astro->sunset = parse_timestring(timestring, NULL, FALSE);
         g_free(timestring);
         astro->sun_never_rises =
             g_key_file_get_boolean(keyfile, group, "sun_never_rises", NULL);
@@ -1294,10 +1293,10 @@ read_cache_file(plugin_data *data)
             g_key_file_get_boolean(keyfile, group, "sun_never_sets", NULL);
 
         CACHE_READ_STRING(timestring, "moonrise");
-        astro->moonrise = parse_timestring(timestring, NULL);
+        astro->moonrise = parse_timestring(timestring, NULL, FALSE);
         g_free(timestring);
         CACHE_READ_STRING(timestring, "moonset");
-        astro->moonset = parse_timestring(timestring, NULL);
+        astro->moonset = parse_timestring(timestring, NULL, FALSE);
         g_free(timestring);
         CACHE_READ_STRING(astro->moon_phase, "moon_phase");
         astro->moon_never_rises =
@@ -1331,13 +1330,13 @@ read_cache_file(plugin_data *data)
 
         /* parse time strings (start, end, point) */
         CACHE_READ_STRING(timestring, "start");
-        timeslice->start = parse_timestring(timestring, NULL);
+        timeslice->start = parse_timestring(timestring, NULL, FALSE);
         g_free(timestring);
         CACHE_READ_STRING(timestring, "end");
-        timeslice->end = parse_timestring(timestring, NULL);
+        timeslice->end = parse_timestring(timestring, NULL, FALSE);
         g_free(timestring);
         CACHE_READ_STRING(timestring, "point");
-        timeslice->point = parse_timestring(timestring, NULL);
+        timeslice->point = parse_timestring(timestring, NULL, FALSE);
         g_free(timestring);
 
         /* parse location data */

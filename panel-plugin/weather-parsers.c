@@ -121,7 +121,8 @@ get_astro(const GArray *astrodata,
 
 time_t
 parse_timestring(const gchar *ts,
-                 gchar *format) {
+                 gchar *format,
+                 gboolean local) {
     time_t t;
     struct tm tm;
 
@@ -141,7 +142,11 @@ parse_timestring(const gchar *ts,
     if (G_UNLIKELY(strptime(ts, format, &tm) == NULL))
         return t;
 
-    t = my_timegm(&tm);
+    if (local)
+        t = mktime(&tm);
+    else
+        t = my_timegm(&tm);
+
     return t;
 }
 
@@ -293,11 +298,11 @@ parse_time(xmlNode *cur_node,
     xmlFree(datatype);
 
     from = PROP(cur_node, "from");
-    start_t = parse_timestring(from, NULL);
+    start_t = parse_timestring(from, NULL, FALSE);
     xmlFree(from);
 
     to = PROP(cur_node, "to");
-    end_t = parse_timestring(to, NULL);
+    end_t = parse_timestring(to, NULL, FALSE);
     xmlFree(to);
 
     if (G_UNLIKELY(!start_t || !end_t))
@@ -388,11 +393,11 @@ parse_astro_location(xmlNode *cur_node,
             xmlFree(never_sets);
 
             sunrise = PROP(child_node, "rise");
-            astro->sunrise = parse_timestring(sunrise, NULL);
+            astro->sunrise = parse_timestring(sunrise, NULL, FALSE);
             xmlFree(sunrise);
 
             sunset = PROP(child_node, "set");
-            astro->sunset = parse_timestring(sunset, NULL);
+            astro->sunset = parse_timestring(sunset, NULL, FALSE);
             xmlFree(sunset);
         }
 
@@ -416,11 +421,11 @@ parse_astro_location(xmlNode *cur_node,
             xmlFree(never_sets);
 
             moonrise = PROP(child_node, "rise");
-            astro->moonrise = parse_timestring(moonrise, NULL);
+            astro->moonrise = parse_timestring(moonrise, NULL, FALSE);
             xmlFree(moonrise);
 
             moonset = PROP(child_node, "set");
-            astro->moonset = parse_timestring(moonset, NULL);
+            astro->moonset = parse_timestring(moonset, NULL, FALSE);
             xmlFree(moonset);
 
             astro->moon_phase = PROP(child_node, "phase");
@@ -441,8 +446,7 @@ parse_astro_time(xmlNode *cur_node)
         return NULL;
 
     date = PROP(cur_node, "date");
-    astro->day = parse_timestring(date, "%Y-%m-%d");
-    astro->day = day_at_midnight(astro->day, 0);
+    astro->day = parse_timestring(date, "%Y-%m-%d", TRUE);
     xmlFree(date);
 
     for (child_node = cur_node->children; child_node;
