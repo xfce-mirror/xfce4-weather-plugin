@@ -1411,13 +1411,19 @@ update_weatherdata_with_reset(plugin_data *data)
         data->weatherdata = make_weather_data();
     }
 
+    /* clear existing astronomical data */
+    if (data->astrodata) {
+        astrodata_free(data->astrodata);
+        data->astrodata = g_array_sized_new(FALSE, TRUE, sizeof(xml_astro *), 30);
+    }
+
     /* update GUI to display NODATA */
     update_icon(data);
     update_scrollbox(data, TRUE);
 
     /* make use of previously saved data */
     read_cache_file(data);
-    update_current_astrodata(data);
+    update_current_conditions(data, TRUE);
 
     /* schedule downloads immediately */
     time(&now_t);
