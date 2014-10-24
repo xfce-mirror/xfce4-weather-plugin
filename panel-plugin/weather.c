@@ -489,15 +489,6 @@ cb_astro_update(SoupSession *session,
     data->astro_update->attempt++;
     data->astro_update->http_status_code = msg->status_code;
     if ((msg->status_code == 200 || msg->status_code == 203)) {
-        if (msg->status_code == 203)
-            g_warning
-                (_("Met.no sunrise API states that this version of the "
-                   "webservice is deprecated, and the plugin needs to be "
-                   "adapted to use a newer version, or it will stop working "
-                   "within a few months. Please file a bug on "
-                   "https://bugzilla.xfce.org if no one else has done so "
-                   "yet."));
-
         doc = get_xml_document(msg);
         if (G_LIKELY(doc)) {
             root_node = xmlDocGetRootElement(doc);
@@ -552,14 +543,6 @@ cb_weather_update(SoupSession *session,
     data->weather_update->attempt++;
     data->weather_update->http_status_code = msg->status_code;
     if (msg->status_code == 200 || msg->status_code == 203) {
-        if (msg->status_code == 203)
-            g_warning
-                (_("Met.no LocationforecastLTS API states that this version "
-                   "of the webservice is deprecated, and the plugin needs to "
-                   "be adapted to use a newer version, or it will stop "
-                   "working within a few months. Please file a bug on "
-                   "https://bugzilla.xfce.org if no one else has done so "
-                   "yet."));
         doc = get_xml_document(msg);
         if (G_LIKELY(doc)) {
             root_node = xmlDocGetRootElement(doc);
