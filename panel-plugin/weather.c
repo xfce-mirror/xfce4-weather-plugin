@@ -487,6 +487,7 @@ cb_astro_update(SoupSession *session,
 
     time(&now_t);
     data->astro_update->attempt++;
+    data->astro_update->http_status_code = msg->status_code;
     if ((msg->status_code == 200 || msg->status_code == 203)) {
         if (msg->status_code == 203)
             g_warning
@@ -549,6 +550,7 @@ cb_weather_update(SoupSession *session,
     weather_debug("Processing downloaded weather data.");
     time(&now_t);
     data->weather_update->attempt++;
+    data->weather_update->http_status_code = msg->status_code;
     if (msg->status_code == 200 || msg->status_code == 203) {
         if (msg->status_code == 203)
             g_warning

@@ -59,6 +59,7 @@ typedef struct {
     guint check_interval;
     gboolean started;
     gboolean finished;
+    guint http_status_code;
 } update_info;
 
 typedef struct {
