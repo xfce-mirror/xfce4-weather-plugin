@@ -220,7 +220,7 @@ init_update_infos(plugin_data *data)
         g_slice_free(update_info, data->conditions_update);
 
     data->astro_update = make_update_info(24 * 3600);
-    data->weather_update = make_update_info(20 * 60);
+    data->weather_update = make_update_info(60 * 60);
     data->conditions_update = make_update_info(5 * 60);
 }
 
