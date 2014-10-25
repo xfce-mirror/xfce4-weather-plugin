@@ -402,7 +402,7 @@ update_current_conditions(plugin_data *data,
 
     if (G_UNLIKELY(data->weatherdata == NULL)) {
         update_icon(data);
-        update_scrollbox(data, FALSE);
+        update_scrollbox(data, TRUE);
         schedule_next_wakeup(data);
         return;
     }
@@ -430,9 +430,7 @@ update_current_conditions(plugin_data *data,
 
     /* update widgets */
     update_icon(data);
-    update_scrollbox(data, FALSE);
-    if (immediately)
-        gtk_scrollbox_reset(GTK_SCROLLBOX(data->scrollbox));
+    update_scrollbox(data, immediately);
 
     /* schedule next update */
     now_tm.tm_min += 5;
@@ -568,6 +566,8 @@ cb_weather_update(SoupSession *session,
                  (GCompareFunc) xml_time_compare);
     weather_debug("Updating current conditions.");
     update_current_conditions(data, !parsing_error);
+    gtk_scrollbox_reset(GTK_SCROLLBOX(data->scrollbox));
+
     data->weather_update->finished = TRUE;
     weather_dump(weather_dump_weatherdata, data->weatherdata);
 }
@@ -589,7 +589,7 @@ update_handler(plugin_data *data)
        scrollbox and return */
     if (G_UNLIKELY(data->lat == NULL || data->lon == NULL)) {
         update_icon(data);
-        update_scrollbox(data, FALSE);
+        update_scrollbox(data, TRUE);
         return FALSE;
     }
 
@@ -1408,7 +1408,6 @@ update_weatherdata_with_reset(plugin_data *data)
 
     /* make use of previously saved data */
     read_cache_file(data);
-    update_current_conditions(data, TRUE);
 
     /* schedule downloads immediately */
     time(&now_t);

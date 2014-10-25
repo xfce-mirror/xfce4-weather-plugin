@@ -344,7 +344,10 @@ gtk_scrollbox_control_loop(gpointer user_data)
         self->fade = FADE_SLEEP;
         break;
     case FADE_OUT:
-        self->fade = FADE_IN;
+        if (self->animate)
+            self->fade = FADE_IN;
+        else
+            self->fade = FADE_NONE;
         gtk_scrollbox_swap_labels(self);
         break;
     case FADE_NONE:
