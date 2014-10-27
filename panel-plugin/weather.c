@@ -1841,6 +1841,7 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     data->forecast_days = DEFAULT_FORECAST_DAYS;
     data->round = TRUE;
     data->single_row = TRUE;
+    data->power_saving = TRUE;
 
     /* Setup update infos */
     init_update_infos(data);
