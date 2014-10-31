@@ -530,8 +530,8 @@ time).
 
 Note that refreshing data by middle-clicking the icon or by clicking
 on the appropriate context menu entry does not clear the cache.
-However, data that is download will always overwrite any existing
-data.
+However, data that has been downloaded will always overwrite any
+existing data.
 
 
 HIDDEN OPTIONS
@@ -556,10 +556,10 @@ config file in $HOME/.config/xfce4/panel, then restart the panel with
 * power_saving: If the plugin has been compiled with support for
   upower, it will try to extend battery life by taking the following
   measures:
-  1) If the lid is closed, hide the scrollbox.
-  2) If the machine is on battery or the lid is closed,
+  If the machine is on battery,
      - decrease the regular update interval to 30 seconds,
      - stop the scrollbox animation and
      - update the summary window clock only every minute.
   Setting this value to false will deactivate power saving. If upower
-  support has not been compiled in, then this setting has no effect.
+  support has not been compiled in, then this setting will have no
+  effect.
