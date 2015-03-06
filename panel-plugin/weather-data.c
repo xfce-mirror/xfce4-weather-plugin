@@ -44,6 +44,15 @@
 
 #define ROUND_TO_INT(default_format) (round ? "%.0f" : default_format)
 
+/* Converts temperatures in Celcius to Fahrenheit while preventing
+ * negative values rounded to zero from being displayed as "-0 °F". */
+#define CALC_FAHRENHEIT(round, temperature)              \
+do {                                                     \
+    temperature = temperature * 9.0 / 5.0 + 32;          \
+    if (round && temperature > -0.5 && temperature < 0)  \
+        temperature = 0;                                 \
+} while (0)
+
 #define LOCALE_DOUBLE(value, format)                        \
     (value                                                  \
      ? g_strdup_printf(format, g_ascii_strtod(value, NULL)) \
@@ -344,7 +353,7 @@ get_data(const xml_time *timeslice,
     case TEMPERATURE:      /* source is in °C */
         val = string_to_double(loc->temperature_value, 0);
         if (units->temperature == FAHRENHEIT)
-            val = val * 9.0 / 5.0 + 32.0;
+            CALC_FAHRENHEIT(round, val);
         return g_strdup_printf(ROUND_TO_INT("%.1f"), val);
 
     case PRESSURE:         /* source is in hectopascals */
@@ -398,14 +407,14 @@ get_data(const xml_time *timeslice,
         if (val == INVALID_VALUE)
             return g_strdup("");
         if (units->temperature == FAHRENHEIT)
-            val = val * 9.0 / 5.0 + 32.0;
+            CALC_FAHRENHEIT(round, val);
         return g_strdup_printf(ROUND_TO_INT("%.1f"), val);
 
     case APPARENT_TEMPERATURE:
         val = calc_apparent_temperature(loc, units->apparent_temperature,
                                         night_time);
         if (units->temperature == FAHRENHEIT)
-            val = val * 9.0 / 5.0 + 32.0;
+            CALC_FAHRENHEIT(round, val);
         return g_strdup_printf(ROUND_TO_INT("%.1f"), val);
 
     case CLOUDS_LOW:
