@@ -10,6 +10,7 @@
 # cquike <cquike@gmail.com>, 2013
 # David Segura Monroy <davidseg@gmail.com>, 2013
 # Francisco <fserrador@gmail.com>, 2013
+# Franco Tortoriello <torto09@gmail.com>, 2015
 # gabrieltandil <gabriel.tandil@gmail.com>, 2014
 # gabrieltandil <gabriel.tandil@gmail.com>, 2014
 # mc <correomc2000-ing@yahoo.es>, 2013-2014
@@ -19,8 +20,8 @@ msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-24 18:31+0200\n"
-"PO-Revision-Date: 2015-04-02 12:08+0000\n"
-"Last-Translator: Manolo Díaz <diaz.manolo@gmail.com>\n"
+"PO-Revision-Date: 2015-04-13 22:31+0000\n"
+"Last-Translator: Franco Tortoriello <torto09@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/projects/p/xfce-panel-plugins/language/es/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -98,7 +99,7 @@ msgstr "¡Error analizando datos astronómicos!"
 msgid ""
 "Download of astronomical data failed with HTTP Status Code %d, Reason "
 "phrase: %s"
-msgstr "La descarga de datos de meteorología han fallado con el código de estado HTTP %d, motivo aducido: %s"
+msgstr "La descarga de datos de meteorología ha fallado con el código de estado HTTP %d, motivo aducido: %s"
 
 #: ../panel-plugin/weather.c:558
 msgid "Error parsing weather data!"
@@ -108,7 +109,7 @@ msgstr "¡Error analizando datos meteorológicos!"
 #, c-format
 msgid ""
 "Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
-msgstr "La descarga de datos de meteorología han fallado con el código de estado HTTP %d, motivo aducido: %s"
+msgstr "La descarga de datos de meteorología ha fallado con el código de estado HTTP %d, motivo aducido: %s"
 
 #. start receive thread
 #: ../panel-plugin/weather.c:635 ../panel-plugin/weather.c:654
@@ -133,7 +134,7 @@ msgstr "Actualización del tiempo"
 
 #: ../panel-plugin/weather.c:1677
 msgid "Short-term forecast data unavailable."
-msgstr "Datos de previsión a corto plazo no disponibles"
+msgstr "Datos de previsión a corto plazo no disponibles."
 
 #: ../panel-plugin/weather.c:1689
 msgid "The sun never rises today."
@@ -190,7 +191,7 @@ msgstr "No se pueden actualizar los datos meteorológicos"
 
 #: ../panel-plugin/weather.c:1884
 msgid "No default icon theme? This should not happen, plugin will crash!"
-msgstr "¿No tiene un tema de iconos predeterminado? ¡Esto no debería pasar, los complementos se bloquearán!"
+msgstr "¿No tiene un tema de iconos predeterminado? ¡Esto no debería pasar, el complemento fallará!"
 
 #. add refresh button to right click menu, for people who missed
 #. the middle mouse click feature
@@ -200,7 +201,7 @@ msgstr "Actuali_zar"
 
 #: ../panel-plugin/weather.c:2120
 msgid "Show weather conditions and forecasts"
-msgstr "Mostrar condiciones meteorológicas y previsiones."
+msgstr "Mostrar condiciones meteorológicas y previsiones"
 
 #: ../panel-plugin/weather.c:2122
 msgid "Copyright (c) 2003-2014\n"
@@ -341,7 +342,7 @@ msgid ""
 "The plugin tries to auto-detect the altitude using the GeoNames webservice, but that might not always be correct too, so you can change it here.\n"
 "\n"
 "Altitude is given in meters above sea level, or alternatively in feet by changing the unit on the units page. It should match the real value roughly, but small differences will have no influence on the weather data. Inside Norway, this setting has no effect at all."
-msgstr "Para ubicaciones fuera de Noruega el modelo de elevación utilizado por el servicio web met.no no es muy bueno, pues generalmente requiere especificar la altitud como parámetro adicional, en caso contrario los valores reportados no serán correctos.\n\nEl complemento intentará detectar automáticamente la altitud utilizando el servicio web de GeoNames, pero puede que no siempre sea correcto, en ese caso se puede cambiar aquí.\n\nLa altitud viene dada en metros sobre el nivel del mar, o alternativamente en pies cambiando la unidad en la página de unidades. Debe coincidir aproximadamente con el valor real, pero ligeras diferencias no influirán en los datos meteorológicos. Dentro de Noruega, este parámetro no tiene efecto alguno."
+msgstr "Para ubicaciones fuera de Noruega el modelo de elevación utilizado por el servicio web met.no no es muy bueno, pues generalmente requiere especificar la altitud como parámetro adicional, en caso contrario los valores reportados no serán correctos.\n\nEl complemento intenta autodetectar la altitud utilizando el servicio web de GeoNames, pero puede que no siempre sea correcto. En ese caso se puede cambiar aquí.\n\nLa altitud viene dada en metros sobre el nivel del mar, o alternativamente en pies cambiando la unidad en la página de unidades. Debería coincidir aproximadamente con el valor real, pero ligeras diferencias no influirán en los datos meteorológicos. Dentro de Noruega, este parámetro no tiene efecto alguno."
 
 #: ../panel-plugin/weather-config.c:587
 msgid "_Timezone:"
@@ -351,7 +352,7 @@ msgstr "_Huso horario:"
 msgid ""
 "If the chosen location is not in your current timezone, then it is necessary to <i>put</i> the plugin into that other timezone for the times to be shown correctly. The proper timezone will be auto-detected via the GeoNames web service, but you might want to correct it if necessary.\n"
 "Leave this field empty to use the timezone set by your system. Invalid entries will cause the use of UTC time, but that may also depend on your system."
-msgstr "Si la localización no está en su huso horario actual, entonces es necesario <i>poner</i> el complemento en otra zona horaria para que dicha hora se muestre correctamente. El huso horario se proporciona automáticamente a través del servicio web «GeoNames», pero quizá prefiera corregirla si lo necesita.\nDeje este campo vacío para utilizar el huso horario establecido por su sistema. Las entradas erróneas devolverán la hora de UTC, pero puede depender también de su sistema."
+msgstr "Si la ubicación no está en su huso horario actual, entonces es necesario <i>poner</i> el complemento en otra zona horaria para que dicha hora se muestre correctamente. El huso horario se proporciona automáticamente a través del servicio web «GeoNames», pero quizá prefiera corregirla si lo necesita.\nDeje este campo vacío para utilizar el huso horario establecido por su sistema. Las entradas erróneas devolverán la hora de UTC, pero puede depender también de su sistema."
 
 #: ../panel-plugin/weather-config.c:620
 msgid ""
@@ -369,7 +370,7 @@ msgstr "Llamada así en honor al astrónomo Anders Celsius, quien inventó la es
 msgid ""
 "The current Fahrenheit temperature scale is based on one proposed in 1724 by the physicist Daniel Gabriel Fahrenheit. 0 °F was the freezing point of brine on the original scale at standard atmospheric pressure, which was the lowest temperature achievable with this mixture of ice, salt and ammonium chloride. The melting point of water is at 32 °F and its boiling point at 212 °F. The Fahrenheit and Celsius scales intersect at -40 degrees. Even in cold winters, the temperatures usually do not fall into negative ranges on the Fahrenheit scale.\n"
 "With its inventor being a member of the Royal Society in London and having a high reputation, the Fahrenheit scale enjoyed great popularity in many English-speaking countries, but was replaced by the Celsius scale in most of these countries during the metrification process in the mid to late 20th century."
-msgstr "La actual escala de temperatura Fahrenheit se basa en la propuesta en 1724 por el físico Daniel Gabriel Fahrenheit. 0 °F era el punto de congelación de la salmuera a una presión atmosférica estándar, que era la temperatura más baja que se podía conseguir con esa mezcla de hielo, sal y cloruro de amonio. El punto de fusión del agua se encuentra a 32 °F y el de ebullición a 212 °F. Las escalas Fahrenheit y Centígrado se intersectan a -40 grados. Incluso en inviernos fríos, las temperaturas en la escala Fahrenheit no suelen alcanzar valores negativos.\n\nSiendo su inventor un miembro de la Real Sociedad de Londres y disfrutando de una gran reputación, la escala Fahrenheit disfrutó de gran popularidad en muchos países de habla inglesa, pero fue remplazada por la escala de Celsius en la mayoría de estos países durante el proceso de metrificación entre mediados y finales del siglo 20."
+msgstr "La actual escala de temperatura Fahrenheit se basa en la propuesta en 1724 por el físico Daniel Gabriel Fahrenheit. 0 °F era el punto de congelación de la salmuera a una presión atmosférica estándar, que era la temperatura más baja que se podía conseguir con esa mezcla de hielo, sal y cloruro de amonio. El punto de fusión del agua se encuentra a 32 °F y el de ebullición a 212 °F. Las escalas Fahrenheit y Centígrado se intersectan a -40 grados. Incluso en inviernos fríos, las temperaturas en la escala Fahrenheit no suelen alcanzar valores negativos.\n\nSiendo su inventor un miembro de la Real Sociedad de Londres y teniendo una gran reputación, la escala Fahrenheit disfrutó de gran popularidad en muchos países de habla inglesa, pero fue remplazada por la escala de Celsius en la mayoría de estos países durante el proceso de metrificación entre mediados y finales del siglo 20."
 
 #: ../panel-plugin/weather-config.c:704
 msgid ""
@@ -377,7 +378,7 @@ msgid ""
 "Pascal, is a SI derived unit and a measure of force per unit area, defined "
 "as one newton per square meter. One standard atmosphere (atm) is 1013.25 "
 "hPa."
-msgstr "El pascal, llamado así en honor al matemático, físico y filósofo Blaise Pascal, es una unidad derivada del Sistema Internacional de Unidades y una medida de fuerza por metro cuadrado. Una atmósfera (atm) son 1013,25 hPa."
+msgstr "El pascal, llamado así en honor al matemático, físico y filósofo Blaise Pascal, es una unidad derivada del Sistema Internacional de Unidades y una medida de presión, definida como un newton por metro cuadrado. Una atmósfera estándar (atm) son 1013,25 hPa."
 
 #: ../panel-plugin/weather-config.c:711
 msgid ""
@@ -415,7 +416,7 @@ msgstr "La velocidad del viento en televisión o en las noticias es generalmente
 msgid ""
 "Miles per hour is an imperial unit of speed expressing the number of statute"
 " miles covered in one hour."
-msgstr "Millas por hora es una unidad de velocidad del sistema métrico anglosajón que expresa el número de millas internacionales cubiertas en el periodo de una hora."
+msgstr "Millas por hora es una unidad de velocidad del sistema métrico anglosajón que expresa el número de millas internacionales cubiertas en una hora."
 
 #: ../panel-plugin/weather-config.c:770
 msgid ""
@@ -513,7 +514,7 @@ msgid ""
 "earlier experiments/developments by Steadman. This model only depends on "
 "wind speed and temperature, not on relative humidity and can be used for "
 "both heat and cold stress."
-msgstr "Mejoras por Robert G. Quayle y Robert G. Steadman aplicados en 1998 a experimentos/desarrollos previos de Steadman. Este modelo solo depende de la velocidad del viento y la temperatura, no en la humedad relativa y se puede utilizar tanto para el estrés por calor o frío."
+msgstr "Mejoras por Robert G. Quayle y Robert G. Steadman aplicados en 1998 a experimentos/desarrollos previos de Steadman. Este modelo solo depende de la velocidad del viento y la temperatura, no de la humedad relativa, y se puede utilizar tanto para el estrés por calor o frío."
 
 #: ../panel-plugin/weather-config.c:967
 msgid "_Temperature:"
@@ -529,7 +530,7 @@ msgstr "Fahrenheit (°F)"
 
 #: ../panel-plugin/weather-config.c:975
 msgid "Barometric _pressure:"
-msgstr "_Presión barométrica"
+msgstr "_Presión barométrica:"
 
 #: ../panel-plugin/weather-config.c:978
 msgid "Hectopascals (hPa)"
@@ -541,7 +542,7 @@ msgstr "Pulgadas de mercurio (inHg)"
 
 #: ../panel-plugin/weather-config.c:982
 msgid "Pound-force per square inch (psi)"
-msgstr "Libra por pulgada cuadrada (psi)"
+msgstr "Libra-fuerza por pulgada cuadrada (psi)"
 
 #: ../panel-plugin/weather-config.c:984
 msgid "Torr (mmHg)"
@@ -549,7 +550,7 @@ msgstr "Torr (mmHg)"
 
 #: ../panel-plugin/weather-config.c:989
 msgid "_Wind speed:"
-msgstr "_Velocidad del viento"
+msgstr "_Velocidad del viento:"
 
 #: ../panel-plugin/weather-config.c:992
 msgid "Kilometers per hour (km/h)"
@@ -561,7 +562,7 @@ msgstr "Millas por hora (mph)"
 
 #: ../panel-plugin/weather-config.c:996
 msgid "Meters per second (m/s)"
-msgstr "Metros por segundos (m/s)"
+msgstr "Metros por segundo (m/s)"
 
 #: ../panel-plugin/weather-config.c:998
 msgid "Feet per second (ft/s)"
@@ -631,17 +632,17 @@ msgstr "<b>Directorio:</b> %s\n\n<b>Autor:</b> %s\n\n<b>Descripción:</b> %s\n\n
 msgid ""
 "A more calendar-like view, with the days in columns and the daytimes "
 "(morning, afternoon, evening, night) in rows."
-msgstr "Una vista estilo calendario con los días en las columnas y sus partes (mañana, tarde, noche) en las filas."
+msgstr "Una vista estilo calendario, con los días en columnas y sus partes (mañana, tarde, atardecer, noche) en filas."
 
 #: ../panel-plugin/weather-config.c:1153
 msgid ""
 "Shows the forecasts in a table with the daytimes (morning, afternoon, "
 "evening, night) in columns and the days in rows."
-msgstr "Muestra las previsiones en una tabla con las partes del día (mañana, tarde, noche) en las filas y los días en las columnas."
+msgstr "Muestra las previsiones en una tabla con las partes del día (mañana, tarde, atardecer, noche) en filas y los días en columnas."
 
 #: ../panel-plugin/weather-config.c:1212
 msgid "_Icon theme:"
-msgstr "_Icono del tema:"
+msgstr "_Tema de iconos:"
 
 #: ../panel-plugin/weather-config.c:1214
 msgid ""
@@ -656,7 +657,7 @@ msgstr "Los iconos disponibles se muestran aquí. Se pueden añadir temas de ico
 msgid ""
 "Open the user icon themes directory in your file manager, creating it if "
 "necessary."
-msgstr "Abra el directorio del tema de iconos en su navegador de archivos, créelo si es necesario"
+msgstr "Abrir el directorio del tema de iconos en su navegador de archivos, creandolo si es necesario."
 
 #: ../panel-plugin/weather-config.c:1249
 msgid "Use only a single _panel row"
@@ -670,7 +671,7 @@ msgstr "Marcar para utilizar siempre una única fila en el panel multirenglón y
 
 #: ../panel-plugin/weather-config.c:1266
 msgid "_Tooltip style:"
-msgstr "Estilo de i_información"
+msgstr "Estilo de _información:"
 
 #: ../panel-plugin/weather-config.c:1268
 msgid "Simple"
@@ -684,11 +685,11 @@ msgstr "Detallado"
 msgid ""
 "Choose your preferred tooltip style. Some styles give a lot of useful data, "
 "some are clearer but provide less data on a glance."
-msgstr "Elige el estilo de sugerencias preferido. Algunos estilos proporcionan mucha información de utilidad, mientras que otros son más claros pero dan menos información de un vistazo."
+msgstr "Elija su estilo de sugerencias preferido. Algunos estilos proporcionan mucha información de utilidad, mientras que otros son más claros pero dan menos información de un vistazo."
 
 #: ../panel-plugin/weather-config.c:1284
 msgid "_Forecast layout:"
-msgstr "Di_seño de la previsión"
+msgstr "Di_seño de la previsión:"
 
 #: ../panel-plugin/weather-config.c:1286
 msgid "Days in columns"
