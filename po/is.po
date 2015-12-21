@@ -11,14 +11,14 @@ msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-24 18:31+0200\n"
-"PO-Revision-Date: 2015-02-18 13:39+0000\n"
+"PO-Revision-Date: 2015-12-21 18:40+0000\n"
 "Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
-"Language-Team: Icelandic (http://www.transifex.com/projects/p/xfce-panel-plugins/language/is/)\n"
+"Language-Team: Icelandic (http://www.transifex.com/xfce/xfce-panel-plugins/language/is/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: is\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);\n"
 
 #. TRANSLATORS: Keep in sync with labeloptions in weather-config.c
 #: ../panel-plugin/weather.c:128
@@ -112,7 +112,7 @@ msgstr "næ í %s"
 #: ../panel-plugin/weather.c:1157
 #, c-format
 msgid "Error writing cache file %s!"
-msgstr ""
+msgstr "Villa við ritun skyndiminnisskráar %s!"
 
 #: ../panel-plugin/weather.c:1609
 #, c-format
@@ -125,7 +125,7 @@ msgstr "Veðuruppfærsla"
 
 #: ../panel-plugin/weather.c:1677
 msgid "Short-term forecast data unavailable."
-msgstr ""
+msgstr "Ekki fundust gögn fyrir stutta veðurspáþ"
 
 #: ../panel-plugin/weather.c:1689
 msgid "The sun never rises today."
@@ -152,7 +152,7 @@ msgid ""
 "<b>Wind:</b> %s from %s\n"
 "<b>Pressure:</b> %s\n"
 "<b>Humidity:</b> %s\n"
-msgstr ""
+msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n<b><span size=\"large\">%s</span></b>\n\n<b>Hitastig:</b> %s\n<b>Vindur:</b> %s úr %s\n<b>Loftþrýstingur:</b> %s\n<b>Rakastig:</b> %s\n"
 
 #. * TRANSLATORS: Re-arrange and align at will, optionally using
 #. * abbreviations for labels if desired or necessary. Just take
@@ -174,7 +174,7 @@ msgid ""
 "<b>Fog:</b> %s    <b>Cloudiness:</b> %s\n"
 "\n"
 "<span size=\"smaller\">%s</span>"
-msgstr ""
+msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n<b><span size=\"large\">%s</span></b>\n<span size=\"smaller\">frá %s til %s, með %s úrkomu</span>\n\n<b>THitastig:</b> %s\t\t<span size=\"smaller\">(values at %s)</span>\n<b>Vindur:</b> %s (%sá Beaufort kvarða) úr %s(%s)\n<b>Loftþrýstingur:</b> %s    <b>Rakastig:</b> %s\n<b>Þoka:</b> %s    <b>Skýjað:</b> %s\n\n<span size=\"smaller\">%s</span>"
 
 #: ../panel-plugin/weather.c:1803
 msgid "Cannot update weather data"
@@ -182,7 +182,7 @@ msgstr "Get ekki uppfært veðurupplýsingar"
 
 #: ../panel-plugin/weather.c:1884
 msgid "No default icon theme? This should not happen, plugin will crash!"
-msgstr ""
+msgstr "Ekkert táknmyndaþema? Þetta á ekki að geta gerst, viðbótin mun hrynja!"
 
 #. add refresh button to right click menu, for people who missed
 #. the middle mouse click feature
@@ -652,7 +652,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-config.c:1249
 msgid "Use only a single _panel row"
-msgstr ""
+msgstr "_Nota aðeins eina röð í stiku"
 
 #: ../panel-plugin/weather-config.c:1251
 msgid ""
@@ -662,7 +662,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-config.c:1266
 msgid "_Tooltip style:"
-msgstr ""
+msgstr "S_tíll vísbendingar:"
 
 #: ../panel-plugin/weather-config.c:1268
 msgid "Simple"
@@ -692,7 +692,7 @@ msgstr "Dagar í röðum"
 
 #: ../panel-plugin/weather-config.c:1295
 msgid "_Number of forecast days:"
-msgstr ""
+msgstr "_Fjöldi spádaga:"
 
 #: ../panel-plugin/weather-config.c:1300
 #, c-format
@@ -706,7 +706,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-config.c:1318
 msgid "_Round values"
-msgstr ""
+msgstr "_Rúnna af gildi"
 
 #: ../panel-plugin/weather-config.c:1320
 msgid ""
@@ -905,7 +905,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-config.c:1878
 msgid "Labels to d_isplay"
-msgstr ""
+msgstr "Merk_ingar sem á að birta"
 
 #: ../panel-plugin/weather-config.c:1881
 msgid ""
@@ -955,7 +955,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-config.c:1942
 msgid "Animate _transitions between labels"
-msgstr ""
+msgstr "Lífga _millifærslur milli merkinga"
 
 #: ../panel-plugin/weather-config.c:1947
 msgid ""
@@ -978,7 +978,7 @@ msgstr "Út_lit"
 
 #: ../panel-plugin/weather-config.c:2096
 msgid "_Scrollbox"
-msgstr ""
+msgstr "_Skrunbox"
 
 #: ../panel-plugin/weather-data.c:284
 msgid "North"
@@ -1159,7 +1159,7 @@ msgstr "Nafnlaus staður"
 #: ../panel-plugin/weather-summary.c:70
 #, c-format
 msgid "\t%s%s%s%s%s\n"
-msgstr ""
+msgstr "\t%s%s%s%s%s\n"
 
 #. TRANSLATORS: DO NOT TRANSLATE THIS STRING. This string is
 #. not visible to the user but controls the alignment of the
@@ -1179,7 +1179,7 @@ msgstr "LTR"
 #: ../panel-plugin/weather-summary.c:279
 #, c-format
 msgid "Error downloading met.no logo image to %s, reason: %s\n"
-msgstr ""
+msgstr "Villa við niðurhal merkis met.no í %s, ástæða: %s\n"
 
 #: ../panel-plugin/weather-summary.c:281
 msgid "unknown"
@@ -1207,7 +1207,7 @@ msgstr "Lengdargráða"
 msgid ""
 "\n"
 "Downloads\n"
-msgstr ""
+msgstr "\nSóttar skrár\n"
 
 #: ../panel-plugin/weather-summary.c:370
 #, c-format
@@ -1217,7 +1217,7 @@ msgid ""
 "\tNext:\t%s\n"
 "\tCurrent failed attempts: %d\n"
 "\n"
-msgstr ""
+msgstr "\tVeðurgögn:\n\tSíðast:\t%s\n\tNæst:\t%s\n\tÞegar misheppnaðar tilraunir: %d\n\n"
 
 #: ../panel-plugin/weather-summary.c:384
 msgid ""
@@ -1237,7 +1237,7 @@ msgid ""
 "\tLast:\t%s\n"
 "\tNext:\t%s\n"
 "\tCurrent failed attempts: %d\n"
-msgstr ""
+msgstr "\tStjörnufræðigögn:\n\tSíðast:\t%s\n\tNæst:\t%s\n\tÞegar misheppnaðar tilraunir: %d\n"
 
 #: ../panel-plugin/weather-summary.c:407
 msgid ""
@@ -1254,7 +1254,7 @@ msgstr ""
 msgid ""
 "\n"
 "Times Used for Calculations\n"
-msgstr ""
+msgstr "\nTímar sem notaðir eru við útreikninga\n"
 
 #: ../panel-plugin/weather-summary.c:417
 #, c-format
@@ -1278,65 +1278,65 @@ msgstr ""
 msgid ""
 "\n"
 "Astronomical Data\n"
-msgstr ""
+msgstr "\nStjörnufræðigögn\n"
 
 #: ../panel-plugin/weather-summary.c:440
 msgid "\tSunrise:\t\tThe sun never rises today.\n"
-msgstr ""
+msgstr "\tSólarupprás:\t\tSólin rís ekki í dag.\n"
 
 #: ../panel-plugin/weather-summary.c:443
 msgid "\tSunset:\t\tThe sun never sets today.\n"
-msgstr ""
+msgstr "\tSólarlag:\t\tSólin sest ekki í dag.\n"
 
 #: ../panel-plugin/weather-summary.c:447
 #, c-format
 msgid "\tSunrise:\t\t%s\n"
-msgstr ""
+msgstr "\tSólarupprás:\t\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:452
 #, c-format
 msgid ""
 "\tSunset:\t\t%s\n"
 "\n"
-msgstr ""
+msgstr "\tSólarlag:\t\t%s\n\n"
 
 #: ../panel-plugin/weather-summary.c:458
 #, c-format
 msgid "\tMoon phase:\t%s\n"
-msgstr ""
+msgstr "\tKvartilaskipti tungls:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:462
 msgid "\tMoon phase:\tUnknown\n"
-msgstr ""
+msgstr "\tKvartilaskipti tungls:\tÓþekkt\n"
 
 #: ../panel-plugin/weather-summary.c:467
 msgid "\tMoonrise:\tThe moon never rises today.\n"
-msgstr ""
+msgstr "\tTunglris:\tTunglið rís ekki í dag.\n"
 
 #: ../panel-plugin/weather-summary.c:471
 msgid "\tMoonset:\tThe moon never sets today.\n"
-msgstr ""
+msgstr "\tTunglsetur:\tTunglið sest ekki í dag.\n"
 
 #: ../panel-plugin/weather-summary.c:475
 #, c-format
 msgid "\tMoonrise:\t%s\n"
-msgstr ""
+msgstr "\tTunglris:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:480
 #, c-format
 msgid "\tMoonset:\t%s\n"
-msgstr ""
+msgstr "\tTunglsetur:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:485
 msgid "\tData not available, will use sane default values for night and day.\n"
-msgstr ""
+msgstr "\tGögn ekki tiltæk, mun nota skynsamleg sjálfgefin gildi fyrir dag og nótt.\n"
 
 #. temperatures
 #: ../panel-plugin/weather-summary.c:491
 msgid ""
 "\n"
 "Temperatures\n"
-msgstr ""
+msgstr "\nHitastig\n"
 
 #: ../panel-plugin/weather-summary.c:492
 msgid "Temperature"
@@ -1355,50 +1355,50 @@ msgstr "Skynjað hitastig"
 msgid ""
 "\n"
 "Wind\n"
-msgstr ""
+msgstr "\nVindur\n"
 
 #: ../panel-plugin/weather-summary.c:502
 #, c-format
 msgid "\tSpeed: %s %s (%s on the Beaufort scale)\n"
-msgstr ""
+msgstr "\tVindhraði: %s %s (%s á Beaufort kvarða)\n"
 
 #: ../panel-plugin/weather-summary.c:514
 #, c-format
 msgid "\tDirection: %s (%s%s)\n"
-msgstr ""
+msgstr "\tStefna: %s (%s%s)\n"
 
 #. precipitation
 #: ../panel-plugin/weather-summary.c:522
 msgid ""
 "\n"
 "Precipitation\n"
-msgstr ""
+msgstr "\nÚrkoma\n"
 
 #: ../panel-plugin/weather-summary.c:523
 msgid "Precipitation amount"
-msgstr ""
+msgstr "Magn úrkomu"
 
 #. atmosphere
 #: ../panel-plugin/weather-summary.c:526
 msgid ""
 "\n"
 "Atmosphere\n"
-msgstr ""
+msgstr "\nAndrúmsloft\n"
 
 #: ../panel-plugin/weather-summary.c:527
 msgid "Barometric pressure"
-msgstr ""
+msgstr "Loftþrýstingur"
 
 #: ../panel-plugin/weather-summary.c:528
 msgid "Relative humidity"
-msgstr ""
+msgstr "Afstætt rakastig"
 
 #. clouds
 #: ../panel-plugin/weather-summary.c:531
 msgid ""
 "\n"
 "Clouds\n"
-msgstr ""
+msgstr "\nSký\n"
 
 #: ../panel-plugin/weather-summary.c:532
 #: ../panel-plugin/weather-translate.c:119
@@ -1407,31 +1407,31 @@ msgstr "Þoka"
 
 #: ../panel-plugin/weather-summary.c:533
 msgid "Low clouds"
-msgstr ""
+msgstr "Lágskýjað"
 
 #: ../panel-plugin/weather-summary.c:534
 msgid "Middle clouds"
-msgstr ""
+msgstr "Miðský"
 
 #: ../panel-plugin/weather-summary.c:535
 msgid "High clouds"
-msgstr ""
+msgstr "Háskýjað"
 
 #: ../panel-plugin/weather-summary.c:536
 msgid "Cloudiness"
-msgstr ""
+msgstr "Skýjað"
 
 #: ../panel-plugin/weather-summary.c:549
 msgid ""
 "\n"
 "Credits\n"
-msgstr ""
+msgstr "\nFramlög\n"
 
 #: ../panel-plugin/weather-summary.c:550
 msgid ""
 "\tEncyclopedic information partly taken from\n"
 "\t\t"
-msgstr ""
+msgstr "\tAlfræðiupplýsingar teknar að hluta frá\n\t\t"
 
 #: ../panel-plugin/weather-summary.c:551
 msgid "Wikipedia"
@@ -1442,7 +1442,7 @@ msgid ""
 "\n"
 "\tElevation and timezone data provided by\n"
 "\t\t"
-msgstr ""
+msgstr "\n\tUpplýsingar um hæðarpunkta og tímabelti eru frá\n\t\t"
 
 #: ../panel-plugin/weather-summary.c:553
 msgid "GeoNames"
@@ -1453,11 +1453,11 @@ msgid ""
 "\n"
 "\tWeather and astronomical data from\n"
 "\t\t"
-msgstr ""
+msgstr "\n\tVeðurgögn og stjörnufræðigögn frá\n\t\t"
 
 #: ../panel-plugin/weather-summary.c:556
 msgid "The Norwegian Meteorological Institute"
-msgstr ""
+msgstr "Norsku veðurstofunni"
 
 #: ../panel-plugin/weather-summary.c:608
 #, c-format
@@ -1475,71 +1475,71 @@ msgstr "Á morgun"
 #. that looks much better and saves space.
 #: ../panel-plugin/weather-summary.c:630
 msgid "<b>Times used for calculations</b>\n"
-msgstr ""
+msgstr "<b>Tímar sem notaðir eru við útreikninga</b>\n"
 
 #: ../panel-plugin/weather-summary.c:632
 #, c-format
 msgid "<tt><small>Interval start:       %s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Upphaf tímabils:       %s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:638
 #, c-format
 msgid "<tt><small>Interval end:         %s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Endir tímabils:       %s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:644
 #, c-format
 msgid ""
 "<tt><small>Data calculated for:  %s</small></tt>\n"
 "\n"
-msgstr ""
+msgstr "<tt><small>Gögn reiknuð fyrir:  %s</small></tt>\n\n"
 
 #: ../panel-plugin/weather-summary.c:650
 msgid "<b>Temperatures</b>\n"
-msgstr ""
+msgstr "<b>Hitastig</b>\n"
 
 #: ../panel-plugin/weather-summary.c:651
 #, c-format
 msgid "<tt><small>Dew point:            %s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Daggarmark:            %s%s%s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:655
 #, c-format
 msgid ""
 "<tt><small>Apparent temperature: %s%s%s</small></tt>\n"
 "\n"
-msgstr ""
+msgstr "<tt><small>Skynjað hitastig: %s%s%s</small></tt>\n\n"
 
 #: ../panel-plugin/weather-summary.c:660
 msgid "<b>Atmosphere</b>\n"
-msgstr ""
+msgstr "<b>Andrúmsloft</b>\n"
 
 #: ../panel-plugin/weather-summary.c:661
 #, c-format
 msgid "<tt><small>Barometric pressure:  %s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Loftþrýstingur:  %s%s%s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:665
 #, c-format
 msgid ""
 "<tt><small>Relative humidity:    %s%s%s</small></tt>\n"
 "\n"
-msgstr ""
+msgstr "<tt><small>Rakastig:    %s%s%s</small></tt>\n\n"
 
 #: ../panel-plugin/weather-summary.c:670
 msgid "<b>Precipitation</b>\n"
-msgstr ""
+msgstr "<b>Úrkoma</b>\n"
 
 #: ../panel-plugin/weather-summary.c:671
 #, c-format
 msgid ""
 "<tt><small>Amount:        %s%s%s</small></tt>\n"
 "\n"
-msgstr ""
+msgstr "<tt><small>Magn:        %s%s%s</small></tt>\n\n"
 
 #: ../panel-plugin/weather-summary.c:676
 msgid "<b>Clouds</b>\n"
-msgstr ""
+msgstr "<b>Ský</b>\n"
 
 #. TRANSLATORS: Clouds percentages are aligned to the right in the
 #. tooltip, the %5s are needed for that and are used both for
@@ -1547,79 +1547,79 @@ msgstr ""
 #: ../panel-plugin/weather-summary.c:680
 #, c-format
 msgid "<tt><small>Fog:           %5s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Þoka:           %5s%s%s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:683
 #, c-format
 msgid "<tt><small>Low clouds:    %5s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Lágský:    %5s%s%s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:686
 #, c-format
 msgid "<tt><small>Middle clouds: %5s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Miðský: %5s%s%s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:689
 #, c-format
 msgid "<tt><small>High clouds:   %5s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Háský:   %5s%s%s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:692
 #, c-format
 msgid "<tt><small>Cloudiness:    %5s%s%s</small></tt>"
-msgstr ""
+msgstr "<tt><small>Skýjað:    %5s%s%s</small></tt>"
 
 #: ../panel-plugin/weather-summary.c:718
 #, c-format
 msgid "<b>%s</b>\n"
-msgstr ""
+msgstr "<b>%s</b>\n"
 
 #: ../panel-plugin/weather-summary.c:722
 msgid "<tt><small>Sunrise: The sun never rises this day.</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Sólarupprás: Sólin rís ekki þennan dag.</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:726
 msgid "<tt><small>Sunset: The sun never sets this day.</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Sólsetur: Sólin sest ekki þennan dag.</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:731
 #, c-format
 msgid "<tt><small>Sunrise: %s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Sólarupprás: %s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:737
 #, c-format
 msgid ""
 "<tt><small>Sunset:  %s</small></tt>\n"
 "\n"
-msgstr ""
+msgstr "<tt><small>Sólsetur:  %s</small></tt>\n\n"
 
 #: ../panel-plugin/weather-summary.c:744
 #, c-format
 msgid "<tt><small>Moon phase: %s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Kvartil tungls: %s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:749
 msgid "<tt><small>Moon phase: Unknown</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Kvartil tungls: óþekkt</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:754
 msgid "<tt><small>Moonrise: The moon never rises this day.</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Tunglris: Tunglið rís ekki þennan dag.</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:759
 msgid "<tt><small>Moonset: The moon never sets this day.</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Tunglsetur: Tunglið sest ekki þennan dag.</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:764
 #, c-format
 msgid "<tt><small>Moonrise: %s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Tunglris: %s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:770
 #, c-format
 msgid "<tt><small>Moonset:  %s</small></tt>"
-msgstr ""
+msgstr "<tt><small>Tunglsetur:  %s</small></tt>"
 
 #. daytime headers
 #: ../panel-plugin/weather-summary.c:938
@@ -1644,11 +1644,11 @@ msgstr "Veðurfregnir"
 
 #: ../panel-plugin/weather-summary.c:1173
 msgid "Please set a location in the plugin settings."
-msgstr ""
+msgstr "Settu inn staðsetningu í stillingum viðbótarinnar."
 
 #: ../panel-plugin/weather-summary.c:1175
 msgid "Currently no data available."
-msgstr ""
+msgstr "í augnablikinu eru engin gögn tiltæk."
 
 #: ../panel-plugin/weather-summary.c:1187
 msgid "_Forecast"
@@ -1749,7 +1749,7 @@ msgstr "Skúrir"
 #. *    short-lived."
 #: ../panel-plugin/weather-translate.c:89
 msgid "Thunder showers"
-msgstr ""
+msgstr "Þrumuskúrir"
 
 #. Analogues to "Rain showers"
 #: ../panel-plugin/weather-translate.c:92
@@ -1777,7 +1777,7 @@ msgstr "Rigning"
 
 #: ../panel-plugin/weather-translate.c:103
 msgid "Rain with thunder"
-msgstr ""
+msgstr "Rigning með þrumuveðri"
 
 #. Sleet is a mixture of rain and snow, but it's not hail.
 #: ../panel-plugin/weather-translate.c:106
@@ -1798,24 +1798,24 @@ msgstr "Snjókoma"
 #. *    extratropical cyclone."
 #: ../panel-plugin/weather-translate.c:117
 msgid "Thundersnow"
-msgstr ""
+msgstr "Snjóbylur með þrumuveðri"
 
 #. Same as symbols 1-15, but with thunder
 #: ../panel-plugin/weather-translate.c:128
 msgid "Sleet showers with thunder"
-msgstr ""
+msgstr "Slydduél með þrumuveðri"
 
 #: ../panel-plugin/weather-translate.c:129
 msgid "Snow showers with thunder"
-msgstr ""
+msgstr "Snjóél með þrumuveðri"
 
 #: ../panel-plugin/weather-translate.c:130
 msgid "Light rain with thunder"
-msgstr ""
+msgstr "Lítilsháttar rigning með þrumuveðri"
 
 #: ../panel-plugin/weather-translate.c:131
 msgid "Sleet with thunder"
-msgstr ""
+msgstr "Slydda með þrumuveðri"
 
 #: ../panel-plugin/weather.desktop.in.h:2
 msgid "Show current weather conditions"
