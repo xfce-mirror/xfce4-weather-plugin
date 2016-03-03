@@ -9,7 +9,7 @@ msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-24 18:31+0200\n"
-"PO-Revision-Date: 2016-03-03 17:31+0000\n"
+"PO-Revision-Date: 2016-03-03 23:32+0000\n"
 "Last-Translator: Tapio Väisänen <tapio.vaeisaenen@gmail.com>\n"
 "Language-Team: Finnish (http://www.transifex.com/xfce/xfce-panel-plugins/language/fi/)\n"
 "MIME-Version: 1.0\n"
@@ -49,19 +49,19 @@ msgstr "KP"
 
 #: ../panel-plugin/weather.c:152
 msgid "A"
-msgstr ""
+msgstr "A"
 
 #: ../panel-plugin/weather.c:155
 msgid "CL"
-msgstr ""
+msgstr "CL"
 
 #: ../panel-plugin/weather.c:158
 msgid "CM"
-msgstr ""
+msgstr "CM"
 
 #: ../panel-plugin/weather.c:161
 msgid "CH"
-msgstr ""
+msgstr "CH"
 
 #: ../panel-plugin/weather.c:164
 msgid "C"
@@ -115,7 +115,7 @@ msgstr "Virhe välitiedostoa %s kirjoitetttaessa"
 #: ../panel-plugin/weather.c:1609
 #, c-format
 msgid "Unable to open the following url: %s"
-msgstr "URL:ia: %s ei voi avata"
+msgstr "URL: %s ei avattavissa"
 
 #: ../panel-plugin/weather.c:1640 ../panel-plugin/weather.desktop.in.h:1
 msgid "Weather Update"
@@ -150,7 +150,7 @@ msgid ""
 "<b>Wind:</b> %s from %s\n"
 "<b>Pressure:</b> %s\n"
 "<b>Humidity:</b> %s\n"
-msgstr ""
+msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n\n<b><span size=\"large\">%s</span></b>\n\n\n<b>Lämpötila:</b> %s\n\n<b>Tuuli</b> %s from %s\n\n<b>Praine:</b> %s\n\n<b>Kosteus:</b> %s\n"
 
 #. * TRANSLATORS: Re-arrange and align at will, optionally using
 #. * abbreviations for labels if desired or necessary. Just take
@@ -172,7 +172,7 @@ msgid ""
 "<b>Fog:</b> %s    <b>Cloudiness:</b> %s\n"
 "\n"
 "<span size=\"smaller\">%s</span>"
-msgstr ""
+msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n\n<b><span size=\"large\">%s</span></b>\n\n<span size=\"smaller\">alkaen %s päättyen %s,  sademäärä %s</span>\n\n\n<b>Lämpötila:</b> %s⇥⇥<span size=\"smaller\">(arvot %s)</span>\n\n<b>Tuuli:</b> %s (%s Beaufort-asteikolla) alkaen %s(%s)\n\n<b>Paine:</b> %s <b>Kosteus:</b> %s\n\n<b>Sumu:</b> %s <b>Pilvisyys</b> %s\n\n\n\n<span size=\"smaller\">%s</span>"
 
 #: ../panel-plugin/weather.c:1803
 msgid "Cannot update weather data"
@@ -186,7 +186,7 @@ msgstr "Ei oletusikoniteemaa? Näin ei pitäisi käydä. Liitännäinen kaatuu!"
 #. the middle mouse click feature
 #: ../panel-plugin/weather.c:1925
 msgid "Re_fresh"
-msgstr "Päivitä"
+msgstr "Tuoreuta"
 
 #: ../panel-plugin/weather.c:2120
 msgid "Show weather conditions and forecasts"
@@ -241,15 +241,15 @@ msgstr "Koettu lämpötila (KL)"
 
 #: ../panel-plugin/weather-config.c:105
 msgid "Low clouds (CL)"
-msgstr "Pilvet matalalla (PM)"
+msgstr "Alapilviä (AP)"
 
 #: ../panel-plugin/weather-config.c:106
 msgid "Middle clouds (CM)"
-msgstr "Pilvet keskikorkealla (PKK)"
+msgstr "Keskipilviä (KP)"
 
 #: ../panel-plugin/weather-config.c:107
 msgid "High clouds (CH)"
-msgstr "Pilvet korkealla (PK)"
+msgstr "Yläpilviä (YP)"
 
 #: ../panel-plugin/weather-config.c:108
 msgid "Cloudiness (C)"
@@ -331,17 +331,17 @@ msgid ""
 "The plugin tries to auto-detect the altitude using the GeoNames webservice, but that might not always be correct too, so you can change it here.\n"
 "\n"
 "Altitude is given in meters above sea level, or alternatively in feet by changing the unit on the units page. It should match the real value roughly, but small differences will have no influence on the weather data. Inside Norway, this setting has no effect at all."
-msgstr "Norjan ulkopuolella met.no -verkkopalvelun käyttämä korkeusmallinnus ei ole kovin hyvä ja yleensä on tarpeen määritellä korkeus lisämuuttujana, sillä muuten ilmoitetut arvot eivät ole oikein.\n\nLiitännäinen koettaa havaita itse korkeuden käyttäen GeoNames-verkkopalvelua, mutta sekään ei ehkä aina ole oikein ja siksi sen voi vaihtaa täällä\n\nKorkeus ilmaistaan metreinä merenpinnasta tai vaihtoehtoisesti jalkoina vaihtamalla mittayksikkö omalla sivullaan. Sen tulisi karkeasti vastata todellista arvoa, mutta pienet erot eivät vaikuta säätietoihin. Norjassa asetuksella ei ole vaikutusta lainkaan."
+msgstr "Norjan ulkopuolella met.no -verkkopalvelun käyttämä korkeusmallinnus ei ole kovin hyvä ja yleensä on tarpeen määritellä korkeus lisämuuttujana, sillä muuten ilmoitetut arvot eivät ole oikein.\n\nLisäosa koettaa havaita itse korkeuden käyttäen GeoNames-verkkopalvelua, mutta sekään ei ehkä aina ole oikein ja siksi sen voi vaihtaa täällä\n\nKorkeus ilmaistaan metreinä merenpinnasta tai vaihtoehtoisesti jalkoina vaihtamalla mittayksikkö omalla sivullaan. Sen tulisi karkeasti vastata todellista arvoa, mutta pienet erot eivät vaikuta säätietoihin. Norjassa asetuksella ei ole vaikutusta lainkaan."
 
 #: ../panel-plugin/weather-config.c:587
 msgid "_Timezone:"
-msgstr "Aikavyöhyke:"
+msgstr "_Aikavyöhyke:"
 
 #: ../panel-plugin/weather-config.c:595
 msgid ""
 "If the chosen location is not in your current timezone, then it is necessary to <i>put</i> the plugin into that other timezone for the times to be shown correctly. The proper timezone will be auto-detected via the GeoNames web service, but you might want to correct it if necessary.\n"
 "Leave this field empty to use the timezone set by your system. Invalid entries will cause the use of UTC time, but that may also depend on your system."
-msgstr "Jos valittu paikkakunta ei ole nykyisellä aikavyöhykkeelläsi on tarpeen <i>asettaa</i> liitännäinen toiselle aikavyöhykkeelle aikojen näyttämiseksi oikein. Oikea aikavyöhyke havaitaan GeoNames-verkkopalvelun avulla, mutta tarvittaessa sen voi vaihttaa\nJätä tämä kenttä tyhjäksi järjestelmän aikavyöhykettä käytettäessä. UTC-aikaa käytetään jos syötetty arvo on kelpaamaton, mutta se voi johtua järjestelmästäkin."
+msgstr "Jos valittu paikkakunta ei ole nykyisellä aikavyöhykkeellä on tarpeen <i>asettaa</i> liitännäinen toiselle aikavyöhykkeelle aikojen näyttämiseksi oikein. Oikea aikavyöhyke havaitaan GeoNames-verkkopalvelun avulla, mutta tarvittaessa sen voi vaihttaa\nJätä tämä kenttä tyhjäksi järjestelmän aikavyöhykettä käytettäessä. UTC-aikaa käytetään jos syötetty arvo on kelpaamaton, mutta se voi johtua järjestelmästäkin."
 
 #: ../panel-plugin/weather-config.c:620
 msgid ""
@@ -353,7 +353,7 @@ msgstr "<i>Vaihda paikkakunnan nimi mieleiseksi ja korjaa\nkorkeus ja aikavyöhy
 msgid ""
 "Named after the astronomer Anders Celsius who invented the original scale in 1742, the Celsius scale is an international standard unit and nowadays defined using the Kelvin scale. 0 °C is equivalent to 273.15 K and 1 °C difference in temperature is exactly the same difference as 1 K. It is defined with the melting point of water being roughly at 0 °C and its boiling point at 100 °C at one standard atmosphere (1 atm = 1013.5 hPa). Until 1948, the unit was known as <i>centigrade</i> - from Latin <i>centum</i> (100) and <i>gradus</i> (steps).\n"
 "In meteorology and everyday life the Celsius scale is very convenient for expressing temperatures because its numbers can be an easy indicator for the formation of black ice and snow."
-msgstr "Celsius-asteikko, joka on nimetty asteikon alunperin vuonna 1742 keksineen tähtitieteilijän Anders Celsiuksen mukaan on kansainvälinen vakioyksikkö ja se määritetään nykyään Kelvin-asteikon avulla. 0 °C vastaa 273,15 K ja yhden 1 °C lämpötilaero on tarkalleen yhtä suuri kuin 1 K lämpötilaero. Se määritellään karkeasti kun veden sulamispiste 0 °C ja kiehumispiste 100 °C normaali-ilmanpaineessa (1 atm=1013,5 hPa). Vuoteen 1948 yksikkö tunnettiin englanniksi <i>centigrade</i>:na. Latinan kielestä <i>centum</i> (100) ja <i>gradus</i> (portaat).\nSäätieteessä ja puhekielessä Celsius-asteikko on käytännöllinen ilmaistaessa lämpötiloja, sillä sen arvot osoittavat helposti mustan jään ja lumen muodostumista."
+msgstr "Celsius-asteikko, joka on nimetty asteikon alunperin vuonna 1742 keksineen tähtitieteilijän Anders Celsiuksen mukaan on kansainvälinen vakioyksikkö ja se määritetään nykyään Kelvin-asteikon avulla. 0 °C vastaa 273,15 K ja yhden 1 °C lämpötilaero on tarkalleen yhtä suuri kuin 1 K lämpötilaero. Se määritellään karkeasti kun veden sulamispiste 0 °C ja kiehumispiste 100 °C normaali-ilmanpaineessa (1 atm=1013,5 hPa). Vuoteen 1948 yksikkö tunnettiin englanniksi nimellä <i>centigrade</i>. Latinan kielestä <i>centum</i> (100) ja <i>gradus</i> (portaat).\nSäätieteessä ja puhekielessä Celsius-asteikko on käytännöllinen ilmaistaessa lämpötiloja, sillä sen arvot osoittavat helposti mustan jään ja lumen muodostumista."
 
 #: ../panel-plugin/weather-config.c:661
 msgid ""
@@ -395,7 +395,7 @@ msgid ""
 "demonstrated the first mercury barometer to the general public. A pressure "
 "of 1 torr is approximately equal to one millimeter of mercury, and one "
 "standard atmosphere (atm) equals 760 Torr."
-msgstr "Torr-yksikkö on nimetty fyysikko ja matemaatikko Evangelista Torricelli:n mukaan, joka keksi ilmanpuntarin toimintaperiaatteen vuonna 1644 ja esitteli julkisesti ensimmäisen elohopeailmapuntarin. Yksi Torr vastaa suunnilleen yhtä elohopeamillimetriä ja yksi vakioilmakehän paine (atm) vastaa 760 Torr:ia"
+msgstr "Torr-yksikkö on nimetty fyysikko ja matemaatikko Evangelista Torricelli:n mukaan, joka keksi ilmapuntarin toimintaperiaatteen vuonna 1644 ja esitteli julkisesti ensimmäisen elohopeailmapuntarin. Yksi Torr vastaa suunnilleen yhtä elohopeamillimetriä ja yksi vakioilmakehän paine (atm) vastaa 760 Torr:ia"
 
 #: ../panel-plugin/weather-config.c:762
 msgid "Wind speeds in TV or in the news are often provided in km/h."
@@ -449,7 +449,7 @@ msgid ""
 "Earth's equator to the North Pole at sea level, its definition has been "
 "periodically refined to reflect growing knowledge of metrology (the science "
 "of measurement)."
-msgstr "Metri on SI-järjestelmän perusyksikkö. Alunperin sen tarkoitus oli olla kymmenesmiljoonasosa matkasta maan päiväntasajalta sen pohjoisnavalle meren korkeudella. Sen määritelmä on aika ajoin tarkentunut jheijastaen metrologian (mittaustieteen) lisääntyvää tietoutta."
+msgstr "Metri on SI-järjestelmän perusyksikkö. Alunperin sen tarkoitus oli olla kymmenesmiljoonasosa matkasta maan päiväntasajalta sen pohjoisnavalle meren korkeudella. Sen määritelmä on aika ajoin tarkentunut heijastaen metrologian (mittaustieteen) lisääntyvää tietoutta."
 
 #: ../panel-plugin/weather-config.c:858
 msgid ""
@@ -458,7 +458,7 @@ msgid ""
 "It is subdivided into 12 inches. The measurement of altitude in the aviation"
 " industry is one of the few areas where the foot is widely used outside the "
 "English-speaking world."
-msgstr "Jalka-pituusyksikkö on tarkalleen 0,3048 m ja sitä käytetään brittiläisessä mittajärjestelmässä ja Yhdysvalloissa tavanomaisena yksikkönä. Se koostuu 12 tuumasta. Ilmankorkeuden yksikkönä jalka on laajasti käytössä englanninkielisen maailman ulkopuolellakin."
+msgstr "Jalka-pituusyksikkö on tarkalleen 0,3048 m ja sitä käytetään brittiläisessä mittajärjestelmässä ja Yhdysvalloissa tavanomaisena yksikkönä. Se koostuu 12 tuumasta. Ilmailussa ilmankorkeuden yksikkönä jalka on laajasti käytössä englanninkielisen maailman ulkopuolellakin."
 
 #. * TRANSLATORS: The Summer Simmer Index is similar to the heat
 #. * index, but usually used at night because of its better accuracy
@@ -484,7 +484,7 @@ msgid ""
 "temperature needs to be at least 20.0 °C (68 °F), with a dewpoint greater "
 "than 0 °C (32 °F). If these conditions are not met, the air temperature will"
 " be shown."
-msgstr "Kanadalainen vastine yhdysvaltalaiselle tuulen hyytävyys/lämpöindeksille on tuulen hyytävyyden osalta samankaltainen edellisen mallin kanssa, mutta hieman erilaisin raja-arvoin. Lämpöindeksin sijaan käytetään <i>humidex</i>-indeksiä. Tuuli katsotaan hyytäväksi kun sen nopeus ylittää 2 km/h (1,24 mph) ja ilman lämpötila on yhtä kuin tai alile 0 °C (32 °F). Humidex-indeksiä varten lämpötilan on oltava vähintään 20 °C (68 °F) ja kastepisteen vähintään 0 °C (32 °F). Jos edellytykset eivät täyty ilmoitetaan ilman lämpötila."
+msgstr "Kanadalainen vastine yhdysvaltalaiselle tuulen hyytävyys/lämpöindeksille on tuulen hyytävyyden osalta samankaltainen edellisen mallin kanssa, mutta hieman erilaisin raja-arvoin. Lämpöindeksin sijaan käytetään <i>humidex</i>-indeksiä. Tuuli katsotaan hyytäväksi kun sen nopeus ylittää 2 km/h (1,24 mph) ja ilman lämpötila on 0 °C tai alle sen (32 °F). Humidex-indeksiä varten lämpötilan on oltava vähintään 20 °C (68 °F) ja kastepisteen vähintään 0 °C (32 °F). Jos edellytykset eivät täyty ilmoitetaan ilman lämpötila."
 
 #: ../panel-plugin/weather-config.c:920
 msgid ""
@@ -507,7 +507,7 @@ msgstr "Robert G. Quayle:n ja Robert G. Steadman:in tekemiä parannuksia  sovell
 
 #: ../panel-plugin/weather-config.c:967
 msgid "_Temperature:"
-msgstr "Lämpötila:"
+msgstr "_Lämpötila:"
 
 #: ../panel-plugin/weather-config.c:969
 msgid "Celsius (°C)"
@@ -519,7 +519,7 @@ msgstr "Fahrenheit (°F)"
 
 #: ../panel-plugin/weather-config.c:975
 msgid "Barometric _pressure:"
-msgstr "Ilmanpaine:"
+msgstr "Ilmanpaine merenpinnassa:"
 
 #: ../panel-plugin/weather-config.c:978
 msgid "Hectopascals (hPa)"
@@ -539,7 +539,7 @@ msgstr "Torria (mmHg)"
 
 #: ../panel-plugin/weather-config.c:989
 msgid "_Wind speed:"
-msgstr "Tuulen nopeus:"
+msgstr "_Tuulen nopeus:"
 
 #: ../panel-plugin/weather-config.c:992
 msgid "Kilometers per hour (km/h)"
@@ -587,7 +587,7 @@ msgstr "Koettu lämpötila:"
 
 #: ../panel-plugin/weather-config.c:1032
 msgid "Windchill/Heat index"
-msgstr "Hyytävyys/lämpöindeksi"
+msgstr "Hyytävyys-/lämpöindeksi"
 
 #: ../panel-plugin/weather-config.c:1034
 msgid "Windchill/Humidex"
@@ -1012,7 +1012,7 @@ msgstr "SE"
 
 #: ../panel-plugin/weather-data.c:296
 msgid "South"
-msgstr ""
+msgstr "Etelä"
 
 #: ../panel-plugin/weather-data.c:296
 msgid "S"
@@ -1423,7 +1423,7 @@ msgstr "Pilvisyys"
 msgid ""
 "\n"
 "Credits\n"
-msgstr ""
+msgstr "\nAnsiot\n"
 
 #: ../panel-plugin/weather-summary.c:550
 msgid ""
@@ -1433,7 +1433,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-summary.c:551
 msgid "Wikipedia"
-msgstr ""
+msgstr "Wikipedia"
 
 #: ../panel-plugin/weather-summary.c:552
 msgid ""
@@ -1455,17 +1455,17 @@ msgstr ""
 
 #: ../panel-plugin/weather-summary.c:556
 msgid "The Norwegian Meteorological Institute"
-msgstr ""
+msgstr "Norjan säätieteen laitos"
 
 #: ../panel-plugin/weather-summary.c:608
 #, c-format
 msgid "Today"
-msgstr ""
+msgstr "Tänään"
 
 #: ../panel-plugin/weather-summary.c:610
 #, c-format
 msgid "Tomorrow"
-msgstr ""
+msgstr "Huomenna"
 
 #. TRANSLATORS: Please use spaces as needed or desired to properly
 #. align the values; Monospace font is enforced with <tt> tags for
@@ -1473,17 +1473,17 @@ msgstr ""
 #. that looks much better and saves space.
 #: ../panel-plugin/weather-summary.c:630
 msgid "<b>Times used for calculations</b>\n"
-msgstr ""
+msgstr "<b>Laskelmassa käytetyt ajat</b>\n"
 
 #: ../panel-plugin/weather-summary.c:632
 #, c-format
 msgid "<tt><small>Interval start:       %s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>ajanjakson alku %s</small></tt>\n\n"
 
 #: ../panel-plugin/weather-summary.c:638
 #, c-format
 msgid "<tt><small>Interval end:         %s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>ajanjakson loppu: %s</small></tt>\n\n"
 
 #: ../panel-plugin/weather-summary.c:644
 #, c-format
@@ -1494,50 +1494,50 @@ msgstr ""
 
 #: ../panel-plugin/weather-summary.c:650
 msgid "<b>Temperatures</b>\n"
-msgstr ""
+msgstr "<b>Lämpötilat</b>\n"
 
 #: ../panel-plugin/weather-summary.c:651
 #, c-format
 msgid "<tt><small>Dew point:            %s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Kastepiste: %s%s%s</small></tt>\n\n"
 
 #: ../panel-plugin/weather-summary.c:655
 #, c-format
 msgid ""
 "<tt><small>Apparent temperature: %s%s%s</small></tt>\n"
 "\n"
-msgstr ""
+msgstr "<tt><small>Koettu lämpötila: %s%s%s</small></tt>\n\n"
 
 #: ../panel-plugin/weather-summary.c:660
 msgid "<b>Atmosphere</b>\n"
-msgstr ""
+msgstr "<b>Ilmakehä</b>\n\n"
 
 #: ../panel-plugin/weather-summary.c:661
 #, c-format
 msgid "<tt><small>Barometric pressure:  %s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Ilmanpaine merenpinnassa: %s%s%s</small></tt>\n\n"
 
 #: ../panel-plugin/weather-summary.c:665
 #, c-format
 msgid ""
 "<tt><small>Relative humidity:    %s%s%s</small></tt>\n"
 "\n"
-msgstr ""
+msgstr "<tt><small>Suhteellinen ilmankosteus: %s%s%s</small></tt>\n\n"
 
 #: ../panel-plugin/weather-summary.c:670
 msgid "<b>Precipitation</b>\n"
-msgstr ""
+msgstr "<b>Sademäärä</b>\n"
 
 #: ../panel-plugin/weather-summary.c:671
 #, c-format
 msgid ""
 "<tt><small>Amount:        %s%s%s</small></tt>\n"
 "\n"
-msgstr ""
+msgstr "<tt><small>Määrä: %s%s%s</small></tt>\n\n"
 
 #: ../panel-plugin/weather-summary.c:676
 msgid "<b>Clouds</b>\n"
-msgstr ""
+msgstr "<b>Pilviä</b>\n"
 
 #. TRANSLATORS: Clouds percentages are aligned to the right in the
 #. tooltip, the %5s are needed for that and are used both for
@@ -1545,108 +1545,108 @@ msgstr ""
 #: ../panel-plugin/weather-summary.c:680
 #, c-format
 msgid "<tt><small>Fog:           %5s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Sumua: %5s%s%s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:683
 #, c-format
 msgid "<tt><small>Low clouds:    %5s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Alapilviä: %5s%s%s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:686
 #, c-format
 msgid "<tt><small>Middle clouds: %5s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Keskipilviä: %5s%s%s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:689
 #, c-format
 msgid "<tt><small>High clouds:   %5s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Yläpilviä: %5s%s%s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:692
 #, c-format
 msgid "<tt><small>Cloudiness:    %5s%s%s</small></tt>"
-msgstr ""
+msgstr "<tt><small>Pilvisyys: %5s%s%s</small></tt>"
 
 #: ../panel-plugin/weather-summary.c:718
 #, c-format
 msgid "<b>%s</b>\n"
-msgstr ""
+msgstr "<b>%s</b>\n\n"
 
 #: ../panel-plugin/weather-summary.c:722
 msgid "<tt><small>Sunrise: The sun never rises this day.</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Auringonnousu. Aurinko ei laske tänään lainkaan.</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:726
 msgid "<tt><small>Sunset: The sun never sets this day.</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Auringonlasku. Aurinko ei laske tänään lainkaan.</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:731
 #, c-format
 msgid "<tt><small>Sunrise: %s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Auringonnous: %s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:737
 #, c-format
 msgid ""
 "<tt><small>Sunset:  %s</small></tt>\n"
 "\n"
-msgstr ""
+msgstr "<tt><small>Auringonlasku: %s</small></tt>\n\n"
 
 #: ../panel-plugin/weather-summary.c:744
 #, c-format
 msgid "<tt><small>Moon phase: %s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Kuun vaihe: %s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:749
 msgid "<tt><small>Moon phase: Unknown</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Kuun vaihe: Tuntematon</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:754
 msgid "<tt><small>Moonrise: The moon never rises this day.</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Kuunnousu: Kuu ei nouse tänään lainkaan.</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:759
 msgid "<tt><small>Moonset: The moon never sets this day.</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Kuunlasku: Kuu ei laske tänään lainkaan.</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:764
 #, c-format
 msgid "<tt><small>Moonrise: %s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Kuunnousu: %s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:770
 #, c-format
 msgid "<tt><small>Moonset:  %s</small></tt>"
-msgstr ""
+msgstr "<tt><small>Kuunlasku:: %s</small></tt>"
 
 #. daytime headers
 #: ../panel-plugin/weather-summary.c:938
 msgid "Morning"
-msgstr ""
+msgstr "Aamu"
 
 #: ../panel-plugin/weather-summary.c:939
 msgid "Afternoon"
-msgstr ""
+msgstr "Iltapäivä"
 
 #: ../panel-plugin/weather-summary.c:940
 msgid "Evening"
-msgstr ""
+msgstr "Ilta"
 
 #: ../panel-plugin/weather-summary.c:941
 msgid "Night"
-msgstr ""
+msgstr "Yö"
 
 #: ../panel-plugin/weather-summary.c:1146
 msgid "Weather Report"
-msgstr ""
+msgstr "Säätiedotus"
 
 #: ../panel-plugin/weather-summary.c:1173
 msgid "Please set a location in the plugin settings."
-msgstr ""
+msgstr "Aseta paikkakunta lisäosan asetuksiin."
 
 #: ../panel-plugin/weather-summary.c:1175
 msgid "Currently no data available."
-msgstr ""
+msgstr "Tietoa ei ole tällä hetkellä saavissa."
 
 #: ../panel-plugin/weather-summary.c:1187
 msgid "_Forecast"
@@ -1654,40 +1654,40 @@ msgstr "_Ennuste"
 
 #: ../panel-plugin/weather-summary.c:1190
 msgid "_Details"
-msgstr ""
+msgstr "_Yksityiskohdat"
 
 #. TRANSLATORS: Moon phases
 #: ../panel-plugin/weather-translate.c:37
 msgid "New moon"
-msgstr ""
+msgstr "Uusi kuu"
 
 #: ../panel-plugin/weather-translate.c:38
 msgid "Waxing crescent"
-msgstr ""
+msgstr "Kasvava kuunsirppi"
 
 #: ../panel-plugin/weather-translate.c:39
 msgid "First quarter"
-msgstr ""
+msgstr "Ensimmäinen neljännes"
 
 #: ../panel-plugin/weather-translate.c:40
 msgid "Waxing gibbous"
-msgstr ""
+msgstr "Kasvava puolikuu"
 
 #: ../panel-plugin/weather-translate.c:41
 msgid "Full moon"
-msgstr ""
+msgstr "Täysikuu"
 
 #: ../panel-plugin/weather-translate.c:42
 msgid "Waning gibbous"
-msgstr ""
+msgstr "Pienenevä puolikuu"
 
 #: ../panel-plugin/weather-translate.c:43
 msgid "Third quarter"
-msgstr ""
+msgstr "Kolmas neljännes"
 
 #: ../panel-plugin/weather-translate.c:44
 msgid "Waning crescent"
-msgstr ""
+msgstr "Pienenevä kuunsirppi"
 
 #. * TRANSLATORS: How these symbols are named and defined is explained at
 #. * http://om.yr.no/forklaring/symbol/ and http://api.yr.no/faq.html#symbols.
@@ -1718,11 +1718,11 @@ msgstr "Selkeää"
 #: ../panel-plugin/weather-translate.c:70
 #: ../panel-plugin/weather-translate.c:123
 msgid "Lightly cloudy"
-msgstr ""
+msgstr "Kevyttä pilvisyyttä"
 
 #: ../panel-plugin/weather-translate.c:71
 msgid "Partly cloudy"
-msgstr ""
+msgstr "Osittain pilvistä"
 
 #: ../panel-plugin/weather-translate.c:72
 msgid "Cloudy"
@@ -1738,7 +1738,7 @@ msgstr "Pilvistä"
 #: ../panel-plugin/weather-translate.c:82
 #: ../panel-plugin/weather-translate.c:124
 msgid "Rain showers"
-msgstr ""
+msgstr "Sadekuuroja"
 
 #. *
 #. http://www.theweathernetwork.com/weathericons/?product=weathericons&pagecontent=index:
@@ -1747,22 +1747,22 @@ msgstr ""
 #. *    short-lived."
 #: ../panel-plugin/weather-translate.c:89
 msgid "Thunder showers"
-msgstr ""
+msgstr "Ukkoskuuroja"
 
 #. Analogues to "Rain showers"
 #: ../panel-plugin/weather-translate.c:92
 msgid "Sleet showers"
-msgstr ""
+msgstr "Räntäkuuroja"
 
 #: ../panel-plugin/weather-translate.c:93
 #: ../panel-plugin/weather-translate.c:125
 msgid "Snow showers"
-msgstr ""
+msgstr "Lumikuuroja"
 
 #. It's raining, usually incessantly, but not heavily.
 #: ../panel-plugin/weather-translate.c:96
 msgid "Light rain"
-msgstr ""
+msgstr "Kevyttä sadetta"
 
 #. Heavy, usually incessant rain. met.no now uses "heavy rain", but personally
 #. I find light
@@ -1771,16 +1771,16 @@ msgstr ""
 #. * time ago.
 #: ../panel-plugin/weather-translate.c:101
 msgid "Rain"
-msgstr "Sateista"
+msgstr "Sadetta"
 
 #: ../panel-plugin/weather-translate.c:103
 msgid "Rain with thunder"
-msgstr ""
+msgstr "Ukkossateita"
 
 #. Sleet is a mixture of rain and snow, but it's not hail.
 #: ../panel-plugin/weather-translate.c:106
 msgid "Sleet"
-msgstr ""
+msgstr "Räntäsadetta"
 
 #: ../panel-plugin/weather-translate.c:108
 msgid "Snow"
@@ -1796,24 +1796,24 @@ msgstr "Lumisadetta"
 #. *    extratropical cyclone."
 #: ../panel-plugin/weather-translate.c:117
 msgid "Thundersnow"
-msgstr ""
+msgstr "Ukkoslumisadetta"
 
 #. Same as symbols 1-15, but with thunder
 #: ../panel-plugin/weather-translate.c:128
 msgid "Sleet showers with thunder"
-msgstr ""
+msgstr "Ukkosräntäkuuroja"
 
 #: ../panel-plugin/weather-translate.c:129
 msgid "Snow showers with thunder"
-msgstr ""
+msgstr "Ukkoslumikuuroja"
 
 #: ../panel-plugin/weather-translate.c:130
 msgid "Light rain with thunder"
-msgstr ""
+msgstr "Kevyttä ukkossadetta"
 
 #: ../panel-plugin/weather-translate.c:131
 msgid "Sleet with thunder"
-msgstr ""
+msgstr "Ukkosräntäsadetta"
 
 #: ../panel-plugin/weather.desktop.in.h:2
 msgid "Show current weather conditions"
