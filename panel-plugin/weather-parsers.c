@@ -458,7 +458,7 @@ parse_astro_time(xmlNode *cur_node)
 
 
 /*
- * Look at http://api.yr.no/weatherapi/sunrise/1.0/schema for information
+ * Look at http://api.yr.no/weatherapi/sunrise/1.1/schema for information
  * of elements and attributes to expect.
  */
 gboolean

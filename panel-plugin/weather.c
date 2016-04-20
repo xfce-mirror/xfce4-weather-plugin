@@ -619,7 +619,7 @@ update_handler(plugin_data *data)
         end_tm = *localtime(&end_t);
 
         /* build url */
-        url = g_strdup_printf("http://api.yr.no/weatherapi/sunrise/1.0/?"
+        url = g_strdup_printf("http://api.yr.no/weatherapi/sunrise/1.1/?"
                               "lat=%s;lon=%s;"
                               "from=%04d-%02d-%02d;"
                               "to=%04d-%02d-%02d",
