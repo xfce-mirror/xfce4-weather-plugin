@@ -139,7 +139,7 @@ static const symbol_desc symbol_to_desc[] = {
  * try to match these with existing symbols, in order to be compatible
  * with existing icon themes and to maintain translation completeness.
  *
- * See http://api.met.no/weatherapi/weathericon/1.1/documentation
+ * See https://api.met.no/weatherapi/weathericon/1.1/documentation
  * for a list of symbols. For a list of symbols with descriptions,
  * see http://om.yr.no/forklaring/symbol.
  */
