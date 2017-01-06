@@ -6,13 +6,13 @@
 # Chris Darnell <chris@cedeel.com>, 2013
 # Lars Jensen <lars@jink.dk>, 2008
 # Morten Juhl-Johansen Zölde-Fejér <morten@writtenandread.net>, 2016
-# scootergrisen, 2016
+# scootergrisen, 2016-2017
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2014-10-24 18:31+0200\n"
-"PO-Revision-Date: 2016-12-16 08:47+0000\n"
+"PO-Revision-Date: 2017-01-06 10:34+0000\n"
 "Last-Translator: scootergrisen\n"
 "Language-Team: Danish (http://www.transifex.com/xfce/xfce-panel-plugins/language/da/)\n"
 "MIME-Version: 1.0\n"
@@ -84,18 +84,18 @@ msgstr "Ingen data"
 
 #: ../panel-plugin/weather.c:505
 msgid "Error parsing astronomical data!"
-msgstr "Fejl ved fortolkning af astronomisk data!"
+msgstr "Fejl ved fortolkning af astronomiske data!"
 
 #: ../panel-plugin/weather.c:507
 #, c-format
 msgid ""
 "Download of astronomical data failed with HTTP Status Code %d, Reason "
 "phrase: %s"
-msgstr "Download af astronomi-data fejlede med HTTP-status-kode %d, årsagsfrase: %s"
+msgstr "Download af astronomiske data fejlede med HTTP-status-kode %d, årsagsfrase: %s"
 
 #: ../panel-plugin/weather.c:558
 msgid "Error parsing weather data!"
-msgstr ""
+msgstr "Fejl ved parsing af vejrdata!"
 
 #: ../panel-plugin/weather.c:561
 #, c-format
@@ -175,7 +175,7 @@ msgid ""
 "<b>Fog:</b> %s    <b>Cloudiness:</b> %s\n"
 "\n"
 "<span size=\"smaller\">%s</span>"
-msgstr ""
+msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n<b><span size=\"large\">%s</span></b>\n<span size=\"smaller\">fra %s til %s, med %s nedbør</span>\n\n<b>Temperatur:</b> %s\t\t<span size=\"smaller\">(values at %s)</span>\n<b>Wind:</b> %s (%s på Beaufort-skalaen) fra %s(%s)\n<b>Tryk:</b> %s    <b>Fugtighed:</b> %s\n<b>Tåge:</b> %s    <b>Skyet:</b> %s\n\n<span size=\"smaller\">%s</span>"
 
 #: ../panel-plugin/weather.c:1803
 msgid "Cannot update weather data"
@@ -285,13 +285,13 @@ msgstr "meter"
 
 #: ../panel-plugin/weather-config.c:503
 msgid "Location _name:"
-msgstr ""
+msgstr "Placering_navn:"
 
 #: ../panel-plugin/weather-config.c:510
 msgid ""
 "Change the name for the location to your liking. It is used for display and "
 "does not affect the location parameters in any way."
-msgstr ""
+msgstr "Skift navnet på placeringen til det du ønsker. Det bruges til visning og påvirker på ingen måde placeringsparametre."
 
 #: ../panel-plugin/weather-config.c:514
 msgid "Chan_ge..."
@@ -299,11 +299,11 @@ msgstr "Æn_dr..."
 
 #: ../panel-plugin/weather-config.c:517
 msgid "Search for a new location and auto-detect its parameters."
-msgstr ""
+msgstr "Søg efter en ny placering og auto-detekter dens parametre."
 
 #: ../panel-plugin/weather-config.c:536
 msgid "Latitud_e:"
-msgstr ""
+msgstr "_Breddegrad:"
 
 #: ../panel-plugin/weather-config.c:540
 msgid ""
@@ -314,7 +314,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-config.c:550
 msgid "L_ongitude:"
-msgstr ""
+msgstr "_Længdegrad:"
 
 #: ../panel-plugin/weather-config.c:554
 msgid ""
@@ -325,7 +325,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-config.c:564 ../panel-plugin/weather-config.c:1015
 msgid "Altitu_de:"
-msgstr ""
+msgstr "_Højde:"
 
 #: ../panel-plugin/weather-config.c:568
 msgid ""
@@ -350,7 +350,7 @@ msgstr ""
 msgid ""
 "<i>Please change location name to your liking and correct\n"
 "altitude and timezone if they are not auto-detected correctly.</i>"
-msgstr ""
+msgstr "<i>Skift venligst placeringsnavn til det du ønsker og ret\nhøjde og tidszone hvis de ikke er auto-detekteret korrekt.</i>"
 
 #: ../panel-plugin/weather-config.c:645
 msgid ""
@@ -534,11 +534,11 @@ msgstr "Tommer af kviksølv (tom. Hg)"
 
 #: ../panel-plugin/weather-config.c:982
 msgid "Pound-force per square inch (psi)"
-msgstr ""
+msgstr "Pund-kraft pr. kvadrat tomme (psi)"
 
 #: ../panel-plugin/weather-config.c:984
 msgid "Torr (mmHg)"
-msgstr ""
+msgstr "Torr (mmHg)"
 
 #: ../panel-plugin/weather-config.c:989
 msgid "_Wind speed:"
@@ -590,19 +590,19 @@ msgstr "Umiddelbar _temperatur:"
 
 #: ../panel-plugin/weather-config.c:1032
 msgid "Windchill/Heat index"
-msgstr ""
+msgstr "Kuldeindeks/varmeindeks"
 
 #: ../panel-plugin/weather-config.c:1034
 msgid "Windchill/Humidex"
-msgstr ""
+msgstr "Kuldeindeks/luftfugtighedindeks"
 
 #: ../panel-plugin/weather-config.c:1035
 msgid "Steadman"
-msgstr ""
+msgstr "Steadman"
 
 #: ../panel-plugin/weather-config.c:1036
 msgid "Quayle-Steadman"
-msgstr ""
+msgstr "Quayle-Steadman"
 
 #: ../panel-plugin/weather-config.c:1059
 msgid "Choose an icon theme."
@@ -707,13 +707,13 @@ msgstr ""
 
 #: ../panel-plugin/weather-config.c:1318
 msgid "_Round values"
-msgstr ""
+msgstr "_Afrund værdier"
 
 #: ../panel-plugin/weather-config.c:1320
 msgid ""
 "Check to round values everywhere except on the details page in the summary "
 "window."
-msgstr ""
+msgstr "Tilvælg for at afrunde værdier overalt undtagen på detaljer-siden i overblik-vinduet."
 
 #: ../panel-plugin/weather-config.c:1370 ../panel-plugin/weather-config.c:1840
 msgid "Select _font"
@@ -1180,7 +1180,7 @@ msgstr ""
 #: ../panel-plugin/weather-summary.c:279
 #, c-format
 msgid "Error downloading met.no logo image to %s, reason: %s\n"
-msgstr ""
+msgstr "Fejl ved download af met.no-logobillede til %s, årsag: %s\n"
 
 #: ../panel-plugin/weather-summary.c:281
 msgid "unknown"
@@ -1192,15 +1192,15 @@ msgstr "Koordinater\n"
 
 #: ../panel-plugin/weather-summary.c:361
 msgid "Altitude"
-msgstr ""
+msgstr "Højde"
 
 #: ../panel-plugin/weather-summary.c:362
 msgid "Latitude"
-msgstr ""
+msgstr "Breddegrad"
 
 #: ../panel-plugin/weather-summary.c:363
 msgid "Longitude"
-msgstr ""
+msgstr "Længdegrad"
 
 #. TRANSLATORS: Please use as many \t as appropriate to align the
 #. date/time values as in the original.
@@ -1218,7 +1218,7 @@ msgid ""
 "\tNext:\t%s\n"
 "\tCurrent failed attempts: %d\n"
 "\n"
-msgstr ""
+msgstr "\tVejrdata:\n\tSidste:\t%s\n\tNæste:\t%s\n\tAktuelle fejlede forsøg: %d\n\n"
 
 #: ../panel-plugin/weather-summary.c:384
 msgid ""
@@ -1238,7 +1238,7 @@ msgid ""
 "\tLast:\t%s\n"
 "\tNext:\t%s\n"
 "\tCurrent failed attempts: %d\n"
-msgstr ""
+msgstr "\tAstronomiske data:\n\tSidste\t%s\n\tNæste:\t%s\n\tAktuelle fejlede forsøg: %d\n"
 
 #: ../panel-plugin/weather-summary.c:407
 msgid ""
@@ -1255,7 +1255,7 @@ msgstr ""
 msgid ""
 "\n"
 "Times Used for Calculations\n"
-msgstr ""
+msgstr "\nTider brugt til udregninger\n"
 
 #: ../panel-plugin/weather-summary.c:417
 #, c-format
@@ -1279,7 +1279,7 @@ msgstr ""
 msgid ""
 "\n"
 "Astronomical Data\n"
-msgstr "\nAstronomi-data\n"
+msgstr "\nAstronomiske data\n"
 
 #: ../panel-plugin/weather-summary.c:440
 msgid "\tSunrise:\t\tThe sun never rises today.\n"
@@ -1304,11 +1304,11 @@ msgstr "\tSolnedgang:\t\t%s\n\n"
 #: ../panel-plugin/weather-summary.c:458
 #, c-format
 msgid "\tMoon phase:\t%s\n"
-msgstr ""
+msgstr "\tMånefase:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:462
 msgid "\tMoon phase:\tUnknown\n"
-msgstr ""
+msgstr "\tMånefase:\tukendt\n"
 
 #: ../panel-plugin/weather-summary.c:467
 msgid "\tMoonrise:\tThe moon never rises today.\n"
@@ -1330,7 +1330,7 @@ msgstr "\tMånenedgang:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:485
 msgid "\tData not available, will use sane default values for night and day.\n"
-msgstr ""
+msgstr "\tData ikke tilgængelig, bruger normale standardværdier til nat og dag.\n"
 
 #. temperatures
 #: ../panel-plugin/weather-summary.c:491
@@ -1377,7 +1377,7 @@ msgstr "\nNedbør\n"
 
 #: ../panel-plugin/weather-summary.c:523
 msgid "Precipitation amount"
-msgstr ""
+msgstr "Nedbørsmængde"
 
 #. atmosphere
 #: ../panel-plugin/weather-summary.c:526
@@ -1432,7 +1432,7 @@ msgstr "\nCredits\n"
 msgid ""
 "\tEncyclopedic information partly taken from\n"
 "\t\t"
-msgstr ""
+msgstr "\tEncyklopædisk information delvist taget fra\n\t\t"
 
 #: ../panel-plugin/weather-summary.c:551
 msgid "Wikipedia"
@@ -1443,18 +1443,18 @@ msgid ""
 "\n"
 "\tElevation and timezone data provided by\n"
 "\t\t"
-msgstr ""
+msgstr "\n\tHøjde- og tidszonedata leveret af\n\t\t"
 
 #: ../panel-plugin/weather-summary.c:553
 msgid "GeoNames"
-msgstr ""
+msgstr "Geonavne"
 
 #: ../panel-plugin/weather-summary.c:555
 msgid ""
 "\n"
 "\tWeather and astronomical data from\n"
 "\t\t"
-msgstr ""
+msgstr "\n\tVejr- og astronomiske data fra\n\t\t"
 
 #: ../panel-plugin/weather-summary.c:556
 msgid "The Norwegian Meteorological Institute"
@@ -1481,12 +1481,12 @@ msgstr "<b>Tider brug for udregninger</b>\n"
 #: ../panel-plugin/weather-summary.c:632
 #, c-format
 msgid "<tt><small>Interval start:       %s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Interval start:       %s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:638
 #, c-format
 msgid "<tt><small>Interval end:         %s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Interval slut:         %s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:644
 #, c-format
@@ -1525,7 +1525,7 @@ msgstr "<tt><small>Barometrisk tryk:  %s%s%s</small></tt>\n"
 msgid ""
 "<tt><small>Relative humidity:    %s%s%s</small></tt>\n"
 "\n"
-msgstr ""
+msgstr "<tt><small>Relativ fugtighed:    %s%s%s</small></tt>\n\n"
 
 #: ../panel-plugin/weather-summary.c:670
 msgid "<b>Precipitation</b>\n"
@@ -1598,11 +1598,11 @@ msgstr "<tt><small>Solnedgang:  %s</small></tt>\n\n"
 #: ../panel-plugin/weather-summary.c:744
 #, c-format
 msgid "<tt><small>Moon phase: %s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Månefase: %s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:749
 msgid "<tt><small>Moon phase: Unknown</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Månefase: ukendt</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:754
 msgid "<tt><small>Moonrise: The moon never rises this day.</small></tt>\n"
@@ -1649,7 +1649,7 @@ msgstr "Sæt venligst en placering i pluginets indstillinger."
 
 #: ../panel-plugin/weather-summary.c:1175
 msgid "Currently no data available."
-msgstr ""
+msgstr "Ingen data i øjeblikket."
 
 #: ../panel-plugin/weather-summary.c:1187
 msgid "_Forecast"
@@ -1670,7 +1670,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-translate.c:39
 msgid "First quarter"
-msgstr ""
+msgstr "Første kvartal"
 
 #: ../panel-plugin/weather-translate.c:40
 msgid "Waxing gibbous"
@@ -1686,7 +1686,7 @@ msgstr ""
 
 #: ../panel-plugin/weather-translate.c:43
 msgid "Third quarter"
-msgstr ""
+msgstr "Tredje kvartal"
 
 #: ../panel-plugin/weather-translate.c:44
 msgid "Waning crescent"
@@ -1799,16 +1799,16 @@ msgstr "Sne"
 #. *    extratropical cyclone."
 #: ../panel-plugin/weather-translate.c:117
 msgid "Thundersnow"
-msgstr ""
+msgstr "Tordensne"
 
 #. Same as symbols 1-15, but with thunder
 #: ../panel-plugin/weather-translate.c:128
 msgid "Sleet showers with thunder"
-msgstr ""
+msgstr "Sludbyger med torden"
 
 #: ../panel-plugin/weather-translate.c:129
 msgid "Snow showers with thunder"
-msgstr ""
+msgstr "Snebyger med torden"
 
 #: ../panel-plugin/weather-translate.c:130
 msgid "Light rain with thunder"
@@ -1816,7 +1816,7 @@ msgstr "Let regn med torden"
 
 #: ../panel-plugin/weather-translate.c:131
 msgid "Sleet with thunder"
-msgstr ""
+msgstr "Slud med torden"
 
 #: ../panel-plugin/weather.desktop.in.h:2
 msgid "Show current weather conditions"
