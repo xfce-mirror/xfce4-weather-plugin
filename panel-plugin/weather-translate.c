@@ -56,7 +56,7 @@ typedef struct {
 static const symbol_desc symbol_to_desc[] = {
     /*
      * TRANSLATORS: How these symbols are named and defined is explained at
-     * http://om.yr.no/forklaring/symbol/ and http://api.yr.no/faq.html#symbols.
+     * http://om.yr.no/forklaring/symbol/ and https://api.met.no/faq.html#symbols.
      * To be more concise / shorter, the plugin uses names that deviate a bit from yr.no, so that
      * they fit well in the tooltip, forecast tab etc.
      *

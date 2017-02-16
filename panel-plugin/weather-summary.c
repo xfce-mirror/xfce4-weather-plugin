@@ -304,7 +304,7 @@ weather_summary_get_logo(plugin_data *data)
     g_free(path);
     if (pixbuf == NULL)
         weather_http_queue_request(data->session,
-                                   "http://met.no/filestore/met.no-logo.gif",
+                                   "https://met.no/filestore/met.no-logo.gif",
                                    logo_fetched, image);
     else {
         gtk_image_set_from_pixbuf(GTK_IMAGE(image), pixbuf);
