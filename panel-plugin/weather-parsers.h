@@ -133,6 +133,9 @@ gboolean parse_weather(xmlNode *cur_node,
 
 xml_astro *parse_astro(xmlNode *cur_node);
 
+gboolean parse_astrodata(xmlNode *cur_node,
+                         GArray *astrodata);
+
 xml_geolocation *parse_geolocation(xmlNode *cur_node);
 
 xml_place *parse_place(xmlNode *cur_node);

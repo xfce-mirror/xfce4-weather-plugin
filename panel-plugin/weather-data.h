@@ -143,6 +143,8 @@ gint xml_time_compare(gconstpointer a,
 void merge_astro(GArray *astrodata,
                  const xml_astro *astro);
 
+void astrodata_clean(GArray *astrodata);
+
 void merge_timeslice(xml_weather *wd,
                      const xml_time *timeslice);
 
