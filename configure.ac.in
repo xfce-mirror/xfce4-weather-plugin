@@ -10,15 +10,15 @@ dnl *** Version information ***
 dnl ***************************
 m4_define([weather_version_major], [0])
 m4_define([weather_version_minor], [8])
-m4_define([weather_version_micro], [8])
+m4_define([weather_version_micro], [9])
 m4_define([weather_version_build], [@REVISION@])
-m4_define([weather_version_tag], [git])
+m4_define([weather_version_tag], [])
 m4_define([weather_version], [weather_version_major().weather_version_minor().weather_version_micro()ifelse(weather_version_tag(), [git], [weather_version_tag()-weather_version_build()], [weather_version_tag()])])
 
 dnl ***************************
 dnl *** Initialize autoconf ***
 dnl ***************************
-AC_COPYRIGHT([Copyright (c) 2006-2014
+AC_COPYRIGHT([Copyright (c) 2006-2017
         The Xfce development team. All rights reserved.])
 AC_INIT([xfce4-weather-plugin], [weather_version], [http://bugzilla.xfce.org/], [xfce4-weather-plugin])
 AC_PREREQ([2.60])
