@@ -54,14 +54,16 @@ static time_t
 my_timegm(struct tm *tm)
 {
     time_t ret;
-    const char *tz;
+    char *tz;
 
-    tz = g_getenv("TZ");
+    tz = g_strdup(g_getenv("TZ"));
     g_setenv("TZ", "", 1);
     tzset();
     ret = mktime(tm);
-    if (tz)
+    if (tz) {
         g_setenv("TZ", tz, 1);
+        g_free(tz);
+    }
     else
         g_unsetenv("TZ");
     tzset();
