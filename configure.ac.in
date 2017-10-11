@@ -12,7 +12,7 @@ m4_define([weather_version_major], [0])
 m4_define([weather_version_minor], [8])
 m4_define([weather_version_micro], [10])
 m4_define([weather_version_build], [@REVISION@])
-m4_define([weather_version_tag], [])
+m4_define([weather_version_tag], [git])
 m4_define([weather_version], [weather_version_major().weather_version_minor().weather_version_micro()ifelse(weather_version_tag(), [git], [weather_version_tag()-weather_version_build()], [weather_version_tag()])])
 
 dnl ***************************
