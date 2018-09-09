@@ -57,6 +57,16 @@ libweather_la_LDFLAGS = \
 	$(PLATFORM_LDFLAGS) \
 	$(UPOWER_GLIB_LIBS)
 
+if MAINTAINER_MODE
+
+BUILT_SOURCES = \
+	weather-config_ui.h
+
+weather-config_ui.h: weather-config.ui
+	exo-csource --static --strip-comments --strip-content --name=weather_config_ui $< >$@
+
+endif
+
 desktopdir = $(datadir)/xfce4/panel/plugins
 desktop_in_files = weather.desktop.in
 desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)

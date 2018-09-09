@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.22.1 -->
 <interface>
-  <requires lib="gtk+" version="3.20"/>
-  <requires lib="libxfce4ui-2" version="4.12"/>
+  <requires lib="gtk+" version="2.24"/>
   <object class="GtkAdjustment" id="adjustment1">
     <property name="lower">1</property>
     <property name="upper">10</property>
@@ -12,6 +11,24 @@
   <object class="GtkAdjustment" id="adjustment2">
     <property name="lower">1</property>
     <property name="upper">10</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment3">
+    <property name="lower">-90</property>
+    <property name="upper">90</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment4">
+    <property name="lower">-180</property>
+    <property name="upper">180</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment5">
+    <property name="lower">-420</property>
+    <property name="upper">10000</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
@@ -46,21 +63,22 @@
     <property name="icon_name">down</property>
   </object>
   <object class="GtkListStore" id="liststore1"/>
-  <object class="XfceTitledDialog" id="dialog">
+  <object class="GtkDialog" id="dialog">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Weather Update</property>
     <property name="default_width">430</property>
     <property name="default_height">430</property>
+    <property name="destroy_with_parent">True</property>
     <property name="icon_name">xfce4-weather</property>
     <property name="type_hint">dialog</property>
     <property name="subtitle" translatable="yes">Preferences</property>
     <child internal-child="vbox">
-      <object class="GtkBox">
+      <object class="GtkVBox" id="box1">
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child internal-child="action_area">
-          <object class="GtkButtonBox">
+          <object class="GtkButtonBox" id="buttonbox1">
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
@@ -100,12 +118,12 @@
           </packing>
         </child>
         <child>
-          <object class="GtkNotebook">
+          <object class="GtkNotebook" id="notebook">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <property name="border_width">6</property>
             <child>
-              <object class="GtkGrid">
+              <object class="GtkTable" id="grid1">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="valign">start</property>
@@ -113,11 +131,12 @@
                 <property name="row_spacing">6</property>
                 <property name="column_spacing">12</property>
                 <child>
-                  <object class="GtkLabel">
+                  <object class="GtkLabel" id="label1">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Location _name:</property>
                     <property name="use_underline">True</property>
+                    <property name="mnemonic_widget">text_loc_name</property>
                     <property name="xalign">0</property>
                   </object>
                   <packing>
@@ -126,11 +145,12 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel">
+                  <object class="GtkLabel" id="label2">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Latitud_e:</property>
                     <property name="use_underline">True</property>
+                    <property name="mnemonic_widget">spin_lat</property>
                     <property name="xalign">0</property>
                   </object>
                   <packing>
@@ -139,11 +159,12 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel">
+                  <object class="GtkLabel" id="label3">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">L_ongitude:</property>
                     <property name="use_underline">True</property>
+                    <property name="mnemonic_widget">spin_lon</property>
                     <property name="xalign">0</property>
                   </object>
                   <packing>
@@ -152,11 +173,12 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel">
+                  <object class="GtkLabel" id="label4">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Altitu_de:</property>
                     <property name="use_underline">True</property>
+                    <property name="mnemonic_widget">spin_alt</property>
                     <property name="xalign">0</property>
                   </object>
                   <packing>
@@ -165,11 +187,12 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel">
+                  <object class="GtkLabel" id="label5">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">_Timezone:</property>
                     <property name="use_underline">True</property>
+                    <property name="mnemonic_widget">text_timezone</property>
                     <property name="xalign">0</property>
                   </object>
                   <packing>
@@ -178,7 +201,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkSeparator">
+                  <object class="GtkHSeparator" id="separator1">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="margin_top">6</property>
@@ -191,7 +214,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel">
+                  <object class="GtkLabel" id="label6">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Please change location name to your liking and correct alltitude and timezone if they are not auto-detected correctly.</property>
@@ -234,7 +257,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox">
+                  <object class="GtkHBox" id="box2">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="spacing">6</property>
@@ -244,6 +267,7 @@
                         <property name="can_focus">True</property>
                         <property name="tooltip_text" translatable="yes">Latitude specifies the north-south position of a point on the Earth's surface. If you change this value manually, you need to provide altitude and timezone manually too.</property>
                         <property name="width_chars">11</property>
+                        <property name="adjustment">adjustment3</property>
                         <property name="digits">6</property>
                       </object>
                       <packing>
@@ -253,7 +277,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel">
+                      <object class="GtkLabel" id="label7">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">°</property>
@@ -272,7 +296,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox">
+                  <object class="GtkHBox" id="box3">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="spacing">6</property>
@@ -282,6 +306,7 @@
                         <property name="can_focus">True</property>
                         <property name="tooltip_text" translatable="yes">Longitude specifies the east-west position of a point on the Earth's surface. If you change this value manually, you need to provide altitude and timezone manually too.</property>
                         <property name="width_chars">11</property>
+                        <property name="adjustment">adjustment4</property>
                         <property name="digits">6</property>
                       </object>
                       <packing>
@@ -291,7 +316,7 @@
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel">
+                      <object class="GtkLabel" id="label8">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">°</property>
@@ -310,7 +335,7 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox">
+                  <object class="GtkHBox" id="box4">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="spacing">6</property>
@@ -324,6 +349,7 @@ The plugin tries to auto-detect the altitude using the GeoNames webservice, but 
 
 Altitude is given in meters above sea level, or alternatively in feet by changing the unit on the units page. It should match the real value roughly, but small differences will have no influence on the weather data. Inside Norway, this setting has no effect at all.</property>
                         <property name="width_chars">11</property>
+                        <property name="adjustment">adjustment5</property>
                       </object>
                       <packing>
                         <property name="expand">False</property>
@@ -332,7 +358,7 @@ Altitude is given in meters above sea level, or alternatively in feet by changin
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkLabel">
+                      <object class="GtkLabel" id="label_alt_unit">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="label" translatable="yes">feet</property>
@@ -363,10 +389,21 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                     <property name="width">2</property>
                   </packing>
                 </child>
+                <child>
+                  <object class="GtkSpinButton" id="update_spinner">
+                    <property name="can_focus">True</property>
+                    <property name="no_show_all">True</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">0</property>
+                    <property name="top_attach">7</property>
+                    <property name="width">3</property>
+                  </packing>
+                </child>
               </object>
             </child>
             <child type="tab">
-              <object class="GtkLabel">
+              <object class="GtkLabel" id="label9">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">_Location</property>
@@ -377,7 +414,7 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
               </packing>
             </child>
             <child>
-              <object class="GtkGrid">
+              <object class="GtkTable" id="grid2">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="valign">start</property>
@@ -385,11 +422,12 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                 <property name="row_spacing">6</property>
                 <property name="column_spacing">12</property>
                 <child>
-                  <object class="GtkLabel">
+                  <object class="GtkLabel" id="label10">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">_Temperature:</property>
                     <property name="use_underline">True</property>
+                    <property name="mnemonic_widget">combo_unit_temperature</property>
                     <property name="xalign">0</property>
                   </object>
                   <packing>
@@ -398,11 +436,12 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel">
+                  <object class="GtkLabel" id="label11">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Barometric _pressure:</property>
                     <property name="use_underline">True</property>
+                    <property name="mnemonic_widget">combo_unit_pressure</property>
                     <property name="xalign">0</property>
                   </object>
                   <packing>
@@ -411,11 +450,12 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel">
+                  <object class="GtkLabel" id="label12">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">_Wind speed:</property>
                     <property name="use_underline">True</property>
+                    <property name="mnemonic_widget">combo_unit_windspeed</property>
                     <property name="xalign">0</property>
                   </object>
                   <packing>
@@ -424,11 +464,12 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel">
+                  <object class="GtkLabel" id="label13">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Prec_ipitations:</property>
                     <property name="use_underline">True</property>
+                    <property name="mnemonic_widget">combo_unit_precipitation</property>
                     <property name="xalign">0</property>
                   </object>
                   <packing>
@@ -437,11 +478,12 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel">
+                  <object class="GtkLabel" id="label14">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Altitu_de:</property>
                     <property name="use_underline">True</property>
+                    <property name="mnemonic_widget">combo_unit_altitude</property>
                     <property name="xalign">0</property>
                   </object>
                   <packing>
@@ -450,7 +492,7 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkSeparator">
+                  <object class="GtkHSeparator" id="separator2">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="margin_top">6</property>
@@ -463,11 +505,12 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel">
+                  <object class="GtkLabel" id="label15">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Apparent te_mperature:</property>
                     <property name="use_underline">True</property>
+                    <property name="mnemonic_widget">combo_apparent_temperature</property>
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
@@ -572,7 +615,7 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
               </packing>
             </child>
             <child type="tab">
-              <object class="GtkLabel">
+              <object class="GtkLabel" id="label16">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">_Units</property>
@@ -584,18 +627,20 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
               </packing>
             </child>
             <child>
-              <object class="GtkGrid">
+              <object class="GtkTable" id="grid3">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="border_width">12</property>
                 <property name="row_spacing">6</property>
                 <property name="column_spacing">12</property>
                 <child>
-                  <object class="GtkLabel">
+                  <object class="GtkLabel" id="label17">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="tooltip_text" translatable="yes">Available icon themes are listed here. You can add icon themes to $HOME/.config/xfce4/weather/icons (or the equivalent directory on your system). Information about how to create or use icon themes can be found in the README file. New icon themes will be detected everytime you open this config dialog.</property>
                     <property name="label" translatable="yes">_Icon theme:</property>
                     <property name="use_underline">True</property>
+                    <property name="mnemonic_widget">combo_icon_theme</property>
                     <property name="xalign">0</property>
                   </object>
                   <packing>
@@ -604,7 +649,7 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkBox">
+                  <object class="GtkHBox" id="box5">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="hexpand">True</property>
@@ -613,7 +658,6 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                       <object class="GtkComboBoxText" id="combo_icon_theme">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="tooltip_text" translatable="yes">Available icon themes are listed here. You can add icon themes to $HOME/.config/xfce4/weather/icons (or the equivalent directory on your system). Information about how to create or use icon themes can be found in the README file. New icon themes will be detected everytime you open this config dialog.</property>
                       </object>
                       <packing>
                         <property name="expand">True</property>
@@ -658,7 +702,7 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkSeparator">
+                  <object class="GtkHSeparator" id="separator3">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="margin_top">6</property>
@@ -671,11 +715,12 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel">
+                  <object class="GtkLabel" id="label18">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">_Tooltip style:</property>
                     <property name="use_underline">True</property>
+                    <property name="mnemonic_widget">combo_tooltip_style</property>
                     <property name="xalign">0</property>
                   </object>
                   <packing>
@@ -699,7 +744,7 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkSeparator">
+                  <object class="GtkHSeparator" id="label19">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="margin_top">6</property>
@@ -712,11 +757,12 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel">
+                  <object class="GtkLabel" id="label20">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">_Forecast layout:</property>
                     <property name="use_underline">True</property>
+                    <property name="mnemonic_widget">combo_forecast_layout</property>
                     <property name="xalign">0</property>
                   </object>
                   <packing>
@@ -739,11 +785,12 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel">
+                  <object class="GtkLabel" id="label21">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">_Number of forecast days:</property>
                     <property name="use_underline">True</property>
+                    <property name="mnemonic_widget">spin_forecast_days</property>
                     <property name="xalign">0</property>
                   </object>
                   <packing>
@@ -755,7 +802,6 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                   <object class="GtkSpinButton" id="spin_forecast_days">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="tooltip_text" translatable="yes">Met.no provides forecast data for up to 5 days in the future. Choose how many days will be shown in the forecast tab in the summary window. On slower computers, a lower number might help against lags when opening the window. Note however that usually forecasts for more than three days in the future are unreliable at best ;-)</property>
                     <property name="halign">start</property>
                     <property name="adjustment">adjustment1</property>
                     <property name="numeric">True</property>
@@ -767,7 +813,7 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkSeparator">
+                  <object class="GtkHSeparator" id="separator4">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="margin_top">6</property>
@@ -800,7 +846,7 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
               </packing>
             </child>
             <child type="tab">
-              <object class="GtkLabel">
+              <object class="GtkLabel" id="label22">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">_Appearance</property>
@@ -812,7 +858,7 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
               </packing>
             </child>
             <child>
-              <object class="GtkGrid">
+              <object class="GtkTable" id="grid4">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="border_width">12</property>
@@ -834,12 +880,13 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel">
+                  <object class="GtkLabel" id="label23">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="hexpand">True</property>
                     <property name="label" translatable="yes">Li_nes:</property>
                     <property name="use_underline">True</property>
+                    <property name="mnemonic_widget">spin_scrollbox_lines</property>
                     <property name="xalign">1</property>
                   </object>
                   <packing>
@@ -863,7 +910,7 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkLabel">
+                  <object class="GtkLabel" id="label24">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="label" translatable="yes">Font and color:</property>
@@ -871,20 +918,6 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                   </object>
                   <packing>
                     <property name="left_attach">0</property>
-                    <property name="top_attach">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkFontButton" id="button_scrollbox_font">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="tooltip_text" translatable="yes">Choose a font you like and set it to a smaller or larger size. Middle-click on the button to unset the font and use your theme's default.</property>
-                    <property name="font">Sans 12</property>
-                    <property name="preview_text"/>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
                     <property name="top_attach">1</property>
                   </packing>
                 </child>
@@ -901,7 +934,7 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkSeparator">
+                  <object class="GtkHSeparator" id="separator5">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="margin_top">6</property>
@@ -914,7 +947,7 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkGrid">
+                  <object class="GtkTable" id="grid5">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="hexpand">True</property>
@@ -950,14 +983,14 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkScrolledWindow">
+                      <object class="GtkScrolledWindow" id="scrollwindow1">
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
                         <property name="shadow_type">in</property>
                         <child>
-                          <object class="GtkViewport">
+                          <object class="GtkViewport" id="viewport1">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <child>
@@ -967,7 +1000,7 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                                 <property name="tooltip_text" translatable="yes">These are the values that will be shown in the scrollbox. Select a single value here and click the appropriate button to remove it or move it up and down in the list.</property>
                                 <property name="model">liststore1</property>
                                 <child internal-child="selection">
-                                  <object class="GtkTreeSelection"/>
+                                  <object class="GtkTreeSelection" id="selection1" />
                                 </child>
                               </object>
                             </child>
@@ -980,7 +1013,7 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                       </packing>
                     </child>
                     <child>
-                      <object class="GtkBox">
+                      <object class="GtkVBox" id="box6">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="orientation">vertical</property>
@@ -1018,7 +1051,7 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkSeparator">
+                          <object class="GtkHSeparator" id="separator6">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="opacity">0</property>
@@ -1093,13 +1126,27 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                     <property name="width">3</property>
                   </packing>
                 </child>
+                <child>
+                  <object class="GtkButton" id="button_scrollbox_font">
+                    <property name="label" translatable="yes">Select _font</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="tooltip_text" translatable="yes">Choose a font you like and set it to a smaller or larger size. Middle-click on the button to unset the font and use your theme's default.</property>
+                    <property name="use_underline">True</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="top_attach">1</property>
+                  </packing>
+                </child>
               </object>
               <packing>
                 <property name="position">3</property>
               </packing>
             </child>
             <child type="tab">
-              <object class="GtkLabel">
+              <object class="GtkLabel" id="label25">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="label" translatable="yes">_Scrollbox</property>
@@ -1119,5 +1166,9 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
         </child>
       </object>
     </child>
+    <action-widgets>
+      <action-widget response="-11">help_button</action-widget>
+      <action-widget response="-7">close_button</action-widget>
+    </action-widgets>
   </object>
 </interface>

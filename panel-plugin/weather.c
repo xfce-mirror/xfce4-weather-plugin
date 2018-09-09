@@ -37,6 +37,8 @@
 #include "weather-scrollbox.h"
 #include "weather-debug.h"
 
+#include "weather-config_ui.h"
+
 #define XFCEWEATHER_ROOT "weather"
 #define CACHE_FILE_MAX_AGE (48 * 3600)
 #define BORDER (8)
@@ -1631,32 +1633,31 @@ static void
 xfceweather_create_options(XfcePanelPlugin *plugin,
                            plugin_data *data)
 {
-    GtkWidget *dlg, *vbox;
+    GtkWidget *dlg;
+    GtkBuilder *builder;
     xfceweather_dialog *dialog;
+    GError *error = NULL;
+    gint response;
 
     xfce_panel_plugin_block_menu(plugin);
 
-    dlg = xfce_titled_dialog_new_with_buttons(_("Weather Update"),
-                                              GTK_WINDOW
-                                              (gtk_widget_get_toplevel
-                                               (GTK_WIDGET(plugin))),
-                                              GTK_DIALOG_DESTROY_WITH_PARENT |
-                                              GTK_DIALOG_NO_SEPARATOR,
-                                              GTK_STOCK_HELP, GTK_RESPONSE_HELP,
-                                              GTK_STOCK_CLOSE, GTK_RESPONSE_OK,
-                                              NULL);
+    builder = gtk_builder_new ();
+    if (gtk_builder_add_from_string (builder, weather_config_ui,
+                                     weather_config_ui_length, &error) != 0)
+    {
+        dlg = gtk_builder_get_object (builder, "dialog");
+        gtk_window_set_transient_for (GTK_WINDOW (dlg), 
+                                      (gtk_widget_get_toplevel
+                                       (GTK_WIDGET(plugin))));
 
-    gtk_container_set_border_width(GTK_CONTAINER(dlg), 2);
-    gtk_window_set_icon_name(GTK_WINDOW(dlg), "xfce4-settings");
+        dialog = create_config_dialog(data, builder);
 
-    vbox = gtk_vbox_new(FALSE, BORDER);
-    gtk_container_set_border_width(GTK_CONTAINER(vbox), BORDER - 2);
-    gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), vbox, TRUE, TRUE, 0);
-
-    dialog = create_config_dialog(data, vbox);
-    g_signal_connect(G_OBJECT(dlg), "response",
-                     G_CALLBACK(xfceweather_dialog_response), dialog);
-    gtk_widget_show(dlg);
+        gtk_widget_show_all (GTK_WIDGET (dlg));
+        response = gtk_dialog_run(GTK_DIALOG (dlg));
+        xfceweather_dialog_response(dlg, response, dialog);
+    } {
+        g_warning ("%s", error->message);
+    }
 }
 
 
