@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Generated with glade 3.22.1 -->
 <interface>
-  <requires lib="gtk+" version="2.24"/>
+  <requires lib="gtk+" version="3.20"/>
+  <requires lib="libxfce4ui-2" version="4.12"/>
   <object class="GtkAdjustment" id="adjustment1">
     <property name="lower">1</property>
     <property name="upper">10</property>
@@ -71,9 +72,8 @@
     <property name="destroy_with_parent">True</property>
     <property name="icon_name">xfce4-weather</property>
     <property name="type_hint">dialog</property>
-    <property name="subtitle" translatable="yes">Preferences</property>
     <child internal-child="vbox">
-      <object class="GtkVBox" id="box1">
+      <object class="GtkBox" id="box1">
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
@@ -128,8 +128,8 @@
                 <property name="can_focus">False</property>
                 <property name="valign">start</property>
                 <property name="border_width">12</property>
-                <property name="row_spacing">6</property>
                 <property name="column_spacing">12</property>
+                <property name="row_spacing">6</property>
                 <child>
                   <object class="GtkLabel" id="label1">
                     <property name="visible">True</property>
@@ -139,10 +139,6 @@
                     <property name="mnemonic_widget">text_loc_name</property>
                     <property name="xalign">0</property>
                   </object>
-                  <packing>
-                    <property name="left_attach">0</property>
-                    <property name="top_attach">0</property>
-                  </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label2">
@@ -154,7 +150,6 @@
                     <property name="xalign">0</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
                     <property name="top_attach">1</property>
                   </packing>
                 </child>
@@ -168,7 +163,6 @@
                     <property name="xalign">0</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
                     <property name="top_attach">2</property>
                   </packing>
                 </child>
@@ -182,7 +176,6 @@
                     <property name="xalign">0</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
                     <property name="top_attach">3</property>
                   </packing>
                 </child>
@@ -196,7 +189,6 @@
                     <property name="xalign">0</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
                     <property name="top_attach">4</property>
                   </packing>
                 </child>
@@ -208,9 +200,7 @@
                     <property name="margin_bottom">6</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
                     <property name="top_attach">5</property>
-                    <property name="width">3</property>
                   </packing>
                 </child>
                 <child>
@@ -225,9 +215,7 @@
                     </attributes>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
                     <property name="top_attach">6</property>
-                    <property name="width">3</property>
                   </packing>
                 </child>
                 <child>
@@ -239,8 +227,13 @@
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
-                    <property name="top_attach">0</property>
                   </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
                 </child>
                 <child>
                   <object class="GtkButton" id="button_loc_change">
@@ -253,8 +246,25 @@
                   </object>
                   <packing>
                     <property name="left_attach">2</property>
-                    <property name="top_attach">0</property>
                   </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
                 </child>
                 <child>
                   <object class="GtkHBox" id="box2">
@@ -292,7 +302,6 @@
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="top_attach">1</property>
-                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
@@ -331,7 +340,6 @@
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="top_attach">2</property>
-                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
@@ -373,7 +381,6 @@ Altitude is given in meters above sea level, or alternatively in feet by changin
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="top_attach">3</property>
-                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
@@ -386,7 +393,6 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="top_attach">4</property>
-                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
@@ -395,10 +401,14 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                     <property name="no_show_all">True</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
                     <property name="top_attach">7</property>
-                    <property name="width">3</property>
                   </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
                 </child>
               </object>
             </child>
@@ -419,8 +429,8 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                 <property name="can_focus">False</property>
                 <property name="valign">start</property>
                 <property name="border_width">12</property>
-                <property name="row_spacing">6</property>
                 <property name="column_spacing">12</property>
+                <property name="row_spacing">6</property>
                 <child>
                   <object class="GtkLabel" id="label10">
                     <property name="visible">True</property>
@@ -430,10 +440,6 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                     <property name="mnemonic_widget">combo_unit_temperature</property>
                     <property name="xalign">0</property>
                   </object>
-                  <packing>
-                    <property name="left_attach">0</property>
-                    <property name="top_attach">0</property>
-                  </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label11">
@@ -445,7 +451,6 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                     <property name="xalign">0</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
                     <property name="top_attach">1</property>
                   </packing>
                 </child>
@@ -459,7 +464,6 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                     <property name="xalign">0</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
                     <property name="top_attach">2</property>
                   </packing>
                 </child>
@@ -473,7 +477,6 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                     <property name="xalign">0</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
                     <property name="top_attach">3</property>
                   </packing>
                 </child>
@@ -487,7 +490,6 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                     <property name="xalign">0</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
                     <property name="top_attach">4</property>
                   </packing>
                 </child>
@@ -499,9 +501,7 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                     <property name="margin_bottom">6</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
                     <property name="top_attach">5</property>
-                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
@@ -513,7 +513,6 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                     <property name="mnemonic_widget">combo_apparent_temperature</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
                     <property name="top_attach">6</property>
                   </packing>
                 </child>
@@ -529,8 +528,10 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
-                    <property name="top_attach">0</property>
                   </packing>
+                </child>
+                <child>
+                  <placeholder/>
                 </child>
                 <child>
                   <object class="GtkComboBoxText" id="combo_unit_pressure">
@@ -631,8 +632,8 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="border_width">12</property>
-                <property name="row_spacing">6</property>
                 <property name="column_spacing">12</property>
+                <property name="row_spacing">6</property>
                 <child>
                   <object class="GtkLabel" id="label17">
                     <property name="visible">True</property>
@@ -643,10 +644,6 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                     <property name="mnemonic_widget">combo_icon_theme</property>
                     <property name="xalign">0</property>
                   </object>
-                  <packing>
-                    <property name="left_attach">0</property>
-                    <property name="top_attach">0</property>
-                  </packing>
                 </child>
                 <child>
                   <object class="GtkHBox" id="box5">
@@ -682,7 +679,6 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
-                    <property name="top_attach">0</property>
                   </packing>
                 </child>
                 <child>
@@ -696,10 +692,11 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                     <property name="draw_indicator">True</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
                     <property name="top_attach">1</property>
-                    <property name="width">2</property>
                   </packing>
+                </child>
+                <child>
+                  <placeholder/>
                 </child>
                 <child>
                   <object class="GtkHSeparator" id="separator3">
@@ -709,10 +706,11 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                     <property name="margin_bottom">6</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
                     <property name="top_attach">2</property>
-                    <property name="width">2</property>
                   </packing>
+                </child>
+                <child>
+                  <placeholder/>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label18">
@@ -724,7 +722,6 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                     <property name="xalign">0</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
                     <property name="top_attach">3</property>
                   </packing>
                 </child>
@@ -751,10 +748,11 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                     <property name="margin_bottom">6</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
                     <property name="top_attach">4</property>
-                    <property name="width">2</property>
                   </packing>
+                </child>
+                <child>
+                  <placeholder/>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label20">
@@ -766,7 +764,6 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                     <property name="xalign">0</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
                     <property name="top_attach">5</property>
                   </packing>
                 </child>
@@ -794,7 +791,6 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                     <property name="xalign">0</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
                     <property name="top_attach">6</property>
                   </packing>
                 </child>
@@ -820,10 +816,11 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                     <property name="margin_bottom">6</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
                     <property name="top_attach">7</property>
-                    <property name="width">2</property>
                   </packing>
+                </child>
+                <child>
+                  <placeholder/>
                 </child>
                 <child>
                   <object class="GtkCheckButton" id="check_round_values">
@@ -835,10 +832,11 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                     <property name="draw_indicator">True</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
                     <property name="top_attach">8</property>
-                    <property name="width">2</property>
                   </packing>
+                </child>
+                <child>
+                  <placeholder/>
                 </child>
               </object>
               <packing>
@@ -862,8 +860,8 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="border_width">12</property>
-                <property name="row_spacing">6</property>
                 <property name="column_spacing">12</property>
+                <property name="row_spacing">6</property>
                 <child>
                   <object class="GtkCheckButton" id="check_scrollbox_show">
                     <property name="label" translatable="yes">Show scroll_box</property>
@@ -874,10 +872,6 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                     <property name="use_underline">True</property>
                     <property name="draw_indicator">True</property>
                   </object>
-                  <packing>
-                    <property name="left_attach">0</property>
-                    <property name="top_attach">0</property>
-                  </packing>
                 </child>
                 <child>
                   <object class="GtkLabel" id="label23">
@@ -891,7 +885,6 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                   </object>
                   <packing>
                     <property name="left_attach">1</property>
-                    <property name="top_attach">0</property>
                   </packing>
                 </child>
                 <child>
@@ -906,7 +899,6 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                   </object>
                   <packing>
                     <property name="left_attach">2</property>
-                    <property name="top_attach">0</property>
                   </packing>
                 </child>
                 <child>
@@ -917,7 +909,6 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                     <property name="xalign">0</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
                     <property name="top_attach">1</property>
                   </packing>
                 </child>
@@ -941,10 +932,14 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                     <property name="margin_bottom">6</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
                     <property name="top_attach">2</property>
-                    <property name="width">3</property>
                   </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
                 </child>
                 <child>
                   <object class="GtkTable" id="grid5">
@@ -952,8 +947,8 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                     <property name="can_focus">False</property>
                     <property name="hexpand">True</property>
                     <property name="vexpand">True</property>
-                    <property name="row_spacing">6</property>
                     <property name="column_spacing">6</property>
+                    <property name="row_spacing">6</property>
                     <child>
                       <object class="GtkComboBoxText" id="options_datatypes">
                         <property name="visible">True</property>
@@ -977,10 +972,6 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                           <item id="17" translatable="yes">Precipitation (R)</item>
                         </items>
                       </object>
-                      <packing>
-                        <property name="left_attach">0</property>
-                        <property name="top_attach">0</property>
-                      </packing>
                     </child>
                     <child>
                       <object class="GtkScrolledWindow" id="scrollwindow1">
@@ -1000,7 +991,7 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                                 <property name="tooltip_text" translatable="yes">These are the values that will be shown in the scrollbox. Select a single value here and click the appropriate button to remove it or move it up and down in the list.</property>
                                 <property name="model">liststore1</property>
                                 <child internal-child="selection">
-                                  <object class="GtkTreeSelection" id="selection1" />
+                                  <object class="GtkTreeSelection" id="selection1"/>
                                 </child>
                               </object>
                             </child>
@@ -1008,7 +999,6 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                         </child>
                       </object>
                       <packing>
-                        <property name="left_attach">0</property>
                         <property name="top_attach">1</property>
                       </packing>
                     </child>
@@ -1016,7 +1006,6 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                       <object class="GtkVBox" id="box6">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="orientation">vertical</property>
                         <property name="spacing">6</property>
                         <child>
                           <object class="GtkButton" id="button_add">
@@ -1099,16 +1088,21 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                       </object>
                       <packing>
                         <property name="left_attach">1</property>
-                        <property name="top_attach">0</property>
-                        <property name="height">2</property>
                       </packing>
+                    </child>
+                    <child>
+                      <placeholder/>
                     </child>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
                     <property name="top_attach">3</property>
-                    <property name="width">3</property>
                   </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
                 </child>
                 <child>
                   <object class="GtkCheckButton" id="check_scrollbox_animate">
@@ -1121,10 +1115,14 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                     <property name="draw_indicator">True</property>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
                     <property name="top_attach">4</property>
-                    <property name="width">3</property>
                   </packing>
+                </child>
+                <child>
+                  <placeholder/>
+                </child>
+                <child>
+                  <placeholder/>
                 </child>
                 <child>
                   <object class="GtkButton" id="button_scrollbox_font">

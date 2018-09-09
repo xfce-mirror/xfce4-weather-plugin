@@ -90,12 +90,12 @@ lnk_clicked(GtkTextTag *tag,
 #define ATTACH_DAYTIME_HEADER(title, pos)               \
     if (data->forecast_layout == FC_LAYOUT_CALENDAR)    \
         gtk_table_attach_defaults                       \
-            (GTK_TABLE(table),                          \
+            (table,                          \
              add_forecast_header(title, 90.0, &darkbg), \
              0, 1, pos, pos+1);                         \
     else                                                \
         gtk_table_attach_defaults                       \
-            (GTK_TABLE(table),                          \
+            (table,                          \
              add_forecast_header(title, 0.0, &darkbg),  \
              pos, pos+1, 0, 1);                         \
 
@@ -840,7 +840,7 @@ add_forecast_cell(plugin_data *data,
     gchar *wind_speed, *wind_direction, *value, *rawvalue;
     xml_time *fcdata;
 
-    box = gtk_vbox_new(FALSE, 0);
+    box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
 
     fcdata = make_forecast_data(data->weatherdata, daydata, day, daytime);
     if (fcdata == NULL)
@@ -930,12 +930,12 @@ make_forecast(plugin_data *data)
     else
         table = gtk_table_new(data->forecast_days + 1, 5, FALSE);
 
-    gtk_table_set_row_spacings(GTK_TABLE(table), 0);
-    gtk_table_set_col_spacings(GTK_TABLE(table), 0);
+    gtk_table_set_row_spacings(table, 0);
+    gtk_table_set_col_spacings(table, 0);
 
     /* empty upper left corner */
-    box = gtk_vbox_new(FALSE, 0);
-    gtk_table_attach_defaults(GTK_TABLE(table),
+    box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_table_attach_defaults(table,
                               wrap_forecast_cell(box, &darkbg),
                               0, 1, 0, 1);
 
@@ -960,10 +960,10 @@ make_forecast(plugin_data *data)
         gtk_widget_set_tooltip_markup(GTK_WIDGET(ebox), text);
 
         if (data->forecast_layout == FC_LAYOUT_CALENDAR)
-            gtk_table_attach_defaults(GTK_TABLE(table), GTK_WIDGET(ebox),
+            gtk_table_attach_defaults(table, GTK_WIDGET(ebox),
                                       i+1, i+2, 0, 1);
         else
-            gtk_table_attach_defaults(GTK_TABLE(table), GTK_WIDGET(ebox),
+            gtk_table_attach_defaults(table, GTK_WIDGET(ebox),
                                       0, 1, i+1, i+2);
 
         /* to speed up things, first get forecast data for all daytimes */
@@ -981,11 +981,11 @@ make_forecast(plugin_data *data)
                 ebox = wrap_forecast_cell(align, &lightbg);
 
             if (data->forecast_layout == FC_LAYOUT_CALENDAR)
-                gtk_table_attach_defaults(GTK_TABLE(table),
+                gtk_table_attach_defaults(table,
                                           GTK_WIDGET(ebox),
                                           i+1, i+2, 1+daytime, 2+daytime);
             else
-                gtk_table_attach_defaults(GTK_TABLE(table),
+                gtk_table_attach_defaults(table,
                                           GTK_WIDGET(ebox),
                                           1+daytime, 2+daytime, i+1, i+2);
         }
@@ -1043,7 +1043,7 @@ create_forecast_tab(plugin_data *data)
         return align;
     } else {
         /* contents too big, scroll window needed */
-        hbox = gtk_hbox_new(FALSE, 0);
+        hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
         gtk_box_pack_start(GTK_BOX(hbox), table, TRUE, FALSE, 0);
         gtk_container_add(GTK_CONTAINER(align), GTK_WIDGET(hbox));
 
@@ -1150,15 +1150,15 @@ create_summary_window(plugin_data *data)
     conditions = get_current_conditions(data->weatherdata);
     window = xfce_titled_dialog_new_with_buttons(_("Weather Report"),
                                                  NULL,
-                                                 GTK_DIALOG_NO_SEPARATOR,
-                                                 GTK_STOCK_CLOSE,
+                                                 GTK_DIALOG_DESTROY_WITH_PARENT,
+                                                 _("Close"),
                                                  GTK_RESPONSE_ACCEPT, NULL);
     if (G_LIKELY(data->location_name != NULL)) {
         title = g_strdup_printf("%s\n", data->location_name);
         xfce_titled_dialog_set_subtitle(XFCE_TITLED_DIALOG(window), title);
         g_free(title);
     }
-    vbox = gtk_vbox_new(FALSE, 0);
+    vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_box_pack_start(GTK_BOX(gtk_dialog_get_content_area (GTK_DIALOG(window))), vbox, TRUE, TRUE, 0);
 
     symbol = get_data(conditions, data->units, SYMBOL,
@@ -1173,7 +1173,7 @@ create_summary_window(plugin_data *data)
 
     if (data->location_name == NULL || data->weatherdata == NULL ||
         data->weatherdata->current_conditions == NULL) {
-        hbox = gtk_hbox_new(FALSE, 0);
+        hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
         if (data->location_name == NULL)
             label = gtk_label_new(_("Please set a location in the plugin settings."));
         else

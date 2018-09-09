@@ -35,11 +35,16 @@
 
 static void gtk_scrollbox_finalize(GObject *object);
 
-static void gtk_scrollbox_size_request(GtkWidget *widget,
-                                       GtkRequisition *requisition);
+static void gtk_scrollbox_get_preferred_height (GtkWidget *widget,
+                                                gint      *minimal_height,
+                                                gint      *natural_height);
 
-static gboolean gtk_scrollbox_expose_event(GtkWidget *widget,
-                                           GdkEventExpose *event);
+static void gtk_scrollbox_get_preferred_width (GtkWidget *widget,
+                                               gint      *minimal_width,
+                                               gint      *natural_width);
+
+static gboolean gtk_scrollbox_draw_event(GtkWidget *widget,
+                                         cairo_t   *cr);
 
 static gboolean gtk_scrollbox_control_loop(gpointer user_data);
 
@@ -56,8 +61,9 @@ gtk_scrollbox_class_init(GtkScrollboxClass *klass)
     gobject_class->finalize = gtk_scrollbox_finalize;
 
     widget_class = GTK_WIDGET_CLASS(klass);
-    widget_class->size_request = gtk_scrollbox_size_request;
-    widget_class->expose_event = gtk_scrollbox_expose_event;
+    widget_class->get_preferred_width = gtk_scrollbox_get_preferred_width;
+    widget_class->get_preferred_height = gtk_scrollbox_get_preferred_height;
+    widget_class->draw = gtk_scrollbox_draw_event;
 }
 
 
@@ -170,9 +176,35 @@ gtk_scrollbox_size_request(GtkWidget *widget,
 }
 
 
+static void
+gtk_scrollbox_get_preferred_height (GtkWidget *widget,
+                                    gint      *minimal_height,
+                                    gint      *natural_height)
+{
+    GtkRequisition requisition;
+
+    gtk_scrollbox_size_request (widget, &requisition);
+
+    *minimal_height = *natural_height = requisition.height;
+}
+
+
+static void
+gtk_scrollbox_get_preferred_width (GtkWidget *widget,
+                                   gint      *minimal_width,
+                                   gint      *natural_width)
+{
+  GtkRequisition requisition;
+
+  gtk_scrollbox_size_request (widget, &requisition);
+
+  *minimal_width = *natural_width = requisition.width;
+}
+
+
 static gboolean
-gtk_scrollbox_expose_event(GtkWidget *widget,
-                           GdkEventExpose *event)
+gtk_scrollbox_draw_event(GtkWidget *widget,
+                         cairo_t   *cr)
 {
     GtkScrollbox *self = GTK_SCROLLBOX(widget);
     PangoLayout *layout;
@@ -182,9 +214,9 @@ gtk_scrollbox_expose_event(GtkWidget *widget,
     PangoMatrix matrix = PANGO_MATRIX_INIT;
     GtkAllocation allocation;
 
-    if (GTK_WIDGET_CLASS(gtk_scrollbox_parent_class)->expose_event != NULL)
+    if (GTK_WIDGET_CLASS(gtk_scrollbox_parent_class)->draw != NULL)
         result = GTK_WIDGET_CLASS
-            (gtk_scrollbox_parent_class)->expose_event(widget, event);
+            (gtk_scrollbox_parent_class)->draw(widget, cr);
 
     if (self->active != NULL) {
         layout = PANGO_LAYOUT(self->active->data);
@@ -216,11 +248,11 @@ gtk_scrollbox_expose_event(GtkWidget *widget,
                    - PANGO_PIXELS(logical_rect.width)) / 2;
         }
 
-        gtk_paint_layout(gtk_widget_get_style (GTK_WIDGET (widget)),
-                         gtk_widget_get_window (GTK_WIDGET (widget)),
-                         gtk_widget_get_state(widget), TRUE,
-                         &event->area, widget,
-                         "GtkScrollbox", width, height, layout);
+        gtk_render_layout (gtk_widget_get_style_context (GTK_WIDGET (widget)),
+                           cr,
+                           width, 
+                           height, 
+                           layout);
     }
     return result;
 }

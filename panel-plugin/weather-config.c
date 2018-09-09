@@ -1146,19 +1146,18 @@ button_scrollbox_font_clicked(GtkWidget *button,
                               gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    GtkFontSelectionDialog *fsd;
+    GtkFontChooserDialog *fsd;
     gchar *fontname;
     gint result;
 
-    fsd = GTK_FONT_SELECTION_DIALOG
-        (gtk_font_selection_dialog_new(_("Select font")));
+    fsd = GTK_FONT_CHOOSER_DIALOG
+        (gtk_font_chooser_dialog_new(_("Select font"), dialog->dialog));
     if (dialog->pd->scrollbox_font)
-        gtk_font_selection_dialog_set_font_name(fsd,
-                                                dialog->pd->scrollbox_font);
+        gtk_font_chooser_set_font (GTK_FONT_CHOOSER (fsd), dialog->pd->scrollbox_font);
 
     result = gtk_dialog_run(GTK_DIALOG(fsd));
     if (result == GTK_RESPONSE_OK || result == GTK_RESPONSE_ACCEPT) {
-        fontname = gtk_font_selection_dialog_get_font_name(fsd);
+        fontname = gtk_font_chooser_get_font (GTK_FONT_CHOOSER (fsd));
         if (fontname != NULL) {
             gtk_button_set_label(GTK_BUTTON(button), fontname);
             g_free(dialog->pd->scrollbox_font);

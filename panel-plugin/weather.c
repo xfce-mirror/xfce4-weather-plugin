@@ -1897,11 +1897,11 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
 
     /* create alignment box that can be easily adapted to the panel
        orientation */
-    data->alignbox = xfce_hvbox_new(GTK_ORIENTATION_HORIZONTAL, FALSE, 0);
+    data->alignbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_container_add(GTK_CONTAINER(data->button), data->alignbox);
 
     /* add widgets to alignment box */
-    data->vbox_center_scrollbox = gtk_vbox_new(FALSE, 0);
+    data->vbox_center_scrollbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_misc_set_alignment(GTK_MISC(data->iconimage), 1, 0.5);
     gtk_box_pack_start(GTK_BOX(data->alignbox),
                        data->iconimage, TRUE, FALSE, 0);
@@ -1925,10 +1925,10 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
 
     /* add refresh button to right click menu, for people who missed
        the middle mouse click feature */
-    refresh = gtk_image_menu_item_new_with_mnemonic(_("Re_fresh"));
-    refresh_icon = gtk_image_new_from_stock(GTK_STOCK_REFRESH,
+    refresh = gtk_menu_item_new_with_mnemonic(_("Re_fresh"));
+    refresh_icon = gtk_image_new_from_icon_name("view-refresh",
                                             GTK_ICON_SIZE_MENU);
-    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(refresh), refresh_icon);
+    //gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(refresh), refresh_icon);
     gtk_widget_show(refresh);
     g_signal_connect(G_OBJECT(refresh), "activate",
                      G_CALLBACK(mi_click), data);
@@ -2038,11 +2038,11 @@ xfceweather_set_mode(XfcePanelPlugin *panel,
     if (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_HORIZONTAL ||
         (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_DESKBAR &&
          data->single_row)) {
-        xfce_hvbox_set_orientation(XFCE_HVBOX(data->alignbox),
+        gtk_orientable_set_orientation(data->alignbox,
                                    GTK_ORIENTATION_HORIZONTAL);
         gtk_misc_set_alignment(GTK_MISC(data->iconimage), 1, 0.5);
     } else {
-        xfce_hvbox_set_orientation(XFCE_HVBOX(data->alignbox),
+        gtk_orientable_set_orientation(data->alignbox,
                                    GTK_ORIENTATION_VERTICAL);
         gtk_misc_set_alignment(GTK_MISC(data->iconimage), 0.5, 1);
     }
@@ -2077,11 +2077,11 @@ xfceweather_set_orientation(XfcePanelPlugin *panel,
     data->panel_orientation = orientation;
 
     if (data->panel_orientation == GTK_ORIENTATION_HORIZONTAL) {
-        xfce_hvbox_set_orientation(XFCE_HVBOX(data->alignbox),
+        gtk_orientable_set_orientation(data->alignbox,
                                    GTK_ORIENTATION_HORIZONTAL);
         gtk_misc_set_alignment(GTK_MISC(data->iconimage), 1, 0.5);
     } else {
-        xfce_hvbox_set_orientation(XFCE_HVBOX(data->alignbox),
+        gtk_orientable_set_orientation(data->alignbox,
                                    GTK_ORIENTATION_VERTICAL);
         gtk_misc_set_alignment(GTK_MISC(data->iconimage), 0.5, 1);
     }
