@@ -64,7 +64,7 @@ gtk_scrollbox_class_init(GtkScrollboxClass *klass)
 static void
 gtk_scrollbox_init(GtkScrollbox *self)
 {
-    GTK_WIDGET_SET_FLAGS(self, GTK_NO_WINDOW);
+    gtk_widget_set_has_window (GTK_WIDGET (self), FALSE);
 
     self->labels = NULL;
     self->labels_new = NULL;
@@ -215,7 +215,7 @@ gtk_scrollbox_expose_event(GtkWidget *widget,
 
         gtk_paint_layout(widget->style,
                          widget->window,
-                         GTK_WIDGET_STATE(widget), TRUE,
+                         gtk_widget_get_state(widget), TRUE,
                          &event->area, widget,
                          "GtkScrollbox", width, height, layout);
     }

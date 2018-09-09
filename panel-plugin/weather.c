@@ -311,7 +311,7 @@ scrollbox_set_visible(plugin_data *data)
     if (data->show_scrollbox && data->labels->len > 0)
         gtk_widget_show_all(GTK_WIDGET(data->vbox_center_scrollbox));
     else
-        gtk_widget_hide_all(GTK_WIDGET(data->vbox_center_scrollbox));
+        gtk_widget_hide(GTK_WIDGET(data->vbox_center_scrollbox));
     gtk_scrollbox_set_visible(GTK_SCROLLBOX(data->scrollbox),
                               data->show_scrollbox);
 }
@@ -1645,9 +1645,9 @@ xfceweather_create_options(XfcePanelPlugin *plugin,
     if (gtk_builder_add_from_string (builder, weather_config_ui,
                                      weather_config_ui_length, &error) != 0)
     {
-        dlg = gtk_builder_get_object (builder, "dialog");
+        dlg = GTK_WIDGET (gtk_builder_get_object (builder, "dialog"));
         gtk_window_set_transient_for (GTK_WINDOW (dlg), 
-                                      (gtk_widget_get_toplevel
+                                      GTK_WINDOW (gtk_widget_get_toplevel
                                        (GTK_WIDGET(plugin))));
 
         dialog = create_config_dialog(data, builder);

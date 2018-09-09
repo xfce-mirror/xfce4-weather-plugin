@@ -65,7 +65,7 @@
     gtk_box_pack_start(GTK_BOX(hbox), combo, TRUE, TRUE, 0);
 
 #define ADD_COMBO_VALUE(combo, text)                        \
-    gtk_combo_box_append_text(GTK_COMBO_BOX(combo), text);
+    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combo), text);
 
 #define SET_COMBO_VALUE(combo, val)                         \
     gtk_combo_box_set_active(GTK_COMBO_BOX(combo), val);
@@ -1613,7 +1613,7 @@ create_scrollbox_page(xfceweather_dialog *dialog)
 
 static void
 notebook_page_switched(GtkNotebook *notebook,
-                       GtkNotebookPage *page,
+                       GtkWidget *page,
                        guint page_num,
                        gpointer user_data)
 {

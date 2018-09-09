@@ -1076,7 +1076,7 @@ summary_dialog_response(const GtkWidget *dlg,
 
 static void
 cb_notebook_page_switched(GtkNotebook *notebook,
-                          GtkNotebookPage *page,
+                          GtkWidget *page,
                           guint page_num,
                           gpointer user_data)
 {

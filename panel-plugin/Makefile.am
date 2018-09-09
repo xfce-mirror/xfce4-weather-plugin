@@ -38,7 +38,10 @@ libweather_la_CFLAGS =						\
 	$(GTK_CFLAGS)							\
 	$(SOUP_CFLAGS)							\
 	$(UPOWER_GLIB_CFLAGS)						\
-	$(LIBXML_CFLAGS)
+	$(LIBXML_CFLAGS)	\
+	-DGTK_DISABLE_SINGLE_INCLUDES	\
+	-DGDK_DISABLE_DEPRECATED	\
+	-DGTK_DISABLE_DEPRECATED
 
 libweather_la_LIBADD =						\
 	$(LIBM)                                 \
