@@ -180,6 +180,7 @@ gtk_scrollbox_expose_event(GtkWidget *widget,
     PangoRectangle logical_rect;
     gboolean result = FALSE;
     PangoMatrix matrix = PANGO_MATRIX_INIT;
+    GtkAllocation allocation;
 
     if (GTK_WIDGET_CLASS(gtk_scrollbox_parent_class)->expose_event != NULL)
         result = GTK_WIDGET_CLASS
@@ -193,28 +194,30 @@ gtk_scrollbox_expose_event(GtkWidget *widget,
         pango_context_set_matrix(pango_layout_get_context(layout), &matrix);
         pango_layout_get_extents(layout, NULL, &logical_rect);
 
+        gtk_widget_get_allocation (GTK_WIDGET (widget), &allocation);
+
         if (self->orientation == GTK_ORIENTATION_HORIZONTAL) {
-            width = widget->allocation.x
-                + (widget->allocation.width
+            width = allocation.x
+                + (allocation.width
                    - PANGO_PIXELS(logical_rect.width)) / 2;
-            height = widget->allocation.y
-                + (widget->allocation.height
+            height = allocation.y
+                + (allocation.height
                    - PANGO_PIXELS(logical_rect.height)) / 2
                 + (self->fade == FADE_IN || self->fade == FADE_OUT
                    ? self->offset : 0);
         } else {
-            width = widget->allocation.x
-                + (widget->allocation.width
+            width = allocation.x
+                + (allocation.width
                    - PANGO_PIXELS(logical_rect.height)) / 2
                 + (self->fade == FADE_IN || self->fade == FADE_OUT
                    ? self->offset : 0);
-            height = widget->allocation.y
-                + (widget->allocation.height
+            height = allocation.y
+                + (allocation.height
                    - PANGO_PIXELS(logical_rect.width)) / 2;
         }
 
-        gtk_paint_layout(widget->style,
-                         widget->window,
+        gtk_paint_layout(gtk_widget_get_style (GTK_WIDGET (widget)),
+                         gtk_widget_get_window (GTK_WIDGET (widget)),
                          gtk_widget_get_state(widget), TRUE,
                          &event->area, widget,
                          "GtkScrollbox", width, height, layout);
@@ -304,6 +307,7 @@ static gboolean
 gtk_scrollbox_fade_out(gpointer user_data)
 {
     GtkScrollbox *self = GTK_SCROLLBOX(user_data);
+    GtkAllocation allocation;
 
     /* increase counter */
     if (self->orientation == GTK_ORIENTATION_HORIZONTAL)
@@ -312,11 +316,12 @@ gtk_scrollbox_fade_out(gpointer user_data)
         self->offset--;
 
     gtk_widget_queue_draw(GTK_WIDGET(self));
+    gtk_widget_get_allocation (GTK_WIDGET (self), &allocation);
 
     if ((self->orientation == GTK_ORIENTATION_HORIZONTAL &&
-         self->offset < GTK_WIDGET(self)->allocation.height) ||
+         self->offset < allocation.height) ||
         (self->orientation == GTK_ORIENTATION_VERTICAL &&
-         self->offset > 0 - GTK_WIDGET(self)->allocation.width))
+         self->offset > 0 - allocation.width))
         return TRUE;
 
     (void) gtk_scrollbox_control_loop(self);
@@ -332,6 +337,7 @@ static gboolean
 gtk_scrollbox_control_loop(gpointer user_data)
 {
     GtkScrollbox *self = GTK_SCROLLBOX(user_data);
+    GtkAllocation allocation;
 
     if (self->timeout_id != 0) {
         g_source_remove(self->timeout_id);
@@ -366,14 +372,16 @@ gtk_scrollbox_control_loop(gpointer user_data)
         break;
     }
 
+    gtk_widget_get_allocation (GTK_WIDGET (self), &allocation);
+
     /* now perform the next action */
     switch(self->fade) {
     case FADE_IN:
         if (self->labels_len > 1) {
             if (self->orientation == GTK_ORIENTATION_HORIZONTAL)
-                self->offset = GTK_WIDGET(self)->allocation.height;
+                self->offset = allocation.height;
             else
-                self->offset = 0 - GTK_WIDGET(self)->allocation.width;
+                self->offset = 0 - allocation.width;
         } else
             self->offset = 0;
         self->timeout_id = g_timeout_add(LABEL_SPEED,
@@ -393,9 +401,9 @@ gtk_scrollbox_control_loop(gpointer user_data)
         break;
     case FADE_NONE:
         if (self->orientation == GTK_ORIENTATION_HORIZONTAL)
-            self->offset = GTK_WIDGET(self)->allocation.height;
+            self->offset = allocation.height;
         else
-            self->offset = GTK_WIDGET(self)->allocation.width;
+            self->offset = allocation.width;
         self->timeout_id = g_timeout_add_seconds(LABEL_SLEEP_LONG,
                                                  gtk_scrollbox_control_loop,
                                                  self);

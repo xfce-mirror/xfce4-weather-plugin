@@ -41,7 +41,8 @@ libweather_la_CFLAGS =						\
 	$(LIBXML_CFLAGS)	\
 	-DGTK_DISABLE_SINGLE_INCLUDES	\
 	-DGDK_DISABLE_DEPRECATED	\
-	-DGTK_DISABLE_DEPRECATED
+	-DGTK_DISABLE_DEPRECATED	\
+	-DGSEAL_ENABLE
 
 libweather_la_LIBADD =						\
 	$(LIBM)                                 \

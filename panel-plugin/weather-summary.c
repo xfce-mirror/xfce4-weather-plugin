@@ -215,6 +215,8 @@ view_scrolled_cb(GtkAdjustment *adj,
                  summary_details *sum)
 {
     gint x, y, x1, y1;
+    GtkAllocation allocation;
+    GtkRequisition requisition;
 
     if (sum->icon_ebox) {
         /* TRANSLATORS: DO NOT TRANSLATE THIS STRING. This string is
@@ -229,11 +231,14 @@ view_scrolled_cb(GtkAdjustment *adj,
            If you know of a better way to determine LTR/RTL that makes
            this tweak unnecessary, please tell the developer.
         */
+        gtk_widget_get_allocation (GTK_WIDGET (sum->text_view), &allocation);
+        gtk_widget_get_requisition (GTK_WIDGET (sum->text_view), &requisition);
+
         if (!strcmp(_("LTR"), "RTL"))
             x1 = -30;
         else
-            x1 = sum->text_view->allocation.width - 191 - 15;
-        y1 = sum->text_view->requisition.height - 60 - 15;
+            x1 = allocation.width - 191 - 15;
+        y1 = requisition.height - 60 - 15;
         gtk_text_view_buffer_to_window_coords(GTK_TEXT_VIEW(sum->text_view),
                                               GTK_TEXT_WINDOW_TEXT,
                                               x1, y1, &x, &y);
@@ -1154,7 +1159,7 @@ create_summary_window(plugin_data *data)
         g_free(title);
     }
     vbox = gtk_vbox_new(FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(GTK_DIALOG(window)->vbox), vbox, TRUE, TRUE, 0);
+    gtk_box_pack_start(GTK_BOX(gtk_dialog_get_content_area (GTK_DIALOG(window))), vbox, TRUE, TRUE, 0);
 
     symbol = get_data(conditions, data->units, SYMBOL,
                       FALSE, data->night_time);
