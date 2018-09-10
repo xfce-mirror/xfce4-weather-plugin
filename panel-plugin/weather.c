@@ -1655,8 +1655,6 @@ xfceweather_create_options(XfcePanelPlugin *plugin,
         gtk_widget_show_all (GTK_WIDGET (dlg));
         response = gtk_dialog_run(GTK_DIALOG (dlg));
         xfceweather_dialog_response(dlg, response, dialog);
-    } {
-        g_warning ("%s", error->message);
     }
 }
 
