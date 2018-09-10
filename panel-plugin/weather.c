@@ -1641,6 +1641,9 @@ xfceweather_create_options(XfcePanelPlugin *plugin,
 
     xfce_panel_plugin_block_menu(plugin);
 
+    if (xfce_titled_dialog_get_type () == 0)
+        return FALSE;
+
     builder = gtk_builder_new ();
     if (gtk_builder_add_from_string (builder, weather_config_ui,
                                      weather_config_ui_length, &error) != 0)
@@ -1655,6 +1658,8 @@ xfceweather_create_options(XfcePanelPlugin *plugin,
         gtk_widget_show_all (GTK_WIDGET (dlg));
         response = gtk_dialog_run(GTK_DIALOG (dlg));
         xfceweather_dialog_response(dlg, response, dialog);
+    } else {
+        g_warning ("Failed to load dialog: %s", error->message);
     }
 }
 

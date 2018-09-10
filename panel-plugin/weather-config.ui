@@ -2,6 +2,7 @@
 <!-- Generated with glade 3.22.1 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
+  <requires lib="libxfce4ui-2" version="4.12"/>
   <object class="GtkAdjustment" id="adjustment1">
     <property name="lower">1</property>
     <property name="upper">10</property>
@@ -63,7 +64,7 @@
     <property name="icon_name">down</property>
   </object>
   <object class="GtkListStore" id="liststore1"/>
-  <object class="GtkDialog" id="dialog">
+  <object class="XfceTitledDialog" id="dialog">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Weather Update</property>
     <property name="default_width">430</property>
@@ -71,9 +72,7 @@
     <property name="destroy_with_parent">True</property>
     <property name="icon_name">xfce4-weather</property>
     <property name="type_hint">dialog</property>
-    <child>
-      <placeholder/>
-    </child>
+    <property name="subtitle" translatable="yes">Preferences</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="box1">
         <property name="can_focus">False</property>
@@ -212,7 +211,7 @@
                   <packing>
                     <property name="left_attach">0</property>
                     <property name="top_attach">5</property>
-                    <property name="width">3</property>
+                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
@@ -229,33 +228,7 @@
                   <packing>
                     <property name="left_attach">0</property>
                     <property name="top_attach">6</property>
-                    <property name="width">3</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkEntry" id="text_loc_name">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="tooltip_text" translatable="yes">Change the name for the location to your liking. It is used for display and does not affect the location parameters in any way.</property>
-                    <property name="hexpand">True</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkButton" id="button_loc_change">
-                    <property name="label" translatable="yes">Change...</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="tooltip_text" translatable="yes">Search for a new location and auto-detect its parameters.</property>
-                    <property name="image">image1</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">2</property>
-                    <property name="top_attach">0</property>
+                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
@@ -294,7 +267,6 @@
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="top_attach">1</property>
-                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
@@ -333,7 +305,6 @@
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="top_attach">2</property>
-                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
@@ -375,7 +346,6 @@ Altitude is given in meters above sea level, or alternatively in feet by changin
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="top_attach">3</property>
-                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
@@ -388,24 +358,58 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="top_attach">4</property>
-                    <property name="width">2</property>
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkSpinner" id="update_spinner">
+                  <object class="GtkBox">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="hexpand">True</property>
+                    <property name="spacing">6</property>
+                    <child>
+                      <object class="GtkEntry" id="text_loc_name">
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="tooltip_text" translatable="yes">Change the name for the location to your liking. It is used for display and does not affect the location parameters in any way.</property>
+                        <property name="hexpand">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkButton" id="button_loc_change">
+                        <property name="label" translatable="yes">Change...</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="tooltip_text" translatable="yes">Search for a new location and auto-detect its parameters.</property>
+                        <property name="image">image1</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkSpinner" id="update_spinner">
+                        <property name="can_focus">False</property>
+                        <property name="no_show_all">True</property>
+                      </object>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="fill">True</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
                   </object>
                   <packing>
-                    <property name="left_attach">0</property>
-                    <property name="top_attach">7</property>
+                    <property name="left_attach">1</property>
+                    <property name="top_attach">0</property>
                   </packing>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
-                <child>
-                  <placeholder/>
                 </child>
               </object>
             </child>
