@@ -198,7 +198,7 @@ gtk_scrollbox_get_preferred_width (GtkWidget *widget,
 
   gtk_scrollbox_size_request (widget, &requisition);
 
-  *minimal_width = *natural_width = requisition.width;
+  *minimal_width = *natural_width = requisition.width + 12;
 }
 
 
@@ -250,8 +250,8 @@ gtk_scrollbox_draw_event(GtkWidget *widget,
 
         gtk_render_layout (gtk_widget_get_style_context (GTK_WIDGET (widget)),
                            cr,
-                           width, 
-                           height, 
+                           6, 
+                           height - 2, 
                            layout);
     }
     return result;
