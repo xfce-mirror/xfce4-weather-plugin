@@ -89,15 +89,15 @@ lnk_clicked(GtkTextTag *tag,
 
 #define ATTACH_DAYTIME_HEADER(title, pos)               \
     if (data->forecast_layout == FC_LAYOUT_CALENDAR)    \
-        gtk_table_attach_defaults                       \
-            (table,                          \
+        gtk_grid_attach                       \
+            (grid,                          \
              add_forecast_header(title, 90.0, &darkbg), \
-             0, 1, pos, pos+1);                         \
+             0, pos, 1, 1);                         \
     else                                                \
-        gtk_table_attach_defaults                       \
-            (table,                          \
+        gtk_grid_attach                       \
+            (grid,                          \
              add_forecast_header(title, 0.0, &darkbg),  \
-             pos, pos+1, 0, 1);                         \
+             pos, 0, 1, 1);                         \
 
 #define APPEND_TOOLTIP_ITEM(description, item)                  \
     value = get_data(fcdata, data->units, item,                 \
@@ -110,6 +110,17 @@ lnk_clicked(GtkTextTag *tag,
     } else                                                      \
         g_string_append_printf(text, description, "-", "", ""); \
     g_free(value);
+
+
+static void
+weather_widget_set_border_width (GtkWidget *widget,
+                                 gint       border_width)
+{
+    gtk_widget_set_margin_start (widget, border_width);
+    gtk_widget_set_margin_top (widget, border_width);
+    gtk_widget_set_margin_end (widget, border_width);
+    gtk_widget_set_margin_bottom (widget, border_width);
+}
 
 
 static gboolean
@@ -809,22 +820,25 @@ add_forecast_header(const gchar *text,
                     const gdouble angle,
                     const GdkColor *color)
 {
-    GtkWidget *label, *align;
+    GtkWidget *label;
     gchar *str;
-
-    if (angle)
-        align = gtk_alignment_new(1, 1, 0, 1);
-    else
-        align = gtk_alignment_new(1, 1, 1, 0);
-    gtk_container_set_border_width(GTK_CONTAINER(align), 4);
 
     label = gtk_label_new(NULL);
     gtk_label_set_angle(GTK_LABEL(label), angle);
     str = g_strdup_printf("<span foreground=\"white\"><b>%s</b></span>", text ? text : "");
     gtk_label_set_markup(GTK_LABEL(label), str);
     g_free(str);
-    gtk_container_add(GTK_CONTAINER(align), GTK_WIDGET(label));
-    return wrap_forecast_cell(align, color);
+
+    if (angle) {
+        gtk_widget_set_hexpand (GTK_WIDGET (label), FALSE);
+        gtk_widget_set_vexpand (GTK_WIDGET (label), TRUE);
+    } else {
+        gtk_widget_set_hexpand (GTK_WIDGET (label), TRUE);
+        gtk_widget_set_vexpand (GTK_WIDGET (label), FALSE);
+    }
+    weather_widget_set_border_width (GTK_WIDGET (label), 4);
+
+    return wrap_forecast_cell(label, color);
 }
 
 
@@ -915,7 +929,7 @@ add_forecast_cell(plugin_data *data,
 static GtkWidget *
 make_forecast(plugin_data *data)
 {
-    GtkWidget *table, *ebox, *box, *align;
+    GtkWidget *grid, *ebox, *box;
     GtkWidget *forecast_box;
     const GdkColor lightbg = {0, 0xeaea, 0xeaea, 0xeaea};
     const GdkColor darkbg = {0, 0x6666, 0x6666, 0x6666};
@@ -925,19 +939,16 @@ make_forecast(plugin_data *data)
     gint i;
     daytime daytime;
 
-    if (data->forecast_layout == FC_LAYOUT_CALENDAR)
-        table = gtk_table_new(5, data->forecast_days + 1, FALSE);
-    else
-        table = gtk_table_new(data->forecast_days + 1, 5, FALSE);
+    grid = gtk_grid_new ();
 
-    gtk_table_set_row_spacings(table, 0);
-    gtk_table_set_col_spacings(table, 0);
+    gtk_grid_set_row_spacing(grid, 0);
+    gtk_grid_set_column_spacing(grid, 0);
 
     /* empty upper left corner */
     box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_table_attach_defaults(table,
-                              wrap_forecast_cell(box, &darkbg),
-                              0, 1, 0, 1);
+    gtk_grid_attach (grid,
+                     wrap_forecast_cell(box, &darkbg),
+                     0, 0, 1, 1);
 
     /* daytime headers */
     ATTACH_DAYTIME_HEADER(_("Morning"), 1);
@@ -960,11 +971,11 @@ make_forecast(plugin_data *data)
         gtk_widget_set_tooltip_markup(GTK_WIDGET(ebox), text);
 
         if (data->forecast_layout == FC_LAYOUT_CALENDAR)
-            gtk_table_attach_defaults(table, GTK_WIDGET(ebox),
-                                      i+1, i+2, 0, 1);
+            gtk_grid_attach (grid, GTK_WIDGET(ebox),
+                             i+1, 0, 1, 1);
         else
-            gtk_table_attach_defaults(table, GTK_WIDGET(ebox),
-                                      0, 1, i+1, i+2);
+            gtk_grid_attach (grid, GTK_WIDGET(ebox),
+                             0, i+1, 1, 1);
 
         /* to speed up things, first get forecast data for all daytimes */
         daydata = get_point_data_for_day(data->weatherdata, i);
@@ -972,33 +983,34 @@ make_forecast(plugin_data *data)
         /* get forecast data for each daytime */
         for (daytime = MORNING; daytime <= NIGHT; daytime++) {
             forecast_box = add_forecast_cell(data, daydata, i, daytime);
-            align = gtk_alignment_new(0.5, 0.5, 1, 1);
-            gtk_container_set_border_width(GTK_CONTAINER(align), 4);
-            gtk_container_add(GTK_CONTAINER(align), GTK_WIDGET(forecast_box));
+            weather_widget_set_border_width (GTK_WIDGET (forecast_box), 4);
+            gtk_widget_set_hexpand (GTK_WIDGET (forecast_box), TRUE);
+            gtk_widget_set_vexpand (GTK_WIDGET (forecast_box), TRUE);
+
             if (i % 2)
-                ebox = wrap_forecast_cell(align, NULL);
+                ebox = wrap_forecast_cell(forecast_box, NULL);
             else
-                ebox = wrap_forecast_cell(align, &lightbg);
+                ebox = wrap_forecast_cell(forecast_box, &lightbg);
 
             if (data->forecast_layout == FC_LAYOUT_CALENDAR)
-                gtk_table_attach_defaults(table,
-                                          GTK_WIDGET(ebox),
-                                          i+1, i+2, 1+daytime, 2+daytime);
+                gtk_grid_attach (grid,
+                                 GTK_WIDGET(ebox),
+                                 i+1, 1+daytime, 1, 1);
             else
-                gtk_table_attach_defaults(table,
-                                          GTK_WIDGET(ebox),
-                                          1+daytime, 2+daytime, i+1, i+2);
+                gtk_grid_attach (grid,
+                                 GTK_WIDGET(ebox),
+                                 1+daytime, i+1, 1, 1);
         }
         g_array_free(daydata, FALSE);
     }
-    return table;
+    return grid;
 }
 
 
 static GtkWidget *
 create_forecast_tab(plugin_data *data)
 {
-    GtkWidget *ebox, *align, *hbox, *scrolled, *table;
+    GtkWidget *ebox, *hbox, *scrolled, *table;
     GdkWindow *window;
     GdkScreen *screen;
     GdkRectangle rect;
@@ -1033,25 +1045,22 @@ create_forecast_tab(plugin_data *data)
     table = GTK_WIDGET(make_forecast(data));
 
     /* generate the containing widgets */
-    align = gtk_alignment_new(0.5, 0, 0.5, 0);
     if ((data->forecast_layout == FC_LAYOUT_CALENDAR &&
          w_need < w_max && data->forecast_days < 8) ||
         (data->forecast_layout == FC_LAYOUT_LIST && h_need < h_max)) {
         /* no scroll window needed, just align the contents */
-        gtk_container_add(GTK_CONTAINER(align), GTK_WIDGET(table));
-        gtk_container_set_border_width(GTK_CONTAINER(align), BORDER);
-        return align;
+        gtk_container_set_border_width(GTK_CONTAINER(table), BORDER);
+        return table;
     } else {
         /* contents too big, scroll window needed */
         hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
         gtk_box_pack_start(GTK_BOX(hbox), table, TRUE, FALSE, 0);
-        gtk_container_add(GTK_CONTAINER(align), GTK_WIDGET(hbox));
 
         scrolled = gtk_scrolled_window_new (NULL, NULL);
         gtk_container_set_border_width(GTK_CONTAINER(scrolled), BORDER);
 
         gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(scrolled),
-                                              align);
+                                              hbox);
         gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled),
                                        GTK_POLICY_AUTOMATIC,
                                        GTK_POLICY_AUTOMATIC);
