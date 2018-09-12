@@ -340,7 +340,7 @@ create_summary_tab(plugin_data *data)
     GtkTextTag *btag, *ltag_img, *ltag_metno, *ltag_wiki, *ltag_geonames;
     GtkWidget *view, *frame, *scrolled, *icon;
     GtkAdjustment *adj;
-    GdkColor lnk_color;
+    GdkRGBA lnk_color;
     xml_time *conditions;
     const gchar *unit;
     gchar *value, *rawvalue, *wind;
@@ -554,15 +554,15 @@ create_summary_tab(plugin_data *data)
     APPEND_TEXT_ITEM(_("Cloudiness"), CLOUDINESS);
 
     /* credits */
-    gdk_color_parse("#0000ff", &lnk_color);
-    ltag_img = gtk_text_buffer_create_tag(buffer, "lnk0", "foreground-gdk",
+    gdk_rgba_parse(&lnk_color, "#0000ff");
+    ltag_img = gtk_text_buffer_create_tag(buffer, "lnk0", "foreground-rgba",
                                           &lnk_color, NULL);
-    ltag_metno = gtk_text_buffer_create_tag(buffer, "lnk1", "foreground-gdk",
+    ltag_metno = gtk_text_buffer_create_tag(buffer, "lnk1", "foreground-rgba",
                                             &lnk_color, NULL);
-    ltag_wiki = gtk_text_buffer_create_tag(buffer, "lnk2", "foreground-gdk",
+    ltag_wiki = gtk_text_buffer_create_tag(buffer, "lnk2", "foreground-rgba",
                                            &lnk_color, NULL);
     ltag_geonames = gtk_text_buffer_create_tag(buffer, "lnk3",
-                                               "foreground-gdk",
+                                               "foreground-rgba",
                                                &lnk_color, NULL);
     APPEND_BTEXT(_("\nCredits\n"));
     APPEND_LINK_ITEM(_("\tEncyclopedic information partly taken from\n\t\t"),
