@@ -1151,7 +1151,7 @@ button_scrollbox_font_clicked(GtkWidget *button,
     gint result;
 
     fsd = GTK_FONT_CHOOSER_DIALOG
-        (gtk_font_chooser_dialog_new(_("Select font"), dialog->dialog));
+        (gtk_font_chooser_dialog_new(_("Select font"), GTK_WINDOW (dialog->dialog)));
     if (dialog->pd->scrollbox_font)
         gtk_font_chooser_set_font (GTK_FONT_CHOOSER (fsd), dialog->pd->scrollbox_font);
 

@@ -1642,7 +1642,7 @@ xfceweather_create_options(XfcePanelPlugin *plugin,
     xfce_panel_plugin_block_menu(plugin);
 
     if (xfce_titled_dialog_get_type () == 0)
-        return FALSE;
+        return;
 
     builder = gtk_builder_new ();
     if (gtk_builder_add_from_string (builder, weather_config_ui,
@@ -1704,7 +1704,7 @@ weather_get_tooltip_text(const plugin_data *data)
             g_free(sunset);
         }
     else
-        sunval = g_strdup_printf("");
+        sunval = g_strdup("");
 
     sym = get_data(conditions, data->units, SYMBOL, FALSE, data->night_time);
     DATA_AND_UNIT(alt, ALTITUDE);
@@ -1905,7 +1905,8 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
 
     /* add widgets to alignment box */
     data->vbox_center_scrollbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_misc_set_alignment(GTK_MISC(data->iconimage), 1, 0.5);
+    gtk_widget_set_halign (GTK_WIDGET (data->iconimage), 1);
+    gtk_widget_set_valign (GTK_WIDGET (data->iconimage), 0.5);
     gtk_box_pack_start(GTK_BOX(data->alignbox),
                        data->iconimage, TRUE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(data->vbox_center_scrollbox),
@@ -2041,13 +2042,15 @@ xfceweather_set_mode(XfcePanelPlugin *panel,
     if (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_HORIZONTAL ||
         (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_DESKBAR &&
          data->single_row)) {
-        gtk_orientable_set_orientation(data->alignbox,
+        gtk_orientable_set_orientation(GTK_ORIENTABLE(data->alignbox),
                                    GTK_ORIENTATION_HORIZONTAL);
-        gtk_misc_set_alignment(GTK_MISC(data->iconimage), 1, 0.5);
+        gtk_widget_set_halign (GTK_WIDGET (data->iconimage), 1);
+        gtk_widget_set_valign (GTK_WIDGET (data->iconimage), 0.5);
     } else {
-        gtk_orientable_set_orientation(data->alignbox,
+        gtk_orientable_set_orientation(GTK_ORIENTABLE(data->alignbox),
                                    GTK_ORIENTATION_VERTICAL);
-        gtk_misc_set_alignment(GTK_MISC(data->iconimage), 0.5, 1);
+        gtk_widget_set_halign (GTK_WIDGET (data->iconimage), 0.5);
+        gtk_widget_set_valign (GTK_WIDGET (data->iconimage), 1);
     }
 
     if (mode == XFCE_PANEL_PLUGIN_MODE_DESKBAR)

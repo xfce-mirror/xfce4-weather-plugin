@@ -90,12 +90,12 @@ lnk_clicked(GtkTextTag *tag,
 #define ATTACH_DAYTIME_HEADER(title, pos)               \
     if (data->forecast_layout == FC_LAYOUT_CALENDAR)    \
         gtk_grid_attach                       \
-            (grid,                          \
+            (GTK_GRID (grid),                          \
              add_forecast_header(title, 90.0, &darkbg), \
              0, pos, 1, 1);                         \
     else                                                \
         gtk_grid_attach                       \
-            (grid,                          \
+            (GTK_GRID (grid),                          \
              add_forecast_header(title, 0.0, &darkbg),  \
              pos, 0, 1, 1);                         \
 
@@ -230,6 +230,11 @@ view_scrolled_cb(GtkAdjustment *adj,
     GtkRequisition requisition;
 
     if (sum->icon_ebox) {
+        gtk_widget_get_allocation (GTK_WIDGET (sum->text_view), &allocation);
+        G_GNUC_BEGIN_IGNORE_DEPRECATIONS
+        gtk_widget_get_requisition (GTK_WIDGET (sum->text_view), &requisition);
+        G_GNUC_END_IGNORE_DEPRECATIONS
+
         /* TRANSLATORS: DO NOT TRANSLATE THIS STRING. This string is
            not visible to the user but controls the alignment of the
            met.no image on the details tab in the summary window,
@@ -242,9 +247,6 @@ view_scrolled_cb(GtkAdjustment *adj,
            If you know of a better way to determine LTR/RTL that makes
            this tweak unnecessary, please tell the developer.
         */
-        gtk_widget_get_allocation (GTK_WIDGET (sum->text_view), &allocation);
-        gtk_widget_get_requisition (GTK_WIDGET (sum->text_view), &requisition);
-
         if (!strcmp(_("LTR"), "RTL"))
             x1 = -30;
         else
@@ -349,8 +351,8 @@ create_summary_tab(plugin_data *data)
 
     sum = g_slice_new0(summary_details);
     sum->on_icon = FALSE;
-    sum->hand_cursor = gdk_cursor_new(GDK_HAND2);
-    sum->text_cursor = gdk_cursor_new(GDK_XTERM);
+    sum->hand_cursor = gdk_cursor_new_for_display (gdk_display_get_default(), GDK_HAND2);
+    sum->text_cursor = gdk_cursor_new_for_display (gdk_display_get_default(), GDK_XTERM);
     data->summary_details = sum;
 
     sum->text_view = view = gtk_text_view_new();
@@ -941,12 +943,12 @@ make_forecast(plugin_data *data)
 
     grid = gtk_grid_new ();
 
-    gtk_grid_set_row_spacing(grid, 0);
-    gtk_grid_set_column_spacing(grid, 0);
+    gtk_grid_set_row_spacing(GTK_GRID (grid), 0);
+    gtk_grid_set_column_spacing(GTK_GRID (grid), 0);
 
     /* empty upper left corner */
     box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_grid_attach (grid,
+    gtk_grid_attach (GTK_GRID (grid),
                      wrap_forecast_cell(box, &darkbg),
                      0, 0, 1, 1);
 
@@ -971,10 +973,10 @@ make_forecast(plugin_data *data)
         gtk_widget_set_tooltip_markup(GTK_WIDGET(ebox), text);
 
         if (data->forecast_layout == FC_LAYOUT_CALENDAR)
-            gtk_grid_attach (grid, GTK_WIDGET(ebox),
+            gtk_grid_attach (GTK_GRID (grid), GTK_WIDGET(ebox),
                              i+1, 0, 1, 1);
         else
-            gtk_grid_attach (grid, GTK_WIDGET(ebox),
+            gtk_grid_attach (GTK_GRID (grid), GTK_WIDGET(ebox),
                              0, i+1, 1, 1);
 
         /* to speed up things, first get forecast data for all daytimes */
@@ -993,11 +995,11 @@ make_forecast(plugin_data *data)
                 ebox = wrap_forecast_cell(forecast_box, &lightbg);
 
             if (data->forecast_layout == FC_LAYOUT_CALENDAR)
-                gtk_grid_attach (grid,
+                gtk_grid_attach (GTK_GRID (grid),
                                  GTK_WIDGET(ebox),
                                  i+1, 1+daytime, 1, 1);
             else
-                gtk_grid_attach (grid,
+                gtk_grid_attach (GTK_GRID (grid),
                                  GTK_WIDGET(ebox),
                                  1+daytime, i+1, 1, 1);
         }
@@ -1010,11 +1012,11 @@ make_forecast(plugin_data *data)
 static GtkWidget *
 create_forecast_tab(plugin_data *data)
 {
-    GtkWidget *ebox, *hbox, *scrolled, *table;
+    GtkWidget *ebox, *hbox, *scrolled, *viewport, *table;
     GdkWindow *window;
-    GdkScreen *screen;
+    GdkMonitor *monitor;
     GdkRectangle rect;
-    gint monitor_num = 0, h_need, h_max, height;
+    gint h_need, h_max, height;
     gint w_need, w_max, width;
 
     /* To avoid causing a GDK assertion, determine the monitor
@@ -1023,10 +1025,10 @@ create_forecast_tab(plugin_data *data)
      * maximum height we may use, subtracting some sane value just to
      * be on the safe side. */
     window = GDK_WINDOW(gtk_widget_get_window(GTK_WIDGET(data->iconimage)));
-    screen = GDK_SCREEN(gtk_widget_get_screen(GTK_WIDGET(data->iconimage)));
-    if (G_LIKELY(window && screen))
-        monitor_num = gdk_screen_get_monitor_at_window(screen, window);
-    gdk_screen_get_monitor_geometry(screen, monitor_num, &rect);
+    monitor = gdk_display_get_monitor_at_window(gdk_display_get_default(), window);
+    if (G_LIKELY(window && monitor)) {
+        gdk_monitor_get_geometry (monitor, &rect);
+    }
 
     /* calculate maximum width and height */
     h_max = rect.height - 250;
@@ -1059,8 +1061,10 @@ create_forecast_tab(plugin_data *data)
         scrolled = gtk_scrolled_window_new (NULL, NULL);
         gtk_container_set_border_width(GTK_CONTAINER(scrolled), BORDER);
 
-        gtk_scrolled_window_add_with_viewport(GTK_SCROLLED_WINDOW(scrolled),
-                                              hbox);
+        viewport = gtk_viewport_new (NULL, NULL);
+        gtk_container_add (GTK_CONTAINER (scrolled), viewport);
+
+        gtk_container_add (GTK_CONTAINER (viewport), hbox);
         gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled),
                                        GTK_POLICY_AUTOMATIC,
                                        GTK_POLICY_AUTOMATIC);
@@ -1226,9 +1230,9 @@ summary_details_free(summary_details *sum)
     sum->icon_ebox = NULL;
     sum->text_view = NULL;
     if (sum->hand_cursor)
-        gdk_cursor_unref(sum->hand_cursor);
+        g_object_unref (sum->hand_cursor);
     sum->hand_cursor = NULL;
     if (sum->text_cursor)
-        gdk_cursor_unref(sum->text_cursor);
+        g_object_unref (sum->text_cursor);
     sum->text_cursor = NULL;
 }
