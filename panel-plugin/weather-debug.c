@@ -501,7 +501,7 @@ weather_dump_plugindata(const plugin_data *data)
                            YESNO(data->show_scrollbox),
                            data->scrollbox_lines,
                            data->scrollbox_font,
-                           gdk_color_to_string(&(data->scrollbox_color)),
+                           gdk_rgba_to_string(&(data->scrollbox_color)),
                            YESNO(data->scrollbox_use_color),
                            YESNO(data->scrollbox_animate));
     g_free(next_wakeup);

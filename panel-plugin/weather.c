@@ -901,7 +901,7 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
 
     value = xfce_rc_read_entry(rc, "scrollbox_color", NULL);
     if (value)
-        gdk_color_parse(value, &(data->scrollbox_color));
+        gdk_rgba_parse(&(data->scrollbox_color), value);
 
     data->scrollbox_use_color =
         xfce_rc_read_bool_entry(rc, "scrollbox_use_color", FALSE);
@@ -1000,7 +1000,7 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
     if (data->scrollbox_font)
         xfce_rc_write_entry(rc, "scrollbox_font", data->scrollbox_font);
 
-    value = gdk_color_to_string(&(data->scrollbox_color));
+    value = gdk_rgba_to_string(&(data->scrollbox_color));
     xfce_rc_write_entry(rc, "scrollbox_color", value);
     g_free(value);
 

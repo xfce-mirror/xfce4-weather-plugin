@@ -104,7 +104,7 @@ typedef struct {
     gboolean show_scrollbox;
     gint scrollbox_lines;
     gchar *scrollbox_font;
-    GdkColor scrollbox_color;
+    GdkRGBA scrollbox_color;
     gboolean scrollbox_use_color;
     gboolean scrollbox_animate;
     GArray *labels;

@@ -98,7 +98,7 @@ void gtk_scrollbox_set_fontname(GtkScrollbox *self,
                                 const gchar *fontname);
 
 void gtk_scrollbox_set_color(GtkScrollbox *self,
-                             const GdkColor color);
+                             const GdkRGBA color);
 
 void gtk_scrollbox_clear_color(GtkScrollbox *self);
 

@@ -575,15 +575,20 @@ gtk_scrollbox_set_fontname(GtkScrollbox *self,
 
 void
 gtk_scrollbox_set_color(GtkScrollbox *self,
-                        const GdkColor color)
+                        const GdkRGBA color)
 {
     PangoAttribute *pattr;
+    guint16 red, green, blue;
 
     g_return_if_fail(GTK_IS_SCROLLBOX(self));
 
-    pattr = pango_attr_foreground_new(color.red,
-                                      color.green,
-                                      color.blue);
+    red = (guint16) (color.red * 65535);
+    green = (guint16) (color.green * 65535);
+    blue = (guint16) (color.blue * 65535);
+
+    pattr = pango_attr_foreground_new(red,
+                                      green,
+                                      blue);
     pango_attr_list_change(self->pattr_list, pattr);
 
     /* update all labels */

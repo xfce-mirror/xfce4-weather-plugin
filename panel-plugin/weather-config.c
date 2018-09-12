@@ -1197,7 +1197,7 @@ button_scrollbox_color_set(GtkWidget *button,
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
 
-    gtk_color_button_get_color(GTK_COLOR_BUTTON(button),
+    gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(button),
                                &(dialog->pd->scrollbox_color));
     gtk_scrollbox_set_color(GTK_SCROLLBOX(dialog->pd->scrollbox),
                             dialog->pd->scrollbox_color);
@@ -1564,7 +1564,7 @@ create_scrollbox_page(xfceweather_dialog *dialog)
         gtk_button_set_label(GTK_BUTTON(dialog->button_scrollbox_font),
                              dialog->pd->scrollbox_font);
     dialog->button_scrollbox_color = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "button_scrollbox_color"));
-    gtk_color_button_set_color (GTK_COLOR_BUTTON (dialog->button_scrollbox_color), &(dialog->pd->scrollbox_color));
+    gtk_color_chooser_set_rgba (GTK_COLOR_CHOOSER (dialog->button_scrollbox_color), &(dialog->pd->scrollbox_color));
 
     /* labels and buttons */
     dialog->options_datatypes = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "options_datatypes"));
