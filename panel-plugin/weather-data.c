@@ -613,7 +613,7 @@ calculate_symbol(xml_time *timeslice,
 
     /* update symbol name */
     g_free(loc->symbol);
-    loc->symbol = g_strdup(symbol_names[loc->symbol_id]);
+    loc->symbol = g_strdup(get_symbol_name(loc->symbol_id));
 }
 
 

@@ -49,33 +49,6 @@ typedef enum {
     SYMBOL_COUNT
 } symbol_ids;
 
-static const gchar *symbol_names[] = {
-    "NODATA",
-    "SUN",
-    "LIGHTCLOUD",
-    "PARTLYCLOUD",
-    "CLOUD",
-    "LIGHTRAINSUN",
-    "LIGHTRAINTHUNDERSUN",
-    "SLEETSUN",
-    "SNOWSUN",
-    "LIGHTRAIN",
-    "RAIN",
-    "RAINTHUNDER",
-    "SLEET",
-    "SNOW",
-    "SNOWTHUNDER",
-    "FOG",
-    "SUN",
-    "LIGHTCLOUD",
-    "LIGHTRAINSUN",
-    "SNOWSUN",
-    "SLEETSUNTHUNDER",
-    "SNOWSUNTHUNDER",
-    "LIGHTRAINTHUNDER",
-    "SLEETTHUNDER"
-};
-
 typedef struct {
     gchar *dir;
     gchar *name;
@@ -102,6 +75,8 @@ GArray *find_icon_themes(void);
 icon_theme *icon_theme_copy(icon_theme *src);
 
 void icon_theme_free(icon_theme *theme);
+
+const gchar *get_symbol_name (gint idx);
 
 G_END_DECLS
 

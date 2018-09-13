@@ -36,6 +36,40 @@
 #define ICON_DIR_BIG "128"
 
 
+static const gchar *symbol_names[] = {
+    "NODATA",
+    "SUN",
+    "LIGHTCLOUD",
+    "PARTLYCLOUD",
+    "CLOUD",
+    "LIGHTRAINSUN",
+    "LIGHTRAINTHUNDERSUN",
+    "SLEETSUN",
+    "SNOWSUN",
+    "LIGHTRAIN",
+    "RAIN",
+    "RAINTHUNDER",
+    "SLEET",
+    "SNOW",
+    "SNOWTHUNDER",
+    "FOG",
+    "SUN",
+    "LIGHTCLOUD",
+    "LIGHTRAINSUN",
+    "SNOWSUN",
+    "SLEETSUNTHUNDER",
+    "SNOWSUNTHUNDER",
+    "LIGHTRAINTHUNDER",
+    "SLEETTHUNDER"
+};
+
+
+const gchar *get_symbol_name(gint idx)
+{
+    return symbol_names[idx];
+}
+
+
 static gboolean
 icon_missing(const icon_theme *theme,
              const gchar *sizedir,
