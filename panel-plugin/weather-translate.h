@@ -24,7 +24,7 @@
 
 G_BEGIN_DECLS
 
-const gchar *get_symbol_for_id(gint id);
+const gchar *get_symbol_for_id(guint id);
 
 const gchar *translate_desc(const gchar *desc,
                             gboolean nighttime);

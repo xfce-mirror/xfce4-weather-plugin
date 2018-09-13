@@ -78,7 +78,7 @@ get_timeslice(xml_weather *wd,
               guint *index)
 {
     xml_time *timeslice;
-    gint i;
+    guint i;
 
     g_assert(wd != NULL);
     if (G_UNLIKELY(wd == NULL))
@@ -103,7 +103,7 @@ get_astro(const GArray *astrodata,
           guint *index)
 {
     xml_astro *astro;
-    gint i;
+    guint i;
 
     g_assert(astrodata != NULL);
     if (G_UNLIKELY(astrodata == NULL))
@@ -598,15 +598,17 @@ parse_timezone(xmlNode *cur_node)
 xmlDoc *
 get_xml_document(SoupMessage *msg)
 {
-    if (G_LIKELY(msg && msg->response_body && msg->response_body->data))
+    if (G_LIKELY(msg && msg->response_body && msg->response_body->data)) {
         if (g_utf8_validate(msg->response_body->data, -1, NULL)) {
             /* force parsing as UTF-8, the XML encoding header may lie */
             return xmlReadMemory(msg->response_body->data,
                                  strlen(msg->response_body->data),
                                  NULL, "UTF-8", 0);
-        } else
+        } else {
             return xmlParseMemory(msg->response_body->data,
                                   strlen(msg->response_body->data));
+        }
+    }
     return NULL;
 }
 
@@ -774,7 +776,7 @@ void
 xml_weather_free(xml_weather *wd)
 {
     xml_time *timeslice;
-    gint i;
+    guint i;
 
     g_assert(wd != NULL);
     if (G_UNLIKELY(wd == NULL))
@@ -800,7 +802,7 @@ xml_weather_clean(xml_weather *wd)
 {
     xml_time *timeslice;
     time_t now_t = time(NULL);
-    gint i;
+    guint i;
 
     if (G_UNLIKELY(wd == NULL || wd->timeslices == NULL))
         return;
@@ -834,7 +836,7 @@ void
 astrodata_free(GArray *astrodata)
 {
     xml_astro *astro;
-    gint i;
+    guint i;
 
     if (G_UNLIKELY(astrodata == NULL))
         return;

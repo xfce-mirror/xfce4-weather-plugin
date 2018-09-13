@@ -86,7 +86,7 @@ typedef struct {
 
     gint panel_size;
     guint panel_rows;
-    GtkOrientation panel_orientation;
+    XfcePanelPluginMode panel_orientation;
     gboolean single_row;
     xml_weather *weatherdata;
     GArray *astrodata;
@@ -102,7 +102,7 @@ typedef struct {
 
     GtkWidget *scrollbox;
     gboolean show_scrollbox;
-    gint scrollbox_lines;
+    guint scrollbox_lines;
     gchar *scrollbox_font;
     GdkRGBA scrollbox_color;
     gboolean scrollbox_use_color;
@@ -123,7 +123,7 @@ typedef struct {
     icon_theme *icon_theme;
     tooltip_styles tooltip_style;
     forecast_layouts forecast_layout;
-    gint forecast_days;
+    guint forecast_days;
     gboolean round;
 } plugin_data;
 

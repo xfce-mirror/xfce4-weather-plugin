@@ -667,11 +667,13 @@ interpolate_gchar_value(gchar *value_start,
     val_start = string_to_double(value_start, 0);
     val_end = string_to_double(value_end, 0);
 
-    if (radian)
+    if (radian) {
         if (val_end > val_start && val_end - val_start > 180)
             val_start += 360;
         else if (val_start > val_end && val_start - val_end > 180)
             val_end += 360;
+    }
+
     val_result = interpolate_value(val_start, val_end,
                                    start_t, end_t, between_t);
     if (radian && val_result >= 360)
@@ -912,7 +914,7 @@ astrodata_clean(GArray *astrodata)
 {
     xml_astro *astro;
     time_t now_t = time(NULL);
-    gint i;
+    guint i;
 
     if (G_UNLIKELY(astrodata == NULL))
         return;
@@ -989,9 +991,9 @@ find_smallest_interval(xml_weather *wd,
 {
     GArray *before = pdr->before, *after = pdr->after;
     xml_time *ts_before, *ts_after, *found;
-    gint i, j;
+    guint i, j;
 
-    for (i = before->len - 1; i >= 0; i--) {
+    for (i = before->len - 1; i > 0; i--) {
         ts_before = g_array_index(before, xml_time *, i);
         for (j = 0; j < after->len; j++) {
             ts_after = g_array_index(after, xml_time *, j);
@@ -1009,7 +1011,7 @@ find_smallest_incomplete_interval(xml_weather *wd,
                                   time_t end_t)
 {
     xml_time *timeslice, *found = NULL;
-    gint i;
+    guint i;
 
     weather_debug("Searching for the smallest incomplete interval.");
     /* search for all timeslices with interval data that have end time end_t */
@@ -1031,37 +1033,6 @@ find_smallest_incomplete_interval(xml_weather *wd,
 }
 
 
-/*
- * Given an array of point data, find two points for which
- * corresponding interval data can be found so that the interval is as
- * big as possible, returning NULL if such interval data doesn't
- * exist.
- */
-static xml_time *
-find_largest_interval(xml_weather *wd,
-                      const point_data_results *pdr)
-{
-    GArray *before = pdr->before, *after = pdr->after;
-    xml_time *ts_before = NULL, *ts_after = NULL, *found = NULL;
-    gint i, j;
-
-    for (i = before->len - 1; i >= 0; i--) {
-        ts_before = g_array_index(before, xml_time *, i);
-        for (j = after->len - 1; j >= 0; j--) {
-            ts_after = g_array_index(after, xml_time *, j);
-            found = get_timeslice(wd, ts_before->start, ts_after->end, NULL);
-            if (found) {
-                weather_debug("Found biggest interval:");
-                weather_dump(weather_dump_timeslice, found);
-                return found;
-            }
-        }
-    }
-    weather_debug("Could not find interval.");
-    return NULL;
-}
-
-
 /* find point data within certain limits around a point in time */
 static point_data_results *
 find_point_data(const xml_weather *wd,
@@ -1072,7 +1043,7 @@ find_point_data(const xml_weather *wd,
     point_data_results *found;
     xml_time *timeslice;
     gdouble diff;
-    gint i;
+    guint i;
 
     found = g_slice_new0(point_data_results);
     found->before = g_array_new(FALSE, TRUE, sizeof(xml_time *));
@@ -1180,7 +1151,7 @@ get_astro_data_for_day(const GArray *astrodata,
 {
     xml_astro *astro;
     time_t day_t = time(NULL);
-    gint i;
+    guint i;
 
     if (G_UNLIKELY(astrodata == NULL))
         return NULL;
@@ -1207,7 +1178,7 @@ get_point_data_for_day(xml_weather *wd,
     GArray *found;
     xml_time *timeslice;
     time_t day_t = time(NULL);
-    gint i;
+    guint i;
 
     day_t = day_at_midnight(day_t, day);
 
@@ -1250,7 +1221,8 @@ make_forecast_data(xml_weather *wd,
     xml_time *ts1, *ts2, *interval = NULL;
     struct tm point_tm, start_tm, end_tm, tm1, tm2;
     time_t point_t, start_t, end_t;
-    gint min = 0, max = 0, point = 0, i, j;
+    gint min = 0, max = 0, point = 0;
+    guint i, j;
 
     g_assert(wd != NULL);
     if (G_UNLIKELY(wd == NULL))

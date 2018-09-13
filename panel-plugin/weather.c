@@ -324,7 +324,7 @@ update_scrollbox(plugin_data *data,
     GString *out;
     gchar *label = NULL;
     data_types type;
-    gint i = 0, j = 0;
+    guint i = 0, j = 0;
 
     gtk_scrollbox_clear_new(GTK_SCROLLBOX(data->scrollbox));
     if (data->weatherdata && data->weatherdata->current_conditions) {
@@ -793,6 +793,21 @@ constrain_to_limits(gint *i,
 
 
 static void
+constrain_to_ulimits(guint *i,
+                    const guint min,
+                    const guint max)
+{
+    g_assert(i != NULL);
+    if (G_UNLIKELY(i == NULL))
+        return;
+    if (*i < min)
+        *i = min;
+    if (*i > max)
+        *i = max;
+}
+
+
+static void
 xfceweather_read_config(XfcePanelPlugin *plugin,
                         plugin_data *data)
 {
@@ -881,7 +896,7 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
 
     data->forecast_days = xfce_rc_read_int_entry(rc, "forecast_days",
                                                  DEFAULT_FORECAST_DAYS);
-    constrain_to_limits(&data->forecast_days, 1, MAX_FORECAST_DAYS);
+    constrain_to_ulimits(&data->forecast_days, 1, MAX_FORECAST_DAYS);
 
     value = xfce_rc_read_entry(rc, "theme_dir", NULL);
     if (data->icon_theme)
@@ -891,7 +906,7 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
     data->show_scrollbox = xfce_rc_read_bool_entry(rc, "show_scrollbox", TRUE);
 
     data->scrollbox_lines = xfce_rc_read_int_entry(rc, "scrollbox_lines", 1);
-    constrain_to_limits(&data->scrollbox_lines, 1, MAX_SCROLLBOX_LINES);
+    constrain_to_ulimits(&data->scrollbox_lines, 1, MAX_SCROLLBOX_LINES);
 
     value = xfce_rc_read_entry(rc, "scrollbox_font", NULL);
     if (value) {
@@ -933,7 +948,7 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
     XfceRc *rc;
     gchar label[10];
     gchar *file, *value;
-    gint i;
+    guint i;
 
     if (!(file = xfce_panel_plugin_save_location(plugin, TRUE)))
         return;
@@ -1050,7 +1065,7 @@ write_cache_file(plugin_data *data)
     gchar *file, *start, *end, *point, *now, *value;
     gchar *date_format = "%Y-%m-%dT%H:%M:%SZ";
     time_t now_t = time(NULL);
-    gint i, j;
+    guint i, j;
 
     file = make_cache_filename(data);
     if (G_UNLIKELY(file == NULL))
@@ -1169,7 +1184,7 @@ static void
 read_cache_file(plugin_data *data)
 {
     GKeyFile *keyfile;
-    GError **err;
+    GError *err = NULL;
     xml_weather *wd;
     xml_time *timeslice = NULL;
     xml_location *loc = NULL;
@@ -1216,10 +1231,10 @@ read_cache_file(plugin_data *data)
                       "reading cache file aborted.");
         return;
     }
-    msl = g_key_file_get_integer(keyfile, group, "msl", err);
+    msl = g_key_file_get_integer(keyfile, group, "msl", &err);
     if (!err)
         num_timeslices = g_key_file_get_integer(keyfile, group,
-                                                "timeslices", err);
+                                                "timeslices", &err);
     if (err || strcmp(lat, data->lat) || strcmp(lon, data->lon) ||
         msl != data->msl || num_timeslices < 1) {
         CACHE_FREE_VARS();
@@ -1599,7 +1614,7 @@ xfceweather_dialog_response(GtkWidget *dlg,
     plugin_data *data = (plugin_data *) dialog->pd;
     icon_theme *theme;
     gboolean result;
-    gint i;
+    guint i;
 
     if (response == GTK_RESPONSE_HELP) {
         /* show help */
@@ -1822,7 +1837,7 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     SoupURI *soup_proxy_uri;
     const gchar *proxy_uri;
     const gchar *proxy_user;
-    GtkWidget *refresh, *refresh_icon;
+    GtkWidget *refresh;
     GdkPixbuf *icon = NULL;
     data_types lbl;
 
@@ -1930,9 +1945,6 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     /* add refresh button to right click menu, for people who missed
        the middle mouse click feature */
     refresh = gtk_menu_item_new_with_mnemonic(_("Re_fresh"));
-    refresh_icon = gtk_image_new_from_icon_name("view-refresh",
-                                            GTK_ICON_SIZE_MENU);
-    //gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(refresh), refresh_icon);
     gtk_widget_show(refresh);
     g_signal_connect(G_OBJECT(refresh), "activate",
                      G_CALLBACK(mi_click), data);

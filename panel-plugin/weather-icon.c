@@ -43,7 +43,7 @@ icon_missing(const icon_theme *theme,
              const gchar *suffix)
 {
     gchar *missing, *icon;
-    gint i;
+    guint i;
 
     icon = g_strconcat(sizedir, G_DIR_SEPARATOR_S, symbol_name, suffix, NULL);
     for (i = 0; i < theme->missing_icons->len; i++) {
@@ -347,7 +347,7 @@ find_themes_in_dir(const gchar *path)
     if (dir) {
         themes = g_array_new(FALSE, TRUE, sizeof(icon_theme *));
 
-        while (dirname = g_dir_read_name(dir)) {
+        while ((dirname = g_dir_read_name(dir))) {
             themedir = g_strdup_printf("%s" G_DIR_SEPARATOR_S "%s",
                                        path, dirname);
             theme = icon_theme_load_info(themedir);

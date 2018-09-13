@@ -208,7 +208,7 @@ gtk_scrollbox_draw_event(GtkWidget *widget,
 {
     GtkScrollbox *self = GTK_SCROLLBOX(widget);
     PangoLayout *layout;
-    gint width, height;
+    gint height;
     PangoRectangle logical_rect;
     gboolean result = FALSE;
     PangoMatrix matrix = PANGO_MATRIX_INIT;
@@ -229,20 +229,12 @@ gtk_scrollbox_draw_event(GtkWidget *widget,
         gtk_widget_get_allocation (GTK_WIDGET (widget), &allocation);
 
         if (self->orientation == GTK_ORIENTATION_HORIZONTAL) {
-            width = allocation.x
-                + (allocation.width
-                   - PANGO_PIXELS(logical_rect.width)) / 2;
             height = allocation.y
                 + (allocation.height
                    - PANGO_PIXELS(logical_rect.height)) / 2
                 + (self->fade == FADE_IN || self->fade == FADE_OUT
                    ? self->offset : 0);
         } else {
-            width = allocation.x
-                + (allocation.width
-                   - PANGO_PIXELS(logical_rect.height)) / 2
-                + (self->fade == FADE_IN || self->fade == FADE_OUT
-                   ? self->offset : 0);
             height = allocation.y
                 + (allocation.height
                    - PANGO_PIXELS(logical_rect.width)) / 2;

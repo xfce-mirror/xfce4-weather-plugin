@@ -490,7 +490,6 @@ text_timezone_changed(const GtkWidget *entry,
 static void
 create_location_page(xfceweather_dialog *dialog)
 {
-    GtkWidget *palign, *page, *hbox, *vbox, *label, *image, *sep;
     GtkWidget *button_loc_change;
 
     /* location name */
@@ -860,8 +859,6 @@ combo_apparent_temperature_changed(GtkWidget *combo,
 static void
 create_units_page(xfceweather_dialog *dialog)
 {
-    GtkWidget *palign, *page, *hbox, *vbox, *label, *sep;
-
     /* temperature */
     dialog->combo_unit_temperature = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "combo_unit_temperature"));
 
@@ -1036,12 +1033,9 @@ check_round_values_toggled(GtkWidget *button,
 static void
 create_appearance_page(xfceweather_dialog *dialog)
 {
-    GtkWidget *palign, *page, *sep, *hbox, *vbox, *label, *image;
-    GtkSizeGroup *sg;
-    GtkSettings *default_settings;
     icon_theme *theme;
     gchar *text;
-    gint i;
+    guint i;
 
     /* icon theme */
     dialog->combo_icon_theme = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "combo_icon_theme"));
@@ -1539,13 +1533,12 @@ check_scrollbox_animate_toggled(GtkWidget *button,
 static void
 create_scrollbox_page(xfceweather_dialog *dialog)
 {
-    GtkWidget *palign, *page, *hbox, *table, *scroll, *label, *image, *sep;
-    GtkSizeGroup *sg_misc, *sg_button;
     GtkWidget *button;
     GtkTreeViewColumn *column;
     GtkCellRenderer *renderer;
     data_types type;
-    gint i, n;
+    guint i;
+    gint n;
 
     /* show scrollbox */
     dialog->check_scrollbox_show = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "check_scrollbox_show"));
@@ -1645,7 +1638,7 @@ setup_units(xfceweather_dialog *dialog,
 }
 
 
-void
+static void
 setup_notebook_signals(xfceweather_dialog *dialog)
 {
     /* location page */

@@ -851,17 +851,16 @@ static GtkWidget *
 add_forecast_cell(plugin_data *data,
                   GArray *daydata,
                   gint day,
-                  gint daytime)
+                  gint time_of_day)
 {
     GtkWidget *box, *label, *image;
     GdkPixbuf *icon;
-    const GdkColor black = {0, 0x0000, 0x0000, 0x0000};
     gchar *wind_speed, *wind_direction, *value, *rawvalue;
     xml_time *fcdata;
 
     box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
 
-    fcdata = make_forecast_data(data->weatherdata, daydata, day, daytime);
+    fcdata = make_forecast_data(data->weatherdata, daydata, day, time_of_day);
     if (fcdata == NULL)
         return box;
 
@@ -873,7 +872,7 @@ add_forecast_cell(plugin_data *data,
     /* symbol */
     rawvalue = get_data(fcdata, data->units, SYMBOL,
                         FALSE, data->night_time);
-    icon = get_icon(data->icon_theme, rawvalue, 48, (daytime == NIGHT));
+    icon = get_icon(data->icon_theme, rawvalue, 48, (time_of_day == NIGHT));
     g_free(rawvalue);
     image = gtk_image_new_from_pixbuf(icon);
     gtk_box_pack_start(GTK_BOX(box), GTK_WIDGET(image), TRUE, TRUE, 0);
@@ -884,7 +883,7 @@ add_forecast_cell(plugin_data *data,
     rawvalue = get_data(fcdata, data->units, SYMBOL,
                         FALSE, data->night_time);
     value = g_strdup_printf("%s",
-                            translate_desc(rawvalue, (daytime == NIGHT)));
+                            translate_desc(rawvalue, (time_of_day == NIGHT)));
     g_free(rawvalue);
     label = gtk_label_new(NULL);
     gtk_label_set_markup(GTK_LABEL(label), value);
@@ -934,8 +933,8 @@ make_forecast(plugin_data *data)
     GArray *daydata;
     xml_astro *astro;
     gchar *dayname, *text;
-    gint i;
-    daytime daytime;
+    guint i;
+    daytime time_of_day;
 
     GdkScreen *screen = gdk_screen_get_default ();
     GtkCssProvider *provider = gtk_css_provider_new ();
@@ -989,8 +988,8 @@ make_forecast(plugin_data *data)
         daydata = get_point_data_for_day(data->weatherdata, i);
 
         /* get forecast data for each daytime */
-        for (daytime = MORNING; daytime <= NIGHT; daytime++) {
-            forecast_box = add_forecast_cell(data, daydata, i, daytime);
+        for (time_of_day = MORNING; time_of_day <= NIGHT; time_of_day++) {
+            forecast_box = add_forecast_cell(data, daydata, i, time_of_day);
             weather_widget_set_border_width (GTK_WIDGET (forecast_box), 4);
             gtk_widget_set_hexpand (GTK_WIDGET (forecast_box), TRUE);
             gtk_widget_set_vexpand (GTK_WIDGET (forecast_box), TRUE);
@@ -1003,11 +1002,11 @@ make_forecast(plugin_data *data)
             if (data->forecast_layout == FC_LAYOUT_CALENDAR)
                 gtk_grid_attach (GTK_GRID (grid),
                                  GTK_WIDGET(ebox),
-                                 i+1, 1+daytime, 1, 1);
+                                 i+1, 1+time_of_day, 1, 1);
             else
                 gtk_grid_attach (GTK_GRID (grid),
                                  GTK_WIDGET(ebox),
-                                 1+daytime, i+1, 1, 1);
+                                 1+time_of_day, i+1, 1, 1);
         }
         g_array_free(daydata, FALSE);
     }
