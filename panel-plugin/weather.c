@@ -1852,7 +1852,7 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     data->next_wakeup = time(NULL);
 
     /* Setup session for HTTP connections */
-    data->session = soup_session_async_new();
+    data->session = soup_session_new();
     g_object_set(data->session, SOUP_SESSION_USER_AGENT,
                  PACKAGE_NAME "-" PACKAGE_VERSION, NULL);
     g_object_set(data->session, SOUP_SESSION_TIMEOUT,
