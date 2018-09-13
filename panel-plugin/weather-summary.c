@@ -820,15 +820,6 @@ wrap_forecast_cell(const GtkWidget *widget,
 }
 
 
-static void
-configure_forecast_label (GtkWidget *label)
-{
-    GtkStyleContext *ctx;
-    ctx = gtk_widget_get_style_context (GTK_WIDGET (label));
-    gtk_style_context_add_class(ctx, "forecast-label");
-}
-
-
 static GtkWidget *
 add_forecast_header(const gchar *text,
                     const gdouble angle,
@@ -897,8 +888,6 @@ add_forecast_cell(plugin_data *data,
     g_free(rawvalue);
     label = gtk_label_new(NULL);
     gtk_label_set_markup(GTK_LABEL(label), value);
-    if (!(day % 2))
-        configure_forecast_label (GTK_WIDGET (label));
     gtk_box_pack_start(GTK_BOX(box), GTK_WIDGET(label), TRUE, TRUE, 0);
     g_free(value);
 
@@ -909,8 +898,6 @@ add_forecast_cell(plugin_data *data,
                             get_unit(data->units, TEMPERATURE));
     g_free(rawvalue);
     label = gtk_label_new(value);
-    if (!(day % 2))
-        configure_forecast_label (GTK_WIDGET (label));
     gtk_box_pack_start(GTK_BOX(box), GTK_WIDGET(label), TRUE, TRUE, 0);
     g_free(value);
 
@@ -924,8 +911,6 @@ add_forecast_cell(plugin_data *data,
     g_free(wind_speed);
     g_free(wind_direction);
     label = gtk_label_new(value);
-    if (!(day % 2))
-        configure_forecast_label (GTK_WIDGET (label));
     gtk_box_pack_start(GTK_BOX(box), label, TRUE, TRUE, 0);
     g_free(value);
 
@@ -956,9 +941,8 @@ make_forecast(plugin_data *data)
     GtkCssProvider *provider = gtk_css_provider_new ();
     gchar *css_string;
 
-    css_string = g_strdup (".forecast-cell.lightbg { background-color: #EAEAEA; }"
-                           ".forecast-cell.darkbg { background-color: #666666; }"
-                           ".forecast-cell .forecast-label { color: #000000; }");
+    css_string = g_strdup (".forecast-cell.lightbg { background-color: rgba(0, 0, 0, 0.2); }"
+                           ".forecast-cell.darkbg { background-color: rgba(0, 0, 0, 0.4); }");
 
     gtk_css_provider_load_from_data (provider, css_string, -1, NULL);
     gtk_style_context_add_provider_for_screen (screen, GTK_STYLE_PROVIDER (provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
