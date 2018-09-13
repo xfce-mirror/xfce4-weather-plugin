@@ -91,12 +91,12 @@ lnk_clicked(GtkTextTag *tag,
     if (data->forecast_layout == FC_LAYOUT_CALENDAR)    \
         gtk_grid_attach                       \
             (GTK_GRID (grid),                          \
-             add_forecast_header(title, 90.0, &darkbg), \
+             add_forecast_header(title, 90.0, "darkbg"), \
              0, pos, 1, 1);                         \
     else                                                \
         gtk_grid_attach                       \
             (GTK_GRID (grid),                          \
-             add_forecast_header(title, 0.0, &darkbg),  \
+             add_forecast_header(title, 0.0, "darkbg"),  \
              pos, 0, 1, 1);                         \
 
 #define APPEND_TOOLTIP_ITEM(description, item)                  \
@@ -801,26 +801,38 @@ forecast_day_header_tooltip_text(xml_astro *astro)
 
 static GtkWidget *
 wrap_forecast_cell(const GtkWidget *widget,
-                   const GdkColor *color)
+                   const gchar *style_class)
 {
     GtkWidget *ebox;
+    GtkStyleContext *ctx;
 
     ebox = gtk_event_box_new();
-    if (color == NULL)
+    if (style_class == NULL)
         gtk_event_box_set_visible_window(GTK_EVENT_BOX(ebox), FALSE);
     else {
         gtk_event_box_set_visible_window(GTK_EVENT_BOX(ebox), TRUE);
-        gtk_widget_modify_bg(GTK_WIDGET(ebox), GTK_STATE_NORMAL, color);
+        ctx = gtk_widget_get_style_context (GTK_WIDGET (ebox));
+        gtk_style_context_add_class(ctx, "forecast-cell");
+        gtk_style_context_add_class(ctx, style_class);
     }
     gtk_container_add(GTK_CONTAINER(ebox), GTK_WIDGET(widget));
     return ebox;
 }
 
 
+static void
+configure_forecast_label (GtkWidget *label)
+{
+    GtkStyleContext *ctx;
+    ctx = gtk_widget_get_style_context (GTK_WIDGET (label));
+    gtk_style_context_add_class(ctx, "forecast-label");
+}
+
+
 static GtkWidget *
 add_forecast_header(const gchar *text,
                     const gdouble angle,
-                    const GdkColor *color)
+                    const gchar *style_class)
 {
     GtkWidget *label;
     gchar *str;
@@ -840,7 +852,7 @@ add_forecast_header(const gchar *text,
     }
     weather_widget_set_border_width (GTK_WIDGET (label), 4);
 
-    return wrap_forecast_cell(label, color);
+    return wrap_forecast_cell(label, style_class);
 }
 
 
@@ -886,7 +898,7 @@ add_forecast_cell(plugin_data *data,
     label = gtk_label_new(NULL);
     gtk_label_set_markup(GTK_LABEL(label), value);
     if (!(day % 2))
-        gtk_widget_modify_fg(GTK_WIDGET(label), GTK_STATE_NORMAL, &black);
+        configure_forecast_label (GTK_WIDGET (label));
     gtk_box_pack_start(GTK_BOX(box), GTK_WIDGET(label), TRUE, TRUE, 0);
     g_free(value);
 
@@ -898,7 +910,7 @@ add_forecast_cell(plugin_data *data,
     g_free(rawvalue);
     label = gtk_label_new(value);
     if (!(day % 2))
-        gtk_widget_modify_fg(GTK_WIDGET(label), GTK_STATE_NORMAL, &black);
+        configure_forecast_label (GTK_WIDGET (label));
     gtk_box_pack_start(GTK_BOX(box), GTK_WIDGET(label), TRUE, TRUE, 0);
     g_free(value);
 
@@ -913,7 +925,7 @@ add_forecast_cell(plugin_data *data,
     g_free(wind_direction);
     label = gtk_label_new(value);
     if (!(day % 2))
-        gtk_widget_modify_fg(GTK_WIDGET(label), GTK_STATE_NORMAL, &black);
+        configure_forecast_label (GTK_WIDGET (label));
     gtk_box_pack_start(GTK_BOX(box), label, TRUE, TRUE, 0);
     g_free(value);
 
@@ -933,13 +945,23 @@ make_forecast(plugin_data *data)
 {
     GtkWidget *grid, *ebox, *box;
     GtkWidget *forecast_box;
-    const GdkColor lightbg = {0, 0xeaea, 0xeaea, 0xeaea};
-    const GdkColor darkbg = {0, 0x6666, 0x6666, 0x6666};
+
     GArray *daydata;
     xml_astro *astro;
     gchar *dayname, *text;
     gint i;
     daytime daytime;
+
+    GdkScreen *screen = gdk_screen_get_default ();
+    GtkCssProvider *provider = gtk_css_provider_new ();
+    gchar *css_string;
+
+    css_string = g_strdup (".forecast-cell.lightbg { background-color: #EAEAEA; }"
+                           ".forecast-cell.darkbg { background-color: #666666; }"
+                           ".forecast-cell .forecast-label { color: #000000; }");
+
+    gtk_css_provider_load_from_data (provider, css_string, -1, NULL);
+    gtk_style_context_add_provider_for_screen (screen, GTK_STYLE_PROVIDER (provider), GTK_STYLE_PROVIDER_PRIORITY_APPLICATION);
 
     grid = gtk_grid_new ();
 
@@ -949,7 +971,7 @@ make_forecast(plugin_data *data)
     /* empty upper left corner */
     box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_grid_attach (GTK_GRID (grid),
-                     wrap_forecast_cell(box, &darkbg),
+                     wrap_forecast_cell(box, "darkbg"),
                      0, 0, 1, 1);
 
     /* daytime headers */
@@ -962,9 +984,9 @@ make_forecast(plugin_data *data)
         /* forecast day headers */
         dayname = get_dayname(i);
         if (data->forecast_layout == FC_LAYOUT_CALENDAR)
-            ebox = add_forecast_header(dayname, 0.0, &darkbg);
+            ebox = add_forecast_header(dayname, 0.0, "darkbg");
         else
-            ebox = add_forecast_header(dayname, 90.0, &darkbg);
+            ebox = add_forecast_header(dayname, 90.0, "darkbg");
         g_free(dayname);
 
         /* add tooltip to forecast day header */
@@ -992,7 +1014,7 @@ make_forecast(plugin_data *data)
             if (i % 2)
                 ebox = wrap_forecast_cell(forecast_box, NULL);
             else
-                ebox = wrap_forecast_cell(forecast_box, &lightbg);
+                ebox = wrap_forecast_cell(forecast_box, "lightbg");
 
             if (data->forecast_layout == FC_LAYOUT_CALENDAR)
                 gtk_grid_attach (GTK_GRID (grid),
