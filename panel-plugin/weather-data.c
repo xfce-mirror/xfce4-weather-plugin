@@ -993,6 +993,9 @@ find_smallest_interval(xml_weather *wd,
     xml_time *ts_before, *ts_after, *found;
     guint i, j;
 
+    if (before->len == 0)
+        return NULL;
+
     for (i = before->len - 1; i > 0; i--) {
         ts_before = g_array_index(before, xml_time *, i);
         for (j = 0; j < after->len; j++) {
