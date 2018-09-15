@@ -358,6 +358,10 @@ create_summary_tab(plugin_data *data)
     sum->text_view = view = gtk_text_view_new();
     gtk_text_view_set_editable(GTK_TEXT_VIEW(view), FALSE);
     gtk_text_view_set_cursor_visible(GTK_TEXT_VIEW(view), FALSE);
+    gtk_text_view_set_left_margin (GTK_TEXT_VIEW(view), 12);
+    gtk_text_view_set_top_margin (GTK_TEXT_VIEW(view), 12);
+    gtk_text_view_set_right_margin (GTK_TEXT_VIEW(view), 12);
+    gtk_text_view_set_bottom_margin (GTK_TEXT_VIEW(view), 12);
     frame = gtk_frame_new(NULL);
     scrolled = gtk_scrolled_window_new(NULL, NULL);
 
@@ -365,7 +369,7 @@ create_summary_tab(plugin_data *data)
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled),
                                    GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 
-    gtk_container_set_border_width(GTK_CONTAINER(frame), BORDER);
+    gtk_container_set_border_width(GTK_CONTAINER(frame), 0);
     gtk_frame_set_shadow_type(GTK_FRAME(frame), GTK_SHADOW_IN);
     gtk_container_add(GTK_CONTAINER(frame), scrolled);
 
@@ -1056,15 +1060,15 @@ create_forecast_tab(plugin_data *data)
          w_need < w_max && data->forecast_days < 8) ||
         (data->forecast_layout == FC_LAYOUT_LIST && h_need < h_max)) {
         /* no scroll window needed, just align the contents */
-        gtk_container_set_border_width(GTK_CONTAINER(table), BORDER);
+        gtk_container_set_border_width(GTK_CONTAINER(table), 0);
         return table;
     } else {
         /* contents too big, scroll window needed */
-        hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+        hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 12);
         gtk_box_pack_start(GTK_BOX(hbox), table, TRUE, FALSE, 0);
 
         scrolled = gtk_scrolled_window_new (NULL, NULL);
-        gtk_container_set_border_width(GTK_CONTAINER(scrolled), BORDER);
+        gtk_container_set_border_width(GTK_CONTAINER(scrolled), 0);
 
         viewport = gtk_viewport_new (NULL, NULL);
         gtk_container_add (GTK_CONTAINER (scrolled), viewport);
@@ -1204,7 +1208,7 @@ create_summary_window(plugin_data *data)
         gtk_window_set_default_size(GTK_WINDOW(window), 500, 400);
     } else {
         notebook = gtk_notebook_new();
-        gtk_container_set_border_width(GTK_CONTAINER(notebook), BORDER);
+        gtk_container_set_border_width(GTK_CONTAINER(notebook), 6);
         gtk_notebook_append_page(GTK_NOTEBOOK(notebook),
                                  create_forecast_tab(data),
                                  gtk_label_new_with_mnemonic(_("_Forecast")));
