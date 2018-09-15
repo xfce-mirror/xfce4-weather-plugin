@@ -31,6 +31,7 @@
 #define LABEL_SLEEP (3)       /* sleep time in seconds */
 #define LABEL_SLEEP_LONG (6)  /* sleep time in seconds for FADE_NONE */
 #define LABEL_SPEED (25)      /* animation speed, delay in ms */
+#define LABEL_PADDING (3)     /* padding to left/right or top/bottom of label */
 
 
 static void gtk_scrollbox_finalize(GObject *object);
@@ -181,11 +182,15 @@ gtk_scrollbox_get_preferred_height (GtkWidget *widget,
                                     gint      *minimal_height,
                                     gint      *natural_height)
 {
+    GtkScrollbox *self = GTK_SCROLLBOX(widget);
     GtkRequisition requisition;
 
     gtk_scrollbox_size_request (widget, &requisition);
 
-    *minimal_height = *natural_height = requisition.height;
+    if (self->orientation == GTK_ORIENTATION_VERTICAL)
+        *minimal_height = *natural_height = requisition.height + (LABEL_PADDING * 2);
+    else
+        *minimal_height = *natural_height = requisition.height;
 }
 
 
@@ -194,11 +199,15 @@ gtk_scrollbox_get_preferred_width (GtkWidget *widget,
                                    gint      *minimal_width,
                                    gint      *natural_width)
 {
-  GtkRequisition requisition;
+    GtkScrollbox *self = GTK_SCROLLBOX(widget);
+    GtkRequisition requisition;
 
-  gtk_scrollbox_size_request (widget, &requisition);
+    gtk_scrollbox_size_request (widget, &requisition);
 
-  *minimal_width = *natural_width = requisition.width + 12;
+    if (self->orientation == GTK_ORIENTATION_HORIZONTAL)
+        *minimal_width = *natural_width = requisition.width + (LABEL_PADDING * 2);
+    else
+        *minimal_width = *natural_width = requisition.width;
 }
 
 
@@ -229,12 +238,12 @@ gtk_scrollbox_draw_event(GtkWidget *widget,
         gtk_widget_get_allocation (GTK_WIDGET (widget), &allocation);
 
         if (self->orientation == GTK_ORIENTATION_HORIZONTAL) {
-            width = 0;
+            width = LABEL_PADDING;
             height = (allocation.height - PANGO_PIXELS(logical_rect.height)) / 2
                 + (self->fade == FADE_IN || self->fade == FADE_OUT
                    ? self->offset : 0);
         } else {
-            height = 0;
+            height = LABEL_PADDING;
             width = (allocation.width + PANGO_PIXELS(logical_rect.height)) / 2
                 + (self->fade == FADE_IN || self->fade == FADE_OUT
                    ? self->offset : 0);
