@@ -143,7 +143,7 @@ static const symbol_desc symbol_to_desc[] = {
  * for a list of symbols. For a list of symbols with descriptions,
  * see http://om.yr.no/forklaring/symbol.
  */
-gint
+static gint
 replace_symbol_id(gint id)
 {
     /* Symbol ids greater than 100 are used for indicating polar
@@ -186,7 +186,7 @@ replace_symbol_id(gint id)
 
 
 const gchar *
-get_symbol_for_id(gint id)
+get_symbol_for_id(guint id)
 {
     if (G_UNLIKELY(id < 1))
         return NODATA;
@@ -205,14 +205,16 @@ const gchar *
 translate_desc(const gchar *desc,
                const gboolean nighttime)
 {
-    gint i;
+    guint i;
 
-    for (i = 0; i < NUM_SYMBOLS; i++)
-        if (!strcmp(desc, symbol_to_desc[i].symbol))
+    for (i = 0; i < NUM_SYMBOLS; i++) {
+        if (!strcmp(desc, symbol_to_desc[i].symbol)) {
             if (nighttime)
                 return _(symbol_to_desc[i].night_desc);
             else
                 return _(symbol_to_desc[i].desc);
+        }
+    }
     return desc;
 }
 
@@ -220,11 +222,13 @@ translate_desc(const gchar *desc,
 const gchar *
 translate_moon_phase(const gchar *moon_phase)
 {
-    gint i;
+    guint i;
 
-    for (i = 0; i < NUM_MOON_PHASES; i++)
-        if (!strcmp(moon_phase, moon_phases[i]))
+    for (i = 0; i < NUM_MOON_PHASES; i++) {
+        if (!strcmp(moon_phase, moon_phases[i])) {
             return _(moon_phases[i]);
+        }
+    }
     return moon_phase;
 }
 

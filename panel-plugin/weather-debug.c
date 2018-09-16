@@ -32,6 +32,8 @@
 #define YESNO(bool) ((bool) ? "yes" : "no")
 
 
+#if GLIB_CHECK_VERSION(2,32,0)
+#else
 static void
 weather_dummy_log_handler(const gchar *log_domain,
                           const GLogLevelFlags log_level,
@@ -40,11 +42,12 @@ weather_dummy_log_handler(const gchar *log_domain,
 {
     /* Swallow all messages */
 }
+#endif
 
 
 void
 weather_debug_init(const gchar *log_domain,
-                   const gboolean debug_mode)
+                   const gboolean w_debug_mode)
 {
     /*
      * GLIB >= 2.32 only shows debug messages if G_MESSAGES_DEBUG contains the
@@ -56,7 +59,7 @@ weather_debug_init(const gchar *log_domain,
     gchar *debug_env_new;
     gint i = 0, j = 0;
 
-    if (debug_mode) {
+    if (w_debug_mode) {
         debug_env = g_getenv("G_MESSAGES_DEBUG");
 
         if (log_domain == NULL)
@@ -77,7 +80,7 @@ weather_debug_init(const gchar *log_domain,
             g_free(debug_env_new_array[j++]);
     }
 #else
-    if (!debug_mode) {
+    if (!w_debug_mode) {
         g_log_set_handler(log_domain, G_LOG_LEVEL_DEBUG,
                           weather_dummy_log_handler, NULL);
         g_log_set_handler(G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG,
@@ -207,7 +210,7 @@ weather_dump_astrodata(const GArray *astrodata)
     GString *out;
     gchar *result, *line;
     xml_astro *astro;
-    gint i;
+    guint i;
 
     if (!astrodata || astrodata->len <= 0)
         return g_strdup("No astronomical data available.");
@@ -371,7 +374,7 @@ weather_dump_weatherdata(const xml_weather *wd)
     GString *out;
     xml_time *timeslice;
     gchar *result, *tmp;
-    gint i;
+    guint i;
 
     if (G_UNLIKELY(wd == NULL))
         return g_strdup("No weather data.");
@@ -501,7 +504,7 @@ weather_dump_plugindata(const plugin_data *data)
                            YESNO(data->show_scrollbox),
                            data->scrollbox_lines,
                            data->scrollbox_font,
-                           gdk_color_to_string(&(data->scrollbox_color)),
+                           gdk_rgba_to_string(&(data->scrollbox_color)),
                            YESNO(data->scrollbox_use_color),
                            YESNO(data->scrollbox_animate));
     g_free(next_wakeup);

@@ -37,6 +37,8 @@
 #include "weather-scrollbox.h"
 #include "weather-debug.h"
 
+#include "weather-config_ui.h"
+
 #define XFCEWEATHER_ROOT "weather"
 #define CACHE_FILE_MAX_AGE (48 * 3600)
 #define BORDER (8)
@@ -309,7 +311,7 @@ scrollbox_set_visible(plugin_data *data)
     if (data->show_scrollbox && data->labels->len > 0)
         gtk_widget_show_all(GTK_WIDGET(data->vbox_center_scrollbox));
     else
-        gtk_widget_hide_all(GTK_WIDGET(data->vbox_center_scrollbox));
+        gtk_widget_hide(GTK_WIDGET(data->vbox_center_scrollbox));
     gtk_scrollbox_set_visible(GTK_SCROLLBOX(data->scrollbox),
                               data->show_scrollbox);
 }
@@ -322,7 +324,7 @@ update_scrollbox(plugin_data *data,
     GString *out;
     gchar *label = NULL;
     data_types type;
-    gint i = 0, j = 0;
+    guint i = 0, j = 0;
 
     gtk_scrollbox_clear_new(GTK_SCROLLBOX(data->scrollbox));
     if (data->weatherdata && data->weatherdata->current_conditions) {
@@ -791,6 +793,21 @@ constrain_to_limits(gint *i,
 
 
 static void
+constrain_to_ulimits(guint *i,
+                    const guint min,
+                    const guint max)
+{
+    g_assert(i != NULL);
+    if (G_UNLIKELY(i == NULL))
+        return;
+    if (*i < min)
+        *i = min;
+    if (*i > max)
+        *i = max;
+}
+
+
+static void
 xfceweather_read_config(XfcePanelPlugin *plugin,
                         plugin_data *data)
 {
@@ -879,7 +896,7 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
 
     data->forecast_days = xfce_rc_read_int_entry(rc, "forecast_days",
                                                  DEFAULT_FORECAST_DAYS);
-    constrain_to_limits(&data->forecast_days, 1, MAX_FORECAST_DAYS);
+    constrain_to_ulimits(&data->forecast_days, 1, MAX_FORECAST_DAYS);
 
     value = xfce_rc_read_entry(rc, "theme_dir", NULL);
     if (data->icon_theme)
@@ -889,7 +906,7 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
     data->show_scrollbox = xfce_rc_read_bool_entry(rc, "show_scrollbox", TRUE);
 
     data->scrollbox_lines = xfce_rc_read_int_entry(rc, "scrollbox_lines", 1);
-    constrain_to_limits(&data->scrollbox_lines, 1, MAX_SCROLLBOX_LINES);
+    constrain_to_ulimits(&data->scrollbox_lines, 1, MAX_SCROLLBOX_LINES);
 
     value = xfce_rc_read_entry(rc, "scrollbox_font", NULL);
     if (value) {
@@ -899,7 +916,7 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
 
     value = xfce_rc_read_entry(rc, "scrollbox_color", NULL);
     if (value)
-        gdk_color_parse(value, &(data->scrollbox_color));
+        gdk_rgba_parse(&(data->scrollbox_color), value);
 
     data->scrollbox_use_color =
         xfce_rc_read_bool_entry(rc, "scrollbox_use_color", FALSE);
@@ -931,7 +948,7 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
     XfceRc *rc;
     gchar label[10];
     gchar *file, *value;
-    gint i;
+    guint i;
 
     if (!(file = xfce_panel_plugin_save_location(plugin, TRUE)))
         return;
@@ -998,7 +1015,7 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
     if (data->scrollbox_font)
         xfce_rc_write_entry(rc, "scrollbox_font", data->scrollbox_font);
 
-    value = gdk_color_to_string(&(data->scrollbox_color));
+    value = gdk_rgba_to_string(&(data->scrollbox_color));
     xfce_rc_write_entry(rc, "scrollbox_color", value);
     g_free(value);
 
@@ -1048,7 +1065,7 @@ write_cache_file(plugin_data *data)
     gchar *file, *start, *end, *point, *now, *value;
     gchar *date_format = "%Y-%m-%dT%H:%M:%SZ";
     time_t now_t = time(NULL);
-    gint i, j;
+    guint i, j;
 
     file = make_cache_filename(data);
     if (G_UNLIKELY(file == NULL))
@@ -1167,7 +1184,7 @@ static void
 read_cache_file(plugin_data *data)
 {
     GKeyFile *keyfile;
-    GError **err;
+    GError *err = NULL;
     xml_weather *wd;
     xml_time *timeslice = NULL;
     xml_location *loc = NULL;
@@ -1214,10 +1231,10 @@ read_cache_file(plugin_data *data)
                       "reading cache file aborted.");
         return;
     }
-    msl = g_key_file_get_integer(keyfile, group, "msl", err);
+    msl = g_key_file_get_integer(keyfile, group, "msl", &err);
     if (!err)
         num_timeslices = g_key_file_get_integer(keyfile, group,
-                                                "timeslices", err);
+                                                "timeslices", &err);
     if (err || strcmp(lat, data->lat) || strcmp(lon, data->lon) ||
         msl != data->msl || num_timeslices < 1) {
         CACHE_FREE_VARS();
@@ -1597,7 +1614,7 @@ xfceweather_dialog_response(GtkWidget *dlg,
     plugin_data *data = (plugin_data *) dialog->pd;
     icon_theme *theme;
     gboolean result;
-    gint i;
+    guint i;
 
     if (response == GTK_RESPONSE_HELP) {
         /* show help */
@@ -1631,32 +1648,34 @@ static void
 xfceweather_create_options(XfcePanelPlugin *plugin,
                            plugin_data *data)
 {
-    GtkWidget *dlg, *vbox;
+    GtkWidget *dlg;
+    GtkBuilder *builder;
     xfceweather_dialog *dialog;
+    GError *error = NULL;
+    gint response;
 
     xfce_panel_plugin_block_menu(plugin);
 
-    dlg = xfce_titled_dialog_new_with_buttons(_("Weather Update"),
-                                              GTK_WINDOW
-                                              (gtk_widget_get_toplevel
-                                               (GTK_WIDGET(plugin))),
-                                              GTK_DIALOG_DESTROY_WITH_PARENT |
-                                              GTK_DIALOG_NO_SEPARATOR,
-                                              GTK_STOCK_HELP, GTK_RESPONSE_HELP,
-                                              GTK_STOCK_CLOSE, GTK_RESPONSE_OK,
-                                              NULL);
+    if (xfce_titled_dialog_get_type () == 0)
+        return;
 
-    gtk_container_set_border_width(GTK_CONTAINER(dlg), 2);
-    gtk_window_set_icon_name(GTK_WINDOW(dlg), "xfce4-settings");
+    builder = gtk_builder_new ();
+    if (gtk_builder_add_from_string (builder, weather_config_ui,
+                                     weather_config_ui_length, &error) != 0)
+    {
+        dlg = GTK_WIDGET (gtk_builder_get_object (builder, "dialog"));
+        gtk_window_set_transient_for (GTK_WINDOW (dlg), 
+                                      GTK_WINDOW (gtk_widget_get_toplevel
+                                       (GTK_WIDGET(plugin))));
 
-    vbox = gtk_vbox_new(FALSE, BORDER);
-    gtk_container_set_border_width(GTK_CONTAINER(vbox), BORDER - 2);
-    gtk_box_pack_start(GTK_BOX(GTK_DIALOG(dlg)->vbox), vbox, TRUE, TRUE, 0);
+        dialog = create_config_dialog(data, builder);
 
-    dialog = create_config_dialog(data, vbox);
-    g_signal_connect(G_OBJECT(dlg), "response",
-                     G_CALLBACK(xfceweather_dialog_response), dialog);
-    gtk_widget_show(dlg);
+        gtk_widget_show_all (GTK_WIDGET (dlg));
+        response = gtk_dialog_run(GTK_DIALOG (dlg));
+        xfceweather_dialog_response(dlg, response, dialog);
+    } else {
+        g_warning ("Failed to load dialog: %s", error->message);
+    }
 }
 
 
@@ -1700,7 +1719,7 @@ weather_get_tooltip_text(const plugin_data *data)
             g_free(sunset);
         }
     else
-        sunval = g_strdup_printf("");
+        sunval = g_strdup("");
 
     sym = get_data(conditions, data->units, SYMBOL, FALSE, data->night_time);
     DATA_AND_UNIT(alt, ALTITUDE);
@@ -1818,7 +1837,7 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     SoupURI *soup_proxy_uri;
     const gchar *proxy_uri;
     const gchar *proxy_user;
-    GtkWidget *refresh, *refresh_icon;
+    GtkWidget *refresh;
     GdkPixbuf *icon = NULL;
     data_types lbl;
 
@@ -1848,7 +1867,7 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     data->next_wakeup = time(NULL);
 
     /* Setup session for HTTP connections */
-    data->session = soup_session_async_new();
+    data->session = soup_session_new();
     g_object_set(data->session, SOUP_SESSION_USER_AGENT,
                  PACKAGE_NAME "-" PACKAGE_VERSION, NULL);
     g_object_set(data->session, SOUP_SESSION_TIMEOUT,
@@ -1896,12 +1915,13 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
 
     /* create alignment box that can be easily adapted to the panel
        orientation */
-    data->alignbox = xfce_hvbox_new(GTK_ORIENTATION_HORIZONTAL, FALSE, 0);
+    data->alignbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_container_add(GTK_CONTAINER(data->button), data->alignbox);
 
     /* add widgets to alignment box */
-    data->vbox_center_scrollbox = gtk_vbox_new(FALSE, 0);
-    gtk_misc_set_alignment(GTK_MISC(data->iconimage), 1, 0.5);
+    data->vbox_center_scrollbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
+    gtk_widget_set_halign (GTK_WIDGET (data->iconimage), 1);
+    gtk_widget_set_valign (GTK_WIDGET (data->iconimage), 0.5);
     gtk_box_pack_start(GTK_BOX(data->alignbox),
                        data->iconimage, TRUE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(data->vbox_center_scrollbox),
@@ -1924,10 +1944,7 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
 
     /* add refresh button to right click menu, for people who missed
        the middle mouse click feature */
-    refresh = gtk_image_menu_item_new_with_mnemonic(_("Re_fresh"));
-    refresh_icon = gtk_image_new_from_stock(GTK_STOCK_REFRESH,
-                                            GTK_ICON_SIZE_MENU);
-    gtk_image_menu_item_set_image(GTK_IMAGE_MENU_ITEM(refresh), refresh_icon);
+    refresh = gtk_menu_item_new_with_mnemonic(_("Re_fresh"));
     gtk_widget_show(refresh);
     g_signal_connect(G_OBJECT(refresh), "activate",
                      G_CALLBACK(mi_click), data);
@@ -2037,13 +2054,15 @@ xfceweather_set_mode(XfcePanelPlugin *panel,
     if (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_HORIZONTAL ||
         (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_DESKBAR &&
          data->single_row)) {
-        xfce_hvbox_set_orientation(XFCE_HVBOX(data->alignbox),
+        gtk_orientable_set_orientation(GTK_ORIENTABLE(data->alignbox),
                                    GTK_ORIENTATION_HORIZONTAL);
-        gtk_misc_set_alignment(GTK_MISC(data->iconimage), 1, 0.5);
+        gtk_widget_set_halign (GTK_WIDGET (data->iconimage), 1);
+        gtk_widget_set_valign (GTK_WIDGET (data->iconimage), 0.5);
     } else {
-        xfce_hvbox_set_orientation(XFCE_HVBOX(data->alignbox),
+        gtk_orientable_set_orientation(GTK_ORIENTABLE(data->alignbox),
                                    GTK_ORIENTATION_VERTICAL);
-        gtk_misc_set_alignment(GTK_MISC(data->iconimage), 0.5, 1);
+        gtk_widget_set_halign (GTK_WIDGET (data->iconimage), 0.5);
+        gtk_widget_set_valign (GTK_WIDGET (data->iconimage), 1);
     }
 
     if (mode == XFCE_PANEL_PLUGIN_MODE_DESKBAR)
@@ -2076,11 +2095,11 @@ xfceweather_set_orientation(XfcePanelPlugin *panel,
     data->panel_orientation = orientation;
 
     if (data->panel_orientation == GTK_ORIENTATION_HORIZONTAL) {
-        xfce_hvbox_set_orientation(XFCE_HVBOX(data->alignbox),
+        gtk_orientable_set_orientation(data->alignbox,
                                    GTK_ORIENTATION_HORIZONTAL);
         gtk_misc_set_alignment(GTK_MISC(data->iconimage), 1, 0.5);
     } else {
-        xfce_hvbox_set_orientation(XFCE_HVBOX(data->alignbox),
+        gtk_orientable_set_orientation(data->alignbox,
                                    GTK_ORIENTATION_VERTICAL);
         gtk_misc_set_alignment(GTK_MISC(data->iconimage), 0.5, 1);
     }

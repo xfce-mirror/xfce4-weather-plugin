@@ -43,9 +43,9 @@ G_BEGIN_DECLS
 
 #define weather_dump(func, data)                \
     if (G_UNLIKELY(debug_mode)) {               \
-        gchar *msg = func(data);                \
-        weather_debug("%s", msg);               \
-        g_free(msg);                            \
+        gchar *dump_msg = func(data);                \
+        weather_debug("%s", dump_msg);               \
+        g_free(dump_msg);                            \
     }
 
 void weather_debug_init(const gchar *log_domain,

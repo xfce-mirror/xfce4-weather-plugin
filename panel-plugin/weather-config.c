@@ -65,7 +65,7 @@
     gtk_box_pack_start(GTK_BOX(hbox), combo, TRUE, TRUE, 0);
 
 #define ADD_COMBO_VALUE(combo, text)                        \
-    gtk_combo_box_append_text(GTK_COMBO_BOX(combo), text);
+    gtk_combo_box_text_append_text(GTK_COMBO_BOX_TEXT(combo), text);
 
 #define SET_COMBO_VALUE(combo, val)                         \
     gtk_combo_box_set_active(GTK_COMBO_BOX(combo), val);
@@ -487,150 +487,54 @@ text_timezone_changed(const GtkWidget *entry,
 }
 
 
-static GtkWidget *
+static void
 create_location_page(xfceweather_dialog *dialog)
 {
-    GtkWidget *palign, *page, *hbox, *vbox, *label, *image, *sep;
     GtkWidget *button_loc_change;
-    GtkSizeGroup *sg_label, *sg_spin;
-
-    ADD_PAGE(FALSE);
-    sg_label = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
-    sg_spin = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
 
     /* location name */
-    hbox = gtk_hbox_new(FALSE, BORDER);
-    ADD_LABEL(_("Location _name:"), sg_label);
-    dialog->text_loc_name = gtk_entry_new();
+    dialog->text_loc_name = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "text_loc_name"));
     gtk_entry_set_max_length(GTK_ENTRY(dialog->text_loc_name),
                              LOC_NAME_MAX_LEN);
-    gtk_label_set_mnemonic_widget(GTK_LABEL(label),
-                                  GTK_WIDGET(dialog->text_loc_name));
-    SET_TOOLTIP(dialog->text_loc_name,
-                _("Change the name for the location to your liking. "
-                  "It is used for display and does not affect the location "
-                  "parameters in any way."));
-    gtk_box_pack_start(GTK_BOX(hbox), dialog->text_loc_name, TRUE, TRUE, 0);
-    button_loc_change = gtk_button_new_with_mnemonic(_("Chan_ge..."));
-    image = gtk_image_new_from_stock(GTK_STOCK_FIND, GTK_ICON_SIZE_BUTTON);
-    gtk_button_set_image(GTK_BUTTON(button_loc_change), image);
-    SET_TOOLTIP(button_loc_change, _("Search for a new location and "
-                                     "auto-detect its parameters."));
+
+    button_loc_change = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "button_loc_change"));
     g_signal_connect(G_OBJECT(button_loc_change), "clicked",
                      G_CALLBACK(cb_findlocation), dialog);
-    gtk_box_pack_start(GTK_BOX(hbox), button_loc_change,
-                       FALSE, FALSE, 0);
+
     if (dialog->pd->location_name)
         gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name),
                            dialog->pd->location_name);
     else
         gtk_entry_set_text(GTK_ENTRY(dialog->text_loc_name), _("Unset"));
+
     /* update spinner */
-    dialog->update_spinner = gtk_spinner_new();
-    gtk_box_pack_start(GTK_BOX(hbox), dialog->update_spinner, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(page), hbox, FALSE, FALSE, BORDER);
+    dialog->update_spinner = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "update_spinner"));
 
     /* latitude */
-    vbox = gtk_vbox_new(FALSE, BORDER);
-    hbox = gtk_hbox_new(FALSE, BORDER);
-    ADD_LABEL(_("Latitud_e:"), sg_label);
-    ADD_SPIN(dialog->spin_lat, -90, 90, 1,
-             (string_to_double(dialog->pd->lat, 0)), 6, sg_spin);
-    SET_TOOLTIP(dialog->spin_lat,
-                _("Latitude specifies the north-south position of a point on "
-                  "the Earth's surface. If you change this value manually, "
-                  "you need to provide altitude and timezone manually too."));
-    label = gtk_label_new("°");
-    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
-    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
+    dialog->spin_lat = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "spin_lat"));
+    gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->spin_lat), string_to_double(dialog->pd->lat, 0));
 
     /* longitude */
-    hbox = gtk_hbox_new(FALSE, BORDER);
-    ADD_LABEL(_("L_ongitude:"), sg_label);
-    ADD_SPIN(dialog->spin_lon, -180, 180, 1,
-             (string_to_double(dialog->pd->lon, 0)), 6, sg_spin);
-    SET_TOOLTIP(dialog->spin_lon,
-                _("Longitude specifies the east-west position of a point on "
-                  "the Earth's surface. If you change this value manually, "
-                  "you need to provide altitude and timezone manually too."));
-    label = gtk_label_new("°");
-    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
-    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
+    dialog->spin_lon = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "spin_lon"));
+    gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->spin_lon), string_to_double(dialog->pd->lon, 0));
 
     /* altitude */
-    hbox = gtk_hbox_new(FALSE, BORDER);
-    ADD_LABEL(_("Altitu_de:"), sg_label);
-    ADD_SPIN(dialog->spin_alt, -420, 10000, 1, dialog->pd->msl, 0, sg_spin);
-    SET_TOOLTIP
-        (dialog->spin_alt,
-         _("For locations outside Norway the elevation model that's used by "
-           "the met.no webservice is not very good, so it's usually necessary "
-           "to specify the altitude as an additional parameter, otherwise the "
-           "reported values will not be correct.\n\n"
-           "The plugin tries to auto-detect the altitude using the GeoNames "
-           "webservice, but that might not always be correct too, so you "
-           "can change it here.\n\n"
-           "Altitude is given in meters above sea level, or alternatively "
-           "in feet by changing the unit on the units page. It should match "
-           "the real value roughly, but small differences will have no "
-           "influence on the weather data. Inside Norway, this setting has "
-           "no effect at all."));
-    dialog->label_alt_unit = gtk_label_new(NULL);
-    gtk_misc_set_alignment(GTK_MISC(dialog->label_alt_unit), 0, 0.5);
-    gtk_box_pack_start(GTK_BOX(hbox), dialog->label_alt_unit, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
+    dialog->label_alt_unit = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "label_alt_unit"));
+    dialog->spin_alt = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "spin_alt"));
+    gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->spin_alt), dialog->pd->msl);
 
     /* timezone */
-    hbox = gtk_hbox_new(FALSE, BORDER);
-    ADD_LABEL(_("_Timezone:"), sg_label);
-    dialog->text_timezone = gtk_entry_new();
+    dialog->text_timezone = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "text_timezone"));
     gtk_entry_set_max_length(GTK_ENTRY(dialog->text_timezone),
                              LOC_NAME_MAX_LEN);
-    gtk_label_set_mnemonic_widget(GTK_LABEL(label),
-                                  GTK_WIDGET(dialog->text_timezone));
-    SET_TOOLTIP
-        (dialog->text_timezone,
-         _("If the chosen location is not in your current timezone, then "
-           "it is necessary to <i>put</i> the plugin into that other "
-           "timezone for the times to be shown correctly. The proper "
-           "timezone will be auto-detected via the GeoNames web service, "
-           "but you might want to correct it if necessary.\n"
-           "Leave this field empty to use the timezone set by your "
-           "system. Invalid entries will cause the use of UTC time, but "
-           "that may also depend on your system."));
-    gtk_box_pack_start(GTK_BOX(hbox), dialog->text_timezone, TRUE, TRUE, 0);
-    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
     if (dialog->pd->timezone)
         gtk_entry_set_text(GTK_ENTRY(dialog->text_timezone),
                            dialog->pd->timezone);
     else
         gtk_entry_set_text(GTK_ENTRY(dialog->text_timezone), "");
 
-    /* separator */
-    sep = gtk_hseparator_new();
-    gtk_box_pack_start(GTK_BOX(vbox), sep, FALSE, FALSE, BORDER * 2);
-
-    /* instructions for correction of altitude and timezone */
-    hbox = gtk_hbox_new(FALSE, BORDER);
-    label = gtk_label_new(NULL);
-    gtk_label_set_markup
-        (GTK_LABEL(label),
-         _("<i>Please change location name to your liking and "
-           "correct\naltitude and timezone if they are "
-           "not auto-detected correctly.</i>"));
-    gtk_misc_set_alignment(GTK_MISC(label), 0, 0.5);
-    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, BORDER/2);
-    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER/2);
-    gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
-
     /* set up the altitude spin box and unit label (meters/feet) */
     setup_altitude(dialog);
-
-    g_object_unref(G_OBJECT(sg_label));
-    g_object_unref(G_OBJECT(sg_spin));
-    return palign;
 }
 
 
@@ -952,97 +856,30 @@ combo_apparent_temperature_changed(GtkWidget *combo,
 }
 
 
-static GtkWidget *
+static void
 create_units_page(xfceweather_dialog *dialog)
 {
-    GtkWidget *palign, *page, *hbox, *vbox, *label, *sep;
-    GtkSizeGroup *sg_label;
-
-    ADD_PAGE(FALSE);
-    sg_label = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
-    vbox = gtk_vbox_new(FALSE, BORDER);
-
     /* temperature */
-    hbox = gtk_hbox_new(FALSE, BORDER);
-    ADD_LABEL(_("_Temperature:"), sg_label);
-    ADD_COMBO(dialog->combo_unit_temperature);
-    ADD_COMBO_VALUE(dialog->combo_unit_temperature, _("Celsius (°C)"));
-    ADD_COMBO_VALUE(dialog->combo_unit_temperature, _("Fahrenheit (°F)"));
-    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
+    dialog->combo_unit_temperature = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "combo_unit_temperature"));
 
     /* atmospheric pressure */
-    hbox = gtk_hbox_new(FALSE, BORDER);
-    ADD_LABEL(_("Barometric _pressure:"), sg_label);
-    ADD_COMBO(dialog->combo_unit_pressure);
-    ADD_COMBO_VALUE(dialog->combo_unit_pressure,
-                    _("Hectopascals (hPa)"));
-    ADD_COMBO_VALUE(dialog->combo_unit_pressure,
-                    _("Inches of mercury (inHg)"));
-    ADD_COMBO_VALUE(dialog->combo_unit_pressure,
-                    _("Pound-force per square inch (psi)"));
-    ADD_COMBO_VALUE(dialog->combo_unit_pressure,
-                    _("Torr (mmHg)"));
-    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
+    dialog->combo_unit_pressure = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "combo_unit_pressure"));
 
     /* wind speed */
-    hbox = gtk_hbox_new(FALSE, BORDER);
-    ADD_LABEL(_("_Wind speed:"), sg_label);
-    ADD_COMBO(dialog->combo_unit_windspeed);
-    ADD_COMBO_VALUE(dialog->combo_unit_windspeed,
-                    _("Kilometers per hour (km/h)"));
-    ADD_COMBO_VALUE(dialog->combo_unit_windspeed,
-                    _("Miles per hour (mph)"));
-    ADD_COMBO_VALUE(dialog->combo_unit_windspeed,
-                    _("Meters per second (m/s)"));
-    ADD_COMBO_VALUE(dialog->combo_unit_windspeed,
-                    _("Feet per second (ft/s)"));
-    ADD_COMBO_VALUE(dialog->combo_unit_windspeed,
-                    _("Knots (kt)"));
-    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
+    dialog->combo_unit_windspeed = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "combo_unit_windspeed"));
 
     /* precipitation */
-    hbox = gtk_hbox_new(FALSE, BORDER);
-    ADD_LABEL(_("Prec_ipitations:"), sg_label);
-    ADD_COMBO(dialog->combo_unit_precipitation);
-    ADD_COMBO_VALUE(dialog->combo_unit_precipitation,
-                    _("Millimeters (mm)"));
-    ADD_COMBO_VALUE(dialog->combo_unit_precipitation,
-                    _("Inches (in)"));
-    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
+    dialog->combo_unit_precipitation = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "combo_unit_precipitation"));
 
     /* altitude */
-    hbox = gtk_hbox_new(FALSE, BORDER);
-    ADD_LABEL(_("Altitu_de:"), sg_label);
-    ADD_COMBO(dialog->combo_unit_altitude);
-    ADD_COMBO_VALUE(dialog->combo_unit_altitude,
-                    _("Meters (m)"));
-    ADD_COMBO_VALUE(dialog->combo_unit_altitude,
-                    _("Feet (ft)"));
-    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
-
-    /* separator */
-    sep = gtk_hseparator_new();
-    gtk_box_pack_start(GTK_BOX(vbox), sep, FALSE, FALSE, BORDER * 2);
+    dialog->combo_unit_altitude = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "combo_unit_altitude"));
 
     /* apparent temperature model */
-    hbox = gtk_hbox_new(FALSE, BORDER);
-    ADD_LABEL(_("Apparent te_mperature:"), sg_label);
-    ADD_COMBO(dialog->combo_apparent_temperature);
-    ADD_COMBO_VALUE(dialog->combo_apparent_temperature,
-                    _("Windchill/Heat index"));
-    ADD_COMBO_VALUE(dialog->combo_apparent_temperature,
-                    _("Windchill/Humidex"));
-    ADD_COMBO_VALUE(dialog->combo_apparent_temperature, _("Steadman"));
-    ADD_COMBO_VALUE(dialog->combo_apparent_temperature, _("Quayle-Steadman"));
-    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, BORDER);
+    dialog->combo_apparent_temperature = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "combo_apparent_temperature"));
 
     /* initialize widgets with current data */
     if (dialog->pd)
         setup_units(dialog, dialog->pd->units);
-
-    gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
-    g_object_unref(G_OBJECT(sg_label));
-    return palign;
 }
 
 
@@ -1193,44 +1030,17 @@ check_round_values_toggled(GtkWidget *button,
 }
 
 
-static GtkWidget *
+static void
 create_appearance_page(xfceweather_dialog *dialog)
 {
-    GtkWidget *palign, *page, *sep, *hbox, *vbox, *label, *image;
-    GtkSizeGroup *sg;
-    GtkSettings *default_settings;
     icon_theme *theme;
     gchar *text;
-    gint i;
-
-    ADD_PAGE(FALSE);
-    sg = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
+    guint i;
 
     /* icon theme */
-    vbox = gtk_vbox_new(FALSE, BORDER);
-    hbox = gtk_hbox_new(FALSE, BORDER);
-    ADD_LABEL(_("_Icon theme:"), sg);
-    SET_TOOLTIP(label,
-                _("Available icon themes are listed here. You can add icon "
-                  "themes to $HOME/.config/xfce4/weather/icons (or the "
-                  "equivalent directory on your system). Information about "
-                  "how to create or use icon themes can be found in the "
-                  "README file. New icon themes will be detected everytime "
-                  "you open this config dialog."));
-    ADD_COMBO(dialog->combo_icon_theme);
-    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
-    default_settings = gtk_settings_get_default();
-    g_object_set(default_settings, "gtk-button-images", TRUE, NULL);
-    image = gtk_image_new();
-    gtk_image_set_from_stock(GTK_IMAGE(image), GTK_STOCK_OPEN,
-                             GTK_ICON_SIZE_BUTTON);
-    dialog->button_icons_dir = gtk_button_new();
-    gtk_button_set_image(GTK_BUTTON(dialog->button_icons_dir), image);
-    gtk_box_pack_start(GTK_BOX(hbox), dialog->button_icons_dir,
-                       FALSE, FALSE, 0);
-    SET_TOOLTIP(dialog->button_icons_dir,
-                _("Open the user icon themes directory in your file manager, "
-                  "creating it if necessary."));
+    dialog->combo_icon_theme = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "combo_icon_theme"));
+    dialog->button_icons_dir = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "button_icons_dir"));
+
     dialog->icon_themes = find_icon_themes();
     for (i = 0; i < dialog->icon_themes->len; i++) {
         theme = g_array_index(dialog->icon_themes, icon_theme *, i);
@@ -1244,58 +1054,25 @@ create_appearance_page(xfceweather_dialog *dialog)
     }
 
     /* always use small icon in panel */
-    hbox = gtk_hbox_new(FALSE, BORDER);
-    dialog->check_single_row =
-        gtk_check_button_new_with_mnemonic(_("Use only a single _panel row"));
-    SET_TOOLTIP(dialog->check_single_row,
-                _("Check to always use only a single row on a multi-row panel "
-                  "and a small icon in deskbar mode."));
+    dialog->check_single_row = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "check_single_row"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dialog->check_single_row),
                                  dialog->pd->single_row);
-    gtk_box_pack_start(GTK_BOX(hbox), dialog->check_single_row,
-                       FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
-
-    sep = gtk_hseparator_new();
-    gtk_box_pack_start(GTK_BOX(page), sep, FALSE, FALSE, BORDER * 2);
 
     /* tooltip style */
-    hbox = gtk_hbox_new(FALSE, BORDER);
-    vbox = gtk_vbox_new(FALSE, BORDER);
-    ADD_LABEL(_("_Tooltip style:"), sg);
-    ADD_COMBO(dialog->combo_tooltip_style);
-    ADD_COMBO_VALUE(dialog->combo_tooltip_style, _("Simple"));
-    ADD_COMBO_VALUE(dialog->combo_tooltip_style, _("Verbose"));
+    dialog->combo_tooltip_style = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "combo_tooltip_style"));
     SET_COMBO_VALUE(dialog->combo_tooltip_style, dialog->pd->tooltip_style);
-    SET_TOOLTIP(dialog->combo_tooltip_style,
-                _("Choose your preferred tooltip style. Some styles "
-                  "give a lot of useful data, some are clearer but "
-                  "provide less data on a glance."));
-    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
-
-    sep = gtk_hseparator_new();
-    gtk_box_pack_start(GTK_BOX(page), sep, FALSE, FALSE, BORDER * 2);
 
     /* forecast layout */
-    vbox = gtk_vbox_new(FALSE, BORDER);
-    hbox = gtk_hbox_new(FALSE, BORDER);
-    ADD_LABEL(_("_Forecast layout:"), sg);
-    ADD_COMBO(dialog->combo_forecast_layout);
-    ADD_COMBO_VALUE(dialog->combo_forecast_layout, _("Days in columns"));
-    ADD_COMBO_VALUE(dialog->combo_forecast_layout, _("Days in rows"));
+    dialog->combo_forecast_layout = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "combo_forecast_layout"));
     SET_COMBO_VALUE(dialog->combo_forecast_layout,
                     dialog->pd->forecast_layout);
     combo_forecast_layout_set_tooltip(dialog->combo_forecast_layout);
-    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
 
     /* number of days shown in forecast */
-    hbox = gtk_hbox_new(FALSE, BORDER);
-    ADD_LABEL(_("_Number of forecast days:"), sg);
-    ADD_SPIN(dialog->spin_forecast_days, 1, MAX_FORECAST_DAYS, 1,
-             (dialog->pd->forecast_days ? dialog->pd->forecast_days : 5),
-             0, NULL);
+    dialog->spin_forecast_days = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "spin_forecast_days"));
+    gtk_spin_button_set_range (GTK_SPIN_BUTTON (dialog->spin_forecast_days), 1, MAX_FORECAST_DAYS);
+    gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->spin_forecast_days),
+                               (dialog->pd->forecast_days ? dialog->pd->forecast_days : 5));
     text = g_strdup_printf
         (_("Met.no provides forecast data for up to %d days in the "
            "future. Choose how many days will be shown in the forecast "
@@ -1306,27 +1083,11 @@ create_appearance_page(xfceweather_dialog *dialog)
          MAX_FORECAST_DAYS);
     SET_TOOLTIP(dialog->spin_forecast_days, text);
     g_free(text);
-    gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
-
-    sep = gtk_hseparator_new();
-    gtk_box_pack_start(GTK_BOX(page), sep, FALSE, FALSE, BORDER * 2);
 
     /* round temperature */
-    vbox = gtk_vbox_new(FALSE, BORDER);
-    dialog->check_round_values =
-        gtk_check_button_new_with_mnemonic(_("_Round values"));
-    SET_TOOLTIP(dialog->check_round_values,
-                _("Check to round values everywhere except on the details "
-                  "page in the summary window."));
-    gtk_box_pack_start(GTK_BOX(vbox), dialog->check_round_values,
-                       FALSE, FALSE, 0);
+    dialog->check_round_values = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "check_round_values"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dialog->check_round_values),
                                  dialog->pd->round);
-
-    gtk_box_pack_start(GTK_BOX(page), vbox, FALSE, FALSE, 0);
-    g_object_unref(G_OBJECT(sg));
-    return palign;
 }
 
 
@@ -1379,19 +1140,18 @@ button_scrollbox_font_clicked(GtkWidget *button,
                               gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    GtkFontSelectionDialog *fsd;
+    GtkFontChooserDialog *fsd;
     gchar *fontname;
     gint result;
 
-    fsd = GTK_FONT_SELECTION_DIALOG
-        (gtk_font_selection_dialog_new(_("Select font")));
+    fsd = GTK_FONT_CHOOSER_DIALOG
+        (gtk_font_chooser_dialog_new(_("Select font"), GTK_WINDOW (dialog->dialog)));
     if (dialog->pd->scrollbox_font)
-        gtk_font_selection_dialog_set_font_name(fsd,
-                                                dialog->pd->scrollbox_font);
+        gtk_font_chooser_set_font (GTK_FONT_CHOOSER (fsd), dialog->pd->scrollbox_font);
 
     result = gtk_dialog_run(GTK_DIALOG(fsd));
     if (result == GTK_RESPONSE_OK || result == GTK_RESPONSE_ACCEPT) {
-        fontname = gtk_font_selection_dialog_get_font_name(fsd);
+        fontname = gtk_font_chooser_get_font (GTK_FONT_CHOOSER (fsd));
         if (fontname != NULL) {
             gtk_button_set_label(GTK_BUTTON(button), fontname);
             g_free(dialog->pd->scrollbox_font);
@@ -1431,30 +1191,11 @@ button_scrollbox_color_set(GtkWidget *button,
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
 
-    gtk_color_button_get_color(GTK_COLOR_BUTTON(button),
+    gtk_color_chooser_get_rgba(GTK_COLOR_CHOOSER(button),
                                &(dialog->pd->scrollbox_color));
     gtk_scrollbox_set_color(GTK_SCROLLBOX(dialog->pd->scrollbox),
                             dialog->pd->scrollbox_color);
     dialog->pd->scrollbox_use_color = TRUE;
-}
-
-
-static GtkWidget *
-make_label(void)
-{
-    GtkWidget *widget, *menu;
-    gint i;
-
-    menu = gtk_menu_new();
-    widget = gtk_option_menu_new();
-    for (i = 0; i < OPTIONS_N; i++) {
-        labeloption opt = labeloptions[i];
-
-        gtk_menu_shell_append(GTK_MENU_SHELL(menu),
-                              gtk_menu_item_new_with_label(_(opt.name)));
-    }
-    gtk_option_menu_set_menu(GTK_OPTION_MENU(widget), menu);
-    return widget;
 }
 
 
@@ -1515,12 +1256,13 @@ option_i(const data_types opt)
 static void
 options_datatypes_set_tooltip(GtkWidget *optmenu)
 {
+    gint history, opt = OPTIONS_N;
+    
     /* TRANSLATORS: Fallback value, usually never shown. */
     gchar *text = _("Choose the value to add to the list below. "
                     "Values can be added more than once.");
-    gint history, opt = OPTIONS_N;
 
-    history = gtk_option_menu_get_history(GTK_OPTION_MENU(optmenu));
+    history = gtk_combo_box_get_active (GTK_COMBO_BOX (optmenu));
     if (G_LIKELY(history > -1) && history < OPTIONS_N)
         opt = labeloptions[history].number;
 
@@ -1695,11 +1437,9 @@ button_add_option_clicked(GtkWidget *widget,
                           gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    gint history;
+    gint index = gtk_combo_box_get_active (GTK_COMBO_BOX (dialog->options_datatypes));
 
-    history =
-        gtk_option_menu_get_history(GTK_OPTION_MENU(dialog->options_datatypes));
-    add_model_option(dialog->model_datatypes, history);
+    add_model_option(dialog->model_datatypes, index);
     update_scrollbox_labels(dialog);
     return FALSE;
 }
@@ -1790,144 +1530,62 @@ check_scrollbox_animate_toggled(GtkWidget *button,
 }
 
 
-static GtkWidget *
+static void
 create_scrollbox_page(xfceweather_dialog *dialog)
 {
-    GtkWidget *palign, *page, *hbox, *table, *scroll, *label, *image, *sep;
-    GtkSizeGroup *sg_misc, *sg_button;
-    GtkWidget *button_add, *button_del, *button_up, *button_down;
+    GtkWidget *button;
     GtkTreeViewColumn *column;
     GtkCellRenderer *renderer;
     data_types type;
-    gint i, n;
-
-    ADD_PAGE(FALSE);
-    sg_misc = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
+    guint i;
+    gint n;
 
     /* show scrollbox */
-    hbox = gtk_hbox_new(FALSE, BORDER);
-    dialog->check_scrollbox_show =
-        gtk_check_button_new_with_mnemonic(_("Show scroll_box"));
-    SET_TOOLTIP(dialog->check_scrollbox_show,
-                _("Hide the scrollbox to save valuable space on the panel. "
-                  "Most interesting information is also provided in the "
-                  "tooltip - provided you choose an appropriate tooltip "
-                  "style - that is shown when hovering over the icon."));
-    gtk_box_pack_start(GTK_BOX(hbox), dialog->check_scrollbox_show,
-                       TRUE, TRUE, 0);
+    dialog->check_scrollbox_show = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "check_scrollbox_show"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON
                                  (dialog->check_scrollbox_show),
                                  dialog->pd->show_scrollbox);
 
     /* values to show at once (multiple lines) */
-    label = gtk_label_new_with_mnemonic(_("Li_nes:"));
-    gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
-    gtk_box_pack_start(GTK_BOX(hbox), label, TRUE, TRUE, 0);
-    ADD_SPIN(dialog->spin_scrollbox_lines, 1, MAX_SCROLLBOX_LINES, 1,
-             dialog->pd->scrollbox_lines, 0, sg_misc);
-    SET_TOOLTIP(dialog->spin_scrollbox_lines,
-                _("Decide how many values should be shown at once in the "
-                  "scrollbox. You can choose a smaller font or enlarge the "
-                  "panel to make more lines fit."));
-    gtk_box_pack_start(GTK_BOX(page), hbox, FALSE, FALSE, 0);
+    dialog->spin_scrollbox_lines = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "spin_scrollbox_lines"));
+    gtk_spin_button_set_range (GTK_SPIN_BUTTON (dialog->spin_scrollbox_lines), 1, MAX_SCROLLBOX_LINES);
+    gtk_spin_button_set_value (GTK_SPIN_BUTTON (dialog->spin_scrollbox_lines), dialog->pd->scrollbox_lines);
 
     /* font and color */
-    hbox = gtk_hbox_new(FALSE, BORDER);
-    label = gtk_label_new(_("Font and color:"));
-    gtk_misc_set_alignment(GTK_MISC(label), 1, 0.5);
-    gtk_box_pack_start(GTK_BOX(hbox), label, FALSE, FALSE, 0);
-    dialog->button_scrollbox_font =
-        gtk_button_new_with_mnemonic(_("Select _font"));
-    SET_TOOLTIP(dialog->button_scrollbox_font,
-                _("Choose a font you like and set it to a smaller or larger "
-                  "size. Middle-click on the button to unset the font and use "
-                  "your theme's default."));
-    gtk_box_pack_start(GTK_BOX(hbox), dialog->button_scrollbox_font,
-                       TRUE, TRUE, 0);
+    dialog->button_scrollbox_font = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "button_scrollbox_font"));
     if (dialog->pd->scrollbox_font)
         gtk_button_set_label(GTK_BUTTON(dialog->button_scrollbox_font),
                              dialog->pd->scrollbox_font);
-    dialog->button_scrollbox_color =
-        gtk_color_button_new_with_color(&(dialog->pd->scrollbox_color));
-    gtk_size_group_add_widget(sg_misc, dialog->button_scrollbox_color);
-    SET_TOOLTIP(dialog->button_scrollbox_color,
-                _("There may be problems with some themes that cause the "
-                  "scrollbox text to be hardly readable. If this is the case "
-                  "or you simply want it to appear in another color, then "
-                  "you can change it using this button. Middle-click on the "
-                  "button to unset the scrollbox text color."));
-    gtk_box_pack_start(GTK_BOX(hbox), dialog->button_scrollbox_color,
-                       FALSE, FALSE, 0 );
-    gtk_box_pack_start(GTK_BOX(page), hbox, FALSE, FALSE, 0);
-
-    /* separator */
-    sep = gtk_hseparator_new();
-    gtk_box_pack_start(GTK_BOX(page), sep, FALSE, FALSE, BORDER * 2);
+    dialog->button_scrollbox_color = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "button_scrollbox_color"));
+    gtk_color_chooser_set_rgba (GTK_COLOR_CHOOSER (dialog->button_scrollbox_color), &(dialog->pd->scrollbox_color));
 
     /* labels and buttons */
-    hbox = gtk_hbox_new(FALSE, BORDER);
-    sg_button = gtk_size_group_new(GTK_SIZE_GROUP_HORIZONTAL);
-    dialog->options_datatypes = make_label();
-    gtk_box_pack_start(GTK_BOX(hbox), dialog->options_datatypes, TRUE, TRUE, 0);
+    dialog->options_datatypes = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "options_datatypes"));
     options_datatypes_set_tooltip(dialog->options_datatypes);
     dialog->model_datatypes = gtk_list_store_new(2, G_TYPE_STRING, G_TYPE_INT);
-    dialog->list_datatypes =
-        gtk_tree_view_new_with_model(GTK_TREE_MODEL(dialog->model_datatypes));
+    dialog->list_datatypes = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "list_datatypes"));
+    gtk_tree_view_set_model (GTK_TREE_VIEW (dialog->list_datatypes), GTK_TREE_MODEL(dialog->model_datatypes));
     renderer = gtk_cell_renderer_text_new();
     column =
         gtk_tree_view_column_new_with_attributes(_("Labels to d_isplay"),
                                                  renderer, "text", 0, NULL);
-    SET_TOOLTIP(dialog->list_datatypes,
-                _("These are the values that will be shown in the scrollbox. "
-                  "Select a single value here and click the appropriate button "
-                  "to remove it or move it up and down in the list."));
     gtk_tree_view_append_column(GTK_TREE_VIEW(dialog->list_datatypes), column);
-    gtk_widget_set_size_request(dialog->options_datatypes, 300, -1);
 
     /* button "add" */
-    ADD_LABEL_EDIT_BUTTON(button_add, _("A_dd"),
-                          GTK_STOCK_ADD, button_add_option_clicked);
-    SET_TOOLTIP(button_add,
-                _("Add the selected value to the labels that should be "
-                  "displayed in the scrollbox."));
-    gtk_box_pack_start(GTK_BOX(hbox), button_add, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(page), hbox, FALSE, FALSE, 0);
-
-    /* labels to display */
-    hbox = gtk_hbox_new(FALSE, BORDER);
-    scroll = gtk_scrolled_window_new(NULL, NULL);
-    gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scroll),
-                                   GTK_POLICY_NEVER, GTK_POLICY_AUTOMATIC);
-    gtk_container_add(GTK_CONTAINER(scroll), dialog->list_datatypes);
-    gtk_box_pack_start(GTK_BOX(hbox), scroll, TRUE, TRUE, 0);
+    button = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "button_add"));
+    g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(button_add_option_clicked), dialog);
 
     /* button "remove" */
-    table = gtk_table_new(4, 1, TRUE);
-    ADD_LABEL_EDIT_BUTTON(button_del, _("_Remove"),
-                          GTK_STOCK_REMOVE, button_del_option_clicked);
-    SET_TOOLTIP(button_del,
-                _("Select a value in the list of labels to display and click "
-                  "this button to remove it."));
-    gtk_table_attach_defaults(GTK_TABLE(table), button_del, 0, 1, 0, 1);
+    button = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "button_del"));
+    g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(button_del_option_clicked), dialog);
 
     /* button "move up" */
-    ADD_LABEL_EDIT_BUTTON(button_up, _("Move u_p"),
-                          GTK_STOCK_GO_UP, button_up_option_clicked);
-    SET_TOOLTIP(button_up,
-                _("Move the selected value up in the list of labels "
-                  "to display."));
-    gtk_table_attach_defaults(GTK_TABLE(table), button_up, 0, 1, 2, 3);
+    button = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "button_up"));
+    g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(button_up_option_clicked), dialog);
 
     /* button "move down" */
-    ADD_LABEL_EDIT_BUTTON(button_down, _("Move do_wn"),
-                          GTK_STOCK_GO_DOWN, button_down_option_clicked);
-    SET_TOOLTIP(button_down,
-                _("Move the selected value down in the list of labels "
-                  "to display."));
-    gtk_table_attach_defaults(GTK_TABLE(table), button_down, 0, 1, 3, 4);
-
-    gtk_box_pack_start(GTK_BOX(hbox), table, FALSE, FALSE, 0);
-    gtk_box_pack_start(GTK_BOX(page), hbox, FALSE, FALSE, 0);
+    button = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "button_down"));
+    g_signal_connect(G_OBJECT(button), "clicked", G_CALLBACK(button_down_option_clicked), dialog);
 
     if (dialog->pd->labels->len > 0) {
         for (i = 0; i < dialog->pd->labels->len; i++) {
@@ -1938,28 +1596,16 @@ create_scrollbox_page(xfceweather_dialog *dialog)
         }
     }
 
-    dialog->check_scrollbox_animate = gtk_check_button_new_with_mnemonic
-        (_("Animate _transitions between labels"));
+    dialog->check_scrollbox_animate = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "check_scrollbox_animate"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON
                                  (dialog->check_scrollbox_animate),
                                  dialog->pd->scrollbox_animate);
-    SET_TOOLTIP(dialog->check_scrollbox_animate,
-                _("Scroll the current displayed value(s) out and the "
-                  "new value(s) in instead of simply changing them. "
-                  "Uncheck this option if you find the animation too "
-                  "distracting."));
-    gtk_box_pack_start(GTK_BOX(page), dialog->check_scrollbox_animate,
-                       FALSE, FALSE, 0);
-
-    g_object_unref(G_OBJECT(sg_misc));
-    g_object_unref(G_OBJECT(sg_button));
-    return palign;
 }
 
 
 static void
 notebook_page_switched(GtkNotebook *notebook,
-                       GtkNotebookPage *page,
+                       GtkWidget *page,
                        guint page_num,
                        gpointer user_data)
 {
@@ -1992,7 +1638,7 @@ setup_units(xfceweather_dialog *dialog,
 }
 
 
-void
+static void
 setup_notebook_signals(xfceweather_dialog *dialog)
 {
     /* location page */
@@ -2073,34 +1719,22 @@ setup_notebook_signals(xfceweather_dialog *dialog)
 
 xfceweather_dialog *
 create_config_dialog(plugin_data *data,
-                     GtkWidget *vbox)
+                     GtkBuilder  *builder)
 {
     xfceweather_dialog *dialog;
 
     dialog = g_slice_new0(xfceweather_dialog);
     dialog->pd = (plugin_data *) data;
-    dialog->dialog = gtk_widget_get_toplevel(vbox);
+    dialog->dialog = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (builder), "dialog"));
+    dialog->builder = builder;
 
-    dialog->notebook = gtk_notebook_new();
-    gtk_notebook_append_page(GTK_NOTEBOOK(dialog->notebook),
-                             create_location_page(dialog),
-                             gtk_label_new_with_mnemonic(_("_Location")));
-    gtk_notebook_append_page(GTK_NOTEBOOK(dialog->notebook),
-                             create_units_page(dialog),
-                             gtk_label_new_with_mnemonic(_("_Units")));
-    gtk_notebook_append_page(GTK_NOTEBOOK(dialog->notebook),
-                             create_appearance_page(dialog),
-                             gtk_label_new_with_mnemonic(_("_Appearance")));
-    gtk_notebook_append_page(GTK_NOTEBOOK(dialog->notebook),
-                             create_scrollbox_page(dialog),
-                             gtk_label_new_with_mnemonic(_("_Scrollbox")));
+    dialog->notebook = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (builder), "notebook"));
+    create_location_page(dialog);
+    create_units_page(dialog);
+    create_appearance_page(dialog);
+    create_scrollbox_page(dialog);
+
     setup_notebook_signals(dialog);
-    gtk_box_pack_start(GTK_BOX(vbox), dialog->notebook, TRUE, TRUE, 0);
-    gtk_widget_show(GTK_WIDGET(vbox));
-    gtk_widget_hide(GTK_WIDGET(dialog->update_spinner));
-#if !LIBXFCE4PANEL_CHECK_VERSION(4,9,0)
-    gtk_widget_hide(GTK_WIDGET(dialog->check_single_row));
-#endif
 
     /* automatically detect current location if it is yet unknown */
     if (!(dialog->pd->lat && dialog->pd->lon))

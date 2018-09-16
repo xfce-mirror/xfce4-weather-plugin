@@ -38,7 +38,11 @@ libweather_la_CFLAGS =						\
 	$(GTK_CFLAGS)							\
 	$(SOUP_CFLAGS)							\
 	$(UPOWER_GLIB_CFLAGS)						\
-	$(LIBXML_CFLAGS)
+	$(LIBXML_CFLAGS)	\
+	-DGTK_DISABLE_SINGLE_INCLUDES	\
+	-DGDK_DISABLE_DEPRECATED	\
+	-DGTK_DISABLE_DEPRECATED	\
+	-DGSEAL_ENABLE
 
 libweather_la_LIBADD =						\
 	$(LIBM)                                 \
@@ -56,6 +60,16 @@ libweather_la_LDFLAGS = \
 	-export-symbols-regex '^xfce_panel_module_(preinit|init|construct)' \
 	$(PLATFORM_LDFLAGS) \
 	$(UPOWER_GLIB_LIBS)
+
+if MAINTAINER_MODE
+
+BUILT_SOURCES = \
+	weather-config_ui.h
+
+weather-config_ui.h: weather-config.ui
+	exo-csource --static --strip-comments --strip-content --name=weather_config_ui $< >$@
+
+endif
 
 desktopdir = $(datadir)/xfce4/panel/plugins
 desktop_in_files = weather.desktop.in

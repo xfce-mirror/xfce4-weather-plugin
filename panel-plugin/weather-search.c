@@ -187,7 +187,7 @@ create_search_dialog(GtkWindow *parent,
                      SoupSession *session)
 {
     search_dialog *dialog;
-    GtkWidget *dialog_vbox, *vbox, *hbox, *scroll, *frame;
+    GtkWidget *dialog_vbox, *vbox, *hbox, *scroll, *frame, *image;
     GtkCellRenderer *renderer = gtk_cell_renderer_text_new();
 
     dialog = g_slice_new0(search_dialog);
@@ -202,18 +202,18 @@ create_search_dialog(GtkWindow *parent,
                                             parent,
                                             GTK_DIALOG_MODAL |
                                             GTK_DIALOG_DESTROY_WITH_PARENT,
-                                            GTK_STOCK_CANCEL,
+                                            _("Cancel"),
                                             GTK_RESPONSE_REJECT,
-                                            GTK_STOCK_OK,
+                                            _("OK"),
                                             GTK_RESPONSE_ACCEPT,
                                             NULL);
     gtk_dialog_set_response_sensitive(GTK_DIALOG(dialog->dialog),
                                       GTK_RESPONSE_ACCEPT, FALSE);
-    gtk_window_set_icon_name(GTK_WINDOW(dialog->dialog), GTK_STOCK_FIND);
+    gtk_window_set_icon_name(GTK_WINDOW(dialog->dialog), "edit-find");
 
     dialog_vbox = gtk_dialog_get_content_area(GTK_DIALOG(dialog->dialog));
 
-    vbox = gtk_vbox_new(FALSE, BORDER);
+    vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, BORDER);
     gtk_container_set_border_width(GTK_CONTAINER(vbox), 6);
     gtk_box_pack_start(GTK_BOX(dialog_vbox), vbox,
                        TRUE, TRUE, 0);
@@ -221,7 +221,7 @@ create_search_dialog(GtkWindow *parent,
     xfce_titled_dialog_set_subtitle(XFCE_TITLED_DIALOG(dialog->dialog),
                                     _("Enter a city name or address"));
 
-    hbox = gtk_hbox_new(FALSE, BORDER);
+    hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, BORDER);
     gtk_box_pack_start(GTK_BOX(vbox), hbox, FALSE, FALSE, 0);
 
     dialog->search_entry = gtk_entry_new();
@@ -230,7 +230,9 @@ create_search_dialog(GtkWindow *parent,
     g_signal_connect(G_OBJECT(dialog->search_entry), "activate",
                      G_CALLBACK(search_cb), dialog);
 
-    dialog->find_button = gtk_button_new_from_stock(GTK_STOCK_FIND);
+    dialog->find_button = gtk_button_new_with_label (_("Search"));
+    image = gtk_image_new_from_icon_name ("edit-find", GTK_ICON_SIZE_BUTTON);
+    gtk_button_set_image (GTK_BUTTON (dialog->find_button), image);
     gtk_box_pack_start(GTK_BOX(hbox), dialog->find_button, TRUE, TRUE, 0);
     g_signal_connect(G_OBJECT(dialog->find_button), "clicked",
                      G_CALLBACK(search_cb), dialog);

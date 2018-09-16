@@ -31,6 +31,7 @@ typedef struct {
     GtkWidget *notebook;
     plugin_data *pd;
     guint timer_id;
+    GtkBuilder *builder;
 
     /* location page */
     GtkWidget *text_loc_name;
@@ -72,7 +73,7 @@ typedef struct {
 
 
 xfceweather_dialog *create_config_dialog(plugin_data *data,
-                                         GtkWidget *vbox);
+                                         GtkBuilder  *builder);
 
 G_END_DECLS
 
