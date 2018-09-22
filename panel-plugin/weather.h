@@ -27,7 +27,7 @@
 #endif
 #include "weather-icon.h"
 
-#define PLUGIN_WEBSITE "http://goodies.xfce.org/projects/panel-plugins/xfce4-weather-plugin"
+#define PLUGIN_WEBSITE "https://goodies.xfce.org/projects/panel-plugins/xfce4-weather-plugin"
 #define MAX_FORECAST_DAYS 10
 #define DEFAULT_FORECAST_DAYS 5
 #define MAX_SCROLLBOX_LINES 10

@@ -161,7 +161,7 @@ search_cb(GtkWidget *widget,
     gtk_dialog_set_response_sensitive(GTK_DIALOG(dialog->dialog),
                                       GTK_RESPONSE_ACCEPT, FALSE);
 
-    url = g_strdup_printf("http://nominatim.openstreetmap.org/"
+    url = g_strdup_printf("https://nominatim.openstreetmap.org/"
                           "search?q=%s&format=xml", sane_str);
     g_free(sane_str);
 

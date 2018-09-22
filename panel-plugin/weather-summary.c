@@ -570,15 +570,15 @@ create_summary_tab(plugin_data *data)
                                                &lnk_color, NULL);
     APPEND_BTEXT(_("\nCredits\n"));
     APPEND_LINK_ITEM(_("\tEncyclopedic information partly taken from\n\t\t"),
-                     _("Wikipedia"), "http://wikipedia.org", ltag_wiki);
+                     _("Wikipedia"), "https://wikipedia.org", ltag_wiki);
     APPEND_LINK_ITEM(_("\n\tElevation and timezone data provided by\n\t\t"),
                      _("GeoNames"),
-                     "http://geonames.org/", ltag_geonames);
+                     "https://geonames.org/", ltag_geonames);
     APPEND_LINK_ITEM(_("\n\tWeather and astronomical data from\n\t\t"),
                      _("The Norwegian Meteorological Institute"),
-                     "http://met.no/", ltag_metno);
+                     "https://met.no/", ltag_metno);
     g_object_set_data_full(G_OBJECT(ltag_img), "url",   /* url for image */
-                           g_strdup("http://met.no"), g_free);
+                           g_strdup("https://met.no"), g_free);
 
     g_signal_connect(G_OBJECT(view), "motion-notify-event",
                      G_CALLBACK(view_motion_notify), sum);
