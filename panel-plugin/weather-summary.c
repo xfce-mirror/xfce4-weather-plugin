@@ -200,8 +200,7 @@ icon_motion_notify(GtkWidget *widget,
 {
     sum->on_icon = TRUE;
     gdk_window_set_cursor
-        (gtk_text_view_get_window(GTK_TEXT_VIEW(sum->text_view),
-                                  GTK_TEXT_WINDOW_TEXT),
+        (gtk_widget_get_window(widget),
          sum->hand_cursor);
     return FALSE;
 }
@@ -218,55 +217,6 @@ view_leave_notify(GtkWidget *widget,
                                   GTK_TEXT_WINDOW_TEXT),
          sum->text_cursor);
     return FALSE;
-}
-
-
-static void
-view_scrolled_cb(GtkAdjustment *adj,
-                 summary_details *sum)
-{
-    gint x, y, x1, y1;
-    GtkAllocation allocation;
-    GtkRequisition requisition;
-
-    if (sum->icon_ebox) {
-        gtk_widget_get_allocation (GTK_WIDGET (sum->text_view), &allocation);
-        G_GNUC_BEGIN_IGNORE_DEPRECATIONS
-        gtk_widget_get_requisition (GTK_WIDGET (sum->text_view), &requisition);
-        G_GNUC_END_IGNORE_DEPRECATIONS
-
-        /* TRANSLATORS: DO NOT TRANSLATE THIS STRING. This string is
-           not visible to the user but controls the alignment of the
-           met.no image on the details tab in the summary window,
-           which is needed for RTL languages because the text is on
-           the right side.
-           If you are a RTL translator (hebrew, arabic), set this
-           string to "RTL" to align the image to the left.
-           If not, leave this string untouched or untranslated.
-           Whatever you do, it should not have the value "RTL".
-           If you know of a better way to determine LTR/RTL that makes
-           this tweak unnecessary, please tell the developer.
-        */
-        if (!strcmp(_("LTR"), "RTL"))
-            x1 = -30;
-        else
-            x1 = allocation.width - 191 - 15;
-        y1 = requisition.height - 60 - 15;
-        gtk_text_view_buffer_to_window_coords(GTK_TEXT_VIEW(sum->text_view),
-                                              GTK_TEXT_WINDOW_TEXT,
-                                              x1, y1, &x, &y);
-        gtk_text_view_move_child(GTK_TEXT_VIEW(sum->text_view),
-                                 sum->icon_ebox, x, y);
-    }
-}
-
-
-static void
-view_size_allocate_cb(GtkWidget *widget,
-                      GtkAllocation *allocation,
-                      gpointer data)
-{
-    view_scrolled_cb(NULL, data);
 }
 
 
@@ -322,7 +272,7 @@ weather_summary_get_logo(plugin_data *data)
     g_free(path);
     if (pixbuf == NULL)
         weather_http_queue_request(data->session,
-                                   "https://met.no/filestore/met.no-logo.gif",
+                                   "https://www.met.no/_/asset/no.met.metno:1497355518/images/met-logo.svg",
                                    logo_fetched, image);
     else {
         gtk_image_set_from_pixbuf(GTK_IMAGE(image), pixbuf);
@@ -338,8 +288,7 @@ create_summary_tab(plugin_data *data)
     GtkTextBuffer *buffer;
     GtkTextIter iter;
     GtkTextTag *btag, *ltag_img, *ltag_metno, *ltag_wiki, *ltag_geonames;
-    GtkWidget *view, *frame, *scrolled, *icon;
-    GtkAdjustment *adj;
+    GtkWidget *view, *frame, *scrolled, *icon, *overlay;
     GdkRGBA lnk_color;
     xml_time *conditions;
     const gchar *unit;
@@ -365,7 +314,10 @@ create_summary_tab(plugin_data *data)
     frame = gtk_frame_new(NULL);
     scrolled = gtk_scrolled_window_new(NULL, NULL);
 
-    gtk_container_add(GTK_CONTAINER(scrolled), view);
+    overlay = gtk_overlay_new ();
+    gtk_container_add (GTK_CONTAINER (overlay), view);
+
+    gtk_container_add(GTK_CONTAINER(scrolled), overlay);
     gtk_scrolled_window_set_policy(GTK_SCROLLED_WINDOW(scrolled),
                                    GTK_POLICY_AUTOMATIC, GTK_POLICY_AUTOMATIC);
 
@@ -591,16 +543,14 @@ create_summary_tab(plugin_data *data)
         sum->icon_ebox = gtk_event_box_new();
         gtk_event_box_set_visible_window(GTK_EVENT_BOX(sum->icon_ebox), FALSE);
         gtk_container_add(GTK_CONTAINER(sum->icon_ebox), icon);
-        gtk_text_view_add_child_in_window(GTK_TEXT_VIEW(view),
-                                          sum->icon_ebox,
-                                          GTK_TEXT_WINDOW_TEXT, 0, 0);
+
+        gtk_widget_set_halign (GTK_WIDGET (sum->icon_ebox), GTK_ALIGN_END);
+        gtk_widget_set_valign (GTK_WIDGET (sum->icon_ebox), GTK_ALIGN_END);
+        gtk_widget_set_margin_bottom (GTK_WIDGET (sum->icon_ebox), 12);
+        gtk_widget_set_margin_end (GTK_WIDGET (sum->icon_ebox), 12);
+        gtk_overlay_add_overlay (GTK_OVERLAY (overlay), sum->icon_ebox);
+
         gtk_widget_show_all(sum->icon_ebox);
-        adj =
-            gtk_scrolled_window_get_vadjustment(GTK_SCROLLED_WINDOW(scrolled));
-        g_signal_connect(G_OBJECT(adj), "value-changed",
-                         G_CALLBACK(view_scrolled_cb), sum);
-        g_signal_connect(G_OBJECT(view), "size_allocate",
-                         G_CALLBACK(view_size_allocate_cb), sum);
         g_signal_connect(G_OBJECT(sum->icon_ebox), "button-release-event",
                          G_CALLBACK(icon_clicked), ltag_img);
         g_signal_connect(G_OBJECT(sum->icon_ebox), "enter-notify-event",
