@@ -19,8 +19,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-17 00:32+0200\n"
-"PO-Revision-Date: 2018-09-18 06:12+0000\n"
+"POT-Creation-Date: 2018-09-23 18:32+0200\n"
+"PO-Revision-Date: 2018-09-24 19:50+0000\n"
 "Last-Translator: Demiray Muhterem <mdemiray@msn.com>\n"
 "Language-Team: Turkish (http://www.transifex.com/xfce/xfce-panel-plugins/language/tr/)\n"
 "MIME-Version: 1.0\n"
@@ -210,63 +210,63 @@ msgstr "Telif hakkı(c) 2003-2014\n"
 #. * read that up somewhere and decide whether you want to use them
 #. * or not. In general, though, you should just try to choose
 #. * letter(s) that make sense and don't use up too much space.
-#: ../panel-plugin/weather-config.c:96
+#: ../panel-plugin/weather-config.c:96 ../panel-plugin/weather-config.ui.h:72
 msgid "Temperature (T)"
 msgstr "Sıcaklık (S)"
 
-#: ../panel-plugin/weather-config.c:97
+#: ../panel-plugin/weather-config.c:97 ../panel-plugin/weather-config.ui.h:73
 msgid "Barometric pressure (P)"
 msgstr "Barometrik basınç (P)"
 
-#: ../panel-plugin/weather-config.c:98
+#: ../panel-plugin/weather-config.c:98 ../panel-plugin/weather-config.ui.h:74
 msgid "Wind speed (WS)"
 msgstr "Rüzgar Hızı (RH)"
 
-#: ../panel-plugin/weather-config.c:99
+#: ../panel-plugin/weather-config.c:99 ../panel-plugin/weather-config.ui.h:75
 msgid "Wind speed - Beaufort scale (WB)"
 msgstr "Rüzgar hızı - Beaufort skalası (WB)"
 
-#: ../panel-plugin/weather-config.c:100
+#: ../panel-plugin/weather-config.c:100 ../panel-plugin/weather-config.ui.h:76
 msgid "Wind direction (WD)"
 msgstr "Rüzgar Yönü (RY)"
 
-#: ../panel-plugin/weather-config.c:101
+#: ../panel-plugin/weather-config.c:101 ../panel-plugin/weather-config.ui.h:77
 msgid "Wind direction in degrees (WD)"
 msgstr "Rüzgar yönü dereceleri (WD)"
 
-#: ../panel-plugin/weather-config.c:102
+#: ../panel-plugin/weather-config.c:102 ../panel-plugin/weather-config.ui.h:78
 msgid "Humidity (H)"
 msgstr "Nem (N)"
 
-#: ../panel-plugin/weather-config.c:103
+#: ../panel-plugin/weather-config.c:103 ../panel-plugin/weather-config.ui.h:79
 msgid "Dew point (D)"
 msgstr "Çiy noktası (D)"
 
-#: ../panel-plugin/weather-config.c:104
+#: ../panel-plugin/weather-config.c:104 ../panel-plugin/weather-config.ui.h:80
 msgid "Apparent temperature (A)"
 msgstr "Hissedilen sıcaklık (A)"
 
-#: ../panel-plugin/weather-config.c:105
+#: ../panel-plugin/weather-config.c:105 ../panel-plugin/weather-config.ui.h:81
 msgid "Low clouds (CL)"
 msgstr "Alçak bulutlar (CL)"
 
-#: ../panel-plugin/weather-config.c:106
+#: ../panel-plugin/weather-config.c:106 ../panel-plugin/weather-config.ui.h:82
 msgid "Middle clouds (CM)"
 msgstr "Orta bulutlar (CM)"
 
-#: ../panel-plugin/weather-config.c:107
+#: ../panel-plugin/weather-config.c:107 ../panel-plugin/weather-config.ui.h:83
 msgid "High clouds (CH)"
 msgstr "Yüksek Bulutlar (CH)"
 
-#: ../panel-plugin/weather-config.c:108
+#: ../panel-plugin/weather-config.c:108 ../panel-plugin/weather-config.ui.h:84
 msgid "Cloudiness (C)"
 msgstr "Bulutluluk (C)"
 
-#: ../panel-plugin/weather-config.c:109
+#: ../panel-plugin/weather-config.c:109 ../panel-plugin/weather-config.ui.h:85
 msgid "Fog (F)"
 msgstr "Sis (F)"
 
-#: ../panel-plugin/weather-config.c:110
+#: ../panel-plugin/weather-config.c:110 ../panel-plugin/weather-config.ui.h:86
 msgid "Precipitation (R)"
 msgstr "Yağış (R)"
 
@@ -279,7 +279,7 @@ msgstr "Kurulmamış"
 msgid "Detecting..."
 msgstr "Keşfediliyor..."
 
-#: ../panel-plugin/weather-config.c:399
+#: ../panel-plugin/weather-config.c:399 ../panel-plugin/weather-config.ui.h:19
 msgid "feet"
 msgstr "feet"
 
@@ -482,6 +482,7 @@ msgid ""
 msgstr "Met.no %d kadar gelecekteki tahmin verilerini sağlar.Özet penceresindeki tahmin sekmesinde kaç gün gösterileceğini seçiniz.Yavaş bilgisayarlarda pencere açılırken ,daha düşük sayılar geçikmelere karşı yardımcı olabilir.Son olarak,genellikle üç günü geçen tahminler çok fazla güvenilir değildir;-)"
 
 #: ../panel-plugin/weather-config.c:1131
+#: ../panel-plugin/weather-config.ui.h:98
 msgid "Select _font"
 msgstr "_Yazı tipi seçin"
 
@@ -752,7 +753,7 @@ msgstr "kt"
 
 #. TRANSLATORS: The degree sign is used like a unit for
 #. latitude, longitude, wind direction
-#: ../panel-plugin/weather-data.c:519
+#: ../panel-plugin/weather-data.c:519 ../panel-plugin/weather-config.ui.h:12
 msgid "°"
 msgstr "°"
 
@@ -827,55 +828,40 @@ msgstr "İsimsiz alan"
 msgid "\t%s%s%s%s%s\n"
 msgstr "\t%s%s%s%s%s\n"
 
-#. TRANSLATORS: DO NOT TRANSLATE THIS STRING. This string is
-#. not visible to the user but controls the alignment of the
-#. met.no image on the details tab in the summary window,
-#. which is needed for RTL languages because the text is on
-#. the right side.
-#. If you are a RTL translator (hebrew, arabic), set this
-#. string to "RTL" to align the image to the left.
-#. If not, leave this string untouched or untranslated.
-#. Whatever you do, it should not have the value "RTL".
-#. If you know of a better way to determine LTR/RTL that makes
-#. this tweak unnecessary, please tell the developer.
-#: ../panel-plugin/weather-summary.c:250
-msgid "LTR"
-msgstr "LTR"
-
-#: ../panel-plugin/weather-summary.c:297
+#: ../panel-plugin/weather-summary.c:247
 #, c-format
 msgid "Error downloading met.no logo image to %s, reason: %s\n"
 msgstr "met.no logo resmini %s konumuna indirirken hata, nedeni: %s\n"
 
-#: ../panel-plugin/weather-summary.c:299
+#: ../panel-plugin/weather-summary.c:249
 msgid "unknown"
 msgstr "bilinmeyen"
 
-#: ../panel-plugin/weather-summary.c:382
+#: ../panel-plugin/weather-summary.c:334
 msgid "Coordinates\n"
 msgstr "Koordinat\n"
 
-#: ../panel-plugin/weather-summary.c:383
+#: ../panel-plugin/weather-summary.c:335
 msgid "Altitude"
 msgstr "Rakım"
 
-#: ../panel-plugin/weather-summary.c:384
+#: ../panel-plugin/weather-summary.c:336
 msgid "Latitude"
 msgstr "Enlem"
 
-#: ../panel-plugin/weather-summary.c:385
+#: ../panel-plugin/weather-summary.c:337
 msgid "Longitude"
 msgstr "Boylam"
 
 #. TRANSLATORS: Please use as many \t as appropriate to align the
 #. date/time values as in the original.
-#: ../panel-plugin/weather-summary.c:389
+#: ../panel-plugin/weather-summary.c:341
 msgid ""
 "\n"
 "Downloads\n"
 msgstr "\nİndirilenler\n"
 
-#: ../panel-plugin/weather-summary.c:392
+#: ../panel-plugin/weather-summary.c:344
 #, c-format
 msgid ""
 "\tWeather data:\n"
@@ -885,7 +871,7 @@ msgid ""
 "\n"
 msgstr "\tHava verisi:\n\tSon:\t%s\n\tSonraki:\t%s\n\tGüncel başarısız deneme: %d\n\n"
 
-#: ../panel-plugin/weather-summary.c:406
+#: ../panel-plugin/weather-summary.c:358
 msgid ""
 "\tMet.no LocationforecastLTS API states that this version\n"
 "\tof the webservice is deprecated, and the plugin needs to be\n"
@@ -896,7 +882,7 @@ msgid ""
 "\n"
 msgstr "\tMet.no LocationforecastLTS API bu sürümün web servisinin\n\tönerilmediğini ve eklenti olması gerektiğini savunuyor\n\tyeni sürümü kullanmak için adapte edilmiştir, yada birkaç ay içinde\n\tçalışmayı durduracaktır.\n\tEğer dosyadaki hatayı kimse düzeltmemişse lütfen  https://bugzilla.xfce.org \n\tüzerinden düzeltin.\n"
 
-#: ../panel-plugin/weather-summary.c:415
+#: ../panel-plugin/weather-summary.c:367
 #, c-format
 msgid ""
 "\tAstronomical data:\n"
@@ -905,7 +891,7 @@ msgid ""
 "\tCurrent failed attempts: %d\n"
 msgstr "\tAstronomik veri:\n\tSon:\t%s\n\tSonraki:\t%s\n\tGüncel başarısız deneme: %d\n"
 
-#: ../panel-plugin/weather-summary.c:429
+#: ../panel-plugin/weather-summary.c:381
 msgid ""
 "\n"
 "\tMet.no sunrise API states that this version of the webservice\n"
@@ -916,20 +902,20 @@ msgid ""
 msgstr "\n⇥Met.no sunrise APİ  bu web servis sürümünün önerilmediğini iddia ediyor\n⇥ve eklentinin yeni bir eklenti kullanmak üzere uyarlanmış olması gerekir\n⇥yoksa bir kaç ay içinde çalışmayı durdurur.\n⇥eğer  kimse henüz yapmamışsa lütfen hata  ile ilgili uyarılaınızı\n⇥ https://bugzilla.xfce.org'a gönderiniz.\n"
 
 #. calculation times
-#: ../panel-plugin/weather-summary.c:436
+#: ../panel-plugin/weather-summary.c:388
 msgid ""
 "\n"
 "Times Used for Calculations\n"
 msgstr "\nHesaplamalarda Kullanılan Zamanlar\n"
 
-#: ../panel-plugin/weather-summary.c:439
+#: ../panel-plugin/weather-summary.c:391
 #, c-format
 msgid ""
 "\tTemperatures, wind, atmosphere and cloud data calculated\n"
 "\tfor:\t\t%s\n"
 msgstr "\tSıcaklıklar, rüzgar, atmosfer ve bulut verileri bunun için\n\thesaplanıyor:\t\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:448
+#: ../panel-plugin/weather-summary.c:400
 #, c-format
 msgid ""
 "\n"
@@ -940,197 +926,197 @@ msgid ""
 msgstr "\n\tYağış ve hava durumu sembolü hesaplandı\n\tAşağıdaki zaman aralığı kullanılarak:\n\tBaşlangıç:\t%s\n\tSonuç:\t%s\n"
 
 #. sun and moon
-#: ../panel-plugin/weather-summary.c:459
+#: ../panel-plugin/weather-summary.c:411
 msgid ""
 "\n"
 "Astronomical Data\n"
 msgstr "\nAstronomik Veri\n"
 
-#: ../panel-plugin/weather-summary.c:462
+#: ../panel-plugin/weather-summary.c:414
 msgid "\tSunrise:\t\tThe sun never rises today.\n"
 msgstr "\tGündoğumu:\t\tBugün güneş doğmayacak.\n"
 
-#: ../panel-plugin/weather-summary.c:465
+#: ../panel-plugin/weather-summary.c:417
 msgid "\tSunset:\t\tThe sun never sets today.\n"
 msgstr "\tGünbatımı:\t\tBugün güneş batmayacak.\n"
 
-#: ../panel-plugin/weather-summary.c:469
+#: ../panel-plugin/weather-summary.c:421
 #, c-format
 msgid "\tSunrise:\t\t%s\n"
 msgstr "\tGündoğumu:\t\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:474
+#: ../panel-plugin/weather-summary.c:426
 #, c-format
 msgid ""
 "\tSunset:\t\t%s\n"
 "\n"
 msgstr "\tGünbatımı:\t\t%s\n\n"
 
-#: ../panel-plugin/weather-summary.c:480
+#: ../panel-plugin/weather-summary.c:432
 #, c-format
 msgid "\tMoon phase:\t%s\n"
 msgstr "\tAy Evresi:\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:484
+#: ../panel-plugin/weather-summary.c:436
 msgid "\tMoon phase:\tUnknown\n"
 msgstr "\tAy evresi:Bilinmiyor\n"
 
-#: ../panel-plugin/weather-summary.c:489
+#: ../panel-plugin/weather-summary.c:441
 msgid "\tMoonrise:\tThe moon never rises today.\n"
 msgstr "\tAy doğumu:\tBugün ay doğmayacak.\n"
 
-#: ../panel-plugin/weather-summary.c:493
+#: ../panel-plugin/weather-summary.c:445
 msgid "\tMoonset:\tThe moon never sets today.\n"
 msgstr "\tAy batımı:\tBugün ay batmayacak.\n"
 
-#: ../panel-plugin/weather-summary.c:497
+#: ../panel-plugin/weather-summary.c:449
 #, c-format
 msgid "\tMoonrise:\t%s\n"
 msgstr "\tAy doğumu:\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:502
+#: ../panel-plugin/weather-summary.c:454
 #, c-format
 msgid "\tMoonset:\t%s\n"
 msgstr "\tAy batımı:\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:507
+#: ../panel-plugin/weather-summary.c:459
 msgid "\tData not available, will use sane default values for night and day.\n"
 msgstr "»Veri mevcut değildir, gece ve gündüz için makul varsayılan değerler kullanılacaktır.\n"
 
 #. temperatures
-#: ../panel-plugin/weather-summary.c:513
+#: ../panel-plugin/weather-summary.c:465
 msgid ""
 "\n"
 "Temperatures\n"
 msgstr "\nSıcaklıklar\n"
 
-#: ../panel-plugin/weather-summary.c:514
+#: ../panel-plugin/weather-summary.c:466
 msgid "Temperature"
 msgstr "Sıcaklık"
 
-#: ../panel-plugin/weather-summary.c:515
+#: ../panel-plugin/weather-summary.c:467
 msgid "Dew point"
 msgstr "Çığ noktası"
 
-#: ../panel-plugin/weather-summary.c:516
+#: ../panel-plugin/weather-summary.c:468
 msgid "Apparent temperature"
 msgstr "Görünen sıcaklık"
 
 #. wind
-#: ../panel-plugin/weather-summary.c:519
+#: ../panel-plugin/weather-summary.c:471
 msgid ""
 "\n"
 "Wind\n"
 msgstr "\n Rüzgar \n"
 
-#: ../panel-plugin/weather-summary.c:524
+#: ../panel-plugin/weather-summary.c:476
 #, c-format
 msgid "\tSpeed: %s %s (%s on the Beaufort scale)\n"
 msgstr "\tHız: %s %s (%s Beaufort ölçeğine göre)\n"
 
-#: ../panel-plugin/weather-summary.c:536
+#: ../panel-plugin/weather-summary.c:488
 #, c-format
 msgid "\tDirection: %s (%s%s)\n"
 msgstr "\tYön: %s (%s%s)\n"
 
 #. precipitation
-#: ../panel-plugin/weather-summary.c:544
+#: ../panel-plugin/weather-summary.c:496
 msgid ""
 "\n"
 "Precipitation\n"
 msgstr "\nYağış\n"
 
-#: ../panel-plugin/weather-summary.c:545
+#: ../panel-plugin/weather-summary.c:497
 msgid "Precipitation amount"
 msgstr "Yağış miktarı"
 
 #. atmosphere
-#: ../panel-plugin/weather-summary.c:548
+#: ../panel-plugin/weather-summary.c:500
 msgid ""
 "\n"
 "Atmosphere\n"
 msgstr "\nAtmosfer\n"
 
-#: ../panel-plugin/weather-summary.c:549
+#: ../panel-plugin/weather-summary.c:501
 msgid "Barometric pressure"
 msgstr "Barometrik basınç"
 
-#: ../panel-plugin/weather-summary.c:550
+#: ../panel-plugin/weather-summary.c:502
 msgid "Relative humidity"
 msgstr "Nem oranı"
 
 #. clouds
-#: ../panel-plugin/weather-summary.c:553
+#: ../panel-plugin/weather-summary.c:505
 msgid ""
 "\n"
 "Clouds\n"
 msgstr "\nBulutlar\n"
 
-#: ../panel-plugin/weather-summary.c:554
+#: ../panel-plugin/weather-summary.c:506
 #: ../panel-plugin/weather-translate.c:119
 msgid "Fog"
 msgstr "Sis"
 
-#: ../panel-plugin/weather-summary.c:555
+#: ../panel-plugin/weather-summary.c:507
 msgid "Low clouds"
 msgstr "Alçak bulutlar"
 
-#: ../panel-plugin/weather-summary.c:556
+#: ../panel-plugin/weather-summary.c:508
 msgid "Middle clouds"
 msgstr "Orta bulutlar"
 
-#: ../panel-plugin/weather-summary.c:557
+#: ../panel-plugin/weather-summary.c:509
 msgid "High clouds"
 msgstr "Yüksek bulutlar"
 
-#: ../panel-plugin/weather-summary.c:558
+#: ../panel-plugin/weather-summary.c:510
 msgid "Cloudiness"
 msgstr "Bulutlu"
 
-#: ../panel-plugin/weather-summary.c:571
+#: ../panel-plugin/weather-summary.c:523
 msgid ""
 "\n"
 "Credits\n"
 msgstr "\nKatkıda Bulunanlar\n"
 
-#: ../panel-plugin/weather-summary.c:572
+#: ../panel-plugin/weather-summary.c:524
 msgid ""
 "\tEncyclopedic information partly taken from\n"
 "\t\t"
 msgstr "\tAnsiklopedik bilgi kaynağı\n\t\t"
 
-#: ../panel-plugin/weather-summary.c:573
+#: ../panel-plugin/weather-summary.c:525
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#: ../panel-plugin/weather-summary.c:574
+#: ../panel-plugin/weather-summary.c:526
 msgid ""
 "\n"
 "\tElevation and timezone data provided by\n"
 "\t\t"
 msgstr "\n\tYükseklik ve zaman dilimi bilgi kaynağı\n\t\t"
 
-#: ../panel-plugin/weather-summary.c:575
+#: ../panel-plugin/weather-summary.c:527
 msgid "GeoNames"
 msgstr "GeoNames"
 
-#: ../panel-plugin/weather-summary.c:577
+#: ../panel-plugin/weather-summary.c:529
 msgid ""
 "\n"
 "\tWeather and astronomical data from\n"
 "\t\t"
 msgstr "\n\tHava durumu ve astronomik veri kaynağı\n\t\t"
 
-#: ../panel-plugin/weather-summary.c:578
+#: ../panel-plugin/weather-summary.c:530
 msgid "The Norwegian Meteorological Institute"
 msgstr "Norveç Meteoroloji Enstitüsü"
 
-#: ../panel-plugin/weather-summary.c:630
+#: ../panel-plugin/weather-summary.c:580
 #, c-format
 msgid "Today"
 msgstr "Bugün"
 
-#: ../panel-plugin/weather-summary.c:632
+#: ../panel-plugin/weather-summary.c:582
 #, c-format
 msgid "Tomorrow"
 msgstr "Yarın"
@@ -1139,192 +1125,192 @@ msgstr "Yarın"
 #. align the values; Monospace font is enforced with <tt> tags for
 #. alignment, and the text is enclosed in <small> tags because
 #. that looks much better and saves space.
-#: ../panel-plugin/weather-summary.c:652
+#: ../panel-plugin/weather-summary.c:602
 msgid "<b>Times used for calculations</b>\n"
 msgstr "<b>Hesaplamalar için kullanılan zamanlar</b>\n"
 
-#: ../panel-plugin/weather-summary.c:654
+#: ../panel-plugin/weather-summary.c:604
 #, c-format
 msgid "<tt><small>Interval start:       %s</small></tt>\n"
 msgstr "<tt><small>Başlangıç:       %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:660
+#: ../panel-plugin/weather-summary.c:610
 #, c-format
 msgid "<tt><small>Interval end:         %s</small></tt>\n"
 msgstr "<tt><small>Bitiş:         %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:666
+#: ../panel-plugin/weather-summary.c:616
 #, c-format
 msgid ""
 "<tt><small>Data calculated for:  %s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Veri:  %s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:672
+#: ../panel-plugin/weather-summary.c:622
 msgid "<b>Temperatures</b>\n"
 msgstr "<b>Sıcaklıklar</b>\n"
 
-#: ../panel-plugin/weather-summary.c:673
+#: ../panel-plugin/weather-summary.c:623
 #, c-format
 msgid "<tt><small>Dew point:            %s%s%s</small></tt>\n"
 msgstr "<tt><small>Çiğ noktası:            %s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:677
+#: ../panel-plugin/weather-summary.c:627
 #, c-format
 msgid ""
 "<tt><small>Apparent temperature: %s%s%s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Görünür sıcaklık: %s%s%s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:682
+#: ../panel-plugin/weather-summary.c:632
 msgid "<b>Atmosphere</b>\n"
 msgstr "<b>Atmosfer</b>\n"
 
-#: ../panel-plugin/weather-summary.c:683
+#: ../panel-plugin/weather-summary.c:633
 #, c-format
 msgid "<tt><small>Barometric pressure:  %s%s%s</small></tt>\n"
 msgstr "<tt><small>Barometrik basınç: %s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:687
+#: ../panel-plugin/weather-summary.c:637
 #, c-format
 msgid ""
 "<tt><small>Relative humidity:    %s%s%s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Göreceli nem:    %s%s%s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:692
+#: ../panel-plugin/weather-summary.c:642
 msgid "<b>Precipitation</b>\n"
 msgstr "<b>Yağış</b>\n"
 
-#: ../panel-plugin/weather-summary.c:693
+#: ../panel-plugin/weather-summary.c:643
 #, c-format
 msgid ""
 "<tt><small>Amount:        %s%s%s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Miktar:        %s%s%s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:698
+#: ../panel-plugin/weather-summary.c:648
 msgid "<b>Clouds</b>\n"
 msgstr "<b>Bulutlar</b>\n"
 
 #. TRANSLATORS: Clouds percentages are aligned to the right in the
 #. tooltip, the %5s are needed for that and are used both for
 #. rounded and unrounded values.
-#: ../panel-plugin/weather-summary.c:702
+#: ../panel-plugin/weather-summary.c:652
 #, c-format
 msgid "<tt><small>Fog:           %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Sis: %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:705
+#: ../panel-plugin/weather-summary.c:655
 #, c-format
 msgid "<tt><small>Low clouds:    %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Alçak bulutlar:    %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:708
+#: ../panel-plugin/weather-summary.c:658
 #, c-format
 msgid "<tt><small>Middle clouds: %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Orta bulutlar: %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:711
+#: ../panel-plugin/weather-summary.c:661
 #, c-format
 msgid "<tt><small>High clouds:   %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Yüksek bulutlar:   %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:714
+#: ../panel-plugin/weather-summary.c:664
 #, c-format
 msgid "<tt><small>Cloudiness:    %5s%s%s</small></tt>"
 msgstr "<tt><small>Bulutluluk:    %5s%s%s</small></tt>"
 
-#: ../panel-plugin/weather-summary.c:740
+#: ../panel-plugin/weather-summary.c:690
 #, c-format
 msgid "<b>%s</b>\n"
 msgstr "<b>%s</b>\n"
 
-#: ../panel-plugin/weather-summary.c:744
+#: ../panel-plugin/weather-summary.c:694
 msgid "<tt><small>Sunrise: The sun never rises this day.</small></tt>\n"
 msgstr "<tt><small>Gündoğumu: Güneş bugün hiç doğmayacak</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:748
+#: ../panel-plugin/weather-summary.c:698
 msgid "<tt><small>Sunset: The sun never sets this day.</small></tt>\n"
 msgstr "<tt><small>Günbatımı: Güneş bugün hiç batmayacak</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:753
+#: ../panel-plugin/weather-summary.c:703
 #, c-format
 msgid "<tt><small>Sunrise: %s</small></tt>\n"
 msgstr "<tt><small>Güneş doğuşu: %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:759
+#: ../panel-plugin/weather-summary.c:709
 #, c-format
 msgid ""
 "<tt><small>Sunset:  %s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Günbatımı: %s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:766
+#: ../panel-plugin/weather-summary.c:716
 #, c-format
 msgid "<tt><small>Moon phase: %s</small></tt>\n"
 msgstr "<tt><small>Ay evresi: %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:771
+#: ../panel-plugin/weather-summary.c:721
 msgid "<tt><small>Moon phase: Unknown</small></tt>\n"
 msgstr "<tt><small>Ay evresi: Bilinmiyor</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:776
+#: ../panel-plugin/weather-summary.c:726
 msgid "<tt><small>Moonrise: The moon never rises this day.</small></tt>\n"
 msgstr "<tt><small>Ay doguşu: Ay bugün hiç dogmayacak.</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:781
+#: ../panel-plugin/weather-summary.c:731
 msgid "<tt><small>Moonset: The moon never sets this day.</small></tt>\n"
 msgstr "<tt><small>Ay batışı: Ay bugün hiç batmacak.</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:786
+#: ../panel-plugin/weather-summary.c:736
 #, c-format
 msgid "<tt><small>Moonrise: %s</small></tt>\n"
 msgstr "<tt><small>Ay doğuşu: %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:792
+#: ../panel-plugin/weather-summary.c:742
 #, c-format
 msgid "<tt><small>Moonset:  %s</small></tt>"
 msgstr "<tt><small>Ay batışı: %s</small></tt>"
 
 #. daytime headers
-#: ../panel-plugin/weather-summary.c:965
+#: ../panel-plugin/weather-summary.c:915
 msgid "Morning"
 msgstr "Sabah"
 
-#: ../panel-plugin/weather-summary.c:966
+#: ../panel-plugin/weather-summary.c:916
 msgid "Afternoon"
 msgstr "Öğleden sonra"
 
-#: ../panel-plugin/weather-summary.c:967
+#: ../panel-plugin/weather-summary.c:917
 msgid "Evening"
 msgstr "Akşam"
 
-#: ../panel-plugin/weather-summary.c:968
+#: ../panel-plugin/weather-summary.c:918
 msgid "Night"
 msgstr "Gece"
 
-#: ../panel-plugin/weather-summary.c:1173
+#: ../panel-plugin/weather-summary.c:1123
 msgid "Weather Report"
 msgstr "Hava Durumu"
 
-#: ../panel-plugin/weather-summary.c:1176
+#: ../panel-plugin/weather-summary.c:1126
 msgid "Close"
 msgstr "Kapat"
 
-#: ../panel-plugin/weather-summary.c:1200
+#: ../panel-plugin/weather-summary.c:1150
 msgid "Please set a location in the plugin settings."
 msgstr "Lütfen eklenti ayarlarında bir konumu ayarlayın."
 
-#: ../panel-plugin/weather-summary.c:1202
+#: ../panel-plugin/weather-summary.c:1152
 msgid "Currently no data available."
 msgstr "Şu anda veri yok."
 
-#: ../panel-plugin/weather-summary.c:1214
+#: ../panel-plugin/weather-summary.c:1164
 msgid "_Forecast"
 msgstr "_Hava Tahmini"
 
-#: ../panel-plugin/weather-summary.c:1217
+#: ../panel-plugin/weather-summary.c:1167
 msgid "_Details"
 msgstr "_Detaylar"
 
@@ -1489,9 +1475,363 @@ msgid "Sleet with thunder"
 msgstr "Fırtınalı dolu"
 
 #: ../panel-plugin/weather.desktop.in.h:1
+#: ../panel-plugin/weather-config.ui.h:1
 msgid "Weather Update"
 msgstr "Hava durumu Güncelle"
 
 #: ../panel-plugin/weather.desktop.in.h:2
 msgid "Show current weather conditions"
 msgstr "Mevcut hava durumunu göster"
+
+#: ../panel-plugin/weather-config.ui.h:2
+msgid "Preferences"
+msgstr "Tercihler"
+
+#: ../panel-plugin/weather-config.ui.h:3
+msgid "_Help"
+msgstr "_Yardım"
+
+#: ../panel-plugin/weather-config.ui.h:4
+msgid "_Close"
+msgstr "_Kapat"
+
+#: ../panel-plugin/weather-config.ui.h:5
+msgid "Location _name:"
+msgstr "Konu_m adı:"
+
+#: ../panel-plugin/weather-config.ui.h:6
+msgid "Latitud_e:"
+msgstr "_Enlem:"
+
+#: ../panel-plugin/weather-config.ui.h:7
+msgid "L_ongitude:"
+msgstr "B_oylam:"
+
+#: ../panel-plugin/weather-config.ui.h:8
+msgid "Altitu_de:"
+msgstr "_Rakım:"
+
+#: ../panel-plugin/weather-config.ui.h:9
+msgid "_Timezone:"
+msgstr "Saa_t dilimi:"
+
+#: ../panel-plugin/weather-config.ui.h:10
+msgid ""
+"Please change location name to your liking and correct alltitude and "
+"timezone if they are not auto-detected correctly."
+msgstr "Sistem yereliniz doğru bir şekilde otomatik olarak algılanmıyorsa, konum adını isteğiniz gibi doğru enlem ve saat diliminize değiştirin."
+
+#: ../panel-plugin/weather-config.ui.h:11
+msgid ""
+"Latitude specifies the north-south position of a point on the Earth's "
+"surface. If you change this value manually, you need to provide altitude and"
+" timezone manually too."
+msgstr "Enlem Dünya'nın yüzeyinde bir noktanın kuzey-güney mevkisini belirtir. Elle bu değeri değiştirirseniz,  rakım ve zaman dilimi de sağlamanız gerekir."
+
+#: ../panel-plugin/weather-config.ui.h:13
+msgid ""
+"Longitude specifies the east-west position of a point on the Earth's "
+"surface. If you change this value manually, you need to provide altitude and"
+" timezone manually too."
+msgstr "Boylam Dünya'nın yüzeyinde bir noktanın doğu-batı mevkisini belirtir. Elle bu değeri değiştirirseniz, rakım ve zaman dilimi de sağlamanız gerekir."
+
+#: ../panel-plugin/weather-config.ui.h:14
+msgid ""
+"For locations outside Norway the elevation model that's used by the met.no webservice is not very good, so it's usually necessary to specify the altitude as an additional parameter, otherwise the reported values will not be correct.\n"
+"\n"
+"The plugin tries to auto-detect the altitude using the GeoNames webservice, but that might not always be correct too, so you can change it here.\n"
+"\n"
+"Altitude is given in meters above sea level, or alternatively in feet by changing the unit on the units page. It should match the real value roughly, but small differences will have no influence on the weather data. Inside Norway, this setting has no effect at all."
+msgstr "Norveç dışındaki yerler için  met.no webservis tarafından kullanılan yükseklik modeli çok iyi değildir,bu yüzden ek parametre olarak yüksekliğini belitrmek gerek,aksi halde bildirilen değerler doğru olmayacaktır.\n\nEklenti GeoNames webservisini kullanarak otomatik olarak yükseklik algılamaya çalışır,ama bu her zaman çok doğru olmaya bilir,bu yüzden bu servisi buradan değiştirebilirsiniz.\n\nYükseklik,denizin seviyesi üzerinden metre olarak yada alternatif olarak öğeler sayfasında birimleri değiştirerek foot birimi kadar verilmiştir.Aşağı yukarı  gerçek değerle eşleşmesi gerekir,ama küçük farklar hava durumu verileri üzerinde hiçbir etkiye sahip olmayacaktır.Norveçde bu ayarların hiçbir etkisi yoktur."
+
+#: ../panel-plugin/weather-config.ui.h:20
+msgid ""
+"If the chosen location is not in your current timezone, then it is necessary to <i>put</i> the plugin into that other timezone for the times to be shown correctly. The proper timezone will be auto-detected via the GeoNames web service, but you might want to correct it if necessary.\n"
+"Leave this field empty to use the timezone set by your system. Invalid entries will cause the use of UTC time, but that may also depend on your system."
+msgstr "Eğer saat dilimi seçilen yerde geçerli değilse,o zaman <i>koymak </i> eklentisini  "
+
+#: ../panel-plugin/weather-config.ui.h:22
+msgid ""
+"Change the name for the location to your liking. It is used for display and "
+"does not affect the location parameters in any way."
+msgstr "Beğeninize göre konum için isim değiştirin. Bu, gösterim için kullanılmaktadır ve herhangi bir şekilde konum parametrelerini etkilemez."
+
+#: ../panel-plugin/weather-config.ui.h:23
+msgid "Change..."
+msgstr "Değiştir..."
+
+#: ../panel-plugin/weather-config.ui.h:24
+msgid "Search for a new location and auto-detect its parameters."
+msgstr "Yeni bir konumu ve parametrelerini otomatik algılama için aramak."
+
+#: ../panel-plugin/weather-config.ui.h:25
+msgid "_Location"
+msgstr "_Konum"
+
+#: ../panel-plugin/weather-config.ui.h:26
+msgid "_Temperature:"
+msgstr "_Sıcaklık:"
+
+#: ../panel-plugin/weather-config.ui.h:27
+msgid "Barometric _pressure:"
+msgstr "Barometrik _basınç:"
+
+#: ../panel-plugin/weather-config.ui.h:28
+msgid "_Wind speed:"
+msgstr "_Rüzgar hızı:"
+
+#: ../panel-plugin/weather-config.ui.h:29
+msgid "Prec_ipitations:"
+msgstr "_Yağış:"
+
+#: ../panel-plugin/weather-config.ui.h:30
+msgid "Apparent te_mperature:"
+msgstr "_Görünen sıcaklık:"
+
+#: ../panel-plugin/weather-config.ui.h:31
+msgid "Celsius (°C)"
+msgstr "Santigrat (°C)"
+
+#: ../panel-plugin/weather-config.ui.h:32
+msgid "Fahrenheit (°F)"
+msgstr "Fahrenhayt (°F)"
+
+#: ../panel-plugin/weather-config.ui.h:33
+msgid "Hectopascals (hPa)"
+msgstr "Hektopaskal (hPa)"
+
+#: ../panel-plugin/weather-config.ui.h:34
+msgid "Inches of mercury (inHg)"
+msgstr "Civa İnç (inHg)"
+
+#: ../panel-plugin/weather-config.ui.h:35
+msgid "Pound-force per square inch (psi)"
+msgstr "Kuvvet birimi kare başına inç'tir(inçkareye pound)"
+
+#: ../panel-plugin/weather-config.ui.h:36
+msgid "Torr (mmHg)"
+msgstr "Tor (mmHg)"
+
+#: ../panel-plugin/weather-config.ui.h:37
+msgid "Kilometers per hour (km/h)"
+msgstr "Saatte kilometre olarak (km/h)"
+
+#: ../panel-plugin/weather-config.ui.h:38
+msgid "Miles per hour (mph)"
+msgstr "Saatte mil olarak (mph)"
+
+#: ../panel-plugin/weather-config.ui.h:39
+msgid "Meters per second (m/s)"
+msgstr "Saniyede metre olarak (m/s)"
+
+#: ../panel-plugin/weather-config.ui.h:40
+msgid "Feet per second (ft/s)"
+msgstr "Saniyede feet olarak (ft/s)"
+
+#: ../panel-plugin/weather-config.ui.h:41
+msgid "Knots (kt)"
+msgstr "Knots (kt)"
+
+#: ../panel-plugin/weather-config.ui.h:42
+msgid "Millimeters (mm)"
+msgstr "Milimetre (mm)"
+
+#: ../panel-plugin/weather-config.ui.h:43
+msgid "Inches (in)"
+msgstr "Inç (in)"
+
+#: ../panel-plugin/weather-config.ui.h:44
+msgid "Meters (m)"
+msgstr "Metre (m)"
+
+#: ../panel-plugin/weather-config.ui.h:45
+msgid "Feet (ft)"
+msgstr "Fit (ft)"
+
+#: ../panel-plugin/weather-config.ui.h:46
+msgid "Windchill/Heat index"
+msgstr "Rüzgar Etkisi/Isı indeksi"
+
+#: ../panel-plugin/weather-config.ui.h:47
+msgid "Windchill/Humidex"
+msgstr "Rüzgar Etkisi/Nem"
+
+#: ../panel-plugin/weather-config.ui.h:48
+msgid "Steadman"
+msgstr "Steadman"
+
+#: ../panel-plugin/weather-config.ui.h:49
+msgid "Quayle-Steadman"
+msgstr "Quayle-Steadman"
+
+#: ../panel-plugin/weather-config.ui.h:50
+msgid "_Units"
+msgstr "_Birimler"
+
+#: ../panel-plugin/weather-config.ui.h:51
+msgid ""
+"Available icon themes are listed here. You can add icon themes to "
+"$HOME/.config/xfce4/weather/icons (or the equivalent directory on your "
+"system). Information about how to create or use icon themes can be found in "
+"the README file. New icon themes will be detected everytime you open this "
+"config dialog."
+msgstr "Mevcut simge temaları burada listelenmiştir.Simge temalarını $ HOME / .yapılandırma / xfce4 / hava durumu / simgeler 'e(veya sisteminizdeki eşdeğer sistem) yükleye bilirsiniz.Nasıl oluşturulacağını veya  simge temalarının nasıl kullanılacağı hakkındaki bilgiyi  README  dosyasından bulabilrsiniz. Her bu yapılandırma iletişim kutusunu açtığınızda yeni simge temaları tespit edilecektir."
+
+#: ../panel-plugin/weather-config.ui.h:52
+msgid "_Icon theme:"
+msgstr "S_imge teması:"
+
+#: ../panel-plugin/weather-config.ui.h:53
+msgid ""
+"Open the user icon themes directory in your file manager, creating it if "
+"necessary."
+msgstr "Oluşturmanız gerekirse dosya yöneticisinde kullanıcı simge temaları dizini açın."
+
+#: ../panel-plugin/weather-config.ui.h:54
+msgid "Use only a single _panel row"
+msgstr "Sadece tek bir _panel satır kullanın"
+
+#: ../panel-plugin/weather-config.ui.h:55
+msgid ""
+"Check to always use only a single row on a multi-row panel and a small icon "
+"in deskbar mode."
+msgstr "Herzaman  multiplane panelinde ve deskbar modunda küçük bir simgeyi sadece tek bir satırda  kullanmak için  kontrol edin."
+
+#: ../panel-plugin/weather-config.ui.h:56
+msgid "_Tooltip style:"
+msgstr "_Araç bilgisi şekli:"
+
+#: ../panel-plugin/weather-config.ui.h:57
+msgid ""
+"Choose your preferred tooltip style. Some styles give a lot of useful data, "
+"some are clearer but provide less data on a glance."
+msgstr "Gerekli ipucu stilinizi seçiniz.Bazı stiller bir sürü kullanışlı bilgiler,bazıları daha da net bilgiler verir,ama ilk bakıldığında daha az bilgi sağlar."
+
+#: ../panel-plugin/weather-config.ui.h:58
+msgid "Simple"
+msgstr "Basit"
+
+#: ../panel-plugin/weather-config.ui.h:59
+msgid "Verbose"
+msgstr "Ayrıntılı"
+
+#: ../panel-plugin/weather-config.ui.h:60
+msgid "_Forecast layout:"
+msgstr "_Tahmin yerleşimi:"
+
+#: ../panel-plugin/weather-config.ui.h:61
+msgid "Days in columns"
+msgstr "Günler sütunlarda"
+
+#: ../panel-plugin/weather-config.ui.h:62
+msgid "Days in rows"
+msgstr "Günler satırlarda"
+
+#: ../panel-plugin/weather-config.ui.h:63
+msgid "_Number of forecast days:"
+msgstr "_Yağışlı gün sayısı:"
+
+#: ../panel-plugin/weather-config.ui.h:64
+msgid "_Round values"
+msgstr "_Yuvarlak değerler"
+
+#: ../panel-plugin/weather-config.ui.h:65
+msgid "_Appearance"
+msgstr "_Görünüm"
+
+#: ../panel-plugin/weather-config.ui.h:66
+msgid "Show scroll_box"
+msgstr "Kaydırma_kutusunu göster"
+
+#: ../panel-plugin/weather-config.ui.h:67
+msgid ""
+"Hide the scrollbox to save valuable space on the panel. Most interesting "
+"information is also provided in the tooltip - provided you choose an "
+"appropriate tooltip style - that is shown when hovering over the icon."
+msgstr "Panelde değerli alanı kayda geçirmek için scrollbox'u gizleyiniz.En ilginç bilgiler de araç bilgisinde verilmektedir-simgenin üzerine fare imlecini getirdiğinizde görünen gerekli araç bilgisini seçmeniz sağlanır."
+
+#: ../panel-plugin/weather-config.ui.h:68
+msgid "Li_nes:"
+msgstr "_Satırlar:"
+
+#: ../panel-plugin/weather-config.ui.h:69
+msgid ""
+"Decide how many values should be shown at once in the scrollbox. You can "
+"choose a smaller font or enlarge the panel to make more lines fit."
+msgstr "Scrollbox'da kaç tane değer gösterilmesi gerektiğine karar veriniz.Daha küçük bir yazı tipi seçebilirsiniz yada birkaç satır sığması için paneli arttırabilirsiniz."
+
+#: ../panel-plugin/weather-config.ui.h:70
+msgid "Font and color:"
+msgstr "Yazı tipi ve renk:"
+
+#: ../panel-plugin/weather-config.ui.h:71
+msgid ""
+"There may be problems with some themes that cause the scrollbox text to be "
+"hardly readable. If this is the case or you simply want it to appear in "
+"another color, then you can change it using this button. Middle-click on the"
+" button to unset the scrollbox text color."
+msgstr "Bazi temalar Scrollbox-metinin okunabilirligi ile sorunlar olabilir. Bu durumda ya da sadece başka bir renkte görünmesini istiyorsanız, o zaman bu düğmeyi kullanarak değiştirebilirsiniz.Scrollbox metin rengi yoketmek icin düğmeye orta-tıklayın."
+
+#: ../panel-plugin/weather-config.ui.h:87
+msgid ""
+"These are the values that will be shown in the scrollbox. Select a single "
+"value here and click the appropriate button to remove it or move it up and "
+"down in the list."
+msgstr "Bunlar scrollbox'da gösterilecek değerlerdir.Buradan yeni bir değer seçiniz ve bu değeri silmek veya listede yukarı ve aşağı hareket ettirmek için uygun düğmeyi tıklayın."
+
+#: ../panel-plugin/weather-config.ui.h:88
+msgid "A_dd"
+msgstr "_Ekle"
+
+#: ../panel-plugin/weather-config.ui.h:89
+msgid ""
+"Add the selected value to the labels that should be displayed in the "
+"scrollbox."
+msgstr "Scrollbox'ta görüntülenmesi gereken etiketler için seçilen değeri ekleyin."
+
+#: ../panel-plugin/weather-config.ui.h:90
+msgid "_Remove"
+msgstr "_Kaldır"
+
+#: ../panel-plugin/weather-config.ui.h:91
+msgid ""
+"Select a value in the list of labels to display and click this button to "
+"remove it."
+msgstr "Görüntülemek için etiket listesinde bir değer seçin ve kaldırmak için bu düğmeyi tıklatın."
+
+#: ../panel-plugin/weather-config.ui.h:92
+msgid "Move do_wn"
+msgstr "Aşağı taşı"
+
+#: ../panel-plugin/weather-config.ui.h:93
+msgid "Move the selected value down in the list of labels to display."
+msgstr "Görüntülemek için etiket listesindeki seçili değeri aşağı hareket ettirin."
+
+#: ../panel-plugin/weather-config.ui.h:94
+msgid "Move u_p"
+msgstr "Yukarı _taşı"
+
+#: ../panel-plugin/weather-config.ui.h:95
+msgid "Move the selected value up in the list of labels to display."
+msgstr "Görüntülemek için etiket listesinde seçilen değer kadar hareket ettirin."
+
+#: ../panel-plugin/weather-config.ui.h:96
+msgid "Animate _transitions between labels"
+msgstr "Etiketler arasındaki  _geçişi hareketlendirmek "
+
+#: ../panel-plugin/weather-config.ui.h:97
+msgid ""
+"Scroll the current displayed value(s) out and the new value(s) in instead of"
+" simply changing them. Uncheck this option if you find the animation too "
+"distracting."
+msgstr "Gösterilen mevcut değeri (ler) ve yerine sadece onları değiştiren, yeni değeri (ler) kaydırın.Eğer animasyonu çok rahatsız edici bulduysanız bu seçeneğin işaretini kaldırın."
+
+#: ../panel-plugin/weather-config.ui.h:99
+msgid ""
+"Choose a font you like and set it to a smaller or larger size. Middle-click "
+"on the button to unset the font and use your theme's default."
+msgstr "Istediginiz bir yazı tipi seçin ve boyutunu daha küçük veya daha büyük ayarlayın. Kendi temanızı varsayılan kullanmak için düğmesini orta-tıklayın ve böylece yazi tipi iptal edilecek."
+
+#: ../panel-plugin/weather-config.ui.h:100
+msgid "_Scrollbox"
+msgstr "_Kaydırma kutusu"
