@@ -26,6 +26,9 @@
 #include <libxfce4util/libxfce4util.h>
 #include <libxfce4ui/libxfce4ui.h>
 
+#include <libxml/parser.h>
+#include <libxml/tree.h>
+
 #include "weather-parsers.h"
 #include "weather-data.h"
 #include "weather.h"
@@ -46,12 +49,6 @@
 #define CONN_MAX_ATTEMPTS (3)    /* max retry attempts using small interval */
 #define CONN_RETRY_INTERVAL_SMALL (10)
 #define CONN_RETRY_INTERVAL_LARGE (10 * 60)
-
-/* met.no sunrise API returns data for up to 30 days in the future and
-   will return an error page if too many days are requested. Let's
-   play it safe and request fewer than that, since we can only get a
-   10 days forecast too. */
-#define ASTRODATA_MAX_DAYS 25
 
 /* power saving update interval in seconds used as a precaution to
    deal with suspend/resume events etc., when nothing needs to be
@@ -81,6 +78,7 @@
     g_free(locname);                            \
     g_free(lat);                                \
     g_free(lon);                                \
+    g_free(offset);                             \
     if (keyfile)                                \
         g_key_file_free(keyfile);
 
@@ -266,6 +264,19 @@ update_timezone(plugin_data *data)
         else
             g_unsetenv("TZ");
     }
+}
+
+
+void
+update_offset(plugin_data *data)
+{
+    GDateTime *dt;
+
+    dt = g_date_time_new_now_local();
+    if (G_LIKELY(data->offset))
+        g_free(data->offset);
+
+    data->offset = g_date_time_format(dt, "%:z");
 }
 
 
@@ -481,7 +492,7 @@ cb_astro_update(SoupSession *session,
 {
     plugin_data *data = user_data;
     xmlDoc *doc;
-    xmlNode *root_node;
+    xmlNode *root_node, *child_node;
     time_t now_t;
     gboolean parsing_error = TRUE;
 
@@ -492,13 +503,19 @@ cb_astro_update(SoupSession *session,
         doc = get_xml_document(msg);
         if (G_LIKELY(doc)) {
             root_node = xmlDocGetRootElement(doc);
-            if (G_LIKELY(root_node))
-                if (parse_astrodata(root_node, data->astrodata)) {
-                    /* schedule next update */
-                    data->astro_update->attempt = 0;
-                    data->astro_update->last = now_t;
-                    parsing_error = FALSE;
+            if (G_LIKELY(root_node)) {
+                for (child_node = root_node->children; child_node;
+                     child_node = child_node->next) {
+                    if (child_node->type == XML_ELEMENT_NODE) {
+                        if (parse_astrodata(child_node, data->astrodata)) {
+                            /* schedule next update */
+                            data->astro_update->attempt = 0;
+                            data->astro_update->last = now_t;
+                            parsing_error = FALSE;
+                        }
+                    }
                 }
+            }
             xmlFreeDoc(doc);
         }
         if (parsing_error)
@@ -580,8 +597,8 @@ update_handler(plugin_data *data)
 {
     gchar *url;
     gboolean night_time;
-    time_t now_t, end_t;
-    struct tm now_tm, end_tm;
+    time_t now_t;
+    struct tm now_tm;
 
     g_assert(data != NULL);
     if (G_UNLIKELY(data == NULL))
@@ -616,26 +633,22 @@ update_handler(plugin_data *data)
         data->astro_update->next = time_calc_hour(now_tm, 1);
         data->astro_update->started = TRUE;
 
-        /* calculate date range for request */
-        end_t = time_calc_day(now_tm, ASTRODATA_MAX_DAYS);
-        end_tm = *localtime(&end_t);
-
         /* build url */
-        url = g_strdup_printf("https://api.met.no/weatherapi/sunrise/1.1/?"
-                              "lat=%s;lon=%s;"
-                              "from=%04d-%02d-%02d;"
-                              "to=%04d-%02d-%02d",
+        url = g_strdup_printf("https://api.met.no/weatherapi"
+                              "/sunrise/2.0/?lat=%s&lon=%s&"
+                              "date=%04d-%02d-%02d&"
+                              "offset=%s&days=%u",
                               data->lat, data->lon,
                               now_tm.tm_year + 1900,
                               now_tm.tm_mon + 1,
                               now_tm.tm_mday,
-                              end_tm.tm_year + 1900,
-                              end_tm.tm_mon + 1,
-                              end_tm.tm_mday);
+                              data->offset,
+                              data->forecast_days);
 
         /* start receive thread */
         g_message(_("getting %s"), url);
-        weather_http_queue_request(data->session, url, cb_astro_update, data);
+        weather_http_queue_request(data->session, url,
+                                   cb_astro_update, data);
         g_free(url);
     }
 
@@ -647,10 +660,10 @@ update_handler(plugin_data *data)
         data->weather_update->started = TRUE;
 
         /* build url */
-        url =
-            g_strdup_printf("https://api.met.no/weatherapi"
-                            "/locationforecastlts/1.3/?lat=%s;lon=%s;msl=%d",
-                            data->lat, data->lon, data->msl);
+        url = g_strdup_printf("https://api.met.no/weatherapi"
+                              "/locationforecastlts/1.3/?lat=%s&lon=%s&"
+                              "msl=%d",
+                              data->lat, data->lon, data->msl);
 
         /* start receive thread */
         g_message(_("getting %s"), url);
@@ -707,7 +720,7 @@ schedule_next_wakeup(plugin_data *data)
 
     next_day_t = day_at_midnight(now_t, 1);
     diff = difftime(next_day_t, now_t);
-	data->next_wakeup_reason = "current astro data update";
+    data->next_wakeup_reason = "current astro data update";
     SCHEDULE_WAKEUP_COMPARE(data->astro_update->next,
                             "astro data download");
     SCHEDULE_WAKEUP_COMPARE(data->weather_update->next,
@@ -853,6 +866,12 @@ xfceweather_read_config(XfcePanelPlugin *plugin,
         data->timezone = g_strdup(value);
     }
 
+    value = xfce_rc_read_entry(rc, "offset", NULL);
+    if (value) {
+        g_free(data->offset);
+        data->offset = g_strdup(value);
+    }
+
     value = xfce_rc_read_entry(rc, "geonames_username", NULL);
     if (value) {
         g_free(data->geonames_username);
@@ -975,6 +994,8 @@ xfceweather_write_config(XfcePanelPlugin *plugin,
 
     xfce_rc_write_entry(rc, "timezone", data->timezone);
 
+    xfce_rc_write_entry(rc, "offset", data->offset);
+
     if (data->geonames_username)
         xfce_rc_write_entry(rc, "geonames_username", data->geonames_username);
 
@@ -1076,6 +1097,7 @@ write_cache_file(plugin_data *data)
     CACHE_APPEND("location_name=%s\n", data->location_name);
     CACHE_APPEND("lat=%s\n", data->lat);
     CACHE_APPEND("lon=%s\n", data->lon);
+    CACHE_APPEND("offset=%s\n", data->offset);
     g_string_append_printf(out, "msl=%d\n", data->msl);
     g_string_append_printf(out, "timeslices=%d\n", wd->timeslices->len);
     if (G_LIKELY(data->weather_update)) {
@@ -1190,7 +1212,7 @@ read_cache_file(plugin_data *data)
     xml_location *loc = NULL;
     xml_astro *astro = NULL;
     time_t now_t = time(NULL), cache_date_t;
-    gchar *file, *locname = NULL, *lat = NULL, *lon = NULL, *group = NULL;
+    gchar *file, *locname = NULL, *lat = NULL, *lon = NULL, *group = NULL, *offset = NULL;
     gchar *timestring;
     gint msl, num_timeslices = 0, i, j;
 
@@ -1225,7 +1247,8 @@ read_cache_file(plugin_data *data)
     locname = g_key_file_get_string(keyfile, group, "location_name", NULL);
     lat = g_key_file_get_string(keyfile, group, "lat", NULL);
     lon = g_key_file_get_string(keyfile, group, "lon", NULL);
-    if (locname == NULL || lat == NULL || lon == NULL) {
+    offset = g_key_file_get_string(keyfile, group, "offset", NULL);
+    if (locname == NULL || lat == NULL || lon == NULL || offset == NULL) {
         CACHE_FREE_VARS();
         weather_debug("Required values are missing in the cache file, "
                       "reading cache file aborted.");
@@ -1236,7 +1259,8 @@ read_cache_file(plugin_data *data)
         num_timeslices = g_key_file_get_integer(keyfile, group,
                                                 "timeslices", &err);
     if (err || strcmp(lat, data->lat) || strcmp(lon, data->lon) ||
-        msl != data->msl || num_timeslices < 1) {
+        strcmp(offset, data->offset) || msl != data->msl ||
+        num_timeslices < 1) {
         CACHE_FREE_VARS();
         weather_debug("The required values are not present in the cache file "
                       "or do not match the current plugin data. Reading "
@@ -1403,6 +1427,9 @@ update_weatherdata_with_reset(plugin_data *data)
 
     /* set location timezone */
     update_timezone(data);
+
+    /* set the offset of timezone */
+    update_offset(data);
 
     /* clear update times */
     init_update_infos(data);
@@ -1709,9 +1736,9 @@ weather_get_tooltip_text(const plugin_data *data)
             sunval = g_strdup(_("The sun never sets today."));
         } else {
             sunrise = format_date(data->current_astro->sunrise,
-                                  "%H:%M:%S", TRUE);
+                                  "%H:%M:%S", FALSE);
             sunset = format_date(data->current_astro->sunset,
-                                 "%H:%M:%S", TRUE);
+                                 "%H:%M:%S", FALSE);
             sunval =
                 g_strdup_printf(_("The sun rises at %s and sets at %s."),
                                 sunrise, sunset);
@@ -1999,6 +2026,7 @@ xfceweather_free(XfcePanelPlugin *plugin,
     g_free(data->location_name);
     g_free(data->scrollbox_font);
     g_free(data->timezone);
+    g_free(data->offset);
     g_free(data->timezone_initial);
     g_free(data->geonames_username);
 
@@ -2170,6 +2198,7 @@ weather_construct(XfcePanelPlugin *plugin)
 
     xfceweather_read_config(plugin, data);
     update_timezone(data);
+    update_offset(data);
     read_cache_file(data);
     update_current_conditions(data, TRUE);
     scrollbox_set_visible(data);
