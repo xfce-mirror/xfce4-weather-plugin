@@ -1068,7 +1068,7 @@ update_summary_subtitle(plugin_data *data)
 {
     time_t now_t;
     GTimeVal now;
-    gchar *title, *date, *date_format;
+    gchar *title, *date;
     guint update_interval;
     gint64 now_ms;
 
@@ -1082,13 +1082,7 @@ update_summary_subtitle(plugin_data *data)
         return FALSE;
 
     time(&now_t);
-#ifdef HAVE_UPOWER_GLIB
-    if (data->upower_on_battery)
-        date_format = "%Y-%m-%d %H:%M:%S (%Z)";
-    else
-#endif
-        date_format = "%Y-%m-%d %H:%M:%S (%Z)";
-    date = format_date(now_t, date_format, TRUE);
+    date = format_date(now_t, "%Y-%m-%d %H:%M:%S (%Z)", TRUE);
     title = g_strdup_printf("%s\n%s", data->location_name, date);
     g_free(date);
     xfce_titled_dialog_set_subtitle(XFCE_TITLED_DIALOG(data->summary_window),

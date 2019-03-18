@@ -277,6 +277,7 @@ update_offset(plugin_data *data)
         g_free(data->offset);
 
     data->offset = g_date_time_format(dt, "%:z");
+    g_date_time_unref(dt);
 }
 
 

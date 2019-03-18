@@ -167,22 +167,17 @@ parse_timestring(const gchar *ts,
     memset(&tm, 0, sizeof(struct tm));
     tm.tm_isdst = -1;
 
-    if (strptime(ts, format, &tm) != NULL) {
-        if (local)
-            t = mktime(&tm);
-        else
-            t = my_timegm(&tm);
-
-        if (t < 0) {
-            memset(&t, 0, sizeof(time_t));
-            return t;
-        } else {
-            return t;
-        }
-    } else {
+    if (strptime(ts, format, &tm) == NULL) {
         memset(&t, 0, sizeof(time_t));
         return t;
     }
+
+    t = local ? mktime(&tm) : my_timegm(&tm);
+
+    if (t < 0)
+        memset(&t, 0, sizeof(time_t));
+
+    return t;
 }
 
 
