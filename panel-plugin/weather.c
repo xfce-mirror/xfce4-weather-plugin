@@ -289,16 +289,8 @@ update_icon(plugin_data *data)
     gchar *str;
     gint size;
 
-    size = data->panel_size;
-#if LIBXFCE4PANEL_CHECK_VERSION(4,9,0)
-    /* make icon smaller when not single-row in multi-row panels */
-    if (!data->single_row && data->panel_rows > 2)
-        size *= 0.80;
-#endif
-    /* take into account the border of the toggle button */
-    size -= 2;
-
     /* set panel icon according to current weather conditions */
+    size = data->icon_size;
     conditions = get_current_conditions(data->weatherdata);
     str = get_data(conditions, data->units, SYMBOL,
                    data->round, data->night_time);
@@ -2049,18 +2041,33 @@ xfceweather_free(XfcePanelPlugin *plugin,
     g_slice_free(plugin_data, data);
 }
 
-
 static gboolean
 xfceweather_set_size(XfcePanelPlugin *panel,
                      gint size,
                      plugin_data *data)
 {
+    gint icon_size;
+
 #if LIBXFCE4PANEL_CHECK_VERSION(4,9,0)
     data->panel_rows = xfce_panel_plugin_get_nrows(panel);
     if (data->single_row)
         size /= data->panel_rows;
 #endif
     data->panel_size = size;
+
+#if LIBXFCE4PANEL_CHECK_VERSION(4, 13, 0)
+    icon_size = xfce_panel_plugin_get_icon_size (panel);
+#else
+    icon_size = data->panel_size;
+
+    /* make icon smaller when not single-row in multi-row panels */
+    if (!data->single_row && data->panel_rows > 2)
+        icon_size *= 0.80;
+
+    /* take into account the border of the toggle button */
+    icon_size -= 2;
+#endif
+    data->icon_size = icon_size;
 
     update_icon(data);
     update_scrollbox(data, FALSE);

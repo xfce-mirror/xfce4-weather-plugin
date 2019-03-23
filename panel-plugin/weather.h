@@ -85,6 +85,7 @@ typedef struct {
     guint summary_remember_tab;
 
     gint panel_size;
+    gint icon_size;
     guint panel_rows;
     XfcePanelPluginMode panel_orientation;
     gboolean single_row;
