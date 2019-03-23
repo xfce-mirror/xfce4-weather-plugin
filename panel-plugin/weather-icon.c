@@ -153,6 +153,23 @@ make_fallback_icon_filename(const gchar *sizedir)
 }
 
 
+static GdkPixbuf *
+quiet_gdk_pixbuf_new_from_file_at_scale(const char *filename,
+                                        int width,
+                                        int height,
+                                        gboolean preserve_aspect_ratio,
+                                        GError **error)
+{
+    if (height == 0)
+        height = 1;
+
+    if (width == 0)
+        width = 1;
+
+    return gdk_pixbuf_new_from_file_at_scale (filename, width, height, preserve_aspect_ratio, error);
+}
+
+
 GdkPixbuf *
 get_icon(const icon_theme *theme,
          const gchar *symbol_name,
@@ -180,7 +197,7 @@ get_icon(const icon_theme *theme,
     /* check whether icon has been verified to be missing before */
     if (!icon_missing(theme, sizedir, symbol_name, suffix)) {
         filename = make_icon_filename(theme, sizedir, symbol_name, suffix);
-        image = gdk_pixbuf_new_from_file_at_scale(filename, size, size, TRUE, NULL);
+        image = quiet_gdk_pixbuf_new_from_file_at_scale(filename, size, size, TRUE, NULL);
     }
 
     if (image == NULL) {
@@ -202,8 +219,8 @@ get_icon(const icon_theme *theme,
         else {
             /* last chance: get NODATA icon from standard theme */
             filename = make_fallback_icon_filename(sizedir);
-            image = gdk_pixbuf_new_from_file_at_scale(filename, size, size,
-                                                      TRUE, NULL);
+            image = quiet_gdk_pixbuf_new_from_file_at_scale(filename, size, size,
+                                                            TRUE, NULL);
             if (G_UNLIKELY(image == NULL))
                 g_warning("Failed to open fallback icon from standard theme: %s",
                           filename);
