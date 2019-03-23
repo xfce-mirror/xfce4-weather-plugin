@@ -96,6 +96,13 @@ remove_timezone_offset(gchar *date)
 }
 
 
+static gdouble
+extract_double(gchar *str)
+{
+    return g_ascii_strtod (str, NULL);
+}
+
+
 xml_time *
 get_timeslice(xml_weather *wd,
               const time_t start_t,
@@ -178,6 +185,28 @@ parse_timestring(const gchar *ts,
         memset(&t, 0, sizeof(time_t));
 
     return t;
+}
+
+
+const gchar *
+parse_moonposition (gdouble pos) {
+    if (pos < 0.0 || pos > 100.0)
+        return "Unknown";
+    if (pos <= 12.5)
+        return "Waxing crescent";
+    else if (pos <= 25.0)
+        return "First quarter";
+    else if (pos <= 37.5)
+        return "Waxing gibbous";
+    else if (pos <= 50.0)
+        return "Full moon";
+    else if (pos <= 62.5)
+        return "Waning gibbous";
+    else if (pos <= 75.0)
+        return "Third quarter";
+    else if (pos <= 87.5)
+        return "Waning crescent";
+    return "New moon";
 }
 
 
@@ -401,6 +430,7 @@ parse_astro_time(xmlNode *cur_node)
     gchar *date, *sunrise, *sunset, *moonrise, *moonset;
     gboolean sun_rises = FALSE, sun_sets = FALSE;
     gboolean moon_rises = FALSE, moon_sets = FALSE;
+    gdouble moonposition;
 
     astro = g_slice_new0(xml_astro);
     if (G_UNLIKELY(astro == NULL))
@@ -439,6 +469,14 @@ parse_astro_time(xmlNode *cur_node)
                 astro->moonrise = parse_timestring(moonrise, NULL, FALSE);
                 xmlFree(moonrise);
                 moon_rises = TRUE;
+            }
+
+            if (NODE_IS_TYPE(child_node, "moonposition")) {
+                moonposition = extract_double(PROP(child_node, "phase"));
+                if (astro->moon_phase) {
+                    g_free (astro->moon_phase);
+                }
+                astro->moon_phase = g_strdup(parse_moonposition(moonposition));
             }
         }
     }
