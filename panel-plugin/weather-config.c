@@ -294,7 +294,7 @@ lookup_altitude_timezone(const gpointer user_data)
     lonstr = double_to_string(lon, "%.6f");
 
     /* lookup altitude */
-    url = g_strdup_printf("http://api.geonames.org"
+    url = g_strdup_printf("https://secure.geonames.org"
                           "/srtm3XML?lat=%s&lng=%s&username=%s",
                           latstr, lonstr,
                           dialog->pd->geonames_username
@@ -304,7 +304,7 @@ lookup_altitude_timezone(const gpointer user_data)
     g_free(url);
 
     /* lookup timezone */
-    url = g_strdup_printf("http://api.geonames.org"
+    url = g_strdup_printf("https://secure.geonames.org"
                           "/timezone?lat=%s&lng=%s&username=%s",
                           latstr, lonstr,
                           dialog->pd->geonames_username
