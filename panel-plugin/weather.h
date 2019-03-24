@@ -114,6 +114,7 @@ typedef struct {
     gchar *lon;
     gint msl;
     gchar *timezone;
+    gchar *offset;
     gchar *timezone_initial;
     gint cache_file_max_age;
     gboolean night_time;
@@ -143,6 +144,8 @@ void forecast_click(GtkWidget *widget,
 gchar *get_cache_directory(void);
 
 void update_timezone(plugin_data *data);
+
+void update_offset(plugin_data *data);
 
 void update_icon(plugin_data *data);
 

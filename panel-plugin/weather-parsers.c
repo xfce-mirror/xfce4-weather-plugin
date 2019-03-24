@@ -35,6 +35,9 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <libxml/parser.h>
+#include <libxml/tree.h>
+
 
 #define DATA(node)                                                  \
     ((gchar *) xmlNodeListGetString(node->doc, node->children, 1))
@@ -68,6 +71,28 @@ my_timegm(struct tm *tm)
         g_unsetenv("TZ");
     tzset();
     return ret;
+}
+
+
+/*
+ * Remove offset of timezone, in order to keep previous
+ * date format (before the new API, 2.x).
+ */
+static gchar *
+remove_timezone_offset(gchar *date)
+{
+    GRegex *re = NULL;
+    const gchar *pattern = "[+-][0-9]{2}:[0-9]{2}";
+    gchar *res;
+
+    re = g_regex_new(pattern, 0, 0, NULL);
+    if (re != NULL && g_regex_match(re, date, 0, NULL)) {
+        res = g_regex_replace(re, date, -1, 0, "Z", 0, NULL);
+    } else {
+        res = date;
+    }
+    g_regex_unref(re);
+    return res;
 }
 
 
@@ -128,9 +153,10 @@ parse_timestring(const gchar *ts,
     time_t t;
     struct tm tm;
 
-    memset(&t, 0, sizeof(time_t));
-    if (G_UNLIKELY(ts == NULL))
+    if (G_UNLIKELY(ts == NULL)) {
+        memset(&t, 0, sizeof(time_t));
         return t;
+    }
 
     /* standard format */
     if (format == NULL)
@@ -141,15 +167,22 @@ parse_timestring(const gchar *ts,
     memset(&tm, 0, sizeof(struct tm));
     tm.tm_isdst = -1;
 
-    if (G_UNLIKELY(strptime(ts, format, &tm) == NULL))
+    if (strptime(ts, format, &tm) != NULL) {
+        if (local)
+            t = mktime(&tm);
+        else
+            t = my_timegm(&tm);
+
+        if (t < 0) {
+            memset(&t, 0, sizeof(time_t));
+            return t;
+        } else {
+            return t;
+        }
+    } else {
+        memset(&t, 0, sizeof(time_t));
         return t;
-
-    if (local)
-        t = mktime(&tm);
-    else
-        t = my_timegm(&tm);
-
-    return t;
+    }
 }
 
 
@@ -365,83 +398,14 @@ parse_weather(xmlNode *cur_node,
 }
 
 
-static void
-parse_astro_location(xmlNode *cur_node,
-                     xml_astro *astro)
-{
-    xmlNode *child_node;
-    gchar *sunrise, *sunset, *moonrise, *moonset;
-    gchar *never_rises, *never_sets;
-
-    for (child_node = cur_node->children; child_node;
-         child_node = child_node->next) {
-        if (NODE_IS_TYPE(child_node, "sun")) {
-            never_rises = PROP(child_node, "never_rise");
-            if (never_rises &&
-                (!strcmp(never_rises, "true") ||
-                 !strcmp(never_rises, "1")))
-                astro->sun_never_rises = TRUE;
-            else
-                astro->sun_never_rises = FALSE;
-            xmlFree(never_rises);
-
-            never_sets = PROP(child_node, "never_set");
-            if (never_sets &&
-                (!strcmp(never_sets, "true") ||
-                 !strcmp(never_sets, "1")))
-                astro->sun_never_sets = TRUE;
-            else
-                astro->sun_never_sets = FALSE;
-            xmlFree(never_sets);
-
-            sunrise = PROP(child_node, "rise");
-            astro->sunrise = parse_timestring(sunrise, NULL, FALSE);
-            xmlFree(sunrise);
-
-            sunset = PROP(child_node, "set");
-            astro->sunset = parse_timestring(sunset, NULL, FALSE);
-            xmlFree(sunset);
-        }
-
-        if (NODE_IS_TYPE(child_node, "moon")) {
-            never_rises = PROP(child_node, "never_rise");
-            if (never_rises &&
-                (!strcmp(never_rises, "true") ||
-                 !strcmp(never_rises, "1")))
-                astro->moon_never_rises = TRUE;
-            else
-                astro->moon_never_rises = FALSE;
-            xmlFree(never_rises);
-
-            never_sets = PROP(child_node, "never_set");
-            if (never_sets &&
-                (!strcmp(never_sets, "true") ||
-                 !strcmp(never_sets, "1")))
-                astro->moon_never_sets = TRUE;
-            else
-                astro->moon_never_sets = FALSE;
-            xmlFree(never_sets);
-
-            moonrise = PROP(child_node, "rise");
-            astro->moonrise = parse_timestring(moonrise, NULL, FALSE);
-            xmlFree(moonrise);
-
-            moonset = PROP(child_node, "set");
-            astro->moonset = parse_timestring(moonset, NULL, FALSE);
-            xmlFree(moonset);
-
-            astro->moon_phase = PROP(child_node, "phase");
-        }
-    }
-}
-
-
 static xml_astro *
 parse_astro_time(xmlNode *cur_node)
 {
     xmlNode *child_node;
     xml_astro *astro;
-    gchar *date;
+    gchar *date, *sunrise, *sunset, *moonrise, *moonset;
+    gboolean sun_rises = FALSE, sun_sets = FALSE;
+    gboolean moon_rises = FALSE, moon_sets = FALSE;
 
     astro = g_slice_new0(xml_astro);
     if (G_UNLIKELY(astro == NULL))
@@ -452,15 +416,61 @@ parse_astro_time(xmlNode *cur_node)
     xmlFree(date);
 
     for (child_node = cur_node->children; child_node;
-         child_node = child_node->next)
-        if (NODE_IS_TYPE(child_node, "location"))
-            parse_astro_location(child_node, astro);
+         child_node = child_node->next) {
+        if (child_node->type == XML_ELEMENT_NODE) {
+            if (NODE_IS_TYPE(child_node, "sunrise")) {
+                sunrise = remove_timezone_offset(PROP(child_node, "time"));
+                astro->sunrise = parse_timestring(sunrise, NULL, FALSE);
+                xmlFree(sunrise);
+                sun_rises = TRUE;
+            }
+
+            if (NODE_IS_TYPE(child_node, "moonset")) {
+                moonset = remove_timezone_offset(PROP(child_node, "time"));
+                astro->moonset = parse_timestring(moonset, NULL, FALSE);
+                xmlFree(moonset);
+                moon_sets = TRUE;
+            }
+
+            if (NODE_IS_TYPE(child_node, "sunset")) {
+                sunset = remove_timezone_offset(PROP(child_node, "time"));
+                astro->sunset = parse_timestring(sunset, NULL, FALSE);
+                xmlFree(sunset);
+                sun_sets = TRUE;
+            }
+
+            if (NODE_IS_TYPE(child_node, "moonrise")) {
+                moonrise = remove_timezone_offset(PROP(child_node, "time"));
+                astro->moonrise = parse_timestring(moonrise, NULL, FALSE);
+                xmlFree(moonrise);
+                moon_rises = TRUE;
+            }
+        }
+    }
+
+    if (sun_rises)
+        astro->sun_never_rises = FALSE;
+    else
+        astro->sun_never_rises = TRUE;
+    if (sun_sets)
+        astro->sun_never_sets = FALSE;
+    else
+        astro->sun_never_sets = TRUE;
+
+    if (moon_rises)
+        astro->moon_never_rises = FALSE;
+    else
+        astro->moon_never_rises = TRUE;
+    if (moon_sets)
+        astro->moon_never_sets = FALSE;
+    else
+        astro->moon_never_sets = TRUE;
     return astro;
 }
 
 
 /*
- * Look at https://api.met.no/weatherapi/sunrise/1.1/schema for information
+ * Look at https://api.met.no/weatherapi/sunrise/2.0/schema for information
  * of elements and attributes to expect.
  */
 gboolean
@@ -475,7 +485,8 @@ parse_astrodata(xmlNode *cur_node,
         return FALSE;
 
     g_assert(cur_node != NULL);
-    if (G_UNLIKELY(cur_node == NULL || !NODE_IS_TYPE(cur_node, "astrodata")))
+    if (G_UNLIKELY(cur_node == NULL ||
+        !NODE_IS_TYPE(cur_node, "location")))
         return FALSE;
 
     for (child_node = cur_node->children; child_node;

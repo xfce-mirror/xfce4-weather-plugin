@@ -103,7 +103,7 @@ gdouble string_to_double(const gchar *str,
 gchar *double_to_string(gdouble val,
                         const gchar *format);
 
-gchar *format_date(const time_t t,
+gchar *format_date(time_t t,
                    gchar *format,
                    gboolean local);
 

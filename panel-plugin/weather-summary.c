@@ -443,12 +443,12 @@ create_summary_tab(plugin_data *data)
             value = g_strdup(_("\tSunset:\t\tThe sun never sets today.\n"));
             APPEND_TEXT_ITEM_REAL(value);
         } else {
-            sunrise = format_date(data->current_astro->sunrise, NULL, TRUE);
+            sunrise = format_date(data->current_astro->sunrise, NULL, FALSE);
             value = g_strdup_printf(_("\tSunrise:\t\t%s\n"), sunrise);
             g_free(sunrise);
             APPEND_TEXT_ITEM_REAL(value);
 
-            sunset = format_date(data->current_astro->sunset, NULL, TRUE);
+            sunset = format_date(data->current_astro->sunset, NULL, FALSE);
             value = g_strdup_printf(_("\tSunset:\t\t%s\n\n"), sunset);
             g_free(sunset);
             APPEND_TEXT_ITEM_REAL(value);
@@ -471,12 +471,12 @@ create_summary_tab(plugin_data *data)
                 g_strdup(_("\tMoonset:\tThe moon never sets today.\n"));
             APPEND_TEXT_ITEM_REAL(value);
         } else {
-            moonrise = format_date(data->current_astro->moonrise, NULL, TRUE);
+            moonrise = format_date(data->current_astro->moonrise, NULL, FALSE);
             value = g_strdup_printf(_("\tMoonrise:\t%s\n"), moonrise);
             g_free(moonrise);
             APPEND_TEXT_ITEM_REAL(value);
 
-            moonset = format_date(data->current_astro->moonset, NULL, TRUE);
+            moonset = format_date(data->current_astro->moonset, NULL, FALSE);
             value = g_strdup_printf(_("\tMoonset:\t%s\n"), moonset);
             g_free(moonset);
             APPEND_TEXT_ITEM_REAL(value);
@@ -727,13 +727,13 @@ forecast_day_header_tooltip_text(xml_astro *astro)
                                     "Sunset: The sun never sets this day."
                                     "</small></tt>\n"));
         else {
-            sunrise = format_date(astro->sunrise, NULL, TRUE);
+            sunrise = format_date(astro->sunrise, NULL, FALSE);
             g_string_append_printf(text, _("<tt><small>"
                                            "Sunrise: %s"
                                            "</small></tt>\n"), sunrise);
             g_free(sunrise);
 
-            sunset = format_date(astro->sunset, NULL, TRUE);
+            sunset = format_date(astro->sunset, NULL, FALSE);
             g_string_append_printf(text, _("<tt><small>"
                                            "Sunset:  %s"
                                            "</small></tt>\n\n"), sunset);
@@ -760,13 +760,13 @@ forecast_day_header_tooltip_text(xml_astro *astro)
                               "Moonset: The moon never sets this day."
                               "</small></tt>\n"));
         else {
-            moonrise = format_date(astro->moonrise, NULL, TRUE);
+            moonrise = format_date(astro->moonrise, NULL, FALSE);
             g_string_append_printf(text, _("<tt><small>"
                                            "Moonrise: %s"
                                            "</small></tt>\n"), moonrise);
             g_free(moonrise);
 
-            moonset = format_date(astro->moonset, NULL, TRUE);
+            moonset = format_date(astro->moonset, NULL, FALSE);
             g_string_append_printf(text, _("<tt><small>"
                                            "Moonset:  %s"
                                            "</small></tt>"), moonset);
@@ -1107,10 +1107,10 @@ update_summary_subtitle(plugin_data *data)
     time(&now_t);
 #ifdef HAVE_UPOWER_GLIB
     if (data->upower_on_battery)
-        date_format = "%Y-%m-%d %H:%M %z (%Z)";
+        date_format = "%Y-%m-%d %H:%M:%S (%Z)";
     else
 #endif
-        date_format = "%Y-%m-%d %H:%M:%S %z (%Z)";
+        date_format = "%Y-%m-%d %H:%M:%S (%Z)";
     date = format_date(now_t, date_format, TRUE);
     title = g_strdup_printf("%s\n%s", data->location_name, date);
     g_free(date);
