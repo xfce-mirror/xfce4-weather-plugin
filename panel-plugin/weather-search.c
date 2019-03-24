@@ -423,7 +423,7 @@ void weather_search_by_ip(SoupSession *session,
                           gpointer user_data)
 {
     geolocation_data *data;
-    const gchar *url = "http://geoip.xfce.org/";
+    const gchar *url = "https://geoip.xfce.org/";
 
     if (!gui_cb)
         return;
