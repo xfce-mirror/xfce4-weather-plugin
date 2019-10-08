@@ -1438,9 +1438,10 @@ button_add_option_clicked(GtkWidget *widget,
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     gint index = gtk_combo_box_get_active (GTK_COMBO_BOX (dialog->options_datatypes));
-
-    add_model_option(dialog->model_datatypes, index);
-    update_scrollbox_labels(dialog);
+    if (index >= 0) {
+        add_model_option(dialog->model_datatypes, index);
+        update_scrollbox_labels(dialog);
+    }
     return FALSE;
 }
 
