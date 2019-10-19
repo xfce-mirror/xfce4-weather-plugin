@@ -1928,7 +1928,7 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     data->labels = g_array_new(FALSE, TRUE, sizeof(data_types));
 
     /* create panel toggle button which will contain all other widgets */
-    data->button = xfce_create_panel_toggle_button();
+    data->button = xfce_panel_create_toggle_button();
     gtk_container_add(GTK_CONTAINER(plugin), data->button);
     xfce_panel_plugin_add_action_widget(plugin, data->button);
     gtk_widget_show(data->button);
