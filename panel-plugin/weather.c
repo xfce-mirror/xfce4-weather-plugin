@@ -1125,6 +1125,8 @@ write_cache_file(plugin_data *data)
                          astro->sun_never_rises ? "true" : "false");
             CACHE_APPEND("sun_never_sets=%s\n",
                          astro->sun_never_sets ? "true" : "false");
+            CACHE_APPEND("solarnoon_elevation=%e\n", astro->solarnoon_elevation);
+            CACHE_APPEND("solarmidnight_elevation=%e\n", astro->solarmidnight_elevation);
             g_free(value);
             g_free(start);
             g_free(end);
@@ -1312,6 +1314,10 @@ read_cache_file(plugin_data *data)
             g_key_file_get_boolean(keyfile, group, "sun_never_rises", NULL);
         astro->sun_never_sets =
             g_key_file_get_boolean(keyfile, group, "sun_never_sets", NULL);
+        astro->solarnoon_elevation =
+            g_key_file_get_double(keyfile, group, "solarnoon_elevation", NULL);
+        astro->solarmidnight_elevation =
+            g_key_file_get_double(keyfile, group, "solarmidnight_elevation", NULL);
 
         CACHE_READ_STRING(timestring, "moonrise");
         astro->moonrise = parse_timestring(timestring, NULL, TRUE);
@@ -1725,10 +1731,25 @@ weather_get_tooltip_text(const plugin_data *data)
 
     /* use sunrise and sunset times if available */
     if (data->current_astro)
-        if (data->current_astro->sun_never_rises) {
-            sunval = g_strdup(_("The sun never rises today."));
-        } else if (data->current_astro->sun_never_sets) {
-            sunval = g_strdup(_("The sun never sets today."));
+        if (data->current_astro->sun_never_rises && data->current_astro->sun_never_sets) {
+            if (data->current_astro->solarmidnight_elevation > 0)
+                sunval = g_strdup(_("The sun never sets today."));
+            else if (data->current_astro->solarnoon_elevation <= 0)
+                sunval = g_strdup(_("The sun never rises today."));
+        }
+        else if (data->current_astro->sun_never_rises){
+            sunset = format_date(data->current_astro->sunset,
+                                 "%H:%M:%S", FALSE);
+            sunval =
+                g_strdup_printf(_("The sun never rises and sets at %s."),
+                                 sunset);
+        }
+        else if (data->current_astro->sun_never_sets){
+            sunrise = format_date(data->current_astro->sunrise,
+                                 "%H:%M:%S", FALSE);
+            sunval =
+                g_strdup_printf(_("The sun rises at %s and never sets."),
+                                 sunset);
         } else {
             sunrise = format_date(data->current_astro->sunrise,
                                   "%H:%M:%S", TRUE);

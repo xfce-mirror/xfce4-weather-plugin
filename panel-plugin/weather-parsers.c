@@ -478,6 +478,14 @@ parse_astro_time(xmlNode *cur_node)
                 }
                 astro->moon_phase = g_strdup(parse_moonposition(moonposition));
             }
+
+            if (NODE_IS_TYPE(child_node, "solarnoon")) {
+                astro->solarnoon_elevation = extract_double(PROP(child_node, "elevation"));
+            }
+
+            if (NODE_IS_TYPE(child_node, "solarmidnight")) {
+                astro->solarmidnight_elevation = extract_double(PROP(child_node, "elevation"));
+            }
         }
     }
 
@@ -737,6 +745,8 @@ xml_astro_copy(const xml_astro *src)
     dst->moon_never_rises = src->moon_never_rises;
     dst->moon_never_sets = src->moon_never_sets;
     dst->moon_phase = g_strdup(src->moon_phase);
+    dst->solarnoon_elevation = src->solarnoon_elevation;
+    dst->solarmidnight_elevation = src->solarmidnight_elevation;
     return dst;
 }
 

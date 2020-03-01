@@ -86,6 +86,8 @@ typedef struct {
     time_t sunset;
     gboolean sun_never_rises;
     gboolean sun_never_sets;
+    gdouble solarnoon_elevation;
+    gdouble solarmidnight_elevation;
 
     time_t moonrise;
     time_t moonset;

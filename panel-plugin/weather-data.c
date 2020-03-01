@@ -552,13 +552,14 @@ is_night_time(const xml_astro *astro)
     time(&now_t);
 
     if (G_LIKELY(astro)) {
-        /* Polar night */
-        if (astro->sun_never_rises)
-            return TRUE;
-
-        /* Polar day */
-        if (astro->sun_never_sets)
-            return FALSE;
+        if (astro->sun_never_rises || astro->sun_never_sets){
+            /* Polar night */
+            if (astro->solarnoon_elevation <= 0)
+                return TRUE;
+            /* Polar day */
+            if (astro->solarmidnight_elevation > 0)
+                return FALSE;
+        }
 
         /* Sunrise and sunset are known */
         if (difftime(astro->sunrise, now_t) > 0)
