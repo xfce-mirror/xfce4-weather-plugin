@@ -1140,7 +1140,7 @@ update_summary_subtitle(plugin_data *data)
 
     time(&now_t);
     date = format_date(now_t, "%Y-%m-%d %H:%M:%S (%Z)", TRUE);
-    title = g_strdup_printf("%s\n%s", data->location_name, date);
+    title = g_strdup_printf("%s   %s", data->location_name, date);
     g_free(date);
     xfce_titled_dialog_set_subtitle(XFCE_TITLED_DIALOG(data->summary_window),
                                     title);
