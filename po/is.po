@@ -12,9 +12,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-09-23 18:32+0200\n"
-"PO-Revision-Date: 2019-05-10 11:27+0000\n"
-"Last-Translator: Sveinn í Felli <sv1@fellsnet.is>\n"
+"POT-Creation-Date: 2020-03-01 06:32+0100\n"
+"PO-Revision-Date: 2020-03-01 05:32+0000\n"
+"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
 "Language-Team: Icelandic (http://www.transifex.com/xfce/xfce-panel-plugins/language/is/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -22,125 +22,579 @@ msgstr ""
 "Language: is\n"
 "Plural-Forms: nplurals=2; plural=(n % 10 != 1 || n % 100 == 11);\n"
 
+#: ../panel-plugin/weather.desktop.in.h:1
+#: ../panel-plugin/weather-config.ui.h:1
+msgid "Weather Update"
+msgstr "Veðuruppfærsla"
+
+#: ../panel-plugin/weather.desktop.in.h:2
+msgid "Show current weather conditions"
+msgstr "Birta veðurslýsingu"
+
+#: ../panel-plugin/weather-config.ui.h:2
+msgid "Preferences"
+msgstr "Kjörstillingar"
+
+#: ../panel-plugin/weather-config.ui.h:3
+msgid "_Help"
+msgstr "_Hjálp"
+
+#: ../panel-plugin/weather-config.ui.h:4
+msgid "_Close"
+msgstr "_Loka"
+
+#: ../panel-plugin/weather-config.ui.h:5
+msgid "Location _name:"
+msgstr "Staðsetning:"
+
+#: ../panel-plugin/weather-config.ui.h:6
+msgid "Latitud_e:"
+msgstr "_Breiddargráða:"
+
+#: ../panel-plugin/weather-config.ui.h:7
+msgid "L_ongitude:"
+msgstr "L_engdargráða:"
+
+#: ../panel-plugin/weather-config.ui.h:8
+msgid "Altitu_de:"
+msgstr "_Hæð:"
+
+#: ../panel-plugin/weather-config.ui.h:9
+msgid "_Timezone:"
+msgstr "_Tímabelti:"
+
+#: ../panel-plugin/weather-config.ui.h:10
+msgid ""
+"Please change location name to your liking and correct alltitude and "
+"timezone if they are not auto-detected correctly."
+msgstr ""
+
+#: ../panel-plugin/weather-config.ui.h:11
+msgid ""
+"Latitude specifies the north-south position of a point on the Earth's "
+"surface. If you change this value manually, you need to provide altitude and"
+" timezone manually too."
+msgstr "Breiddargráða tilgreinir norður-suður stöðu punkts á yfirborði jarðarinnar. Ef þú breytir þessu gildi, verður þú einnig að gefa upp hæð og tímabelti."
+
+#. TRANSLATORS: The degree sign is used like a unit for
+#. latitude, longitude, wind direction
+#: ../panel-plugin/weather-config.ui.h:12 ../panel-plugin/weather-data.c:519
+msgid "°"
+msgstr "°"
+
+#: ../panel-plugin/weather-config.ui.h:13
+msgid ""
+"Longitude specifies the east-west position of a point on the Earth's "
+"surface. If you change this value manually, you need to provide altitude and"
+" timezone manually too."
+msgstr "Lengdargráða tilgreinir austur-vestur stöðu punkts á yfirborði jarðarinnar. Ef þú breytir þessu gildi, verður þú einnig að gefa upp hæð og tímabelti."
+
+#: ../panel-plugin/weather-config.ui.h:14
+msgid ""
+"For locations outside Norway the elevation model that's used by the met.no webservice is not very good, so it's usually necessary to specify the altitude as an additional parameter, otherwise the reported values will not be correct.\n"
+"\n"
+"The plugin tries to auto-detect the altitude using the GeoNames webservice, but that might not always be correct too, so you can change it here.\n"
+"\n"
+"Altitude is given in meters above sea level, or alternatively in feet by changing the unit on the units page. It should match the real value roughly, but small differences will have no influence on the weather data. Inside Norway, this setting has no effect at all."
+msgstr ""
+
+#: ../panel-plugin/weather-config.ui.h:19 ../panel-plugin/weather-config.c:399
+msgid "feet"
+msgstr "fet"
+
+#: ../panel-plugin/weather-config.ui.h:20
+msgid ""
+"If the chosen location is not in your current timezone, then it is necessary to <i>put</i> the plugin into that other timezone for the times to be shown correctly. The proper timezone will be auto-detected via the GeoNames web service, but you might want to correct it if necessary.\n"
+"Leave this field empty to use the timezone set by your system. Invalid entries will cause the use of UTC time, but that may also depend on your system."
+msgstr ""
+
+#: ../panel-plugin/weather-config.ui.h:22
+msgid ""
+"Change the name for the location to your liking. It is used for display and "
+"does not affect the location parameters in any way."
+msgstr "Breyttu nafni staðsetningarinnar í það sem þér líkar best. Þetta er einungis notað til birtingar og hefur ekki nein áhrif á staðsetningarbreytur."
+
+#: ../panel-plugin/weather-config.ui.h:23
+msgid "Change..."
+msgstr "Breyta..."
+
+#: ../panel-plugin/weather-config.ui.h:24
+msgid "Search for a new location and auto-detect its parameters."
+msgstr "Leita að nýrri staðsetningu og skynja sjálfkrafa breytur tengdar henni."
+
+#: ../panel-plugin/weather-config.ui.h:25
+msgid "_Location"
+msgstr "_Staðsetning"
+
+#: ../panel-plugin/weather-config.ui.h:26
+msgid "_Temperature:"
+msgstr "Hi_tastig:"
+
+#: ../panel-plugin/weather-config.ui.h:27
+msgid "Barometric _pressure:"
+msgstr "_Loftþrýstingur:"
+
+#: ../panel-plugin/weather-config.ui.h:28
+msgid "_Wind speed:"
+msgstr "_Vindhraði:"
+
+#: ../panel-plugin/weather-config.ui.h:29
+msgid "Prec_ipitations:"
+msgstr "Úr_koma:"
+
+#: ../panel-plugin/weather-config.ui.h:30
+msgid "Apparent te_mperature:"
+msgstr "Sk_ynjað hitastig:"
+
+#: ../panel-plugin/weather-config.ui.h:31
+msgid "Celsius (°C)"
+msgstr "Celsíusgráður (°C)"
+
+#: ../panel-plugin/weather-config.ui.h:32
+msgid "Fahrenheit (°F)"
+msgstr "Fahrenheit (°F)"
+
+#: ../panel-plugin/weather-config.ui.h:33
+msgid "Hectopascals (hPa)"
+msgstr "Hektópasköl (hPa)"
+
+#: ../panel-plugin/weather-config.ui.h:34
+msgid "Inches of mercury (inHg)"
+msgstr "Tommur kvikasilfurs (inHg)"
+
+#: ../panel-plugin/weather-config.ui.h:35
+msgid "Pound-force per square inch (psi)"
+msgstr "Pund á fertommu (psi)"
+
+#: ../panel-plugin/weather-config.ui.h:36
+msgid "Torr (mmHg)"
+msgstr "Torr (mmHg)"
+
+#: ../panel-plugin/weather-config.ui.h:37
+msgid "Kilometers per hour (km/h)"
+msgstr "Kílómetrar á klukkustund (km/klst)"
+
+#: ../panel-plugin/weather-config.ui.h:38
+msgid "Miles per hour (mph)"
+msgstr "Mílur á klukkustund (mi/klst)"
+
+#: ../panel-plugin/weather-config.ui.h:39
+msgid "Meters per second (m/s)"
+msgstr "Metrar á sekúndu (m/sek)"
+
+#: ../panel-plugin/weather-config.ui.h:40
+msgid "Feet per second (ft/s)"
+msgstr "Fet á sekúndu (ft/sek)"
+
+#: ../panel-plugin/weather-config.ui.h:41
+msgid "Knots (kt)"
+msgstr "Hnútar (kt)"
+
+#: ../panel-plugin/weather-config.ui.h:42
+msgid "Millimeters (mm)"
+msgstr "Millímetrar (mm)"
+
+#: ../panel-plugin/weather-config.ui.h:43
+msgid "Inches (in)"
+msgstr "Tommur (in)"
+
+#: ../panel-plugin/weather-config.ui.h:44
+msgid "Meters (m)"
+msgstr "Metrar (m)"
+
+#: ../panel-plugin/weather-config.ui.h:45
+msgid "Feet (ft)"
+msgstr "Fet (ft)"
+
+#: ../panel-plugin/weather-config.ui.h:46
+msgid "Windchill/Heat index"
+msgstr "Vindkæling/Hitatafla"
+
+#: ../panel-plugin/weather-config.ui.h:47
+msgid "Windchill/Humidex"
+msgstr "Vindkæling/Humidex"
+
+#: ../panel-plugin/weather-config.ui.h:48
+msgid "Steadman"
+msgstr "Steadman"
+
+#: ../panel-plugin/weather-config.ui.h:49
+msgid "Quayle-Steadman"
+msgstr "Quayle-Steadman"
+
+#: ../panel-plugin/weather-config.ui.h:50
+msgid "_Units"
+msgstr "_Einingar"
+
+#: ../panel-plugin/weather-config.ui.h:51
+msgid ""
+"Available icon themes are listed here. You can add icon themes to "
+"$HOME/.config/xfce4/weather/icons (or the equivalent directory on your "
+"system). Information about how to create or use icon themes can be found in "
+"the README file. New icon themes will be detected everytime you open this "
+"config dialog."
+msgstr ""
+
+#: ../panel-plugin/weather-config.ui.h:52
+msgid "_Icon theme:"
+msgstr "Táknmyn_daþema:"
+
+#: ../panel-plugin/weather-config.ui.h:53
+msgid ""
+"Open the user icon themes directory in your file manager, creating it if "
+"necessary."
+msgstr "Opna möppu með táknmyndaþemum í skráarstjóra, og búa hana til ef nauðsyn krefur."
+
+#: ../panel-plugin/weather-config.ui.h:54
+msgid "Use only a single _panel row"
+msgstr "_Nota aðeins eina röð í stiku"
+
+#: ../panel-plugin/weather-config.ui.h:55
+msgid ""
+"Check to always use only a single row on a multi-row panel and a small icon "
+"in deskbar mode."
+msgstr ""
+
+#: ../panel-plugin/weather-config.ui.h:56
+msgid "_Tooltip style:"
+msgstr "S_tíll vísbendingar:"
+
+#: ../panel-plugin/weather-config.ui.h:57
+msgid ""
+"Choose your preferred tooltip style. Some styles give a lot of useful data, "
+"some are clearer but provide less data on a glance."
+msgstr "Veldu þann stíl vísbendinga sem þér hentar. Sumir stílar birta mikið af gagnlegum upplýsingum, aðrir eru skírari en birta minna af upplýsingum í einu."
+
+#: ../panel-plugin/weather-config.ui.h:58
+msgid "Simple"
+msgstr "Einfalt"
+
+#: ../panel-plugin/weather-config.ui.h:59
+msgid "Verbose"
+msgstr "Ítarlegt"
+
+#: ../panel-plugin/weather-config.ui.h:60
+msgid "_Forecast layout:"
+msgstr "_Framsetning veðurspár:"
+
+#: ../panel-plugin/weather-config.ui.h:61
+msgid "Days in columns"
+msgstr "Dagar í dálkum"
+
+#: ../panel-plugin/weather-config.ui.h:62
+msgid "Days in rows"
+msgstr "Dagar í röðum"
+
+#: ../panel-plugin/weather-config.ui.h:63
+msgid "_Number of forecast days:"
+msgstr "_Fjöldi spádaga:"
+
+#: ../panel-plugin/weather-config.ui.h:64
+msgid "_Round values"
+msgstr "_Rúnna af gildi"
+
+#: ../panel-plugin/weather-config.ui.h:65
+msgid "_Appearance"
+msgstr "Út_lit"
+
+#: ../panel-plugin/weather-config.ui.h:66
+msgid "Show scroll_box"
+msgstr "Birta skrun_box"
+
+#: ../panel-plugin/weather-config.ui.h:67
+msgid ""
+"Hide the scrollbox to save valuable space on the panel. Most interesting "
+"information is also provided in the tooltip - provided you choose an "
+"appropriate tooltip style - that is shown when hovering over the icon."
+msgstr "Fela skrunboxið til að spara pláss á skjástikunni. Áhugaverðustu upplýsingarnar munu einnig sjást í vísbendingum - ef þú velur viðeigandi stíl fyrir vísbendingar - og munu þær birtast þegar bendill svífur yfir táknmyndinni."
+
+#: ../panel-plugin/weather-config.ui.h:68
+msgid "Li_nes:"
+msgstr "Lí_nur:"
+
+#: ../panel-plugin/weather-config.ui.h:69
+msgid ""
+"Decide how many values should be shown at once in the scrollbox. You can "
+"choose a smaller font or enlarge the panel to make more lines fit."
+msgstr "Ákveddu hve mörg gildi eigi að birta í einu í skrunboxinu. Þú getur valið smærra letur eða stækkað stikuna til að koma fleiri línum fyrir."
+
+#: ../panel-plugin/weather-config.ui.h:70
+msgid "Font and color:"
+msgstr "Letur og litir"
+
+#: ../panel-plugin/weather-config.ui.h:71
+msgid ""
+"There may be problems with some themes that cause the scrollbox text to be "
+"hardly readable. If this is the case or you simply want it to appear in "
+"another color, then you can change it using this button. Middle-click on the"
+" button to unset the scrollbox text color."
+msgstr ""
+
+#. * TRANSLATORS: The abbreviations in parentheses will be shown in
+#. * the scrollbox together with the values. Keep them in sync with
+#. * those in make_label() in weather.c. Some of them may be
+#. * standardized internationally, like CL, CM, CH, and you might
+#. * read that up somewhere and decide whether you want to use them
+#. * or not. In general, though, you should just try to choose
+#. * letter(s) that make sense and don't use up too much space.
+#: ../panel-plugin/weather-config.ui.h:72 ../panel-plugin/weather-config.c:96
+msgid "Temperature (T)"
+msgstr "Hitastig (T)"
+
+#: ../panel-plugin/weather-config.ui.h:73 ../panel-plugin/weather-config.c:97
+msgid "Barometric pressure (P)"
+msgstr "Þrýstingur (P)"
+
+#: ../panel-plugin/weather-config.ui.h:74 ../panel-plugin/weather-config.c:98
+msgid "Wind speed (WS)"
+msgstr "Vindhraði (VH)"
+
+#: ../panel-plugin/weather-config.ui.h:75 ../panel-plugin/weather-config.c:99
+msgid "Wind speed - Beaufort scale (WB)"
+msgstr "Vindhraði - Beaufort kvarði (VB)"
+
+#: ../panel-plugin/weather-config.ui.h:76 ../panel-plugin/weather-config.c:100
+msgid "Wind direction (WD)"
+msgstr "Vindátt (VÁ)"
+
+#: ../panel-plugin/weather-config.ui.h:77 ../panel-plugin/weather-config.c:101
+msgid "Wind direction in degrees (WD)"
+msgstr "Vindátt í gráðum (VÁ)"
+
+#: ../panel-plugin/weather-config.ui.h:78 ../panel-plugin/weather-config.c:102
+msgid "Humidity (H)"
+msgstr "Rakastig (R)"
+
+#: ../panel-plugin/weather-config.ui.h:79 ../panel-plugin/weather-config.c:103
+msgid "Dew point (D)"
+msgstr "Daggarmark (D)"
+
+#: ../panel-plugin/weather-config.ui.h:80 ../panel-plugin/weather-config.c:104
+msgid "Apparent temperature (A)"
+msgstr "Skynjað hitastig (H)"
+
+#: ../panel-plugin/weather-config.ui.h:81 ../panel-plugin/weather-config.c:105
+msgid "Low clouds (CL)"
+msgstr "Lágskýjað (LS)"
+
+#: ../panel-plugin/weather-config.ui.h:82 ../panel-plugin/weather-config.c:106
+msgid "Middle clouds (CM)"
+msgstr "Miðský (MS)"
+
+#: ../panel-plugin/weather-config.ui.h:83 ../panel-plugin/weather-config.c:107
+msgid "High clouds (CH)"
+msgstr "Háskýjað (HS)"
+
+#: ../panel-plugin/weather-config.ui.h:84 ../panel-plugin/weather-config.c:108
+msgid "Cloudiness (C)"
+msgstr "Skýjahula (S)"
+
+#: ../panel-plugin/weather-config.ui.h:85 ../panel-plugin/weather-config.c:109
+msgid "Fog (F)"
+msgstr "Þoka (Þ)"
+
+#: ../panel-plugin/weather-config.ui.h:86 ../panel-plugin/weather-config.c:110
+msgid "Precipitation (R)"
+msgstr "Úrkoma (Ú)"
+
+#: ../panel-plugin/weather-config.ui.h:87
+msgid ""
+"These are the values that will be shown in the scrollbox. Select a single "
+"value here and click the appropriate button to remove it or move it up and "
+"down in the list."
+msgstr "Þetta eru merkingarnar sem á að birta í skrunboxinu. Veldu eitt gildi hér og ýttu á viðeigandi hnapp til að færa það upp eða niður í listanum eða til að fjarlægja það."
+
+#: ../panel-plugin/weather-config.ui.h:88
+msgid "A_dd"
+msgstr "_Bæta við"
+
+#: ../panel-plugin/weather-config.ui.h:89
+msgid ""
+"Add the selected value to the labels that should be displayed in the "
+"scrollbox."
+msgstr "Bæta völdu gildi í merkingarnar sem á að birta í skrunboxinu."
+
+#: ../panel-plugin/weather-config.ui.h:90
+msgid "_Remove"
+msgstr "_Fjarlægja"
+
+#: ../panel-plugin/weather-config.ui.h:91
+msgid ""
+"Select a value in the list of labels to display and click this button to "
+"remove it."
+msgstr "Veldu gildi í listanum yfir merkingarnar sem á að birta, og ýttu á þennan hnapp til að fjarlægja það."
+
+#: ../panel-plugin/weather-config.ui.h:92
+msgid "Move do_wn"
+msgstr "Færa _niður"
+
+#: ../panel-plugin/weather-config.ui.h:93
+msgid "Move the selected value down in the list of labels to display."
+msgstr "Færa valið gildi niður í listanum yfir merkingarnar sem á að birta."
+
+#: ../panel-plugin/weather-config.ui.h:94
+msgid "Move u_p"
+msgstr "Færa u_pp"
+
+#: ../panel-plugin/weather-config.ui.h:95
+msgid "Move the selected value up in the list of labels to display."
+msgstr "Færa valið gildi upp í listanum yfir merkingarnar sem á að birta."
+
+#: ../panel-plugin/weather-config.ui.h:96
+msgid "Animate _transitions between labels"
+msgstr "Lífga _millifærslur milli merkinga"
+
+#: ../panel-plugin/weather-config.ui.h:97
+msgid ""
+"Scroll the current displayed value(s) out and the new value(s) in instead of"
+" simply changing them. Uncheck this option if you find the animation too "
+"distracting."
+msgstr ""
+
+#: ../panel-plugin/weather-config.ui.h:98
+#: ../panel-plugin/weather-config.c:1131
+msgid "Select _font"
+msgstr "_Veldu letur"
+
+#: ../panel-plugin/weather-config.ui.h:99
+msgid ""
+"Choose a font you like and set it to a smaller or larger size. Middle-click "
+"on the button to unset the font and use your theme's default."
+msgstr "Veldu letur sem þér líkar og ákveddu stærðina á því. Smelltu með miðjuhnapp músarinnar á hnappinn til að núllstilla letrið og nota það sem sjálfgefið er í þemanu."
+
+#: ../panel-plugin/weather-config.ui.h:100
+msgid "_Scrollbox"
+msgstr "_Skrunbox"
+
 #. TRANSLATORS: Keep in sync with labeloptions in weather-config.c
-#: ../panel-plugin/weather.c:130
+#: ../panel-plugin/weather.c:128
 msgid "T"
 msgstr "T"
 
-#: ../panel-plugin/weather.c:133
+#: ../panel-plugin/weather.c:131
 msgid "P"
 msgstr "P"
 
-#: ../panel-plugin/weather.c:136
+#: ../panel-plugin/weather.c:134
 msgid "WS"
 msgstr "VH"
 
-#: ../panel-plugin/weather.c:139
+#: ../panel-plugin/weather.c:137
 msgid "WB"
 msgstr "VB"
 
-#: ../panel-plugin/weather.c:142 ../panel-plugin/weather.c:145
+#: ../panel-plugin/weather.c:140 ../panel-plugin/weather.c:143
 msgid "WD"
 msgstr "VÁ"
 
-#: ../panel-plugin/weather.c:148
+#: ../panel-plugin/weather.c:146
 msgid "H"
 msgstr "R"
 
-#: ../panel-plugin/weather.c:151
+#: ../panel-plugin/weather.c:149
 msgid "D"
 msgstr "D"
 
-#: ../panel-plugin/weather.c:154
+#: ../panel-plugin/weather.c:152
 msgid "A"
 msgstr "H"
 
-#: ../panel-plugin/weather.c:157
+#: ../panel-plugin/weather.c:155
 msgid "CL"
 msgstr "LS"
 
-#: ../panel-plugin/weather.c:160
+#: ../panel-plugin/weather.c:158
 msgid "CM"
 msgstr "MS"
 
-#: ../panel-plugin/weather.c:163
+#: ../panel-plugin/weather.c:161
 msgid "CH"
 msgstr "HS"
 
-#: ../panel-plugin/weather.c:166
+#: ../panel-plugin/weather.c:164
 msgid "C"
 msgstr "S"
 
-#: ../panel-plugin/weather.c:169
+#: ../panel-plugin/weather.c:167
 msgid "F"
 msgstr "Þ"
 
-#: ../panel-plugin/weather.c:172
+#: ../panel-plugin/weather.c:170
 msgid "R"
 msgstr "Ú"
 
-#: ../panel-plugin/weather.c:353 ../panel-plugin/weather.c:355
+#: ../panel-plugin/weather.c:357 ../panel-plugin/weather.c:359
 msgid "No Data"
 msgstr "Engin gögn"
 
-#: ../panel-plugin/weather.c:505
+#: ../panel-plugin/weather.c:515
 msgid "Error parsing astronomical data!"
 msgstr "Villa við þáttun stjörnufræðigagna!"
 
-#: ../panel-plugin/weather.c:507
+#: ../panel-plugin/weather.c:517
 #, c-format
 msgid ""
 "Download of astronomical data failed with HTTP Status Code %d, Reason "
 "phrase: %s"
 msgstr "Niðurhal stjörnufræðigagna brást með HTTP-stöðukóða %d, uppgefin ástæða: %s"
 
-#: ../panel-plugin/weather.c:558
+#: ../panel-plugin/weather.c:568
 msgid "Error parsing weather data!"
 msgstr "Villa við þáttun veðurgagna!"
 
-#: ../panel-plugin/weather.c:561
+#: ../panel-plugin/weather.c:571
 #, c-format
 msgid ""
 "Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
 msgstr "Niðurhal veðurfræðigagna brást með HTTP-stöðukóða %d, uppgefin ástæða: %s"
 
 #. start receive thread
-#: ../panel-plugin/weather.c:637 ../panel-plugin/weather.c:656
+#: ../panel-plugin/weather.c:643 ../panel-plugin/weather.c:664
 #: ../panel-plugin/weather-search.c:169 ../panel-plugin/weather-search.c:437
 #, c-format
 msgid "getting %s"
 msgstr "næ í %s"
 
-#: ../panel-plugin/weather.c:1174
+#: ../panel-plugin/weather.c:1193
 #, c-format
 msgid "Error writing cache file %s!"
 msgstr "Villa við ritun skyndiminnisskráar %s!"
 
-#: ../panel-plugin/weather.c:1625
+#: ../panel-plugin/weather.c:1653
 #, c-format
 msgid "Unable to open the following url: %s"
 msgstr "Get ekki opnað eftirfarandi slóð: %s"
 
-#: ../panel-plugin/weather.c:1695
+#: ../panel-plugin/weather.c:1723
 msgid "Short-term forecast data unavailable."
 msgstr "Ekki fundust gögn fyrir stutta veðurspáþ"
 
-#: ../panel-plugin/weather.c:1707
-msgid "The sun never rises today."
-msgstr "Sólin rís ekki í dag."
-
-#: ../panel-plugin/weather.c:1709
+#: ../panel-plugin/weather.c:1736
 msgid "The sun never sets today."
 msgstr "Sólin sest ekki í dag."
 
-#: ../panel-plugin/weather.c:1716
+#: ../panel-plugin/weather.c:1738
+msgid "The sun never rises today."
+msgstr "Sólin rís ekki í dag."
+
+#: ../panel-plugin/weather.c:1744
+#, c-format
+msgid "The sun never rises and sets at %s."
+msgstr ""
+
+#: ../panel-plugin/weather.c:1751
+#, c-format
+msgid "The sun rises at %s and never sets."
+msgstr ""
+
+#: ../panel-plugin/weather.c:1759
 #, c-format
 msgid "The sun rises at %s and sets at %s."
 msgstr "Sólin rís klukkan %s og sest klukkan %s."
 
 #. * TRANSLATORS: This is the simple tooltip. For a bigger challenge,
 #. * look at the verbose tooltip style further below ;-)
-#: ../panel-plugin/weather.c:1744
+#: ../panel-plugin/weather.c:1787
 #, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
@@ -159,7 +613,7 @@ msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\
 #. * be changed easily - and try to make it compact and look
 #. * good! The missing space after "%son the ..." is intentional,
 #. * it is included in the %s.
-#: ../panel-plugin/weather.c:1768
+#: ../panel-plugin/weather.c:1811
 #, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
@@ -174,94 +628,27 @@ msgid ""
 "<span size=\"smaller\">%s</span>"
 msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n<b><span size=\"large\">%s</span></b>\n<span size=\"smaller\">frá %s til %s, með %s úrkomu</span>\n\n<b>Hitastig:</b> %s\t\t<span size=\"smaller\">(values at %s)</span>\n<b>Vindur:</b> %s (%sá Beaufort kvarða) úr %s(%s)\n<b>Loftþrýstingur:</b> %s    <b>Rakastig:</b> %s\n<b>Þoka:</b> %s    <b>Skýjað:</b> %s\n\n<span size=\"smaller\">%s</span>"
 
-#: ../panel-plugin/weather.c:1821
+#: ../panel-plugin/weather.c:1864
 msgid "Cannot update weather data"
 msgstr "Get ekki uppfært veðurupplýsingar"
 
-#: ../panel-plugin/weather.c:1905
+#: ../panel-plugin/weather.c:1948
 msgid "No default icon theme? This should not happen, plugin will crash!"
 msgstr "Ekkert táknmyndaþema? Þetta á ekki að geta gerst, viðbótin mun hrynja!"
 
 #. add refresh button to right click menu, for people who missed
 #. the middle mouse click feature
-#: ../panel-plugin/weather.c:1947
+#: ../panel-plugin/weather.c:1990
 msgid "Re_fresh"
 msgstr "Endurlesa"
 
-#: ../panel-plugin/weather.c:2141
+#: ../panel-plugin/weather.c:2200
 msgid "Show weather conditions and forecasts"
 msgstr "Birta veðurslýsingar og veðurspár"
 
-#: ../panel-plugin/weather.c:2143
+#: ../panel-plugin/weather.c:2202
 msgid "Copyright (c) 2003-2014\n"
 msgstr "Höfundarréttur (c) 2003-2014\n"
-
-#. * TRANSLATORS: The abbreviations in parentheses will be shown in
-#. * the scrollbox together with the values. Keep them in sync with
-#. * those in make_label() in weather.c. Some of them may be
-#. * standardized internationally, like CL, CM, CH, and you might
-#. * read that up somewhere and decide whether you want to use them
-#. * or not. In general, though, you should just try to choose
-#. * letter(s) that make sense and don't use up too much space.
-#: ../panel-plugin/weather-config.c:96 ../panel-plugin/weather-config.ui.h:72
-msgid "Temperature (T)"
-msgstr "Hitastig (T)"
-
-#: ../panel-plugin/weather-config.c:97 ../panel-plugin/weather-config.ui.h:73
-msgid "Barometric pressure (P)"
-msgstr "Þrýstingur (P)"
-
-#: ../panel-plugin/weather-config.c:98 ../panel-plugin/weather-config.ui.h:74
-msgid "Wind speed (WS)"
-msgstr "Vindhraði (VH)"
-
-#: ../panel-plugin/weather-config.c:99 ../panel-plugin/weather-config.ui.h:75
-msgid "Wind speed - Beaufort scale (WB)"
-msgstr "Vindhraði - Beaufort kvarði (VB)"
-
-#: ../panel-plugin/weather-config.c:100 ../panel-plugin/weather-config.ui.h:76
-msgid "Wind direction (WD)"
-msgstr "Vindátt (VÁ)"
-
-#: ../panel-plugin/weather-config.c:101 ../panel-plugin/weather-config.ui.h:77
-msgid "Wind direction in degrees (WD)"
-msgstr "Vindátt í gráðum (VÁ)"
-
-#: ../panel-plugin/weather-config.c:102 ../panel-plugin/weather-config.ui.h:78
-msgid "Humidity (H)"
-msgstr "Rakastig (R)"
-
-#: ../panel-plugin/weather-config.c:103 ../panel-plugin/weather-config.ui.h:79
-msgid "Dew point (D)"
-msgstr "Daggarmark (D)"
-
-#: ../panel-plugin/weather-config.c:104 ../panel-plugin/weather-config.ui.h:80
-msgid "Apparent temperature (A)"
-msgstr "Skynjað hitastig (H)"
-
-#: ../panel-plugin/weather-config.c:105 ../panel-plugin/weather-config.ui.h:81
-msgid "Low clouds (CL)"
-msgstr "Lágskýjað (LS)"
-
-#: ../panel-plugin/weather-config.c:106 ../panel-plugin/weather-config.ui.h:82
-msgid "Middle clouds (CM)"
-msgstr "Miðský (MS)"
-
-#: ../panel-plugin/weather-config.c:107 ../panel-plugin/weather-config.ui.h:83
-msgid "High clouds (CH)"
-msgstr "Háskýjað (HS)"
-
-#: ../panel-plugin/weather-config.c:108 ../panel-plugin/weather-config.ui.h:84
-msgid "Cloudiness (C)"
-msgstr "Skýjahula (S)"
-
-#: ../panel-plugin/weather-config.c:109 ../panel-plugin/weather-config.ui.h:85
-msgid "Fog (F)"
-msgstr "Þoka (Þ)"
-
-#: ../panel-plugin/weather-config.c:110 ../panel-plugin/weather-config.ui.h:86
-msgid "Precipitation (R)"
-msgstr "Úrkoma (Ú)"
 
 #: ../panel-plugin/weather-config.c:232 ../panel-plugin/weather-config.c:338
 #: ../panel-plugin/weather-config.c:508
@@ -271,10 +658,6 @@ msgstr "Afvirkja"
 #: ../panel-plugin/weather-config.c:348
 msgid "Detecting..."
 msgstr "Skynja..."
-
-#: ../panel-plugin/weather-config.c:399 ../panel-plugin/weather-config.ui.h:19
-msgid "feet"
-msgstr "fet"
 
 #: ../panel-plugin/weather-config.c:409
 msgid "meters"
@@ -474,11 +857,6 @@ msgid ""
 "are unreliable at best ;-)"
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:1131
-#: ../panel-plugin/weather-config.ui.h:98
-msgid "Select _font"
-msgstr "_Veldu letur"
-
 #: ../panel-plugin/weather-config.c:1148
 msgid "Select font"
 msgstr "Veldu letur"
@@ -624,7 +1002,7 @@ msgid ""
 "<b>Note</b>: While air temperature is an important factor in this calculation, there are other influencing factors that the plugin doesn't know about like the type of snow and ground temperature. Because of that, these rules will only lead to rough estimates and may not represent the real amount of snow."
 msgstr ""
 
-#: ../panel-plugin/weather-config.c:1570
+#: ../panel-plugin/weather-config.c:1571
 msgid "Labels to d_isplay"
 msgstr "Merk_ingar sem á að birta"
 
@@ -744,12 +1122,6 @@ msgstr "ft/sek"
 msgid "kt"
 msgstr "hn"
 
-#. TRANSLATORS: The degree sign is used like a unit for
-#. latitude, longitude, wind direction
-#: ../panel-plugin/weather-data.c:519 ../panel-plugin/weather-config.ui.h:12
-msgid "°"
-msgstr "°"
-
 #. TRANSLATORS: Percentage sign is used like a unit for
 #. clouds, fog, humidity
 #: ../panel-plugin/weather-data.c:528
@@ -764,7 +1136,7 @@ msgstr "in"
 msgid "mm"
 msgstr "mm"
 
-#: ../panel-plugin/weather-icon.c:168
+#: ../panel-plugin/weather-icon.c:185
 msgid "No icon theme!"
 msgstr "Ekkert táknmyndaþema!"
 
@@ -1283,27 +1655,27 @@ msgstr "Kvöld"
 msgid "Night"
 msgstr "Nótt"
 
-#: ../panel-plugin/weather-summary.c:1123
+#: ../panel-plugin/weather-summary.c:1117
 msgid "Weather Report"
 msgstr "Veðurfregnir"
 
-#: ../panel-plugin/weather-summary.c:1126
+#: ../panel-plugin/weather-summary.c:1120
 msgid "Close"
 msgstr "Loka"
 
-#: ../panel-plugin/weather-summary.c:1150
+#: ../panel-plugin/weather-summary.c:1144
 msgid "Please set a location in the plugin settings."
 msgstr "Settu inn staðsetningu í stillingum viðbótarinnar."
 
-#: ../panel-plugin/weather-summary.c:1152
+#: ../panel-plugin/weather-summary.c:1146
 msgid "Currently no data available."
 msgstr "í augnablikinu eru engin gögn tiltæk."
 
-#: ../panel-plugin/weather-summary.c:1164
+#: ../panel-plugin/weather-summary.c:1158
 msgid "_Forecast"
 msgstr "_Veðurspá"
 
-#: ../panel-plugin/weather-summary.c:1167
+#: ../panel-plugin/weather-summary.c:1161
 msgid "_Details"
 msgstr "_Nánar"
 
@@ -1466,365 +1838,3 @@ msgstr "Lítilsháttar rigning með þrumuveðri"
 #: ../panel-plugin/weather-translate.c:131
 msgid "Sleet with thunder"
 msgstr "Slydda með þrumuveðri"
-
-#: ../panel-plugin/weather.desktop.in.h:1
-#: ../panel-plugin/weather-config.ui.h:1
-msgid "Weather Update"
-msgstr "Veðuruppfærsla"
-
-#: ../panel-plugin/weather.desktop.in.h:2
-msgid "Show current weather conditions"
-msgstr "Birta veðurslýsingu"
-
-#: ../panel-plugin/weather-config.ui.h:2
-msgid "Preferences"
-msgstr "Kjörstillingar"
-
-#: ../panel-plugin/weather-config.ui.h:3
-msgid "_Help"
-msgstr "_Hjálp"
-
-#: ../panel-plugin/weather-config.ui.h:4
-msgid "_Close"
-msgstr "_Loka"
-
-#: ../panel-plugin/weather-config.ui.h:5
-msgid "Location _name:"
-msgstr "Staðsetning:"
-
-#: ../panel-plugin/weather-config.ui.h:6
-msgid "Latitud_e:"
-msgstr "_Breiddargráða:"
-
-#: ../panel-plugin/weather-config.ui.h:7
-msgid "L_ongitude:"
-msgstr "L_engdargráða:"
-
-#: ../panel-plugin/weather-config.ui.h:8
-msgid "Altitu_de:"
-msgstr "_Hæð:"
-
-#: ../panel-plugin/weather-config.ui.h:9
-msgid "_Timezone:"
-msgstr "_Tímabelti:"
-
-#: ../panel-plugin/weather-config.ui.h:10
-msgid ""
-"Please change location name to your liking and correct alltitude and "
-"timezone if they are not auto-detected correctly."
-msgstr ""
-
-#: ../panel-plugin/weather-config.ui.h:11
-msgid ""
-"Latitude specifies the north-south position of a point on the Earth's "
-"surface. If you change this value manually, you need to provide altitude and"
-" timezone manually too."
-msgstr "Breiddargráða tilgreinir norður-suður stöðu punkts á yfirborði jarðarinnar. Ef þú breytir þessu gildi, verður þú einnig að gefa upp hæð og tímabelti."
-
-#: ../panel-plugin/weather-config.ui.h:13
-msgid ""
-"Longitude specifies the east-west position of a point on the Earth's "
-"surface. If you change this value manually, you need to provide altitude and"
-" timezone manually too."
-msgstr "Lengdargráða tilgreinir austur-vestur stöðu punkts á yfirborði jarðarinnar. Ef þú breytir þessu gildi, verður þú einnig að gefa upp hæð og tímabelti."
-
-#: ../panel-plugin/weather-config.ui.h:14
-msgid ""
-"For locations outside Norway the elevation model that's used by the met.no webservice is not very good, so it's usually necessary to specify the altitude as an additional parameter, otherwise the reported values will not be correct.\n"
-"\n"
-"The plugin tries to auto-detect the altitude using the GeoNames webservice, but that might not always be correct too, so you can change it here.\n"
-"\n"
-"Altitude is given in meters above sea level, or alternatively in feet by changing the unit on the units page. It should match the real value roughly, but small differences will have no influence on the weather data. Inside Norway, this setting has no effect at all."
-msgstr ""
-
-#: ../panel-plugin/weather-config.ui.h:20
-msgid ""
-"If the chosen location is not in your current timezone, then it is necessary to <i>put</i> the plugin into that other timezone for the times to be shown correctly. The proper timezone will be auto-detected via the GeoNames web service, but you might want to correct it if necessary.\n"
-"Leave this field empty to use the timezone set by your system. Invalid entries will cause the use of UTC time, but that may also depend on your system."
-msgstr ""
-
-#: ../panel-plugin/weather-config.ui.h:22
-msgid ""
-"Change the name for the location to your liking. It is used for display and "
-"does not affect the location parameters in any way."
-msgstr "Breyttu nafni staðsetningarinnar í það sem þér líkar best. Þetta er einungis notað til birtingar og hefur ekki nein áhrif á staðsetningarbreytur."
-
-#: ../panel-plugin/weather-config.ui.h:23
-msgid "Change..."
-msgstr "Breyta..."
-
-#: ../panel-plugin/weather-config.ui.h:24
-msgid "Search for a new location and auto-detect its parameters."
-msgstr "Leita að nýrri staðsetningu og skynja sjálfkrafa breytur tengdar henni."
-
-#: ../panel-plugin/weather-config.ui.h:25
-msgid "_Location"
-msgstr "_Staðsetning"
-
-#: ../panel-plugin/weather-config.ui.h:26
-msgid "_Temperature:"
-msgstr "Hi_tastig:"
-
-#: ../panel-plugin/weather-config.ui.h:27
-msgid "Barometric _pressure:"
-msgstr "_Loftþrýstingur:"
-
-#: ../panel-plugin/weather-config.ui.h:28
-msgid "_Wind speed:"
-msgstr "_Vindhraði:"
-
-#: ../panel-plugin/weather-config.ui.h:29
-msgid "Prec_ipitations:"
-msgstr "Úr_koma:"
-
-#: ../panel-plugin/weather-config.ui.h:30
-msgid "Apparent te_mperature:"
-msgstr "Sk_ynjað hitastig:"
-
-#: ../panel-plugin/weather-config.ui.h:31
-msgid "Celsius (°C)"
-msgstr "Celsíusgráður (°C)"
-
-#: ../panel-plugin/weather-config.ui.h:32
-msgid "Fahrenheit (°F)"
-msgstr "Fahrenheit (°F)"
-
-#: ../panel-plugin/weather-config.ui.h:33
-msgid "Hectopascals (hPa)"
-msgstr "Hektópasköl (hPa)"
-
-#: ../panel-plugin/weather-config.ui.h:34
-msgid "Inches of mercury (inHg)"
-msgstr "Tommur kvikasilfurs (inHg)"
-
-#: ../panel-plugin/weather-config.ui.h:35
-msgid "Pound-force per square inch (psi)"
-msgstr "Pund á fertommu (psi)"
-
-#: ../panel-plugin/weather-config.ui.h:36
-msgid "Torr (mmHg)"
-msgstr "Torr (mmHg)"
-
-#: ../panel-plugin/weather-config.ui.h:37
-msgid "Kilometers per hour (km/h)"
-msgstr "Kílómetrar á klukkustund (km/klst)"
-
-#: ../panel-plugin/weather-config.ui.h:38
-msgid "Miles per hour (mph)"
-msgstr "Mílur á klukkustund (mi/klst)"
-
-#: ../panel-plugin/weather-config.ui.h:39
-msgid "Meters per second (m/s)"
-msgstr "Metrar á sekúndu (m/sek)"
-
-#: ../panel-plugin/weather-config.ui.h:40
-msgid "Feet per second (ft/s)"
-msgstr "Fet á sekúndu (ft/sek)"
-
-#: ../panel-plugin/weather-config.ui.h:41
-msgid "Knots (kt)"
-msgstr "Hnútar (kt)"
-
-#: ../panel-plugin/weather-config.ui.h:42
-msgid "Millimeters (mm)"
-msgstr "Millímetrar (mm)"
-
-#: ../panel-plugin/weather-config.ui.h:43
-msgid "Inches (in)"
-msgstr "Tommur (in)"
-
-#: ../panel-plugin/weather-config.ui.h:44
-msgid "Meters (m)"
-msgstr "Metrar (m)"
-
-#: ../panel-plugin/weather-config.ui.h:45
-msgid "Feet (ft)"
-msgstr "Fet (ft)"
-
-#: ../panel-plugin/weather-config.ui.h:46
-msgid "Windchill/Heat index"
-msgstr "Vindkæling/Hitatafla"
-
-#: ../panel-plugin/weather-config.ui.h:47
-msgid "Windchill/Humidex"
-msgstr "Vindkæling/Humidex"
-
-#: ../panel-plugin/weather-config.ui.h:48
-msgid "Steadman"
-msgstr "Steadman"
-
-#: ../panel-plugin/weather-config.ui.h:49
-msgid "Quayle-Steadman"
-msgstr "Quayle-Steadman"
-
-#: ../panel-plugin/weather-config.ui.h:50
-msgid "_Units"
-msgstr "_Einingar"
-
-#: ../panel-plugin/weather-config.ui.h:51
-msgid ""
-"Available icon themes are listed here. You can add icon themes to "
-"$HOME/.config/xfce4/weather/icons (or the equivalent directory on your "
-"system). Information about how to create or use icon themes can be found in "
-"the README file. New icon themes will be detected everytime you open this "
-"config dialog."
-msgstr ""
-
-#: ../panel-plugin/weather-config.ui.h:52
-msgid "_Icon theme:"
-msgstr "Táknmyn_daþema:"
-
-#: ../panel-plugin/weather-config.ui.h:53
-msgid ""
-"Open the user icon themes directory in your file manager, creating it if "
-"necessary."
-msgstr "Opna möppu með táknmyndaþemum í skráarstjóra, og búa hana til ef nauðsyn krefur."
-
-#: ../panel-plugin/weather-config.ui.h:54
-msgid "Use only a single _panel row"
-msgstr "_Nota aðeins eina röð í stiku"
-
-#: ../panel-plugin/weather-config.ui.h:55
-msgid ""
-"Check to always use only a single row on a multi-row panel and a small icon "
-"in deskbar mode."
-msgstr ""
-
-#: ../panel-plugin/weather-config.ui.h:56
-msgid "_Tooltip style:"
-msgstr "S_tíll vísbendingar:"
-
-#: ../panel-plugin/weather-config.ui.h:57
-msgid ""
-"Choose your preferred tooltip style. Some styles give a lot of useful data, "
-"some are clearer but provide less data on a glance."
-msgstr "Veldu þann stíl vísbendinga sem þér hentar. Sumir stílar birta mikið af gagnlegum upplýsingum, aðrir eru skírari en birta minna af upplýsingum í einu."
-
-#: ../panel-plugin/weather-config.ui.h:58
-msgid "Simple"
-msgstr "Einfalt"
-
-#: ../panel-plugin/weather-config.ui.h:59
-msgid "Verbose"
-msgstr "Ítarlegt"
-
-#: ../panel-plugin/weather-config.ui.h:60
-msgid "_Forecast layout:"
-msgstr "_Framsetning veðurspár:"
-
-#: ../panel-plugin/weather-config.ui.h:61
-msgid "Days in columns"
-msgstr "Dagar í dálkum"
-
-#: ../panel-plugin/weather-config.ui.h:62
-msgid "Days in rows"
-msgstr "Dagar í röðum"
-
-#: ../panel-plugin/weather-config.ui.h:63
-msgid "_Number of forecast days:"
-msgstr "_Fjöldi spádaga:"
-
-#: ../panel-plugin/weather-config.ui.h:64
-msgid "_Round values"
-msgstr "_Rúnna af gildi"
-
-#: ../panel-plugin/weather-config.ui.h:65
-msgid "_Appearance"
-msgstr "Út_lit"
-
-#: ../panel-plugin/weather-config.ui.h:66
-msgid "Show scroll_box"
-msgstr "Birta skrun_box"
-
-#: ../panel-plugin/weather-config.ui.h:67
-msgid ""
-"Hide the scrollbox to save valuable space on the panel. Most interesting "
-"information is also provided in the tooltip - provided you choose an "
-"appropriate tooltip style - that is shown when hovering over the icon."
-msgstr "Fela skrunboxið til að spara pláss á skjástikunni. Áhugaverðustu upplýsingarnar munu einnig sjást í vísbendingum - ef þú velur viðeigandi stíl fyrir vísbendingar - og munu þær birtast þegar bendill svífur yfir táknmyndinni."
-
-#: ../panel-plugin/weather-config.ui.h:68
-msgid "Li_nes:"
-msgstr "Lí_nur:"
-
-#: ../panel-plugin/weather-config.ui.h:69
-msgid ""
-"Decide how many values should be shown at once in the scrollbox. You can "
-"choose a smaller font or enlarge the panel to make more lines fit."
-msgstr "Ákveddu hve mörg gildi eigi að birta í einu í skrunboxinu. Þú getur valið smærra letur eða stækkað stikuna til að koma fleiri línum fyrir."
-
-#: ../panel-plugin/weather-config.ui.h:70
-msgid "Font and color:"
-msgstr "Letur og litir"
-
-#: ../panel-plugin/weather-config.ui.h:71
-msgid ""
-"There may be problems with some themes that cause the scrollbox text to be "
-"hardly readable. If this is the case or you simply want it to appear in "
-"another color, then you can change it using this button. Middle-click on the"
-" button to unset the scrollbox text color."
-msgstr ""
-
-#: ../panel-plugin/weather-config.ui.h:87
-msgid ""
-"These are the values that will be shown in the scrollbox. Select a single "
-"value here and click the appropriate button to remove it or move it up and "
-"down in the list."
-msgstr "Þetta eru merkingarnar sem á að birta í skrunboxinu. Veldu eitt gildi hér og ýttu á viðeigandi hnapp til að færa það upp eða niður í listanum eða til að fjarlægja það."
-
-#: ../panel-plugin/weather-config.ui.h:88
-msgid "A_dd"
-msgstr "_Bæta við"
-
-#: ../panel-plugin/weather-config.ui.h:89
-msgid ""
-"Add the selected value to the labels that should be displayed in the "
-"scrollbox."
-msgstr "Bæta völdu gildi í merkingarnar sem á að birta í skrunboxinu."
-
-#: ../panel-plugin/weather-config.ui.h:90
-msgid "_Remove"
-msgstr "_Fjarlægja"
-
-#: ../panel-plugin/weather-config.ui.h:91
-msgid ""
-"Select a value in the list of labels to display and click this button to "
-"remove it."
-msgstr "Veldu gildi í listanum yfir merkingarnar sem á að birta, og ýttu á þennan hnapp til að fjarlægja það."
-
-#: ../panel-plugin/weather-config.ui.h:92
-msgid "Move do_wn"
-msgstr "Færa _niður"
-
-#: ../panel-plugin/weather-config.ui.h:93
-msgid "Move the selected value down in the list of labels to display."
-msgstr "Færa valið gildi niður í listanum yfir merkingarnar sem á að birta."
-
-#: ../panel-plugin/weather-config.ui.h:94
-msgid "Move u_p"
-msgstr "Færa u_pp"
-
-#: ../panel-plugin/weather-config.ui.h:95
-msgid "Move the selected value up in the list of labels to display."
-msgstr "Færa valið gildi upp í listanum yfir merkingarnar sem á að birta."
-
-#: ../panel-plugin/weather-config.ui.h:96
-msgid "Animate _transitions between labels"
-msgstr "Lífga _millifærslur milli merkinga"
-
-#: ../panel-plugin/weather-config.ui.h:97
-msgid ""
-"Scroll the current displayed value(s) out and the new value(s) in instead of"
-" simply changing them. Uncheck this option if you find the animation too "
-"distracting."
-msgstr ""
-
-#: ../panel-plugin/weather-config.ui.h:99
-msgid ""
-"Choose a font you like and set it to a smaller or larger size. Middle-click "
-"on the button to unset the font and use your theme's default."
-msgstr "Veldu letur sem þér líkar og ákveddu stærðina á því. Smelltu með miðjuhnapp músarinnar á hnappinn til að núllstilla letrið og nota það sem sjálfgefið er í þemanu."
-
-#: ../panel-plugin/weather-config.ui.h:100
-msgid "_Scrollbox"
-msgstr "_Skrunbox"
