@@ -69,7 +69,7 @@ BUILT_SOURCES = \
 	weather-config_ui.h
 
 weather-config_ui.h: weather-config.ui
-	exo-csource --static --strip-comments --strip-content --name=weather_config_ui $< >$@
+	xdt-csource --static --strip-comments --strip-content --name=weather_config_ui $< >$@
 
 endif
 
