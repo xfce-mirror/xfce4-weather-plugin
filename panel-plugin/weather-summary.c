@@ -1124,7 +1124,6 @@ gboolean
 update_summary_subtitle(plugin_data *data)
 {
     time_t now_t;
-    GTimeVal now;
     gchar *title, *date;
     guint update_interval;
     gint64 now_ms;
@@ -1147,8 +1146,7 @@ update_summary_subtitle(plugin_data *data)
     g_free(title);
 
     /* compute and schedule the next update */
-    g_get_current_time(&now);
-    now_ms = ((gint64) now.tv_sec * 1000) + ((gint64) now.tv_usec / 1000);
+    now_ms = g_get_real_time () / 1000;
 #ifdef HAVE_UPOWER_GLIB
     if (data->upower_on_battery)
         update_interval = 60000 - (now_ms % 60000) + 10;
