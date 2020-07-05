@@ -408,12 +408,12 @@ create_summary_tab(plugin_data *data)
     /* Check for deprecated API and issue a warning if necessary */
     if (data->weather_update->http_status_code == 203)
         APPEND_BTEXT
-            (_("\tMet.no LocationforecastLTS API states that this version\n"
+            (_("\tMet.no Locationforecast API states that this version\n"
                "\tof the webservice is deprecated, and the plugin needs to be\n"
                "\tadapted to use a newer version, or it will stop working within\n"
                "\ta few months.\n"
-               "\tPlease file a bug on https://bugzilla.xfce.org if no one\n"
-               "\telse has done so yet.\n\n"));
+               "\tPlease file a bug on https://gitlab.xfce.org/panel-plugins/xfce4-weather-plugin/\n"
+               "\tif no one else has done so yet.\n\n"));
 
     last_download = format_date(data->astro_update->last, NULL, TRUE);
     next_download = format_date(data->astro_update->next, NULL, TRUE);
@@ -434,8 +434,8 @@ create_summary_tab(plugin_data *data)
             (_("\n\tMet.no sunrise API states that this version of the webservice\n"
                "\tis deprecated, and the plugin needs to be adapted to use\n"
                "\ta newer version, or it will stop working within a few months.\n"
-               "\tPlease file a bug on https://bugzilla.xfce.org if no one\n"
-               "\telse has done so yet.\n"));
+               "\tPlease file a bug on https://gitlab.xfce.org/panel-plugins/xfce4-weather-plugin/\n"
+               "\tif no one else has done so yet.\n\n"));
 
     /* calculation times */
     APPEND_BTEXT(_("\nTimes Used for Calculations\n"));

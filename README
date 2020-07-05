@@ -92,8 +92,8 @@ left open by the former:
   https://api.met.no/license_data.html
 
 * Service-specific documentation
-  https://api.met.no/weatherapi/locationforecastlts/1.3/documentation
-  https://api.met.no/weatherapi/sunrise/1.1/documentation
+  https://api.met.no/weatherapi/locationforecast/2.0/documentation
+  https://api.met.no/weatherapi/sunrise/2.0/documentation
 
 For more technical details you might need to study the XML schema
 corresponding to the document in question.
@@ -101,11 +101,11 @@ corresponding to the document in question.
 
 DEBUGGING AND REPORTING BUGS
 ==========================================================================
-Before reporting bugs or asking for new features, please consolidate
-the Xfce bug tracker at https://bugzilla.xfce.org and check the TODO
-file, because your issue or request might have been reported already
-or be in planning. However, feel free to add any information not yet
-mentioned that you find useful.
+Before reporting bugs or asking for new features, please open
+an issue on https://gitlab.xfce.org/panel-plugins/xfce4-weather-plugin/
+and check the TODO file, because your issue or request might have been
+reported already or be in planning. However, feel free to add any
+information not yet mentioned that you find useful.
 
 First, if you're having trouble with downloading data, then you might
 look at the warnings in the panel output. In case of an error, the
@@ -131,7 +131,7 @@ prove insightful to enable panel debugging as follows:
 This will make the plugin explain what it's currently doing and dump
 data it downloaded from the various sources. More information about
 debugging panel plugins can be obtained from several pages of the Xfce
-Wiki at https://wiki.xfce.org.
+Wiki at https://docs.xfce.org/xfce/xfce4-panel/debugging.
 
 It's also relatively easy and often very helpful to create a backtrace
 using gdb or any other debugger should the plugin crash:
@@ -144,7 +144,8 @@ using gdb or any other debugger should the plugin crash:
 4) Produce the crash if possible, or wait until it crashes.
 5) GDB will detect the crash and freeze the plugin again. Use 'bt' to
    print a nice backtrace. Report the issue to the Xfce bugtracker at
-   https://bugzilla.xfce.org, providing the backtrace.
+   https://gitlab.xfce.org/panel-plugins/xfce4-weather-plugin,
+   providing the backtrace.
 6) 'quit' exits the debugger.
 
 
@@ -206,8 +207,9 @@ is to ask at a forum for your distribution, not on a general forum.
 Then for both cases:
 2) make
 
-If this fails, file a bug on https://bugzilla.xfce.org, or send a mail
-to the xfce mailing list and provide make output.
+If this fails, file a bug on
+https://gitlab.xfce.org/panel-plugins/xfce4-weather-plugin, or
+send a mail to the xfce mailing list and provide make output.
 
 Finally, and usually as root:
 3) make install
