@@ -447,7 +447,7 @@ find_icon_themes(void)
     /* look in user directory first */
     dir = get_user_icons_dir();
     found = find_themes_in_dir(dir);
-    g_free(dir);
+
     if (found) {
         if (found->len > 0)
             themes = g_array_append_vals(themes, found->data, found->len);
@@ -463,6 +463,7 @@ find_icon_themes(void)
     }
 
     weather_debug("Found %d icon themes in total.", themes->len, dir);
+    g_free(dir);
     return themes;
 }
 
