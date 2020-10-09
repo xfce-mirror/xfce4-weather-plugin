@@ -6,14 +6,15 @@
 # Alex Nordlund <deep.alexander@gmail.com>, 2013
 # Alex Nordlund <deep.alexander@gmail.com>, 2013
 # Daniel Nylander <po@danielnylander.se>, 2008
+# Luna Jernberg <bittin@cafe8bitar.se>, 2020
 # Påvel Nicklasson<pavel@frimix.se>, 2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-01 06:32+0100\n"
-"PO-Revision-Date: 2020-03-01 05:32+0000\n"
-"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
+"POT-Creation-Date: 2020-07-06 00:47+0200\n"
+"PO-Revision-Date: 2020-10-09 10:44+0000\n"
+"Last-Translator: Luna Jernberg <bittin@cafe8bitar.se>\n"
 "Language-Team: Swedish (http://www.transifex.com/xfce/xfce-panel-plugins/language/sv/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -579,12 +580,12 @@ msgstr "Solen går inte upp idag."
 #: ../panel-plugin/weather.c:1744
 #, c-format
 msgid "The sun never rises and sets at %s."
-msgstr ""
+msgstr "Solen stiger aldrig upp och går ned vid %s."
 
 #: ../panel-plugin/weather.c:1751
 #, c-format
 msgid "The sun rises at %s and never sets."
-msgstr ""
+msgstr "Solen stiger vid %s och går aldrig ner."
 
 #: ../panel-plugin/weather.c:1759
 #, c-format
@@ -1201,31 +1202,31 @@ msgstr "Fel då met.no:s logotype laddades ner till %s, orsak: %s\n"
 msgid "unknown"
 msgstr "okänd"
 
-#: ../panel-plugin/weather-summary.c:334
+#: ../panel-plugin/weather-summary.c:387
 msgid "Coordinates\n"
 msgstr "Koordinater\n"
 
-#: ../panel-plugin/weather-summary.c:335
+#: ../panel-plugin/weather-summary.c:388
 msgid "Altitude"
 msgstr "Höjd över havet"
 
-#: ../panel-plugin/weather-summary.c:336
+#: ../panel-plugin/weather-summary.c:389
 msgid "Latitude"
 msgstr "Latitud"
 
-#: ../panel-plugin/weather-summary.c:337
+#: ../panel-plugin/weather-summary.c:390
 msgid "Longitude"
 msgstr "Longitud"
 
 #. TRANSLATORS: Please use as many \t as appropriate to align the
 #. date/time values as in the original.
-#: ../panel-plugin/weather-summary.c:341
+#: ../panel-plugin/weather-summary.c:394
 msgid ""
 "\n"
 "Downloads\n"
 msgstr "\nNedladdningar\n"
 
-#: ../panel-plugin/weather-summary.c:344
+#: ../panel-plugin/weather-summary.c:397
 #, c-format
 msgid ""
 "\tWeather data:\n"
@@ -1235,18 +1236,18 @@ msgid ""
 "\n"
 msgstr "\tVäderdata:\n\tSenaste:\t%s\n\tNästa:\t%s\n\tAntal misslyckade försök: %d\n\n"
 
-#: ../panel-plugin/weather-summary.c:358
+#: ../panel-plugin/weather-summary.c:411
 msgid ""
-"\tMet.no LocationforecastLTS API states that this version\n"
+"\tMet.no Locationforecast API states that this version\n"
 "\tof the webservice is deprecated, and the plugin needs to be\n"
 "\tadapted to use a newer version, or it will stop working within\n"
 "\ta few months.\n"
-"\tPlease file a bug on https://bugzilla.xfce.org if no one\n"
-"\telse has done so yet.\n"
+"\tPlease file a bug on https://gitlab.xfce.org/panel-plugins/xfce4-weather-plugin/\n"
+"\tif no one else has done so yet.\n"
 "\n"
-msgstr "\tMet.no LocationforecastLTS API anger att denna version\n\tav nättjänsten är föråldrad och insticksprogrammet måste\n\tanpassas för att använda en nyare version, eller sluta fungera inom\n\tnågra månader.\n\tPosta en bugrapport på https://bugzilla.xfce.org om ingen\n\tredan gjort det.\n\n"
+msgstr ""
 
-#: ../panel-plugin/weather-summary.c:367
+#: ../panel-plugin/weather-summary.c:420
 #, c-format
 msgid ""
 "\tAstronomical data:\n"
@@ -1255,31 +1256,32 @@ msgid ""
 "\tCurrent failed attempts: %d\n"
 msgstr "\tAstronomiska data:\n\tSenaste:\t%s\n\tNästa:\t%s\n\tAntal misslyclade försök: %d\n"
 
-#: ../panel-plugin/weather-summary.c:381
+#: ../panel-plugin/weather-summary.c:434
 msgid ""
 "\n"
 "\tMet.no sunrise API states that this version of the webservice\n"
 "\tis deprecated, and the plugin needs to be adapted to use\n"
 "\ta newer version, or it will stop working within a few months.\n"
-"\tPlease file a bug on https://bugzilla.xfce.org if no one\n"
-"\telse has done so yet.\n"
-msgstr "\n\tMet.no sunrise API anger att denna version av nättjänsten\n\tär föråldrad, och insticksprogrammet måste abpassas för att att använda\n\ten nyare version, eller sluta fungera inom några månader.\n\tPosta en felrapport på https://bugzilla.xfce.org om ingen\n\tredan gjort det.\n"
+"\tPlease file a bug on https://gitlab.xfce.org/panel-plugins/xfce4-weather-plugin/\n"
+"\tif no one else has done so yet.\n"
+"\n"
+msgstr ""
 
 #. calculation times
-#: ../panel-plugin/weather-summary.c:388
+#: ../panel-plugin/weather-summary.c:441
 msgid ""
 "\n"
 "Times Used for Calculations\n"
 msgstr "\nTider som används för beräkningar\n"
 
-#: ../panel-plugin/weather-summary.c:391
+#: ../panel-plugin/weather-summary.c:444
 #, c-format
 msgid ""
 "\tTemperatures, wind, atmosphere and cloud data calculated\n"
 "\tfor:\t\t%s\n"
 msgstr "\tTemperaturer, vind, atmosfär och molndata beräknade\n\tför:\t\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:400
+#: ../panel-plugin/weather-summary.c:453
 #, c-format
 msgid ""
 "\n"
@@ -1290,197 +1292,197 @@ msgid ""
 msgstr "\n\tNederbörd och vädersymbol har beräknats\n\tgenom att använda följande tidsintervall:\n\tBörjan:\t%s\n\tSlut:\t%s\n"
 
 #. sun and moon
-#: ../panel-plugin/weather-summary.c:411
+#: ../panel-plugin/weather-summary.c:464
 msgid ""
 "\n"
 "Astronomical Data\n"
 msgstr "\nAstronomisk data\n"
 
-#: ../panel-plugin/weather-summary.c:414
+#: ../panel-plugin/weather-summary.c:467
 msgid "\tSunrise:\t\tThe sun never rises today.\n"
 msgstr "\tSoluppgång:\t\tSolen går inte upp idag.\n"
 
-#: ../panel-plugin/weather-summary.c:417
+#: ../panel-plugin/weather-summary.c:470
 msgid "\tSunset:\t\tThe sun never sets today.\n"
 msgstr "\tSolnedgång:\t\tSolen går inte ned idag.\n"
 
-#: ../panel-plugin/weather-summary.c:421
+#: ../panel-plugin/weather-summary.c:474
 #, c-format
 msgid "\tSunrise:\t\t%s\n"
 msgstr "\tSoluppgång:\t\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:426
+#: ../panel-plugin/weather-summary.c:479
 #, c-format
 msgid ""
 "\tSunset:\t\t%s\n"
 "\n"
 msgstr "\tSolnedgång:\t\t%s\n\n"
 
-#: ../panel-plugin/weather-summary.c:432
+#: ../panel-plugin/weather-summary.c:485
 #, c-format
 msgid "\tMoon phase:\t%s\n"
 msgstr "\tMånfas:\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:436
+#: ../panel-plugin/weather-summary.c:489
 msgid "\tMoon phase:\tUnknown\n"
 msgstr "\tMånfas:\tOkänd\n"
 
-#: ../panel-plugin/weather-summary.c:441
+#: ../panel-plugin/weather-summary.c:494
 msgid "\tMoonrise:\tThe moon never rises today.\n"
 msgstr "\tMånuppgång:\tMånen går inte upp idag.\n"
 
-#: ../panel-plugin/weather-summary.c:445
+#: ../panel-plugin/weather-summary.c:498
 msgid "\tMoonset:\tThe moon never sets today.\n"
 msgstr "\tMånnedgång:\tMånen går inte ned idag.\n"
 
-#: ../panel-plugin/weather-summary.c:449
+#: ../panel-plugin/weather-summary.c:502
 #, c-format
 msgid "\tMoonrise:\t%s\n"
 msgstr "\tMånuppgång:\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:454
+#: ../panel-plugin/weather-summary.c:507
 #, c-format
 msgid "\tMoonset:\t%s\n"
 msgstr "\tMånnedgång:\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:459
+#: ../panel-plugin/weather-summary.c:512
 msgid "\tData not available, will use sane default values for night and day.\n"
 msgstr "\tData är inte tillgänglig, kommer att använda förnuftiga standardvärden för natt och dag.\n"
 
 #. temperatures
-#: ../panel-plugin/weather-summary.c:465
+#: ../panel-plugin/weather-summary.c:518
 msgid ""
 "\n"
 "Temperatures\n"
 msgstr "\nTemperaturer\n"
 
-#: ../panel-plugin/weather-summary.c:466
+#: ../panel-plugin/weather-summary.c:519
 msgid "Temperature"
 msgstr "Temperatur"
 
-#: ../panel-plugin/weather-summary.c:467
+#: ../panel-plugin/weather-summary.c:520
 msgid "Dew point"
 msgstr "Daggpunkt"
 
-#: ../panel-plugin/weather-summary.c:468
+#: ../panel-plugin/weather-summary.c:521
 msgid "Apparent temperature"
 msgstr "Upplevd temperatur"
 
 #. wind
-#: ../panel-plugin/weather-summary.c:471
+#: ../panel-plugin/weather-summary.c:524
 msgid ""
 "\n"
 "Wind\n"
 msgstr "\nVind\n"
 
-#: ../panel-plugin/weather-summary.c:476
+#: ../panel-plugin/weather-summary.c:529
 #, c-format
 msgid "\tSpeed: %s %s (%s on the Beaufort scale)\n"
 msgstr "\tHastighet: %s %s (%s på Beaufortskalan)\n"
 
-#: ../panel-plugin/weather-summary.c:488
+#: ../panel-plugin/weather-summary.c:541
 #, c-format
 msgid "\tDirection: %s (%s%s)\n"
 msgstr "\tRiktning: %s (%s%s)\n"
 
 #. precipitation
-#: ../panel-plugin/weather-summary.c:496
+#: ../panel-plugin/weather-summary.c:549
 msgid ""
 "\n"
 "Precipitation\n"
 msgstr "\nNederbörd\n"
 
-#: ../panel-plugin/weather-summary.c:497
+#: ../panel-plugin/weather-summary.c:550
 msgid "Precipitation amount"
 msgstr "Nederbördsmängd"
 
 #. atmosphere
-#: ../panel-plugin/weather-summary.c:500
+#: ../panel-plugin/weather-summary.c:553
 msgid ""
 "\n"
 "Atmosphere\n"
 msgstr "\nAtmosfär\n"
 
-#: ../panel-plugin/weather-summary.c:501
+#: ../panel-plugin/weather-summary.c:554
 msgid "Barometric pressure"
 msgstr "Barometertryck"
 
-#: ../panel-plugin/weather-summary.c:502
+#: ../panel-plugin/weather-summary.c:555
 msgid "Relative humidity"
 msgstr "Relativ fuktighet"
 
 #. clouds
-#: ../panel-plugin/weather-summary.c:505
+#: ../panel-plugin/weather-summary.c:558
 msgid ""
 "\n"
 "Clouds\n"
 msgstr "\nMoln\n"
 
-#: ../panel-plugin/weather-summary.c:506
+#: ../panel-plugin/weather-summary.c:559
 #: ../panel-plugin/weather-translate.c:119
 msgid "Fog"
 msgstr "Dimma"
 
-#: ../panel-plugin/weather-summary.c:507
+#: ../panel-plugin/weather-summary.c:560
 msgid "Low clouds"
 msgstr "Låga moln"
 
-#: ../panel-plugin/weather-summary.c:508
+#: ../panel-plugin/weather-summary.c:561
 msgid "Middle clouds"
 msgstr "Mellanhöga moln"
 
-#: ../panel-plugin/weather-summary.c:509
+#: ../panel-plugin/weather-summary.c:562
 msgid "High clouds"
 msgstr "Höga moln"
 
-#: ../panel-plugin/weather-summary.c:510
+#: ../panel-plugin/weather-summary.c:563
 msgid "Cloudiness"
 msgstr "Molnighet"
 
-#: ../panel-plugin/weather-summary.c:523
+#: ../panel-plugin/weather-summary.c:576
 msgid ""
 "\n"
 "Credits\n"
 msgstr "\nTack till\n"
 
-#: ../panel-plugin/weather-summary.c:524
+#: ../panel-plugin/weather-summary.c:577
 msgid ""
 "\tEncyclopedic information partly taken from\n"
 "\t\t"
 msgstr "\tEncyklopedisk information har delvis hämtats från\n\t\t"
 
-#: ../panel-plugin/weather-summary.c:525
+#: ../panel-plugin/weather-summary.c:578
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#: ../panel-plugin/weather-summary.c:526
+#: ../panel-plugin/weather-summary.c:579
 msgid ""
 "\n"
 "\tElevation and timezone data provided by\n"
 "\t\t"
 msgstr "\n\tHöjd- och tidzonsdata tillhandahållen av\n\t\t"
 
-#: ../panel-plugin/weather-summary.c:527
+#: ../panel-plugin/weather-summary.c:580
 msgid "GeoNames"
 msgstr "GeoNames"
 
-#: ../panel-plugin/weather-summary.c:529
+#: ../panel-plugin/weather-summary.c:582
 msgid ""
 "\n"
 "\tWeather and astronomical data from\n"
 "\t\t"
 msgstr "\n\tVäder- och astronomisk data från\n\t\t"
 
-#: ../panel-plugin/weather-summary.c:530
+#: ../panel-plugin/weather-summary.c:583
 msgid "The Norwegian Meteorological Institute"
 msgstr "Norska Meteorologiska Institutet"
 
-#: ../panel-plugin/weather-summary.c:580
+#: ../panel-plugin/weather-summary.c:633
 #, c-format
 msgid "Today"
 msgstr "Idag"
 
-#: ../panel-plugin/weather-summary.c:582
+#: ../panel-plugin/weather-summary.c:635
 #, c-format
 msgid "Tomorrow"
 msgstr "Imorgon"
@@ -1489,192 +1491,192 @@ msgstr "Imorgon"
 #. align the values; Monospace font is enforced with <tt> tags for
 #. alignment, and the text is enclosed in <small> tags because
 #. that looks much better and saves space.
-#: ../panel-plugin/weather-summary.c:602
+#: ../panel-plugin/weather-summary.c:655
 msgid "<b>Times used for calculations</b>\n"
 msgstr "<b>Tider som används för beräkningar</b>\n"
 
-#: ../panel-plugin/weather-summary.c:604
+#: ../panel-plugin/weather-summary.c:657
 #, c-format
 msgid "<tt><small>Interval start:       %s</small></tt>\n"
 msgstr "<tt><small>Intervallstart:       %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:610
+#: ../panel-plugin/weather-summary.c:663
 #, c-format
 msgid "<tt><small>Interval end:         %s</small></tt>\n"
 msgstr "<tt><small>Intervalslut:         %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:616
+#: ../panel-plugin/weather-summary.c:669
 #, c-format
 msgid ""
 "<tt><small>Data calculated for:  %s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Data beräknad för:  %s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:622
+#: ../panel-plugin/weather-summary.c:675
 msgid "<b>Temperatures</b>\n"
 msgstr "<b>Temperaturer</b>\n"
 
-#: ../panel-plugin/weather-summary.c:623
+#: ../panel-plugin/weather-summary.c:676
 #, c-format
 msgid "<tt><small>Dew point:            %s%s%s</small></tt>\n"
 msgstr "<tt><small>Daggpunkt:            %s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:627
+#: ../panel-plugin/weather-summary.c:680
 #, c-format
 msgid ""
 "<tt><small>Apparent temperature: %s%s%s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Upplevd temperatur: %s%s%s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:632
+#: ../panel-plugin/weather-summary.c:685
 msgid "<b>Atmosphere</b>\n"
 msgstr "<b>Atmosfär</b>\n"
 
-#: ../panel-plugin/weather-summary.c:633
+#: ../panel-plugin/weather-summary.c:686
 #, c-format
 msgid "<tt><small>Barometric pressure:  %s%s%s</small></tt>\n"
 msgstr "<tt><small>Barometertryck:  %s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:637
+#: ../panel-plugin/weather-summary.c:690
 #, c-format
 msgid ""
 "<tt><small>Relative humidity:    %s%s%s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Relativ fuktighet:    %s%s%s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:642
+#: ../panel-plugin/weather-summary.c:695
 msgid "<b>Precipitation</b>\n"
 msgstr "<b>Nederbörd</b>\n"
 
-#: ../panel-plugin/weather-summary.c:643
+#: ../panel-plugin/weather-summary.c:696
 #, c-format
 msgid ""
 "<tt><small>Amount:        %s%s%s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Mängd:        %s%s%s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:648
+#: ../panel-plugin/weather-summary.c:701
 msgid "<b>Clouds</b>\n"
 msgstr "<b>Moln</b>\n"
 
 #. TRANSLATORS: Clouds percentages are aligned to the right in the
 #. tooltip, the %5s are needed for that and are used both for
 #. rounded and unrounded values.
-#: ../panel-plugin/weather-summary.c:652
+#: ../panel-plugin/weather-summary.c:705
 #, c-format
 msgid "<tt><small>Fog:           %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Dimma:           %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:655
+#: ../panel-plugin/weather-summary.c:708
 #, c-format
 msgid "<tt><small>Low clouds:    %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Låga moln:    %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:658
+#: ../panel-plugin/weather-summary.c:711
 #, c-format
 msgid "<tt><small>Middle clouds: %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Mellanhöga moln: %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:661
+#: ../panel-plugin/weather-summary.c:714
 #, c-format
 msgid "<tt><small>High clouds:   %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Höga moln:   %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:664
+#: ../panel-plugin/weather-summary.c:717
 #, c-format
 msgid "<tt><small>Cloudiness:    %5s%s%s</small></tt>"
 msgstr "<tt><small>Molnighet:    %5s%s%s</small></tt>"
 
-#: ../panel-plugin/weather-summary.c:690
+#: ../panel-plugin/weather-summary.c:743
 #, c-format
 msgid "<b>%s</b>\n"
 msgstr "<b>%s</b>\n"
 
-#: ../panel-plugin/weather-summary.c:694
+#: ../panel-plugin/weather-summary.c:747
 msgid "<tt><small>Sunrise: The sun never rises this day.</small></tt>\n"
 msgstr "<tt><small>Soluppgång: Solen går inte upp denna dag.</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:698
+#: ../panel-plugin/weather-summary.c:751
 msgid "<tt><small>Sunset: The sun never sets this day.</small></tt>\n"
 msgstr "<tt><small>Solnedgång: solen går inte ner denna dag.</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:703
+#: ../panel-plugin/weather-summary.c:756
 #, c-format
 msgid "<tt><small>Sunrise: %s</small></tt>\n"
 msgstr "<tt><small>Soluppgång: %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:709
+#: ../panel-plugin/weather-summary.c:762
 #, c-format
 msgid ""
 "<tt><small>Sunset:  %s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Solnedgång:  %s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:716
+#: ../panel-plugin/weather-summary.c:769
 #, c-format
 msgid "<tt><small>Moon phase: %s</small></tt>\n"
 msgstr "<tt><small>Månfas: %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:721
+#: ../panel-plugin/weather-summary.c:774
 msgid "<tt><small>Moon phase: Unknown</small></tt>\n"
 msgstr "<tt><small>Månfas: Okänd</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:726
+#: ../panel-plugin/weather-summary.c:779
 msgid "<tt><small>Moonrise: The moon never rises this day.</small></tt>\n"
 msgstr "<tt><small>Månuppgång: Månen går inte upp denna dag.</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:731
+#: ../panel-plugin/weather-summary.c:784
 msgid "<tt><small>Moonset: The moon never sets this day.</small></tt>\n"
 msgstr "<tt><small>Månnedgång: Månen går inte ner denna dag.</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:736
+#: ../panel-plugin/weather-summary.c:789
 #, c-format
 msgid "<tt><small>Moonrise: %s</small></tt>\n"
 msgstr "<tt><small>Månuppgång: %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:742
+#: ../panel-plugin/weather-summary.c:795
 #, c-format
 msgid "<tt><small>Moonset:  %s</small></tt>"
 msgstr "<tt><small>Månnedgång:  %s</small></tt>"
 
 #. daytime headers
-#: ../panel-plugin/weather-summary.c:915
+#: ../panel-plugin/weather-summary.c:972
 msgid "Morning"
 msgstr "Morgon"
 
-#: ../panel-plugin/weather-summary.c:916
+#: ../panel-plugin/weather-summary.c:973
 msgid "Afternoon"
 msgstr "Eftermiddag"
 
-#: ../panel-plugin/weather-summary.c:917
+#: ../panel-plugin/weather-summary.c:974
 msgid "Evening"
 msgstr "Kväll"
 
-#: ../panel-plugin/weather-summary.c:918
+#: ../panel-plugin/weather-summary.c:975
 msgid "Night"
 msgstr "Natt"
 
-#: ../panel-plugin/weather-summary.c:1117
+#: ../panel-plugin/weather-summary.c:1174
 msgid "Weather Report"
 msgstr "Väderrapport"
 
-#: ../panel-plugin/weather-summary.c:1120
+#: ../panel-plugin/weather-summary.c:1177
 msgid "Close"
 msgstr "Stäng"
 
-#: ../panel-plugin/weather-summary.c:1144
+#: ../panel-plugin/weather-summary.c:1201
 msgid "Please set a location in the plugin settings."
 msgstr "Ställ in en plats i insticksprogrammets inställningar."
 
-#: ../panel-plugin/weather-summary.c:1146
+#: ../panel-plugin/weather-summary.c:1203
 msgid "Currently no data available."
 msgstr "För närvarande finns inga tillgängliga uppgifter. "
 
-#: ../panel-plugin/weather-summary.c:1158
+#: ../panel-plugin/weather-summary.c:1215
 msgid "_Forecast"
 msgstr "_Prognos"
 
-#: ../panel-plugin/weather-summary.c:1161
+#: ../panel-plugin/weather-summary.c:1218
 msgid "_Details"
 msgstr "_Detaljer"
 
