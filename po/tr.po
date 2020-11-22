@@ -7,6 +7,7 @@
 # Aşır <asirkaraman@yahoo.de>, 2014
 # aybuke <aybuke.147@gmail.com>, 2013
 # Demiray Muhterem <mdemiray@msn.com>, 2018,2020
+# Emin Tufan Çetin <etcetin@gmail.com>, 2020
 # Fatih ERDEM <93.fatiherdem@gmail.com>, 2013
 # Natavan Mirzayeva <mirzayevanatavan@gmail.com>, 2014
 # Necdet Yücel <necdetyucel@gmail.com>, 2013-2014
@@ -21,8 +22,8 @@ msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-07-06 00:47+0200\n"
-"PO-Revision-Date: 2020-07-20 21:12+0000\n"
-"Last-Translator: Demiray Muhterem <mdemiray@msn.com>\n"
+"PO-Revision-Date: 2020-11-22 07:28+0000\n"
+"Last-Translator: Emin Tufan Çetin <etcetin@gmail.com>\n"
 "Language-Team: Turkish (http://www.transifex.com/xfce/xfce-panel-plugins/language/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -37,7 +38,7 @@ msgstr "Hava durumu Güncelle"
 
 #: ../panel-plugin/weather.desktop.in.h:2
 msgid "Show current weather conditions"
-msgstr "Mevcut hava durumunu göster"
+msgstr "Şu anki hava durumunu göster"
 
 #: ../panel-plugin/weather-config.ui.h:2
 msgid "Preferences"
@@ -75,14 +76,14 @@ msgstr "Saa_t dilimi:"
 msgid ""
 "Please change location name to your liking and correct alltitude and "
 "timezone if they are not auto-detected correctly."
-msgstr "Sistem yereliniz doğru bir şekilde otomatik olarak algılanmıyorsa, konum adını isteğiniz gibi doğru enlem ve saat diliminize değiştirin."
+msgstr "Eğer kendiliğinden doğru algılanmadılarsa rakımı ve saat dilimini düzeltmek için konum adını değiştirin."
 
 #: ../panel-plugin/weather-config.ui.h:11
 msgid ""
 "Latitude specifies the north-south position of a point on the Earth's "
 "surface. If you change this value manually, you need to provide altitude and"
 " timezone manually too."
-msgstr "Enlem Dünya'nın yüzeyinde bir noktanın kuzey-güney mevkisini belirtir. Elle bu değeri değiştirirseniz,  rakım ve zaman dilimi de sağlamanız gerekir."
+msgstr "Enlem, Dünya'nın yüzeyinde bir noktanın kuzey-güney konumunu belirtir. Elle bu değeri değiştirirseniz, rakım ve saat dilimi de sağlamalısınız."
 
 #. TRANSLATORS: The degree sign is used like a unit for
 #. latitude, longitude, wind direction
@@ -104,23 +105,23 @@ msgid ""
 "The plugin tries to auto-detect the altitude using the GeoNames webservice, but that might not always be correct too, so you can change it here.\n"
 "\n"
 "Altitude is given in meters above sea level, or alternatively in feet by changing the unit on the units page. It should match the real value roughly, but small differences will have no influence on the weather data. Inside Norway, this setting has no effect at all."
-msgstr "Norveç dışındaki yerler için  met.no webservis tarafından kullanılan yükseklik modeli çok iyi değildir,bu yüzden ek parametre olarak yüksekliğini belitrmek gerek,aksi halde bildirilen değerler doğru olmayacaktır.\n\nEklenti GeoNames webservisini kullanarak otomatik olarak yükseklik algılamaya çalışır,ama bu her zaman çok doğru olmaya bilir,bu yüzden bu servisi buradan değiştirebilirsiniz.\n\nYükseklik,denizin seviyesi üzerinden metre olarak yada alternatif olarak öğeler sayfasında birimleri değiştirerek foot birimi kadar verilmiştir.Aşağı yukarı  gerçek değerle eşleşmesi gerekir,ama küçük farklar hava durumu verileri üzerinde hiçbir etkiye sahip olmayacaktır.Norveçde bu ayarların hiçbir etkisi yoktur."
+msgstr "Norveç dışındaki yerler için met.no web servisince kullanılan yükseklik modeli çok iyi değildir, bu yüzden ek parametre olarak yüksekliğini belirtmek gerekebilir, yoksa bildirilen değerler doğru olmayacaktır.\n\nEklenti, GeoNames web servisini kullanarak yüksekliği kendiliğinden algılamaya çalışır ama bu her zaman çok doğru olmayabilir, buradan değiştirebilirsiniz.\n\nYükseklik, denizin düzeyi üzerinden metre olarak verilmiştir. Alternatif olarak birimler sayfasında birimleri değiştirerek fit birimi olarak verilebilir. Aşağı yukarı gerçek değerle eşleşmesi gerekir ama küçük değişimler hava durumu verisinde hiçbir etkiye neden olmayacaktır. Norveç'te bu ayarların hiçbir etkisi yoktur."
 
 #: ../panel-plugin/weather-config.ui.h:19 ../panel-plugin/weather-config.c:399
 msgid "feet"
-msgstr "feet"
+msgstr "fit"
 
 #: ../panel-plugin/weather-config.ui.h:20
 msgid ""
 "If the chosen location is not in your current timezone, then it is necessary to <i>put</i> the plugin into that other timezone for the times to be shown correctly. The proper timezone will be auto-detected via the GeoNames web service, but you might want to correct it if necessary.\n"
 "Leave this field empty to use the timezone set by your system. Invalid entries will cause the use of UTC time, but that may also depend on your system."
-msgstr "Eğer saat dilimi seçilen yerde geçerli değilse,o zaman <i>koymak </i> eklentisini  "
+msgstr ""
 
 #: ../panel-plugin/weather-config.ui.h:22
 msgid ""
 "Change the name for the location to your liking. It is used for display and "
 "does not affect the location parameters in any way."
-msgstr "Beğeninize göre konum için isim değiştirin. Bu, gösterim için kullanılmaktadır ve herhangi bir şekilde konum parametrelerini etkilemez."
+msgstr "Konumun adını isteğinize göre değiştirin. Bu, gösterimde kullanılmaktadır ve herhangi biçimde konum parametrelerini etkilemez."
 
 #: ../panel-plugin/weather-config.ui.h:23
 msgid "Change..."
@@ -128,7 +129,7 @@ msgstr "Değiştir..."
 
 #: ../panel-plugin/weather-config.ui.h:24
 msgid "Search for a new location and auto-detect its parameters."
-msgstr "Yeni bir konumu ve parametrelerini otomatik algılama için aramak."
+msgstr "Yeni konum ara ve parametreleri kendiliğinden sapta."
 
 #: ../panel-plugin/weather-config.ui.h:25
 msgid "_Location"
@@ -152,7 +153,7 @@ msgstr "_Yağış:"
 
 #: ../panel-plugin/weather-config.ui.h:30
 msgid "Apparent te_mperature:"
-msgstr "_Görünen sıcaklık:"
+msgstr "_Hissedilen sıcaklık:"
 
 #: ../panel-plugin/weather-config.ui.h:31
 msgid "Celsius (°C)"
@@ -241,7 +242,7 @@ msgid ""
 "system). Information about how to create or use icon themes can be found in "
 "the README file. New icon themes will be detected everytime you open this "
 "config dialog."
-msgstr "Mevcut simge temaları burada listelenmiştir.Simge temalarını $ HOME / .yapılandırma / xfce4 / hava durumu / simgeler 'e(veya sisteminizdeki eşdeğer sistem) yükleye bilirsiniz.Nasıl oluşturulacağını veya  simge temalarının nasıl kullanılacağı hakkındaki bilgiyi  README  dosyasından bulabilrsiniz. Her bu yapılandırma iletişim kutusunu açtığınızda yeni simge temaları tespit edilecektir."
+msgstr "Var olan simge temaları burada listelenmiştir. Simge temalarını $HOME/.config/xfce4/weather/icons konumuna (veya sisteminizdeki eşdeğer dizine) yükleyebilirsiniz. Nasıl oluşturulacağını veya simge temalarının kullanımyla ilgili bilgiyi README dosyasından edinebilirsiniz. Bu yapılandırma iletişim kutusunu her açışınızda yeni simge temaları saptanacaktır."
 
 #: ../panel-plugin/weather-config.ui.h:52
 msgid "_Icon theme:"
@@ -261,7 +262,7 @@ msgstr "Sadece tek bir _panel satır kullanın"
 msgid ""
 "Check to always use only a single row on a multi-row panel and a small icon "
 "in deskbar mode."
-msgstr "Herzaman  multiplane panelinde ve deskbar modunda küçük bir simgeyi sadece tek bir satırda  kullanmak için  kontrol edin."
+msgstr "Masaüstü çubuğu kipinde küçük simge ve çoklu satır panelinde yalnızca tek satır kullanmak için bunu seç."
 
 #: ../panel-plugin/weather-config.ui.h:56
 msgid "_Tooltip style:"
@@ -336,7 +337,7 @@ msgid ""
 "hardly readable. If this is the case or you simply want it to appear in "
 "another color, then you can change it using this button. Middle-click on the"
 " button to unset the scrollbox text color."
-msgstr "Bazi temalar Scrollbox-metinin okunabilirligi ile sorunlar olabilir. Bu durumda ya da sadece başka bir renkte görünmesini istiyorsanız, o zaman bu düğmeyi kullanarak değiştirebilirsiniz.Scrollbox metin rengi yoketmek icin düğmeye orta-tıklayın."
+msgstr "Bazı temalar kaydırma kutusu metninin okunabilirliğiyle ile sorunlar yaratabilir. Bu durumda ya da yalnızca başka renkte görünmesini istiyorsanız, bu düğmeyi kullanarak değiştirebilirsiniz. Kaydırma kutusu metninin rengini sıfırlamak düğmeye orta tıklayın."
 
 #. * TRANSLATORS: The abbreviations in parentheses will be shown in
 #. * the scrollbox together with the values. Keep them in sync with
@@ -457,7 +458,7 @@ msgid ""
 "Scroll the current displayed value(s) out and the new value(s) in instead of"
 " simply changing them. Uncheck this option if you find the animation too "
 "distracting."
-msgstr "Gösterilen mevcut değeri (ler) ve yerine sadece onları değiştiren, yeni değeri (ler) kaydırın.Eğer animasyonu çok rahatsız edici bulduysanız bu seçeneğin işaretini kaldırın."
+msgstr "Basitçe değiştirmek yerine, gösterilen değer(ler)i kaydırarak yeni değer(ler)i göster. Eğer animasyonu rahatsız edici bulduysanız bu seçeneğin imini kaldırın."
 
 #: ../panel-plugin/weather-config.ui.h:98
 #: ../panel-plugin/weather-config.c:1131
@@ -681,7 +682,7 @@ msgstr "1742 yılında orijinal ölceği icat etmiş Anders Celsius'dan adını 
 msgid ""
 "The current Fahrenheit temperature scale is based on one proposed in 1724 by the physicist Daniel Gabriel Fahrenheit. 0 °F was the freezing point of brine on the original scale at standard atmospheric pressure, which was the lowest temperature achievable with this mixture of ice, salt and ammonium chloride. The melting point of water is at 32 °F and its boiling point at 212 °F. The Fahrenheit and Celsius scales intersect at -40 degrees. Even in cold winters, the temperatures usually do not fall into negative ranges on the Fahrenheit scale.\n"
 "With its inventor being a member of the Royal Society in London and having a high reputation, the Fahrenheit scale enjoyed great popularity in many English-speaking countries, but was replaced by the Celsius scale in most of these countries during the metrification process in the mid to late 20th century."
-msgstr "Mevcut Fahrenheit sıcaklık ölçeği  1724 yılında fizikçi Daniel Gabriel Fahrenheit tarafından önerilmiştir.0 ° C, buz, tuz, amonyum klorür, karışımları ile elde edilebilen en düşük sıcaklık olan, standart atmosfer basıncında, orijinal bir ölçekte, tuzlu su donma noktası olmuştur.Suyun erime noktası 32 °F ve kaynama noktası  212 °F derece olarak alınmıştır.Fahrenheit ve Celsius ölçekleri-40 derecede kesişir.Hatta soğuk kışlarda, sıcaklıklar genellikle Fahrenheit ölçeğinde olumsuz aralıklar içine girmemektedir.\nMucidinin londonda Royal Society üyesi olduğu ve yüksek bir üne sahip olduğu  Fahrenheit ölçeği birçok İngilizce konuşan ülkelerde büyük bir popülerliğe sahipti,fakat 20. yüzyılın sonlarında orta ve metrik sisteme çevirme işlemi sırasında bu ülkelerin çoğunda Celsius ölçeği ile değiştirildi."
+msgstr "Şu anki Fahrenhayt sıcaklık ölçeği 1724 yılında fizikçi Daniel Gabriel Fahrenheit tarafından önerilmiştir. 0 °F, standart atmosferik basınçtaki özgün ölçekte tuzlu suyun donma noktasıdır; bu buz, tuz ve amonyum klorür karışımıyla ulaşılabilen en düşük sıcaklıktır. Suyun erime noktası 32 °F ve kaynama noktası 212 °F'dir. Fahrenhayt ve Celsius -40 derecede kesişir. Fahrenhayt ölçeğinde, en soğuk kışlarda bile sıcaklıklar negatif değerlere düşmemektedir.\nMucidinin London'da Royal Society üyesi ve ünü olması nedeniyle, Fahrenhayt ölçeği çoğu İngilizce konuşan ülkelerde büyük rağbet görmüştür, ancak 20. yüzyılın ortalarındaki metrikleştirme sürecinde bu ülkelerin çoğu Celsius'a geçmiştir."
 
 #: ../panel-plugin/weather-config.c:608
 msgid ""
@@ -762,7 +763,7 @@ msgid ""
 "have been many different standards of the inch with varying sizes of "
 "measure, but the current internationally accepted value is exactly 25.4 "
 "millimeters."
-msgstr "<i> inç </ i>  ingilizce kelimesi anlamı  <i> on ikide biri </ I> (bu durumda, bir foot on ikide biri) olan <i> Uncia </ I> latince kelimesinden geliyor.Geçmişte,farklı boyutlarda  inç ölçümü için birçok farklı standartlar vardı,ama mevcut uluslararası kabul görmüş değer tam olarak 25.4 milimetredir."
+msgstr "İngilizce <i>inç</i> sözcüğü Latince <i>uncia</i> sözcüğünden gelmektedir, bu sözcüğün anlamı <i>on ikide bir</i>dir (bu durumda, bir foot'un on ikide biri). Geçmişte başka boyutlarda inç ölçümü için birçok standart vardı ama şu anda uluslararası kabul gören değer tam olarak 25.4 milimetredir."
 
 #: ../panel-plugin/weather-config.c:754
 msgid ""
@@ -881,7 +882,7 @@ msgid ""
 "Air temperature, sometimes referred to as dry-bulb temperature. Measured by "
 "a thermometer that is freely exposed to the air, yet shielded from radiation"
 " and moisture."
-msgstr "Hava sıcaklığı,bazen dry-bulb sıcaklığı olarak adlandırılır.Nemden ve radyasyondan korunmuş sadece serbest havaya maruz kalmış termometre ile değer ölçülmüştür."
+msgstr "Hava sıcaklığı, bazen dry-bulb sıcaklığı olarak adlandırılır. Nemden ve radyasyondan korunmuş, yalnızca serbest havaya maruz kalmış termometre ile değer ölçülmüştür."
 
 #: ../panel-plugin/weather-config.c:1277
 msgid ""
@@ -928,7 +929,7 @@ msgid ""
 "the water content of air, relative humidity gives (in %) the current "
 "absolute humidity relative to the maximum for that air temperature and "
 "pressure."
-msgstr "Nem havadaki su buharı miktarı olarak tanımlanır ve yağış, sis ve çiy olasılığını yükseltmektedir.Mutlak nem havanın su içeriği iken,bağıl nem (% olarak) hava sıcaklığı ve basıncının en fazla mevcut mutlak nem cinsinden verir."
+msgstr "Nem, havadaki su buharı miktarı olarak tanımlanır ve yağış, sis ve çiy olasılığını yükseltmektedir. Mutlak nem, havadaki su iken; bağıl nem, şu anki mutlak nemi, o anki hava sıcaklığı ve basıncın azami taşıyabileceği oranı (% olarak) verir."
 
 #: ../panel-plugin/weather-config.c:1319
 msgid ""
@@ -942,7 +943,7 @@ msgid ""
 "Also known as <i>felt temperature</i>, <i>effective temperature</i>, or what some weather providers declare as <i>feels like</i>. Human temperature sensation is not only based on air temperature, but also on heat flow, physical activity and individual condition. While being a highly subjective value, apparent temperature can actually be useful for warning about extreme conditions (cold, heat).\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no. You should use a calculation model appropriate for your local climate and personal preferences on the units page."
-msgstr "Ayrıca  <i>algılanan sıcaklık</i>, <i>etkili sıcaklık</i> olarak biliniyor veya bazı hava sağlayıcıları  <i>gibi algılıyor</i> olarak  bildiriliyor.İnsanın sıcaklık hissi sadece hava sıcaklığına değil,aynı zamanda ısı akışı, fiziksel aktivite ve bireysel durumuna bağlıdır.Son derece subjektif bir değer olurken, belirgin sıcaklık aslında aşırı koşullar hakkında uyarı için yararlı olabilir (soğuk,ısı).\n\n<b>Not:</b> Bu hesaplanan değer met.no. tarafından sağlanmamıştır.Yerel iklim ve kişisel tercihler için,birimler sayfasında  uygun bir hesaplama modeli kullanmanız gerekir."
+msgstr "Ayrıca <i>algılanan sıcaklık</i>, <i>etkili sıcaklık</i> veya bazı hava sağlayıcılarının da dediği gibi <i>hissedilen sıcaklık</i> olarak biliniyor. İnsanın sıcaklık hissi yalnızca hava sıcaklığına değil, aynı zamanda ısı akışı, fiziksel etkinlik ve bireysel durumuna bağlıdır. Görünen sıcaklık; son derece öznel değer olurken, özünde aşırı koşullarla ilgili uyarıda yararlı olabilir (soğuk, sıcak).\n\n<b>Not:</b> Bu hesaplanan değer, met.no tarafından sağlanmamıştır. Yerel iklim ve kişisel tercihler için birimler sayfasında uygun hesaplama modeli kullanmalısınız."
 
 #: ../panel-plugin/weather-config.c:1345
 msgid ""
@@ -1355,7 +1356,7 @@ msgstr "\tAy batımı:\t%s\n"
 
 #: ../panel-plugin/weather-summary.c:512
 msgid "\tData not available, will use sane default values for night and day.\n"
-msgstr "»Veri mevcut değildir, gece ve gündüz için makul varsayılan değerler kullanılacaktır.\n"
+msgstr "\tVeri yok, gece ve gündüz için mantıklı öntanımlı değerler kullanılacaktır.\n"
 
 #. temperatures
 #: ../panel-plugin/weather-summary.c:518
@@ -1374,7 +1375,7 @@ msgstr "Çığ noktası"
 
 #: ../panel-plugin/weather-summary.c:521
 msgid "Apparent temperature"
-msgstr "Görünen sıcaklık"
+msgstr "Hissedilen sıcaklık"
 
 #. wind
 #: ../panel-plugin/weather-summary.c:524
@@ -1534,7 +1535,7 @@ msgstr "<tt><small>Çiğ noktası:            %s%s%s</small></tt>\n"
 msgid ""
 "<tt><small>Apparent temperature: %s%s%s</small></tt>\n"
 "\n"
-msgstr "<tt><small>Görünür sıcaklık: %s%s%s</small></tt>\n\n"
+msgstr "<tt><small>Hissedilen sıcaklık: %s%s%s</small></tt>\n\n"
 
 #: ../panel-plugin/weather-summary.c:685
 msgid "<b>Atmosphere</b>\n"
