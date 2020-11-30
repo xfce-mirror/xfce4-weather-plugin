@@ -586,8 +586,9 @@ cb_weather_update(SoupSession *session,
 
 
 static gboolean
-update_handler(plugin_data *data)
+update_handler(gpointer user_data)
 {
+    plugin_data *data = user_data;
     gchar *api_version = FORECAST_API;
     gchar *url;
     gboolean night_time;
@@ -759,8 +760,7 @@ schedule_next_wakeup(plugin_data *data)
 
     date = format_date(now_t, "%Y-%m-%d %H:%M:%S", TRUE);
     data->update_timer =
-        g_timeout_add_seconds((guint) diff,
-                              (GSourceFunc) update_handler, data);
+        g_timeout_add_seconds((guint) diff, update_handler, data);
     if (!strcmp(data->next_wakeup_reason, "regular check"))
         weather_debug("[%s]: Running regular check for updates, "
                       "interval %d secs.", date, UPDATE_INTERVAL);
@@ -1513,7 +1513,7 @@ void
 forecast_click(GtkWidget *widget,
                gpointer user_data)
 {
-    plugin_data *data = (plugin_data *) user_data;
+    plugin_data *data = user_data;
 
     if (data->summary_window != NULL)
         gtk_widget_destroy(data->summary_window);

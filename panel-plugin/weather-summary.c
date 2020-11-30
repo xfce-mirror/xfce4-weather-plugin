@@ -1120,6 +1120,13 @@ cb_notebook_page_switched(GtkNotebook *notebook,
 }
 
 
+static gboolean
+update_summary_subtitle_cb(gpointer user_data)
+{
+    plugin_data *data = user_data;
+    return update_summary_subtitle(data);
+}
+
 gboolean
 update_summary_subtitle(plugin_data *data)
 {
@@ -1154,8 +1161,7 @@ update_summary_subtitle(plugin_data *data)
 #endif
         update_interval = 1000 - (now_ms % 1000) + 10;
     data->summary_update_timer =
-        g_timeout_add(update_interval, (GSourceFunc) update_summary_subtitle,
-                      data);
+        g_timeout_add(update_interval, update_summary_subtitle_cb, data);
     return FALSE;
 }
 

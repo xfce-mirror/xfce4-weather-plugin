@@ -150,7 +150,7 @@ update_summary_window(xfceweather_dialog *dialog,
 static gboolean
 schedule_data_update(gpointer user_data)
 {
-    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    xfceweather_dialog *dialog = user_data;
     plugin_data *pd = dialog->pd;
 
     /* force update of downloaded data */
@@ -192,8 +192,7 @@ schedule_delayed_data_update(xfceweather_dialog *dialog)
     gtk_widget_show(GTK_WIDGET(dialog->update_spinner));
     gtk_spinner_start(GTK_SPINNER(dialog->update_spinner));
     dialog->timer_id =
-        g_timeout_add_seconds(UPDATE_TIMER_DELAY,
-                              (GSourceFunc) schedule_data_update, dialog);
+        g_timeout_add_seconds(UPDATE_TIMER_DELAY, schedule_data_update, dialog);
 }
 
 
