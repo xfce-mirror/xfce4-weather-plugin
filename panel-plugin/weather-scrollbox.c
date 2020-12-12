@@ -92,9 +92,7 @@ static void
 gtk_scrollbox_labels_free(GtkScrollbox *self)
 {
     /* free all the labels */
-    g_list_foreach(self->labels, (GFunc) g_object_unref, NULL);
-    g_list_free(self->labels);
-    self->labels = NULL;
+    g_list_free_full(self->labels, g_object_unref);
 }
 
 
@@ -472,9 +470,7 @@ gtk_scrollbox_clear_new(GtkScrollbox *self)
     g_return_if_fail(GTK_IS_SCROLLBOX(self));
 
     /* free all the new labels */
-    g_list_foreach(self->labels_new, (GFunc) g_object_unref, NULL);
-    g_list_free(self->labels_new);
-    self->labels_new = NULL;
+    g_list_free_full(self->labels_new, g_object_unref);
 }
 
 

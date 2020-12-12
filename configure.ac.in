@@ -15,13 +15,18 @@ m4_define([weather_version_build], [@REVISION@])
 m4_define([weather_version_tag], [git])
 m4_define([weather_version], [weather_version_major().weather_version_minor().weather_version_micro()ifelse(weather_version_tag(), [git], [weather_version_tag()-weather_version_build()], [weather_version_tag()])])
 
+dnl *******************************************
+dnl *** Debugging support for git snapshots ***
+dnl *******************************************
+m4_define([weather_debug_default], [ifelse(weather_version_tag(), [git], [yes], [minimum])])
+
 dnl ***************************
 dnl *** Initialize autoconf ***
 dnl ***************************
 AC_COPYRIGHT([Copyright (c) 2006-2020
         The Xfce development team. All rights reserved.])
 AC_INIT([xfce4-weather-plugin], [weather_version], [https://gitlab.xfce.org/panel-plugins/xfce4-weather-plugin], [xfce4-weather-plugin])
-AC_PREREQ([2.60])
+AC_PREREQ([2.69])
 AC_CONFIG_MACRO_DIRS([m4])
 
 dnl ***************************
@@ -36,7 +41,7 @@ dnl ********************************
 dnl *** Check for basic programs ***
 dnl ********************************
 AC_PROG_CC()
-AC_PROG_LD()
+LT_PATH_LD([])
 AC_PROG_INSTALL()
 IT_PROG_INTLTOOL([0.35.0])
 LT_PREREQ([2.2.6])
@@ -48,7 +53,7 @@ dnl *** Check for standard headers ***
 dnl **********************************
 AC_HEADER_STDC()
 AC_CHECK_HEADERS([math.h stdarg.h stddef.h stdlib.h string.h sys/stat.h time.h])
-AC_CHECK_LIBM
+LT_LIB_M
 AC_SUBST(LIBM)
 
 dnl ******************************
@@ -60,8 +65,8 @@ dnl ***********************************
 dnl *** Check for required packages ***
 dnl ***********************************
 XDT_CHECK_PACKAGE([GTK], [gtk+-3.0], [3.22.0])
-XDT_CHECK_PACKAGE([GTHREAD], [gthread-2.0], [2.42.0])
-XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [2.42.0])
+XDT_CHECK_PACKAGE([GTHREAD], [gthread-2.0], [2.50.0])
+XDT_CHECK_PACKAGE([GLIB], [glib-2.0], [2.50.0])
 XDT_CHECK_PACKAGE([LIBXFCE4UTIL], [libxfce4util-1.0], [4.12.0])
 XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-2], [4.12.0])
 XDT_CHECK_PACKAGE([LIBXFCE4PANEL], [libxfce4panel-2.0], [4.12.0])
@@ -84,9 +89,9 @@ AS_IF([test "x$GEONAMES_USERNAME" = x], [GEONAMES_USERNAME="xfce4weatherplugin"]
 dnl ***********************************
 dnl *** Check for debugging support ***
 dnl ***********************************
-XDT_FEATURE_DEBUG()
+XDT_FEATURE_DEBUG([weather_debug_default])
 
-AC_OUTPUT([
+AC_CONFIG_FILES([
 Makefile
 panel-plugin/Makefile
 po/Makefile.in
@@ -105,3 +110,9 @@ icons/simplistic/48/Makefile
 icons/simplistic/128/Makefile
 icons/48x48/Makefile
 ])
+AC_OUTPUT
+
+echo
+echo "Build Configuration:"
+echo
+echo "* Debug Support:             $enable_debug"
