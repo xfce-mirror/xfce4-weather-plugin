@@ -241,7 +241,7 @@ cb_lookup_altitude(SoupSession *session,
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     xml_altitude *altitude;
-    gdouble alt;
+    gdouble alt = 0;
 
     altitude = (xml_altitude *)
         parse_xml_document(msg, (XmlParseFunc) parse_altitude);

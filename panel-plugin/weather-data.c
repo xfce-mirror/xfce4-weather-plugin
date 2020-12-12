@@ -343,6 +343,7 @@ get_data(const xml_time *timeslice,
             val /= 0.3048;
             return g_strdup_printf(ROUND_TO_INT("%.2f"), val);
         }
+        break;
 
     case LATITUDE:
         return LOCALE_DOUBLE(loc->latitude, "%.4f");
@@ -498,6 +499,7 @@ get_unit(const units_config *units,
         case TORR:
             return _("mmHg");
         }
+        break;
     case WIND_SPEED:
         switch (units->windspeed) {
         case KMH:
@@ -511,6 +513,7 @@ get_unit(const units_config *units,
         case KNOTS:
             return _("kt");
         }
+        break;
     case WIND_DIRECTION_DEG:
     case LATITUDE:
     case LONGITUDE:

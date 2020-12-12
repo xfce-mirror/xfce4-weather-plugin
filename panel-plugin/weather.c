@@ -1714,7 +1714,7 @@ weather_get_tooltip_text(const plugin_data *data)
     gchar *text, *sym, *alt, *temp;
     gchar *windspeed, *windbeau, *winddir, *winddeg;
     gchar *pressure, *humidity, *precipitation;
-    gchar *fog, *cloudiness, *sunval, *value;
+    gchar *fog, *cloudiness, *sunval = NULL, *value;
     gchar *point, *interval_start, *interval_end, *sunrise, *sunset = NULL;
     const gchar *unit;
 

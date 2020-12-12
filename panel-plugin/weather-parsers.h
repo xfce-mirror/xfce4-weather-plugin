@@ -133,6 +133,8 @@ time_t parse_timestring(const gchar *ts,
 gboolean parse_weather(xmlNode *cur_node,
                        xml_weather *wd);
 
+const gchar *parse_moonposition (gdouble pos);
+
 xml_astro *parse_astro(xmlNode *cur_node);
 
 gboolean parse_astrodata(xmlNode *cur_node,
