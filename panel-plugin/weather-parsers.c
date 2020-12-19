@@ -188,7 +188,7 @@ parse_timestring(const gchar *ts,
 }
 
 
-const gchar *
+static const gchar *
 parse_moonposition (gdouble pos) {
     if (pos < 0.0 || pos > 100.0)
         return "Unknown";
