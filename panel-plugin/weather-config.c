@@ -1256,7 +1256,7 @@ static void
 options_datatypes_set_tooltip(GtkWidget *optmenu)
 {
     gint history, opt = OPTIONS_N;
-    
+
     /* TRANSLATORS: Fallback value, usually never shown. */
     gchar *text = _("Choose the value to add to the list below. "
                     "Values can be added more than once.");
