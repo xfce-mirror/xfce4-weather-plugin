@@ -21,6 +21,7 @@
 
 #include <libxfce4panel/libxfce4panel.h>
 #include <libxfce4util/libxfce4util.h>
+#include <xfconf/xfconf.h>
 #include <libsoup/soup.h>
 #ifdef HAVE_UPOWER_GLIB
 #include <upower.h>
@@ -32,6 +33,35 @@
 #define DEFAULT_FORECAST_DAYS 5
 #define MAX_SCROLLBOX_LINES 10
 #define FORECAST_API "2.0"
+
+#define SETTING_LOCATION_NAME "/location/name"
+#define SETTING_LATITUDE      "/location/latitude"
+#define SETTING_LONGITUDE     "/location/longitude"
+#define SETTING_MSL           "/msl"
+#define SETTING_TIMEZONE      "/timezone"
+#define SETTING_OFFSET        "/offset"
+#define SETTING_GEONAMES      "/geonames-username"
+#define SETTING_CACHE_MAX_AGE "/cache-max-age"
+#define SETTING_POWER_SAVING  "/power-saving"
+#define SETTING_TEMPERATURE   "/units/temperature"
+#define SETTING_PRESSURE      "/units/pressure"
+#define SETTING_WINDSPEED     "/units/windspeed"
+#define SETTING_PRECIPITATION "/units/precipitation"
+#define SETTING_ALTITUDE      "/units/altitude"
+#define SETTING_APPARENT_TEMP "/units/apparent-temperature"
+#define SETTING_ROUND         "/round"
+#define SETTING_SINGLE_ROW    "/single-row"
+#define SETTING_TOOLTIP_STYLE "/tooltip-style"
+#define SETTING_FC_LAYOUT     "/forecast/layout"
+#define SETTING_FC_DAYS       "/forecast/days"
+#define SETTING_THEME_DIR     "/theme-dir"
+#define SETTING_SB_SHOW       "/scrollbox/show"
+#define SETTING_SB_ANIMATE    "/scrollbox/animate"
+#define SETTING_SB_LINES      "/scrollbox/lines"
+#define SETTING_SB_FONT       "/scrollbox/font"
+#define SETTING_SB_COLOR      "/scrollbox/color"
+#define SETTING_SB_USE_COLOR  "/scrollbox/use-color"
+#define SETTING_LABELS        "/labels/"
 
 G_BEGIN_DECLS
 
@@ -65,6 +95,8 @@ typedef struct {
 
 typedef struct {
     XfcePanelPlugin *plugin;
+    XfconfChannel *channel;
+    const gchar *property_base;
 
 #ifdef HAVE_UPOWER_GLIB
     UpClient *upower;
