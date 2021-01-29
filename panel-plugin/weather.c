@@ -25,6 +25,7 @@
 
 #include <libxfce4util/libxfce4util.h>
 #include <libxfce4ui/libxfce4ui.h>
+#include <xfconf/xfconf.h>
 
 #include <libxml/parser.h>
 #include <libxml/tree.h>
@@ -816,237 +817,236 @@ constrain_to_ulimits(guint *i,
 
 
 static void
-xfceweather_read_config(XfcePanelPlugin *plugin,
-                        plugin_data *data)
+xfceweather_xfconf_set_intbool (plugin_data *data, gchar* setting, gint value, gboolean bool)
 {
-    XfceRc *rc;
+    gchar          *property;
+
+    property = g_strconcat (data->property_base, setting, NULL);
+    if (bool)
+        xfconf_channel_set_bool (data->channel, property, (gboolean) value);
+    else
+        xfconf_channel_set_int (data->channel, property, value);
+    g_free (property);
+}
+
+
+static void
+xfceweather_xfconf_set_string (plugin_data *data, gchar* setting, gchar *value)
+{
+    gchar          *property;
+
+    property = g_strconcat (data->property_base, setting, NULL);
+    xfconf_channel_set_string (data->channel, property, value);
+    g_free (property);
+}
+
+
+static gboolean
+xfceweather_xfconf_get_bool (plugin_data *data, gchar* setting, gboolean fallback)
+{
+    gchar          *property;
+    gboolean            value;
+
+    property = g_strconcat (data->property_base, setting, NULL);
+    value = xfconf_channel_get_bool (data->channel, property, fallback);
+    g_free (property);
+
+    return value;
+}
+
+
+static gint
+xfceweather_xfconf_get_int (plugin_data *data, gchar* setting, gint fallback)
+{
+    gchar          *property;
+    gint            value;
+
+    property = g_strconcat (data->property_base, setting, NULL);
+    value = xfconf_channel_get_int (data->channel, property, fallback);
+    g_free (property);
+
+    return value;
+}
+
+
+static gchar *
+xfceweather_xfconf_get_string (plugin_data *data, gchar* setting)
+{
+    gchar          *property, *value;
+
+    property = g_strconcat (data->property_base, setting, NULL);
+    value = xfconf_channel_get_string (data->channel, property, NULL);
+    g_free (property);
+
+    return value;
+}
+
+
+static void
+xfceweather_read_config (XfcePanelPlugin *plugin,
+                         plugin_data *data)
+{
     const gchar *value;
-    gchar *file;
+    gchar *property;
     gchar label[10];
     gint label_count = 0, val;
 
-    if (!(file = xfce_panel_plugin_lookup_rc_file(plugin)))
-        return;
+    g_return_if_fail (XFCONF_IS_CHANNEL (data->channel));
 
-    rc = xfce_rc_simple_open(file, TRUE);
-    g_free(file);
+    data->location_name = xfceweather_xfconf_get_string (data, SETTING_LOCATION_NAME);
+    data->lat = xfceweather_xfconf_get_string (data, SETTING_LATITUDE);
+    data->lon = xfceweather_xfconf_get_string (data, SETTING_LONGITUDE);
 
-    if (!rc)
-        return;
-
-    value = xfce_rc_read_entry(rc, "loc_name", NULL);
-    if (value) {
-        g_free(data->location_name);
-        data->location_name = g_strdup(value);
-    }
-
-    value = xfce_rc_read_entry(rc, "lat", NULL);
-    if (value) {
-        g_free(data->lat);
-        data->lat = g_strdup(value);
-    }
-
-    value = xfce_rc_read_entry(rc, "lon", NULL);
-    if (value) {
-        g_free(data->lon);
-        data->lon = g_strdup(value);
-    }
-
-    data->msl = xfce_rc_read_int_entry(rc, "msl", 0);
+    data->msl = xfceweather_xfconf_get_int (data, SETTING_MSL, 0);
     constrain_to_limits(&data->msl, -420, 10000);
+    data->timezone = xfceweather_xfconf_get_string (data, SETTING_TIMEZONE);
+    data->offset = xfceweather_xfconf_get_string (data, SETTING_OFFSET);
+    data->geonames_username = xfceweather_xfconf_get_string (data, SETTING_GEONAMES);
+    data->cache_file_max_age = xfceweather_xfconf_get_int (data, SETTING_CACHE_MAX_AGE, CACHE_FILE_MAX_AGE);
+    data->power_saving = xfceweather_xfconf_get_bool (data, SETTING_POWER_SAVING, TRUE);
 
-    value = xfce_rc_read_entry(rc, "timezone", NULL);
-    if (value) {
-        g_free(data->timezone);
-        data->timezone = g_strdup(value);
-    }
-
-    value = xfce_rc_read_entry(rc, "offset", NULL);
-    if (value) {
-        g_free(data->offset);
-        data->offset = g_strdup(value);
-    }
-
-    value = xfce_rc_read_entry(rc, "geonames_username", NULL);
-    if (value) {
-        g_free(data->geonames_username);
-        data->geonames_username = g_strdup(value);
-    }
-
-    data->cache_file_max_age =
-        xfce_rc_read_int_entry(rc, "cache_file_max_age", CACHE_FILE_MAX_AGE);
-
-    data->power_saving = xfce_rc_read_bool_entry(rc, "power_saving", TRUE);
-
+    /* Units */
     if (data->units)
         g_slice_free(units_config, data->units);
     data->units = g_slice_new0(units_config);
-    data->units->temperature =
-        xfce_rc_read_int_entry(rc, "units_temperature", CELSIUS);
-    data->units->pressure =
-        xfce_rc_read_int_entry(rc, "units_pressure", HECTOPASCAL);
-    data->units->windspeed =
-        xfce_rc_read_int_entry(rc, "units_windspeed", KMH);
-    data->units->precipitation =
-        xfce_rc_read_int_entry(rc, "units_precipitation", MILLIMETERS);
-    data->units->altitude =
-        xfce_rc_read_int_entry(rc, "units_altitude", METERS);
-    data->units->apparent_temperature =
-        xfce_rc_read_int_entry(rc, "model_apparent_temperature",
-                               STEADMAN);
+    data->units->temperature = xfceweather_xfconf_get_int (data, SETTING_TEMPERATURE, CELSIUS);
+    data->units->pressure = xfceweather_xfconf_get_int (data, SETTING_PRESSURE, HECTOPASCAL);
+    data->units->windspeed = xfceweather_xfconf_get_int (data, SETTING_WINDSPEED, KMH);
+    data->units->precipitation = xfceweather_xfconf_get_int (data, SETTING_PRECIPITATION, MILLIMETERS);
+    data->units->altitude = xfceweather_xfconf_get_int (data, SETTING_ALTITUDE, METERS);
+    data->units->apparent_temperature = xfceweather_xfconf_get_int (data, SETTING_APPARENT_TEMP, STEADMAN);
 
-    data->round = xfce_rc_read_bool_entry(rc, "round", TRUE);
+    data->round = xfceweather_xfconf_get_bool (data, SETTING_ROUND, TRUE);
+    data->single_row = xfceweather_xfconf_get_bool (data, SETTING_SINGLE_ROW, TRUE);
+    data->tooltip_style = xfceweather_xfconf_get_int (data, SETTING_TOOLTIP_STYLE, TOOLTIP_VERBOSE);
 
-    data->single_row = xfce_rc_read_bool_entry(rc, "single_row", TRUE);
-
-    data->tooltip_style = xfce_rc_read_int_entry(rc, "tooltip_style",
-                                                 TOOLTIP_VERBOSE);
-
-    val = xfce_rc_read_int_entry(rc, "forecast_layout", FC_LAYOUT_LIST);
+    /* Forecast */
+    val = xfceweather_xfconf_get_int (data, SETTING_FC_LAYOUT, FC_LAYOUT_LIST);
     if (val == FC_LAYOUT_CALENDAR || val == FC_LAYOUT_LIST)
         data->forecast_layout = val;
     else
         data->forecast_layout = FC_LAYOUT_LIST;
 
-    data->forecast_days = xfce_rc_read_int_entry(rc, "forecast_days",
-                                                 DEFAULT_FORECAST_DAYS);
+    data->forecast_days = xfceweather_xfconf_get_int (data, SETTING_FC_DAYS, DEFAULT_FORECAST_DAYS);
     constrain_to_ulimits(&data->forecast_days, 1, MAX_FORECAST_DAYS);
 
-    value = xfce_rc_read_entry(rc, "theme_dir", NULL);
+    value = xfceweather_xfconf_get_string (data, SETTING_THEME_DIR);
     if (data->icon_theme)
         icon_theme_free(data->icon_theme);
     data->icon_theme = icon_theme_load(value);
 
-    data->show_scrollbox = xfce_rc_read_bool_entry(rc, "show_scrollbox", TRUE);
-
-    data->scrollbox_lines = xfce_rc_read_int_entry(rc, "scrollbox_lines", 1);
+    /* Scrollbox */
+    data->show_scrollbox = xfceweather_xfconf_get_bool (data, SETTING_SB_SHOW, TRUE);
+    data->scrollbox_use_color = xfceweather_xfconf_get_bool (data, SETTING_SB_USE_COLOR, FALSE);
+    data->scrollbox_lines = xfceweather_xfconf_get_int (data, SETTING_SB_LINES, 1);
     constrain_to_ulimits(&data->scrollbox_lines, 1, MAX_SCROLLBOX_LINES);
 
-    value = xfce_rc_read_entry(rc, "scrollbox_font", NULL);
+    value = xfceweather_xfconf_get_string (data, SETTING_SB_FONT);
     if (value) {
-        g_free(data->scrollbox_font);
-        data->scrollbox_font = g_strdup(value);
+        g_free (data->scrollbox_font);
+        data->scrollbox_font = g_strdup (value);
     }
 
-    value = xfce_rc_read_entry(rc, "scrollbox_color", NULL);
-    if (value)
+    value = xfceweather_xfconf_get_string (data, SETTING_SB_COLOR);
+    if (value) {
         gdk_rgba_parse(&(data->scrollbox_color), value);
-
-    data->scrollbox_use_color =
-        xfce_rc_read_bool_entry(rc, "scrollbox_use_color", FALSE);
-
-    data->scrollbox_animate =
-        xfce_rc_read_bool_entry(rc, "scrollbox_animate", TRUE);
-    gtk_scrollbox_set_animate(GTK_SCROLLBOX(data->scrollbox),
-                              data->scrollbox_animate);
+    }
+    data->scrollbox_animate = xfceweather_xfconf_get_bool (data, SETTING_SB_ANIMATE, TRUE);
+    gtk_scrollbox_set_animate (GTK_SCROLLBOX(data->scrollbox),
+                               data->scrollbox_animate);
 
     data->labels = labels_clear(data->labels);
     val = 0;
     while (val != -1) {
         g_snprintf(label, 10, "label%d", label_count++);
+        property = g_strconcat (SETTING_LABELS, label, NULL);
 
-        val = xfce_rc_read_int_entry(rc, label, -1);
-        if (val >= 0)
-            g_array_append_val(data->labels, val);
+        val = xfceweather_xfconf_get_int (data, property, -1);
+        if (val >= 0) {
+            g_array_append_val (data->labels, val);
+        }
+        g_free (property);
     }
 
-    xfce_rc_close(rc);
     weather_debug("Config file read.");
 }
 
-
 static void
-xfceweather_write_config(XfcePanelPlugin *plugin,
-                         plugin_data *data)
+xfceweather_write_config (XfcePanelPlugin *plugin,
+                          plugin_data *data)
 {
-    XfceRc *rc;
-    gchar label[10];
-    gchar *file, *value;
-    guint i;
+    gchar           label[10];
+    guint           i;
+    gchar          *property;
 
-    if (!(file = xfce_panel_plugin_save_location(plugin, TRUE)))
-        return;
-
-    /* get rid of old values */
-    unlink(file);
-
-    rc = xfce_rc_simple_open(file, FALSE);
-    g_free(file);
-
-    if (!rc)
-        return;
+    g_return_if_fail (XFCONF_IS_CHANNEL (data->channel));
 
     if (data->location_name)
-        xfce_rc_write_entry(rc, "loc_name", data->location_name);
-
+    {
+        xfceweather_xfconf_set_string (data, SETTING_LOCATION_NAME, data->location_name);
+    }
     if (data->lat)
-        xfce_rc_write_entry(rc, "lat", data->lat);
-
+    {
+        xfceweather_xfconf_set_string (data, SETTING_LATITUDE, data->lat);
+    }
     if (data->lon)
-        xfce_rc_write_entry(rc, "lon", data->lon);
-
-    xfce_rc_write_int_entry(rc, "msl", data->msl);
-
-    xfce_rc_write_entry(rc, "timezone", data->timezone);
-
-    xfce_rc_write_entry(rc, "offset", data->offset);
-
-    if (data->geonames_username)
-        xfce_rc_write_entry(rc, "geonames_username", data->geonames_username);
-
-    xfce_rc_write_int_entry(rc, "cache_file_max_age",
-                            data->cache_file_max_age);
-
-    xfce_rc_write_bool_entry(rc, "power_saving", data->power_saving);
-
-    xfce_rc_write_int_entry(rc, "units_temperature", data->units->temperature);
-    xfce_rc_write_int_entry(rc, "units_pressure", data->units->pressure);
-    xfce_rc_write_int_entry(rc, "units_windspeed", data->units->windspeed);
-    xfce_rc_write_int_entry(rc, "units_precipitation",
-                            data->units->precipitation);
-    xfce_rc_write_int_entry(rc, "units_altitude", data->units->altitude);
-    xfce_rc_write_int_entry(rc, "model_apparent_temperature",
-                            data->units->apparent_temperature);
-
-    xfce_rc_write_bool_entry(rc, "round", data->round);
-
-    xfce_rc_write_bool_entry(rc, "single_row", data->single_row);
-
-    xfce_rc_write_int_entry(rc, "tooltip_style", data->tooltip_style);
-
-    xfce_rc_write_int_entry(rc, "forecast_layout", data->forecast_layout);
-
-    xfce_rc_write_int_entry(rc, "forecast_days", data->forecast_days);
-
-    xfce_rc_write_bool_entry(rc, "scrollbox_animate", data->scrollbox_animate);
-
-    if (data->icon_theme && data->icon_theme->dir)
-        xfce_rc_write_entry(rc, "theme_dir", data->icon_theme->dir);
-
-    xfce_rc_write_bool_entry(rc, "show_scrollbox",
-                             data->show_scrollbox);
-
-    xfce_rc_write_int_entry(rc, "scrollbox_lines", data->scrollbox_lines);
-
-    if (data->scrollbox_font)
-        xfce_rc_write_entry(rc, "scrollbox_font", data->scrollbox_font);
-
-    value = gdk_rgba_to_string(&(data->scrollbox_color));
-    xfce_rc_write_entry(rc, "scrollbox_color", value);
-    g_free(value);
-
-    xfce_rc_write_bool_entry(rc, "scrollbox_use_color",
-                             data->scrollbox_use_color);
-
-    for (i = 0; i < data->labels->len; i++) {
-        g_snprintf(label, 10, "label%d", i);
-        xfce_rc_write_int_entry(rc, label,
-                                (gint) g_array_index(data->labels,
-                                                     data_types, i));
+    {
+        xfceweather_xfconf_set_string (data, SETTING_LONGITUDE, data->lon);
     }
 
-    xfce_rc_close(rc);
-    weather_debug("Config file written.");
+    xfceweather_xfconf_set_intbool (data, SETTING_MSL, data->msl, FALSE);
+    xfceweather_xfconf_set_string (data, SETTING_TIMEZONE, data->timezone);
+    xfceweather_xfconf_set_string (data, SETTING_OFFSET, data->offset);
+
+    if (data->geonames_username)
+    {
+        xfceweather_xfconf_set_string (data, SETTING_GEONAMES, data->geonames_username);
+    }
+
+    xfceweather_xfconf_set_intbool (data, SETTING_CACHE_MAX_AGE, data->cache_file_max_age, FALSE);
+    xfceweather_xfconf_set_intbool (data, SETTING_POWER_SAVING, data->power_saving, TRUE);
+
+    xfceweather_xfconf_set_intbool (data, SETTING_TEMPERATURE, data->units->temperature, FALSE);
+    xfceweather_xfconf_set_intbool (data, SETTING_PRESSURE, data->units->pressure, FALSE);
+    xfceweather_xfconf_set_intbool (data, SETTING_WINDSPEED, data->units->windspeed, FALSE);
+    xfceweather_xfconf_set_intbool (data, SETTING_PRECIPITATION, data->units->precipitation, FALSE);
+    xfceweather_xfconf_set_intbool (data, SETTING_ALTITUDE, data->units->altitude, FALSE);
+    xfceweather_xfconf_set_intbool (data, SETTING_APPARENT_TEMP, data->units->apparent_temperature, FALSE);
+
+    xfceweather_xfconf_set_intbool (data, SETTING_ROUND, data->round, TRUE);
+    xfceweather_xfconf_set_intbool (data, SETTING_SINGLE_ROW, data->single_row, TRUE);
+
+    xfceweather_xfconf_set_intbool (data, SETTING_TOOLTIP_STYLE, data->tooltip_style, FALSE);
+    xfceweather_xfconf_set_intbool (data, SETTING_FC_LAYOUT, data->forecast_layout, FALSE);
+    xfceweather_xfconf_set_intbool (data, SETTING_FC_DAYS, data->forecast_days, FALSE);
+
+
+    if (data->icon_theme && data->icon_theme->dir)
+    {
+        xfceweather_xfconf_set_string (data, SETTING_THEME_DIR, data->icon_theme->dir);
+    }
+
+    /* Scrollbox */
+    xfceweather_xfconf_set_intbool (data, SETTING_SB_SHOW, data->show_scrollbox, TRUE);
+    xfceweather_xfconf_set_intbool (data, SETTING_SB_ANIMATE, data->scrollbox_animate, TRUE);
+    xfceweather_xfconf_set_intbool (data, SETTING_SB_LINES, data->scrollbox_lines, FALSE);
+    if (data->scrollbox_font)
+    {
+      xfceweather_xfconf_set_string (data, SETTING_SB_FONT, data->scrollbox_font);
+    }
+    xfceweather_xfconf_set_string (data, SETTING_SB_COLOR, gdk_rgba_to_string(&(data->scrollbox_color)));
+    xfceweather_xfconf_set_intbool (data, SETTING_SB_USE_COLOR, data->scrollbox_use_color, TRUE);
+
+    /* Labels */
+    for (i = 0; i < data->labels->len; i++) {
+        g_snprintf(label, 10, "label%d", i);
+        property = g_strconcat (data->property_base, SETTING_LABELS, label, NULL);
+        xfconf_channel_set_int (data->channel, property,
+                                (gint) g_array_index(data->labels, data_types, i));
+        g_free (property);
+    }
+
+    weather_debug("Config written.");
 }
 
 
@@ -1665,7 +1665,7 @@ xfceweather_dialog_response(GtkWidget *dlg,
 
         xfce_panel_plugin_unblock_menu(data->plugin);
 
-        weather_debug("Saving configuration options.");
+        weather_debug("Write configuration");
         xfceweather_write_config(data->plugin, data);
         weather_dump(weather_dump_plugindata, data);
     }
@@ -1692,7 +1692,7 @@ xfceweather_create_options(XfcePanelPlugin *plugin,
                                      weather_config_ui_length, &error) != 0)
     {
         dlg = GTK_WIDGET (gtk_builder_get_object (builder, "dialog"));
-        gtk_window_set_transient_for (GTK_WINDOW (dlg), 
+        gtk_window_set_transient_for (GTK_WINDOW (dlg),
                                       GTK_WINDOW (gtk_widget_get_toplevel
                                        (GTK_WIDGET(plugin))));
 
@@ -2062,6 +2062,7 @@ xfceweather_free(XfcePanelPlugin *plugin,
     icon_theme_free(data->icon_theme);
 
     g_slice_free(plugin_data, data);
+    xfconf_shutdown ();
 }
 
 static gboolean
@@ -2223,6 +2224,16 @@ weather_construct(XfcePanelPlugin *plugin)
 
     xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
     data = xfceweather_create_control(plugin);
+
+    if (xfconf_init (NULL))
+        data->channel = xfconf_channel_get ("xfce4-panel");
+    else
+    {
+        g_warning ("Could not initialize xfconf.");
+        return;
+    }
+
+    data->property_base = xfce_panel_plugin_get_property_base (plugin);
 
     /* save initial timezone so we can reset it later */
     data->timezone_initial = g_strdup(g_getenv("TZ"));
