@@ -887,9 +887,7 @@ xfceweather_read_config (XfcePanelPlugin *plugin,
                          plugin_data *data)
 {
     const gchar *value;
-    const gchar     *property_base;
-    gchar           *property;
-
+    gchar *property;
     gchar label[10];
     gint label_count = 0, val;
 
@@ -956,17 +954,20 @@ xfceweather_read_config (XfcePanelPlugin *plugin,
     data->scrollbox_animate = xfceweather_xfconf_get_bool (data, SETTING_SB_ANIMATE);
     gtk_scrollbox_set_animate(GTK_SCROLLBOX(data->scrollbox),
                               data->scrollbox_animate);
-/*
+
     data->labels = labels_clear(data->labels);
     val = 0;
     while (val != -1) {
         g_snprintf(label, 10, "label%d", label_count++);
+        property = g_strconcat (SETTING_LABELS, label, NULL);
 
-        val = xfce_rc_read_int_entry(rc, label, -1);
-        if (val >= 0)
+        val = xfceweather_xfconf_get_int (data, property, -1);
+        if (val >= 0) {
             g_array_append_val(data->labels, val);
+        }
+        g_free (property);
     }
-*/
+
     weather_debug("Config file read.");
 }
 
