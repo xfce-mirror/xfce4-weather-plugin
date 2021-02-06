@@ -1660,8 +1660,8 @@ xfceweather_dialog_response(GtkWidget *dlg,
         for (i = 0; i < dialog->icon_themes->len; i++) {
             theme = g_array_index(dialog->icon_themes, icon_theme *, i);
             icon_theme_free(theme);
-            g_array_free(dialog->icon_themes, TRUE);
         }
+        g_array_free(dialog->icon_themes, FALSE);
         g_slice_free(xfceweather_dialog, dialog);
 
         xfce_panel_plugin_unblock_menu(data->plugin);
