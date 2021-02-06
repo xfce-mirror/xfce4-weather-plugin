@@ -842,13 +842,13 @@ xfceweather_xfconf_set_string (plugin_data *data, gchar* setting, gchar *value)
 
 
 static gboolean
-xfceweather_xfconf_get_bool (plugin_data *data, gchar* setting)
+xfceweather_xfconf_get_bool (plugin_data *data, gchar* setting, gboolean fallback)
 {
     gchar          *property;
     gboolean            value;
 
     property = g_strconcat (data->property_base, setting, NULL);
-    value = xfconf_channel_get_bool (data->channel, property, TRUE);
+    value = xfconf_channel_get_bool (data->channel, property, fallback);
     g_free (property);
 
     return value;
@@ -903,7 +903,7 @@ xfceweather_read_config (XfcePanelPlugin *plugin,
     data->offset = xfceweather_xfconf_get_string (data, SETTING_OFFSET);
     data->geonames_username = xfceweather_xfconf_get_string (data, SETTING_GEONAMES);
     data->cache_file_max_age = xfceweather_xfconf_get_int (data, SETTING_CACHE_MAX_AGE, CACHE_FILE_MAX_AGE);
-    data->power_saving = xfceweather_xfconf_get_bool (data, SETTING_POWER_SAVING);
+    data->power_saving = xfceweather_xfconf_get_bool (data, SETTING_POWER_SAVING, TRUE);
 
     /* Units */
     if (data->units)
@@ -916,8 +916,8 @@ xfceweather_read_config (XfcePanelPlugin *plugin,
     data->units->altitude = xfceweather_xfconf_get_int (data, SETTING_ALTITUDE, METERS);
     data->units->apparent_temperature = xfceweather_xfconf_get_int (data, SETTING_APPARENT_TEMP, STEADMAN);
 
-    data->round = xfceweather_xfconf_get_bool (data, SETTING_ROUND);
-    data->single_row = xfceweather_xfconf_get_bool (data, SETTING_SINGLE_ROW);
+    data->round = xfceweather_xfconf_get_bool (data, SETTING_ROUND, TRUE);
+    data->single_row = xfceweather_xfconf_get_bool (data, SETTING_SINGLE_ROW, TRUE);
     data->tooltip_style = xfceweather_xfconf_get_int (data, SETTING_TOOLTIP_STYLE, TOOLTIP_VERBOSE);
 
     /* Forecast */
@@ -936,24 +936,24 @@ xfceweather_read_config (XfcePanelPlugin *plugin,
     data->icon_theme = icon_theme_load(value);
 
     /* Scrollbox */
-    data->show_scrollbox = xfceweather_xfconf_get_bool (data, SETTING_SB_SHOW);
-    data->scrollbox_use_color = xfceweather_xfconf_get_bool (data, SETTING_SB_USE_COLOR); // FALSE
+    data->show_scrollbox = xfceweather_xfconf_get_bool (data, SETTING_SB_SHOW, TRUE);
+    data->scrollbox_use_color = xfceweather_xfconf_get_bool (data, SETTING_SB_USE_COLOR, FALSE);
     data->scrollbox_lines = xfceweather_xfconf_get_int (data, SETTING_SB_LINES, 1);
     constrain_to_ulimits(&data->scrollbox_lines, 1, MAX_SCROLLBOX_LINES);
 
     value = xfceweather_xfconf_get_string (data, SETTING_SB_FONT);
     if (value) {
-        g_free(data->scrollbox_font);
-        data->scrollbox_font = g_strdup(value);
+        g_free (data->scrollbox_font);
+        data->scrollbox_font = g_strdup (value);
     }
 
     value = xfceweather_xfconf_get_string (data, SETTING_SB_COLOR);
     if (value) {
         gdk_rgba_parse(&(data->scrollbox_color), value);
     }
-    data->scrollbox_animate = xfceweather_xfconf_get_bool (data, SETTING_SB_ANIMATE);
-    gtk_scrollbox_set_animate(GTK_SCROLLBOX(data->scrollbox),
-                              data->scrollbox_animate);
+    data->scrollbox_animate = xfceweather_xfconf_get_bool (data, SETTING_SB_ANIMATE, TRUE);
+    gtk_scrollbox_set_animate (GTK_SCROLLBOX(data->scrollbox),
+                               data->scrollbox_animate);
 
     data->labels = labels_clear(data->labels);
     val = 0;
@@ -963,7 +963,7 @@ xfceweather_read_config (XfcePanelPlugin *plugin,
 
         val = xfceweather_xfconf_get_int (data, property, -1);
         if (val >= 0) {
-            g_array_append_val(data->labels, val);
+            g_array_append_val (data->labels, val);
         }
         g_free (property);
     }
