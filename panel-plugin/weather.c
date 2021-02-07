@@ -958,7 +958,7 @@ xfceweather_read_config (XfcePanelPlugin *plugin,
     data->labels = labels_clear(data->labels);
     val = 0;
     while (val != -1) {
-        g_snprintf(label, 10, "label%d", label_count++);
+        g_snprintf(label, 10, "/label%d", label_count++);
         property = g_strconcat (SETTING_LABELS, label, NULL);
 
         val = xfceweather_xfconf_get_int (data, property, -1);
@@ -1038,8 +1038,13 @@ xfceweather_write_config (XfcePanelPlugin *plugin,
     xfceweather_xfconf_set_intbool (data, SETTING_SB_USE_COLOR, data->scrollbox_use_color, TRUE);
 
     /* Labels */
+    /* Reset all labels prior to storing */
+    property = g_strconcat (data->property_base, SETTING_LABELS, NULL);
+    xfconf_channel_reset_property (data->channel, property, TRUE);
+    g_free (property);
+
     for (i = 0; i < data->labels->len; i++) {
-        g_snprintf(label, 10, "label%d", i);
+        g_snprintf(label, 10, "/label%d", i);
         property = g_strconcat (data->property_base, SETTING_LABELS, label, NULL);
         xfconf_channel_set_int (data->channel, property,
                                 (gint) g_array_index(data->labels, data_types, i));

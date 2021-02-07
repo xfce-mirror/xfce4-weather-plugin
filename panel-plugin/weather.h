@@ -61,7 +61,7 @@
 #define SETTING_SB_FONT       "/scrollbox/font"
 #define SETTING_SB_COLOR      "/scrollbox/color"
 #define SETTING_SB_USE_COLOR  "/scrollbox/use-color"
-#define SETTING_LABELS        "/labels/"
+#define SETTING_LABELS        "/labels"
 
 G_BEGIN_DECLS
 
