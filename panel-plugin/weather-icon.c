@@ -179,6 +179,7 @@ get_icon(const icon_theme *theme,
     GdkPixbuf *image = NULL;
     const gchar *sizedir;
     gchar *filename = NULL, *suffix = "";
+    GError *error = NULL;
 
     g_assert(theme != NULL);
     if (G_UNLIKELY(!theme)) {
@@ -197,11 +198,15 @@ get_icon(const icon_theme *theme,
     /* check whether icon has been verified to be missing before */
     if (!icon_missing(theme, sizedir, symbol_name, suffix)) {
         filename = make_icon_filename(theme, sizedir, symbol_name, suffix);
-        image = quiet_gdk_pixbuf_new_from_file_at_scale(filename, size, size, TRUE, NULL);
+        image = quiet_gdk_pixbuf_new_from_file_at_scale(filename, size, size, TRUE, &error);
     }
 
     if (image == NULL) {
         /* remember failure for future lookups */
+        if (error) {
+            g_warning ("Failed to load pixbuf: %s", error->message);
+            g_error_free (error);
+        }
         if (filename) {
             weather_debug("Unable to open image: %s", filename);
             remember_missing_icon(theme, sizedir, symbol_name, suffix);
