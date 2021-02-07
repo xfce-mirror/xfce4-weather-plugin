@@ -37,6 +37,7 @@ libweather_la_CFLAGS =						\
 	$(LIBXFCE4PANEL_CFLAGS)						\
 	$(LIBXFCE4UI_CFLAGS)						\
 	$(LIBXFCE4UTIL_CFLAGS)						\
+	$(XFCONF_CFLAGS)								\
 	$(GTK_CFLAGS)							\
 	$(SOUP_CFLAGS)							\
 	$(UPOWER_GLIB_CFLAGS)						\
@@ -51,6 +52,7 @@ libweather_la_LIBADD =						\
 	$(LIBXFCE4PANEL_LIBS)						\
 	$(LIBXFCE4UTIL_LIBS)						\
 	$(LIBXFCE4UI_LIBS)						\
+	$(XFCONF_LIBS)							\
 	$(GTK_LIBS)							\
 	$(LIBXML_LIBS)							\
 	$(SOUP_LIBS)
