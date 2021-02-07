@@ -113,6 +113,7 @@ typedef struct {
     GtkWidget *iconimage;
     GdkPixbuf *tooltip_icon;
     GtkWidget *summary_window;
+    GtkWidget *summary_subtitle;
     summary_details *summary_details;
     guint config_remember_tab;
     guint summary_remember_tab;

@@ -1145,21 +1145,15 @@ update_summary_subtitle(plugin_data *data)
         return FALSE;
 
     time(&now_t);
-    date = format_date(now_t, "%Y-%m-%d %H:%M:%S (%Z)", TRUE);
-    title = g_strdup_printf("%s   %s", data->location_name, date);
+    date = format_date(now_t, "%A %_d %b %Y, %H:%M (%Z)", TRUE);
+    title = g_markup_printf_escaped("<big><b>%s</b>\n%s</big>", data->location_name, date);
     g_free(date);
-    xfce_titled_dialog_set_subtitle(XFCE_TITLED_DIALOG(data->summary_window),
-                                    title);
+    gtk_label_set_markup(GTK_LABEL(data->summary_subtitle), title);
     g_free(title);
 
     /* compute and schedule the next update */
     now_ms = g_get_real_time () / 1000;
-#ifdef HAVE_UPOWER_GLIB
-    if (data->upower_on_battery)
-        update_interval = 60000 - (now_ms % 60000) + 10;
-    else
-#endif
-        update_interval = 1000 - (now_ms % 1000) + 10;
+    update_interval = 60000 - (now_ms % 60000) + 10;
     data->summary_update_timer =
         g_timeout_add(update_interval, update_summary_subtitle_cb, data);
     return FALSE;
@@ -1169,7 +1163,7 @@ update_summary_subtitle(plugin_data *data)
 GtkWidget *
 create_summary_window(plugin_data *data)
 {
-    GtkWidget *window, *notebook, *vbox, *hbox, *label;
+    GtkWidget *window, *notebook, *vbox, *hbox, *label, *image;
     GdkPixbuf *icon;
     xml_time *conditions;
     gchar *title, *symbol;
@@ -1180,20 +1174,29 @@ create_summary_window(plugin_data *data)
                                                  GTK_DIALOG_DESTROY_WITH_PARENT,
                                                  _("Close"),
                                                  GTK_RESPONSE_ACCEPT, NULL);
+
+    data->summary_subtitle = gtk_label_new (NULL);
     if (G_LIKELY(data->location_name != NULL)) {
-        title = g_strdup_printf("%s\n", data->location_name);
-        xfce_titled_dialog_set_subtitle(XFCE_TITLED_DIALOG(window), title);
+        title = g_markup_printf_escaped("<big><b>%s</b></big>\n", data->location_name);
+        gtk_label_set_markup(GTK_LABEL(data->summary_subtitle), title);
         g_free(title);
     }
     vbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
     gtk_box_pack_start(GTK_BOX(gtk_dialog_get_content_area (GTK_DIALOG(window))), vbox, TRUE, TRUE, 0);
 
+    hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
+    gtk_box_pack_start(GTK_BOX (vbox), hbox, TRUE, FALSE, 6);
+    image = gtk_image_new ();
+    gtk_box_pack_start(GTK_BOX (hbox), image, FALSE, FALSE, 6);
+    gtk_box_pack_start(GTK_BOX (hbox), data->summary_subtitle, FALSE, FALSE, 6);
+
     symbol = get_data(conditions, data->units, SYMBOL,
                       FALSE, data->night_time);
     icon = get_icon(data->icon_theme, symbol, 48, data->night_time);
+    gtk_image_set_from_pixbuf (GTK_IMAGE (image), icon);
     g_free(symbol);
 
-    gtk_window_set_icon(GTK_WINDOW(window), icon);
+    gtk_window_set_icon_name(GTK_WINDOW(window), "xfce4-weather");
 
     if (G_LIKELY(icon))
         g_object_unref(G_OBJECT(icon));
