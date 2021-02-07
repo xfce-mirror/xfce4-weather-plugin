@@ -1653,7 +1653,6 @@ xfceweather_dialog_response(GtkWidget *dlg,
             g_warning(_("Unable to open the following url: %s"),
                       PLUGIN_WEBSITE);
     } else {
-        xfceweather_write_config(data->plugin, data);
         /* free stuff used in config dialog */
         gtk_widget_destroy(dlg);
         gtk_list_store_clear(dialog->model_datatypes);
@@ -1666,8 +1665,8 @@ xfceweather_dialog_response(GtkWidget *dlg,
 
         xfce_panel_plugin_unblock_menu(data->plugin);
 
-        weather_debug("Shutting down xfconf");
-        xfconf_shutdown ();
+        weather_debug("Write configuration");
+        xfceweather_write_config(data->plugin, data);
         weather_dump(weather_dump_plugindata, data);
     }
 }
@@ -2063,6 +2062,7 @@ xfceweather_free(XfcePanelPlugin *plugin,
     icon_theme_free(data->icon_theme);
 
     g_slice_free(plugin_data, data);
+    xfconf_shutdown ();
 }
 
 static gboolean
