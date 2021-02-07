@@ -2024,8 +2024,10 @@ xfceweather_free(XfcePanelPlugin *plugin,
     }
 
 #ifdef HAVE_UPOWER_GLIB
-    if (data->upower)
+    if (data->upower) {
         g_object_unref(data->upower);
+        data->upower = NULL;
+    }
 #endif
 
     if (data->weatherdata)
@@ -2238,6 +2240,7 @@ weather_construct(XfcePanelPlugin *plugin)
     /* save initial timezone so we can reset it later */
     data->timezone_initial = g_strdup(g_getenv("TZ"));
 
+    data->tooltip_icon = NULL;
     xfceweather_read_config(plugin, data);
     update_timezone(data);
     update_offset(data);
