@@ -817,12 +817,12 @@ constrain_to_ulimits(guint *i,
 
 
 static void
-xfceweather_xfconf_set_intbool (plugin_data *data, gchar* setting, gint value, gboolean bool)
+xfceweather_xfconf_set_intbool (plugin_data *data, gchar* setting, gint value, gboolean is_boolean)
 {
     gchar          *property;
 
     property = g_strconcat (data->property_base, setting, NULL);
-    if (bool)
+    if (is_boolean)
         xfconf_channel_set_bool (data->channel, property, (gboolean) value);
     else
         xfconf_channel_set_int (data->channel, property, value);
