@@ -2197,6 +2197,7 @@ xfceweather_show_about(XfcePanelPlugin *plugin,
         "Nick Schermer <nick@xfce.org>",
         "Colin Leroy <colin@colino.net>",
         "Harald Judt <h.judt@gmx.at>",
+        "Simon Steinbeiß <simon@xfce.org>",
         NULL };
     icon = xfce_panel_pixbuf_from_source("xfce4-weather", NULL, 48);
     gtk_show_about_dialog
@@ -2207,7 +2208,7 @@ xfceweather_show_about(XfcePanelPlugin *plugin,
          "program-name", PACKAGE_NAME,
          "comments", _("Show weather conditions and forecasts"),
          "website", PLUGIN_WEBSITE,
-         "copyright", _("Copyright (c) 2003-2014\n"),
+         "copyright", _("Copyright (c) 2003-2021\n"),
          "authors", auth,
          NULL);
 
