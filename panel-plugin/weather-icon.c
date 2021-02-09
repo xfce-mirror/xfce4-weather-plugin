@@ -388,11 +388,7 @@ icon_theme_compare(gconstpointer a,
 static GArray *
 find_themes_in_dir(const gchar *path)
 {
-    GArray *themes = NULL;
     GDir *dir;
-    icon_theme *theme;
-    gchar *themedir;
-    const gchar *dirname;
 
     g_assert(path != NULL);
     if (G_UNLIKELY(path == NULL))
@@ -401,6 +397,11 @@ find_themes_in_dir(const gchar *path)
     weather_debug("Looking for icon themes in %s.", path);
     dir = g_dir_open(path, 0, NULL);
     if (dir) {
+        GArray *themes;
+        icon_theme *theme;
+        gchar *themedir;
+        const gchar *dirname;
+
         themes = g_array_new(FALSE, TRUE, sizeof(icon_theme *));
 
         while ((dirname = g_dir_read_name(dir))) {
@@ -417,10 +418,12 @@ find_themes_in_dir(const gchar *path)
         }
         g_dir_close(dir);
         weather_debug("Found %d icon theme(s) in %s.", themes->len, path);
-    } else
+        g_array_sort(themes, (GCompareFunc) icon_theme_compare);
+        return themes;
+    } else {
         weather_debug("Could not list directory %s.", path);
-    g_array_sort(themes, (GCompareFunc) icon_theme_compare);
-    return themes;
+        return NULL;
+    }
 }
 
 
