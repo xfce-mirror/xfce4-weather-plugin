@@ -1185,7 +1185,7 @@ create_summary_window(plugin_data *data)
     gtk_box_pack_start(GTK_BOX(gtk_dialog_get_content_area (GTK_DIALOG(window))), vbox, TRUE, TRUE, 0);
 
     hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 6);
-    gtk_box_pack_start(GTK_BOX (vbox), hbox, TRUE, FALSE, 6);
+    gtk_box_pack_start(GTK_BOX (vbox), hbox, FALSE, FALSE, 6);
     image = gtk_image_new ();
     gtk_box_pack_start(GTK_BOX (hbox), image, FALSE, FALSE, 6);
     gtk_box_pack_start(GTK_BOX (hbox), data->summary_subtitle, FALSE, FALSE, 6);
