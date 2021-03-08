@@ -1091,12 +1091,13 @@ create_appearance_page(xfceweather_dialog *dialog)
 
 
 static void
-check_scrollbox_show_toggled(GtkWidget *button,
+check_scrollbox_show_toggled(GtkSwitch *button,
+                             gboolean state,
                              gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    dialog->pd->show_scrollbox =
-        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button));
+    dialog->pd->show_scrollbox = state;
+    gtk_switch_set_state (button, state);
     scrollbox_set_visible(dialog->pd);
 }
 
@@ -1513,12 +1514,13 @@ button_down_option_clicked(GtkWidget *widget,
 
 
 static void
-check_scrollbox_animate_toggled(GtkWidget *button,
-                                gpointer user_data)
+check_scrollbox_animate_toggled(GtkSwitch *button,
+                                gboolean   state,
+                                gpointer   user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    dialog->pd->scrollbox_animate =
-        gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button));
+    dialog->pd->scrollbox_animate = state;
+    gtk_switch_set_state (button, state);
 #ifdef HAVE_UPOWER_GLIB
     if (dialog->pd->upower_on_battery)
         gtk_scrollbox_set_animate(GTK_SCROLLBOX(dialog->pd->scrollbox),
@@ -1542,9 +1544,8 @@ create_scrollbox_page(xfceweather_dialog *dialog)
 
     /* show scrollbox */
     dialog->check_scrollbox_show = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "check_scrollbox_show"));
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON
-                                 (dialog->check_scrollbox_show),
-                                 dialog->pd->show_scrollbox);
+    gtk_switch_set_active(GTK_SWITCH (dialog->check_scrollbox_show),
+                          dialog->pd->show_scrollbox);
 
     /* values to show at once (multiple lines) */
     dialog->spin_scrollbox_lines = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "spin_scrollbox_lines"));
@@ -1597,9 +1598,8 @@ create_scrollbox_page(xfceweather_dialog *dialog)
     }
 
     dialog->check_scrollbox_animate = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "check_scrollbox_animate"));
-    gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON
-                                 (dialog->check_scrollbox_animate),
-                                 dialog->pd->scrollbox_animate);
+    gtk_switch_set_active(GTK_SWITCH (dialog->check_scrollbox_animate),
+                          dialog->pd->scrollbox_animate);
 }
 
 
@@ -1685,7 +1685,7 @@ setup_notebook_signals(xfceweather_dialog *dialog)
                      G_CALLBACK(check_round_values_toggled), dialog);
 
     /* scrollbox page */
-    g_signal_connect(dialog->check_scrollbox_show, "toggled",
+    g_signal_connect(dialog->check_scrollbox_show, "state-set",
                      G_CALLBACK(check_scrollbox_show_toggled), dialog);
     g_signal_connect(GTK_SPIN_BUTTON(dialog->spin_scrollbox_lines),
                      "value-changed",
@@ -1705,7 +1705,7 @@ setup_notebook_signals(xfceweather_dialog *dialog)
                      G_CALLBACK(button_scrollbox_color_set), dialog);
     g_signal_connect(dialog->options_datatypes, "changed",
                      G_CALLBACK(options_datatypes_changed), dialog);
-    g_signal_connect(dialog->check_scrollbox_animate, "toggled",
+    g_signal_connect(dialog->check_scrollbox_animate, "state-set",
                      G_CALLBACK(check_scrollbox_animate_toggled), dialog);
 
     /* notebook widget */
