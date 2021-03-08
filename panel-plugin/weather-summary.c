@@ -1196,7 +1196,7 @@ create_summary_window(plugin_data *data)
     gtk_image_set_from_pixbuf (GTK_IMAGE (image), icon);
     g_free(symbol);
 
-    gtk_window_set_icon_name(GTK_WINDOW(window), "xfce4-weather");
+    gtk_window_set_icon_name(GTK_WINDOW(window), "org.xfce.panel.weather");
 
     if (G_LIKELY(icon))
         g_object_unref(G_OBJECT(icon));

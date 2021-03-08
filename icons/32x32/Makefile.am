@@ -1,4 +1,4 @@
-iconsdir = $(datadir)/icons/hicolor/48x48/apps
+iconsdir = $(datadir)/icons/hicolor/32x32/apps
 
 icons_DATA =								\
 	org.xfce.panel.weather.png

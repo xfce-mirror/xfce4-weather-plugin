@@ -1,7 +1,7 @@
-iconsdir = $(datadir)/icons/hicolor/48x48/apps
+iconsdir = $(datadir)/icons/hicolor/scalable/apps
 
 icons_DATA =								\
-	org.xfce.panel.weather.png
+	org.xfce.panel.weather.svg
 
 EXTRA_DIST =								\
 	$(icons_DATA)

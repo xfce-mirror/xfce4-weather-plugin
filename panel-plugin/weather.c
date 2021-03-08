@@ -2188,7 +2188,6 @@ static void
 xfceweather_show_about(XfcePanelPlugin *plugin,
                        plugin_data *data)
 {
-    GdkPixbuf *icon;
     const gchar *auth[] = {
         "Bob Schlärmann <weatherplugin@atreidis.nl.eu.org>",
         "Benedikt Meurer <benny@xfce.org>",
@@ -2199,10 +2198,9 @@ xfceweather_show_about(XfcePanelPlugin *plugin,
         "Harald Judt <h.judt@gmx.at>",
         "Simon Steinbeiß <simon@xfce.org>",
         NULL };
-    icon = xfce_panel_pixbuf_from_source("xfce4-weather", NULL, 48);
     gtk_show_about_dialog
         (NULL,
-         "logo", icon,
+         "logo-icon-name", "org.xfce.panel.weather",
          "license", xfce_get_license_text(XFCE_LICENSE_TEXT_GPL),
          "version", PACKAGE_VERSION,
          "program-name", PACKAGE_NAME,
@@ -2211,9 +2209,6 @@ xfceweather_show_about(XfcePanelPlugin *plugin,
          "copyright", _("Copyright (c) 2003-2021\n"),
          "authors", auth,
          NULL);
-
-    if (icon)
-        g_object_unref(G_OBJECT(icon));
 }
 
 
