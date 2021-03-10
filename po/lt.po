@@ -4,14 +4,14 @@
 # 
 # Translators:
 # Algimantas Margevičius <margevicius.algimantas@gmail.com>, 2012
-# Moo, 2015-2018,2020
+# Moo, 2015-2018,2020-2021
 # Rimas Kudelis <rq@akl.lt>, 2005
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-06 00:47+0200\n"
-"PO-Revision-Date: 2020-07-07 15:14+0000\n"
+"POT-Creation-Date: 2021-03-10 00:48+0100\n"
+"PO-Revision-Date: 2021-03-10 13:44+0000\n"
 "Last-Translator: Moo\n"
 "Language-Team: Lithuanian (http://www.transifex.com/xfce/xfce-panel-plugins/language/lt/)\n"
 "MIME-Version: 1.0\n"
@@ -30,44 +30,34 @@ msgid "Show current weather conditions"
 msgstr "Rodyti dabartines oro sąlygas"
 
 #: ../panel-plugin/weather-config.ui.h:2
-msgid "Preferences"
-msgstr "Nuostatos"
-
-#: ../panel-plugin/weather-config.ui.h:3
 msgid "_Help"
 msgstr "Ž_inynas"
 
-#: ../panel-plugin/weather-config.ui.h:4
+#: ../panel-plugin/weather-config.ui.h:3
 msgid "_Close"
 msgstr "_Užverti"
 
-#: ../panel-plugin/weather-config.ui.h:5
+#: ../panel-plugin/weather-config.ui.h:4
 msgid "Location _name:"
 msgstr "Vietos _pavadinimas:"
 
-#: ../panel-plugin/weather-config.ui.h:6
+#: ../panel-plugin/weather-config.ui.h:5
 msgid "Latitud_e:"
 msgstr "_Platuma:"
 
-#: ../panel-plugin/weather-config.ui.h:7
+#: ../panel-plugin/weather-config.ui.h:6
 msgid "L_ongitude:"
 msgstr "Ilg_uma:"
 
-#: ../panel-plugin/weather-config.ui.h:8
+#: ../panel-plugin/weather-config.ui.h:7
 msgid "Altitu_de:"
 msgstr "_Aukštis:"
 
-#: ../panel-plugin/weather-config.ui.h:9
+#: ../panel-plugin/weather-config.ui.h:8
 msgid "_Timezone:"
 msgstr "Laiko juos_ta:"
 
-#: ../panel-plugin/weather-config.ui.h:10
-msgid ""
-"Please change location name to your liking and correct alltitude and "
-"timezone if they are not auto-detected correctly."
-msgstr "Prašome pakeisti vietos pavadinimą į jums patinkantį ir pataisyti aukštį ir laiko juostą, jeigu ji nėra teisingai automatiškai aptinkama."
-
-#: ../panel-plugin/weather-config.ui.h:11
+#: ../panel-plugin/weather-config.ui.h:9
 msgid ""
 "Latitude specifies the north-south position of a point on the Earth's "
 "surface. If you change this value manually, you need to provide altitude and"
@@ -76,18 +66,18 @@ msgstr "Platuma nurodo Žemės paviršiuje esančio taško, šiaurės-pietų vie
 
 #. TRANSLATORS: The degree sign is used like a unit for
 #. latitude, longitude, wind direction
-#: ../panel-plugin/weather-config.ui.h:12 ../panel-plugin/weather-data.c:519
+#: ../panel-plugin/weather-config.ui.h:10 ../panel-plugin/weather-data.c:522
 msgid "°"
 msgstr "°"
 
-#: ../panel-plugin/weather-config.ui.h:13
+#: ../panel-plugin/weather-config.ui.h:11
 msgid ""
 "Longitude specifies the east-west position of a point on the Earth's "
 "surface. If you change this value manually, you need to provide altitude and"
 " timezone manually too."
 msgstr "Ilguma nurodo Žemės paviršiuje esančio taško, rytų-vakarų vietą. Jeigu rankiniu būdu pakeisite šią reikšmę, taip pat rankiniu būdu turėsite pateikti aukštį bei laiko juostą."
 
-#: ../panel-plugin/weather-config.ui.h:14
+#: ../panel-plugin/weather-config.ui.h:12
 msgid ""
 "For locations outside Norway the elevation model that's used by the met.no webservice is not very good, so it's usually necessary to specify the altitude as an additional parameter, otherwise the reported values will not be correct.\n"
 "\n"
@@ -96,135 +86,141 @@ msgid ""
 "Altitude is given in meters above sea level, or alternatively in feet by changing the unit on the units page. It should match the real value roughly, but small differences will have no influence on the weather data. Inside Norway, this setting has no effect at all."
 msgstr "Vietovėms už Norvegijos ribų, aukščio modelis, kurį naudoja met.no nėra labai geras, todėl, dažniausiai, kaip papildomą parametrą, reikia nurodyti aukštį, kitaip, pateikiamos reikšmės bus neteisingos.\n\nŠis įskiepis bando automatiškai nustatyti aukštį, naudodamas GeoNames saityno tarnybą, tačiau tai ne visuomet būna teisinga, todėl čia galite tai pakeisti.\n\nAukštis yra pateikiamas metrais virš jūros lygio arba, pakeitus vienetus matavimo vienetų kortelėje, pėdomis. Jis turėtų apytiksliai atitikti tikrąją reikšmę, tačiau gali būti ir nedidelių netikslumų, kurie neturės įtakos orų duomenims. Norvegijos viduje, šis nustatymas neturi visiškai jokios įtakos."
 
-#: ../panel-plugin/weather-config.ui.h:19 ../panel-plugin/weather-config.c:399
+#: ../panel-plugin/weather-config.ui.h:17 ../panel-plugin/weather-config.c:398
 msgid "feet"
 msgstr "pėdos"
 
-#: ../panel-plugin/weather-config.ui.h:20
+#: ../panel-plugin/weather-config.ui.h:18
 msgid ""
 "If the chosen location is not in your current timezone, then it is necessary to <i>put</i> the plugin into that other timezone for the times to be shown correctly. The proper timezone will be auto-detected via the GeoNames web service, but you might want to correct it if necessary.\n"
 "Leave this field empty to use the timezone set by your system. Invalid entries will cause the use of UTC time, but that may also depend on your system."
 msgstr "Jeigu pasirinkta vieta nėra jūsų esamoje laiko juostoje, tuomet, kad būtų teisingai rodomi laikai, įskiepį reikia <i>įvesti</i> į tą kitą laiko juostą. Tinkama laiko juosta bus nustatyta GeoNames saityno tarnybos dėka, tačiau, jei reikia, laiko juostą galite pataisyti.\nPalikite šį lauką tuščią, kad būtų naudojama jūsų sistemos nustatyta laiko juosta. Neteisingi įrašai sąlygos UTC (Pasaulinio) laiko naudojimą, tačiau tai taip pat gali priklausyti nuo jūsų sistemos."
 
-#: ../panel-plugin/weather-config.ui.h:22
+#: ../panel-plugin/weather-config.ui.h:20
 msgid ""
 "Change the name for the location to your liking. It is used for display and "
 "does not affect the location parameters in any way."
 msgstr "Įveskite pageidaujamą vietos pavadinimą. Jis yra naudojamas tik rodymui ir niekaip neįtakoja vietos parametrų."
 
-#: ../panel-plugin/weather-config.ui.h:23
+#: ../panel-plugin/weather-config.ui.h:21
 msgid "Change..."
 msgstr "Keisti..."
 
-#: ../panel-plugin/weather-config.ui.h:24
+#: ../panel-plugin/weather-config.ui.h:22
 msgid "Search for a new location and auto-detect its parameters."
 msgstr "Ieškoti naujos vietos ir automatiškai aptikti jos parametrus."
 
-#: ../panel-plugin/weather-config.ui.h:25
+#: ../panel-plugin/weather-config.ui.h:23
+msgid ""
+"Please change location name to your liking and correct alltitude and "
+"timezone if they are not auto-detected correctly."
+msgstr "Prašome pakeisti vietos pavadinimą į jums patinkantį ir pataisyti aukštį ir laiko juostą, jeigu ji nėra teisingai automatiškai aptinkama."
+
+#: ../panel-plugin/weather-config.ui.h:24
 msgid "_Location"
 msgstr "_Vietovė"
 
-#: ../panel-plugin/weather-config.ui.h:26
+#: ../panel-plugin/weather-config.ui.h:25
 msgid "_Temperature:"
 msgstr "_Temperatūra:"
 
-#: ../panel-plugin/weather-config.ui.h:27
+#: ../panel-plugin/weather-config.ui.h:26
 msgid "Barometric _pressure:"
 msgstr "Atmosferos s_lėgis:"
 
-#: ../panel-plugin/weather-config.ui.h:28
+#: ../panel-plugin/weather-config.ui.h:27
 msgid "_Wind speed:"
 msgstr "_Vėjo greitis:"
 
-#: ../panel-plugin/weather-config.ui.h:29
+#: ../panel-plugin/weather-config.ui.h:28
 msgid "Prec_ipitations:"
 msgstr "Kr_ituliai:"
 
-#: ../panel-plugin/weather-config.ui.h:30
+#: ../panel-plugin/weather-config.ui.h:29
 msgid "Apparent te_mperature:"
 msgstr "Jutiminė te_mperatūra:"
 
-#: ../panel-plugin/weather-config.ui.h:31
+#: ../panel-plugin/weather-config.ui.h:30
 msgid "Celsius (°C)"
 msgstr "Celsijus (°C)"
 
-#: ../panel-plugin/weather-config.ui.h:32
+#: ../panel-plugin/weather-config.ui.h:31
 msgid "Fahrenheit (°F)"
 msgstr "Fahrenheitas (°F)"
 
-#: ../panel-plugin/weather-config.ui.h:33
+#: ../panel-plugin/weather-config.ui.h:32
 msgid "Hectopascals (hPa)"
 msgstr "Hektopaskaliai (hPa)"
 
-#: ../panel-plugin/weather-config.ui.h:34
+#: ../panel-plugin/weather-config.ui.h:33
 msgid "Inches of mercury (inHg)"
 msgstr "Coliai gyvsidabrio (inHg)"
 
-#: ../panel-plugin/weather-config.ui.h:35
+#: ../panel-plugin/weather-config.ui.h:34
 msgid "Pound-force per square inch (psi)"
 msgstr "Svarai kvadratiniam coliui (psi)"
 
-#: ../panel-plugin/weather-config.ui.h:36
+#: ../panel-plugin/weather-config.ui.h:35
 msgid "Torr (mmHg)"
 msgstr "Toras (mmHg)"
 
-#: ../panel-plugin/weather-config.ui.h:37
+#: ../panel-plugin/weather-config.ui.h:36
 msgid "Kilometers per hour (km/h)"
 msgstr "Kilometrai per valandą (km/val.)"
 
-#: ../panel-plugin/weather-config.ui.h:38
+#: ../panel-plugin/weather-config.ui.h:37
 msgid "Miles per hour (mph)"
 msgstr "Mylios per valandą (mph)"
 
-#: ../panel-plugin/weather-config.ui.h:39
+#: ../panel-plugin/weather-config.ui.h:38
 msgid "Meters per second (m/s)"
 msgstr "Metrai per sekundę (m/s)"
 
-#: ../panel-plugin/weather-config.ui.h:40
+#: ../panel-plugin/weather-config.ui.h:39
 msgid "Feet per second (ft/s)"
 msgstr "Pėdos per sekundę (ft/s)"
 
-#: ../panel-plugin/weather-config.ui.h:41
+#: ../panel-plugin/weather-config.ui.h:40
 msgid "Knots (kt)"
 msgstr "Mazgai (kt)"
 
-#: ../panel-plugin/weather-config.ui.h:42
+#: ../panel-plugin/weather-config.ui.h:41
 msgid "Millimeters (mm)"
 msgstr "Milimetrai (mm)"
 
-#: ../panel-plugin/weather-config.ui.h:43
+#: ../panel-plugin/weather-config.ui.h:42
 msgid "Inches (in)"
 msgstr "Coliai (in)"
 
-#: ../panel-plugin/weather-config.ui.h:44
+#: ../panel-plugin/weather-config.ui.h:43
 msgid "Meters (m)"
 msgstr "Metrai (m)"
 
-#: ../panel-plugin/weather-config.ui.h:45
+#: ../panel-plugin/weather-config.ui.h:44
 msgid "Feet (ft)"
 msgstr "Pėdos (ft)"
 
-#: ../panel-plugin/weather-config.ui.h:46
+#: ../panel-plugin/weather-config.ui.h:45
 msgid "Windchill/Heat index"
 msgstr "Vėjo žvarbumo/Karščio indeksas"
 
-#: ../panel-plugin/weather-config.ui.h:47
+#: ../panel-plugin/weather-config.ui.h:46
 msgid "Windchill/Humidex"
 msgstr "Vėjo žvarbumo/Humidex karščio indeksas"
 
-#: ../panel-plugin/weather-config.ui.h:48
+#: ../panel-plugin/weather-config.ui.h:47
 msgid "Steadman"
 msgstr "Steadman'o indeksas"
 
-#: ../panel-plugin/weather-config.ui.h:49
+#: ../panel-plugin/weather-config.ui.h:48
 msgid "Quayle-Steadman"
 msgstr "Quayle-Steadman'o indeksas"
 
-#: ../panel-plugin/weather-config.ui.h:50
+#: ../panel-plugin/weather-config.ui.h:49
 msgid "_Units"
 msgstr "_Matavimo vienetai"
 
-#: ../panel-plugin/weather-config.ui.h:51
+#: ../panel-plugin/weather-config.ui.h:50
 msgid ""
 "Available icon themes are listed here. You can add icon themes to "
 "$HOME/.config/xfce4/weather/icons (or the equivalent directory on your "
@@ -233,100 +229,86 @@ msgid ""
 "config dialog."
 msgstr "Čia yra išvardytos prieinamos piktogramų temos. Galite pridėti piktogramas į $HOME/.config/xfce4/weather/icons (arba į atitinkamą savo sistemos katalogą). Informaciją, apie tai kaip kurti ir naudoti piktogramų temas, galite rasti README faile. Naujos piktogramų temos bus aptinkamos kaskart atidarius šį konfigūracijos dialogo langelį."
 
-#: ../panel-plugin/weather-config.ui.h:52
+#: ../panel-plugin/weather-config.ui.h:51
 msgid "_Icon theme:"
 msgstr "P_iktogramų tema:"
 
-#: ../panel-plugin/weather-config.ui.h:53
+#: ../panel-plugin/weather-config.ui.h:52
 msgid ""
 "Open the user icon themes directory in your file manager, creating it if "
 "necessary."
 msgstr "Atverti naudotojo piktogramų katalogą jūsų failų tvarkytuvėje, sukuriant jį, jei tai yra būtina."
 
-#: ../panel-plugin/weather-config.ui.h:54
+#: ../panel-plugin/weather-config.ui.h:53
 msgid "Use only a single _panel row"
 msgstr "Naudoti tik vieną s_kydelio eilutę"
 
-#: ../panel-plugin/weather-config.ui.h:55
+#: ../panel-plugin/weather-config.ui.h:54
 msgid ""
 "Check to always use only a single row on a multi-row panel and a small icon "
 "in deskbar mode."
 msgstr "Pažymėkite, norėdami, kelių eilučių skydelyje, visuomet naudoti tik vieną eilutę, o darbalaukio juostos veiksenoje, mažą piktogramą."
 
-#: ../panel-plugin/weather-config.ui.h:56
+#: ../panel-plugin/weather-config.ui.h:55
 msgid "_Tooltip style:"
 msgstr "Paaiš_kinimo stilius:"
 
-#: ../panel-plugin/weather-config.ui.h:57
+#: ../panel-plugin/weather-config.ui.h:56
 msgid ""
 "Choose your preferred tooltip style. Some styles give a lot of useful data, "
 "some are clearer but provide less data on a glance."
 msgstr "Pasirinkite norimą paaiškinimo stilių. Kai kurie stiliai suteikia daug naudingų duomenų, o kai kurie yra aiškesni, tačiau, iš pirmo žvilgsnio, suteikia mažiau duomenų."
 
-#: ../panel-plugin/weather-config.ui.h:58
+#: ../panel-plugin/weather-config.ui.h:57
 msgid "Simple"
 msgstr "Paprastas"
 
-#: ../panel-plugin/weather-config.ui.h:59
+#: ../panel-plugin/weather-config.ui.h:58
 msgid "Verbose"
 msgstr "Išsamus"
 
-#: ../panel-plugin/weather-config.ui.h:60
+#: ../panel-plugin/weather-config.ui.h:59
 msgid "_Forecast layout:"
 msgstr "Orų prognozės iš_dėstymas:"
 
-#: ../panel-plugin/weather-config.ui.h:61
+#: ../panel-plugin/weather-config.ui.h:60
 msgid "Days in columns"
 msgstr "Dienos stulpeliuose"
 
-#: ../panel-plugin/weather-config.ui.h:62
+#: ../panel-plugin/weather-config.ui.h:61
 msgid "Days in rows"
 msgstr "Dienos eilutėse"
 
-#: ../panel-plugin/weather-config.ui.h:63
+#: ../panel-plugin/weather-config.ui.h:62
 msgid "_Number of forecast days:"
 msgstr "Orų prognozės die_nų skaičius:"
 
-#: ../panel-plugin/weather-config.ui.h:64
+#: ../panel-plugin/weather-config.ui.h:63
 msgid "_Round values"
 msgstr "Ap_valinti reikšmes"
 
-#: ../panel-plugin/weather-config.ui.h:65
+#: ../panel-plugin/weather-config.ui.h:64
 msgid "_Appearance"
 msgstr "_Išvaizda"
 
-#: ../panel-plugin/weather-config.ui.h:66
-msgid "Show scroll_box"
-msgstr "Rodyti sla_nkiklį"
-
-#: ../panel-plugin/weather-config.ui.h:67
-msgid ""
-"Hide the scrollbox to save valuable space on the panel. Most interesting "
-"information is also provided in the tooltip - provided you choose an "
-"appropriate tooltip style - that is shown when hovering over the icon."
-msgstr "Slėpkite slankiklį, norėdami išsaugoti vertingą skydelio vietą. Pati įdomiausia informacija taip pat pateikiama paaiškinime - turint omeny, kad pasirinkote tinkamą paaiškinimo stilių - paaiškinimas yra rodomas, užvedant pelę virš piktogramos."
-
-#: ../panel-plugin/weather-config.ui.h:68
-msgid "Li_nes:"
-msgstr "Eilu_tės:"
-
-#: ../panel-plugin/weather-config.ui.h:69
-msgid ""
-"Decide how many values should be shown at once in the scrollbox. You can "
-"choose a smaller font or enlarge the panel to make more lines fit."
-msgstr "Nuspręskite kiek reikšmių slankiklyje turėtų būti rodoma vienu metu. Galite pasirinkti mažesnį šriftą arba padidinti skydelį, siekiant, kad tilptų daugiau eilučių."
-
-#: ../panel-plugin/weather-config.ui.h:70
+#: ../panel-plugin/weather-config.ui.h:65
 msgid "Font and color:"
 msgstr "Šriftas ir spalva:"
 
-#: ../panel-plugin/weather-config.ui.h:71
+#: ../panel-plugin/weather-config.ui.h:66
 msgid ""
-"There may be problems with some themes that cause the scrollbox text to be "
-"hardly readable. If this is the case or you simply want it to appear in "
-"another color, then you can change it using this button. Middle-click on the"
-" button to unset the scrollbox text color."
-msgstr "Gali kilti problemų su kai kuriomis temomis, kurios sukels sunkumų bandant perskaityti tekstą. Jei taip nutiko arba jūs, tiesiog, norite, kad jis būtų kitos spalvos, tuomet galite tai pakeisti, naudodami šį mygtuką. Spustelėkite vidurinį pelės mygtuką, kad sugrąžintumėte slankiklio šrifto spalvos nustatymą."
+"These are the values that will be shown in the scrollbox. Select a single "
+"value here and click the appropriate button to remove it or move it up and "
+"down in the list."
+msgstr "Tai yra reikšmės, kurios bus rodomos slankiklyje. Pasirinkite vieną reikšmę čia ir spustelėkite atitinkamą mygtuką, kad pašalintumėte iš sąrašo, perkeltumėte aukštyn ir nuleistumėte žemyn."
+
+#: ../panel-plugin/weather-config.ui.h:67
+msgid "Move the selected value up in the list of labels to display."
+msgstr "Rodomų duomenų sąraše perkelti pasirinktą reikšmę aukštyn."
+
+#: ../panel-plugin/weather-config.ui.h:68
+msgid "Move the selected value down in the list of labels to display."
+msgstr "Rodomų duomenų sąraše nuleisti pasirinktą reikšmę žemyn."
 
 #. * TRANSLATORS: The abbreviations in parentheses will be shown in
 #. * the scrollbox together with the values. Keep them in sync with
@@ -335,264 +317,262 @@ msgstr "Gali kilti problemų su kai kuriomis temomis, kurios sukels sunkumų ban
 #. * read that up somewhere and decide whether you want to use them
 #. * or not. In general, though, you should just try to choose
 #. * letter(s) that make sense and don't use up too much space.
-#: ../panel-plugin/weather-config.ui.h:72 ../panel-plugin/weather-config.c:96
+#: ../panel-plugin/weather-config.ui.h:69 ../panel-plugin/weather-config.c:96
 msgid "Temperature (T)"
 msgstr "Temperatūra (T)"
 
-#: ../panel-plugin/weather-config.ui.h:73 ../panel-plugin/weather-config.c:97
+#: ../panel-plugin/weather-config.ui.h:70 ../panel-plugin/weather-config.c:97
 msgid "Barometric pressure (P)"
 msgstr "Atmosferos slėgis (A)"
 
-#: ../panel-plugin/weather-config.ui.h:74 ../panel-plugin/weather-config.c:98
+#: ../panel-plugin/weather-config.ui.h:71 ../panel-plugin/weather-config.c:98
 msgid "Wind speed (WS)"
 msgstr "Vėjo greitis (V)"
 
-#: ../panel-plugin/weather-config.ui.h:75 ../panel-plugin/weather-config.c:99
+#: ../panel-plugin/weather-config.ui.h:72 ../panel-plugin/weather-config.c:99
 msgid "Wind speed - Beaufort scale (WB)"
 msgstr "Vėjo greitis - Boforto skalė (VB)"
 
-#: ../panel-plugin/weather-config.ui.h:76 ../panel-plugin/weather-config.c:100
+#: ../panel-plugin/weather-config.ui.h:73 ../panel-plugin/weather-config.c:100
 msgid "Wind direction (WD)"
 msgstr "Vėjo kryptis (VK)"
 
-#: ../panel-plugin/weather-config.ui.h:77 ../panel-plugin/weather-config.c:101
+#: ../panel-plugin/weather-config.ui.h:74 ../panel-plugin/weather-config.c:101
 msgid "Wind direction in degrees (WD)"
 msgstr "Vėjo kryptis laipsniais (VK)"
 
-#: ../panel-plugin/weather-config.ui.h:78 ../panel-plugin/weather-config.c:102
+#: ../panel-plugin/weather-config.ui.h:75 ../panel-plugin/weather-config.c:102
 msgid "Humidity (H)"
 msgstr "Drėgnumas (D)"
 
-#: ../panel-plugin/weather-config.ui.h:79 ../panel-plugin/weather-config.c:103
+#: ../panel-plugin/weather-config.ui.h:76 ../panel-plugin/weather-config.c:103
 msgid "Dew point (D)"
 msgstr "Rasos taškas (RT)"
 
-#: ../panel-plugin/weather-config.ui.h:80 ../panel-plugin/weather-config.c:104
+#: ../panel-plugin/weather-config.ui.h:77 ../panel-plugin/weather-config.c:104
 msgid "Apparent temperature (A)"
 msgstr "Jutiminė temperatūra (JT)"
 
-#: ../panel-plugin/weather-config.ui.h:81 ../panel-plugin/weather-config.c:105
+#: ../panel-plugin/weather-config.ui.h:78 ../panel-plugin/weather-config.c:105
 msgid "Low clouds (CL)"
 msgstr "Apatinio aukšto debesys (AD)"
 
-#: ../panel-plugin/weather-config.ui.h:82 ../panel-plugin/weather-config.c:106
+#: ../panel-plugin/weather-config.ui.h:79 ../panel-plugin/weather-config.c:106
 msgid "Middle clouds (CM)"
 msgstr "Vidurinio aukšto debesys (VDD)"
 
-#: ../panel-plugin/weather-config.ui.h:83 ../panel-plugin/weather-config.c:107
+#: ../panel-plugin/weather-config.ui.h:80 ../panel-plugin/weather-config.c:107
 msgid "High clouds (CH)"
 msgstr "Viršutinio aukšto debesys (VRD)"
 
-#: ../panel-plugin/weather-config.ui.h:84 ../panel-plugin/weather-config.c:108
+#: ../panel-plugin/weather-config.ui.h:81 ../panel-plugin/weather-config.c:108
 msgid "Cloudiness (C)"
 msgstr "Debesuotumas (DB)"
 
-#: ../panel-plugin/weather-config.ui.h:85 ../panel-plugin/weather-config.c:109
+#: ../panel-plugin/weather-config.ui.h:82 ../panel-plugin/weather-config.c:109
 msgid "Fog (F)"
 msgstr "Rūkas (R)"
 
-#: ../panel-plugin/weather-config.ui.h:86 ../panel-plugin/weather-config.c:110
+#: ../panel-plugin/weather-config.ui.h:83 ../panel-plugin/weather-config.c:110
 msgid "Precipitation (R)"
 msgstr "Krituliai (K)"
 
-#: ../panel-plugin/weather-config.ui.h:87
-msgid ""
-"These are the values that will be shown in the scrollbox. Select a single "
-"value here and click the appropriate button to remove it or move it up and "
-"down in the list."
-msgstr "Tai yra reikšmės, kurios bus rodomos slankiklyje. Pasirinkite vieną reikšmę čia ir spustelėkite atitinkamą mygtuką, kad pašalintumėte iš sąrašo, perkeltumėte aukštyn ir nuleistumėte žemyn."
-
-#: ../panel-plugin/weather-config.ui.h:88
-msgid "A_dd"
-msgstr "Pri_dėti"
-
-#: ../panel-plugin/weather-config.ui.h:89
+#: ../panel-plugin/weather-config.ui.h:84
 msgid ""
 "Add the selected value to the labels that should be displayed in the "
 "scrollbox."
 msgstr "Prideda pasirinktą reikšmę prie slankiklyje rodomų duomenų."
 
-#: ../panel-plugin/weather-config.ui.h:90
-msgid "_Remove"
-msgstr "Ša_linti"
-
-#: ../panel-plugin/weather-config.ui.h:91
+#: ../panel-plugin/weather-config.ui.h:85
 msgid ""
 "Select a value in the list of labels to display and click this button to "
 "remove it."
 msgstr "Pasirinkite iš žemiau esančio duomenų sąrašo reikšmę ir spustelėkite šį mygtuką, kad ją pašalintumete."
 
+#: ../panel-plugin/weather-config.ui.h:86
+msgid "Li_nes:"
+msgstr "Eilu_tės:"
+
+#: ../panel-plugin/weather-config.ui.h:87
+msgid ""
+"Decide how many values should be shown at once in the scrollbox. You can "
+"choose a smaller font or enlarge the panel to make more lines fit."
+msgstr "Nuspręskite kiek reikšmių slankiklyje turėtų būti rodoma vienu metu. Galite pasirinkti mažesnį šriftą arba padidinti skydelį, siekiant, kad tilptų daugiau eilučių."
+
+#: ../panel-plugin/weather-config.ui.h:88
+msgid ""
+"Hide the scrollbox to save valuable space on the panel. Most interesting "
+"information is also provided in the tooltip - provided you choose an "
+"appropriate tooltip style - that is shown when hovering over the icon."
+msgstr "Slėpkite slankiklį, norėdami išsaugoti vertingą skydelio vietą. Pati įdomiausia informacija taip pat pateikiama paaiškinime - turint omeny, kad pasirinkote tinkamą paaiškinimo stilių - paaiškinimas yra rodomas, užvedant pelę virš piktogramos."
+
+#: ../panel-plugin/weather-config.ui.h:89
+msgid "<b>Show scrollbox</b>"
+msgstr "<b>Rodyti slankiklį</b>"
+
+#: ../panel-plugin/weather-config.ui.h:90
+#: ../panel-plugin/weather-config.c:1131
+msgid "Select _font"
+msgstr "Pasirinkti šri_ftą"
+
+#: ../panel-plugin/weather-config.ui.h:91
+msgid ""
+"Choose a font you like and set it to a smaller or larger size. Middle-click "
+"on the button to unset the font and use your theme's default."
+msgstr "Pasirinkite norimą šriftą ir nustatykite didesnį ar mažesnį jo dydį. Spustelėkite ant mygtuko viduriniu pelės mygtuku, kad atšauktumėte šrifto nustatymą ir naudotumėte savo temos numatytąjį šriftą."
+
 #: ../panel-plugin/weather-config.ui.h:92
-msgid "Move do_wn"
-msgstr "_Nuleisti"
+msgid ""
+"There may be problems with some themes that cause the scrollbox text to be "
+"hardly readable. If this is the case or you simply want it to appear in "
+"another color, then you can change it using this button. Middle-click on the"
+" button to unset the scrollbox text color."
+msgstr "Gali kilti problemų su kai kuriomis temomis, kurios sukels sunkumų bandant perskaityti tekstą. Jei taip nutiko arba jūs, tiesiog, norite, kad jis būtų kitos spalvos, tuomet galite tai pakeisti, naudodami šį mygtuką. Spustelėkite vidurinį pelės mygtuką, kad sugrąžintumėte slankiklio šrifto spalvos nustatymą."
 
 #: ../panel-plugin/weather-config.ui.h:93
-msgid "Move the selected value down in the list of labels to display."
-msgstr "Rodomų duomenų sąraše nuleisti pasirinktą reikšmę žemyn."
+msgid "Animate transitions between labels"
+msgstr "Animuoti duomenų pasikeitimą"
 
 #: ../panel-plugin/weather-config.ui.h:94
-msgid "Move u_p"
-msgstr "_Pakelti"
-
-#: ../panel-plugin/weather-config.ui.h:95
-msgid "Move the selected value up in the list of labels to display."
-msgstr "Rodomų duomenų sąraše perkelti pasirinktą reikšmę aukštyn."
-
-#: ../panel-plugin/weather-config.ui.h:96
-msgid "Animate _transitions between labels"
-msgstr "Animuo_ti duomenų pasikeitimą"
-
-#: ../panel-plugin/weather-config.ui.h:97
 msgid ""
 "Scroll the current displayed value(s) out and the new value(s) in instead of"
 " simply changing them. Uncheck this option if you find the animation too "
 "distracting."
 msgstr "Vietoj to, kad, tiesiog keisti reikšmes, slinkti, pakeičiant rodomas reikšmes naujomis reikšmėmis. Nuimkite žymėjimą nuo šio parametro, jei animacija blaško jūsų dėmesį."
 
-#: ../panel-plugin/weather-config.ui.h:98
-#: ../panel-plugin/weather-config.c:1131
-msgid "Select _font"
-msgstr "Pasirinkti šri_ftą"
-
-#: ../panel-plugin/weather-config.ui.h:99
-msgid ""
-"Choose a font you like and set it to a smaller or larger size. Middle-click "
-"on the button to unset the font and use your theme's default."
-msgstr "Pasirinkite norimą šriftą ir nustatykite didesnį ar mažesnį jo dydį. Spustelėkite ant mygtuko viduriniu pelės mygtuku, kad atšauktumėte šrifto nustatymą ir naudotumėte savo temos numatytąjį šriftą."
-
-#: ../panel-plugin/weather-config.ui.h:100
+#: ../panel-plugin/weather-config.ui.h:95
 msgid "_Scrollbox"
 msgstr "_Slankiklis"
 
 #. TRANSLATORS: Keep in sync with labeloptions in weather-config.c
-#: ../panel-plugin/weather.c:128
+#: ../panel-plugin/weather.c:129
 msgid "T"
 msgstr "T"
 
-#: ../panel-plugin/weather.c:131
+#: ../panel-plugin/weather.c:132
 msgid "P"
 msgstr "A"
 
-#: ../panel-plugin/weather.c:134
+#: ../panel-plugin/weather.c:135
 msgid "WS"
 msgstr "V"
 
-#: ../panel-plugin/weather.c:137
+#: ../panel-plugin/weather.c:138
 msgid "WB"
 msgstr "VB"
 
-#: ../panel-plugin/weather.c:140 ../panel-plugin/weather.c:143
+#: ../panel-plugin/weather.c:141 ../panel-plugin/weather.c:144
 msgid "WD"
 msgstr "VK"
 
-#: ../panel-plugin/weather.c:146
+#: ../panel-plugin/weather.c:147
 msgid "H"
 msgstr "D"
 
-#: ../panel-plugin/weather.c:149
+#: ../panel-plugin/weather.c:150
 msgid "D"
 msgstr "RT"
 
-#: ../panel-plugin/weather.c:152
+#: ../panel-plugin/weather.c:153
 msgid "A"
 msgstr "JT"
 
-#: ../panel-plugin/weather.c:155
+#: ../panel-plugin/weather.c:156
 msgid "CL"
 msgstr "AD"
 
-#: ../panel-plugin/weather.c:158
+#: ../panel-plugin/weather.c:159
 msgid "CM"
 msgstr "VDD"
 
-#: ../panel-plugin/weather.c:161
+#: ../panel-plugin/weather.c:162
 msgid "CH"
 msgstr "VRD"
 
-#: ../panel-plugin/weather.c:164
+#: ../panel-plugin/weather.c:165
 msgid "C"
 msgstr "DB"
 
-#: ../panel-plugin/weather.c:167
+#: ../panel-plugin/weather.c:168
 msgid "F"
 msgstr "R"
 
-#: ../panel-plugin/weather.c:170
+#: ../panel-plugin/weather.c:171
 msgid "R"
 msgstr "K"
 
-#: ../panel-plugin/weather.c:357 ../panel-plugin/weather.c:359
+#: ../panel-plugin/weather.c:358 ../panel-plugin/weather.c:360
 msgid "No Data"
 msgstr "Nėra duomenų"
 
-#: ../panel-plugin/weather.c:515
+#: ../panel-plugin/weather.c:516
 msgid "Error parsing astronomical data!"
 msgstr "Klaida, analizuojant astronominius duomenis!"
 
-#: ../panel-plugin/weather.c:517
+#: ../panel-plugin/weather.c:518
 #, c-format
 msgid ""
 "Download of astronomical data failed with HTTP Status Code %d, Reason "
 "phrase: %s"
 msgstr "Astronominių duomenų atsiuntimas nepavyko su HTTP būsenos kodu %d, Priežasties frazė: %s"
 
-#: ../panel-plugin/weather.c:568
+#: ../panel-plugin/weather.c:569
 msgid "Error parsing weather data!"
 msgstr "Klaida, analizuojant orų duomenis!"
 
-#: ../panel-plugin/weather.c:571
+#: ../panel-plugin/weather.c:572
 #, c-format
 msgid ""
 "Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
 msgstr "Orų duomenų atsiuntimas nepavyko su HTTP būsenos kodu %d, Priežasties frazė: %s"
 
 #. start receive thread
-#: ../panel-plugin/weather.c:643 ../panel-plugin/weather.c:664
+#: ../panel-plugin/weather.c:645 ../panel-plugin/weather.c:666
 #: ../panel-plugin/weather-search.c:169 ../panel-plugin/weather-search.c:437
 #, c-format
 msgid "getting %s"
 msgstr "Gaunama %s"
 
-#: ../panel-plugin/weather.c:1193
+#: ../panel-plugin/weather.c:1198
 #, c-format
 msgid "Error writing cache file %s!"
 msgstr "Klaida, įrašant podėlio failą %s!"
 
-#: ../panel-plugin/weather.c:1653
+#: ../panel-plugin/weather.c:1658
 #, c-format
 msgid "Unable to open the following url: %s"
 msgstr "Nepavyko atverti šio url: %s"
 
-#: ../panel-plugin/weather.c:1723
+#: ../panel-plugin/weather.c:1728
 msgid "Short-term forecast data unavailable."
 msgstr "Trumpalaikės orų prognozės duomenys nepasiekiami."
 
-#: ../panel-plugin/weather.c:1736
+#: ../panel-plugin/weather.c:1741
 msgid "The sun never sets today."
 msgstr "Šiandien Saulė nenusileidžia."
 
-#: ../panel-plugin/weather.c:1738
+#: ../panel-plugin/weather.c:1743
 msgid "The sun never rises today."
 msgstr "Šiandien Saulė nepakyla."
 
-#: ../panel-plugin/weather.c:1744
+#: ../panel-plugin/weather.c:1749
 #, c-format
 msgid "The sun never rises and sets at %s."
 msgstr "Saulė nebepakyla, o nusileidžia %s."
 
-#: ../panel-plugin/weather.c:1751
+#: ../panel-plugin/weather.c:1756
 #, c-format
 msgid "The sun rises at %s and never sets."
 msgstr "Saulė pakyla %s ir nebenusileidžia."
 
-#: ../panel-plugin/weather.c:1759
+#: ../panel-plugin/weather.c:1764
 #, c-format
 msgid "The sun rises at %s and sets at %s."
 msgstr "Saulė pakyla %s ir nusileidžia %s."
 
 #. * TRANSLATORS: This is the simple tooltip. For a bigger challenge,
 #. * look at the verbose tooltip style further below ;-)
-#: ../panel-plugin/weather.c:1787
+#: ../panel-plugin/weather.c:1792
 #, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
@@ -611,7 +591,7 @@ msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\
 #. * be changed easily - and try to make it compact and look
 #. * good! The missing space after "%son the ..." is intentional,
 #. * it is included in the %s.
-#: ../panel-plugin/weather.c:1811
+#: ../panel-plugin/weather.c:1816
 #, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
@@ -626,54 +606,54 @@ msgid ""
 "<span size=\"smaller\">%s</span>"
 msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n<b><span size=\"large\">%s</span></b>\n<span size=\"smaller\">nuo %s iki %s, su %s kritulių</span>\n\n<b>Temperatūra:</b> %s\t\t<span size=\"smaller\">(reikšmės ties %s)</span>\n<b>Vėjas:</b> %s (%spagal Boforto skalę) iš %s(%s)\n<b>Slėgis:</b> %s    <b>Drėgnumas:</b> %s\n<b>Rūkas:</b> %s    <b>Debesuotumas:</b> %s\n\n<span size=\"smaller\">%s</span>"
 
-#: ../panel-plugin/weather.c:1864
+#: ../panel-plugin/weather.c:1869
 msgid "Cannot update weather data"
 msgstr "Nepavyko atnaujinti duomenų apie orą"
 
-#: ../panel-plugin/weather.c:1948
+#: ../panel-plugin/weather.c:1953
 msgid "No default icon theme? This should not happen, plugin will crash!"
 msgstr "Nėra numatytosios piktogramų temos? Taip neturėtų nutikti, įskiepis užstrigs!"
 
 #. add refresh button to right click menu, for people who missed
 #. the middle mouse click feature
-#: ../panel-plugin/weather.c:1990
+#: ../panel-plugin/weather.c:1995
 msgid "Re_fresh"
 msgstr "Įkelti iš _naujo"
 
-#: ../panel-plugin/weather.c:2200
+#: ../panel-plugin/weather.c:2207
 msgid "Show weather conditions and forecasts"
 msgstr "Rodyti orų sąlygas ir prognozes"
 
-#: ../panel-plugin/weather.c:2202
-msgid "Copyright (c) 2003-2014\n"
-msgstr "Autorių Teisės (c) 2003-2014\n"
+#: ../panel-plugin/weather.c:2209
+msgid "Copyright (c) 2003-2021\n"
+msgstr "Autorių teisės (c) 2003-2021\n"
 
-#: ../panel-plugin/weather-config.c:232 ../panel-plugin/weather-config.c:338
-#: ../panel-plugin/weather-config.c:508
+#: ../panel-plugin/weather-config.c:231 ../panel-plugin/weather-config.c:337
+#: ../panel-plugin/weather-config.c:507
 msgid "Unset"
 msgstr "Nenustatyta"
 
-#: ../panel-plugin/weather-config.c:348
+#: ../panel-plugin/weather-config.c:347
 msgid "Detecting..."
 msgstr "Aptinkama..."
 
-#: ../panel-plugin/weather-config.c:409
+#: ../panel-plugin/weather-config.c:408
 msgid "meters"
 msgstr "metrai"
 
-#: ../panel-plugin/weather-config.c:549
+#: ../panel-plugin/weather-config.c:548
 msgid ""
 "Named after the astronomer Anders Celsius who invented the original scale in 1742, the Celsius scale is an international standard unit and nowadays defined using the Kelvin scale. 0 °C is equivalent to 273.15 K and 1 °C difference in temperature is exactly the same difference as 1 K. It is defined with the melting point of water being roughly at 0 °C and its boiling point at 100 °C at one standard atmosphere (1 atm = 1013.5 hPa). Until 1948, the unit was known as <i>centigrade</i> - from Latin <i>centum</i> (100) and <i>gradus</i> (steps).\n"
 "In meteorology and everyday life the Celsius scale is very convenient for expressing temperatures because its numbers can be an easy indicator for the formation of black ice and snow."
 msgstr "Pavadinta astronomo Anderso Celsijaus, kuris 1742 m. sukūrė pradinę skalę, garbei. Celsijaus skalė yra tarptautinis standartinis vienetas ir mūsų laikais yra apibrėžiama, naudojant Kelvino skalę. 0 °C atitinka 273,15 K, o 1 °C temperatūros skirtumas yra visiškai toks pats kaip ir 1 K temperatūros skirtumas. Ši skalė yra apibrėžiama ledo tirpimu ties, apytiksliai, 0 °C, o vandens virimu ties 100 °C, esant slėgiui, kuris lygus vienai standartinei atmosferai (1 atm = 1013.5 hPa). Iki 1948 m., vienetas buvo žinomas kaip <i>centigrade</i> - nuo Lotynų <i>centum</i> (100) ir <i>gradus</i> (žingsniai).\nMeteorologijoje ir kasdieniame gyvenime, Celsijaus skalė yra labai patogi temperatūrai išreikšti, kadangi jos skaičiai gali lengvai nurodyti sniego arba plikledžio formavimąsi."
 
-#: ../panel-plugin/weather-config.c:565
+#: ../panel-plugin/weather-config.c:564
 msgid ""
 "The current Fahrenheit temperature scale is based on one proposed in 1724 by the physicist Daniel Gabriel Fahrenheit. 0 °F was the freezing point of brine on the original scale at standard atmospheric pressure, which was the lowest temperature achievable with this mixture of ice, salt and ammonium chloride. The melting point of water is at 32 °F and its boiling point at 212 °F. The Fahrenheit and Celsius scales intersect at -40 degrees. Even in cold winters, the temperatures usually do not fall into negative ranges on the Fahrenheit scale.\n"
 "With its inventor being a member of the Royal Society in London and having a high reputation, the Fahrenheit scale enjoyed great popularity in many English-speaking countries, but was replaced by the Celsius scale in most of these countries during the metrification process in the mid to late 20th century."
 msgstr "Esama Farenheito temperatūros skalė yra pagrįsta, 1724 m. pasiūlyta, fiziko Danielio Gabrielio Farenheito, skale. Pradinėje skalėje, esant standartiniam atmosferos slėgiui, sūrymo užšalimo taškas buvo 0 °F, kas tuo metu buvo žemiausia, su šiuo ledo, druskos ir amonio chlorido mišiniu pasiekiama, temperatūra. Ledo tirpimo taškas yra 32 °F, o jos virimo taškas 212 °F. Farenheito ir Celsijaus skalės persikerta ties -40 laipsnių. Naudojant Farenheito skalę, dažniausiai, netgi šalčiausią žiemą, temperatūros nepasiekia neigiamų reikšmių.\nKadangi šios skalės išradėjas buvo Karališkosios Visuomenės narys ir turėjo aukštą reputaciją, Farenheito skalė buvo populiari daugelyje, Angliškai kalbančių šalių, tačiau XX a. viduryje-pabaigoje, daugumoje šių šalių, metrifikacijos eigoje, ją pakeitė Celsijaus skalė."
 
-#: ../panel-plugin/weather-config.c:608
+#: ../panel-plugin/weather-config.c:607
 msgid ""
 "The pascal, named after mathematician, physicist and philosopher Blaise "
 "Pascal, is a SI derived unit and a measure of force per unit area, defined "
@@ -681,7 +661,7 @@ msgid ""
 "hPa."
 msgstr "Paskalis yra, matematiko, fiziko ir filosofo Blezo Paskalio garbei pavadintas, SI sistemos vienetas ir vienam ploto vienetui tenkančios jėgos matas, apibrėžiamas kaip vienas niutonas kvadratiniam metrui. Viena standartinė atmosfera (atm) yra 1013.25 hPa."
 
-#: ../panel-plugin/weather-config.c:615
+#: ../panel-plugin/weather-config.c:614
 msgid ""
 "Inches of mercury is still widely used for barometric pressure in weather "
 "reports, refrigeration and aviation in the United States, but seldom used "
@@ -690,7 +670,7 @@ msgid ""
 " of gravity."
 msgstr "Coliai gyvsidabrio yra vis dar plačiai naudojami atmosferos slėgio nurodymui orų pranešimuose, šaldytuvuose ir aviacijoje, Jungtinėse Valstijose, tačiau yra rečiau naudojami kur nors kitur. Jie yra apibrėžiami kaip slėgis, kurį sukuria 1 colio aukščio gyvsidabrio stulpelis, esant 32 °F (0 °C) temperatūrai ir standartiniam sunkio pagreičiui."
 
-#: ../panel-plugin/weather-config.c:623
+#: ../panel-plugin/weather-config.c:622
 msgid ""
 "The pound per square inch is a unit of pressure based on avoirdupois units "
 "(a system of weights based on a pound of 16 ounces) and defined as the "
@@ -700,7 +680,7 @@ msgid ""
 "Colonies."
 msgstr "Svarai kvadratiniam coliui yra slėgio vienetas, pagrįstas \"avoirdupois\" vienetais (svorių sistema, kuri yra pagrįsta svaru, susidedančiu iš 16 uncijų) ir apibrėžiamas kaip slėgis, kurį sukuria vieno svaro jėga, pritaikyta vieno kvadratinio colio pločiui. Šis vienetas yra naudojamas Jungtinėse valstijose ir kažkiek kasdieniame gyvenime Kanadoje, Jungtinėje Karalystėje ir, galbūt, kai kurios buvusiose Britų kolonijose."
 
-#: ../panel-plugin/weather-config.c:632
+#: ../panel-plugin/weather-config.c:631
 msgid ""
 "The torr unit was named after the physicist and mathematician Evangelista "
 "Torricelli who discovered the principle of the barometer in 1644 and "
@@ -709,29 +689,29 @@ msgid ""
 "standard atmosphere (atm) equals 760 Torr."
 msgstr "Toro vienetas yra pavadintas fiziko, matematiko Evangelista Toričelio garbei, kuris 1644 m. išrado barometro principą ir pristatė pirmąjį gyvsidabrio barometrą plačiajai visuomenei. 1 toro slėgis yra, apytiksliai, lygus vieno colio gyvsidabrio slėgiui, o viena standartinė atmosfera (atm) lygi 760 Torų."
 
-#: ../panel-plugin/weather-config.c:666
+#: ../panel-plugin/weather-config.c:665
 msgid "Wind speeds in TV or in the news are often provided in km/h."
 msgstr "Vėjo greitis televizijoje ir naujienose dažniausiai pateikiamas kilometrais per valandą, km/val."
 
-#: ../panel-plugin/weather-config.c:670
+#: ../panel-plugin/weather-config.c:669
 msgid ""
 "Miles per hour is an imperial unit of speed expressing the number of statute"
 " miles covered in one hour."
 msgstr "Mylios per valandą yra imperinis greičio vienetas, išreiškiantis, per vieną valandą įveikiamų, statutinių mylių skaičių."
 
-#: ../panel-plugin/weather-config.c:674
+#: ../panel-plugin/weather-config.c:673
 msgid ""
 "Meter per second is <i>the</i> unit typically used by meteorologists to "
 "denote wind speeds."
 msgstr "Metras per sekundę yra vienetas, kurį meteorologai, dažniausiai, naudoja vėjo greičio matavimams."
 
-#: ../panel-plugin/weather-config.c:678
+#: ../panel-plugin/weather-config.c:677
 msgid ""
 "The foot per second (pl. feet per second) in the imperial unit system is the"
 " counterpart to the meter per second in the International System of Units."
 msgstr "Imperinėje vienetų sistemoje esanti pėda per sekundę (dgs. pėdos per sekundę) yra, Tarptautinėje vienetų sistemoje esančio metro per sekundę, atitikmuo."
 
-#: ../panel-plugin/weather-config.c:683
+#: ../panel-plugin/weather-config.c:682
 msgid ""
 "The knot is a unit of speed equal to one international nautical mile (1.852 "
 "km) per hour, or approximately 1.151 mph, and sees worldwide use in "
@@ -739,13 +719,13 @@ msgid ""
 "knot along a meridian travels one minute of geographic latitude in one hour."
 msgstr "Mazgas yra greičio vienetas, lygus vienai tarptautinei jūrmylei (1,852 km) per valandą arba, apytiksliai, 1,151 mph, ir yra naudojamas visame pasaulyje meteorologijoje, laivyboje, ir oro navigacijoje. Laivas, keliaujantis palei meridianą 1 mazgo greičiu, per vieną valandą nukeliauja vieną, geografinės platumos, minutę."
 
-#: ../panel-plugin/weather-config.c:716
+#: ../panel-plugin/weather-config.c:715
 msgid ""
 "1 millimeter is one thousandth of a meter - the fundamental unit of length "
 "in the International System of Units -, or approximately 0.04 inches."
 msgstr "1 milimetras yra viena tūkstantoji metro - pagrindinis Tarptautinės Matavimo Vienetų Sistemos ilgio vienetas -, arba apytiksliai 0.04 colio."
 
-#: ../panel-plugin/weather-config.c:721
+#: ../panel-plugin/weather-config.c:720
 msgid ""
 "The English word <i>inch</i> comes from Latin <i>uncia</i> meaning <i>one-"
 "twelfth part</i> (in this case, one twelfth of a foot). In the past, there "
@@ -754,7 +734,7 @@ msgid ""
 "millimeters."
 msgstr "Angliškas žodis <i>colis</i> ateina iš Lotynų kalbos žodžio <i>uncia</i>, reiškiančio <i>vieną dvyliktąją dalį</i> (šiuo atveju, vieną dvyliktąją pėdos dalį). Praeityje buvo daug skirtingų colio standartų su besikeičiančiais matavimo dydžiais, tačiau šiuo metu tarptautiniu lygiu priimta reikšmė yra, tiksliai 25.4 milimetrai."
 
-#: ../panel-plugin/weather-config.c:754
+#: ../panel-plugin/weather-config.c:753
 msgid ""
 "The meter is the fundamental unit of length in the International System of "
 "Units. Originally intended to be one ten-millionth of the distance from the "
@@ -763,7 +743,7 @@ msgid ""
 "of measurement)."
 msgstr "Metras yra pagrindinis ilgio vienetas Tarptautinėje vienetų sistemoje. Iš pradžių, numatytas kaip viena dešimt milijoninė dalis atstumo jūros lygyje nuo Žemės pusiaujo iki Šiaurės ašigalio, jo apibrėžimas buvo periodiškai tobulinamas, kad atspindėtų augančias metrologijos (matavimų mokslo) žinias."
 
-#: ../panel-plugin/weather-config.c:762
+#: ../panel-plugin/weather-config.c:761
 msgid ""
 "A foot (plural feet) is a unit of length defined as being 0.3048 m exactly "
 "and used in the imperial system of units and United States customary units. "
@@ -775,7 +755,7 @@ msgstr "Pėda (dgsk. pėdos) yra ilgio vienetas, tiksliai apibrėžiamas kaip 0,
 #. * TRANSLATORS: The Summer Simmer Index is similar to the heat
 #. * index, but usually used at night because of its better accuracy
 #. * at that time.
-#: ../panel-plugin/weather-config.c:801
+#: ../panel-plugin/weather-config.c:800
 msgid ""
 "Used in North America, wind chill will be reported for low temperatures and "
 "heat index for higher ones. At night, heat index will be replaced by the "
@@ -786,7 +766,7 @@ msgid ""
 "met, the air temperature will be shown."
 msgstr "Naudojamas Šiaurės Amerikoje, vėjo žvarbumo indeksas bus naudojamas pranešimams apie žemesnes temperatūras, o karščio indeksas apie aukštesnes. Naktį, karščio indeksą pakeis \"Summer Simmer\" indeksas. Vėjo žvarbumo indeksui, vėjo greičiai turi būti didesni kaip 3,0 mph (4,828 km/val.), o oro temperatūra žemesnė 50,0 °F (10,0 °C). Karščio indeksui, oro temperatūra turi būti aukštesnė kaip 80 °F (26,7 °C) - arba naktį aukštesnė kaip 71,6 °F (22 °C) - o santykinis drėgnumas bent 40%. Jeigu šios sąlygos nėra patenkinamos, tuomet bus rodoma oro temperatūra."
 
-#: ../panel-plugin/weather-config.c:812
+#: ../panel-plugin/weather-config.c:811
 msgid ""
 "The Canadian counterpart to the US windchill/heat index, with the wind chill"
 " being similar to the previous model but with slightly different "
@@ -798,7 +778,7 @@ msgid ""
 " be shown."
 msgstr "Kanadietiškas, JAV vėjo žvarbumo/karščio indekso atitikmuo, kuriame vėjo žvarbumas yra panašus į ankstesnio modelio vėjo žvarbumą, tik su truputėlį kitokiais apribojimais. Vietoj karščio indekso, bus naudojamas <i>humidex</i> indeksas. Tam, kad vėjo žvarbumo indeksas taptų efektyvus, vėjo greitis turi būti virš 2.0 km/val. (1.24 mph), o oro temperatūra žemiau arba lygi 0 °C (32 °F). Humidex indeksui, oro temperatūra turi būti bent 20.0 °C (68 °F), su rasos tašku didesniu nei 0 °C (32 °F). Jei šios sąlygos nėra patenkinamos, bus rodoma oro temperatūra."
 
-#: ../panel-plugin/weather-config.c:824
+#: ../panel-plugin/weather-config.c:823
 msgid ""
 "This is the model used by the Australian Bureau of Meteorology, especially "
 "adapted for the climate of this continent. Possibly used in Central Europe "
@@ -809,7 +789,7 @@ msgid ""
 "temperatures alike."
 msgstr "Tai yra Australijos Meteorologijos Biuro naudojamas modelis, specialiai pritaikytas šio kontinento klimatui. Galimai naudojamas Centrinėje Europoje, o taip pat kitų kontinentų dalyse, tačiau vėjo žvarbumo ir panašios reikšmės niekada neįgavo ten tokio populiarumo kaip JAV ar Kanadoje, taigi informacija apie jo naudojimą yra nepakankama arba abejotina. Šis modelis priklauso nuo oro temperatūros, vėjo greičio ir drėgnumo, ir gali būti naudojamas žemesnėms temperatūroms taip pat kaip ir aukštesnėms."
 
-#: ../panel-plugin/weather-config.c:835
+#: ../panel-plugin/weather-config.c:834
 msgid ""
 "Improvements by Robert G. Quayle and Robert G. Steadman applied in 1998 to "
 "earlier experiments/developments by Steadman. This model only depends on "
@@ -817,11 +797,11 @@ msgid ""
 "both heat and cold stress."
 msgstr "1998 metais Steadman'o eksperimentams/plėtojimams buvo pritaikyti Robert'o G. Quayle ir Robert'o G. Steadman'o patobulinimai. Šis modelis priklauso tik nuo vėjo greičio ir temperatūros bei nepriklauso nuo santykinio drėgnumo ir gali būti naudojamas įvairiems temperatūros pokyčiams."
 
-#: ../panel-plugin/weather-config.c:896
+#: ../panel-plugin/weather-config.c:895
 msgid "Choose an icon theme."
 msgstr "Pasirinkite piktogramų temą."
 
-#: ../panel-plugin/weather-config.c:901
+#: ../panel-plugin/weather-config.c:900
 #, c-format
 msgid ""
 "<b>Directory:</b> %s\n"
@@ -833,19 +813,19 @@ msgid ""
 "<b>License:</b> %s"
 msgstr "<b>Katalogas:</b> %s\n\n<b>Autorius:</b> %s\n\n<b>Aprašas:</b> %s\n\n<b>Licencija:</b> %s"
 
-#: ../panel-plugin/weather-config.c:986
+#: ../panel-plugin/weather-config.c:985
 msgid ""
 "A more calendar-like view, with the days in columns and the daytimes "
 "(morning, afternoon, evening, night) in rows."
 msgstr "Labiau kalendorių primenantis rodinys, su dienomis stulpeliuose ir dienos metu (rytas, diena, vakaras, naktis) eilutėse."
 
-#: ../panel-plugin/weather-config.c:990
+#: ../panel-plugin/weather-config.c:989
 msgid ""
 "Shows the forecasts in a table with the daytimes (morning, afternoon, "
 "evening, night) in columns and the days in rows."
 msgstr "Rodo orų prognozę lentelėje, kurioje dienos metas (rytas, diena, vakaras, naktis) yra stulpeliuose, o dienų pavadinimai eilutėse. "
 
-#: ../panel-plugin/weather-config.c:1077
+#: ../panel-plugin/weather-config.c:1076
 #, c-format
 msgid ""
 "Met.no provides forecast data for up to %d days in the future. Choose how "
@@ -1068,73 +1048,73 @@ msgstr "Šiaurės Vakarai"
 msgid "NW"
 msgstr "ŠV"
 
-#: ../panel-plugin/weather-data.c:485
+#: ../panel-plugin/weather-data.c:486
 msgid "ft"
 msgstr "ft"
 
-#: ../panel-plugin/weather-data.c:485
+#: ../panel-plugin/weather-data.c:486
 msgid "m"
 msgstr "m"
 
-#: ../panel-plugin/weather-data.c:489
+#: ../panel-plugin/weather-data.c:490
 msgid "°F"
 msgstr "°F"
 
-#: ../panel-plugin/weather-data.c:489
+#: ../panel-plugin/weather-data.c:490
 msgid "°C"
 msgstr "°C"
 
-#: ../panel-plugin/weather-data.c:493
+#: ../panel-plugin/weather-data.c:494
 msgid "hPa"
 msgstr "hPa"
 
-#: ../panel-plugin/weather-data.c:495
+#: ../panel-plugin/weather-data.c:496
 msgid "inHg"
 msgstr "inHg"
 
-#: ../panel-plugin/weather-data.c:497
+#: ../panel-plugin/weather-data.c:498
 msgid "psi"
 msgstr "psi"
 
-#: ../panel-plugin/weather-data.c:499
+#: ../panel-plugin/weather-data.c:500
 msgid "mmHg"
 msgstr "mmHg"
 
-#: ../panel-plugin/weather-data.c:504
+#: ../panel-plugin/weather-data.c:506
 msgid "km/h"
 msgstr "km/val."
 
-#: ../panel-plugin/weather-data.c:506
+#: ../panel-plugin/weather-data.c:508
 msgid "mph"
 msgstr "mph"
 
-#: ../panel-plugin/weather-data.c:508
+#: ../panel-plugin/weather-data.c:510
 msgid "m/s"
 msgstr "m/s"
 
-#: ../panel-plugin/weather-data.c:510
+#: ../panel-plugin/weather-data.c:512
 msgid "ft/s"
 msgstr "ft/s"
 
-#: ../panel-plugin/weather-data.c:512
+#: ../panel-plugin/weather-data.c:514
 msgid "kt"
 msgstr "kt"
 
 #. TRANSLATORS: Percentage sign is used like a unit for
 #. clouds, fog, humidity
-#: ../panel-plugin/weather-data.c:528
+#: ../panel-plugin/weather-data.c:531
 msgid "%"
 msgstr "%"
 
-#: ../panel-plugin/weather-data.c:530
+#: ../panel-plugin/weather-data.c:533
 msgid "in"
 msgstr "in"
 
-#: ../panel-plugin/weather-data.c:530
+#: ../panel-plugin/weather-data.c:533
 msgid "mm"
 msgstr "mm"
 
-#: ../panel-plugin/weather-icon.c:185
+#: ../panel-plugin/weather-icon.c:186
 msgid "No icon theme!"
 msgstr "Nėra piktogramų temos!"
 
@@ -1654,27 +1634,27 @@ msgstr "Vakaras"
 msgid "Night"
 msgstr "Naktis"
 
-#: ../panel-plugin/weather-summary.c:1174
+#: ../panel-plugin/weather-summary.c:1172
 msgid "Weather Report"
 msgstr "Orų pranešimas"
 
-#: ../panel-plugin/weather-summary.c:1177
+#: ../panel-plugin/weather-summary.c:1175
 msgid "Close"
 msgstr "Užverti"
 
-#: ../panel-plugin/weather-summary.c:1201
+#: ../panel-plugin/weather-summary.c:1208
 msgid "Please set a location in the plugin settings."
 msgstr "Prašome įskiepio nustatymuose įvesti vietą."
 
-#: ../panel-plugin/weather-summary.c:1203
+#: ../panel-plugin/weather-summary.c:1210
 msgid "Currently no data available."
 msgstr "Šiuo metu nėra prieinamų duomenų."
 
-#: ../panel-plugin/weather-summary.c:1215
+#: ../panel-plugin/weather-summary.c:1222
 msgid "_Forecast"
 msgstr "_Prognozė"
 
-#: ../panel-plugin/weather-summary.c:1218
+#: ../panel-plugin/weather-summary.c:1225
 msgid "_Details"
 msgstr "_Išsamiau"
 
