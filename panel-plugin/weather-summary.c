@@ -1145,7 +1145,7 @@ update_summary_subtitle(plugin_data *data)
         return FALSE;
 
     time(&now_t);
-    date = format_date(now_t, "%A %_d %b %Y, %H:%M (%Z)", TRUE);
+    date = format_date(now_t, "%A %d %b %Y, %H:%M (%Z)", TRUE);
     title = g_markup_printf_escaped("<big><b>%s</b>\n%s</big>", data->location_name, date);
     g_free(date);
     gtk_label_set_markup(GTK_LABEL(data->summary_subtitle), title);
