@@ -1159,21 +1159,31 @@ update_summary_subtitle(plugin_data *data)
     return FALSE;
 }
 
+static void
+open_config_dialog (GtkButton *button, plugin_data *data)
+{
+    GtkWidget *parent_window;
+
+    parent_window = gtk_widget_get_toplevel (GTK_WIDGET (button));
+    gtk_window_close (GTK_WINDOW (parent_window));
+    g_signal_emit_by_name (data->plugin, "configure-plugin", data, G_TYPE_NONE);
+}
+
 
 GtkWidget *
 create_summary_window(plugin_data *data)
 {
-    GtkWidget *window, *notebook, *vbox, *hbox, *label, *image;
+    GtkWidget *window, *notebook, *vbox, *hbox, *label, *image, *button, *box;
     GdkPixbuf *icon;
     xml_time *conditions;
     gchar *title, *symbol;
 
     conditions = get_current_conditions(data->weatherdata);
-    window = xfce_titled_dialog_new_with_buttons(_("Weather Report"),
-                                                 NULL,
-                                                 GTK_DIALOG_DESTROY_WITH_PARENT,
-                                                 _("Close"),
-                                                 GTK_RESPONSE_ACCEPT, NULL);
+    window = xfce_titled_dialog_new_with_mixed_buttons(_("Weather Report"),
+                                                       NULL,
+                                                       GTK_DIALOG_DESTROY_WITH_PARENT,
+                                                       "window-close-symbolic", _("_Close"),
+                                                       GTK_RESPONSE_ACCEPT, NULL);
 
     data->summary_subtitle = gtk_label_new (NULL);
     if (G_LIKELY(data->location_name != NULL)) {
@@ -1203,16 +1213,41 @@ create_summary_window(plugin_data *data)
 
     if (data->location_name == NULL || data->weatherdata == NULL ||
         data->weatherdata->current_conditions == NULL) {
-        hbox = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
-        if (data->location_name == NULL)
-            label = gtk_label_new(_("Please set a location in the plugin settings."));
-        else
-            label = gtk_label_new(_("Currently no data available."));
-        gtk_box_pack_start(GTK_BOX(hbox), GTK_WIDGET(label),
-                           TRUE, TRUE, 0);
+        box = gtk_box_new (GTK_ORIENTATION_VERTICAL, 0);
+        gtk_widget_set_valign (box, GTK_ALIGN_CENTER);
 
-        gtk_box_pack_start(GTK_BOX(vbox), GTK_WIDGET(hbox),
-                           TRUE, TRUE, 0);
+        gtk_widget_destroy (image);
+        icon = get_icon (data->icon_theme, NULL, 128, data->night_time);
+        image = gtk_image_new ();
+        gtk_image_set_from_pixbuf (GTK_IMAGE (image), icon);
+        if (G_LIKELY (icon))
+            g_object_unref (G_OBJECT (icon));
+
+        gtk_box_pack_start (GTK_BOX (box), GTK_WIDGET (image),
+                            FALSE, FALSE, 6);
+
+        label = gtk_label_new (NULL);
+        gtk_label_set_justify (GTK_LABEL (label), GTK_JUSTIFY_CENTER);
+        gtk_widget_set_sensitive (label, FALSE);
+
+        if (data->location_name == NULL)
+            title = g_markup_printf_escaped("<big><b>%s</b></big>\n%s", _("No location selected."), _("Please set a location in the plugin settings."));
+        else
+            title = g_markup_printf_escaped("<big><b>%s</b></big>", _("Currently no data available."));
+
+        gtk_label_set_markup (GTK_LABEL (label), title);
+        g_free (title);
+        gtk_box_pack_start (GTK_BOX (box), GTK_WIDGET (label),
+                            FALSE, FALSE, 6);
+
+        button = gtk_button_new_with_label (_("Plugin settings..."));
+        gtk_widget_set_halign (button, GTK_ALIGN_CENTER);
+        g_signal_connect (G_OBJECT (button), "clicked", G_CALLBACK (open_config_dialog), data);
+        gtk_box_pack_start (GTK_BOX (box), button, FALSE, FALSE, 6);
+
+        gtk_box_pack_start (GTK_BOX (vbox), GTK_WIDGET(box),
+                            TRUE, TRUE, 0);
+
         gtk_window_set_default_size(GTK_WINDOW(window), 500, 400);
     } else {
         notebook = gtk_notebook_new();
