@@ -1044,7 +1044,8 @@ create_forecast_tab(plugin_data *data)
     monitor = gdk_display_get_monitor_at_window(gdk_display_get_default(), window);
     if (G_LIKELY(window && monitor)) {
         gdk_monitor_get_geometry (monitor, &rect);
-    }
+    } else
+        return NULL;
 
     /* calculate maximum width and height */
     h_max = rect.height - 250;
