@@ -1754,7 +1754,7 @@ weather_get_tooltip_text(const plugin_data *data)
                                  "%H:%M:%S", FALSE);
             sunval =
                 g_strdup_printf(_("The sun rises at %s and never sets."),
-                                 sunset);
+                                 sunrise);
         } else {
             sunrise = format_date(data->current_astro->sunrise,
                                   "%H:%M:%S", TRUE);
