@@ -11,8 +11,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-10 00:48+0100\n"
-"PO-Revision-Date: 2021-03-10 15:15+0000\n"
+"POT-Creation-Date: 2021-03-23 00:49+0100\n"
+"PO-Revision-Date: 2021-03-24 15:54+0000\n"
 "Last-Translator: beriain\n"
 "Language-Team: Basque (http://www.transifex.com/xfce/xfce-panel-plugins/language/eu/)\n"
 "MIME-Version: 1.0\n"
@@ -35,6 +35,7 @@ msgid "_Help"
 msgstr "_Laguntza"
 
 #: ../panel-plugin/weather-config.ui.h:3
+#: ../panel-plugin/weather-summary.c:1185
 msgid "_Close"
 msgstr "_Itxi"
 
@@ -845,7 +846,7 @@ msgstr "Hautatu letra-tipoa"
 msgid ""
 "Choose the value to add to the list below. Values can be added more than "
 "once."
-msgstr ""
+msgstr "Hautatu balio bat beheko zerrendara gehitzeko. Balioak behin baino gehiagotan gehitu daitezke."
 
 #: ../panel-plugin/weather-config.c:1271
 msgid ""
@@ -884,13 +885,13 @@ msgstr ""
 msgid ""
 "This gives the cardinal direction (North, East, South, West) the wind is "
 "coming from."
-msgstr ""
+msgstr "Honek haizea datorren norabide kardinala adierazten du (iparraldea, ekialdea, hegoaldea, mendebaldea)."
 
 #: ../panel-plugin/weather-config.c:1306
 msgid ""
 "This gives the direction the wind is coming from in azimuth degrees (North ="
 " 0°, East = 90°, South = 180° and West = 270°)."
-msgstr ""
+msgstr "Honek haizea datorren norabidea adierazten du azimut graduetan (iparraldea = 0°, ekialdea = 90°, hegoaldea = 180° and mendebaldea = 270°)."
 
 #: ../panel-plugin/weather-config.c:1311
 msgid ""
@@ -1308,11 +1309,11 @@ msgstr "\tIlargi fasea:\tEzezaguna\n"
 
 #: ../panel-plugin/weather-summary.c:494
 msgid "\tMoonrise:\tThe moon never rises today.\n"
-msgstr ""
+msgstr "\tIlargia irtetea:\tIlargia ez da inoiz irtengo gaur.\n"
 
 #: ../panel-plugin/weather-summary.c:498
 msgid "\tMoonset:\tThe moon never sets today.\n"
-msgstr ""
+msgstr "\tIlargia sartzea:\tIlargia ez da inoiz sartuko gaur.\n"
 
 #: ../panel-plugin/weather-summary.c:502
 #, c-format
@@ -1489,7 +1490,7 @@ msgstr "<tt><small>Tartearen amaiera:         %s</small></tt>\n"
 msgid ""
 "<tt><small>Data calculated for:  %s</small></tt>\n"
 "\n"
-msgstr ""
+msgstr "<tt><small>Datuak honetarako kalkulatuta:  %s</small></tt>\n\n"
 
 #: ../panel-plugin/weather-summary.c:675
 msgid "<b>Temperatures</b>\n"
@@ -1498,14 +1499,14 @@ msgstr "<b>Tenperaturak</b>\n"
 #: ../panel-plugin/weather-summary.c:676
 #, c-format
 msgid "<tt><small>Dew point:            %s%s%s</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Ihintzi-puntua:            %s%s%s</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:680
 #, c-format
 msgid ""
 "<tt><small>Apparent temperature: %s%s%s</small></tt>\n"
 "\n"
-msgstr ""
+msgstr "<tt><small>Itxurazko tenperatura: %s%s%s</small></tt>\n\n"
 
 #: ../panel-plugin/weather-summary.c:685
 msgid "<b>Atmosphere</b>\n"
@@ -1602,11 +1603,11 @@ msgstr "<tt><small>Ilargialdia: Ezezaguna</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:779
 msgid "<tt><small>Moonrise: The moon never rises this day.</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Ilargia irtetea: Ilargia ez da inoiz irtengo egun honetan.</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:784
 msgid "<tt><small>Moonset: The moon never sets this day.</small></tt>\n"
-msgstr ""
+msgstr "<tt><small>Ilargia sartzea: Ilargia ez da inoiz sartuko egun honetan.</small></tt>\n"
 
 #: ../panel-plugin/weather-summary.c:789
 #, c-format
@@ -1635,27 +1636,31 @@ msgstr "Ilunabarra"
 msgid "Night"
 msgstr "Gaua"
 
-#: ../panel-plugin/weather-summary.c:1172
+#: ../panel-plugin/weather-summary.c:1182
 msgid "Weather Report"
 msgstr "Eguraldi txostena"
 
-#: ../panel-plugin/weather-summary.c:1175
-msgid "Close"
-msgstr "Itxi"
+#: ../panel-plugin/weather-summary.c:1234
+msgid "No location selected."
+msgstr "Ez da kokapenik hautatu."
 
-#: ../panel-plugin/weather-summary.c:1208
+#: ../panel-plugin/weather-summary.c:1234
 msgid "Please set a location in the plugin settings."
 msgstr "Mesedez ezarri kokaleku bat pluginaren ezarpenetan."
 
-#: ../panel-plugin/weather-summary.c:1210
+#: ../panel-plugin/weather-summary.c:1236
 msgid "Currently no data available."
 msgstr "Ez dago datu eskuragarririk"
 
-#: ../panel-plugin/weather-summary.c:1222
+#: ../panel-plugin/weather-summary.c:1243
+msgid "Plugin settings..."
+msgstr "Plugin ezarpenak..."
+
+#: ../panel-plugin/weather-summary.c:1257
 msgid "_Forecast"
 msgstr "_Iragarpena"
 
-#: ../panel-plugin/weather-summary.c:1225
+#: ../panel-plugin/weather-summary.c:1260
 msgid "_Details"
 msgstr "_Xehetasunak"
 
