@@ -10,9 +10,9 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-02-09 12:54+0100\n"
-"PO-Revision-Date: 2021-02-14 08:38+0000\n"
-"Last-Translator: Ioannis LM\n"
+"POT-Creation-Date: 2021-03-23 00:49+0100\n"
+"PO-Revision-Date: 2021-03-22 23:49+0000\n"
+"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
 "Language-Team: Greek (http://www.transifex.com/xfce/xfce-panel-plugins/language/el/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -34,6 +34,7 @@ msgid "_Help"
 msgstr "_Βοήθεια"
 
 #: ../panel-plugin/weather-config.ui.h:3
+#: ../panel-plugin/weather-summary.c:1185
 msgid "_Close"
 msgstr "_Κλείσιμο"
 
@@ -292,37 +293,23 @@ msgid "_Appearance"
 msgstr "_Εμφάνιση"
 
 #: ../panel-plugin/weather-config.ui.h:65
-msgid "Show scroll_box"
-msgstr "Εμφάνιση του πλαίσιου _κύλισης"
-
-#: ../panel-plugin/weather-config.ui.h:66
-msgid ""
-"Hide the scrollbox to save valuable space on the panel. Most interesting "
-"information is also provided in the tooltip - provided you choose an "
-"appropriate tooltip style - that is shown when hovering over the icon."
-msgstr "Αποκρύψτε το πλαίσιο κύλισης για να εξοικονομήσετε χώρο στο ταμπλό. Ενδιαφέρουσα πληροφόρηση παρέχει επίσης και το εικονίδιο πληροφοριών που εμφανίζεται όταν ο δείκτης του ποντικού σας μετακινηθεί επάνω στο εικονίδιο του ταμπλό, υπό τον όρο να επιλέξετε το κατάλληλο στυλ εικονιδίου στη σελίδα Εμφάνιση."
-
-#: ../panel-plugin/weather-config.ui.h:67
-msgid "Li_nes:"
-msgstr "Γρα_μμές:"
-
-#: ../panel-plugin/weather-config.ui.h:68
-msgid ""
-"Decide how many values should be shown at once in the scrollbox. You can "
-"choose a smaller font or enlarge the panel to make more lines fit."
-msgstr "Επιλέξτε πόσες τιμές θα πρέπει να δείχνει ταυτόχρονα το πλαίσιο κύλισης. Μπορείτε να επιλέξετε μικρότερο μέγεθος γραμματοσειράς ή να μεγαλώσετε το ταμπλό για να ταιριάζουν περισσότερες γραμμές."
-
-#: ../panel-plugin/weather-config.ui.h:69
 msgid "Font and color:"
 msgstr "Γραμματοσειρά και χρώμα:"
 
-#: ../panel-plugin/weather-config.ui.h:70
+#: ../panel-plugin/weather-config.ui.h:66
 msgid ""
-"There may be problems with some themes that cause the scrollbox text to be "
-"hardly readable. If this is the case or you simply want it to appear in "
-"another color, then you can change it using this button. Middle-click on the"
-" button to unset the scrollbox text color."
-msgstr "Με κάποια θέματα μπορεί να υπάρξουν προβλήματα ανάγνωσης του κειμένου στο πλαίσιο κύλισης . Αν αυτό συμβεί ή απλά θέλετε να εμφανίζεται το κείμενο με άλλο χρώμα, μπορείτε να το αλλάξετε με αυτό το κουμπί. Με μεσαίο κλικ απενεργοποιείται το χρώμα του κειμένου και χρησιμοποιείται το προκαθορισμένο."
+"These are the values that will be shown in the scrollbox. Select a single "
+"value here and click the appropriate button to remove it or move it up and "
+"down in the list."
+msgstr "Αυτές είναι οι τιμές που θα εμφανίζονται στο πλαίσιο κύλισης. Επιλέξτε εδώ μια τιμή και με κλικ στο κατάλληλο κουμπί, μπορείτε να την αφαιρέστε ή να τη μετακινήσετε επάνω ή κάτω στη λίστα."
+
+#: ../panel-plugin/weather-config.ui.h:67
+msgid "Move the selected value up in the list of labels to display."
+msgstr "Μετακίνηση επάνω της επιλεγμένης τιμής στη λίστα με τις εμφανιζόμενες ετικέτες."
+
+#: ../panel-plugin/weather-config.ui.h:68
+msgid "Move the selected value down in the list of labels to display."
+msgstr "Μετακίνηση κάτω της επιλεγμένης τιμής στη λίστα με τις εμφανιζόμενες ετικέτες."
 
 #. * TRANSLATORS: The abbreviations in parentheses will be shown in
 #. * the scrollbox together with the values. Keep them in sync with
@@ -331,132 +318,130 @@ msgstr "Με κάποια θέματα μπορεί να υπάρξουν προ
 #. * read that up somewhere and decide whether you want to use them
 #. * or not. In general, though, you should just try to choose
 #. * letter(s) that make sense and don't use up too much space.
-#: ../panel-plugin/weather-config.ui.h:71 ../panel-plugin/weather-config.c:96
+#: ../panel-plugin/weather-config.ui.h:69 ../panel-plugin/weather-config.c:96
 msgid "Temperature (T)"
 msgstr "Θερμοκρασία (Θ)"
 
-#: ../panel-plugin/weather-config.ui.h:72 ../panel-plugin/weather-config.c:97
+#: ../panel-plugin/weather-config.ui.h:70 ../panel-plugin/weather-config.c:97
 msgid "Barometric pressure (P)"
 msgstr "Βαρομετρική πίεση (Π)"
 
-#: ../panel-plugin/weather-config.ui.h:73 ../panel-plugin/weather-config.c:98
+#: ../panel-plugin/weather-config.ui.h:71 ../panel-plugin/weather-config.c:98
 msgid "Wind speed (WS)"
 msgstr "Ταχύτητα ανέμου (ΤΑ)"
 
-#: ../panel-plugin/weather-config.ui.h:74 ../panel-plugin/weather-config.c:99
+#: ../panel-plugin/weather-config.ui.h:72 ../panel-plugin/weather-config.c:99
 msgid "Wind speed - Beaufort scale (WB)"
 msgstr "Ταχύτητα ανέμου - Κλίμακα Beaufort (κB)"
 
-#: ../panel-plugin/weather-config.ui.h:75 ../panel-plugin/weather-config.c:100
+#: ../panel-plugin/weather-config.ui.h:73 ../panel-plugin/weather-config.c:100
 msgid "Wind direction (WD)"
 msgstr "Διεύθυνση ανέμου (ΔΑ)"
 
-#: ../panel-plugin/weather-config.ui.h:76 ../panel-plugin/weather-config.c:101
+#: ../panel-plugin/weather-config.ui.h:74 ../panel-plugin/weather-config.c:101
 msgid "Wind direction in degrees (WD)"
 msgstr "Διεύθυνση ανέμου σε μοίρες (ΔΑ°)"
 
-#: ../panel-plugin/weather-config.ui.h:77 ../panel-plugin/weather-config.c:102
+#: ../panel-plugin/weather-config.ui.h:75 ../panel-plugin/weather-config.c:102
 msgid "Humidity (H)"
 msgstr "Υγρασία (Υ)"
 
-#: ../panel-plugin/weather-config.ui.h:78 ../panel-plugin/weather-config.c:103
+#: ../panel-plugin/weather-config.ui.h:76 ../panel-plugin/weather-config.c:103
 msgid "Dew point (D)"
 msgstr "Σημείο δρόσου (ΣΔ)"
 
-#: ../panel-plugin/weather-config.ui.h:79 ../panel-plugin/weather-config.c:104
+#: ../panel-plugin/weather-config.ui.h:77 ../panel-plugin/weather-config.c:104
 msgid "Apparent temperature (A)"
 msgstr "Αισθητή θερμοκρασία (ΑΘ)"
 
-#: ../panel-plugin/weather-config.ui.h:80 ../panel-plugin/weather-config.c:105
+#: ../panel-plugin/weather-config.ui.h:78 ../panel-plugin/weather-config.c:105
 msgid "Low clouds (CL)"
 msgstr "Κατώτερη νέφωση (ΚΝ)"
 
-#: ../panel-plugin/weather-config.ui.h:81 ../panel-plugin/weather-config.c:106
+#: ../panel-plugin/weather-config.ui.h:79 ../panel-plugin/weather-config.c:106
 msgid "Middle clouds (CM)"
 msgstr "Μεσαία νέφωση (ΜΝ)"
 
-#: ../panel-plugin/weather-config.ui.h:82 ../panel-plugin/weather-config.c:107
+#: ../panel-plugin/weather-config.ui.h:80 ../panel-plugin/weather-config.c:107
 msgid "High clouds (CH)"
 msgstr "Ανώτερη νέφωση (ΑΝ)"
 
-#: ../panel-plugin/weather-config.ui.h:83 ../panel-plugin/weather-config.c:108
+#: ../panel-plugin/weather-config.ui.h:81 ../panel-plugin/weather-config.c:108
 msgid "Cloudiness (C)"
 msgstr "Συννεφιά (Σ)"
 
-#: ../panel-plugin/weather-config.ui.h:84 ../panel-plugin/weather-config.c:109
+#: ../panel-plugin/weather-config.ui.h:82 ../panel-plugin/weather-config.c:109
 msgid "Fog (F)"
 msgstr "Ομίχλη (Ο)"
 
-#: ../panel-plugin/weather-config.ui.h:85 ../panel-plugin/weather-config.c:110
+#: ../panel-plugin/weather-config.ui.h:83 ../panel-plugin/weather-config.c:110
 msgid "Precipitation (R)"
 msgstr "Βροχόπτωση (Β)"
 
-#: ../panel-plugin/weather-config.ui.h:86
-msgid ""
-"These are the values that will be shown in the scrollbox. Select a single "
-"value here and click the appropriate button to remove it or move it up and "
-"down in the list."
-msgstr "Αυτές είναι οι τιμές που θα εμφανίζονται στο πλαίσιο κύλισης. Επιλέξτε εδώ μια τιμή και με κλικ στο κατάλληλο κουμπί, μπορείτε να την αφαιρέστε ή να τη μετακινήσετε επάνω ή κάτω στη λίστα."
-
-#: ../panel-plugin/weather-config.ui.h:87
-msgid "A_dd"
-msgstr "_Προσθήκη"
-
-#: ../panel-plugin/weather-config.ui.h:88
+#: ../panel-plugin/weather-config.ui.h:84
 msgid ""
 "Add the selected value to the labels that should be displayed in the "
 "scrollbox."
 msgstr "Προσθήκη της επιλεγμένης τιμής στις ετικέτες που εμφανίζονται στο πλαίσιο κύλισης."
 
-#: ../panel-plugin/weather-config.ui.h:89
-msgid "_Remove"
-msgstr "_Αφαίρεση"
-
-#: ../panel-plugin/weather-config.ui.h:90
+#: ../panel-plugin/weather-config.ui.h:85
 msgid ""
 "Select a value in the list of labels to display and click this button to "
 "remove it."
 msgstr "Αφαίρεση της επιλεγμένης τιμής από τις ετικέτες που εμφανίζονται στο πλαίσιο κύλισης."
 
+#: ../panel-plugin/weather-config.ui.h:86
+msgid "Li_nes:"
+msgstr "Γρα_μμές:"
+
+#: ../panel-plugin/weather-config.ui.h:87
+msgid ""
+"Decide how many values should be shown at once in the scrollbox. You can "
+"choose a smaller font or enlarge the panel to make more lines fit."
+msgstr "Επιλέξτε πόσες τιμές θα πρέπει να δείχνει ταυτόχρονα το πλαίσιο κύλισης. Μπορείτε να επιλέξετε μικρότερο μέγεθος γραμματοσειράς ή να μεγαλώσετε το ταμπλό για να ταιριάζουν περισσότερες γραμμές."
+
+#: ../panel-plugin/weather-config.ui.h:88
+msgid ""
+"Hide the scrollbox to save valuable space on the panel. Most interesting "
+"information is also provided in the tooltip - provided you choose an "
+"appropriate tooltip style - that is shown when hovering over the icon."
+msgstr "Αποκρύψτε το πλαίσιο κύλισης για να εξοικονομήσετε χώρο στο ταμπλό. Ενδιαφέρουσα πληροφόρηση παρέχει επίσης και το εικονίδιο πληροφοριών που εμφανίζεται όταν ο δείκτης του ποντικού σας μετακινηθεί επάνω στο εικονίδιο του ταμπλό, υπό τον όρο να επιλέξετε το κατάλληλο στυλ εικονιδίου στη σελίδα Εμφάνιση."
+
+#: ../panel-plugin/weather-config.ui.h:89
+msgid "<b>Show scrollbox</b>"
+msgstr ""
+
+#: ../panel-plugin/weather-config.ui.h:90
+#: ../panel-plugin/weather-config.c:1131
+msgid "Select _font"
+msgstr "Επιλογή _γραμματοσειράς"
+
 #: ../panel-plugin/weather-config.ui.h:91
-msgid "Move do_wn"
-msgstr "Μετακίνηση _κάτω"
+msgid ""
+"Choose a font you like and set it to a smaller or larger size. Middle-click "
+"on the button to unset the font and use your theme's default."
+msgstr "Επιλέξτε τη γραμματοσειρά και το μέγεθος που θέλετε. Με μεσαίο κλικ απενεργοποιείτε τη γραμματοσειρά και χρησιμοποιείτε την προκαθορισμένη από το θέμα."
 
 #: ../panel-plugin/weather-config.ui.h:92
-msgid "Move the selected value down in the list of labels to display."
-msgstr "Μετακίνηση κάτω της επιλεγμένης τιμής στη λίστα με τις εμφανιζόμενες ετικέτες."
+msgid ""
+"There may be problems with some themes that cause the scrollbox text to be "
+"hardly readable. If this is the case or you simply want it to appear in "
+"another color, then you can change it using this button. Middle-click on the"
+" button to unset the scrollbox text color."
+msgstr "Με κάποια θέματα μπορεί να υπάρξουν προβλήματα ανάγνωσης του κειμένου στο πλαίσιο κύλισης . Αν αυτό συμβεί ή απλά θέλετε να εμφανίζεται το κείμενο με άλλο χρώμα, μπορείτε να το αλλάξετε με αυτό το κουμπί. Με μεσαίο κλικ απενεργοποιείται το χρώμα του κειμένου και χρησιμοποιείται το προκαθορισμένο."
 
 #: ../panel-plugin/weather-config.ui.h:93
-msgid "Move u_p"
-msgstr "Μετακίνηση _πάνω"
+msgid "Animate transitions between labels"
+msgstr ""
 
 #: ../panel-plugin/weather-config.ui.h:94
-msgid "Move the selected value up in the list of labels to display."
-msgstr "Μετακίνηση επάνω της επιλεγμένης τιμής στη λίστα με τις εμφανιζόμενες ετικέτες."
-
-#: ../panel-plugin/weather-config.ui.h:95
-msgid "Animate _transitions between labels"
-msgstr "Εναλλαγή των εμφανιζόμενων ετικετών"
-
-#: ../panel-plugin/weather-config.ui.h:96
 msgid ""
 "Scroll the current displayed value(s) out and the new value(s) in instead of"
 " simply changing them. Uncheck this option if you find the animation too "
 "distracting."
 msgstr "Εναλλάσσει με κυκλικό τρόπο τις εμφανιζόμενες ετικέτες αντί απλά να τις αλλάζει. Ακυρώστε αυτή την επιλογή αν βρίσκετε τη κινούμενη εικόνα πολύ ενοχλητική."
 
-#: ../panel-plugin/weather-config.ui.h:97
-#: ../panel-plugin/weather-config.c:1130
-msgid "Select _font"
-msgstr "Επιλογή _γραμματοσειράς"
-
-#: ../panel-plugin/weather-config.ui.h:98
-msgid ""
-"Choose a font you like and set it to a smaller or larger size. Middle-click "
-"on the button to unset the font and use your theme's default."
-msgstr "Επιλέξτε τη γραμματοσειρά και το μέγεθος που θέλετε. Με μεσαίο κλικ απενεργοποιείτε τη γραμματοσειρά και χρησιμοποιείτε την προκαθορισμένη από το θέμα."
-
-#: ../panel-plugin/weather-config.ui.h:99
+#: ../panel-plugin/weather-config.ui.h:95
 msgid "_Scrollbox"
 msgstr "Πλαίσιο κ_ύλισης"
 
@@ -636,11 +621,11 @@ msgstr "Κανένα προεπιλεγμένο θέμα εικονιδίων; �
 msgid "Re_fresh"
 msgstr "_Ανανέωση"
 
-#: ../panel-plugin/weather.c:2209
+#: ../panel-plugin/weather.c:2207
 msgid "Show weather conditions and forecasts"
 msgstr "Εμφάνιση καιρού και προβλέψεων"
 
-#: ../panel-plugin/weather.c:2211
+#: ../panel-plugin/weather.c:2209
 msgid "Copyright (c) 2003-2021\n"
 msgstr "Πνευματικά δικαιώματα (c) 2003-2021\n"
 
@@ -851,25 +836,25 @@ msgid ""
 "are unreliable at best ;-)"
 msgstr "Η υπηρεσία Met.no προσφέρει δεδομένα πρόγνωσης για %d ημέρες. Επιλέξτε τον αριθμό των ημερών που θα εμφανίζονται στο παράθυρο πρόγνωσης. Σε αργούς υπολογιστές και για να προληφθούν τυχόν καθυστερήσεις όταν ανοίγετε το παράθυρο της πρόγνωσης, συνιστάται μικρός αριθμός ημερών. Σημειώστε επίσης ότι, οι προβλέψεις για περισσότερο από 3 ημέρες δεν είναι συνήθως αξιόπιστες!-)"
 
-#: ../panel-plugin/weather-config.c:1147
+#: ../panel-plugin/weather-config.c:1148
 msgid "Select font"
 msgstr "Επιλογή γραμματοσειράς"
 
 #. TRANSLATORS: Fallback value, usually never shown.
-#: ../panel-plugin/weather-config.c:1261
+#: ../panel-plugin/weather-config.c:1262
 msgid ""
 "Choose the value to add to the list below. Values can be added more than "
 "once."
 msgstr "Επιλέξτε τιμή για να προστεθεί στο τέλος της λίστας. Οι τιμές μπορεί να προστεθούν περισσότερο από μια φορά."
 
-#: ../panel-plugin/weather-config.c:1270
+#: ../panel-plugin/weather-config.c:1271
 msgid ""
 "Air temperature, sometimes referred to as dry-bulb temperature. Measured by "
 "a thermometer that is freely exposed to the air, yet shielded from radiation"
 " and moisture."
 msgstr "Η θερμοκρασία του αέρα κάποιες φορές ονομάζεται και ξηρή θερμοκρασία. Μετράται με θερμόμετρο, που εκτίθεται ελεύθερο στον αέρα και προστατεύεται από ακτινοβολία και υγρασία."
 
-#: ../panel-plugin/weather-config.c:1276
+#: ../panel-plugin/weather-config.c:1277
 msgid ""
 "The weight of the air that makes up the atmosphere exerts a pressure on the "
 "surface of the Earth, which is known as atmospheric pressure. To make it "
@@ -880,7 +865,7 @@ msgid ""
 "pressures mean deterioration."
 msgstr "Το βάρος του αέρα που κάνει την ατμόσφαιρα να ασκεί πίεση στην επιφάνεια της γης, γνωστή σαν ατμοσφαιρική πίεση. Για την ευκολότερη σύγκριση της τιμής με άλλες σε τοποθεσίες με διαφορετικά υψόμετρα, η ατμοσφαιρική πίεση αναπροσαρμόζεται με την ίσης αξίας πίεση στο επίπεδο της θάλασσας που ονομάζεται βαρομετρική πίεση. Γενικότερα, η αύξηση της βαρομετρικής πίεσης δείχνει βελτίωση του καιρού ενώ η πτώση της σημαίνει επιδείνωση."
 
-#: ../panel-plugin/weather-config.c:1287
+#: ../panel-plugin/weather-config.c:1288
 msgid ""
 "Nowadays wind speed/velocity is measured using an anemometer (Greek "
 "<i>anemos</i>, meaning <i>wind</i>) in 10 m (33 ft) height. Anemometers "
@@ -888,26 +873,26 @@ msgid ""
 "as they are closely related to and can be deduced from each other."
 msgstr "Σήμερα η ταχύτητα του ανέμου μετράται με την χρήση ανεμόμετρου (στα Ελληνικά <i>anemos</i>, σημαίνει <i>άνεμος</i>) σε ύψος 10μ (33 ft). Τα ανεμόμετρα συνήθως μετράνε είτε την ταχύτητα του αέρα ή την πίεση, θα παρέχουν και τις δυο τιμές επειδή είναι στενά συνδεδεμένες αλλά και μπορεί να εξαχθούν η μία από την άλλη."
 
-#: ../panel-plugin/weather-config.c:1295
+#: ../panel-plugin/weather-config.c:1296
 msgid ""
 "Invented by Sir Francis Beaufort in 1805, this empirical scale on wind speed"
 " is based on people's observations of specific land or sea conditions, "
 "denoting these conditions with numbers from 0 (calm) to 12 (hurricane)."
 msgstr "Εφευρέθηκε από τον Sir Francis Beaufort το 1805, αυτή η εμπειρική κλίμακα της ταχύτητας του ανέμου είναι βασισμένη σε παρατηρήσεις του ανθρώπου σε ειδικές χερσαίες ή θαλάσσιες συνθήκες και υποδηλώνει αυτές τις συνθήκες με αριθμούς από το 0 ( ηρεμία ) έως 12 ( τυφώνας )."
 
-#: ../panel-plugin/weather-config.c:1301
+#: ../panel-plugin/weather-config.c:1302
 msgid ""
 "This gives the cardinal direction (North, East, South, West) the wind is "
 "coming from."
 msgstr "Μας δίνει τη διεύθυνση του ορίζοντα από την οποία έρχεται ο άνεμος (Βόρειος, Ανατολικός, Νότιος, Δυτικός)."
 
-#: ../panel-plugin/weather-config.c:1305
+#: ../panel-plugin/weather-config.c:1306
 msgid ""
 "This gives the direction the wind is coming from in azimuth degrees (North ="
 " 0°, East = 90°, South = 180° and West = 270°)."
 msgstr "Μας δίνει τη διεύθυνση από την οποία έρχεται ο άνεμος, σε μοίρες αζιμούθου (Βόρεια = 0°, Ανατολικά = 90°, Νότια = 180° και Δυτικά = 270°)."
 
-#: ../panel-plugin/weather-config.c:1310
+#: ../panel-plugin/weather-config.c:1311
 msgid ""
 "Humidity is defined as the amount of water vapor in the air and increases "
 "the possibility of precipitation, fog and dew. While absolute humidity is "
@@ -916,21 +901,21 @@ msgid ""
 "pressure."
 msgstr "Η υγρασία ορίζει τη ποσότητα των υδρατμών στον αέρα και αυξάνει τη πιθανότητα βροχόπτωσης, ομίχλης και δροσιάς. Ενώ η απόλυτη υγρασία είναι το περιεχόμενο του νερού στον αέρα, η σχετική υγρασία δίνει την εκατοστιαία (%) αναλογία της απόλυτης υγρασίας σχετικά με τη μέγιστη θερμοκρασία και τη πίεση του αέρα."
 
-#: ../panel-plugin/weather-config.c:1318
+#: ../panel-plugin/weather-config.c:1319
 msgid ""
 "This is the temperature to which air must be cooled to reach 100% relative humidity, given no change in water content. Reaching the dew point halts the cooling process, as condensation occurs which releases heat into the air. A high dew point increases the possibility of rain and severe thunderstorms. The dew point allows the prediction of dew, frost, fog and minimum overnight temperature, and has influence on the comfort level one experiences.\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no."
 msgstr "Είναι η θερμοκρασία στην οποία ο αέρας πρέπει να ψυχθεί για να φτάσει στο 100% της σχετικής υγρασίας χωρίς αλλαγή στη περιεκτικότητα του σε νερό. Φτάνοντας στο σημείο δρόσου σταματά η διαδικασία ψύξης του αέρα,  καθώς εμφανίζεται συμπύκνωση που απελευθερώνει θερμότητα. Το υψηλό σημείο δρόσου αυξάνει τη πιθανότητα βροχής και ισχυρών καταιγίδων. Το σημείο δρόσου επιτρέπει την πρόγνωση δροσιάς, πάγου, ομίχλης καθώς και της ελάχιστης νυχτερινής θερμοκρασίας και έχει επίδραση στα βιωματικά επίπεδα άνεσης.\n\n<b>Σημείωση:</b> Αυτή είναι μια υπολογιζόμενη τιμή που δεν παρέχεται από το met.no."
 
-#: ../panel-plugin/weather-config.c:1330
+#: ../panel-plugin/weather-config.c:1331
 msgid ""
 "Also known as <i>felt temperature</i>, <i>effective temperature</i>, or what some weather providers declare as <i>feels like</i>. Human temperature sensation is not only based on air temperature, but also on heat flow, physical activity and individual condition. While being a highly subjective value, apparent temperature can actually be useful for warning about extreme conditions (cold, heat).\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no. You should use a calculation model appropriate for your local climate and personal preferences on the units page."
 msgstr "Γνωστή επίσης και σαν <i>θερμοκρασία αίσθησης</i>, <i>αποτελεσματική θερμοκρασία</i> ή όπως αλλιώς καθορίζεται από κάποιους σταθμούς καιρού ότι <i>δίδει την αίσθηση</i>. Η αίσθηση της θερμοκρασίας από τον άνθρωπο δεν οφείλεται μόνο στη θερμοκρασία του αέρα, αλλά επηρεάζεται από την ροή της θερμότητας, τη φυσική δραστηριότητα και τη κατάσταση του ατόμου. Αν και είναι μια πολύ υποκειμενική τιμή, η θερμοκρασία αυτή μπορεί να φανεί χρήσιμη στη προειδοποίηση ακραίων καταστάσεων (κρύου, θερμότητας).\n\n<b>Σημείωση:</b> Αυτή είναι μια υπολογιζόμενη τιμή που δεν παρέχεται από το met.no. Πρέπει να χρησιμοποιήσετε τον κατάλληλο δείκτη-μοντέλο για τη τοποθεσία σας καθώς και τη προσωπική σας επιλογή στη σελίδα με τις μονάδες μέτρησης."
 
-#: ../panel-plugin/weather-config.c:1344
+#: ../panel-plugin/weather-config.c:1345
 msgid ""
 "This gives the low-level cloud cover in percent. According to WMO "
 "definition, low-level clouds can be found at altitudes below 4,000 m (13,000"
@@ -939,7 +924,7 @@ msgid ""
 "particles and snow, when temperatures are cold enough."
 msgstr "Δίνει το επίπεδο της κατώτερης νέφωσης σε ποσοστό. Σύμφωνα με το καθορισμό από τον Παγκόσμιο Μετεωρολογικό Οργανισμό (WMO), το επίπεδο της κατώτερης νέφωσης βρίσκεται σε υψόμετρα κάτω από τα 4.000 m (13.000 ft), στον ισημερινό κάτω από τα 5.000 m (16.000 ft), αν και συχνά βρίσκονται κάτω από τα 2.000 m (6.500 ft). Όταν η θερμοκρασία είναι αρκετά χαμηλή, τα νέφη αποτελούνται κυρίως από σταγόνες νερού ή από μικρά κομματάκια πάγου και χιονιού."
 
-#: ../panel-plugin/weather-config.c:1352
+#: ../panel-plugin/weather-config.c:1353
 msgid ""
 "This specifies the mid-level cloud cover in percent. According to WMO "
 "definition, mid-level clouds form in heights of 4,000-8,000 m (13,000-26,000"
@@ -948,7 +933,7 @@ msgid ""
 "temperatures get low enough, ice particles can replace the droplets."
 msgstr "Δίνει το επίπεδο της μεσαίας νέφωσης σε ποσοστό. Σύμφωνα με το καθορισμό από τον Παγκόσμιο Μετεωρολογικό Οργανισμό (WMO), το επίπεδο της μεσαίας νέφωσης σχηματίζεται στα ύψη μεταξύ 4.000-8.000 m (13.000-26.000 ft), στον ισημερινό μεταξύ 5.000-10.000 m (16.000-33.000 ft). Όπως και στη κατώτερη νέφωση, τα νέφη αποτελούνται κυρίως από σταγόνες νερού, όταν όμως η θερμοκρασία κατέβει αρκετά τότε μικρά κομματάκια πάγου αντικαθιστούν τις σταγόνες."
 
-#: ../panel-plugin/weather-config.c:1361
+#: ../panel-plugin/weather-config.c:1362
 msgid ""
 "This reports the high-level cloud cover in percent. According to WMO "
 "definition, high-level clouds can be found in altitudes of 8,000 to 15,000 m"
@@ -958,7 +943,7 @@ msgid ""
 "a magnificent array of colors when the sun is low on the horizon."
 msgstr "Δίνει το επίπεδο της υψηλής νέφωσης σε ποσοστό. Σύμφωνα με το καθορισμό από τον Παγκόσμιο Μετεωρολογικό Οργανισμό (WMO), η ανώτερη νέφωση βρίσκεται σε υψόμετρο από 8.000 ως 15.000 m (26.000 ως 49.000 ft), στον ισημερινό από 10.000 m ως 18.000 m (33.000-59.000 ft). Όταν η θερμοκρασία είναι πολύ χαμηλή, τα νέφη αποτελούνται κυρίως από πολύ λεπτούς παγοκρυστάλλους. Και ενώ η τυπική εμφάνιση τους είναι λεπτή και λευκή, όταν ο Ήλιος είναι χαμηλά στον ορίζοντα, μπορεί να εμφανίζονται με μια υπέροχη ποικιλία χρωμάτων."
 
-#: ../panel-plugin/weather-config.c:1371
+#: ../panel-plugin/weather-config.c:1372
 msgid ""
 "Cloudiness, or cloud cover, defines the fraction of the sky obscured by "
 "clouds when observed from a given location. Clouds are both carriers of "
@@ -969,7 +954,7 @@ msgid ""
 "that way contribute to the cooling of the planet."
 msgstr "Η συννεφιά ή η κάλυψη των νεφών σε μια δεδομένη τοποθεσία, καθορίζει το κλάσμα της σκίασης του ουρανού από τα σύννεφα. Τα σύννεφα είναι φορείς βροχόπτωσης και ταυτόχρονα ρυθμιστές της ποσότητας της ηλιακής ακτινοβολίας που φτάνει στην επιφάνεια της γης. Ενώ κατά τη διάρκεια της ημέρας ελαττώνουν τη θερμοκρασία, το βράδυ έχουν το αντίθετο αποτέλεσμα, καθώς οι υδρατμοί εμποδίζουν να διαφύγει στο διάστημα η ακτινοβολία μεγάλου μήκους κύματος. Πέρα από αυτό, τα σύννεφα αντανακλούν φως στο διάστημα και συνεισφέρουν έτσι στην διατήρηση της ψύξης του πλανήτη."
 
-#: ../panel-plugin/weather-config.c:1383
+#: ../panel-plugin/weather-config.c:1384
 msgid ""
 "Fog is a type of low-lying stratus cloud, with the moisture in it often "
 "generated locally such as from a nearby lake, river, ocean, or simply moist "
@@ -979,7 +964,7 @@ msgid ""
 " visibility to less than 1 km (5/8 statute mile)."
 msgstr "Η ομίχλη είναι ένας τύπος πολύ χαμηλής συννεφιάς. Συχνά η υγρασία σε αυτή δημιουργείται τοπικά από μια κοντινή λίμνη, ποταμό, ωκεανό ή από την απλή υγρασία του εδάφους, όταν η διαφορά μεταξύ της θερμοκρασίας και του σημείου δρόσου είναι χαμηλότερη από  2.5 °C (4 °F) και συνήθως με σχετική υγρασία 100%. Συνήθως η ομίχλη παράγει ελαφρά βροχόπτωση, με τη μορφή μικρών σταγόνων βροχής (ψεκάδες) ή πολύ ελαφράς χιονόπτωσης και ελαττώνει την ορατότητα σε λιγότερο από 1 km (5/8 του μιλίου)."
 
-#: ../panel-plugin/weather-config.c:1394
+#: ../panel-plugin/weather-config.c:1395
 msgid ""
 "The amount of rain, drizzle, sleet, hail, snow, graupel and other forms of water falling from the sky over a specific period.\n"
 "\n"
@@ -996,7 +981,7 @@ msgid ""
 "<b>Note</b>: While air temperature is an important factor in this calculation, there are other influencing factors that the plugin doesn't know about like the type of snow and ground temperature. Because of that, these rules will only lead to rough estimates and may not represent the real amount of snow."
 msgstr "Είναι η ποσότητα της βροχής, του ψιλόβροχου, του χιονόνερου, του χαλαζιού, των νιφάδων του χιονιού και του χιονιού σε μπάλες, καθώς και άλλων τύπων νερού που πέφτουν από τον ουρανό, σε μια συγκεκριμένη χρονική περίοδο.\n\nΟι τιμές που δίνει το met.no είναι αυτές της βροχόπτωσης σε υγρή μορφή - με άλλα λόγια: της βροχής -. Εάν αναμένεται χιόνι (αλλά όχι χιονόνερο), τότε η ποσότητα του χιονιού θα <i>υπολογιστεί</i>, πολλαπλασιάζοντας την αναφερόμενη τιμή με την αναλογία, που εξαρτάται από τη θερμοκρασία του αέρα:\n\n<tt><small>                   Θ &lt; -11.1 °C (12 °F) =&gt; 1:12\n-11.1 °C (12 °F) &lt; Θ &lt;  -4.4 °C (24 °F) =&gt; 1:10\n -4.4 °C (24 °F) &lt; Θ &lt;  -2.2 °C (28° F) =&gt; 1:7\n -2.2 °C (28 °F) &lt; Θ &lt;  -0.6 °C (31 °F) =&gt; 1:5\n -0.6 °C (31 °F) &lt; Θ                    =&gt; 1:3\n\n</small></tt>Παράδειγμα: Αν η θερμοκρασία είναι -5 °C (12 °F), τότε η πυκνότητα του χιονιού θα είναι χαμηλή και θα χρησιμοποιηθεί για τον υπολογισμό η αναλογία 1:10. Υποθέτοντας ότι η αναφερόμενη τιμή είναι 5 mm, τότε η υπολογιζόμενη ποσότητα του χιονιού είναι 50 mm.\n\n<b>Σημείωση</b>: Σε αυτό τον υπολογισμό αν και η θερμοκρασία του αέρα είναι ένας σημαντικός παράγοντας, υπάρχουν και άλλοι επιδρώντες παράγοντες που δεν γνωρίζει το πρόσθετο, όπως ο τύπος του χιονιού και η θερμοκρασία του εδάφους. Για αυτό οι προηγούμενοι κανόνες οδηγούν σε πρόχειρες εκτιμήσεις και δεν αντιπροσωπεύουν τη πραγματική ποσότητα του χιονιού."
 
-#: ../panel-plugin/weather-config.c:1570
+#: ../panel-plugin/weather-config.c:1571
 msgid "Labels to d_isplay"
 msgstr "_Εμφανιζόμενες ετικέτες"
 
@@ -1650,27 +1635,31 @@ msgstr "Βράδυ"
 msgid "Night"
 msgstr "Νύχτα"
 
-#: ../panel-plugin/weather-summary.c:1172
+#: ../panel-plugin/weather-summary.c:1182
 msgid "Weather Report"
 msgstr "Δελτίο καιρού"
 
-#: ../panel-plugin/weather-summary.c:1175
-msgid "Close"
-msgstr "Κλείσιμο"
+#: ../panel-plugin/weather-summary.c:1234
+msgid "No location selected."
+msgstr ""
 
-#: ../panel-plugin/weather-summary.c:1208
+#: ../panel-plugin/weather-summary.c:1234
 msgid "Please set a location in the plugin settings."
 msgstr "Παρακαλώ εισάγετε τη τοποθεσία στις ρυθμίσεις του πρόσθετου."
 
-#: ../panel-plugin/weather-summary.c:1210
+#: ../panel-plugin/weather-summary.c:1236
 msgid "Currently no data available."
 msgstr "Προς το παρόν δεν υπάρχουν διαθέσιμα δεδομένα."
 
-#: ../panel-plugin/weather-summary.c:1222
+#: ../panel-plugin/weather-summary.c:1243
+msgid "Plugin settings..."
+msgstr ""
+
+#: ../panel-plugin/weather-summary.c:1257
 msgid "_Forecast"
 msgstr "_Πρόβλεψη"
 
-#: ../panel-plugin/weather-summary.c:1225
+#: ../panel-plugin/weather-summary.c:1260
 msgid "_Details"
 msgstr "_Λεπτομέρειες"
 
