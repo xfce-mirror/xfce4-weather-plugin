@@ -24,7 +24,7 @@ msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-03-23 00:49+0100\n"
-"PO-Revision-Date: 2021-05-11 20:35+0000\n"
+"PO-Revision-Date: 2021-05-12 10:46+0000\n"
 "Last-Translator: Toni Estévez <toni.estevez@gmail.com>\n"
 "Language-Team: Spanish (http://www.transifex.com/xfce/xfce-panel-plugins/language/es/)\n"
 "MIME-Version: 1.0\n"
@@ -98,7 +98,7 @@ msgid ""
 "The plugin tries to auto-detect the altitude using the GeoNames webservice, but that might not always be correct too, so you can change it here.\n"
 "\n"
 "Altitude is given in meters above sea level, or alternatively in feet by changing the unit on the units page. It should match the real value roughly, but small differences will have no influence on the weather data. Inside Norway, this setting has no effect at all."
-msgstr "Para ubicaciones fuera de Noruega, el modelo de elevación usado por el servicio web de met.no no es muy bueno, así que normalmente es necesario especificar la altitud como un parámetro adicional, de lo contrario los valores indicados no serán correctos.\n\nEl complemento intenta detectar automáticamente la altitud usando el servicio web GeoNames, pero puede que este valor no sea siempre correcto y por eso puede cambiarlo aquí.\n\nLa altitud se da en metros sobre el nivel del mar o alternativamente en pies, si se cambia la unidad en la página de unidades. Debería coincidir aproximadamente con el valor real, aunque pequeñas diferencias no influirán en los datos meteorológicos. Dentro de Noruega, este ajuste no tiene ningún efecto."
+msgstr "Para ubicaciones situadas fuera de Noruega, el modelo de elevación usado por el servicio web met.no no es muy bueno, así que normalmente es necesario especificar la altitud como un parámetro adicional, de lo contrario los valores indicados no serán correctos.\n\nEl complemento intenta detectar automáticamente la altitud usando el servicio web GeoNames, pero puede que este valor no sea siempre correcto y por eso puede cambiarlo aquí.\n\nLa altitud se da en metros sobre el nivel del mar o alternativamente en pies, si se cambia la unidad en la página de unidades. Debería coincidir aproximadamente con el valor real, aunque pequeñas diferencias no influirán en los datos meteorológicos. Dentro de Noruega, este ajuste no tiene ningún efecto."
 
 #: ../panel-plugin/weather-config.ui.h:17 ../panel-plugin/weather-config.c:398
 msgid "feet"
@@ -108,7 +108,7 @@ msgstr "pies"
 msgid ""
 "If the chosen location is not in your current timezone, then it is necessary to <i>put</i> the plugin into that other timezone for the times to be shown correctly. The proper timezone will be auto-detected via the GeoNames web service, but you might want to correct it if necessary.\n"
 "Leave this field empty to use the timezone set by your system. Invalid entries will cause the use of UTC time, but that may also depend on your system."
-msgstr "Si la ubicación no está en su huso horario actual, entonces es necesario <i>poner</i> el complemento en otra zona horaria para que dicha hora se muestre correctamente. El huso horario se proporciona automáticamente a través del servicio web «GeoNames», pero quizá prefiera corregirla si lo necesita.\nDeje este campo vacío para utilizar el huso horario establecido por su sistema. Las entradas erróneas devolverán la hora de UTC, pero puede depender también de su sistema."
+msgstr "Si la ubicación elegida no está situada en el huso horario actual, es necesario <i>poner</i> el complemento en ese otro huso horario para que las horas se muestren correctamente. El huso horario adecuado se detectará automáticamente mediante el servicio web GeoNames, pero se puede corregir si es necesario.\nDeje este campo en blanco para usar el huso horario configurado en el sistema. Las entradas no válidas harán que se use la hora UTC, pero eso también depende del sistema."
 
 #: ../panel-plugin/weather-config.ui.h:20
 msgid ""
@@ -122,13 +122,13 @@ msgstr "Cambiar..."
 
 #: ../panel-plugin/weather-config.ui.h:22
 msgid "Search for a new location and auto-detect its parameters."
-msgstr "Buscar una nueva ubicación y autodetectar sus parámetros."
+msgstr "Buscar una nueva ubicación y detectar automáticamente sus parámetros."
 
 #: ../panel-plugin/weather-config.ui.h:23
 msgid ""
 "Please change location name to your liking and correct alltitude and "
 "timezone if they are not auto-detected correctly."
-msgstr "Cambie el nombre de la ubicación como prefiera y corrija la altitud y el huso horario si no se han detectado correctamente."
+msgstr "Cambia el nombre de la ubicación a su gusto y corrija la altitud y el huso horario si no se detectan correctamente de modo automática."
 
 #: ../panel-plugin/weather-config.ui.h:24
 msgid "_Location"
@@ -140,7 +140,7 @@ msgstr "_Temperatura:"
 
 #: ../panel-plugin/weather-config.ui.h:26
 msgid "Barometric _pressure:"
-msgstr "_Presión barométrica:"
+msgstr "_Presión atmosférica:"
 
 #: ../panel-plugin/weather-config.ui.h:27
 msgid "_Wind speed:"
@@ -176,7 +176,7 @@ msgstr "Libra-fuerza por pulgada cuadrada (psi)"
 
 #: ../panel-plugin/weather-config.ui.h:35
 msgid "Torr (mmHg)"
-msgstr "Torr (mmHg)"
+msgstr "Milímetros de mercurio (mmHg)"
 
 #: ../panel-plugin/weather-config.ui.h:36
 msgid "Kilometers per hour (km/h)"
@@ -216,11 +216,11 @@ msgstr "Pies (ft)"
 
 #: ../panel-plugin/weather-config.ui.h:45
 msgid "Windchill/Heat index"
-msgstr "Sensación térmica/Temperatura de bochorno"
+msgstr "Sensación térmica / temperatura de bochorno"
 
 #: ../panel-plugin/weather-config.ui.h:46
 msgid "Windchill/Humidex"
-msgstr "Sensación térmica/índice Humidex"
+msgstr "Sensación térmica / índice de humedad"
 
 #: ../panel-plugin/weather-config.ui.h:47
 msgid "Steadman"
@@ -241,7 +241,7 @@ msgid ""
 "system). Information about how to create or use icon themes can be found in "
 "the README file. New icon themes will be detected everytime you open this "
 "config dialog."
-msgstr "Los iconos disponibles se muestran aquí. Se pueden añadir temas de iconos en $HOME/.config/xfce4/weather/icons (o el directorio equivalente en su sistema). En el fichero README se puede encontrar información sobre como crear o usar temas de iconos. Los temas de iconos nuevos serán detectados cada vez que se abra este diálogo de configuración."
+msgstr "Aquí se listan los temas de iconos disponibles. Se pueden añadir temas de iconos en $HOME/.config/xfce4/weather/icons (o en la carpeta equivalente del sistema). En el archivo README se puede encontrar información sobre cómo crear o usar temas de iconos. Los temas de iconos nuevos se detectarán cada vez que se abra este diálogo de configuración."
 
 #: ../panel-plugin/weather-config.ui.h:51
 msgid "_Icon theme:"
@@ -251,27 +251,27 @@ msgstr "_Tema de iconos:"
 msgid ""
 "Open the user icon themes directory in your file manager, creating it if "
 "necessary."
-msgstr "Abrir el directorio del tema de iconos en su navegador de archivos, creándolo si es necesario."
+msgstr "Abrir la carpeta de temas de iconos del usuario en el gestor de archivos. Crearla si es necesario."
 
 #: ../panel-plugin/weather-config.ui.h:53
 msgid "Use only a single _panel row"
-msgstr "Utilizar solo una fila del _panel"
+msgstr "Usar solo una fila del _panel"
 
 #: ../panel-plugin/weather-config.ui.h:54
 msgid ""
 "Check to always use only a single row on a multi-row panel and a small icon "
 "in deskbar mode."
-msgstr "Marcar para utilizar siempre una única fila en el panel multirenglón y un icono pequeño en modo de barra de escritorio."
+msgstr "Marque para usar siempre una sola fila en un panel de varias filas y un icono pequeño en el modo de barra de escritorio."
 
 #: ../panel-plugin/weather-config.ui.h:55
 msgid "_Tooltip style:"
-msgstr "Estilo de _información:"
+msgstr "Estilo de la _información emergente:"
 
 #: ../panel-plugin/weather-config.ui.h:56
 msgid ""
 "Choose your preferred tooltip style. Some styles give a lot of useful data, "
 "some are clearer but provide less data on a glance."
-msgstr "Elija su estilo de sugerencias preferido. Algunos estilos proporcionan mucha información de utilidad, mientras que otros son más claros pero dan menos información de un vistazo."
+msgstr "Elija su estilo de información emergente preferido. Algunos estilos dan muchos datos útiles, otros son más claros pero proporcionan menos datos."
 
 #: ../panel-plugin/weather-config.ui.h:57
 msgid "Simple"
@@ -283,7 +283,7 @@ msgstr "Detallado"
 
 #: ../panel-plugin/weather-config.ui.h:59
 msgid "_Forecast layout:"
-msgstr "Di_seño de la previsión:"
+msgstr "Di_stribución de la previsión:"
 
 #: ../panel-plugin/weather-config.ui.h:60
 msgid "Days in columns"
@@ -295,7 +295,7 @@ msgstr "Días en filas"
 
 #: ../panel-plugin/weather-config.ui.h:62
 msgid "_Number of forecast days:"
-msgstr "_Número de días previstos:"
+msgstr "_Número de días de la previsión:"
 
 #: ../panel-plugin/weather-config.ui.h:63
 msgid "_Round values"
@@ -307,22 +307,22 @@ msgstr "_Apariencia"
 
 #: ../panel-plugin/weather-config.ui.h:65
 msgid "Font and color:"
-msgstr "Tipo de letra y color:"
+msgstr "Tipografía y color:"
 
 #: ../panel-plugin/weather-config.ui.h:66
 msgid ""
 "These are the values that will be shown in the scrollbox. Select a single "
 "value here and click the appropriate button to remove it or move it up and "
 "down in the list."
-msgstr "Estos son los valores que se muestran en la barra de desplazamiento. Seleccione un valor único aquí y haga clic en el botón correspondiente para eliminar o mover hacia arriba y hacia abajo en la lista."
+msgstr "Estos son los valores que se mostrarán en el cuadro de desplazamiento. Seleccione aquí un solo valor y haga clic en el botón correspondiente para eliminarlo o moverlo hacia arriba y hacia abajo en la lista."
 
 #: ../panel-plugin/weather-config.ui.h:67
 msgid "Move the selected value up in the list of labels to display."
-msgstr "Mueve el valor seleccionado hacia arriba en la lista de etiquetas a mostrar."
+msgstr "Sube el valor seleccionado en la lista de etiquetas para mostrar."
 
 #: ../panel-plugin/weather-config.ui.h:68
 msgid "Move the selected value down in the list of labels to display."
-msgstr "Mueve el valor seleccionado hacia abajo en la lista de etiquetas a mostrar."
+msgstr "Bajar el valor seleccionado en la lista de etiquetas para mostrar."
 
 #. * TRANSLATORS: The abbreviations in parentheses will be shown in
 #. * the scrollbox together with the values. Keep them in sync with
@@ -337,7 +337,7 @@ msgstr "Temperatura (T)"
 
 #: ../panel-plugin/weather-config.ui.h:70 ../panel-plugin/weather-config.c:97
 msgid "Barometric pressure (P)"
-msgstr "Presión barométrica (P)"
+msgstr "Presión atmosférica (P)"
 
 #: ../panel-plugin/weather-config.ui.h:71 ../panel-plugin/weather-config.c:98
 msgid "Wind speed (WS)"
@@ -345,7 +345,7 @@ msgstr "Velocidad del viento (VV)"
 
 #: ../panel-plugin/weather-config.ui.h:72 ../panel-plugin/weather-config.c:99
 msgid "Wind speed - Beaufort scale (WB)"
-msgstr "Velocidad del viento, escala Beaufort (VB)"
+msgstr "Velocidad del viento: escala Beaufort (VB)"
 
 #: ../panel-plugin/weather-config.ui.h:73 ../panel-plugin/weather-config.c:100
 msgid "Wind direction (WD)"
@@ -395,13 +395,13 @@ msgstr "Precipitación (R)"
 msgid ""
 "Add the selected value to the labels that should be displayed in the "
 "scrollbox."
-msgstr "Agregue el valor seleccionado a las etiquetas que se deben mostrar en la barra de desplazamiento."
+msgstr "Añada el valor seleccionado a las etiquetas que se deben mostrar en el cuadro de desplazamiento."
 
 #: ../panel-plugin/weather-config.ui.h:85
 msgid ""
 "Select a value in the list of labels to display and click this button to "
 "remove it."
-msgstr "Seleccione un valor en la lista de etiquetas a mostrar y pulse en este botón para eliminarlo."
+msgstr "Seleccione un valor en la lista de etiquetas para mostrar y haga clic en este botón para eliminarlo."
 
 #: ../panel-plugin/weather-config.ui.h:86
 msgid "Li_nes:"
@@ -411,14 +411,14 @@ msgstr "Lí_neas:"
 msgid ""
 "Decide how many values should be shown at once in the scrollbox. You can "
 "choose a smaller font or enlarge the panel to make more lines fit."
-msgstr "Decida cuantos valores deben mostrarse a la vez en el cuadro de desplazamiento. Puede elegir un tipo de letra más pequeño o ampliar el panel para que quepan más líneas."
+msgstr "Decida cuántos valores deben mostrarse a la vez en el cuadro de desplazamiento. Puede elegir una letra más pequeña o ampliar el panel para que quepan más líneas."
 
 #: ../panel-plugin/weather-config.ui.h:88
 msgid ""
 "Hide the scrollbox to save valuable space on the panel. Most interesting "
 "information is also provided in the tooltip - provided you choose an "
 "appropriate tooltip style - that is shown when hovering over the icon."
-msgstr "Se puede esconder la caja de desplazamiento para ahorrar espacio en el panel. La información más interesante también se muestra en un mensaje emergente cuando se posa el cursor sobre el icono (siempre y cuando se elija una estilo de sugerencias apropiado)."
+msgstr "Oculte el cuadro de desplazamiento para ahorrar un valioso espacio en el panel. La mayor parte de la información de interés también se proporciona en el texto que se muestra al situar el puntero sobre el icono, siempre que se elija un estilo de información emergente adecuado."
 
 #: ../panel-plugin/weather-config.ui.h:89
 msgid "<b>Show scrollbox</b>"
@@ -427,13 +427,13 @@ msgstr "<b>Mostrar el cuadro de desplazamiento</b>"
 #: ../panel-plugin/weather-config.ui.h:90
 #: ../panel-plugin/weather-config.c:1131
 msgid "Select _font"
-msgstr "_Seleccione el tipo de letra"
+msgstr "_Seleccione la tipografía"
 
 #: ../panel-plugin/weather-config.ui.h:91
 msgid ""
 "Choose a font you like and set it to a smaller or larger size. Middle-click "
 "on the button to unset the font and use your theme's default."
-msgstr "Elija un tipo de letra que le guste y defina su tamaño. Utilice el botón central del ratón para quitar el tipo de letra y utilizar el valor predeterminado del tema."
+msgstr "Elija una tipografía que le guste y ajuste su tamaño. Haga clic central para desactivarla y usar el valor predeterminado del tema."
 
 #: ../panel-plugin/weather-config.ui.h:92
 msgid ""
@@ -441,7 +441,7 @@ msgid ""
 "hardly readable. If this is the case or you simply want it to appear in "
 "another color, then you can change it using this button. Middle-click on the"
 " button to unset the scrollbox text color."
-msgstr "Puede haber problemas con algunos temas que hacen que el texto de la barra de desplazamiento sea apenas legible. Si este es el caso, o si simplemente desea que aparezca con otro color, entonces puede cambiarlo usando este botón. Utilice el clic del medio en el botón para devolver el color del texto de la barra de desplazamiento a su valor original."
+msgstr "Puede haber problemas con algunos temas que hacen que el texto de la caja de desplazamiento sea apenas legible. Si este es el caso, o simplemente prefiere otro color, puede usar este botón. Haga clic central para anular la configuración del color del texto de la caja de desplazamiento."
 
 #: ../panel-plugin/weather-config.ui.h:93
 msgid "Animate transitions between labels"
@@ -452,11 +452,11 @@ msgid ""
 "Scroll the current displayed value(s) out and the new value(s) in instead of"
 " simply changing them. Uncheck this option if you find the animation too "
 "distracting."
-msgstr "Desplace el (los) valor(es) mostrado(s) actualmente fuera y el (los) nuevo(s) valor(es) en lugar de simplemente cambiarlo(s). Desactive esta opción si encuentra la animación demasiado molesta."
+msgstr "Desplaza hacia fuera los valores actuales y hacia dentro los valores nuevos en vez de simplemente cambiarlos. Desactive esta opción si la animación le resulta molesta."
 
 #: ../panel-plugin/weather-config.ui.h:95
 msgid "_Scrollbox"
-msgstr "Ca_ja de desplazamiento"
+msgstr "_Cuadro de desplazamiento"
 
 #. TRANSLATORS: Keep in sync with labeloptions in weather-config.c
 #: ../panel-plugin/weather.c:129
@@ -521,24 +521,24 @@ msgstr "Sin datos"
 
 #: ../panel-plugin/weather.c:516
 msgid "Error parsing astronomical data!"
-msgstr "¡Error analizando datos astronómicos!"
+msgstr "¡Error al analizar los datos astronómicos!"
 
 #: ../panel-plugin/weather.c:518
 #, c-format
 msgid ""
 "Download of astronomical data failed with HTTP Status Code %d, Reason "
 "phrase: %s"
-msgstr "La descarga de datos de meteorología ha fallado con el código de estado HTTP %d, motivo aducido: %s"
+msgstr "Ha fallado la descarga de datos astronómicos con el código de estado HTTP %d. Motivo del error: %s"
 
 #: ../panel-plugin/weather.c:569
 msgid "Error parsing weather data!"
-msgstr "¡Error analizando datos meteorológicos!"
+msgstr "¡Error al analizar los datos meteorológicos!"
 
 #: ../panel-plugin/weather.c:572
 #, c-format
 msgid ""
 "Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
-msgstr "La descarga de datos de meteorología ha fallado con el código de estado HTTP %d, motivo aducido: %s"
+msgstr "Ha fallado la descarga de datos meteorológicos con el código de estado HTTP %d. Motivo del error: %s"
 
 #. start receive thread
 #: ../panel-plugin/weather.c:645 ../panel-plugin/weather.c:666
@@ -550,12 +550,12 @@ msgstr "obteniendo %s"
 #: ../panel-plugin/weather.c:1198
 #, c-format
 msgid "Error writing cache file %s!"
-msgstr "¡Error escribiendo archivo de caché %s!"
+msgstr "¡Error al escribir archivo de caché %s!"
 
 #: ../panel-plugin/weather.c:1658
 #, c-format
 msgid "Unable to open the following url: %s"
-msgstr "Imposible abrir la siguiente URL: %s"
+msgstr "No se puede abrir el URL siguiente: %s"
 
 #: ../panel-plugin/weather.c:1728
 msgid "Short-term forecast data unavailable."
@@ -563,26 +563,26 @@ msgstr "Datos de previsión a corto plazo no disponibles."
 
 #: ../panel-plugin/weather.c:1741
 msgid "The sun never sets today."
-msgstr "El Sol no se pone hoy."
+msgstr "Hoy no se pondrá el sol."
 
 #: ../panel-plugin/weather.c:1743
 msgid "The sun never rises today."
-msgstr "El Sol no sale hoy."
+msgstr "Hoy no saldrá el sol."
 
 #: ../panel-plugin/weather.c:1749
 #, c-format
 msgid "The sun never rises and sets at %s."
-msgstr "El Sol nunca sale y se pone a las %s."
+msgstr "El sol no sale nunca y se pone a las %s."
 
 #: ../panel-plugin/weather.c:1756
 #, c-format
 msgid "The sun rises at %s and never sets."
-msgstr "El Sol sale a las %s y nunca se pone."
+msgstr "El sol sale a las %s y no se pone nunca."
 
 #: ../panel-plugin/weather.c:1764
 #, c-format
 msgid "The sun rises at %s and sets at %s."
-msgstr "El Sol sale a las %s y se pone a las %s."
+msgstr "El sol sale a las %s y se pone a las %s."
 
 #. * TRANSLATORS: This is the simple tooltip. For a bigger challenge,
 #. * look at the verbose tooltip style further below ;-)
