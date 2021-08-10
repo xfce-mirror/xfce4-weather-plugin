@@ -264,16 +264,16 @@ cb_lookup_timezone(SoupSession *session,
                    gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
-    xml_timezone *timezone;
+    xml_timezone *xml_tz;
 
-    timezone = (xml_timezone *)
+    xml_tz = (xml_timezone *)
         parse_xml_document(msg, (XmlParseFunc) parse_timezone);
-    weather_dump(weather_dump_timezone, timezone);
+    weather_dump(weather_dump_timezone, xml_tz);
 
-    if (timezone) {
+    if (xml_tz) {
         gtk_entry_set_text(GTK_ENTRY(dialog->text_timezone),
-                           timezone->timezone_id);
-        xml_timezone_free(timezone);
+                           xml_tz->timezone_id);
+        xml_timezone_free(xml_tz);
     } else
         gtk_entry_set_text(GTK_ENTRY(dialog->text_timezone), "");
 }
