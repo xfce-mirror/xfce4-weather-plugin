@@ -34,6 +34,7 @@ typedef struct {
     GtkBuilder *builder;
 
     /* location page */
+    GtkWidget *switch_auto;
     GtkWidget *text_loc_name;
     GtkWidget *spin_lat;
     GtkWidget *spin_lon;

@@ -37,6 +37,7 @@
 #include "weather-translate.h"
 #include "weather-summary.h"
 #include "weather-config.h"
+#include "weather-search.h"
 #include "weather-icon.h"
 #include "weather-scrollbox.h"
 #include "weather-debug.h"
@@ -475,6 +476,19 @@ calc_next_download_time(const update_info *upi,
     return time_calc(retry_tm, 0, 0, 0, 0, 0, interval);
 }
 
+static void
+cb_initial_auto_locate(const gchar *loc_name,
+                       const gchar *lat,
+                       const gchar *lon,
+                       const units_config *units,
+                       gpointer user_data)
+{
+    plugin_data *data = user_data;
+
+    data->location_name = g_strdup(loc_name);
+    data->lat = g_strdup(lat);
+    data->lon = g_strdup(lon);
+}
 
 /*
  * Process downloaded astro data and schedule next astro update.
@@ -893,6 +907,7 @@ xfceweather_read_config (XfcePanelPlugin *plugin,
 
     g_return_if_fail (XFCONF_IS_CHANNEL (data->channel));
 
+    data->auto_location = xfceweather_xfconf_get_bool (data, SETTING_AUTO_LOCATION, FALSE);
     data->location_name = xfceweather_xfconf_get_string (data, SETTING_LOCATION_NAME);
     data->lat = xfceweather_xfconf_get_string (data, SETTING_LATITUDE);
     data->lon = xfceweather_xfconf_get_string (data, SETTING_LONGITUDE);
@@ -981,6 +996,7 @@ xfceweather_write_config (XfcePanelPlugin *plugin,
 
     g_return_if_fail (XFCONF_IS_CHANNEL (data->channel));
 
+    xfceweather_xfconf_set_intbool (data, SETTING_AUTO_LOCATION, data->auto_location, TRUE);
     if (data->location_name)
     {
         xfceweather_xfconf_set_string (data, SETTING_LOCATION_NAME, data->location_name);
@@ -2243,9 +2259,14 @@ weather_construct(XfcePanelPlugin *plugin)
 
     data->tooltip_icon = NULL;
     xfceweather_read_config(plugin, data);
-    update_timezone(data);
-    update_offset(data);
-    read_cache_file(data);
+    if  (data->auto_location) {
+        weather_search_by_ip(data->session, cb_initial_auto_locate, data);
+        update_weatherdata_with_reset(data);
+    } else {
+        update_timezone(data);
+        update_offset(data);
+        read_cache_file(data);
+    }
     update_current_conditions(data, TRUE);
     scrollbox_set_visible(data);
     gtk_scrollbox_set_fontname(GTK_SCROLLBOX(data->scrollbox),
