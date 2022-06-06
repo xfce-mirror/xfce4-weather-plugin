@@ -144,6 +144,7 @@ typedef struct {
     gboolean scrollbox_animate;
     GArray *labels;
 
+    gboolean auto_location;
     gchar *location_name;
     gchar *lat;
     gchar *lon;

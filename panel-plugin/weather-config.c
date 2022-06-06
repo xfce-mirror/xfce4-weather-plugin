@@ -420,6 +420,24 @@ setup_altitude(xfceweather_dialog *dialog)
 
 
 static void
+switch_auto_toggled(GtkSwitch *switch_auto,
+                    gpointer user_data)
+{
+    /* why is user_data empty? */
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+    GtkWidget *button_loc_change = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "button_loc_change"));
+    gboolean auto_location = dialog->pd->auto_location = gtk_switch_get_active(switch_auto);
+
+    gtk_widget_set_sensitive(dialog->text_loc_name, auto_location);
+    gtk_widget_set_sensitive(button_loc_change, auto_location);
+    gtk_widget_set_sensitive(dialog->spin_lat, auto_location);
+    gtk_widget_set_sensitive(dialog->spin_lon,  auto_location);
+    gtk_widget_set_sensitive(dialog->spin_alt, auto_location);
+    gtk_widget_set_sensitive(dialog->text_timezone, auto_location);
+}
+
+
+static void
 text_loc_name_changed(const GtkWidget *spin,
                       gpointer user_data)
 {
@@ -490,6 +508,9 @@ static void
 create_location_page(xfceweather_dialog *dialog)
 {
     GtkWidget *button_loc_change;
+
+    /* auto-location switch */
+    dialog->switch_auto = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "switch_auto"));
 
     /* location name */
     dialog->text_loc_name = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "text_loc_name"));
@@ -1642,6 +1663,8 @@ static void
 setup_notebook_signals(xfceweather_dialog *dialog)
 {
     /* location page */
+    g_signal_connect(GTK_SWITCH(dialog->switch_auto), "state-set",
+                     G_CALLBACK(switch_auto_toggled), dialog);
     g_signal_connect(GTK_EDITABLE(dialog->text_loc_name), "changed",
                      G_CALLBACK(text_loc_name_changed), dialog);
     g_signal_connect(GTK_SPIN_BUTTON(dialog->spin_lat), "value-changed",
