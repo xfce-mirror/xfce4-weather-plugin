@@ -32,6 +32,7 @@ EXTRA_DIST =								\
 DISTCLEANFILES =							\
 	intltool-extract						\
 	intltool-merge							\
-	intltool-update
+	intltool-update							\
+	po/.intltool-merge-cache.lock
 
 # vi:set ts=8 sw=8 noet ai nocindent syntax=automake:
