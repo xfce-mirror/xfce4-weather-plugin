@@ -616,7 +616,8 @@ update_handler(gpointer user_data)
 
     /* plugin has not been configured yet, so simply update icon and
        scrollbox and return */
-    if (G_UNLIKELY(data->lat == NULL || data->lon == NULL)) {
+    if (G_UNLIKELY(data->lat == NULL || data->lon == NULL) &&
+        !data->auto_location) {
         update_icon(data);
         update_scrollbox(data, TRUE);
         return FALSE;
