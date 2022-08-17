@@ -634,7 +634,8 @@ update_handler(gpointer user_data)
         data->astro_update->finished = FALSE;
         data->weather_update->started = FALSE;
         data->weather_update->finished = FALSE;
-        write_cache_file(data);
+        if (!data->auto_location)
+            write_cache_file(data);
     }
 
     /* fetch astronomical data */
@@ -1474,7 +1475,9 @@ update_weatherdata_with_reset(plugin_data *data)
     update_scrollbox(data, TRUE);
 
     /* make use of previously saved data */
-    read_cache_file(data);
+    if (!data->auto_location) {
+        read_cache_file(data);
+    }
 
     /* schedule downloads immediately */
     time(&now_t);
