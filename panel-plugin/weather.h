@@ -34,6 +34,7 @@
 #define MAX_SCROLLBOX_LINES 10
 #define FORECAST_API "2.0"
 
+#define SETTING_AUTO_LOCATION "/auto-location"
 #define SETTING_LOCATION_NAME "/location/name"
 #define SETTING_LATITUDE      "/location/latitude"
 #define SETTING_LONGITUDE     "/location/longitude"
@@ -144,6 +145,7 @@ typedef struct {
     gboolean scrollbox_animate;
     GArray *labels;
 
+    gboolean auto_location;
     gchar *location_name;
     gchar *lat;
     gchar *lon;
