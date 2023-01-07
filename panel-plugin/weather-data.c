@@ -355,6 +355,10 @@ get_data(const xml_time *timeslice,
         val = string_to_double(loc->temperature_value, 0);
         if (units->temperature == FAHRENHEIT)
             CALC_FAHRENHEIT(round, val);
+        else {
+            if (val > -0.5 && val < 0) 
+                val = 0;
+        }
         return g_strdup_printf(ROUND_TO_INT("%.1f"), val);
 
     case PRESSURE:         /* source is in hectopascals */
