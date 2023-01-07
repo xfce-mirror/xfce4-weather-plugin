@@ -59,10 +59,11 @@ typedef struct {
 } icon_theme;
 
 
-GdkPixbuf *get_icon(const icon_theme *theme,
-                    const gchar *icon,
-                    gint size,
-                    gboolean night);
+cairo_surface_t *get_icon(const icon_theme *theme,
+                          const gchar *icon,
+                          gint size,
+                          gint scale,
+                          gboolean night);
 
 icon_theme *icon_theme_load_info(const gchar *dir);
 

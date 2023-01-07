@@ -170,16 +170,19 @@ quiet_gdk_pixbuf_new_from_file_at_scale(const char *filename,
 }
 
 
-GdkPixbuf *
+cairo_surface_t *
 get_icon(const icon_theme *theme,
          const gchar *symbol_name,
-         const gint size,
+         const gint _size,
+         gint scale,
          const gboolean night)
 {
     GdkPixbuf *image = NULL;
+    cairo_surface_t *icon = NULL;
     const gchar *sizedir;
     gchar *filename = NULL, *suffix = "";
     GError *error = NULL;
+    gint size = _size * scale;
 
     g_assert(theme != NULL);
     if (G_UNLIKELY(!theme)) {
@@ -217,10 +220,10 @@ get_icon(const icon_theme *theme,
         if (strcmp(symbol_name, symbol_names[SYMBOL_NODATA]))
             if (night)
                 /* maybe there is no night icon, so fallback to using day icon... */
-                return get_icon(theme, symbol_name, size, FALSE);
+                return get_icon(theme, symbol_name, _size, scale, FALSE);
             else
                 /* ... or use NODATA if we tried that already */
-                return get_icon(theme, NULL, size, FALSE);
+                return get_icon(theme, NULL, _size, scale, FALSE);
         else {
             /* last chance: get NODATA icon from standard theme */
             filename = make_fallback_icon_filename(sizedir);
@@ -233,7 +236,12 @@ get_icon(const icon_theme *theme,
     }
     g_free(filename);
 
-    return image;
+    if (G_LIKELY(image != NULL)) {
+        icon = gdk_cairo_surface_create_from_pixbuf(image, scale, NULL);
+        g_object_unref(image);
+    }
+
+    return icon;
 }
 
 

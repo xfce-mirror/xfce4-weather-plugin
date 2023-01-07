@@ -285,26 +285,28 @@ update_offset(plugin_data *data)
 void
 update_icon(plugin_data *data)
 {
-    GdkPixbuf *icon;
+    cairo_surface_t *icon;
     xml_time *conditions;
     gchar *str;
     gint size;
+    gint scale_factor;
 
     /* set panel icon according to current weather conditions */
     size = data->icon_size;
     conditions = get_current_conditions(data->weatherdata);
     str = get_data(conditions, data->units, SYMBOL,
                    data->round, data->night_time);
-    icon = get_icon(data->icon_theme, str, size, data->night_time);
-    gtk_image_set_from_pixbuf(GTK_IMAGE(data->iconimage), icon);
+    scale_factor = gtk_widget_get_scale_factor(GTK_WIDGET(data->plugin));
+    icon = get_icon(data->icon_theme, str, size, scale_factor, data->night_time);
+    gtk_image_set_from_surface(GTK_IMAGE(data->iconimage), icon);
     if (G_LIKELY(icon))
-        g_object_unref(G_OBJECT(icon));
+        cairo_surface_destroy(icon);
 
     /* set tooltip icon too */
     size = get_tooltip_icon_size(data);
     if (G_LIKELY(data->tooltip_icon))
-        g_object_unref(G_OBJECT(data->tooltip_icon));
-    data->tooltip_icon = get_icon(data->icon_theme, str, size, data->night_time);
+        cairo_surface_destroy(data->tooltip_icon);
+    data->tooltip_icon = get_icon(data->icon_theme, str, size, scale_factor, data->night_time);
     g_free(str);
     weather_debug("Updated panel and tooltip icons.");
 }
@@ -1863,17 +1865,25 @@ weather_get_tooltip_cb(GtkWidget *widget,
                        GtkTooltip *tooltip,
                        plugin_data *data)
 {
+    GtkWidget *box, *label, *image;
     gchar *markup_text;
 
     if (data->weatherdata == NULL)
-        gtk_tooltip_set_text(tooltip, _("Cannot update weather data"));
+        label = gtk_label_new(_("Cannot update weather data"));
     else {
         markup_text = weather_get_tooltip_text(data);
-        gtk_tooltip_set_markup(tooltip, markup_text);
+        label = gtk_label_new(markup_text);
+        gtk_label_set_use_markup(GTK_LABEL(label), TRUE);
         g_free(markup_text);
     }
 
-    gtk_tooltip_set_icon(tooltip, data->tooltip_icon);
+    image = gtk_image_new_from_surface(data->tooltip_icon);
+    box = gtk_box_new(GTK_ORIENTATION_HORIZONTAL, 0);
+    gtk_box_pack_start(GTK_BOX(box), image, TRUE, FALSE, 0);
+    gtk_box_pack_start(GTK_BOX(box), label, TRUE, FALSE, 0);
+    gtk_widget_show_all(box);
+    gtk_tooltip_set_custom(tooltip, box);
+
     return TRUE;
 }
 
@@ -1886,8 +1896,9 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     const gchar *proxy_uri;
     const gchar *proxy_user;
     GtkWidget *refresh;
-    GdkPixbuf *icon = NULL;
+    cairo_surface_t *icon = NULL;
     data_types lbl;
+    gint scale_factor;
 
     /* Initialize with sane default values */
     data->plugin = plugin;
@@ -1945,10 +1956,11 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     data->panel_size = xfce_panel_plugin_get_size(plugin);
     data->panel_rows = xfce_panel_plugin_get_nrows(plugin);
     data->icon_theme = icon_theme_load(NULL);
-    icon = get_icon(data->icon_theme, NULL, 16, FALSE);
+    scale_factor = gtk_widget_get_scale_factor(GTK_WIDGET(plugin));
+    icon = get_icon(data->icon_theme, NULL, 16, scale_factor, FALSE);
     if (G_LIKELY(icon)) {
-        data->iconimage = gtk_image_new_from_pixbuf(icon);
-        g_object_unref(G_OBJECT(icon));
+        data->iconimage = gtk_image_new_from_surface(icon);
+        cairo_surface_destroy(icon);
     } else
         g_warning(_("No default icon theme? "
                     "This should not happen, plugin will crash!"));

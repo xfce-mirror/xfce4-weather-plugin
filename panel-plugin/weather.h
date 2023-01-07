@@ -111,7 +111,7 @@ typedef struct {
     GtkWidget *alignbox;
     GtkWidget *vbox_center_scrollbox;
     GtkWidget *iconimage;
-    GdkPixbuf *tooltip_icon;
+    cairo_surface_t *tooltip_icon;
     GtkWidget *summary_window;
     GtkWidget *summary_subtitle;
     summary_details *summary_details;

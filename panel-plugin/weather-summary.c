@@ -861,9 +861,10 @@ add_forecast_cell(plugin_data *data,
                   gint time_of_day)
 {
     GtkWidget *box, *label, *image;
-    GdkPixbuf *icon;
+    cairo_surface_t *icon;
     gchar *wind_speed, *wind_direction, *value, *rawvalue;
     xml_time *fcdata;
+    gint scale_factor;
 
     box = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
 
@@ -879,12 +880,13 @@ add_forecast_cell(plugin_data *data,
     /* symbol */
     rawvalue = get_data(fcdata, data->units, SYMBOL,
                         FALSE, data->night_time);
-    icon = get_icon(data->icon_theme, rawvalue, 48, (time_of_day == NIGHT));
+    scale_factor = gtk_widget_get_scale_factor(GTK_WIDGET(data->plugin));
+    icon = get_icon(data->icon_theme, rawvalue, 48, scale_factor, (time_of_day == NIGHT));
     g_free(rawvalue);
-    image = gtk_image_new_from_pixbuf(icon);
+    image = gtk_image_new_from_surface(icon);
     gtk_box_pack_start(GTK_BOX(box), GTK_WIDGET(image), TRUE, TRUE, 0);
     if (G_LIKELY(icon))
-        g_object_unref(G_OBJECT(icon));
+        cairo_surface_destroy(icon);
 
     /* symbol description */
     rawvalue = get_data(fcdata, data->units, SYMBOL,
@@ -1175,9 +1177,10 @@ GtkWidget *
 create_summary_window(plugin_data *data)
 {
     GtkWidget *window, *notebook, *vbox, *hbox, *label, *image, *button, *box;
-    GdkPixbuf *icon;
+    cairo_surface_t *icon;
     xml_time *conditions;
     gchar *title, *symbol;
+    gint scale_factor;
 
     conditions = get_current_conditions(data->weatherdata);
     window = xfce_titled_dialog_new_with_mixed_buttons(_("Weather Report"),
@@ -1203,14 +1206,15 @@ create_summary_window(plugin_data *data)
 
     symbol = get_data(conditions, data->units, SYMBOL,
                       FALSE, data->night_time);
-    icon = get_icon(data->icon_theme, symbol, 48, data->night_time);
-    gtk_image_set_from_pixbuf (GTK_IMAGE (image), icon);
+    scale_factor = gtk_widget_get_scale_factor(GTK_WIDGET(data->plugin));
+    icon = get_icon(data->icon_theme, symbol, 48, scale_factor, data->night_time);
+    gtk_image_set_from_surface(GTK_IMAGE(image), icon);
     g_free(symbol);
 
     gtk_window_set_icon_name(GTK_WINDOW(window), "org.xfce.panel.weather");
 
     if (G_LIKELY(icon))
-        g_object_unref(G_OBJECT(icon));
+        cairo_surface_destroy(icon);
 
     if (data->location_name == NULL || data->weatherdata == NULL ||
         data->weatherdata->current_conditions == NULL) {
@@ -1218,11 +1222,11 @@ create_summary_window(plugin_data *data)
         gtk_widget_set_valign (box, GTK_ALIGN_CENTER);
 
         gtk_widget_destroy (image);
-        icon = get_icon (data->icon_theme, NULL, 128, data->night_time);
+        icon = get_icon (data->icon_theme, NULL, 128, scale_factor, data->night_time);
         image = gtk_image_new ();
-        gtk_image_set_from_pixbuf (GTK_IMAGE (image), icon);
+        gtk_image_set_from_surface (GTK_IMAGE (image), icon);
         if (G_LIKELY (icon))
-            g_object_unref (G_OBJECT (icon));
+            cairo_surface_destroy (icon);
 
         gtk_box_pack_start (GTK_BOX (box), GTK_WIDGET (image),
                             FALSE, FALSE, 6);
