@@ -227,7 +227,7 @@ get_logo_path(void)
 
     cache_dir = get_cache_directory();
     logo_path = g_strconcat(cache_dir, G_DIR_SEPARATOR_S,
-                            "weather_logo.gif", NULL);
+                            "weather_logo.svg", NULL);
     g_free(cache_dir);
     return logo_path;
 }
@@ -242,6 +242,7 @@ logo_fetched(SoupSession *session,
         gchar *path = get_logo_path();
         GError *error = NULL;
         GdkPixbuf *pixbuf = NULL;
+        gint scale_factor;
         if (!g_file_set_contents(path, msg->response_body->data,
                                  msg->response_body->length, &error)) {
             g_warning(_("Error downloading met.no logo image to %s, "
@@ -251,10 +252,13 @@ logo_fetched(SoupSession *session,
             g_free(path);
             return;
         }
-        pixbuf = gdk_pixbuf_new_from_file(path, NULL);
+        scale_factor = gtk_widget_get_scale_factor(user_data);
+        pixbuf = gdk_pixbuf_new_from_file_at_size(path, 180 * scale_factor, -1, NULL);
         g_free(path);
         if (pixbuf) {
-            gtk_image_set_from_pixbuf(GTK_IMAGE(user_data), pixbuf);
+            cairo_surface_t *surface = gdk_cairo_surface_create_from_pixbuf(pixbuf, scale_factor, NULL);
+            gtk_image_set_from_surface(GTK_IMAGE(user_data), surface);
+            cairo_surface_destroy(surface);
             g_object_unref(pixbuf);
         }
     }
@@ -267,15 +271,18 @@ weather_summary_get_logo(plugin_data *data)
     GtkWidget *image = gtk_image_new();
     GdkPixbuf *pixbuf;
     gchar *path = get_logo_path();
+    gint scale_factor = gtk_widget_get_scale_factor(GTK_WIDGET(data->plugin));
 
-    pixbuf = gdk_pixbuf_new_from_file(path, NULL);
+    pixbuf = gdk_pixbuf_new_from_file_at_size(path, 180 * scale_factor, -1, NULL);
     g_free(path);
     if (pixbuf == NULL)
         weather_http_queue_request(data->session,
                                    "https://www.met.no/_/asset/no.met.metno:1497355518/images/met-logo.svg",
                                    logo_fetched, image);
     else {
-        gtk_image_set_from_pixbuf(GTK_IMAGE(image), pixbuf);
+        cairo_surface_t *surface = gdk_cairo_surface_create_from_pixbuf(pixbuf, scale_factor, NULL);
+        gtk_image_set_from_surface(GTK_IMAGE(image), surface);
+        cairo_surface_destroy(surface);
         g_object_unref(pixbuf);
     }
     return image;
