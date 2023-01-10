@@ -53,6 +53,15 @@ do {                                                     \
         temperature = 0;                                 \
 } while (0)
 
+/* Rounds temperatures in Celcius to prevent
+ * negative values rounded to zero from being displayed as "-0 °C". */
+#define ROUND_CELCIUS(round, temperature)              \
+do {                                                     \
+    if (round && temperature > -0.5 && temperature < 0)  \
+        temperature = 0;                                 \
+} while (0)
+
+
 #define LOCALE_DOUBLE(value, format)                        \
     (value                                                  \
      ? g_strdup_printf(format, g_ascii_strtod(value, NULL)) \
@@ -355,6 +364,8 @@ get_data(const xml_time *timeslice,
         val = string_to_double(loc->temperature_value, 0);
         if (units->temperature == FAHRENHEIT)
             CALC_FAHRENHEIT(round, val);
+        else
+            ROUND_CELCIUS(round, val);
         return g_strdup_printf(ROUND_TO_INT("%.1f"), val);
 
     case PRESSURE:         /* source is in hectopascals */
@@ -409,6 +420,8 @@ get_data(const xml_time *timeslice,
             return g_strdup("");
         if (units->temperature == FAHRENHEIT)
             CALC_FAHRENHEIT(round, val);
+        else
+            ROUND_CELCIUS(round, val);
         return g_strdup_printf(ROUND_TO_INT("%.1f"), val);
 
     case APPARENT_TEMPERATURE:
@@ -416,6 +429,8 @@ get_data(const xml_time *timeslice,
                                         night_time);
         if (units->temperature == FAHRENHEIT)
             CALC_FAHRENHEIT(round, val);
+        else
+            ROUND_CELCIUS(round, val);
         return g_strdup_printf(ROUND_TO_INT("%.1f"), val);
 
     case CLOUDS_LOW:
