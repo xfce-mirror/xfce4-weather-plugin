@@ -2218,7 +2218,7 @@ xfceweather_show_about(XfcePanelPlugin *plugin,
          "program-name", PACKAGE_NAME,
          "comments", _("Show weather conditions and forecasts"),
          "website", PLUGIN_WEBSITE,
-         "copyright", _("Copyright (c) 2003-2021\n"),
+         "copyright", "Copyright \302\251 2004-2023 The Xfce development team",
          "authors", auth,
          NULL);
 }
