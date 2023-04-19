@@ -11,10 +11,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-23 00:49+0100\n"
-"PO-Revision-Date: 2021-05-26 09:11+0000\n"
-"Last-Translator: Arnold Marko <arnold.marko@gmail.com>\n"
-"Language-Team: Slovenian (http://www.transifex.com/xfce/xfce-panel-plugins/language/sl/)\n"
+"POT-Creation-Date: 2023-04-19 01:18+0200\n"
+"PO-Revision-Date: 2013-07-03 19:29+0000\n"
+"Last-Translator: Arnold Marko <arnold.marko@gmail.com>, 2019-2021\n"
+"Language-Team: Slovenian (http://app.transifex.com/xfce/xfce-panel-plugins/language/sl/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -35,7 +35,7 @@ msgid "_Help"
 msgstr "Pomo_č"
 
 #: ../panel-plugin/weather-config.ui.h:3
-#: ../panel-plugin/weather-summary.c:1185
+#: ../panel-plugin/weather-summary.c:1196
 msgid "_Close"
 msgstr "_Zapri"
 
@@ -68,7 +68,7 @@ msgstr "Zemljepisna širina definira kako severno/južno od Ekvatorja leži neka
 
 #. TRANSLATORS: The degree sign is used like a unit for
 #. latitude, longitude, wind direction
-#: ../panel-plugin/weather-config.ui.h:10 ../panel-plugin/weather-data.c:522
+#: ../panel-plugin/weather-config.ui.h:10 ../panel-plugin/weather-data.c:537
 msgid "°"
 msgstr "°"
 
@@ -503,78 +503,78 @@ msgstr "M"
 msgid "R"
 msgstr "P"
 
-#: ../panel-plugin/weather.c:358 ../panel-plugin/weather.c:360
+#: ../panel-plugin/weather.c:360 ../panel-plugin/weather.c:362
 msgid "No Data"
 msgstr "Ni podatkov"
 
-#: ../panel-plugin/weather.c:516
+#: ../panel-plugin/weather.c:518
 msgid "Error parsing astronomical data!"
 msgstr "Napaka pri razčlenjevanju astronomskih podatkov!"
 
-#: ../panel-plugin/weather.c:518
+#: ../panel-plugin/weather.c:520
 #, c-format
 msgid ""
 "Download of astronomical data failed with HTTP Status Code %d, Reason "
 "phrase: %s"
 msgstr "Prenos astronomskih podatkov se je neuspešno prekinil s HTTP statusom %d, razlog: %s"
 
-#: ../panel-plugin/weather.c:569
+#: ../panel-plugin/weather.c:571
 msgid "Error parsing weather data!"
 msgstr "Napaka pri razčlenjevanju vremenskih podatkov!"
 
-#: ../panel-plugin/weather.c:572
+#: ../panel-plugin/weather.c:574
 #, c-format
 msgid ""
 "Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
 msgstr "Prenos vremenskih podatkov se je neuspešno prekinil s HTTP statusom %d, razlog: %s"
 
 #. start receive thread
-#: ../panel-plugin/weather.c:645 ../panel-plugin/weather.c:666
+#: ../panel-plugin/weather.c:647 ../panel-plugin/weather.c:668
 #: ../panel-plugin/weather-search.c:169 ../panel-plugin/weather-search.c:437
 #, c-format
 msgid "getting %s"
 msgstr "prejemam %s"
 
-#: ../panel-plugin/weather.c:1198
+#: ../panel-plugin/weather.c:1200
 #, c-format
 msgid "Error writing cache file %s!"
 msgstr "Napaka pri zapisovanju v predpomnilniško datoteko %s!"
 
-#: ../panel-plugin/weather.c:1658
+#: ../panel-plugin/weather.c:1660
 #, c-format
 msgid "Unable to open the following url: %s"
 msgstr "Ni bilo mogoče odpreti URL naslova: %s"
 
-#: ../panel-plugin/weather.c:1728
+#: ../panel-plugin/weather.c:1730
 msgid "Short-term forecast data unavailable."
 msgstr "Kratkoročna napoved ni na voljo."
 
-#: ../panel-plugin/weather.c:1741
+#: ../panel-plugin/weather.c:1743
 msgid "The sun never sets today."
 msgstr "Danes sonce ne zaide."
 
-#: ../panel-plugin/weather.c:1743
+#: ../panel-plugin/weather.c:1745
 msgid "The sun never rises today."
 msgstr "Danes sonce ne vzide."
 
-#: ../panel-plugin/weather.c:1749
+#: ../panel-plugin/weather.c:1751
 #, c-format
 msgid "The sun never rises and sets at %s."
 msgstr "Sonce nikoli ne vzide ali zaide ob %s"
 
-#: ../panel-plugin/weather.c:1756
+#: ../panel-plugin/weather.c:1758
 #, c-format
 msgid "The sun rises at %s and never sets."
 msgstr "Sonce vzide ob %s in nikoli ne zaide."
 
-#: ../panel-plugin/weather.c:1764
+#: ../panel-plugin/weather.c:1766
 #, c-format
 msgid "The sun rises at %s and sets at %s."
 msgstr "Sonce vzide ob %s in zaide ob %s."
 
 #. * TRANSLATORS: This is the simple tooltip. For a bigger challenge,
 #. * look at the verbose tooltip style further below ;-)
-#: ../panel-plugin/weather.c:1792
+#: ../panel-plugin/weather.c:1794
 #, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
@@ -593,7 +593,7 @@ msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\
 #. * be changed easily - and try to make it compact and look
 #. * good! The missing space after "%son the ..." is intentional,
 #. * it is included in the %s.
-#: ../panel-plugin/weather.c:1816
+#: ../panel-plugin/weather.c:1818
 #, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
@@ -608,27 +608,23 @@ msgid ""
 "<span size=\"smaller\">%s</span>"
 msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n<b><span size=\"large\">%s</span></b>\n<span size=\"smaller\">od %s do %s, z %s padavin</span>\n\n<b>Temperatura:</b> %s\t\t<span size=\"smaller\">(vrednosti ob %s)</span>\n<b>Veter:</b> %s (%sna Beaufortovi lestvici) s smeri %s(%s)\n<b>Pritisk:</b> %s    <b>Vlažnost:</b> %s\n<b>Megla:</b> %s    <b>Oblačnost:</b> %s\n\n<span size=\"smaller\">%s</span>"
 
-#: ../panel-plugin/weather.c:1869
+#: ../panel-plugin/weather.c:1872
 msgid "Cannot update weather data"
 msgstr "Vremenskih podatkov ni mogoče posodobiti"
 
-#: ../panel-plugin/weather.c:1953
+#: ../panel-plugin/weather.c:1965
 msgid "No default icon theme? This should not happen, plugin will crash!"
 msgstr "Ni privzete teme ikon? To se nebi smelo zgoditi, vtičnik se bo sesul!"
 
 #. add refresh button to right click menu, for people who missed
 #. the middle mouse click feature
-#: ../panel-plugin/weather.c:1995
+#: ../panel-plugin/weather.c:2007
 msgid "Re_fresh"
 msgstr "_Osveži"
 
-#: ../panel-plugin/weather.c:2207
+#: ../panel-plugin/weather.c:2219
 msgid "Show weather conditions and forecasts"
 msgstr "Prikaži vremenske razmere in napoved"
-
-#: ../panel-plugin/weather.c:2209
-msgid "Copyright (c) 2003-2021\n"
-msgstr "Avtorstvo (c) 2003-2021\n"
 
 #: ../panel-plugin/weather-config.c:231 ../panel-plugin/weather-config.c:337
 #: ../panel-plugin/weather-config.c:507
@@ -986,137 +982,137 @@ msgstr "Količina dežja, pršenja, sreža, toče, snega, ... v določenem času
 msgid "Labels to d_isplay"
 msgstr "Oznake za pr_ikaz"
 
-#: ../panel-plugin/weather-data.c:293
+#: ../panel-plugin/weather-data.c:302
 msgid "North"
 msgstr "Sever"
 
-#: ../panel-plugin/weather-data.c:293
+#: ../panel-plugin/weather-data.c:302
 msgid "N"
 msgstr "S"
 
-#: ../panel-plugin/weather-data.c:296
+#: ../panel-plugin/weather-data.c:305
 msgid "North-East"
 msgstr "Severovzhod"
 
-#: ../panel-plugin/weather-data.c:296
+#: ../panel-plugin/weather-data.c:305
 msgid "NE"
 msgstr "SV"
 
-#: ../panel-plugin/weather-data.c:299
+#: ../panel-plugin/weather-data.c:308
 msgid "East"
 msgstr "Vzhod"
 
-#: ../panel-plugin/weather-data.c:299
+#: ../panel-plugin/weather-data.c:308
 msgid "E"
 msgstr "V"
 
-#: ../panel-plugin/weather-data.c:302
+#: ../panel-plugin/weather-data.c:311
 msgid "South-East"
 msgstr "Jugovzhod"
 
-#: ../panel-plugin/weather-data.c:302
+#: ../panel-plugin/weather-data.c:311
 msgid "SE"
 msgstr "JV"
 
-#: ../panel-plugin/weather-data.c:305
+#: ../panel-plugin/weather-data.c:314
 msgid "South"
 msgstr "Jug"
 
-#: ../panel-plugin/weather-data.c:305
+#: ../panel-plugin/weather-data.c:314
 msgid "S"
 msgstr "J"
 
-#: ../panel-plugin/weather-data.c:308
+#: ../panel-plugin/weather-data.c:317
 msgid "South-West"
 msgstr "Jugozahod"
 
-#: ../panel-plugin/weather-data.c:308
+#: ../panel-plugin/weather-data.c:317
 msgid "SW"
 msgstr "JZ"
 
-#: ../panel-plugin/weather-data.c:311
+#: ../panel-plugin/weather-data.c:320
 msgid "West"
 msgstr "Zahod"
 
-#: ../panel-plugin/weather-data.c:311
+#: ../panel-plugin/weather-data.c:320
 msgid "W"
 msgstr "Z"
 
-#: ../panel-plugin/weather-data.c:314
+#: ../panel-plugin/weather-data.c:323
 msgid "North-West"
 msgstr "Severozahod"
 
-#: ../panel-plugin/weather-data.c:314
+#: ../panel-plugin/weather-data.c:323
 msgid "NW"
 msgstr "SZ"
 
-#: ../panel-plugin/weather-data.c:486
+#: ../panel-plugin/weather-data.c:501
 msgid "ft"
 msgstr "ft"
 
-#: ../panel-plugin/weather-data.c:486
+#: ../panel-plugin/weather-data.c:501
 msgid "m"
 msgstr "m"
 
-#: ../panel-plugin/weather-data.c:490
+#: ../panel-plugin/weather-data.c:505
 msgid "°F"
 msgstr "°F"
 
-#: ../panel-plugin/weather-data.c:490
+#: ../panel-plugin/weather-data.c:505
 msgid "°C"
 msgstr "°C"
 
-#: ../panel-plugin/weather-data.c:494
+#: ../panel-plugin/weather-data.c:509
 msgid "hPa"
 msgstr "hPa"
 
-#: ../panel-plugin/weather-data.c:496
+#: ../panel-plugin/weather-data.c:511
 msgid "inHg"
 msgstr "inHg"
 
-#: ../panel-plugin/weather-data.c:498
+#: ../panel-plugin/weather-data.c:513
 msgid "psi"
 msgstr "psi"
 
-#: ../panel-plugin/weather-data.c:500
+#: ../panel-plugin/weather-data.c:515
 msgid "mmHg"
 msgstr "mmHg"
 
-#: ../panel-plugin/weather-data.c:506
+#: ../panel-plugin/weather-data.c:521
 msgid "km/h"
 msgstr "km/h"
 
-#: ../panel-plugin/weather-data.c:508
+#: ../panel-plugin/weather-data.c:523
 msgid "mph"
 msgstr "mph"
 
-#: ../panel-plugin/weather-data.c:510
+#: ../panel-plugin/weather-data.c:525
 msgid "m/s"
 msgstr "m/s"
 
-#: ../panel-plugin/weather-data.c:512
+#: ../panel-plugin/weather-data.c:527
 msgid "ft/s"
 msgstr "ft/s"
 
-#: ../panel-plugin/weather-data.c:514
+#: ../panel-plugin/weather-data.c:529
 msgid "kt"
 msgstr "kt"
 
 #. TRANSLATORS: Percentage sign is used like a unit for
 #. clouds, fog, humidity
-#: ../panel-plugin/weather-data.c:531
+#: ../panel-plugin/weather-data.c:546
 msgid "%"
 msgstr "%"
 
-#: ../panel-plugin/weather-data.c:533
+#: ../panel-plugin/weather-data.c:548
 msgid "in"
 msgstr "in"
 
-#: ../panel-plugin/weather-data.c:533
+#: ../panel-plugin/weather-data.c:548
 msgid "mm"
 msgstr "mm"
 
-#: ../panel-plugin/weather-icon.c:186
+#: ../panel-plugin/weather-icon.c:189
 msgid "No icon theme!"
 msgstr "Ni teme ikon!"
 
@@ -1173,40 +1169,40 @@ msgstr "Neimanovana lokacija"
 msgid "\t%s%s%s%s%s\n"
 msgstr "\t%s%s%s%s%s\n"
 
-#: ../panel-plugin/weather-summary.c:247
+#: ../panel-plugin/weather-summary.c:248
 #, c-format
 msgid "Error downloading met.no logo image to %s, reason: %s\n"
 msgstr "Napaka pri prejemanju met.no logotipa v %s, razlog: %s\n"
 
-#: ../panel-plugin/weather-summary.c:249
+#: ../panel-plugin/weather-summary.c:250
 msgid "unknown"
 msgstr "neznano"
 
-#: ../panel-plugin/weather-summary.c:387
+#: ../panel-plugin/weather-summary.c:394
 msgid "Coordinates\n"
 msgstr "Koordinate\n"
 
-#: ../panel-plugin/weather-summary.c:388
+#: ../panel-plugin/weather-summary.c:395
 msgid "Altitude"
 msgstr "Nadmorska višina"
 
-#: ../panel-plugin/weather-summary.c:389
+#: ../panel-plugin/weather-summary.c:396
 msgid "Latitude"
 msgstr "Zemljepisna širina"
 
-#: ../panel-plugin/weather-summary.c:390
+#: ../panel-plugin/weather-summary.c:397
 msgid "Longitude"
 msgstr "Zemljepisna dolžina"
 
 #. TRANSLATORS: Please use as many \t as appropriate to align the
 #. date/time values as in the original.
-#: ../panel-plugin/weather-summary.c:394
+#: ../panel-plugin/weather-summary.c:401
 msgid ""
 "\n"
 "Downloads\n"
 msgstr "\nPrejemi\n"
 
-#: ../panel-plugin/weather-summary.c:397
+#: ../panel-plugin/weather-summary.c:404
 #, c-format
 msgid ""
 "\tWeather data:\n"
@@ -1216,7 +1212,7 @@ msgid ""
 "\n"
 msgstr "\tVremenski podatki:\n\tZadnji:\t%s\n\tNaslednji:\t%s\n\tTrenutno neuspelih poskusov: %d\n\n"
 
-#: ../panel-plugin/weather-summary.c:411
+#: ../panel-plugin/weather-summary.c:418
 msgid ""
 "\tMet.no Locationforecast API states that this version\n"
 "\tof the webservice is deprecated, and the plugin needs to be\n"
@@ -1227,7 +1223,7 @@ msgid ""
 "\n"
 msgstr "\tMet.no Locationforecast API javlja, da je ta različica\n\tspletne storitve (webservice) opuščena in da mora biti vmesnik\n\tprilagojen novi različici ali pa bo nehal delovati\n\tve nekaj mesecih.\n\tPrijavite hrošč na https://gitlab.xfce.org/panel-plugins/xfce4-weather-plugin/,\n\tče tega še nihče ni storil.\n\n"
 
-#: ../panel-plugin/weather-summary.c:420
+#: ../panel-plugin/weather-summary.c:427
 #, c-format
 msgid ""
 "\tAstronomical data:\n"
@@ -1236,7 +1232,7 @@ msgid ""
 "\tCurrent failed attempts: %d\n"
 msgstr "\tAstronomski podatki:\n\tZadnji:\t%s\n\tNaslednji:\t%s\n\tTrenutno neuspelih poskusov: %d\n"
 
-#: ../panel-plugin/weather-summary.c:434
+#: ../panel-plugin/weather-summary.c:441
 msgid ""
 "\n"
 "\tMet.no sunrise API states that this version of the webservice\n"
@@ -1248,20 +1244,20 @@ msgid ""
 msgstr "\nMet.no sunrise API javlja, da je ta različica\n\tspletne storitve opuščena in da mora biti vmesnik\n\tprilagojen novi različici ali pa bo nehal delovati\n\tve nekaj mesecih.\n\tPrijavite hrošč na https://gitlab.xfce.org/panel-plugins/xfce4-weather-plugin/,\n\tče tega še nihče ni storil.\n\n"
 
 #. calculation times
-#: ../panel-plugin/weather-summary.c:441
+#: ../panel-plugin/weather-summary.c:448
 msgid ""
 "\n"
 "Times Used for Calculations\n"
 msgstr "\nČasi uporabljeni za preračunavanje\n"
 
-#: ../panel-plugin/weather-summary.c:444
+#: ../panel-plugin/weather-summary.c:451
 #, c-format
 msgid ""
 "\tTemperatures, wind, atmosphere and cloud data calculated\n"
 "\tfor:\t\t%s\n"
 msgstr "\tPodatki o temperaturi, vetru, atmosferi in oblačnosti so izračunani\n\tza:\t\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:453
+#: ../panel-plugin/weather-summary.c:460
 #, c-format
 msgid ""
 "\n"
@@ -1272,197 +1268,197 @@ msgid ""
 msgstr "\n\tPadavine in sličica vremena so bili izračunani za\n\tčasovni interval:\n\tZačetek:\t%s\n\tKonec:\t%s\n"
 
 #. sun and moon
-#: ../panel-plugin/weather-summary.c:464
+#: ../panel-plugin/weather-summary.c:471
 msgid ""
 "\n"
 "Astronomical Data\n"
 msgstr "\nAstronomski podatki\n"
 
-#: ../panel-plugin/weather-summary.c:467
+#: ../panel-plugin/weather-summary.c:474
 msgid "\tSunrise:\t\tThe sun never rises today.\n"
 msgstr "\tSončni vzhod:\t\tDanes sonce ne vzide.\n"
 
-#: ../panel-plugin/weather-summary.c:470
+#: ../panel-plugin/weather-summary.c:477
 msgid "\tSunset:\t\tThe sun never sets today.\n"
 msgstr "\tSončni zahod:\t\tDanes sonce ne zaide.\n"
 
-#: ../panel-plugin/weather-summary.c:474
+#: ../panel-plugin/weather-summary.c:481
 #, c-format
 msgid "\tSunrise:\t\t%s\n"
 msgstr "\tSončni vzhod:\t\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:479
+#: ../panel-plugin/weather-summary.c:486
 #, c-format
 msgid ""
 "\tSunset:\t\t%s\n"
 "\n"
 msgstr "\tSončni zahod:\t\t%s\n\n"
 
-#: ../panel-plugin/weather-summary.c:485
+#: ../panel-plugin/weather-summary.c:492
 #, c-format
 msgid "\tMoon phase:\t%s\n"
 msgstr "\tLunina faza:\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:489
+#: ../panel-plugin/weather-summary.c:496
 msgid "\tMoon phase:\tUnknown\n"
 msgstr "\tLunina faza:\tNi znano\n"
 
-#: ../panel-plugin/weather-summary.c:494
+#: ../panel-plugin/weather-summary.c:501
 msgid "\tMoonrise:\tThe moon never rises today.\n"
 msgstr "\tLunin vzhod:\t\tDanes luna ne vzide.\n"
 
-#: ../panel-plugin/weather-summary.c:498
+#: ../panel-plugin/weather-summary.c:505
 msgid "\tMoonset:\tThe moon never sets today.\n"
 msgstr "\tLunin zahod:\t\tDanes luna ne zaide.\n"
 
-#: ../panel-plugin/weather-summary.c:502
+#: ../panel-plugin/weather-summary.c:509
 #, c-format
 msgid "\tMoonrise:\t%s\n"
 msgstr "\tLunin vzhod:\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:507
+#: ../panel-plugin/weather-summary.c:514
 #, c-format
 msgid "\tMoonset:\t%s\n"
 msgstr "\tLunin zahod:\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:512
+#: ../panel-plugin/weather-summary.c:519
 msgid "\tData not available, will use sane default values for night and day.\n"
 msgstr "\tPodatki niso na voljo; uporabljeni bodo razumne privzete vrednosti za noč in dan.\n"
 
 #. temperatures
-#: ../panel-plugin/weather-summary.c:518
+#: ../panel-plugin/weather-summary.c:525
 msgid ""
 "\n"
 "Temperatures\n"
 msgstr "\nTemperature\n"
 
-#: ../panel-plugin/weather-summary.c:519
+#: ../panel-plugin/weather-summary.c:526
 msgid "Temperature"
 msgstr "Temperatura"
 
-#: ../panel-plugin/weather-summary.c:520
+#: ../panel-plugin/weather-summary.c:527
 msgid "Dew point"
 msgstr "Rosišče"
 
-#: ../panel-plugin/weather-summary.c:521
+#: ../panel-plugin/weather-summary.c:528
 msgid "Apparent temperature"
 msgstr "Navidezna temperatura"
 
 #. wind
-#: ../panel-plugin/weather-summary.c:524
+#: ../panel-plugin/weather-summary.c:531
 msgid ""
 "\n"
 "Wind\n"
 msgstr "\nVeter\n"
 
-#: ../panel-plugin/weather-summary.c:529
+#: ../panel-plugin/weather-summary.c:536
 #, c-format
 msgid "\tSpeed: %s %s (%s on the Beaufort scale)\n"
 msgstr "\tHitrost: %s %s (%s na Beaufortovi lestvici)\n"
 
-#: ../panel-plugin/weather-summary.c:541
+#: ../panel-plugin/weather-summary.c:548
 #, c-format
 msgid "\tDirection: %s (%s%s)\n"
 msgstr "\tSmer: %s (%s%s)\n"
 
 #. precipitation
-#: ../panel-plugin/weather-summary.c:549
+#: ../panel-plugin/weather-summary.c:556
 msgid ""
 "\n"
 "Precipitation\n"
 msgstr "\nPadavine\n"
 
-#: ../panel-plugin/weather-summary.c:550
+#: ../panel-plugin/weather-summary.c:557
 msgid "Precipitation amount"
 msgstr "Količina padavin"
 
 #. atmosphere
-#: ../panel-plugin/weather-summary.c:553
+#: ../panel-plugin/weather-summary.c:560
 msgid ""
 "\n"
 "Atmosphere\n"
 msgstr "\nOzračje\n"
 
-#: ../panel-plugin/weather-summary.c:554
+#: ../panel-plugin/weather-summary.c:561
 msgid "Barometric pressure"
 msgstr "Zračni tlak"
 
-#: ../panel-plugin/weather-summary.c:555
+#: ../panel-plugin/weather-summary.c:562
 msgid "Relative humidity"
 msgstr "Relativna vlažnost"
 
 #. clouds
-#: ../panel-plugin/weather-summary.c:558
+#: ../panel-plugin/weather-summary.c:565
 msgid ""
 "\n"
 "Clouds\n"
 msgstr "\nOblačnost\n"
 
-#: ../panel-plugin/weather-summary.c:559
+#: ../panel-plugin/weather-summary.c:566
 #: ../panel-plugin/weather-translate.c:119
 msgid "Fog"
 msgstr "Megla"
 
-#: ../panel-plugin/weather-summary.c:560
+#: ../panel-plugin/weather-summary.c:567
 msgid "Low clouds"
 msgstr "Nizka oblačnost"
 
-#: ../panel-plugin/weather-summary.c:561
+#: ../panel-plugin/weather-summary.c:568
 msgid "Middle clouds"
 msgstr "Srednja oblačnost"
 
-#: ../panel-plugin/weather-summary.c:562
+#: ../panel-plugin/weather-summary.c:569
 msgid "High clouds"
 msgstr "Visoka oblačnost"
 
-#: ../panel-plugin/weather-summary.c:563
+#: ../panel-plugin/weather-summary.c:570
 msgid "Cloudiness"
 msgstr "Oblačnost"
 
-#: ../panel-plugin/weather-summary.c:576
+#: ../panel-plugin/weather-summary.c:583
 msgid ""
 "\n"
 "Credits\n"
 msgstr "\nAvtorji\n"
 
-#: ../panel-plugin/weather-summary.c:577
+#: ../panel-plugin/weather-summary.c:584
 msgid ""
 "\tEncyclopedic information partly taken from\n"
 "\t\t"
 msgstr "\tEnciklopedijsko znanje delno povzeto iz\n\t\t"
 
-#: ../panel-plugin/weather-summary.c:578
+#: ../panel-plugin/weather-summary.c:585
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#: ../panel-plugin/weather-summary.c:579
+#: ../panel-plugin/weather-summary.c:586
 msgid ""
 "\n"
 "\tElevation and timezone data provided by\n"
 "\t\t"
 msgstr "\n\tPodatki o nadmorski višini in časovnem pasu pridobljeni od\n\t\t"
 
-#: ../panel-plugin/weather-summary.c:580
+#: ../panel-plugin/weather-summary.c:587
 msgid "GeoNames"
 msgstr "GeoNames"
 
-#: ../panel-plugin/weather-summary.c:582
+#: ../panel-plugin/weather-summary.c:589
 msgid ""
 "\n"
 "\tWeather and astronomical data from\n"
 "\t\t"
 msgstr "\n\tVremenski in astronomski podatki iz\n\t\t"
 
-#: ../panel-plugin/weather-summary.c:583
+#: ../panel-plugin/weather-summary.c:590
 msgid "The Norwegian Meteorological Institute"
 msgstr "Norveški meterološki inštitut"
 
-#: ../panel-plugin/weather-summary.c:633
+#: ../panel-plugin/weather-summary.c:640
 #, c-format
 msgid "Today"
 msgstr "Danes"
 
-#: ../panel-plugin/weather-summary.c:635
+#: ../panel-plugin/weather-summary.c:642
 #, c-format
 msgid "Tomorrow"
 msgstr "Jutri"
@@ -1471,196 +1467,196 @@ msgstr "Jutri"
 #. align the values; Monospace font is enforced with <tt> tags for
 #. alignment, and the text is enclosed in <small> tags because
 #. that looks much better and saves space.
-#: ../panel-plugin/weather-summary.c:655
+#: ../panel-plugin/weather-summary.c:662
 msgid "<b>Times used for calculations</b>\n"
 msgstr "<b>Časi uporabljeni za preračunavanje</b>\n"
 
-#: ../panel-plugin/weather-summary.c:657
+#: ../panel-plugin/weather-summary.c:664
 #, c-format
 msgid "<tt><small>Interval start:       %s</small></tt>\n"
 msgstr "<tt><small>Začetek intervala:       %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:663
+#: ../panel-plugin/weather-summary.c:670
 #, c-format
 msgid "<tt><small>Interval end:         %s</small></tt>\n"
 msgstr "<tt><small>Konec intervala:         %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:669
+#: ../panel-plugin/weather-summary.c:676
 #, c-format
 msgid ""
 "<tt><small>Data calculated for:  %s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Podatki izračunani za:  %s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:675
+#: ../panel-plugin/weather-summary.c:682
 msgid "<b>Temperatures</b>\n"
 msgstr "<b>Temperature</b>\n"
 
-#: ../panel-plugin/weather-summary.c:676
+#: ../panel-plugin/weather-summary.c:683
 #, c-format
 msgid "<tt><small>Dew point:            %s%s%s</small></tt>\n"
 msgstr "<tt><small>Rosišče:            %s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:680
+#: ../panel-plugin/weather-summary.c:687
 #, c-format
 msgid ""
 "<tt><small>Apparent temperature: %s%s%s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Temperatura (zdi se): %s%s%s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:685
+#: ../panel-plugin/weather-summary.c:692
 msgid "<b>Atmosphere</b>\n"
 msgstr "<b>Atmosfera</b>\n"
 
-#: ../panel-plugin/weather-summary.c:686
+#: ../panel-plugin/weather-summary.c:693
 #, c-format
 msgid "<tt><small>Barometric pressure:  %s%s%s</small></tt>\n"
 msgstr "<tt><small>Zračni tlak:  %s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:690
+#: ../panel-plugin/weather-summary.c:697
 #, c-format
 msgid ""
 "<tt><small>Relative humidity:    %s%s%s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Relativna vlažnost:    %s%s%s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:695
+#: ../panel-plugin/weather-summary.c:702
 msgid "<b>Precipitation</b>\n"
 msgstr "<b>Padavine</b>\n"
 
-#: ../panel-plugin/weather-summary.c:696
+#: ../panel-plugin/weather-summary.c:703
 #, c-format
 msgid ""
 "<tt><small>Amount:        %s%s%s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Količina:        %s%s%s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:701
+#: ../panel-plugin/weather-summary.c:708
 msgid "<b>Clouds</b>\n"
 msgstr "<b>Oblačnost</b>\n"
 
 #. TRANSLATORS: Clouds percentages are aligned to the right in the
 #. tooltip, the %5s are needed for that and are used both for
 #. rounded and unrounded values.
-#: ../panel-plugin/weather-summary.c:705
+#: ../panel-plugin/weather-summary.c:712
 #, c-format
 msgid "<tt><small>Fog:           %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Megla:         %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:708
+#: ../panel-plugin/weather-summary.c:715
 #, c-format
 msgid "<tt><small>Low clouds:    %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Nizki oblaki:    %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:711
+#: ../panel-plugin/weather-summary.c:718
 #, c-format
 msgid "<tt><small>Middle clouds: %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Srednji oblaki: %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:714
+#: ../panel-plugin/weather-summary.c:721
 #, c-format
 msgid "<tt><small>High clouds:   %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Visoki oblaki:   %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:717
+#: ../panel-plugin/weather-summary.c:724
 #, c-format
 msgid "<tt><small>Cloudiness:    %5s%s%s</small></tt>"
 msgstr "<tt><small>Oblačnost:    %5s%s%s</small></tt>"
 
-#: ../panel-plugin/weather-summary.c:743
+#: ../panel-plugin/weather-summary.c:750
 #, c-format
 msgid "<b>%s</b>\n"
 msgstr "<b>%s</b>\n"
 
-#: ../panel-plugin/weather-summary.c:747
+#: ../panel-plugin/weather-summary.c:754
 msgid "<tt><small>Sunrise: The sun never rises this day.</small></tt>\n"
 msgstr "<tt><small>Sončni vzhod: Sonce danes ne vzide.</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:751
+#: ../panel-plugin/weather-summary.c:758
 msgid "<tt><small>Sunset: The sun never sets this day.</small></tt>\n"
 msgstr "<tt><small>Sončni zahod: Danes sonce ne zaide.</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:756
+#: ../panel-plugin/weather-summary.c:763
 #, c-format
 msgid "<tt><small>Sunrise: %s</small></tt>\n"
 msgstr "<tt><small>Sončni vzhod: %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:762
+#: ../panel-plugin/weather-summary.c:769
 #, c-format
 msgid ""
 "<tt><small>Sunset:  %s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Sončni zahod:  %s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:769
+#: ../panel-plugin/weather-summary.c:776
 #, c-format
 msgid "<tt><small>Moon phase: %s</small></tt>\n"
 msgstr "<tt><small>Lunina faza: %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:774
+#: ../panel-plugin/weather-summary.c:781
 msgid "<tt><small>Moon phase: Unknown</small></tt>\n"
 msgstr "<tt><small>Lunina faza: neznano</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:779
+#: ../panel-plugin/weather-summary.c:786
 msgid "<tt><small>Moonrise: The moon never rises this day.</small></tt>\n"
 msgstr "<tt><small>Lunin vzhod: Danes luna ne vzide.</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:784
+#: ../panel-plugin/weather-summary.c:791
 msgid "<tt><small>Moonset: The moon never sets this day.</small></tt>\n"
 msgstr "<tt><small>Lunin zahod: Danes luna ne zaide.</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:789
+#: ../panel-plugin/weather-summary.c:796
 #, c-format
 msgid "<tt><small>Moonrise: %s</small></tt>\n"
 msgstr "<tt><small>Lunin vzhod: %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:795
+#: ../panel-plugin/weather-summary.c:802
 #, c-format
 msgid "<tt><small>Moonset:  %s</small></tt>"
 msgstr "<tt><small>Lunin zahod:  %s</small></tt>"
 
 #. daytime headers
-#: ../panel-plugin/weather-summary.c:972
+#: ../panel-plugin/weather-summary.c:981
 msgid "Morning"
 msgstr "Jutro"
 
-#: ../panel-plugin/weather-summary.c:973
+#: ../panel-plugin/weather-summary.c:982
 msgid "Afternoon"
 msgstr "Popoldne"
 
-#: ../panel-plugin/weather-summary.c:974
+#: ../panel-plugin/weather-summary.c:983
 msgid "Evening"
 msgstr "Večer"
 
-#: ../panel-plugin/weather-summary.c:975
+#: ../panel-plugin/weather-summary.c:984
 msgid "Night"
 msgstr "Noč"
 
-#: ../panel-plugin/weather-summary.c:1182
+#: ../panel-plugin/weather-summary.c:1193
 msgid "Weather Report"
 msgstr "Vremensko poročilo"
 
-#: ../panel-plugin/weather-summary.c:1234
+#: ../panel-plugin/weather-summary.c:1246
 msgid "No location selected."
 msgstr "Ni izbrane lokacije"
 
-#: ../panel-plugin/weather-summary.c:1234
+#: ../panel-plugin/weather-summary.c:1246
 msgid "Please set a location in the plugin settings."
 msgstr "Prosimo nastavite lokacijo v nastavitvah vtičnika"
 
-#: ../panel-plugin/weather-summary.c:1236
+#: ../panel-plugin/weather-summary.c:1248
 msgid "Currently no data available."
 msgstr "Trenutno podatki niso na voljo."
 
-#: ../panel-plugin/weather-summary.c:1243
+#: ../panel-plugin/weather-summary.c:1255
 msgid "Plugin settings..."
 msgstr "Nastavitve vtičnika..."
 
-#: ../panel-plugin/weather-summary.c:1257
+#: ../panel-plugin/weather-summary.c:1269
 msgid "_Forecast"
 msgstr "_Napoved"
 
-#: ../panel-plugin/weather-summary.c:1260
+#: ../panel-plugin/weather-summary.c:1272
 msgid "_Details"
 msgstr "Po_drobnosti"
 
