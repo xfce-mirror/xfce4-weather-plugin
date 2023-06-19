@@ -10,10 +10,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-23 00:49+0100\n"
-"PO-Revision-Date: 2021-03-22 23:49+0000\n"
-"Last-Translator: Xfce Bot <transifex@xfce.org>\n"
-"Language-Team: Finnish (http://www.transifex.com/xfce/xfce-panel-plugins/language/fi/)\n"
+"POT-Creation-Date: 2023-06-19 12:52+0200\n"
+"PO-Revision-Date: 2013-07-03 19:29+0000\n"
+"Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>, 2019-2021\n"
+"Language-Team: Finnish (http://app.transifex.com/xfce/xfce-panel-plugins/language/fi/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -34,7 +34,7 @@ msgid "_Help"
 msgstr "_Ohje"
 
 #: ../panel-plugin/weather-config.ui.h:3
-#: ../panel-plugin/weather-summary.c:1185
+#: ../panel-plugin/weather-summary.c:1196
 msgid "_Close"
 msgstr "_Sulje"
 
@@ -67,7 +67,7 @@ msgstr "Leveysasteella määritetään pisteen sijainti maapallon pinnalla pohjo
 
 #. TRANSLATORS: The degree sign is used like a unit for
 #. latitude, longitude, wind direction
-#: ../panel-plugin/weather-config.ui.h:10 ../panel-plugin/weather-data.c:522
+#: ../panel-plugin/weather-config.ui.h:10 ../panel-plugin/weather-data.c:537
 msgid "°"
 msgstr "°"
 
@@ -226,9 +226,9 @@ msgid ""
 "Available icon themes are listed here. You can add icon themes to "
 "$HOME/.config/xfce4/weather/icons (or the equivalent directory on your "
 "system). Information about how to create or use icon themes can be found in "
-"the README file. New icon themes will be detected everytime you open this "
+"the README file. New icon themes will be detected every time you open this "
 "config dialog."
-msgstr "Saatavilla olavet ikoniteemat ovat lueteltuina täällä. Ikoniteemoja voi lisätä hakemistoon $HOME/.config/xfce4/weather/icons (tai käytössä olevan järjestelmän vastaavaan hakemistoon). Tietoja ikoniteemojen luomisesta ja käytöstä on saatavissa README-tiedostosta. Uudet ikoniteemat havaitaan aina tätä config-dialogia avattaessa."
+msgstr ""
 
 #: ../panel-plugin/weather-config.ui.h:51
 msgid "_Icon theme:"
@@ -502,78 +502,78 @@ msgstr "S"
 msgid "R"
 msgstr "SM"
 
-#: ../panel-plugin/weather.c:358 ../panel-plugin/weather.c:360
+#: ../panel-plugin/weather.c:360 ../panel-plugin/weather.c:362
 msgid "No Data"
 msgstr "Aineisto puuttuu"
 
-#: ../panel-plugin/weather.c:516
+#: ../panel-plugin/weather.c:518
 msgid "Error parsing astronomical data!"
 msgstr "Virhe tähtitieteellisen aineiston jäsentämisessä!"
 
-#: ../panel-plugin/weather.c:518
+#: ../panel-plugin/weather.c:520
 #, c-format
 msgid ""
 "Download of astronomical data failed with HTTP Status Code %d, Reason "
 "phrase: %s"
 msgstr "Tähtitieteellisen aineiston lataus epäonnistui HTTP-tilakoodilla %d. Syylauseke: %s"
 
-#: ../panel-plugin/weather.c:569
+#: ../panel-plugin/weather.c:571
 msgid "Error parsing weather data!"
 msgstr "Virhe säätietoja jäsennettäessä!"
 
-#: ../panel-plugin/weather.c:572
+#: ../panel-plugin/weather.c:574
 #, c-format
 msgid ""
 "Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
 msgstr "Sääaineiston lataus epäonnistui HTTP-tilakoodilla %d. Syylauseke: %s"
 
 #. start receive thread
-#: ../panel-plugin/weather.c:645 ../panel-plugin/weather.c:666
+#: ../panel-plugin/weather.c:647 ../panel-plugin/weather.c:668
 #: ../panel-plugin/weather-search.c:169 ../panel-plugin/weather-search.c:437
 #, c-format
 msgid "getting %s"
 msgstr "haetaan %s"
 
-#: ../panel-plugin/weather.c:1198
+#: ../panel-plugin/weather.c:1200
 #, c-format
 msgid "Error writing cache file %s!"
 msgstr "Virhe välitiedostoa %s kirjoitetttaessa"
 
-#: ../panel-plugin/weather.c:1658
+#: ../panel-plugin/weather.c:1660
 #, c-format
 msgid "Unable to open the following url: %s"
 msgstr "URL: %s ei avattavissa"
 
-#: ../panel-plugin/weather.c:1728
+#: ../panel-plugin/weather.c:1730
 msgid "Short-term forecast data unavailable."
 msgstr "Lähiajan sääennusteen tiedot eivät ole saatavilla."
 
-#: ../panel-plugin/weather.c:1741
+#: ../panel-plugin/weather.c:1743
 msgid "The sun never sets today."
 msgstr "Aurinko ei laske tänään lainkaan."
 
-#: ../panel-plugin/weather.c:1743
+#: ../panel-plugin/weather.c:1745
 msgid "The sun never rises today."
 msgstr "Aurinko ei nouse tänään lainkaan."
 
-#: ../panel-plugin/weather.c:1749
+#: ../panel-plugin/weather.c:1751
 #, c-format
 msgid "The sun never rises and sets at %s."
 msgstr "Aurinko ei koskaan nouse ja laske sijainnissa %s."
 
-#: ../panel-plugin/weather.c:1756
+#: ../panel-plugin/weather.c:1758
 #, c-format
 msgid "The sun rises at %s and never sets."
 msgstr "Aurinko nousee %s eikä laske."
 
-#: ../panel-plugin/weather.c:1764
+#: ../panel-plugin/weather.c:1766
 #, c-format
 msgid "The sun rises at %s and sets at %s."
 msgstr "Aurinko nousee kello %s ja laskee %s."
 
 #. * TRANSLATORS: This is the simple tooltip. For a bigger challenge,
 #. * look at the verbose tooltip style further below ;-)
-#: ../panel-plugin/weather.c:1792
+#: ../panel-plugin/weather.c:1794
 #, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
@@ -592,7 +592,7 @@ msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\
 #. * be changed easily - and try to make it compact and look
 #. * good! The missing space after "%son the ..." is intentional,
 #. * it is included in the %s.
-#: ../panel-plugin/weather.c:1816
+#: ../panel-plugin/weather.c:1818
 #, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
@@ -607,27 +607,23 @@ msgid ""
 "<span size=\"smaller\">%s</span>"
 msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n\n<b><span size=\"large\">%s</span></b>\n\n<span size=\"smaller\">alkaen %s päättyen %s, %s sadetta</span>\n\n\n<b>Lämpötila:</b> %s⇥⇥<span size=\"smaller\">(arvot kello %s)</span>\n\n<b>Tuuli:</b> %s (%s Beaufort-asteikolla) suunnasta %s(%s)\n\n<b>Ilmanpaine:</b> %s <b>Ilman kosteus:</b> %s\n\n<b>Sumu:</b> %s <b>Pilvisyys</b> %s\n\n\n\n<span size=\"smaller\">%s</span>"
 
-#: ../panel-plugin/weather.c:1869
+#: ../panel-plugin/weather.c:1872
 msgid "Cannot update weather data"
 msgstr "Säätietoja ei voi päivittää"
 
-#: ../panel-plugin/weather.c:1953
+#: ../panel-plugin/weather.c:1965
 msgid "No default icon theme? This should not happen, plugin will crash!"
 msgstr "Ei oletuskuvaketeemaa? Näin ei pitäisi käydä. Lisäosa kaatuu!"
 
 #. add refresh button to right click menu, for people who missed
 #. the middle mouse click feature
-#: ../panel-plugin/weather.c:1995
+#: ../panel-plugin/weather.c:2007
 msgid "Re_fresh"
 msgstr "_Päivitä"
 
-#: ../panel-plugin/weather.c:2207
+#: ../panel-plugin/weather.c:2219
 msgid "Show weather conditions and forecasts"
 msgstr "Näytä säätila ja -ennuste"
-
-#: ../panel-plugin/weather.c:2209
-msgid "Copyright (c) 2003-2021\n"
-msgstr ""
 
 #: ../panel-plugin/weather-config.c:231 ../panel-plugin/weather-config.c:337
 #: ../panel-plugin/weather-config.c:507
@@ -985,137 +981,137 @@ msgstr "Taivaalta tulevan sateen, tihkusateen, räntäsateen, rakeiden, lumen, l
 msgid "Labels to d_isplay"
 msgstr "Näytettävät nimikkeet"
 
-#: ../panel-plugin/weather-data.c:293
+#: ../panel-plugin/weather-data.c:302
 msgid "North"
 msgstr "Pohjoinen"
 
-#: ../panel-plugin/weather-data.c:293
+#: ../panel-plugin/weather-data.c:302
 msgid "N"
 msgstr "N"
 
-#: ../panel-plugin/weather-data.c:296
+#: ../panel-plugin/weather-data.c:305
 msgid "North-East"
 msgstr "Koillinen"
 
-#: ../panel-plugin/weather-data.c:296
+#: ../panel-plugin/weather-data.c:305
 msgid "NE"
 msgstr "NE"
 
-#: ../panel-plugin/weather-data.c:299
+#: ../panel-plugin/weather-data.c:308
 msgid "East"
 msgstr "Itä"
 
-#: ../panel-plugin/weather-data.c:299
+#: ../panel-plugin/weather-data.c:308
 msgid "E"
 msgstr "E"
 
-#: ../panel-plugin/weather-data.c:302
+#: ../panel-plugin/weather-data.c:311
 msgid "South-East"
 msgstr "Kaakko"
 
-#: ../panel-plugin/weather-data.c:302
+#: ../panel-plugin/weather-data.c:311
 msgid "SE"
 msgstr "SE"
 
-#: ../panel-plugin/weather-data.c:305
+#: ../panel-plugin/weather-data.c:314
 msgid "South"
 msgstr "Etelä"
 
-#: ../panel-plugin/weather-data.c:305
+#: ../panel-plugin/weather-data.c:314
 msgid "S"
 msgstr "S"
 
-#: ../panel-plugin/weather-data.c:308
+#: ../panel-plugin/weather-data.c:317
 msgid "South-West"
 msgstr "Lounas"
 
-#: ../panel-plugin/weather-data.c:308
+#: ../panel-plugin/weather-data.c:317
 msgid "SW"
 msgstr "SW"
 
-#: ../panel-plugin/weather-data.c:311
+#: ../panel-plugin/weather-data.c:320
 msgid "West"
 msgstr "Länsi"
 
-#: ../panel-plugin/weather-data.c:311
+#: ../panel-plugin/weather-data.c:320
 msgid "W"
 msgstr "W"
 
-#: ../panel-plugin/weather-data.c:314
+#: ../panel-plugin/weather-data.c:323
 msgid "North-West"
 msgstr "Luode"
 
-#: ../panel-plugin/weather-data.c:314
+#: ../panel-plugin/weather-data.c:323
 msgid "NW"
 msgstr "NW"
 
-#: ../panel-plugin/weather-data.c:486
+#: ../panel-plugin/weather-data.c:501
 msgid "ft"
 msgstr "ft"
 
-#: ../panel-plugin/weather-data.c:486
+#: ../panel-plugin/weather-data.c:501
 msgid "m"
 msgstr "m"
 
-#: ../panel-plugin/weather-data.c:490
+#: ../panel-plugin/weather-data.c:505
 msgid "°F"
 msgstr "°F"
 
-#: ../panel-plugin/weather-data.c:490
+#: ../panel-plugin/weather-data.c:505
 msgid "°C"
 msgstr "°C"
 
-#: ../panel-plugin/weather-data.c:494
+#: ../panel-plugin/weather-data.c:509
 msgid "hPa"
 msgstr "hPa"
 
-#: ../panel-plugin/weather-data.c:496
+#: ../panel-plugin/weather-data.c:511
 msgid "inHg"
 msgstr "inHg"
 
-#: ../panel-plugin/weather-data.c:498
+#: ../panel-plugin/weather-data.c:513
 msgid "psi"
 msgstr "psi"
 
-#: ../panel-plugin/weather-data.c:500
+#: ../panel-plugin/weather-data.c:515
 msgid "mmHg"
 msgstr "mmHg"
 
-#: ../panel-plugin/weather-data.c:506
+#: ../panel-plugin/weather-data.c:521
 msgid "km/h"
 msgstr "km/h"
 
-#: ../panel-plugin/weather-data.c:508
+#: ../panel-plugin/weather-data.c:523
 msgid "mph"
 msgstr "mph"
 
-#: ../panel-plugin/weather-data.c:510
+#: ../panel-plugin/weather-data.c:525
 msgid "m/s"
 msgstr "m/s"
 
-#: ../panel-plugin/weather-data.c:512
+#: ../panel-plugin/weather-data.c:527
 msgid "ft/s"
 msgstr "ft/s"
 
-#: ../panel-plugin/weather-data.c:514
+#: ../panel-plugin/weather-data.c:529
 msgid "kt"
 msgstr "kn"
 
 #. TRANSLATORS: Percentage sign is used like a unit for
 #. clouds, fog, humidity
-#: ../panel-plugin/weather-data.c:531
+#: ../panel-plugin/weather-data.c:546
 msgid "%"
 msgstr "%"
 
-#: ../panel-plugin/weather-data.c:533
+#: ../panel-plugin/weather-data.c:548
 msgid "in"
 msgstr "in"
 
-#: ../panel-plugin/weather-data.c:533
+#: ../panel-plugin/weather-data.c:548
 msgid "mm"
 msgstr "mm"
 
-#: ../panel-plugin/weather-icon.c:186
+#: ../panel-plugin/weather-icon.c:189
 msgid "No icon theme!"
 msgstr "Ei kuvaketeemaa!"
 
@@ -1172,40 +1168,40 @@ msgstr "Nimeämätön paikka"
 msgid "\t%s%s%s%s%s\n"
 msgstr "%s%s%s%s%s\n"
 
-#: ../panel-plugin/weather-summary.c:247
+#: ../panel-plugin/weather-summary.c:248
 #, c-format
 msgid "Error downloading met.no logo image to %s, reason: %s\n"
 msgstr "Vihe ladattaessa met.no-liiketunnusta %s:een, syy: %s\n"
 
-#: ../panel-plugin/weather-summary.c:249
+#: ../panel-plugin/weather-summary.c:250
 msgid "unknown"
 msgstr "tuntematon"
 
-#: ../panel-plugin/weather-summary.c:387
+#: ../panel-plugin/weather-summary.c:394
 msgid "Coordinates\n"
 msgstr "Koordinaatit\n"
 
-#: ../panel-plugin/weather-summary.c:388
+#: ../panel-plugin/weather-summary.c:395
 msgid "Altitude"
 msgstr "Korkeus"
 
-#: ../panel-plugin/weather-summary.c:389
+#: ../panel-plugin/weather-summary.c:396
 msgid "Latitude"
 msgstr "Leveysaste"
 
-#: ../panel-plugin/weather-summary.c:390
+#: ../panel-plugin/weather-summary.c:397
 msgid "Longitude"
 msgstr "Korkeusaste"
 
 #. TRANSLATORS: Please use as many \t as appropriate to align the
 #. date/time values as in the original.
-#: ../panel-plugin/weather-summary.c:394
+#: ../panel-plugin/weather-summary.c:401
 msgid ""
 "\n"
 "Downloads\n"
 msgstr "\nLataukset\n"
 
-#: ../panel-plugin/weather-summary.c:397
+#: ../panel-plugin/weather-summary.c:404
 #, c-format
 msgid ""
 "\tWeather data:\n"
@@ -1215,7 +1211,7 @@ msgid ""
 "\n"
 msgstr "⇥Säätiedot:\n⇥Viimeinen:⇥%s\n\n⇥Seuraava:⇥%s\n\n⇥Epäonnistuneet yritykset: %d\n\n"
 
-#: ../panel-plugin/weather-summary.c:411
+#: ../panel-plugin/weather-summary.c:418
 msgid ""
 "\tMet.no Locationforecast API states that this version\n"
 "\tof the webservice is deprecated, and the plugin needs to be\n"
@@ -1226,7 +1222,7 @@ msgid ""
 "\n"
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:420
+#: ../panel-plugin/weather-summary.c:427
 #, c-format
 msgid ""
 "\tAstronomical data:\n"
@@ -1235,7 +1231,7 @@ msgid ""
 "\tCurrent failed attempts: %d\n"
 msgstr "Säätieteelliset arvot\nViimeinen %s\nSeuraava %s\nEpäonnistuneet yritykset: %d\n"
 
-#: ../panel-plugin/weather-summary.c:434
+#: ../panel-plugin/weather-summary.c:441
 msgid ""
 "\n"
 "\tMet.no sunrise API states that this version of the webservice\n"
@@ -1247,20 +1243,20 @@ msgid ""
 msgstr ""
 
 #. calculation times
-#: ../panel-plugin/weather-summary.c:441
+#: ../panel-plugin/weather-summary.c:448
 msgid ""
 "\n"
 "Times Used for Calculations\n"
 msgstr "\nLaskennassa käytetyt ajat\n"
 
-#: ../panel-plugin/weather-summary.c:444
+#: ../panel-plugin/weather-summary.c:451
 #, c-format
 msgid ""
 "\tTemperatures, wind, atmosphere and cloud data calculated\n"
 "\tfor:\t\t%s\n"
 msgstr "Lämpötilat, tuuli-, ilmakehä- ja pilvitiedot laskettu ajalle %s\n"
 
-#: ../panel-plugin/weather-summary.c:453
+#: ../panel-plugin/weather-summary.c:460
 #, c-format
 msgid ""
 "\n"
@@ -1271,197 +1267,197 @@ msgid ""
 msgstr "\nSademäärä ja sääsymboli on laskettu käyttäen aikaväliä\nAlku %s Loppu %s\n"
 
 #. sun and moon
-#: ../panel-plugin/weather-summary.c:464
+#: ../panel-plugin/weather-summary.c:471
 msgid ""
 "\n"
 "Astronomical Data\n"
 msgstr "\nTähtitieteellinen aineisto\n"
 
-#: ../panel-plugin/weather-summary.c:467
+#: ../panel-plugin/weather-summary.c:474
 msgid "\tSunrise:\t\tThe sun never rises today.\n"
 msgstr "Auringonnousu Aurinko ei nouse tänään lainkaan\n"
 
-#: ../panel-plugin/weather-summary.c:470
+#: ../panel-plugin/weather-summary.c:477
 msgid "\tSunset:\t\tThe sun never sets today.\n"
 msgstr "Auringonlasku Aurinko ei laske tänään lainkaan\n"
 
-#: ../panel-plugin/weather-summary.c:474
+#: ../panel-plugin/weather-summary.c:481
 #, c-format
 msgid "\tSunrise:\t\t%s\n"
 msgstr "Auringonnousu %s\n"
 
-#: ../panel-plugin/weather-summary.c:479
+#: ../panel-plugin/weather-summary.c:486
 #, c-format
 msgid ""
 "\tSunset:\t\t%s\n"
 "\n"
 msgstr "Auringonlasku %s\n"
 
-#: ../panel-plugin/weather-summary.c:485
+#: ../panel-plugin/weather-summary.c:492
 #, c-format
 msgid "\tMoon phase:\t%s\n"
 msgstr "Kuun vaihe %s\n"
 
-#: ../panel-plugin/weather-summary.c:489
+#: ../panel-plugin/weather-summary.c:496
 msgid "\tMoon phase:\tUnknown\n"
 msgstr "Kuun vaihe Tuntematon\n"
 
-#: ../panel-plugin/weather-summary.c:494
+#: ../panel-plugin/weather-summary.c:501
 msgid "\tMoonrise:\tThe moon never rises today.\n"
 msgstr "Kuunnousu Kuu ei nouse tänään lainkaan\n"
 
-#: ../panel-plugin/weather-summary.c:498
+#: ../panel-plugin/weather-summary.c:505
 msgid "\tMoonset:\tThe moon never sets today.\n"
 msgstr "Kuunlasku Kuu ei laske tänään lainkaan\n"
 
-#: ../panel-plugin/weather-summary.c:502
+#: ../panel-plugin/weather-summary.c:509
 #, c-format
 msgid "\tMoonrise:\t%s\n"
 msgstr "Kuunnousu %s\n"
 
-#: ../panel-plugin/weather-summary.c:507
+#: ../panel-plugin/weather-summary.c:514
 #, c-format
 msgid "\tMoonset:\t%s\n"
 msgstr "Kuunlasku %s\n"
 
-#: ../panel-plugin/weather-summary.c:512
+#: ../panel-plugin/weather-summary.c:519
 msgid "\tData not available, will use sane default values for night and day.\n"
 msgstr "Tieto ei ole saatavilla. Käytetään kohtuullisia oletuksia yölle ja päivälle.\n"
 
 #. temperatures
-#: ../panel-plugin/weather-summary.c:518
+#: ../panel-plugin/weather-summary.c:525
 msgid ""
 "\n"
 "Temperatures\n"
 msgstr "\nLämpötilat\n"
 
-#: ../panel-plugin/weather-summary.c:519
+#: ../panel-plugin/weather-summary.c:526
 msgid "Temperature"
 msgstr "Lämpötila"
 
-#: ../panel-plugin/weather-summary.c:520
+#: ../panel-plugin/weather-summary.c:527
 msgid "Dew point"
 msgstr "Kastepiste"
 
-#: ../panel-plugin/weather-summary.c:521
+#: ../panel-plugin/weather-summary.c:528
 msgid "Apparent temperature"
 msgstr "Koettu lämpötila"
 
 #. wind
-#: ../panel-plugin/weather-summary.c:524
+#: ../panel-plugin/weather-summary.c:531
 msgid ""
 "\n"
 "Wind\n"
 msgstr "\nTuuli\n"
 
-#: ../panel-plugin/weather-summary.c:529
+#: ../panel-plugin/weather-summary.c:536
 #, c-format
 msgid "\tSpeed: %s %s (%s on the Beaufort scale)\n"
 msgstr "Nopeus: %s %s (%s Beaufort-asteikolla)\n"
 
-#: ../panel-plugin/weather-summary.c:541
+#: ../panel-plugin/weather-summary.c:548
 #, c-format
 msgid "\tDirection: %s (%s%s)\n"
 msgstr "⇥Suunta: %s (%s%s)\n"
 
 #. precipitation
-#: ../panel-plugin/weather-summary.c:549
+#: ../panel-plugin/weather-summary.c:556
 msgid ""
 "\n"
 "Precipitation\n"
 msgstr "\nSademäärä\n"
 
-#: ../panel-plugin/weather-summary.c:550
+#: ../panel-plugin/weather-summary.c:557
 msgid "Precipitation amount"
 msgstr "Sademääräsumma"
 
 #. atmosphere
-#: ../panel-plugin/weather-summary.c:553
+#: ../panel-plugin/weather-summary.c:560
 msgid ""
 "\n"
 "Atmosphere\n"
 msgstr "\nIlmakehä\n"
 
-#: ../panel-plugin/weather-summary.c:554
+#: ../panel-plugin/weather-summary.c:561
 msgid "Barometric pressure"
 msgstr "Ilmanpaine merenpinnassa"
 
-#: ../panel-plugin/weather-summary.c:555
+#: ../panel-plugin/weather-summary.c:562
 msgid "Relative humidity"
 msgstr "Suhteellinen kosteus"
 
 #. clouds
-#: ../panel-plugin/weather-summary.c:558
+#: ../panel-plugin/weather-summary.c:565
 msgid ""
 "\n"
 "Clouds\n"
 msgstr "\nPilviä\n"
 
-#: ../panel-plugin/weather-summary.c:559
+#: ../panel-plugin/weather-summary.c:566
 #: ../panel-plugin/weather-translate.c:119
 msgid "Fog"
 msgstr "Sumua"
 
-#: ../panel-plugin/weather-summary.c:560
+#: ../panel-plugin/weather-summary.c:567
 msgid "Low clouds"
 msgstr "Alapilviä"
 
-#: ../panel-plugin/weather-summary.c:561
+#: ../panel-plugin/weather-summary.c:568
 msgid "Middle clouds"
 msgstr "Keskipilviä"
 
-#: ../panel-plugin/weather-summary.c:562
+#: ../panel-plugin/weather-summary.c:569
 msgid "High clouds"
 msgstr "Yläpilviä"
 
-#: ../panel-plugin/weather-summary.c:563
+#: ../panel-plugin/weather-summary.c:570
 msgid "Cloudiness"
 msgstr "Pilvisyys"
 
-#: ../panel-plugin/weather-summary.c:576
+#: ../panel-plugin/weather-summary.c:583
 msgid ""
 "\n"
 "Credits\n"
 msgstr "\nAnsiot\n"
 
-#: ../panel-plugin/weather-summary.c:577
+#: ../panel-plugin/weather-summary.c:584
 msgid ""
 "\tEncyclopedic information partly taken from\n"
 "\t\t"
 msgstr "Tietosanakirjalainaukset tehty osittain lähteestä"
 
-#: ../panel-plugin/weather-summary.c:578
+#: ../panel-plugin/weather-summary.c:585
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#: ../panel-plugin/weather-summary.c:579
+#: ../panel-plugin/weather-summary.c:586
 msgid ""
 "\n"
 "\tElevation and timezone data provided by\n"
 "\t\t"
 msgstr "\nKorkeus- ja aikavyöhyketiedot peräisin lähteestä"
 
-#: ../panel-plugin/weather-summary.c:580
+#: ../panel-plugin/weather-summary.c:587
 msgid "GeoNames"
 msgstr "GeoNames"
 
-#: ../panel-plugin/weather-summary.c:582
+#: ../panel-plugin/weather-summary.c:589
 msgid ""
 "\n"
 "\tWeather and astronomical data from\n"
 "\t\t"
 msgstr "\nSää- ja tähtitieteellinen aineisto lähteestä"
 
-#: ../panel-plugin/weather-summary.c:583
+#: ../panel-plugin/weather-summary.c:590
 msgid "The Norwegian Meteorological Institute"
 msgstr "Norjan säätieteen laitos"
 
-#: ../panel-plugin/weather-summary.c:633
+#: ../panel-plugin/weather-summary.c:640
 #, c-format
 msgid "Today"
 msgstr "Tänään"
 
-#: ../panel-plugin/weather-summary.c:635
+#: ../panel-plugin/weather-summary.c:642
 #, c-format
 msgid "Tomorrow"
 msgstr "Huomenna"
@@ -1470,196 +1466,196 @@ msgstr "Huomenna"
 #. align the values; Monospace font is enforced with <tt> tags for
 #. alignment, and the text is enclosed in <small> tags because
 #. that looks much better and saves space.
-#: ../panel-plugin/weather-summary.c:655
+#: ../panel-plugin/weather-summary.c:662
 msgid "<b>Times used for calculations</b>\n"
 msgstr "<b>Laskelmassa käytetyt ajat</b>\n"
 
-#: ../panel-plugin/weather-summary.c:657
+#: ../panel-plugin/weather-summary.c:664
 #, c-format
 msgid "<tt><small>Interval start:       %s</small></tt>\n"
 msgstr "<tt><small>ajanjakson alku %s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:663
+#: ../panel-plugin/weather-summary.c:670
 #, c-format
 msgid "<tt><small>Interval end:         %s</small></tt>\n"
 msgstr "<tt><small>ajanjakson loppu: %s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:669
+#: ../panel-plugin/weather-summary.c:676
 #, c-format
 msgid ""
 "<tt><small>Data calculated for:  %s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Tiedot laskettu: ajalle %s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:675
+#: ../panel-plugin/weather-summary.c:682
 msgid "<b>Temperatures</b>\n"
 msgstr "<b>Lämpötilat</b>\n"
 
-#: ../panel-plugin/weather-summary.c:676
+#: ../panel-plugin/weather-summary.c:683
 #, c-format
 msgid "<tt><small>Dew point:            %s%s%s</small></tt>\n"
 msgstr "<tt><small>Kastepiste: %s%s%s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:680
+#: ../panel-plugin/weather-summary.c:687
 #, c-format
 msgid ""
 "<tt><small>Apparent temperature: %s%s%s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Koettu lämpötila: %s%s%s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:685
+#: ../panel-plugin/weather-summary.c:692
 msgid "<b>Atmosphere</b>\n"
 msgstr "<b>Ilmakehä</b>\n\n"
 
-#: ../panel-plugin/weather-summary.c:686
+#: ../panel-plugin/weather-summary.c:693
 #, c-format
 msgid "<tt><small>Barometric pressure:  %s%s%s</small></tt>\n"
 msgstr "<tt><small>Ilmanpaine merenpinnassa: %s%s%s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:690
+#: ../panel-plugin/weather-summary.c:697
 #, c-format
 msgid ""
 "<tt><small>Relative humidity:    %s%s%s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Suhteellinen ilmankosteus: %s%s%s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:695
+#: ../panel-plugin/weather-summary.c:702
 msgid "<b>Precipitation</b>\n"
 msgstr "<b>Sademäärä</b>\n"
 
-#: ../panel-plugin/weather-summary.c:696
+#: ../panel-plugin/weather-summary.c:703
 #, c-format
 msgid ""
 "<tt><small>Amount:        %s%s%s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Määrä: %s%s%s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:701
+#: ../panel-plugin/weather-summary.c:708
 msgid "<b>Clouds</b>\n"
 msgstr "<b>Pilviä</b>\n"
 
 #. TRANSLATORS: Clouds percentages are aligned to the right in the
 #. tooltip, the %5s are needed for that and are used both for
 #. rounded and unrounded values.
-#: ../panel-plugin/weather-summary.c:705
+#: ../panel-plugin/weather-summary.c:712
 #, c-format
 msgid "<tt><small>Fog:           %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Sumua: %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:708
+#: ../panel-plugin/weather-summary.c:715
 #, c-format
 msgid "<tt><small>Low clouds:    %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Alapilviä: %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:711
+#: ../panel-plugin/weather-summary.c:718
 #, c-format
 msgid "<tt><small>Middle clouds: %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Keskipilviä: %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:714
+#: ../panel-plugin/weather-summary.c:721
 #, c-format
 msgid "<tt><small>High clouds:   %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Yläpilviä: %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:717
+#: ../panel-plugin/weather-summary.c:724
 #, c-format
 msgid "<tt><small>Cloudiness:    %5s%s%s</small></tt>"
 msgstr "<tt><small>Pilvisyys: %5s%s%s</small></tt>"
 
-#: ../panel-plugin/weather-summary.c:743
+#: ../panel-plugin/weather-summary.c:750
 #, c-format
 msgid "<b>%s</b>\n"
 msgstr "<b>%s</b>\n\n"
 
-#: ../panel-plugin/weather-summary.c:747
+#: ../panel-plugin/weather-summary.c:754
 msgid "<tt><small>Sunrise: The sun never rises this day.</small></tt>\n"
 msgstr "<tt><small>Auringonnousu. Aurinko ei laske tänään lainkaan.</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:751
+#: ../panel-plugin/weather-summary.c:758
 msgid "<tt><small>Sunset: The sun never sets this day.</small></tt>\n"
 msgstr "<tt><small>Auringonlasku. Aurinko ei laske tänään lainkaan.</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:756
+#: ../panel-plugin/weather-summary.c:763
 #, c-format
 msgid "<tt><small>Sunrise: %s</small></tt>\n"
 msgstr "<tt><small>Auringonnous: %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:762
+#: ../panel-plugin/weather-summary.c:769
 #, c-format
 msgid ""
 "<tt><small>Sunset:  %s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Auringonlasku: %s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:769
+#: ../panel-plugin/weather-summary.c:776
 #, c-format
 msgid "<tt><small>Moon phase: %s</small></tt>\n"
 msgstr "<tt><small>Kuun vaihe: %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:774
+#: ../panel-plugin/weather-summary.c:781
 msgid "<tt><small>Moon phase: Unknown</small></tt>\n"
 msgstr "<tt><small>Kuun vaihe: Tuntematon</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:779
+#: ../panel-plugin/weather-summary.c:786
 msgid "<tt><small>Moonrise: The moon never rises this day.</small></tt>\n"
 msgstr "<tt><small>Kuunnousu: Kuu ei nouse tänään lainkaan.</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:784
+#: ../panel-plugin/weather-summary.c:791
 msgid "<tt><small>Moonset: The moon never sets this day.</small></tt>\n"
 msgstr "<tt><small>Kuunlasku: Kuu ei laske tänään lainkaan.</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:789
+#: ../panel-plugin/weather-summary.c:796
 #, c-format
 msgid "<tt><small>Moonrise: %s</small></tt>\n"
 msgstr "<tt><small>Kuunnousu: %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:795
+#: ../panel-plugin/weather-summary.c:802
 #, c-format
 msgid "<tt><small>Moonset:  %s</small></tt>"
 msgstr "<tt><small>Kuunlasku:: %s</small></tt>"
 
 #. daytime headers
-#: ../panel-plugin/weather-summary.c:972
+#: ../panel-plugin/weather-summary.c:981
 msgid "Morning"
 msgstr "Aamu"
 
-#: ../panel-plugin/weather-summary.c:973
+#: ../panel-plugin/weather-summary.c:982
 msgid "Afternoon"
 msgstr "Iltapäivä"
 
-#: ../panel-plugin/weather-summary.c:974
+#: ../panel-plugin/weather-summary.c:983
 msgid "Evening"
 msgstr "Ilta"
 
-#: ../panel-plugin/weather-summary.c:975
+#: ../panel-plugin/weather-summary.c:984
 msgid "Night"
 msgstr "Yö"
 
-#: ../panel-plugin/weather-summary.c:1182
+#: ../panel-plugin/weather-summary.c:1193
 msgid "Weather Report"
 msgstr "Säätiedotus"
 
-#: ../panel-plugin/weather-summary.c:1234
+#: ../panel-plugin/weather-summary.c:1246
 msgid "No location selected."
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:1234
+#: ../panel-plugin/weather-summary.c:1246
 msgid "Please set a location in the plugin settings."
 msgstr "Aseta paikkakunta lisäosan asetuksiin."
 
-#: ../panel-plugin/weather-summary.c:1236
+#: ../panel-plugin/weather-summary.c:1248
 msgid "Currently no data available."
 msgstr "Tietoa ei ole tällä hetkellä saavissa."
 
-#: ../panel-plugin/weather-summary.c:1243
+#: ../panel-plugin/weather-summary.c:1255
 msgid "Plugin settings..."
 msgstr ""
 
-#: ../panel-plugin/weather-summary.c:1257
+#: ../panel-plugin/weather-summary.c:1269
 msgid "_Forecast"
 msgstr "_Ennuste"
 
-#: ../panel-plugin/weather-summary.c:1260
+#: ../panel-plugin/weather-summary.c:1272
 msgid "_Details"
 msgstr "_Yksityiskohdat"
 
