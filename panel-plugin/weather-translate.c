@@ -42,7 +42,7 @@ static const gchar *moon_phases[] = {
     N_("Waning gibbous"),
     N_("Third quarter"),
     N_("Waning crescent"),
-    NULL
+    N_("")
 };
 #define NUM_MOON_PHASES (sizeof(moon_phases) / sizeof(gchar *))
 
