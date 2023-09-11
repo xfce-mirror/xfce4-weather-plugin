@@ -38,7 +38,6 @@
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 
-
 #define DATA(node)                                                  \
     ((gchar *) xmlNodeListGetString(node->doc, node->children, 1))
 
@@ -180,7 +179,6 @@ parse_timestring(const gchar *ts,
     }
 
     t = local ? mktime(&tm) : my_timegm(&tm);
-
     if (t < 0)
         memset(&t, 0, sizeof(time_t));
 
@@ -421,126 +419,272 @@ parse_weather(xmlNode *cur_node,
     return TRUE;
 }
 
-
-static xml_astro *
-parse_astro_time(xmlNode *cur_node)
-{
-    xmlNode *child_node;
-    xml_astro *astro;
-    gchar *date, *sunrise, *sunset, *moonrise, *moonset;
-    gboolean sun_rises = FALSE, sun_sets = FALSE;
-    gboolean moon_rises = FALSE, moon_sets = FALSE;
-    gdouble moonposition;
-
-    astro = g_slice_new0(xml_astro);
-    if (G_UNLIKELY(astro == NULL))
-        return NULL;
-
-    date = PROP(cur_node, "date");
-    astro->day = parse_timestring(date, "%Y-%m-%d", TRUE);
-    xmlFree(date);
-
-    for (child_node = cur_node->children; child_node;
-         child_node = child_node->next) {
-        if (child_node->type == XML_ELEMENT_NODE) {
-            if (NODE_IS_TYPE(child_node, "sunrise")) {
-                sunrise = remove_timezone_offset(PROP(child_node, "time"));
-                astro->sunrise = parse_timestring(sunrise, NULL, TRUE);
-                xmlFree(sunrise);
-                sun_rises = TRUE;
-            }
-
-            if (NODE_IS_TYPE(child_node, "moonset")) {
-                moonset = remove_timezone_offset(PROP(child_node, "time"));
-                astro->moonset = parse_timestring(moonset, NULL, TRUE);
-                xmlFree(moonset);
-                moon_sets = TRUE;
-            }
-
-            if (NODE_IS_TYPE(child_node, "sunset")) {
-                sunset = remove_timezone_offset(PROP(child_node, "time"));
-                astro->sunset = parse_timestring(sunset, NULL, TRUE);
-                xmlFree(sunset);
-                sun_sets = TRUE;
-            }
-
-            if (NODE_IS_TYPE(child_node, "moonrise")) {
-                moonrise = remove_timezone_offset(PROP(child_node, "time"));
-                astro->moonrise = parse_timestring(moonrise, NULL, TRUE);
-                xmlFree(moonrise);
-                moon_rises = TRUE;
-            }
-
-            if (NODE_IS_TYPE(child_node, "moonposition")) {
-                moonposition = extract_double(PROP(child_node, "phase"));
-                if (astro->moon_phase) {
-                    g_free (astro->moon_phase);
-                }
-                astro->moon_phase = g_strdup(parse_moonposition(moonposition));
-            }
-
-            if (NODE_IS_TYPE(child_node, "solarnoon")) {
-                astro->solarnoon_elevation = extract_double(PROP(child_node, "elevation"));
-            }
-
-            if (NODE_IS_TYPE(child_node, "solarmidnight")) {
-                astro->solarmidnight_elevation = extract_double(PROP(child_node, "elevation"));
-            }
-        }
-    }
-
-    if (sun_rises)
-        astro->sun_never_rises = FALSE;
-    else
-        astro->sun_never_rises = TRUE;
-    if (sun_sets)
-        astro->sun_never_sets = FALSE;
-    else
-        astro->sun_never_sets = TRUE;
-
-    if (moon_rises)
-        astro->moon_never_rises = FALSE;
-    else
-        astro->moon_never_rises = TRUE;
-    if (moon_sets)
-        astro->moon_never_sets = FALSE;
-    else
-        astro->moon_never_sets = TRUE;
-    return astro;
-}
-
-
 /*
- * Look at https://api.met.no/weatherapi/sunrise/2.0/schema for information
+ * Look at https://docs.api.met.no/doc/formats/SunriseJSON for information
  * of elements and attributes to expect.
  */
 gboolean
-parse_astrodata(xmlNode *cur_node,
+parse_astrodata_sun(json_object *cur_node,
                 GArray *astrodata)
 {
-    xmlNode *child_node;
     xml_astro *astro;
+    json_object *jwhen, *jinterval, *jproperties, *jdate, *jsunrise,
+           *jsunrise_time, *jsunset,  *jsunset_time,
+           *jsolarnoon, *jsolarmidnight,  *jdisc_centre_elevation ;
+
+    const gchar day_format[]="%Y-%m-%d";
+    const gchar sun_format[]="%Y-%m-%dT%H:%MZ";
+    const gchar *date, *time;
+    gboolean sun_rises = FALSE, sun_sets = FALSE;
+
+    astro = g_slice_new0(xml_astro);
+    if (G_UNLIKELY(astro == NULL))
+        return FALSE;
 
     g_assert(astrodata != NULL);
     if (G_UNLIKELY(astrodata == NULL))
         return FALSE;
 
-    g_assert(cur_node != NULL);
-    if (G_UNLIKELY(cur_node == NULL ||
-        !NODE_IS_TYPE(cur_node, "location")))
+   jwhen = json_object_object_get(cur_node, "when");
+    if (G_UNLIKELY(jwhen == NULL))
         return FALSE;
 
-    for (child_node = cur_node->children; child_node;
-         child_node = child_node->next)
-        if (NODE_IS_TYPE(child_node, "time")) {
-            if ((astro = parse_astro_time(child_node))) {
-                merge_astro(astrodata, astro);
-                xml_astro_free(astro);
-            }
-        }
+    jinterval = json_object_object_get(jwhen, "interval");
+    if (G_UNLIKELY(jinterval == NULL))
+        return FALSE;
+    if (G_UNLIKELY(json_object_array_length(jinterval)!=2))
+        return FALSE;
+    jdate = json_object_array_get_idx(jinterval, 0);
+    if (G_UNLIKELY(jdate == NULL))
+        return FALSE;
+    date = json_object_get_string(jdate);
+    if (G_UNLIKELY(date == NULL))
+        return FALSE;
+    astro->day = parse_timestring(date, day_format, TRUE);
+    weather_debug("sun: astro->day=%s\n",
+                  format_date(astro->day, day_format,TRUE));
+
+    jproperties = json_object_object_get(cur_node, "properties");
+     if (G_UNLIKELY(jproperties == NULL))
+         return FALSE;
+
+     jsunrise = json_object_object_get(jproperties, "sunrise");
+      if (G_UNLIKELY(jsunrise == NULL))
+          return FALSE;
+      jsunrise_time = json_object_object_get(jsunrise, "time");
+      if (G_UNLIKELY(jsunrise_time == NULL)) {
+          weather_debug("sunrise time not found");
+      }
+      else {
+          date = json_object_get_string(jsunrise_time);
+          if (G_UNLIKELY(date == NULL))
+              return FALSE;
+           time = remove_timezone_offset(date);
+          astro->sunrise= parse_timestring(time, sun_format, TRUE);
+          sun_rises = TRUE;
+          weather_debug("astro->sunrise=%s\n",
+                        format_date(astro->sunrise, NULL,TRUE));
+      }
+
+      jsunset = json_object_object_get(jproperties, "sunset");
+       if (G_UNLIKELY(jsunset == NULL))
+           return FALSE;
+       jsunset_time = json_object_object_get(jsunset, "time");
+      if (G_UNLIKELY(jsunset_time == NULL)) {
+          weather_debug("sunset time not found");
+      }
+      else {
+          date = json_object_get_string(jsunset_time);
+          if (G_UNLIKELY(date == NULL))
+              return FALSE;
+          time = remove_timezone_offset(date);
+          astro->sunset= parse_timestring(time, sun_format, TRUE);
+          sun_sets = TRUE;
+          weather_debug("astro->sunset=%s\n",
+                        format_date(astro->sunset, NULL,TRUE));
+      }
+
+       jsolarnoon = json_object_object_get(jproperties, "solarnoon");
+        if (G_UNLIKELY(jsolarnoon == NULL))
+            return FALSE;
+        jdisc_centre_elevation = json_object_object_get(jsolarnoon,
+                                                        "disc_centre_elevation");
+        if (G_UNLIKELY(jdisc_centre_elevation == NULL))
+             return FALSE;
+        astro->solarnoon_elevation =
+                json_object_get_double(jdisc_centre_elevation);
+        weather_debug("astro->solarnoon_elevation=%f\n",
+                      astro->solarnoon_elevation);
+
+        jsolarmidnight = json_object_object_get(jproperties, "solarmidnight");
+          g_assert(jsolarmidnight != NULL);
+          if (G_UNLIKELY(jsolarmidnight == NULL))
+              return FALSE;
+          jdisc_centre_elevation = json_object_object_get(jsolarmidnight,
+                                                          "disc_centre_elevation");
+           if (G_UNLIKELY(jdisc_centre_elevation == NULL))
+               return FALSE;
+          astro->solarmidnight_elevation =
+                  json_object_get_double(jdisc_centre_elevation);
+          weather_debug("astro->solarmidnight_elevation=%f\n",
+                        astro->solarmidnight_elevation);
+
+   if (sun_rises)
+        astro->sun_never_rises = FALSE;
+    else
+        astro->sun_never_rises = TRUE;
+
+    if (sun_sets)
+        astro->sun_never_sets = FALSE;
+    else
+        astro->sun_never_sets = TRUE;
+
+    merge_astro(astrodata, astro);
+    xml_astro_free(astro);
+
     return TRUE;
 }
+/*
+ * Look at https://docs.api.met.no/doc/formats/SunriseJSON for information
+ * of elements and attributes to expect.
+ */
+gboolean
+parse_astrodata_moon(json_object *cur_node,
+                GArray *astrodata)
+{
+    xml_astro *astro;
+    json_object *jwhen, *jinterval, *jproperties, *jdate, *jmoonrise,
+           *jmoonrise_time, *jmoonset,  *jmoonset_time,
+           *jmoonphase;
+    time_t day, previous_day;
+    struct tm* local_time;
+    guint index;
 
+    const gchar day_format[]="%Y-%m-%d";
+    const gchar moon_format[]="%Y-%m-%dT%H:%MZ";
+    const gchar *date, *time;
+    gboolean moon_rises = FALSE, moon_sets = FALSE;
+
+    g_assert(astrodata != NULL);
+    if (G_UNLIKELY(astrodata == NULL))
+        return FALSE;
+
+   jwhen = json_object_object_get(cur_node, "when");
+   if (G_UNLIKELY(jwhen == NULL)) {
+        weather_debug("when not found" );
+        return FALSE;
+    }
+    jinterval = json_object_object_get(jwhen, "interval");
+    if (G_UNLIKELY(jinterval == NULL)) {
+        weather_debug("interval not found" );
+        return FALSE;
+    }
+    if (G_UNLIKELY(json_object_array_length(jinterval)!=2)) {
+        weather_debug("interval length is %d instead of %d",
+                      json_object_array_length(jinterval));
+        return FALSE;
+    }
+    jdate = json_object_array_get_idx(jinterval, 0);
+    if (G_UNLIKELY(jdate == NULL)) {
+        weather_debug("jdate empty" );
+        return FALSE;
+    }
+    date = json_object_get_string(jdate);
+    if (G_UNLIKELY(date == NULL)) {
+        weather_debug("date not found" );
+        return FALSE;
+    }
+    day = parse_timestring(date, day_format, TRUE);
+    /* this data seems weird */
+    astro = get_astro(astrodata, day, &index);
+    if (G_UNLIKELY(astro == NULL)) {
+        weather_debug("no sun astrodata for day=%s\n",
+                      format_date(day, day_format,TRUE));
+        local_time = localtime(&day);
+        previous_day = time_calc_day(*local_time, -1);
+        astro = get_astro(astrodata, previous_day, &index);
+        if (G_UNLIKELY(astro == NULL)) {
+            weather_debug("no sun astrodata for previous day=%s\n",
+                          format_date(previous_day, day_format,TRUE));
+            return FALSE;
+        }
+    }
+    astro->day=day;
+    weather_debug("moon: astro->day=%s\n", format_date(astro->day,
+                                                       day_format,TRUE));
+
+    jproperties = json_object_object_get(cur_node, "properties");
+     if (G_UNLIKELY(jproperties == NULL)) {
+         weather_debug("properties not found" );
+         return FALSE;
+     }
+     jmoonrise = json_object_object_get(jproperties, "moonrise");
+     if (G_UNLIKELY(jmoonrise == NULL)) {
+          weather_debug("moonrise not found" );
+          return FALSE;
+      }
+      jmoonrise_time = json_object_object_get(jmoonrise, "time");
+      if (G_UNLIKELY(jmoonrise_time == NULL)) {
+          weather_debug("moonrise time not found" );
+      }
+      else {
+          date = json_object_get_string(jmoonrise_time);
+          if (G_UNLIKELY(date == NULL)) {
+              weather_debug("jmoonrise_time empty" );
+              return FALSE;
+          }
+           time = remove_timezone_offset(date);
+          astro->moonrise= parse_timestring(time, moon_format, TRUE);
+          moon_rises = TRUE;
+          weather_debug("astro->moonrise=%s\n",
+                        format_date(astro->moonrise, NULL,TRUE));
+      }
+
+      jmoonset = json_object_object_get(jproperties, "moonset");
+       if (G_UNLIKELY(jmoonset == NULL)) {
+           weather_debug("moonset not found" );
+           return FALSE;
+       }
+       jmoonset_time = json_object_object_get(jmoonset, "time");
+       if (G_UNLIKELY(jmoonset_time == NULL)) {
+           weather_debug("moonset time not found" );
+       }
+       else {
+           date = json_object_get_string(jmoonset_time);
+           if (G_UNLIKELY(date == NULL)) {
+               weather_debug("moonset time empty" );
+               return FALSE;
+           }
+           time = remove_timezone_offset(date);
+           astro->moonset= parse_timestring(time, moon_format, TRUE);
+           moon_sets = TRUE;
+           weather_debug("astro->moonset=%s\n",
+                         format_date(astro->moonset, NULL,TRUE));
+       }
+
+       jmoonphase = json_object_object_get(jproperties, "moonphase");
+        if (G_UNLIKELY(jmoonphase == NULL)) {
+            weather_debug("moonphase not found" );
+            return FALSE;
+        }
+         astro->moon_phase =g_strdup(parse_moonposition( json_object_get_double(jmoonphase)));
+        weather_debug("astro->moonphase=%s\n",astro->moon_phase);
+
+        if (moon_rises)
+             astro->moon_never_rises = FALSE;
+         else
+             astro->moon_never_rises = TRUE;
+
+         if (moon_sets)
+             astro->moon_never_sets = FALSE;
+         else
+             astro->moon_never_sets = TRUE;
+
+
+         merge_astro(astrodata, astro);
+
+         return TRUE;
+}
 
 xml_geolocation *
 parse_geolocation(xmlNode *cur_node)
@@ -657,13 +801,26 @@ get_xml_document(SoupMessage *msg)
                                  strlen(msg->response_body->data),
                                  NULL, "UTF-8", 0);
         } else {
-            return xmlParseMemory(msg->response_body->data,
+           return xmlParseMemory(msg->response_body->data,
                                   strlen(msg->response_body->data));
         }
     }
     return NULL;
 }
 
+json_object *
+get_json_tree(SoupMessage *msg)
+{
+    json_object *res=NULL;
+    enum json_tokener_error err;
+
+    if (G_LIKELY(msg && msg->response_body && msg->response_body->data)) {
+        res =  json_tokener_parse_verbose(msg->response_body->data, &err);
+        if (err != json_tokener_success)
+            g_warning("get_json_tree: error =%d",err);
+    }
+    return res;
+}
 
 gpointer
 parse_xml_document(SoupMessage *msg,
