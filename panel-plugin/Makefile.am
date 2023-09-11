@@ -40,6 +40,7 @@ libweather_la_CFLAGS =						\
 	$(XFCONF_CFLAGS)								\
 	$(GTK_CFLAGS)							\
 	$(SOUP_CFLAGS)							\
+	$(JSON_CFLAGS)							\
 	$(UPOWER_GLIB_CFLAGS)						\
 	$(LIBXML_CFLAGS)	\
 	-DGTK_DISABLE_SINGLE_INCLUDES	\
@@ -55,7 +56,8 @@ libweather_la_LIBADD =						\
 	$(XFCONF_LIBS)							\
 	$(GTK_LIBS)							\
 	$(LIBXML_LIBS)							\
-	$(SOUP_LIBS)
+	$(SOUP_LIBS)							\
+	$(JSON_LIBS)
 
 libweather_la_LDFLAGS = \
 	-avoid-version \
