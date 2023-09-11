@@ -803,12 +803,16 @@ merge_astro(GArray *astrodata,
     /* copy astro, as it may be deleted by the calling function */
     new_astro = xml_astro_copy(astro);
 
+    weather_debug("new_astro->day=%s", format_date(new_astro->day, NULL,TRUE));
+    weather_dump(weather_dump_astro, new_astro);
+
     /* check for and replace existing astrodata of the same date */
     if ((old_astro = get_astro(astrodata, astro->day, &index))) {
         xml_astro_free(old_astro);
         g_array_remove_index(astrodata, index);
         g_array_insert_val(astrodata, index, new_astro);
         weather_debug("Replaced existing astrodata at %d.", index);
+        //weather_dump(weather_dump_astrodata, astrodata);
     } else {
         g_array_append_val(astrodata, new_astro);
         weather_debug("Appended new astrodata to the existing data.");
