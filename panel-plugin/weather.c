@@ -30,6 +30,8 @@
 #include <libxml/parser.h>
 #include <libxml/tree.h>
 
+#include <json-c/json_tokener.h>
+
 #include "weather-parsers.h"
 #include "weather-data.h"
 #include "weather.h"
@@ -393,12 +395,15 @@ update_current_astrodata(plugin_data *data)
     if (data->current_astro)
         tdiff = difftime(now_t, data->current_astro->day);
 
-    if (data->current_astro == NULL || tdiff >= 24 * 3600 || tdiff < 0) {
+    if (data->current_astro == NULL || tdiff >= 24 * 3600 || tdiff < 0)
+    {
         data->current_astro = get_astro_data_for_day(data->astrodata, 0);
         if (G_UNLIKELY(data->current_astro == NULL))
             weather_debug("No current astrodata available.");
-        else
+        else {
             weather_debug("Updated current astrodata.");
+            weather_debug("%s",weather_dump_astro(data->current_astro));
+        }
     }
 }
 
@@ -473,70 +478,106 @@ calc_next_download_time(const update_info *upi,
         else
             interval = upi->check_interval;
     }
-
+    weather_debug("interval=%d", interval);
     return time_calc(retry_tm, 0, 0, 0, 0, 0, interval);
 }
 
-
 /*
- * Process downloaded astro data and schedule next astro update.
+ * Process downloaded sun astro data and schedule next astro update.
  */
 static void
-cb_astro_update(SoupSession *session,
+cb_astro_update_sun(SoupSession *session,
                 SoupMessage *msg,
                 gpointer user_data)
 {
     plugin_data *data = user_data;
-    xmlDoc *doc;
-    xmlNode *root_node, *child_node;
+    json_object *json_tree;
     time_t now_t;
-    gboolean parsing_error = TRUE;
+
+    time(&now_t);
+    data->astro_update->http_status_code = msg->status_code;
+    if ((msg->status_code == 200 || msg->status_code == 203)) {
+        json_tree = get_json_tree(msg);
+        if (G_LIKELY(json_tree)) {
+            if (!parse_astrodata_sun(json_tree, data->astrodata))  {
+                g_warning(_("Error parsing astronomical data!"));
+                weather_debug("data->astrodata:%s",
+                              weather_dump_astrodata(data->astrodata));
+            }
+            else {             
+                weather_dump(weather_dump_astrodata, data->astrodata);
+            }
+            g_assert(json_object_put(json_tree) ==1);
+        }
+        else {
+            g_warning(_("Error parsing sun astronomical data!"));
+            weather_debug("No json_tree");
+        }
+    }
+    else {
+        g_warning(_("Download of sun  astronomical data failed with "
+                    "HTTP Status Code %d, Reason phrase: %s"),
+                  msg->status_code, msg->reason_phrase);
+        data->astro_update->next = calc_next_download_time(data->astro_update,
+                                                            now_t);
+    }
+}
+/*
+ * Process downloaded moon astro data and schedule next astro update.
+ */
+static void
+cb_astro_update_moon(SoupSession *session,
+                SoupMessage *msg,
+                gpointer user_data)
+{
+    plugin_data *data = user_data;
+    json_object *json_tree;
+
+    gboolean parse_error=TRUE;
+    time_t now_t;
 
     time(&now_t);
     data->astro_update->attempt++;
     data->astro_update->http_status_code = msg->status_code;
     if ((msg->status_code == 200 || msg->status_code == 203)) {
-        doc = get_xml_document(msg);
-        if (G_LIKELY(doc)) {
-            root_node = xmlDocGetRootElement(doc);
-            if (G_LIKELY(root_node)) {
-                for (child_node = root_node->children; child_node;
-                     child_node = child_node->next) {
-                    if (child_node->type == XML_ELEMENT_NODE) {
-                        if (parse_astrodata(child_node, data->astrodata)) {
-                            /* schedule next update */
-                            data->astro_update->attempt = 0;
-                            data->astro_update->last = now_t;
-                            parsing_error = FALSE;
-                        }
-                    }
-                }
+        json_tree = get_json_tree(msg);
+        if (G_LIKELY(json_tree)) {
+            if (!parse_astrodata_moon(json_tree, data->astrodata))  {
+                g_warning(_("Error parsing moon astronomical data"));
+                weather_debug("data->astrodata:%s",
+                              weather_dump_astrodata(data->astrodata));
             }
-            xmlFreeDoc(doc);
+            else {
+                parse_error=FALSE;
+                weather_dump(weather_dump_astrodata, data->astrodata);
+            }
+            g_assert(json_object_put(json_tree) ==1);
         }
-        if (parsing_error)
-            g_warning(_("Error parsing astronomical data!"));
-    } else
-        g_warning(_("Download of astronomical data failed with "
+        else {
+            g_warning(_("Error parsing moon astronomical data"));
+            weather_debug("No json_tree");
+        }
+    }
+    else {
+        g_warning(_("Download of moon astronomical data failed with "
                     "HTTP Status Code %d, Reason phrase: %s"),
                   msg->status_code, msg->reason_phrase);
-    data->astro_update->next = calc_next_download_time(data->astro_update,
-                                                       now_t);
+        data->astro_update->next = calc_next_download_time(data->astro_update,
+                                                            now_t);
+    }
 
-    astrodata_clean(data->astrodata);
-    g_array_sort(data->astrodata, (GCompareFunc) xml_astro_compare);
-    update_current_astrodata(data);
-    if (! parsing_error)
-        weather_dump(weather_dump_astrodata, data->astrodata);
+    if (!parse_error) {
+        astrodata_clean(data->astrodata);
+        g_array_sort(data->astrodata, (GCompareFunc) xml_astro_compare);
+        data->astro_update->attempt = 0;
+        data->astro_update->last = now_t;
+        update_current_astrodata(data);
 
-    /* update icon */
-    data->night_time = is_night_time(data->current_astro);
-    update_icon(data);
-
-    data->astro_update->finished = TRUE;
+        /* update icon */
+        data->night_time = is_night_time(data->current_astro);
+        update_icon(data);
+    }
 }
-
-
 /*
  * Process downloaded weather data and schedule next weather update.
  */
@@ -616,9 +657,9 @@ update_handler(gpointer user_data)
     /* check if all started downloads are finished and the cache file
        can be written */
     if (data->astro_update->started && data->astro_update->finished &&
-        data->weather_update->started && data->weather_update->finished) {
+                    data->weather_update->started && data->weather_update->finished) {
         data->astro_update->started = FALSE;
-        data->astro_update->finished = FALSE;
+         data->astro_update->finished = FALSE;
         data->weather_update->started = FALSE;
         data->weather_update->finished = FALSE;
         write_cache_file(data);
@@ -628,30 +669,51 @@ update_handler(gpointer user_data)
     if (difftime(data->astro_update->next, now_t) <= 0) {
         /* real next update time will be calculated when update is finished,
            this is to prevent spawning multiple updates in a row */
-        data->astro_update->next = time_calc_hour(now_tm, 1);
-        data->astro_update->started = TRUE;
+        if (!data->astro_update->started) {
+            data->astro_update->started = TRUE;
 
-        /* build url */
-        url = g_strdup_printf("https://api.met.no/weatherapi"
-                              "/sunrise/2.0/?lat=%s&lon=%s&"
+             /* build url */
+            url = g_strdup_printf("https://api.met.no/weatherapi"
+                                  "/sunrise/3.0/sun?lat=%s&lon=%s&"
+                                  "date=%04d-%02d-%02d&"
+                                  "offset=%s",
+                                  data->lat, data->lon,
+                                  now_tm.tm_year + 1900,
+                                  now_tm.tm_mon + 1,
+                                  now_tm.tm_mday,
+                                  data->offset
+                                  );
+
+            /* start receive thread */
+            g_message(_("getting sun data:%s"), url);
+            weather_http_queue_request(data->session, url,
+                                       cb_astro_update_sun, data);
+            g_free(url);
+        }
+        else
+        if (!data->astro_update->finished) {
+            data->astro_update->finished = TRUE;
+            data->astro_update->next = calc_next_download_time(data->astro_update,
+                                                               data->astro_update->last);
+            url = g_strdup_printf("https://api.met.no/weatherapi"
+                              "/sunrise/3.0/moon?lat=%s&lon=%s&"
                               "date=%04d-%02d-%02d&"
-                              "offset=%s&days=%u",
+                              "offset=%s",
                               data->lat, data->lon,
                               now_tm.tm_year + 1900,
                               now_tm.tm_mon + 1,
                               now_tm.tm_mday,
-                              data->offset,
-                              data->forecast_days);
-
-        /* start receive thread */
-        g_message(_("getting %s"), url);
-        weather_http_queue_request(data->session, url,
-                                   cb_astro_update, data);
-        g_free(url);
+                              data->offset
+                              );
+            /* start receive thread */
+            g_message(_("getting moon data: %s"), url);
+            weather_http_queue_request(data->session, url,
+                                       cb_astro_update_moon, data);
+            g_free(url);
+        }
     }
-
     /* fetch weather data */
-    if (difftime(data->weather_update->next, now_t) <= 0) {
+    if (difftime(data->weather_update->next, now_t) <= 0)  {
         /* real next update time will be calculated when update is finished,
            this is to prevent spawning multiple updates in a row */
         data->weather_update->next = time_calc_hour(now_tm, 1);
@@ -1216,6 +1278,8 @@ read_cache_file(plugin_data *data)
     xml_location *loc = NULL;
     xml_astro *astro = NULL;
     time_t now_t = time(NULL), cache_date_t;
+    struct tm now_tm = *localtime(&now_t);
+
     gchar *file, *locname = NULL, *lat = NULL, *lon = NULL, *group = NULL, *offset = NULL;
     gchar *timestring;
     gint msl, num_timeslices = 0, i, j;
@@ -1301,8 +1365,6 @@ read_cache_file(plugin_data *data)
     i = 0;
     group = g_strdup_printf("astrodata%d", i);
     while (g_key_file_has_group(keyfile, group)) {
-        if (i == 0)
-            weather_debug("Reusing cached astrodata instead of downloading it.");
 
         astro = g_slice_new0(xml_astro);
         if (G_UNLIKELY(astro == NULL))
@@ -1337,13 +1399,21 @@ read_cache_file(plugin_data *data)
             g_key_file_get_boolean(keyfile, group, "moon_never_rises", NULL);
         astro->moon_never_sets =
             g_key_file_get_boolean(keyfile, group, "moon_never_sets", NULL);
-
         merge_astro(data->astrodata, astro);
         xml_astro_free(astro);
 
         g_free(group);
         group = g_strdup_printf("astrodata%d", ++i);
     }
+    /* downloads the astrodata of the day if necessary */
+    if  (G_LIKELY(get_astro_data_for_day(data->astrodata, 0)))
+        weather_debug("Reusing cached astrodata instead of downloading it.");
+    else {
+        weather_debug("Astrodata of the day not in cache. Downloading scheduled in 30s.");
+       data->astro_update->attempt = 0;
+       data->astro_update->next = time_calc(now_tm, 0, 0, 0, 0, 0, 30);
+    }
+
     g_free(group);
     group = NULL;
 

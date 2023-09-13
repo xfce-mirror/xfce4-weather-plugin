@@ -23,6 +23,7 @@
 #include <gtk/gtk.h>
 #include <libxml/parser.h>
 #include <libsoup/soup.h>
+#include <json-c/json_tokener.h>
 
 #define DATA_EXPIRY_TIME (24 * 3600)
 
@@ -137,6 +138,12 @@ xml_astro *parse_astro(xmlNode *cur_node);
 
 gboolean parse_astrodata(xmlNode *cur_node,
                          GArray *astrodata);
+gboolean
+parse_astrodata_sun(json_object *cur_node,
+                GArray *astrodata);
+gboolean
+parse_astrodata_moon(json_object *cur_node,
+                GArray *astrodata);
 
 xml_geolocation *parse_geolocation(xmlNode *cur_node);
 
@@ -156,6 +163,9 @@ xml_astro *get_astro(const GArray *astrodata,
                      guint *index);
 
 xmlDoc *get_xml_document(SoupMessage *msg);
+
+json_object *
+get_json_tree(SoupMessage *msg);
 
 gpointer parse_xml_document(SoupMessage *msg,
                             XmlParseFunc parse_func);
