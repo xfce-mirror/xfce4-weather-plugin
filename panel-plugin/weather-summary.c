@@ -570,7 +570,7 @@ create_summary_tab(plugin_data *data)
     APPEND_TEXT_ITEM(_("Cloudiness"), CLOUDINESS);
 
     /* credits */
-    gdk_rgba_parse(&lnk_color, "#0000ff");
+    gdk_rgba_parse(&lnk_color, "#1A5FB4");
     ltag_img = gtk_text_buffer_create_tag(buffer, "lnk0", "foreground-rgba",
                                           &lnk_color, NULL);
     ltag_metno = gtk_text_buffer_create_tag(buffer, "lnk1", "foreground-rgba",
