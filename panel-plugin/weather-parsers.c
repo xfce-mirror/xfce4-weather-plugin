@@ -89,7 +89,7 @@ remove_timezone_offset(const gchar *date)
     if (re != NULL && g_regex_match(re, date, 0, NULL)) {
         res = g_regex_replace(re, date, -1, 0, "Z", 0, NULL);
     } else {
-        res = date;
+        res = g_strdup(date);
     }
     g_regex_unref(re);
     return res;
