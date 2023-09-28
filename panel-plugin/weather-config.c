@@ -957,11 +957,9 @@ check_single_row_toggled(GtkWidget *button,
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     dialog->pd->single_row =
         gtk_toggle_button_get_active(GTK_TOGGLE_BUTTON(button));
-#if LIBXFCE4PANEL_CHECK_VERSION(4,9,0)
     xfceweather_set_mode(dialog->pd->plugin,
                          xfce_panel_plugin_get_mode(dialog->pd->plugin),
                          dialog->pd);
-#endif
 }
 
 

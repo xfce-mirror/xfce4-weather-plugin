@@ -32,28 +32,10 @@
 #define YESNO(bool) ((bool) ? "yes" : "no")
 
 
-#if GLIB_CHECK_VERSION(2,32,0)
-#else
-static void
-weather_dummy_log_handler(const gchar *log_domain,
-                          const GLogLevelFlags log_level,
-                          const gchar *message,
-                          const gpointer unused_data)
-{
-    /* Swallow all messages */
-}
-#endif
-
-
 void
 weather_debug_init(const gchar *log_domain,
                    const gboolean w_debug_mode)
 {
-    /*
-     * GLIB >= 2.32 only shows debug messages if G_MESSAGES_DEBUG contains the
-     * log domain or "all", earlier GLIB versions always show debugging output
-     */
-#if GLIB_CHECK_VERSION(2,32,0)
     const gchar *debug_env;
     gchar *debug_env_new_array[] = { NULL, NULL, NULL, NULL };
     gchar *debug_env_new;
@@ -79,14 +61,6 @@ weather_debug_init(const gchar *log_domain,
         while (j < i)
             g_free(debug_env_new_array[j++]);
     }
-#else
-    if (!w_debug_mode) {
-        g_log_set_handler(log_domain, G_LOG_LEVEL_DEBUG,
-                          weather_dummy_log_handler, NULL);
-        g_log_set_handler(G_LOG_DOMAIN, G_LOG_LEVEL_DEBUG,
-                          weather_dummy_log_handler, NULL);
-    }
-#endif
 }
 
 

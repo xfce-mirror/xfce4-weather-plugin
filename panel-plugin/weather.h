@@ -191,11 +191,9 @@ void update_weatherdata_with_reset(plugin_data *data);
 
 GArray *labels_clear(GArray *array);
 
-#if LIBXFCE4PANEL_CHECK_VERSION(4,9,0)
 gboolean xfceweather_set_mode(XfcePanelPlugin *panel,
                               XfcePanelPluginMode mode,
                               plugin_data *data);
-#endif
 
 G_END_DECLS
 
