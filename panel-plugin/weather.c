@@ -515,10 +515,10 @@ cb_astro_update(SoupSession *session,
             xmlFreeDoc(doc);
         }
         if (parsing_error)
-            g_warning(_("Error parsing astronomical data!"));
+            g_warning("Error parsing astronomical data!");
     } else
-        g_warning(_("Download of astronomical data failed with "
-                    "HTTP Status Code %d, Reason phrase: %s"),
+        g_warning("Download of astronomical data failed with "
+                    "HTTP Status Code %d, Reason phrase: %s",
                   msg->status_code, msg->reason_phrase);
     data->astro_update->next = calc_next_download_time(data->astro_update,
                                                        now_t);
@@ -568,11 +568,11 @@ cb_weather_update(SoupSession *session,
             xmlFreeDoc(doc);
         }
         if (parsing_error)
-            g_warning(_("Error parsing weather data!"));
+            g_warning("Error parsing weather data!");
     } else
         g_warning
-            (_("Download of weather data failed with HTTP Status Code %d, "
-               "Reason phrase: %s"), msg->status_code, msg->reason_phrase);
+            ("Download of weather data failed with HTTP Status Code %d, "
+             "Reason phrase: %s", msg->status_code, msg->reason_phrase);
     data->weather_update->next = calc_next_download_time(data->weather_update,
                                                          now_t);
 
@@ -644,7 +644,7 @@ update_handler(gpointer user_data)
                               data->forecast_days);
 
         /* start receive thread */
-        g_message(_("getting %s"), url);
+        g_message("getting %s", url);
         weather_http_queue_request(data->session, url,
                                    cb_astro_update, data);
         g_free(url);
@@ -665,7 +665,7 @@ update_handler(gpointer user_data)
                               data->lat, data->lon, data->msl);
 
         /* start receive thread */
-        g_message(_("getting %s"), url);
+        g_message("getting %s", url);
         weather_http_queue_request(data->session, url,
                                    cb_weather_update, data);
         g_free(url);
@@ -1197,7 +1197,7 @@ write_cache_file(plugin_data *data)
     }
 
     if (!g_file_set_contents(file, out->str, -1, NULL))
-        g_warning(_("Error writing cache file %s!"), file);
+        g_warning("Error writing cache file %s!", file);
     else
         weather_debug("Cache file %s has been written.", file);
 
@@ -1657,7 +1657,7 @@ xfceweather_dialog_response(GtkWidget *dlg,
                                             PLUGIN_WEBSITE, NULL);
 
         if (G_UNLIKELY(result == FALSE))
-            g_warning(_("Unable to open the following url: %s"),
+            g_warning("Unable to open the following url: %s",
                       PLUGIN_WEBSITE);
     } else {
         /* free stuff used in config dialog */
@@ -1962,8 +1962,8 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
         data->iconimage = gtk_image_new_from_surface(icon);
         cairo_surface_destroy(icon);
     } else
-        g_warning(_("No default icon theme? "
-                    "This should not happen, plugin will crash!"));
+        g_warning("No default icon theme? "
+                  "This should not happen, plugin will crash!");
 
     data->labels = g_array_new(FALSE, TRUE, sizeof(data_types));
 

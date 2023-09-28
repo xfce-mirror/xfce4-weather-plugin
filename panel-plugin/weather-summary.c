@@ -245,9 +245,9 @@ logo_fetched(SoupSession *session,
         gint scale_factor;
         if (!g_file_set_contents(path, msg->response_body->data,
                                  msg->response_body->length, &error)) {
-            g_warning(_("Error downloading met.no logo image to %s, "
-                        "reason: %s\n"), path,
-                      error ? error->message : _("unknown"));
+            g_warning("Error downloading met.no logo image to %s, "
+                      "reason: %s\n", path,
+                      error ? error->message : "unknown");
             g_error_free(error);
             g_free(path);
             return;

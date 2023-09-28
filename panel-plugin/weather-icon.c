@@ -186,7 +186,7 @@ get_icon(const icon_theme *theme,
 
     g_assert(theme != NULL);
     if (G_UNLIKELY(!theme)) {
-        g_warning(_("No icon theme!"));
+        g_warning("No icon theme!");
         return NULL;
     }
 

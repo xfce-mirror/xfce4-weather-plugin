@@ -166,7 +166,7 @@ search_cb(GtkWidget *widget,
     g_free(sane_str);
 
     gtk_tree_view_column_set_title(dialog->column, _("Searching..."));
-    g_message(_("getting %s"), url);
+    g_message("getting %s", url);
     weather_http_queue_request(dialog->session, url, cb_searchdone, dialog);
     g_free(url);
 }
@@ -434,6 +434,6 @@ void weather_search_by_ip(SoupSession *session,
     data->cb = gui_cb;
     data->user_data = user_data;
 
-    g_message(_("getting %s"), url);
+    g_message("getting %s", url);
     weather_http_queue_request(session, url, cb_geolocation, data);
 }
