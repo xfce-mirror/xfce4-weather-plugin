@@ -115,7 +115,7 @@ double_to_string(const gdouble val,
 
 gchar *
 format_date(time_t date_t,
-            gchar *format,
+            const gchar *format,
             gboolean local)
 {
     struct tm *tm;

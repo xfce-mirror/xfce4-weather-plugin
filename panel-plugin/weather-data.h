@@ -104,7 +104,7 @@ gchar *double_to_string(gdouble val,
                         const gchar *format);
 
 gchar *format_date(time_t t,
-                   gchar *format,
+                   const gchar *format,
                    gboolean local);
 
 gboolean timeslice_is_interval(xml_time *timeslice);

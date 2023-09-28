@@ -79,7 +79,7 @@ my_timegm(struct tm *tm)
  * date format (before the new API, 2.x).
  */
 static gchar *
-remove_timezone_offset(gchar *date)
+remove_timezone_offset(const gchar *date)
 {
     GRegex *re = NULL;
     const gchar *pattern = "[+-][0-9]{2}:[0-9]{2}";
@@ -155,7 +155,7 @@ get_astro(const GArray *astrodata,
 
 time_t
 parse_timestring(const gchar *ts,
-                 gchar *format,
+                 const gchar *format,
                  gboolean local) {
     time_t t;
     struct tm tm;

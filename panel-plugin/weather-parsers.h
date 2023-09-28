@@ -127,7 +127,7 @@ xml_weather *make_weather_data(void);
 xml_time *make_timeslice(void);
 
 time_t parse_timestring(const gchar *ts,
-                        gchar *format,
+                        const gchar *format,
                         gboolean local);
 
 gboolean parse_weather(xmlNode *cur_node,
