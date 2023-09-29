@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-19 12:52+0200\n"
+"POT-Creation-Date: 2023-09-29 00:51+0200\n"
 "PO-Revision-Date: 2013-07-03 19:29+0000\n"
 "Last-Translator: Arnold Marko <arnold.marko@gmail.com>, 2019-2021,2023\n"
 "Language-Team: Slovenian (http://app.transifex.com/xfce/xfce-panel-plugins/language/sl/)\n"
@@ -413,7 +413,7 @@ msgid "<b>Show scrollbox</b>"
 msgstr "<b>Prikaži drsni prikazovalnik</b>"
 
 #: ../panel-plugin/weather-config.ui.h:90
-#: ../panel-plugin/weather-config.c:1131
+#: ../panel-plugin/weather-config.c:1129
 msgid "Select _font"
 msgstr "Izberi _pisavo"
 
@@ -507,44 +507,6 @@ msgstr "P"
 msgid "No Data"
 msgstr "Ni podatkov"
 
-#: ../panel-plugin/weather.c:518
-msgid "Error parsing astronomical data!"
-msgstr "Napaka pri razčlenjevanju astronomskih podatkov!"
-
-#: ../panel-plugin/weather.c:520
-#, c-format
-msgid ""
-"Download of astronomical data failed with HTTP Status Code %d, Reason "
-"phrase: %s"
-msgstr "Prenos astronomskih podatkov se je neuspešno prekinil s HTTP statusom %d, razlog: %s"
-
-#: ../panel-plugin/weather.c:571
-msgid "Error parsing weather data!"
-msgstr "Napaka pri razčlenjevanju vremenskih podatkov!"
-
-#: ../panel-plugin/weather.c:574
-#, c-format
-msgid ""
-"Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
-msgstr "Prenos vremenskih podatkov se je neuspešno prekinil s HTTP statusom %d, razlog: %s"
-
-#. start receive thread
-#: ../panel-plugin/weather.c:647 ../panel-plugin/weather.c:668
-#: ../panel-plugin/weather-search.c:169 ../panel-plugin/weather-search.c:437
-#, c-format
-msgid "getting %s"
-msgstr "prejemam %s"
-
-#: ../panel-plugin/weather.c:1200
-#, c-format
-msgid "Error writing cache file %s!"
-msgstr "Napaka pri zapisovanju v predpomnilniško datoteko %s!"
-
-#: ../panel-plugin/weather.c:1660
-#, c-format
-msgid "Unable to open the following url: %s"
-msgstr "Ni bilo mogoče odpreti URL naslova: %s"
-
 #: ../panel-plugin/weather.c:1730
 msgid "Short-term forecast data unavailable."
 msgstr "Kratkoročna napoved ni na voljo."
@@ -612,17 +574,13 @@ msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\
 msgid "Cannot update weather data"
 msgstr "Vremenskih podatkov ni mogoče posodobiti"
 
-#: ../panel-plugin/weather.c:1965
-msgid "No default icon theme? This should not happen, plugin will crash!"
-msgstr "Ni privzete teme ikon? To se nebi smelo zgoditi, vtičnik se bo sesul!"
-
 #. add refresh button to right click menu, for people who missed
 #. the middle mouse click feature
 #: ../panel-plugin/weather.c:2007
 msgid "Re_fresh"
 msgstr "_Osveži"
 
-#: ../panel-plugin/weather.c:2219
+#: ../panel-plugin/weather.c:2172
 msgid "Show weather conditions and forecasts"
 msgstr "Prikaži vremenske razmere in napoved"
 
@@ -811,19 +769,19 @@ msgid ""
 "<b>License:</b> %s"
 msgstr "<b>Mapa:</b> %s\n\n<b>Avtor:</b> %s\n\n<b>Opis:</b> %s\n\n<b>Licenca:</b> %s"
 
-#: ../panel-plugin/weather-config.c:985
+#: ../panel-plugin/weather-config.c:983
 msgid ""
 "A more calendar-like view, with the days in columns and the daytimes "
 "(morning, afternoon, evening, night) in rows."
 msgstr "Bolj koledarski izgled z dnevi v stolpcih in deli dneva (jutro, popoldne, večer, noč) v vrsticah."
 
-#: ../panel-plugin/weather-config.c:989
+#: ../panel-plugin/weather-config.c:987
 msgid ""
 "Shows the forecasts in a table with the daytimes (morning, afternoon, "
 "evening, night) in columns and the days in rows."
 msgstr "Prikaže napovedi v tabeli z deli dneva (jutro, popoldne, večer, noč) v stolpcih in dnevi v vrsticah."
 
-#: ../panel-plugin/weather-config.c:1076
+#: ../panel-plugin/weather-config.c:1074
 #, c-format
 msgid ""
 "Met.no provides forecast data for up to %d days in the future. Choose how "
@@ -833,25 +791,25 @@ msgid ""
 "are unreliable at best ;-)"
 msgstr "Met.no ponuja napovedi za %d dni vnaprej. Izberite, koliko dni naj bo prikazanih v zavihku z napovedjo. Na počasnejših računalnikih lahko nižja vrednost pomaga pri zakasnitvi pri odpiranju okna. Načeloma velja, da so napovedi za več kot tri dni vnaprej v najboljšem primeru nezanesljive. ;-)"
 
-#: ../panel-plugin/weather-config.c:1148
+#: ../panel-plugin/weather-config.c:1146
 msgid "Select font"
 msgstr "Izberi pisavo"
 
 #. TRANSLATORS: Fallback value, usually never shown.
-#: ../panel-plugin/weather-config.c:1262
+#: ../panel-plugin/weather-config.c:1260
 msgid ""
 "Choose the value to add to the list below. Values can be added more than "
 "once."
 msgstr "Izberite vrednosti za spodnji seznam."
 
-#: ../panel-plugin/weather-config.c:1271
+#: ../panel-plugin/weather-config.c:1269
 msgid ""
 "Air temperature, sometimes referred to as dry-bulb temperature. Measured by "
 "a thermometer that is freely exposed to the air, yet shielded from radiation"
 " and moisture."
 msgstr "Temperatura zraka se meri s termometrom, ki je prosto izpostavljen zraku, vendar je zaščiten pred sevanjem in vlago."
 
-#: ../panel-plugin/weather-config.c:1277
+#: ../panel-plugin/weather-config.c:1275
 msgid ""
 "The weight of the air that makes up the atmosphere exerts a pressure on the "
 "surface of the Earth, which is known as atmospheric pressure. To make it "
@@ -862,7 +820,7 @@ msgid ""
 "pressures mean deterioration."
 msgstr "Teža zraka, ki sestavlja atmosfero, izvaja pritisk na površino Zemlje, kar poznamo kot atmosferski pritisk. Za lažjo primerjavo med različnimi lokacijami, se jo prilagaja na višino morja, kar imenujemo barometrični pritisk. Večanje pritiska ponavadi izraža izboljšanje vremena, padanje pritiska pa poslabšanje."
 
-#: ../panel-plugin/weather-config.c:1288
+#: ../panel-plugin/weather-config.c:1286
 msgid ""
 "Nowadays wind speed/velocity is measured using an anemometer (Greek "
 "<i>anemos</i>, meaning <i>wind</i>) in 10 m (33 ft) height. Anemometers "
@@ -870,26 +828,26 @@ msgid ""
 "as they are closely related to and can be deduced from each other."
 msgstr "Danes se hitrost vetra meri z anemometrom (<i>anemos</i> je grško za <i>veter</i>) na višini 10 m (33 čevljev). Ponavadi merijo ali hitrost ali pritisk vetra, a sta si obe vrednosti blizu in se jih da določiti eno iz druge."
 
-#: ../panel-plugin/weather-config.c:1296
+#: ../panel-plugin/weather-config.c:1294
 msgid ""
 "Invented by Sir Francis Beaufort in 1805, this empirical scale on wind speed"
 " is based on people's observations of specific land or sea conditions, "
 "denoting these conditions with numbers from 0 (calm) to 12 (hurricane)."
 msgstr "Po Sir Francis Beaufortu, ki jo je izmuil 1805. Gre za empirično skalo, ki temelji na človeških opazovanjih na kopnem in morju in ki ima vrednosti od 0 (mirno) do 12 (hurikan)"
 
-#: ../panel-plugin/weather-config.c:1302
+#: ../panel-plugin/weather-config.c:1300
 msgid ""
 "This gives the cardinal direction (North, East, South, West) the wind is "
 "coming from."
 msgstr "To poda smer neba (Sever, jug, Vzhod, Zahod), od koder piha veter."
 
-#: ../panel-plugin/weather-config.c:1306
+#: ../panel-plugin/weather-config.c:1304
 msgid ""
 "This gives the direction the wind is coming from in azimuth degrees (North ="
 " 0°, East = 90°, South = 180° and West = 270°)."
 msgstr "To je smer, od koder piha veter, podana v stopinjah odklona od severa (Sever = 0°, Vzhod = 90°, Jug = 180°, Zahod = 270°).."
 
-#: ../panel-plugin/weather-config.c:1311
+#: ../panel-plugin/weather-config.c:1309
 msgid ""
 "Humidity is defined as the amount of water vapor in the air and increases "
 "the possibility of precipitation, fog and dew. While absolute humidity is "
@@ -898,21 +856,21 @@ msgid ""
 "pressure."
 msgstr "Vlaga je definirana kot količina vodne pare v zraku in povečuje možnost rosenja, megle in potenja. Absolutna vlažnost je količina vode v zraku, relativna vlažnost pa je odstotek (%) absolutne vlažnosti glede na to koliko vlage lahko vsebuje zrak ob določeni temperaturi in pritisku."
 
-#: ../panel-plugin/weather-config.c:1319
+#: ../panel-plugin/weather-config.c:1317
 msgid ""
 "This is the temperature to which air must be cooled to reach 100% relative humidity, given no change in water content. Reaching the dew point halts the cooling process, as condensation occurs which releases heat into the air. A high dew point increases the possibility of rain and severe thunderstorms. The dew point allows the prediction of dew, frost, fog and minimum overnight temperature, and has influence on the comfort level one experiences.\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no."
 msgstr "To je temperatura, do katere mora biti zrak ohlajen, da doseže 100% relativno vlažnost. Če se doseže rosišče, se ohlajanje zaustavi, ker se zgodi kondenzacija, ki sprošča toploto v zrak. Visoka vrednost rosišča povečuje možnost padavin in nalivov. Rosišče omogoča napovedovanje megle, rose, skalne in minimalne nočne temperature in ima vpliv na udobje. <b>Opomba: </b> Ta vrednost je izračunana in je ne posreduje met.no."
 
-#: ../panel-plugin/weather-config.c:1331
+#: ../panel-plugin/weather-config.c:1329
 msgid ""
 "Also known as <i>felt temperature</i>, <i>effective temperature</i>, or what some weather providers declare as <i>feels like</i>. Human temperature sensation is not only based on air temperature, but also on heat flow, physical activity and individual condition. While being a highly subjective value, apparent temperature can actually be useful for warning about extreme conditions (cold, heat).\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no. You should use a calculation model appropriate for your local climate and personal preferences on the units page."
 msgstr "Znano tudi kot <i>občutena temperatura</i>, <i>efektivna temperatura</i> ali kot rečejo nekateri <i>se občuti kot</i>. Človekovo dojemanje temperature ni zgolj posledica temperature zraka, temveč tudi pretoka toplote, fizične dejavnosti in subjektivnih faktorjev. Čeprav gre za zelo subjektivno vrednost, je lahko uporabna za opozorila o ekstremnih pogojih (mraz, vročina).\n\n<b>Opomba:</b> Gre za izračunano vrednost, ki je met.no ne podaja. Uporabite vaši klimi prilagojen model, ki ga najdete na strani z enotami."
 
-#: ../panel-plugin/weather-config.c:1345
+#: ../panel-plugin/weather-config.c:1343
 msgid ""
 "This gives the low-level cloud cover in percent. According to WMO "
 "definition, low-level clouds can be found at altitudes below 4,000 m (13,000"
@@ -921,7 +879,7 @@ msgid ""
 "particles and snow, when temperatures are cold enough."
 msgstr "Poda nizko oblačnost v odstotkih. Po definiciji WMO so to oblaki pod 4.000 m (13.000 čevljev) na ekvatorju, čeprav pogosto ležijo pod 2.000 m (6.500 čevljev). Večinoma jih sestavljajo kaplje, pa tudi ledeni delci ali sneg, kadar je dovolj hladno."
 
-#: ../panel-plugin/weather-config.c:1353
+#: ../panel-plugin/weather-config.c:1351
 msgid ""
 "This specifies the mid-level cloud cover in percent. According to WMO "
 "definition, mid-level clouds form in heights of 4,000-8,000 m (13,000-26,000"
@@ -930,7 +888,7 @@ msgid ""
 "temperatures get low enough, ice particles can replace the droplets."
 msgstr "Poda nizko oblačnost v odstotkih. Po definiciji WMO so to oblaki med 4.000m in 8.000m (13.000-26.000 čevljev)  ali 5.000-10.000 m (16.000-33.000) na ekvatorju. Tako kot nizko oblačnost jih večinoma sestavljajo kaplje, pa tudi ledeni delci, kadar je dovolj hladno."
 
-#: ../panel-plugin/weather-config.c:1362
+#: ../panel-plugin/weather-config.c:1360
 msgid ""
 "This reports the high-level cloud cover in percent. According to WMO "
 "definition, high-level clouds can be found in altitudes of 8,000 to 15,000 m"
@@ -940,7 +898,7 @@ msgid ""
 "a magnificent array of colors when the sun is low on the horizon."
 msgstr "Poda nizko oblačnost v odstotkih. Po definiciji WMO so to oblaki med 8.000m in 15.000m (26.000-49.000 čevljev) ali 10.000-18.000 m (33.000-59.000) na ekvatorju. Zaradi nizkih temperatur s v glavnem iz ledenih kristalov. Večinoma so videti belkasti in tanki, ko pa je sonce nizko lahko zasvetijo v različnih barvah."
 
-#: ../panel-plugin/weather-config.c:1372
+#: ../panel-plugin/weather-config.c:1370
 msgid ""
 "Cloudiness, or cloud cover, defines the fraction of the sky obscured by "
 "clouds when observed from a given location. Clouds are both carriers of "
@@ -951,7 +909,7 @@ msgid ""
 "that way contribute to the cooling of the planet."
 msgstr "Oblačnost ali pokritost z oblaki določa delež pokritosti neba z oblaki na določeni lokaciji. Oblaki so nosilci vlage in regulator sevanja sončnih žarkov, ki dosežejo površino Zemlje. Med dnevom hladijo površino, ponoči pa imajo obratni učinek, ker vlaga preprečuje dolgovalovnemu sevanju uhajanje v vesolje. Z odbijanjem svetlobe v vesolje pa tudi prispevajo k ohlajanju planeta."
 
-#: ../panel-plugin/weather-config.c:1384
+#: ../panel-plugin/weather-config.c:1382
 msgid ""
 "Fog is a type of low-lying stratus cloud, with the moisture in it often "
 "generated locally such as from a nearby lake, river, ocean, or simply moist "
@@ -961,7 +919,7 @@ msgid ""
 " visibility to less than 1 km (5/8 statute mile)."
 msgstr "Megla je nizko ležeč stratusni oblak, katerega vlaga se pogosto ustvarja lokalno (jezero, reka, ocean ali tla). Ustvari se, ko je razlika med temperaturo in rosiščem manjša od 2,5 stopinj, ponavadi pri relativni vlažnosti 100%. Pogosto ustvarja vlago v obliki pršenja ali blagega sneženja ter zmanjšano vidljivost pod 1 km."
 
-#: ../panel-plugin/weather-config.c:1395
+#: ../panel-plugin/weather-config.c:1393
 msgid ""
 "The amount of rain, drizzle, sleet, hail, snow, graupel and other forms of water falling from the sky over a specific period.\n"
 "\n"
@@ -978,7 +936,7 @@ msgid ""
 "<b>Note</b>: While air temperature is an important factor in this calculation, there are other influencing factors that the plugin doesn't know about like the type of snow and ground temperature. Because of that, these rules will only lead to rough estimates and may not represent the real amount of snow."
 msgstr "Količina dežja, pršenja, sreža, toče, snega, ... v določenem času."
 
-#: ../panel-plugin/weather-config.c:1571
+#: ../panel-plugin/weather-config.c:1569
 msgid "Labels to d_isplay"
 msgstr "Oznake za pr_ikaz"
 
@@ -1112,10 +1070,6 @@ msgstr "in"
 msgid "mm"
 msgstr "mm"
 
-#: ../panel-plugin/weather-icon.c:189
-msgid "No icon theme!"
-msgstr "Ni teme ikon!"
-
 #: ../panel-plugin/weather-search.c:128 ../panel-plugin/weather-search.c:254
 msgid "Results"
 msgstr "Rezultati"
@@ -1168,15 +1122,6 @@ msgstr "Neimanovana lokacija"
 #, c-format
 msgid "\t%s%s%s%s%s\n"
 msgstr "\t%s%s%s%s%s\n"
-
-#: ../panel-plugin/weather-summary.c:248
-#, c-format
-msgid "Error downloading met.no logo image to %s, reason: %s\n"
-msgstr "Napaka pri prejemanju met.no logotipa v %s, razlog: %s\n"
-
-#: ../panel-plugin/weather-summary.c:250
-msgid "unknown"
-msgstr "neznano"
 
 #: ../panel-plugin/weather-summary.c:394
 msgid "Coordinates\n"
@@ -1395,7 +1340,7 @@ msgid ""
 msgstr "\nOblačnost\n"
 
 #: ../panel-plugin/weather-summary.c:566
-#: ../panel-plugin/weather-translate.c:119
+#: ../panel-plugin/weather-translate.c:118
 msgid "Fog"
 msgstr "Megla"
 
@@ -1710,26 +1655,26 @@ msgstr "Upadajoči srp"
 #. Norwegian descriptions.
 #. Symbols 16-19 are used for polar days (unused beginning with API version
 #. 1.2)
-#: ../panel-plugin/weather-translate.c:69
-#: ../panel-plugin/weather-translate.c:122
+#: ../panel-plugin/weather-translate.c:68
+#: ../panel-plugin/weather-translate.c:121
 msgid "Sunny"
 msgstr "Sončno"
 
-#: ../panel-plugin/weather-translate.c:69
-#: ../panel-plugin/weather-translate.c:122
+#: ../panel-plugin/weather-translate.c:68
+#: ../panel-plugin/weather-translate.c:121
 msgid "Clear"
 msgstr "Jasno"
 
-#: ../panel-plugin/weather-translate.c:70
-#: ../panel-plugin/weather-translate.c:123
+#: ../panel-plugin/weather-translate.c:69
+#: ../panel-plugin/weather-translate.c:122
 msgid "Lightly cloudy"
 msgstr "Rahlo oblačno"
 
-#: ../panel-plugin/weather-translate.c:71
+#: ../panel-plugin/weather-translate.c:70
 msgid "Partly cloudy"
 msgstr "Delno oblačno"
 
-#: ../panel-plugin/weather-translate.c:72
+#: ../panel-plugin/weather-translate.c:71
 msgid "Cloudy"
 msgstr "Oblačno"
 
@@ -1740,8 +1685,8 @@ msgstr "Oblačno"
 #. *    precipitation that can vary greatly in intensity over a short
 #. *    amount of time. [...] Precipitation may be locally heavy for
 #. *    short amounts of time."
-#: ../panel-plugin/weather-translate.c:82
-#: ../panel-plugin/weather-translate.c:124
+#: ../panel-plugin/weather-translate.c:81
+#: ../panel-plugin/weather-translate.c:123
 msgid "Rain showers"
 msgstr "Dež"
 
@@ -1750,22 +1695,22 @@ msgstr "Dež"
 #. *   "Thunder Showers - Intermittent rain showers with thunder and
 #. lightning, generally
 #. *    short-lived."
-#: ../panel-plugin/weather-translate.c:89
+#: ../panel-plugin/weather-translate.c:88
 msgid "Thunder showers"
 msgstr "Nevihta"
 
 #. Analogues to "Rain showers"
-#: ../panel-plugin/weather-translate.c:92
+#: ../panel-plugin/weather-translate.c:91
 msgid "Sleet showers"
 msgstr "Dež"
 
-#: ../panel-plugin/weather-translate.c:93
-#: ../panel-plugin/weather-translate.c:125
+#: ../panel-plugin/weather-translate.c:92
+#: ../panel-plugin/weather-translate.c:124
 msgid "Snow showers"
 msgstr "Sneg"
 
 #. It's raining, usually incessantly, but not heavily.
-#: ../panel-plugin/weather-translate.c:96
+#: ../panel-plugin/weather-translate.c:95
 msgid "Light rain"
 msgstr "Rahel dež"
 
@@ -1774,20 +1719,20 @@ msgstr "Rahel dež"
 #. * rain and rain somewhat better. Symbol names indicate this is the way
 #. met.no did it some
 #. * time ago.
-#: ../panel-plugin/weather-translate.c:101
+#: ../panel-plugin/weather-translate.c:100
 msgid "Rain"
 msgstr "Dež"
 
-#: ../panel-plugin/weather-translate.c:103
+#: ../panel-plugin/weather-translate.c:102
 msgid "Rain with thunder"
 msgstr "Dež z grmenjem"
 
 #. Sleet is a mixture of rain and snow, but it's not hail.
-#: ../panel-plugin/weather-translate.c:106
+#: ../panel-plugin/weather-translate.c:105
 msgid "Sleet"
 msgstr "Žled"
 
-#: ../panel-plugin/weather-translate.c:108
+#: ../panel-plugin/weather-translate.c:107
 msgid "Snow"
 msgstr "Sneg"
 
@@ -1799,23 +1744,23 @@ msgstr "Sneg"
 #. *    rain. It typically falls in regions of strong upward motion within the
 #. cold sector of an
 #. *    extratropical cyclone."
-#: ../panel-plugin/weather-translate.c:117
+#: ../panel-plugin/weather-translate.c:116
 msgid "Thundersnow"
 msgstr "Zimska nevihta"
 
 #. Same as symbols 1-15, but with thunder
-#: ../panel-plugin/weather-translate.c:128
+#: ../panel-plugin/weather-translate.c:127
 msgid "Sleet showers with thunder"
 msgstr "Nevihte z žledom"
 
-#: ../panel-plugin/weather-translate.c:129
+#: ../panel-plugin/weather-translate.c:128
 msgid "Snow showers with thunder"
 msgstr "Snežne nevihte"
 
-#: ../panel-plugin/weather-translate.c:130
+#: ../panel-plugin/weather-translate.c:129
 msgid "Light rain with thunder"
 msgstr "Rahel dež z bliskanjem"
 
-#: ../panel-plugin/weather-translate.c:131
+#: ../panel-plugin/weather-translate.c:130
 msgid "Sleet with thunder"
 msgstr "Žled z bliskanjem"
