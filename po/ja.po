@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-19 12:52+0200\n"
+"POT-Creation-Date: 2023-09-29 00:51+0200\n"
 "PO-Revision-Date: 2013-07-03 19:29+0000\n"
 "Last-Translator: Nobuhiro Iwamatsu <iwamatsu@nigauri.org>, 2008,2018,2023\n"
 "Language-Team: Japanese (http://app.transifex.com/xfce/xfce-panel-plugins/language/ja/)\n"
@@ -412,7 +412,7 @@ msgid "<b>Show scrollbox</b>"
 msgstr "<b>スクロールボックスを表示</b>"
 
 #: ../panel-plugin/weather-config.ui.h:90
-#: ../panel-plugin/weather-config.c:1131
+#: ../panel-plugin/weather-config.c:1129
 msgid "Select _font"
 msgstr "フォントの選択(_F)"
 
@@ -506,44 +506,6 @@ msgstr "降水量"
 msgid "No Data"
 msgstr "データなし"
 
-#: ../panel-plugin/weather.c:518
-msgid "Error parsing astronomical data!"
-msgstr "天文データの解析でエラーが発生しました!"
-
-#: ../panel-plugin/weather.c:520
-#, c-format
-msgid ""
-"Download of astronomical data failed with HTTP Status Code %d, Reason "
-"phrase: %s"
-msgstr "天文データのダウンロードに失敗しました。HTTP Status Code %d, Reason phrase: %s"
-
-#: ../panel-plugin/weather.c:571
-msgid "Error parsing weather data!"
-msgstr "気象データの解析でエラーが発生しました!"
-
-#: ../panel-plugin/weather.c:574
-#, c-format
-msgid ""
-"Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
-msgstr "気象データのダウンロードに失敗しました。HTTP Status Code %d, Reason phrase: %s"
-
-#. start receive thread
-#: ../panel-plugin/weather.c:647 ../panel-plugin/weather.c:668
-#: ../panel-plugin/weather-search.c:169 ../panel-plugin/weather-search.c:437
-#, c-format
-msgid "getting %s"
-msgstr "getting %s"
-
-#: ../panel-plugin/weather.c:1200
-#, c-format
-msgid "Error writing cache file %s!"
-msgstr "キャッシュファイル %s への書き込みでエラーです!"
-
-#: ../panel-plugin/weather.c:1660
-#, c-format
-msgid "Unable to open the following url: %s"
-msgstr "次の URL を開くことができません: %s"
-
 #: ../panel-plugin/weather.c:1730
 msgid "Short-term forecast data unavailable."
 msgstr "利用可能な短期予報データがありません。"
@@ -611,17 +573,13 @@ msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\
 msgid "Cannot update weather data"
 msgstr "気象データを更新できません"
 
-#: ../panel-plugin/weather.c:1965
-msgid "No default icon theme? This should not happen, plugin will crash!"
-msgstr "デフォルトアイコンテーマがありません。これは想定外の事態のため、プラグインは停止します!"
-
 #. add refresh button to right click menu, for people who missed
 #. the middle mouse click feature
 #: ../panel-plugin/weather.c:2007
 msgid "Re_fresh"
 msgstr "更新(_F)"
 
-#: ../panel-plugin/weather.c:2219
+#: ../panel-plugin/weather.c:2172
 msgid "Show weather conditions and forecasts"
 msgstr "天気状況と予報を表示します。"
 
@@ -810,19 +768,19 @@ msgid ""
 "<b>License:</b> %s"
 msgstr "<b>ディレクトリ:</b> %s\n\n<b>作者:</b> %s\n\n<b>説明:</b> %s\n\n<b>ライセンス:</b> %s"
 
-#: ../panel-plugin/weather-config.c:985
+#: ../panel-plugin/weather-config.c:983
 msgid ""
 "A more calendar-like view, with the days in columns and the daytimes "
 "(morning, afternoon, evening, night) in rows."
 msgstr "日を列に、時間帯を行にして表示します。"
 
-#: ../panel-plugin/weather-config.c:989
+#: ../panel-plugin/weather-config.c:987
 msgid ""
 "Shows the forecasts in a table with the daytimes (morning, afternoon, "
 "evening, night) in columns and the days in rows."
 msgstr "時間帯を列に、日を行にして表示します。"
 
-#: ../panel-plugin/weather-config.c:1076
+#: ../panel-plugin/weather-config.c:1074
 #, c-format
 msgid ""
 "Met.no provides forecast data for up to %d days in the future. Choose how "
@@ -832,25 +790,25 @@ msgid ""
 "are unreliable at best ;-)"
 msgstr "サマリウィンドウの「予報」タブで表示する予報日数を指定します。met.no は %d 日先までの予報データを提供しています。低速のコンピューターではこの値を大きくするとウィンドウ表示に時間がかかるかもしれません。ただし、予報が信用できるのはせいぜい 3 日先がいいところでしょう ;-)"
 
-#: ../panel-plugin/weather-config.c:1148
+#: ../panel-plugin/weather-config.c:1146
 msgid "Select font"
 msgstr "フォントの選択"
 
 #. TRANSLATORS: Fallback value, usually never shown.
-#: ../panel-plugin/weather-config.c:1262
+#: ../panel-plugin/weather-config.c:1260
 msgid ""
 "Choose the value to add to the list below. Values can be added more than "
 "once."
 msgstr "以下のリストに追加する値を選択してください。複数の値を追加できます。"
 
-#: ../panel-plugin/weather-config.c:1271
+#: ../panel-plugin/weather-config.c:1269
 msgid ""
 "Air temperature, sometimes referred to as dry-bulb temperature. Measured by "
 "a thermometer that is freely exposed to the air, yet shielded from radiation"
 " and moisture."
 msgstr "大気の温度です。時々乾球温度を参照します。"
 
-#: ../panel-plugin/weather-config.c:1277
+#: ../panel-plugin/weather-config.c:1275
 msgid ""
 "The weight of the air that makes up the atmosphere exerts a pressure on the "
 "surface of the Earth, which is known as atmospheric pressure. To make it "
@@ -861,7 +819,7 @@ msgid ""
 "pressures mean deterioration."
 msgstr "大気によって地表にかかる圧力 (大気圧) です。一般に気圧の上昇は天候の好転を、低下は悪化を意味します。"
 
-#: ../panel-plugin/weather-config.c:1288
+#: ../panel-plugin/weather-config.c:1286
 msgid ""
 "Nowadays wind speed/velocity is measured using an anemometer (Greek "
 "<i>anemos</i>, meaning <i>wind</i>) in 10 m (33 ft) height. Anemometers "
@@ -869,26 +827,26 @@ msgid ""
 "as they are closely related to and can be deduced from each other."
 msgstr "風の速さ/速度です。高度 10m (33ft) で計測されます。"
 
-#: ../panel-plugin/weather-config.c:1296
+#: ../panel-plugin/weather-config.c:1294
 msgid ""
 "Invented by Sir Francis Beaufort in 1805, this empirical scale on wind speed"
 " is based on people's observations of specific land or sea conditions, "
 "denoting these conditions with numbers from 0 (calm) to 12 (hurricane)."
 msgstr "風力 (ビューフォート風力階級) です。風の強さを 0 から 12 までの 13 段階で表します。"
 
-#: ../panel-plugin/weather-config.c:1302
+#: ../panel-plugin/weather-config.c:1300
 msgid ""
 "This gives the cardinal direction (North, East, South, West) the wind is "
 "coming from."
 msgstr "風が吹いてくる基本方位 (東西南北) です。"
 
-#: ../panel-plugin/weather-config.c:1306
+#: ../panel-plugin/weather-config.c:1304
 msgid ""
 "This gives the direction the wind is coming from in azimuth degrees (North ="
 " 0°, East = 90°, South = 180° and West = 270°)."
 msgstr "風が吹いてくる方位角 (北 = 0°、東 = 90°、南 = 180°、西 = 270°) です。"
 
-#: ../panel-plugin/weather-config.c:1311
+#: ../panel-plugin/weather-config.c:1309
 msgid ""
 "Humidity is defined as the amount of water vapor in the air and increases "
 "the possibility of precipitation, fog and dew. While absolute humidity is "
@@ -897,21 +855,21 @@ msgid ""
 "pressure."
 msgstr "湿度は大気中に含まれる水蒸気の割合のことで、これが増加すると降雨、霧の発生、あるいは結露の可能性が高まります。絶対湿度は大気の単位容積あたりの水分量で、重量で表します。相対湿度は飽和水蒸気圧に対する実際の水蒸気量の比率と定義され、百分率で表します。"
 
-#: ../panel-plugin/weather-config.c:1319
+#: ../panel-plugin/weather-config.c:1317
 msgid ""
 "This is the temperature to which air must be cooled to reach 100% relative humidity, given no change in water content. Reaching the dew point halts the cooling process, as condensation occurs which releases heat into the air. A high dew point increases the possibility of rain and severe thunderstorms. The dew point allows the prediction of dew, frost, fog and minimum overnight temperature, and has influence on the comfort level one experiences.\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no."
 msgstr "露点温度は、大気を冷却していったときに相対湿度が 100% になる温度です。露点温度が高いと、降雨や激しい雷雨の可能性が高まります。\n\n<b>注意:</b> この値は本プラグインで計算したもので、met.no が提供する情報ではありません。"
 
-#: ../panel-plugin/weather-config.c:1331
+#: ../panel-plugin/weather-config.c:1329
 msgid ""
 "Also known as <i>felt temperature</i>, <i>effective temperature</i>, or what some weather providers declare as <i>feels like</i>. Human temperature sensation is not only based on air temperature, but also on heat flow, physical activity and individual condition. While being a highly subjective value, apparent temperature can actually be useful for warning about extreme conditions (cold, heat).\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no. You should use a calculation model appropriate for your local climate and personal preferences on the units page."
 msgstr "<i>実効温度</i>や<i>見かけ温度</i>などとも呼ばれる、人間が肌で感じる温度の感覚を数値化したものです。\n\n<b>注意:</b> この値は本プラグインで計算したもので、met.no が提供する情報ではありません。計算モデルは「単位」タブで選択できます。"
 
-#: ../panel-plugin/weather-config.c:1345
+#: ../panel-plugin/weather-config.c:1343
 msgid ""
 "This gives the low-level cloud cover in percent. According to WMO "
 "definition, low-level clouds can be found at altitudes below 4,000 m (13,000"
@@ -920,7 +878,7 @@ msgid ""
 "particles and snow, when temperatures are cold enough."
 msgstr "下層雲量の割合です。世界気象機関の定義によれば、下層雲は赤道地点で高度 4,000m (13,000ft) または 5,000m (16,000ft) 以下に発生した雲のことですが、2,000m (6,500ft) 以下とされる場合もあります。"
 
-#: ../panel-plugin/weather-config.c:1353
+#: ../panel-plugin/weather-config.c:1351
 msgid ""
 "This specifies the mid-level cloud cover in percent. According to WMO "
 "definition, mid-level clouds form in heights of 4,000-8,000 m (13,000-26,000"
@@ -929,7 +887,7 @@ msgid ""
 "temperatures get low enough, ice particles can replace the droplets."
 msgstr "中層雲量の割合です。世界気象機関の定義によれば、中層雲は赤道地点で高度 4,000 から 8,000m (13,000 から 26,000ft) に発生した雲のことです。"
 
-#: ../panel-plugin/weather-config.c:1362
+#: ../panel-plugin/weather-config.c:1360
 msgid ""
 "This reports the high-level cloud cover in percent. According to WMO "
 "definition, high-level clouds can be found in altitudes of 8,000 to 15,000 m"
@@ -939,7 +897,7 @@ msgid ""
 "a magnificent array of colors when the sun is low on the horizon."
 msgstr "上層雲量の割合です。世界気象機関の定義によれば、上層雲は赤道地点で高度 8,000～15,000m (26,000～49,000ft) または 10,000～18,000m (33,000～59,000ft) までに発生した雲のことです。"
 
-#: ../panel-plugin/weather-config.c:1372
+#: ../panel-plugin/weather-config.c:1370
 msgid ""
 "Cloudiness, or cloud cover, defines the fraction of the sky obscured by "
 "clouds when observed from a given location. Clouds are both carriers of "
@@ -950,7 +908,7 @@ msgid ""
 "that way contribute to the cooling of the planet."
 msgstr "雲量は所定の位置から空を観測したときの、雲によって隠される割合です。雲量が大きいと日中は気温の低下につながり、夜間は気温の低下を抑制します。"
 
-#: ../panel-plugin/weather-config.c:1384
+#: ../panel-plugin/weather-config.c:1382
 msgid ""
 "Fog is a type of low-lying stratus cloud, with the moisture in it often "
 "generated locally such as from a nearby lake, river, ocean, or simply moist "
@@ -960,7 +918,7 @@ msgid ""
 " visibility to less than 1 km (5/8 statute mile)."
 msgstr "霧は地表付近に発生する雲の一種で、湖、川、海、あるいは湿地やその周囲でよく見られます。気温と露点温度の差が 2.5 ℃ (4 ℉) 未満で、湿度が 100％ 近くになったときに発生します。一般に霧雨または非常に小さい雪の形で降り、視程が 1 km (5/8 法定マイル) 未満になるものを言います。"
 
-#: ../panel-plugin/weather-config.c:1395
+#: ../panel-plugin/weather-config.c:1393
 msgid ""
 "The amount of rain, drizzle, sleet, hail, snow, graupel and other forms of water falling from the sky over a specific period.\n"
 "\n"
@@ -977,7 +935,7 @@ msgid ""
 "<b>Note</b>: While air temperature is an important factor in this calculation, there are other influencing factors that the plugin doesn't know about like the type of snow and ground temperature. Because of that, these rules will only lead to rough estimates and may not represent the real amount of snow."
 msgstr "降水量とは、一定期間内に空中から地表に落ちた、雨、雪、霰、雹などの総量を意味します。\n\nmet.no が提供するのは、これらを液体状態にした場合 (雪などは気温を基にしたオリジナルの計算値による推測) の値になります:\n\n<tt><small>                  T &lt; -11.1 ℃ (12 ℉) =&gt; 1:12\n-11.1 ℃ (12 ℉) &lt; T &lt;  -4.4 ℃ (24 ℉) =&gt; 1:10\n -4.4 ℃ (24 ℉) &lt; T &lt;  -2.2 ℃ (28 ℉) =&gt; 1:7\n -2.2 ℃ (28 ℉) &lt; T &lt;  -0.6 ℃ (31 ℉) =&gt; 1:5\n -0.6 ℃ (31 ℉) &lt; T                   =&gt; 1:3</small></tt>\n\n例: 気温が -5 ℃ (12 ℉) のとき、雪の密度は「低」とされ、降水量と降雪量の変換比率は「1:10」として計算されます。結果、予報値は 5mm、積雪量は 50mm になります。\n\n<b>注意:</b> この計算では気温のみ使用しており、降雪の種類や地表の温度などは考慮されていません。このため、この値はおおまかな見積り値であり、実際の降雪量を表していません。"
 
-#: ../panel-plugin/weather-config.c:1571
+#: ../panel-plugin/weather-config.c:1569
 msgid "Labels to d_isplay"
 msgstr "表示するラベル(_I)"
 
@@ -1111,10 +1069,6 @@ msgstr "in"
 msgid "mm"
 msgstr "mm"
 
-#: ../panel-plugin/weather-icon.c:189
-msgid "No icon theme!"
-msgstr "アイコンテーマがありません!"
-
 #: ../panel-plugin/weather-search.c:128 ../panel-plugin/weather-search.c:254
 msgid "Results"
 msgstr "結果"
@@ -1167,15 +1121,6 @@ msgstr "無名の地"
 #, c-format
 msgid "\t%s%s%s%s%s\n"
 msgstr "\t%s%s%s%s%s\n"
-
-#: ../panel-plugin/weather-summary.c:248
-#, c-format
-msgid "Error downloading met.no logo image to %s, reason: %s\n"
-msgstr "met.no ロゴ画像 %s のダウンロードでエラーです。理由: %s\n"
-
-#: ../panel-plugin/weather-summary.c:250
-msgid "unknown"
-msgstr "不明"
 
 #: ../panel-plugin/weather-summary.c:394
 msgid "Coordinates\n"
@@ -1394,7 +1339,7 @@ msgid ""
 msgstr "\n雲\n"
 
 #: ../panel-plugin/weather-summary.c:566
-#: ../panel-plugin/weather-translate.c:119
+#: ../panel-plugin/weather-translate.c:118
 msgid "Fog"
 msgstr "霧"
 
@@ -1709,26 +1654,26 @@ msgstr "下弦から新月の間"
 #. Norwegian descriptions.
 #. Symbols 16-19 are used for polar days (unused beginning with API version
 #. 1.2)
-#: ../panel-plugin/weather-translate.c:69
-#: ../panel-plugin/weather-translate.c:122
+#: ../panel-plugin/weather-translate.c:68
+#: ../panel-plugin/weather-translate.c:121
 msgid "Sunny"
 msgstr "快晴"
 
-#: ../panel-plugin/weather-translate.c:69
-#: ../panel-plugin/weather-translate.c:122
+#: ../panel-plugin/weather-translate.c:68
+#: ../panel-plugin/weather-translate.c:121
 msgid "Clear"
 msgstr "快晴"
 
-#: ../panel-plugin/weather-translate.c:70
-#: ../panel-plugin/weather-translate.c:123
+#: ../panel-plugin/weather-translate.c:69
+#: ../panel-plugin/weather-translate.c:122
 msgid "Lightly cloudy"
 msgstr "晴れ"
 
-#: ../panel-plugin/weather-translate.c:71
+#: ../panel-plugin/weather-translate.c:70
 msgid "Partly cloudy"
 msgstr "晴れ時々曇り"
 
-#: ../panel-plugin/weather-translate.c:72
+#: ../panel-plugin/weather-translate.c:71
 msgid "Cloudy"
 msgstr "曇り"
 
@@ -1739,8 +1684,8 @@ msgstr "曇り"
 #. *    precipitation that can vary greatly in intensity over a short
 #. *    amount of time. [...] Precipitation may be locally heavy for
 #. *    short amounts of time."
-#: ../panel-plugin/weather-translate.c:82
-#: ../panel-plugin/weather-translate.c:124
+#: ../panel-plugin/weather-translate.c:81
+#: ../panel-plugin/weather-translate.c:123
 msgid "Rain showers"
 msgstr "晴れ時々雨"
 
@@ -1749,22 +1694,22 @@ msgstr "晴れ時々雨"
 #. *   "Thunder Showers - Intermittent rain showers with thunder and
 #. lightning, generally
 #. *    short-lived."
-#: ../panel-plugin/weather-translate.c:89
+#: ../panel-plugin/weather-translate.c:88
 msgid "Thunder showers"
 msgstr "晴れ時々雷雨"
 
 #. Analogues to "Rain showers"
-#: ../panel-plugin/weather-translate.c:92
+#: ../panel-plugin/weather-translate.c:91
 msgid "Sleet showers"
 msgstr "晴れ時々みぞれ"
 
-#: ../panel-plugin/weather-translate.c:93
-#: ../panel-plugin/weather-translate.c:125
+#: ../panel-plugin/weather-translate.c:92
+#: ../panel-plugin/weather-translate.c:124
 msgid "Snow showers"
 msgstr "晴れ時々雪"
 
 #. It's raining, usually incessantly, but not heavily.
-#: ../panel-plugin/weather-translate.c:96
+#: ../panel-plugin/weather-translate.c:95
 msgid "Light rain"
 msgstr "小雨"
 
@@ -1773,20 +1718,20 @@ msgstr "小雨"
 #. * rain and rain somewhat better. Symbol names indicate this is the way
 #. met.no did it some
 #. * time ago.
-#: ../panel-plugin/weather-translate.c:101
+#: ../panel-plugin/weather-translate.c:100
 msgid "Rain"
 msgstr "雨"
 
-#: ../panel-plugin/weather-translate.c:103
+#: ../panel-plugin/weather-translate.c:102
 msgid "Rain with thunder"
 msgstr "雷雨"
 
 #. Sleet is a mixture of rain and snow, but it's not hail.
-#: ../panel-plugin/weather-translate.c:106
+#: ../panel-plugin/weather-translate.c:105
 msgid "Sleet"
 msgstr "みぞれ"
 
-#: ../panel-plugin/weather-translate.c:108
+#: ../panel-plugin/weather-translate.c:107
 msgid "Snow"
 msgstr "雪"
 
@@ -1798,23 +1743,23 @@ msgstr "雪"
 #. *    rain. It typically falls in regions of strong upward motion within the
 #. cold sector of an
 #. *    extratropical cyclone."
-#: ../panel-plugin/weather-translate.c:117
+#: ../panel-plugin/weather-translate.c:116
 msgid "Thundersnow"
 msgstr "雷を伴う雪"
 
 #. Same as symbols 1-15, but with thunder
-#: ../panel-plugin/weather-translate.c:128
+#: ../panel-plugin/weather-translate.c:127
 msgid "Sleet showers with thunder"
 msgstr "晴れ時々雷を伴うみぞれ"
 
-#: ../panel-plugin/weather-translate.c:129
+#: ../panel-plugin/weather-translate.c:128
 msgid "Snow showers with thunder"
 msgstr "晴れ時々雷を伴う雪"
 
-#: ../panel-plugin/weather-translate.c:130
+#: ../panel-plugin/weather-translate.c:129
 msgid "Light rain with thunder"
 msgstr "雷を伴う小雨"
 
-#: ../panel-plugin/weather-translate.c:131
+#: ../panel-plugin/weather-translate.c:130
 msgid "Sleet with thunder"
 msgstr "雷を伴うみぞれ"
