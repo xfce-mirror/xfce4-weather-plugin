@@ -22,7 +22,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-19 12:52+0200\n"
+"POT-Creation-Date: 2023-09-29 00:51+0200\n"
 "PO-Revision-Date: 2013-07-03 19:29+0000\n"
 "Last-Translator: Demiray Muhterem <mdemiray@msn.com>, 2018,2020,2023\n"
 "Language-Team: Turkish (http://app.transifex.com/xfce/xfce-panel-plugins/language/tr/)\n"
@@ -424,7 +424,7 @@ msgid "<b>Show scrollbox</b>"
 msgstr "<b>Kaydırma kutusunu göster</b>"
 
 #: ../panel-plugin/weather-config.ui.h:90
-#: ../panel-plugin/weather-config.c:1131
+#: ../panel-plugin/weather-config.c:1129
 msgid "Select _font"
 msgstr "_Yazı tipi seç"
 
@@ -518,44 +518,6 @@ msgstr "R"
 msgid "No Data"
 msgstr "Veri Yok"
 
-#: ../panel-plugin/weather.c:518
-msgid "Error parsing astronomical data!"
-msgstr "Astronomik veriler alınırken hata oluştu!"
-
-#: ../panel-plugin/weather.c:520
-#, c-format
-msgid ""
-"Download of astronomical data failed with HTTP Status Code %d, Reason "
-"phrase: %s"
-msgstr "Astronomik veri indirmesi başarısız: HTTP Durum Kodu %d, Neden öbeği: %s"
-
-#: ../panel-plugin/weather.c:571
-msgid "Error parsing weather data!"
-msgstr "Hava durumu alınırken hata oluştu!"
-
-#: ../panel-plugin/weather.c:574
-#, c-format
-msgid ""
-"Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
-msgstr "Hava durumu veri indirmesi başarısız: HTTP Durum Kodu %d, Neden öbeği: %s"
-
-#. start receive thread
-#: ../panel-plugin/weather.c:647 ../panel-plugin/weather.c:668
-#: ../panel-plugin/weather-search.c:169 ../panel-plugin/weather-search.c:437
-#, c-format
-msgid "getting %s"
-msgstr "%s alınıyor"
-
-#: ../panel-plugin/weather.c:1200
-#, c-format
-msgid "Error writing cache file %s!"
-msgstr "%s önbellek dosyasına yazılamıyor!"
-
-#: ../panel-plugin/weather.c:1660
-#, c-format
-msgid "Unable to open the following url: %s"
-msgstr "Url açılamıyor: %s "
-
 #: ../panel-plugin/weather.c:1730
 msgid "Short-term forecast data unavailable."
 msgstr "Kısa dönemli hava tahmini verisi yok."
@@ -623,17 +585,13 @@ msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\
 msgid "Cannot update weather data"
 msgstr "Hava durumu bilgileri güncellenemedi."
 
-#: ../panel-plugin/weather.c:1965
-msgid "No default icon theme? This should not happen, plugin will crash!"
-msgstr "Öntanımlı simge teması yok mu? Böyle olmamalı, eklenti çalışmayacaktır!"
-
 #. add refresh button to right click menu, for people who missed
 #. the middle mouse click feature
 #: ../panel-plugin/weather.c:2007
 msgid "Re_fresh"
 msgstr "_Yenile"
 
-#: ../panel-plugin/weather.c:2219
+#: ../panel-plugin/weather.c:2172
 msgid "Show weather conditions and forecasts"
 msgstr "Hava durumlarını ve öngörüleri göster"
 
@@ -822,19 +780,19 @@ msgid ""
 "<b>License:</b> %s"
 msgstr "<b>Dizin:</b> %s\n\n<b>Yazar:</b> %s\n\n<b>Tanımlama:</b> %s\n\n<b>Lisans:</b> %s"
 
-#: ../panel-plugin/weather-config.c:985
+#: ../panel-plugin/weather-config.c:983
 msgid ""
 "A more calendar-like view, with the days in columns and the daytimes "
 "(morning, afternoon, evening, night) in rows."
 msgstr "Birçok takvim-günlerin sutunlar ve iş günlerinin (sabah, öğleden sonra, akşam, gece) satır günlerinin görünmesi halindedir."
 
-#: ../panel-plugin/weather-config.c:989
+#: ../panel-plugin/weather-config.c:987
 msgid ""
 "Shows the forecasts in a table with the daytimes (morning, afternoon, "
 "evening, night) in columns and the days in rows."
 msgstr "Sütunlarında günün zamanları (sabah, öğle, akşam, gece) ve satırlarında günler olan tabloda tahminleri gösterir."
 
-#: ../panel-plugin/weather-config.c:1076
+#: ../panel-plugin/weather-config.c:1074
 #, c-format
 msgid ""
 "Met.no provides forecast data for up to %d days in the future. Choose how "
@@ -844,25 +802,25 @@ msgid ""
 "are unreliable at best ;-)"
 msgstr "Met.no %d kadar gelecekteki tahmin verilerini sağlar.Özet penceresindeki tahmin sekmesinde kaç gün gösterileceğini seçiniz.Yavaş bilgisayarlarda pencere açılırken ,daha düşük sayılar geçikmelere karşı yardımcı olabilir.Son olarak,genellikle üç günü geçen tahminler çok fazla güvenilir değildir;-)"
 
-#: ../panel-plugin/weather-config.c:1148
+#: ../panel-plugin/weather-config.c:1146
 msgid "Select font"
 msgstr "Yazı tipi seç"
 
 #. TRANSLATORS: Fallback value, usually never shown.
-#: ../panel-plugin/weather-config.c:1262
+#: ../panel-plugin/weather-config.c:1260
 msgid ""
 "Choose the value to add to the list below. Values can be added more than "
 "once."
 msgstr "Aşağıdaki listeye eklemek için değer seçin. Değerler birden çok kez ilave edilebilir."
 
-#: ../panel-plugin/weather-config.c:1271
+#: ../panel-plugin/weather-config.c:1269
 msgid ""
 "Air temperature, sometimes referred to as dry-bulb temperature. Measured by "
 "a thermometer that is freely exposed to the air, yet shielded from radiation"
 " and moisture."
 msgstr "Hava sıcaklığı, bazen dry-bulb sıcaklığı olarak adlandırılır. Nemden ve radyasyondan korunmuş, yalnızca serbest havaya maruz kalmış termometre ile değer ölçülmüştür."
 
-#: ../panel-plugin/weather-config.c:1277
+#: ../panel-plugin/weather-config.c:1275
 msgid ""
 "The weight of the air that makes up the atmosphere exerts a pressure on the "
 "surface of the Earth, which is known as atmospheric pressure. To make it "
@@ -873,7 +831,7 @@ msgid ""
 "pressures mean deterioration."
 msgstr "Atmosferi oluşturan havanın agırlıgı ,atmosfere dünyanın yüzeyinde bir basınç uygulanmaktadır .Buda atmosferik basınç olarak bilinir.Farklı yükseklikteki yerler için bir değeri başka değerle karşılaştırmayı kolaylaştırmak için,atmosferik basınç deniz seviyesindeki basınca eşdeğer olmaya ayarlanmıştır ve buna barometrik basınç denir.,Genelde basınç düşüşü kötüye giderken,yükselen  barometrik basınç artışı hava şartlarında iyileşmeyi gösterir."
 
-#: ../panel-plugin/weather-config.c:1288
+#: ../panel-plugin/weather-config.c:1286
 msgid ""
 "Nowadays wind speed/velocity is measured using an anemometer (Greek "
 "<i>anemos</i>, meaning <i>wind</i>) in 10 m (33 ft) height. Anemometers "
@@ -881,26 +839,26 @@ msgid ""
 "as they are closely related to and can be deduced from each other."
 msgstr "Günümüzde rüzgar,rüzgar hızı/hız 10m(33ft)  yüksekliğinde anemometrenin(Yunanca<i>anemos</i>,yani<i>rüzgar</i>) yardımıyla ölçülür.Genelde anemometreler  ya rüzgarın hızını yada basıncı ölçer,ama yakından ilişkili olduklarında  ve birbirinden çıkarım yapıldığında ikisinide sağlayacaktır."
 
-#: ../panel-plugin/weather-config.c:1296
+#: ../panel-plugin/weather-config.c:1294
 msgid ""
 "Invented by Sir Francis Beaufort in 1805, this empirical scale on wind speed"
 " is based on people's observations of specific land or sea conditions, "
 "denoting these conditions with numbers from 0 (calm) to 12 (hurricane)."
 msgstr "1805 yılında Bay Francis Beaufort ,rüzgar hızındaki  deneysel ölçeği 0(durgun) ila 12(kasırga) arasına denk gelen sayılarla bu koşulları gösteren,belirli deniz ve kara şartlarında, insanların gözlemlerine dayanarak icat etmiştir."
 
-#: ../panel-plugin/weather-config.c:1302
+#: ../panel-plugin/weather-config.c:1300
 msgid ""
 "This gives the cardinal direction (North, East, South, West) the wind is "
 "coming from."
 msgstr "Ana yönler (Kuzey, Doğu, Güney, Batı) rüzgarın geldiği tarafı verir."
 
-#: ../panel-plugin/weather-config.c:1306
+#: ../panel-plugin/weather-config.c:1304
 msgid ""
 "This gives the direction the wind is coming from in azimuth degrees (North ="
 " 0°, East = 90°, South = 180° and West = 270°)."
 msgstr "Bu rüzgarın geldiği açısal konumu derece cinsinden verir (Kuzey = 0°, Doğu = 90°, Güney = 180° ve Batı = 270°)."
 
-#: ../panel-plugin/weather-config.c:1311
+#: ../panel-plugin/weather-config.c:1309
 msgid ""
 "Humidity is defined as the amount of water vapor in the air and increases "
 "the possibility of precipitation, fog and dew. While absolute humidity is "
@@ -909,21 +867,21 @@ msgid ""
 "pressure."
 msgstr "Nem, havadaki su buharı miktarı olarak tanımlanır ve yağış, sis ve çiy olasılığını yükseltmektedir. Mutlak nem, havadaki su iken; bağıl nem, şu anki mutlak nemi, o anki hava sıcaklığı ve basıncın azami taşıyabileceği oranı (% olarak) verir."
 
-#: ../panel-plugin/weather-config.c:1319
+#: ../panel-plugin/weather-config.c:1317
 msgid ""
 "This is the temperature to which air must be cooled to reach 100% relative humidity, given no change in water content. Reaching the dew point halts the cooling process, as condensation occurs which releases heat into the air. A high dew point increases the possibility of rain and severe thunderstorms. The dew point allows the prediction of dew, frost, fog and minimum overnight temperature, and has influence on the comfort level one experiences.\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no."
 msgstr "Bu,su içerisinde herhangi bir değişiklik verilmeyen,havanın 100% nispi neme ulaşmak için soğutması gerekmekte olduğu sıcaklıktır.Isıyı havaya serbest bırakan yoğuşma meydana geldiği gibi çiy noktası sağlanması soğutma işlemini durdurur.Yüksek çiy noktası yağmur ve şiddetli gök gürültü olasılııklarını arttırır.Çiğ Noktası çiy , don , sis ve minimum gece sıcaklığı tahminni sağlar ve aynı zamanda bir deneyimdeki konfor seviyesi üzerinde etkisi vardır.\n\n<b>Not:</b> Bu hesaplanan değer met.no. tarafından sağlanmamıştır."
 
-#: ../panel-plugin/weather-config.c:1331
+#: ../panel-plugin/weather-config.c:1329
 msgid ""
 "Also known as <i>felt temperature</i>, <i>effective temperature</i>, or what some weather providers declare as <i>feels like</i>. Human temperature sensation is not only based on air temperature, but also on heat flow, physical activity and individual condition. While being a highly subjective value, apparent temperature can actually be useful for warning about extreme conditions (cold, heat).\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no. You should use a calculation model appropriate for your local climate and personal preferences on the units page."
 msgstr "Ayrıca <i>algılanan sıcaklık</i>, <i>etkili sıcaklık</i> veya bazı hava sağlayıcılarının da dediği gibi <i>hissedilen sıcaklık</i> olarak biliniyor. İnsanın sıcaklık hissi yalnızca hava sıcaklığına değil, aynı zamanda ısı akışı, fiziksel etkinlik ve bireysel durumuna bağlıdır. Görünen sıcaklık; son derece öznel değer olurken, özünde aşırı koşullarla ilgili uyarıda yararlı olabilir (soğuk, sıcak).\n\n<b>Not:</b> Bu hesaplanan değer, met.no tarafından sağlanmamıştır. Yerel iklim ve kişisel tercihler için birimler sayfasında uygun hesaplama modeli kullanmalısınız."
 
-#: ../panel-plugin/weather-config.c:1345
+#: ../panel-plugin/weather-config.c:1343
 msgid ""
 "This gives the low-level cloud cover in percent. According to WMO "
 "definition, low-level clouds can be found at altitudes below 4,000 m (13,000"
@@ -932,7 +890,7 @@ msgid ""
 "particles and snow, when temperatures are cold enough."
 msgstr "Bu alt seviyeli bulut örtüsünü verir. WMO'nun tanımlamasına göre alt seviyeli bulutlar 4,000 m (13,000 ft), altında veya ekvatorda 5,000 m (16,000 ft) altında temel çizgileri 2,000 m (6,500 ft) ve altında bulunurlar. Bunlar çoğunlukla su damlaları veya yeterince soğuk olduğunda buz tanecikleri ve kar bulundururlar."
 
-#: ../panel-plugin/weather-config.c:1353
+#: ../panel-plugin/weather-config.c:1351
 msgid ""
 "This specifies the mid-level cloud cover in percent. According to WMO "
 "definition, mid-level clouds form in heights of 4,000-8,000 m (13,000-26,000"
@@ -941,7 +899,7 @@ msgid ""
 "temperatures get low enough, ice particles can replace the droplets."
 msgstr "Bunlar orta seviyeli bulutlardır. WMO tanımlamasına göre orta seviyeli bulutlar 4,000-8,000 m (13,000-26,000 ft) seviyesinde veya ekvatorda 5,000-10,000 m'de (16,000-33,000 ft) bulunurlar. Alt seviyeli kuzenleri gibi çoğunlukla su damlalarından oluşurlar. Hava yeterince soğuduğunda damlalar buz taneciklerine dönüşürler."
 
-#: ../panel-plugin/weather-config.c:1362
+#: ../panel-plugin/weather-config.c:1360
 msgid ""
 "This reports the high-level cloud cover in percent. According to WMO "
 "definition, high-level clouds can be found in altitudes of 8,000 to 15,000 m"
@@ -951,7 +909,7 @@ msgid ""
 "a magnificent array of colors when the sun is low on the horizon."
 msgstr "Bunlar yüksek seviyeli bulutlardır. WMO tanımlamasına göre yüksek seviyeli bulutlar 8,000 ile 15,000 m (26,000 to 49,000 ft) arasında veya ekvatorda 10,000 m-18,000 m (33,000-59,000 ft) arasında bulunur ve sıcaklık çok düşük olduğundan çoğunlukla buz kristallerinden oluşurlar. Genellikle ince ve beyaz görünseler de güneş ufukta düşük olduğunda renklerin muhteşem bir dizisi olarak görülürler."
 
-#: ../panel-plugin/weather-config.c:1372
+#: ../panel-plugin/weather-config.c:1370
 msgid ""
 "Cloudiness, or cloud cover, defines the fraction of the sky obscured by "
 "clouds when observed from a given location. Clouds are both carriers of "
@@ -962,7 +920,7 @@ msgid ""
 "that way contribute to the cooling of the planet."
 msgstr "Bulutluluk veya bulut örtüsü verilen bir konumdan yapılan gözlemde bulutların gökyüzünün ne kadarını kapladığının ölçüsünü tanımlar. Bulutlar yağışları taşıdıkları gibi yüzeye düşen güneş radyasyonunun düzenleyicisidirler. Gündüz sıcaklığı düşürürken gece su buharı uzun dalga radyasyonun uzaya kaçmasına engel olur ve tam ters bir etki yapar. Bunun dışında, bulutlar ışığı uzaya yansıtır ve bu şekilde gezegeni soğutmaya katkıda bulunurlar."
 
-#: ../panel-plugin/weather-config.c:1384
+#: ../panel-plugin/weather-config.c:1382
 msgid ""
 "Fog is a type of low-lying stratus cloud, with the moisture in it often "
 "generated locally such as from a nearby lake, river, ocean, or simply moist "
@@ -972,7 +930,7 @@ msgid ""
 " visibility to less than 1 km (5/8 statute mile)."
 msgstr "Sis genellikle göl, nehir, okyanus veya basitçe yerden bölgesel olarak oluşan nem içeren alçak bulutların bir türüdür ve sıcaklık ve çiğ noktası 2.5 °C (4 °F)'nin altında olduğunda %100 göreceli nemden oluşur. Sis çoğunlukla çiseleme veya çok az kar biçiminde yağış üretir ve görüşü 1 km (5/8 kara mili) altına düşürür."
 
-#: ../panel-plugin/weather-config.c:1395
+#: ../panel-plugin/weather-config.c:1393
 msgid ""
 "The amount of rain, drizzle, sleet, hail, snow, graupel and other forms of water falling from the sky over a specific period.\n"
 "\n"
@@ -989,7 +947,7 @@ msgid ""
 "<b>Note</b>: While air temperature is an important factor in this calculation, there are other influencing factors that the plugin doesn't know about like the type of snow and ground temperature. Because of that, these rules will only lead to rough estimates and may not represent the real amount of snow."
 msgstr "Yağmur, çiseleme, sulu kar, dolu, kar, graupel ve belirli bir süre içinde gökten düşen suyun diğer formları miktarıdır.\n\nmet.no tarafından bildirilen değerler sıvı halde yağış olanlardır - ya da başka bir deyişle yağmur - eğer  kar bekleniyorsa (karla karışık yağmur değil), kar miktarı özgün değeri hava sıcaklığına bağlı bir oranla çarparak <i>tahmin edilir</i>:\n\n<tt><small>                   T &lt; -11.1 °C (12 °F) =&gt; 1:12\n-11.1 °C (12 °F) &lt; T &lt;  -4.4 °C (24 °F) =&gt; 1:10\n -4.4 °C (24 °F) &lt; T &lt;  -2.2 °C (28° F) =&gt; 1:7\n -2.2 °C (28 °F) &lt; T &lt;  -0.6 °C (31 °F) =&gt; 1:5\n -0.6 °C (31 °F) &lt; T                    =&gt; 1:3\n\n</small></tt>Örnek: Sıcaklık -5 °C (12 °F) olduğunda kar yoğunluğu düşük olacak ve hesaplamada kar oranı 1:10 kullanılacaktır. Rapor edilen değerin 5 mm olduğunu kabul edersek kar yağım miktarı 50 mm olacaktır.\n\n<b>Not</b>: Hava sıcaklığı bu hesaplamada önemli bir çarpan olsa da etkili olan ve eklentinin bilemediği kar yağışının türü ve zemin sıcaklığı gibi başka etkenler de vardır. Bunlar yüzünden bu kurallar kaba tahminler olacak ve gerçek kar miktarını temsil etmeyecektir."
 
-#: ../panel-plugin/weather-config.c:1571
+#: ../panel-plugin/weather-config.c:1569
 msgid "Labels to d_isplay"
 msgstr "Görüntülenecek et_iketler"
 
@@ -1123,10 +1081,6 @@ msgstr "in"
 msgid "mm"
 msgstr "mm"
 
-#: ../panel-plugin/weather-icon.c:189
-msgid "No icon theme!"
-msgstr "Simge teması yok!"
-
 #: ../panel-plugin/weather-search.c:128 ../panel-plugin/weather-search.c:254
 msgid "Results"
 msgstr "Sonuçlar"
@@ -1179,15 +1133,6 @@ msgstr "Adsız alan"
 #, c-format
 msgid "\t%s%s%s%s%s\n"
 msgstr "\t%s%s%s%s%s\n"
-
-#: ../panel-plugin/weather-summary.c:248
-#, c-format
-msgid "Error downloading met.no logo image to %s, reason: %s\n"
-msgstr "met.no logo resmini %s konumuna indirirken hata, nedeni: %s\n"
-
-#: ../panel-plugin/weather-summary.c:250
-msgid "unknown"
-msgstr "bilinmeyen"
 
 #: ../panel-plugin/weather-summary.c:394
 msgid "Coordinates\n"
@@ -1406,7 +1351,7 @@ msgid ""
 msgstr "\nBulutlar\n"
 
 #: ../panel-plugin/weather-summary.c:566
-#: ../panel-plugin/weather-translate.c:119
+#: ../panel-plugin/weather-translate.c:118
 msgid "Fog"
 msgstr "Sis"
 
@@ -1721,26 +1666,26 @@ msgstr "Küçülen ay"
 #. Norwegian descriptions.
 #. Symbols 16-19 are used for polar days (unused beginning with API version
 #. 1.2)
-#: ../panel-plugin/weather-translate.c:69
-#: ../panel-plugin/weather-translate.c:122
+#: ../panel-plugin/weather-translate.c:68
+#: ../panel-plugin/weather-translate.c:121
 msgid "Sunny"
 msgstr "Güneşli"
 
-#: ../panel-plugin/weather-translate.c:69
-#: ../panel-plugin/weather-translate.c:122
+#: ../panel-plugin/weather-translate.c:68
+#: ../panel-plugin/weather-translate.c:121
 msgid "Clear"
 msgstr "Açık"
 
-#: ../panel-plugin/weather-translate.c:70
-#: ../panel-plugin/weather-translate.c:123
+#: ../panel-plugin/weather-translate.c:69
+#: ../panel-plugin/weather-translate.c:122
 msgid "Lightly cloudy"
 msgstr "Hafif bulutlu"
 
-#: ../panel-plugin/weather-translate.c:71
+#: ../panel-plugin/weather-translate.c:70
 msgid "Partly cloudy"
 msgstr "Parçalı bulutlu"
 
-#: ../panel-plugin/weather-translate.c:72
+#: ../panel-plugin/weather-translate.c:71
 msgid "Cloudy"
 msgstr "Bulutlu"
 
@@ -1751,8 +1696,8 @@ msgstr "Bulutlu"
 #. *    precipitation that can vary greatly in intensity over a short
 #. *    amount of time. [...] Precipitation may be locally heavy for
 #. *    short amounts of time."
-#: ../panel-plugin/weather-translate.c:82
-#: ../panel-plugin/weather-translate.c:124
+#: ../panel-plugin/weather-translate.c:81
+#: ../panel-plugin/weather-translate.c:123
 msgid "Rain showers"
 msgstr "Sağanak yağmur"
 
@@ -1761,22 +1706,22 @@ msgstr "Sağanak yağmur"
 #. *   "Thunder Showers - Intermittent rain showers with thunder and
 #. lightning, generally
 #. *    short-lived."
-#: ../panel-plugin/weather-translate.c:89
+#: ../panel-plugin/weather-translate.c:88
 msgid "Thunder showers"
 msgstr "Gök gürültülü sağanak"
 
 #. Analogues to "Rain showers"
-#: ../panel-plugin/weather-translate.c:92
+#: ../panel-plugin/weather-translate.c:91
 msgid "Sleet showers"
 msgstr "Sulu sepken"
 
-#: ../panel-plugin/weather-translate.c:93
-#: ../panel-plugin/weather-translate.c:125
+#: ../panel-plugin/weather-translate.c:92
+#: ../panel-plugin/weather-translate.c:124
 msgid "Snow showers"
 msgstr "Karla karışık"
 
 #. It's raining, usually incessantly, but not heavily.
-#: ../panel-plugin/weather-translate.c:96
+#: ../panel-plugin/weather-translate.c:95
 msgid "Light rain"
 msgstr "Hafif yağmur"
 
@@ -1785,20 +1730,20 @@ msgstr "Hafif yağmur"
 #. * rain and rain somewhat better. Symbol names indicate this is the way
 #. met.no did it some
 #. * time ago.
-#: ../panel-plugin/weather-translate.c:101
+#: ../panel-plugin/weather-translate.c:100
 msgid "Rain"
 msgstr "Yağmur"
 
-#: ../panel-plugin/weather-translate.c:103
+#: ../panel-plugin/weather-translate.c:102
 msgid "Rain with thunder"
 msgstr "Fırtınalı yağış"
 
 #. Sleet is a mixture of rain and snow, but it's not hail.
-#: ../panel-plugin/weather-translate.c:106
+#: ../panel-plugin/weather-translate.c:105
 msgid "Sleet"
 msgstr "Dolu"
 
-#: ../panel-plugin/weather-translate.c:108
+#: ../panel-plugin/weather-translate.c:107
 msgid "Snow"
 msgstr "Kar"
 
@@ -1810,23 +1755,23 @@ msgstr "Kar"
 #. *    rain. It typically falls in regions of strong upward motion within the
 #. cold sector of an
 #. *    extratropical cyclone."
-#: ../panel-plugin/weather-translate.c:117
+#: ../panel-plugin/weather-translate.c:116
 msgid "Thundersnow"
 msgstr "Tipi"
 
 #. Same as symbols 1-15, but with thunder
-#: ../panel-plugin/weather-translate.c:128
+#: ../panel-plugin/weather-translate.c:127
 msgid "Sleet showers with thunder"
 msgstr "Fırtınalı karla karışık"
 
-#: ../panel-plugin/weather-translate.c:129
+#: ../panel-plugin/weather-translate.c:128
 msgid "Snow showers with thunder"
 msgstr "Fırtınalı tipi"
 
-#: ../panel-plugin/weather-translate.c:130
+#: ../panel-plugin/weather-translate.c:129
 msgid "Light rain with thunder"
 msgstr "Fırtınalı hafif yağış"
 
-#: ../panel-plugin/weather-translate.c:131
+#: ../panel-plugin/weather-translate.c:130
 msgid "Sleet with thunder"
 msgstr "Fırtınalı dolu"
