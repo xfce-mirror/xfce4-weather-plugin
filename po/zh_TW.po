@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-19 12:52+0200\n"
+"POT-Creation-Date: 2023-09-29 00:51+0200\n"
 "PO-Revision-Date: 2013-07-03 19:29+0000\n"
 "Last-Translator: 黃柏諺 <s8321414@gmail.com>, 2020-2021,2023\n"
 "Language-Team: Chinese (Taiwan) (http://app.transifex.com/xfce/xfce-panel-plugins/language/zh_TW/)\n"
@@ -415,7 +415,7 @@ msgid "<b>Show scrollbox</b>"
 msgstr "<b>顯示捲動框</b>"
 
 #: ../panel-plugin/weather-config.ui.h:90
-#: ../panel-plugin/weather-config.c:1131
+#: ../panel-plugin/weather-config.c:1129
 msgid "Select _font"
 msgstr "選取字型(_F)"
 
@@ -509,44 +509,6 @@ msgstr "降水"
 msgid "No Data"
 msgstr "無資料"
 
-#: ../panel-plugin/weather.c:518
-msgid "Error parsing astronomical data!"
-msgstr "分析天文資料時發生錯誤！"
-
-#: ../panel-plugin/weather.c:520
-#, c-format
-msgid ""
-"Download of astronomical data failed with HTTP Status Code %d, Reason "
-"phrase: %s"
-msgstr "天文資料下載失敗，HTTP 狀態碼 %d ，分析原因： %s"
-
-#: ../panel-plugin/weather.c:571
-msgid "Error parsing weather data!"
-msgstr "分析天氣資料時發生錯誤！"
-
-#: ../panel-plugin/weather.c:574
-#, c-format
-msgid ""
-"Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
-msgstr "天氣資料下載失敗，HTTP 狀態碼 %d ，分析原因： %s"
-
-#. start receive thread
-#: ../panel-plugin/weather.c:647 ../panel-plugin/weather.c:668
-#: ../panel-plugin/weather-search.c:169 ../panel-plugin/weather-search.c:437
-#, c-format
-msgid "getting %s"
-msgstr "正在取得 %s"
-
-#: ../panel-plugin/weather.c:1200
-#, c-format
-msgid "Error writing cache file %s!"
-msgstr "寫入快取檔 %s 時發生錯誤！"
-
-#: ../panel-plugin/weather.c:1660
-#, c-format
-msgid "Unable to open the following url: %s"
-msgstr "無法開啟下列網址：%s"
-
 #: ../panel-plugin/weather.c:1730
 msgid "Short-term forecast data unavailable."
 msgstr "目前尚未有短期預測。"
@@ -614,17 +576,13 @@ msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\
 msgid "Cannot update weather data"
 msgstr "無法更新天氣資料"
 
-#: ../panel-plugin/weather.c:1965
-msgid "No default icon theme? This should not happen, plugin will crash!"
-msgstr "沒有預設圖示佈景主題？這可不行！本插件會垮掉！"
-
 #. add refresh button to right click menu, for people who missed
 #. the middle mouse click feature
 #: ../panel-plugin/weather.c:2007
 msgid "Re_fresh"
 msgstr "重刷(_F)"
 
-#: ../panel-plugin/weather.c:2219
+#: ../panel-plugin/weather.c:2172
 msgid "Show weather conditions and forecasts"
 msgstr "顯示天氣及預測"
 
@@ -813,19 +771,19 @@ msgid ""
 "<b>License:</b> %s"
 msgstr "<b>目錄：</b> %s\n\n<b>作者：</b> %s\n\n<b>描述：</b> %s\n\n<b>授權條款：</b> %s"
 
-#: ../panel-plugin/weather-config.c:985
+#: ../panel-plugin/weather-config.c:983
 msgid ""
 "A more calendar-like view, with the days in columns and the daytimes "
 "(morning, afternoon, evening, night) in rows."
 msgstr "更類似於日曆的顯示方式，日期在欄上，而時段 (上午、下午、傍晚、夜晚) 在行上。"
 
-#: ../panel-plugin/weather-config.c:989
+#: ../panel-plugin/weather-config.c:987
 msgid ""
 "Shows the forecasts in a table with the daytimes (morning, afternoon, "
 "evening, night) in columns and the days in rows."
 msgstr "在表格中顯示天氣預報，時段 (上午、下午、傍晚、夜晚) 在欄上，日期在行上。"
 
-#: ../panel-plugin/weather-config.c:1076
+#: ../panel-plugin/weather-config.c:1074
 #, c-format
 msgid ""
 "Met.no provides forecast data for up to %d days in the future. Choose how "
@@ -835,25 +793,25 @@ msgid ""
 "are unreliable at best ;-)"
 msgstr "Met.no 提供了多達未來 %d 天的天氣預報資訊。選擇要在概要視窗中的天氣預報分頁中顯示多少天。在較慢的電腦上，較低的數值可能在開啟視窗時較不會有太多的延遲。請記住任何超過三天的天氣預報都不會太可靠 ;-)"
 
-#: ../panel-plugin/weather-config.c:1148
+#: ../panel-plugin/weather-config.c:1146
 msgid "Select font"
 msgstr "選取字型"
 
 #. TRANSLATORS: Fallback value, usually never shown.
-#: ../panel-plugin/weather-config.c:1262
+#: ../panel-plugin/weather-config.c:1260
 msgid ""
 "Choose the value to add to the list below. Values can be added more than "
 "once."
 msgstr "選取數值以加入下面的列表。可以加入多於一個的值。"
 
-#: ../panel-plugin/weather-config.c:1271
+#: ../panel-plugin/weather-config.c:1269
 msgid ""
 "Air temperature, sometimes referred to as dry-bulb temperature. Measured by "
 "a thermometer that is freely exposed to the air, yet shielded from radiation"
 " and moisture."
 msgstr "氣溫，有時候也被稱為乾球溫度。由直接暴露在空氣中，且沒有遮蔽輻射線及水氣的溫度計測定。"
 
-#: ../panel-plugin/weather-config.c:1277
+#: ../panel-plugin/weather-config.c:1275
 msgid ""
 "The weight of the air that makes up the atmosphere exerts a pressure on the "
 "surface of the Earth, which is known as atmospheric pressure. To make it "
@@ -864,7 +822,7 @@ msgid ""
 "pressures mean deterioration."
 msgstr "大氣的重量施加壓力於地球表面，為眾所皆知的大氣壓力。為了讓它較容易與其他不同高度的值比較，大氣壓力會被修正到海平面高度的大氣壓力，稱為修正大氣壓力。氣壓升高通常代表天氣轉好，而氣壓降低通常代表著天氣變差。"
 
-#: ../panel-plugin/weather-config.c:1288
+#: ../panel-plugin/weather-config.c:1286
 msgid ""
 "Nowadays wind speed/velocity is measured using an anemometer (Greek "
 "<i>anemos</i>, meaning <i>wind</i>) in 10 m (33 ft) height. Anemometers "
@@ -872,26 +830,26 @@ msgid ""
 "as they are closely related to and can be deduced from each other."
 msgstr "現今風速使用風速計測量(希臘文 <i>anemos</i>，意思是 <i> 風 </i>)，會擺在10公尺(33英呎)的高度。風速計通常用來測量風速或壓力其中之一，但因為它們可以互相用來推斷對方，所以通常可以同時提供兩種資訊。"
 
-#: ../panel-plugin/weather-config.c:1296
+#: ../panel-plugin/weather-config.c:1294
 msgid ""
 "Invented by Sir Francis Beaufort in 1805, this empirical scale on wind speed"
 " is based on people's observations of specific land or sea conditions, "
 "denoting these conditions with numbers from 0 (calm) to 12 (hurricane)."
 msgstr "由蒲福氏在1805年所發明，這個測量方法是經由特定陸地或海洋的人們所觀察的結果，數據從0(無風)到12(颶風)。"
 
-#: ../panel-plugin/weather-config.c:1302
+#: ../panel-plugin/weather-config.c:1300
 msgid ""
 "This gives the cardinal direction (North, East, South, West) the wind is "
 "coming from."
 msgstr "這顯示了使用基本方位 (北、東、南、西) 的風的來向。"
 
-#: ../panel-plugin/weather-config.c:1306
+#: ../panel-plugin/weather-config.c:1304
 msgid ""
 "This gives the direction the wind is coming from in azimuth degrees (North ="
 " 0°, East = 90°, South = 180° and West = 270°)."
 msgstr "這以方位角的形式顯示了風的來向 (北 = 0°、東 = 90°、南 = 180° 、西 = 270°)."
 
-#: ../panel-plugin/weather-config.c:1311
+#: ../panel-plugin/weather-config.c:1309
 msgid ""
 "Humidity is defined as the amount of water vapor in the air and increases "
 "the possibility of precipitation, fog and dew. While absolute humidity is "
@@ -900,21 +858,21 @@ msgid ""
 "pressure."
 msgstr "濕度被定義為在空氣中的水蒸氣的量，增加了降水、霧和生成露水的可能性。絕對溼度是空氣中的水含量，而相對濕度則為(以%表示)目前的絕對濕度相對於當時的氣溫及壓力的最大絕對濕度。"
 
-#: ../panel-plugin/weather-config.c:1319
+#: ../panel-plugin/weather-config.c:1317
 msgid ""
 "This is the temperature to which air must be cooled to reach 100% relative humidity, given no change in water content. Reaching the dew point halts the cooling process, as condensation occurs which releases heat into the air. A high dew point increases the possibility of rain and severe thunderstorms. The dew point allows the prediction of dew, frost, fog and minimum overnight temperature, and has influence on the comfort level one experiences.\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no."
 msgstr "這是空氣被冷卻到達100%的相對濕度，但並不改變水含量。因為開始發生冷凝，到達露點會停止冷卻過程。高的露點增加降雨及打雷的機會。露點可以用來預測露水凝結、霜、霧及夜間最低溫度，這也會影響到舒適度。\n\n<b> 注意： </b> 這個計算值並非由 met.no 提供。"
 
-#: ../panel-plugin/weather-config.c:1331
+#: ../panel-plugin/weather-config.c:1329
 msgid ""
 "Also known as <i>felt temperature</i>, <i>effective temperature</i>, or what some weather providers declare as <i>feels like</i>. Human temperature sensation is not only based on air temperature, but also on heat flow, physical activity and individual condition. While being a highly subjective value, apparent temperature can actually be useful for warning about extreme conditions (cold, heat).\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no. You should use a calculation model appropriate for your local climate and personal preferences on the units page."
 msgstr "也被稱為 <i> 體感溫度 </i>， <i> 有效溫度 </i>，或部份天氣預報提供者稱 <i>feels like</i>。人體溫度的感覺不僅基於氣溫，同時也包含了熱流動，身體活動及個體情況。雖然這個值非常主觀，但用來警告極端環境(冷、熱)仍相當有用。 \n\n<b> 注意： </b> 這個計算值並非由 met.no 提供。您應該在個人偏好設定頁面中使用符合當地氣候的計算模型。"
 
-#: ../panel-plugin/weather-config.c:1345
+#: ../panel-plugin/weather-config.c:1343
 msgid ""
 "This gives the low-level cloud cover in percent. According to WMO "
 "definition, low-level clouds can be found at altitudes below 4,000 m (13,000"
@@ -923,7 +881,7 @@ msgid ""
 "particles and snow, when temperatures are cold enough."
 msgstr "這裡給出了低層的雲層覆蓋百分比。根據世界氣象組織的定義，低層雲可以在低於4,000公尺(13,000英呎)，或在赤道上低於5,000公尺(16,000英呎)的地方找到，雖然他們通常在低於2,000公尺(6,500英呎)的地方。它們在溫度不夠低的情況下通常由水滴或冰粒及雪組成。"
 
-#: ../panel-plugin/weather-config.c:1353
+#: ../panel-plugin/weather-config.c:1351
 msgid ""
 "This specifies the mid-level cloud cover in percent. According to WMO "
 "definition, mid-level clouds form in heights of 4,000-8,000 m (13,000-26,000"
@@ -932,7 +890,7 @@ msgid ""
 "temperatures get low enough, ice particles can replace the droplets."
 msgstr "這個會指定中層的雲層覆蓋百分比。根據世界氣象組織的定義，中層雲可以在4,000-8,000公尺(13,000-26,000英呎)的地方發現，或在赤道上5,000-10,000公尺(16,000-33,000英呎)的地方找到。就像低層雲一樣，它們主要也是由水滴組成，當溫度夠低時，冰粒會取代水滴。"
 
-#: ../panel-plugin/weather-config.c:1362
+#: ../panel-plugin/weather-config.c:1360
 msgid ""
 "This reports the high-level cloud cover in percent. According to WMO "
 "definition, high-level clouds can be found in altitudes of 8,000 to 15,000 m"
@@ -942,7 +900,7 @@ msgid ""
 "a magnificent array of colors when the sun is low on the horizon."
 msgstr "這個回報了高層的雲層覆蓋百分比。根據世界氣象組織的定義，高層雲可以在8,000-15,000公尺(26,000-49,000英呎)的地方發現，或在赤道上10,000-18,000公尺(33,000-59,000英呎)的地方找到，因為溫度很低，它們主要是由冰晶組成。雖然通常看起來很薄且白，它們可以在太陽很靠近地平線的時候看起來非常美麗。"
 
-#: ../panel-plugin/weather-config.c:1372
+#: ../panel-plugin/weather-config.c:1370
 msgid ""
 "Cloudiness, or cloud cover, defines the fraction of the sky obscured by "
 "clouds when observed from a given location. Clouds are both carriers of "
@@ -953,7 +911,7 @@ msgid ""
 "that way contribute to the cooling of the planet."
 msgstr "雲，或者雲層，定義了從一個特定地點觀察時，被雲層遮蔽了天空的一小部分。雲同時是降水的媒介及到達地表的太陽輻射的調節器。白天時它們降低溫度，而夜晚它們造成相反的效果，因為水蒸氣防止長波輻射散逸到外太空。此外，雲層反射光線到太空，藉此降低地球的溫度。"
 
-#: ../panel-plugin/weather-config.c:1384
+#: ../panel-plugin/weather-config.c:1382
 msgid ""
 "Fog is a type of low-lying stratus cloud, with the moisture in it often "
 "generated locally such as from a nearby lake, river, ocean, or simply moist "
@@ -963,7 +921,7 @@ msgid ""
 " visibility to less than 1 km (5/8 statute mile)."
 msgstr "霧是一種低海拔的雲，經常是從附近的湖泊、河流、海洋或是濕地中的水氣凝結而成，在氣溫及露點之間的差小於2.5 °C (4 °F)時產生，通常當時的相對濕度為100%。霧通常以細雨或非常輕的雪的型式落下，且降低能見度到低於1公里(5/8英哩)。"
 
-#: ../panel-plugin/weather-config.c:1395
+#: ../panel-plugin/weather-config.c:1393
 msgid ""
 "The amount of rain, drizzle, sleet, hail, snow, graupel and other forms of water falling from the sky over a specific period.\n"
 "\n"
@@ -980,7 +938,7 @@ msgid ""
 "<b>Note</b>: While air temperature is an important factor in this calculation, there are other influencing factors that the plugin doesn't know about like the type of snow and ground temperature. Because of that, these rules will only lead to rough estimates and may not represent the real amount of snow."
 msgstr "在一特定期間內，雨、細雨、凍雨、冰雹、雪、霰及其他從天空落下的降水型式。\n\n由 met.no 所回報的值是以液體的型式的降水 ─ 也就是雨 ─ ，所以，如果預期會有降水(但沒有凍雨)，雪量就會以取決於氣溫的比例乘以原始值做計算：\n\n<tt><small>                   T &lt; -11.1 °C (12 °F) =&gt; 1:12\n-11.1 °C (12 °F) &lt; T &lt;  -4.4 °C (24 °F) =&gt; 1:10\n -4.4 °C (24 °F) &lt; T &lt;  -2.2 °C (28° F) =&gt; 1:7\n -2.2 °C (28 °F) &lt; T &lt;  -0.6 °C (31 °F) =&gt; 1:5\n -0.6 °C (31 °F) &lt; T                    =&gt; 1:3\n\n</small></tt> 舉例來說：如果溫度是 -5 °C (12 °F)，那麼雪的密度就會很低，雨及雪的比例就會以 1:10做計算。假設回報值是5毫米，那麼雪的計算值就會是50毫米。\n\n<b> 注意 </b>：雖然氣溫在這個計算中是其中一個很重要的因子，但仍有此天氣插件所不知道的其它可能影響的因子，像是雪的種類及地面溫度。因此，這些規則只是粗略估計，可能並不代表真實數量。"
 
-#: ../panel-plugin/weather-config.c:1571
+#: ../panel-plugin/weather-config.c:1569
 msgid "Labels to d_isplay"
 msgstr "要顯示的標籤(_I)"
 
@@ -1114,10 +1072,6 @@ msgstr "吋"
 msgid "mm"
 msgstr "公釐"
 
-#: ../panel-plugin/weather-icon.c:189
-msgid "No icon theme!"
-msgstr "沒有圖示佈景主題！"
-
 #: ../panel-plugin/weather-search.c:128 ../panel-plugin/weather-search.c:254
 msgid "Results"
 msgstr "搜尋結果"
@@ -1170,15 +1124,6 @@ msgstr "未命名地方"
 #, c-format
 msgid "\t%s%s%s%s%s\n"
 msgstr "\t%s%s%s%s%s\n"
-
-#: ../panel-plugin/weather-summary.c:248
-#, c-format
-msgid "Error downloading met.no logo image to %s, reason: %s\n"
-msgstr "下載 met.no 圖示時發生錯誤 %s ，理由： %s\n"
-
-#: ../panel-plugin/weather-summary.c:250
-msgid "unknown"
-msgstr "不明"
 
 #: ../panel-plugin/weather-summary.c:394
 msgid "Coordinates\n"
@@ -1397,7 +1342,7 @@ msgid ""
 msgstr "\n有雲\n"
 
 #: ../panel-plugin/weather-summary.c:566
-#: ../panel-plugin/weather-translate.c:119
+#: ../panel-plugin/weather-translate.c:118
 msgid "Fog"
 msgstr "有霧"
 
@@ -1712,26 +1657,26 @@ msgstr "殘月"
 #. Norwegian descriptions.
 #. Symbols 16-19 are used for polar days (unused beginning with API version
 #. 1.2)
-#: ../panel-plugin/weather-translate.c:69
-#: ../panel-plugin/weather-translate.c:122
+#: ../panel-plugin/weather-translate.c:68
+#: ../panel-plugin/weather-translate.c:121
 msgid "Sunny"
 msgstr "陽光普照"
 
-#: ../panel-plugin/weather-translate.c:69
-#: ../panel-plugin/weather-translate.c:122
+#: ../panel-plugin/weather-translate.c:68
+#: ../panel-plugin/weather-translate.c:121
 msgid "Clear"
 msgstr "明朗"
 
-#: ../panel-plugin/weather-translate.c:70
-#: ../panel-plugin/weather-translate.c:123
+#: ../panel-plugin/weather-translate.c:69
+#: ../panel-plugin/weather-translate.c:122
 msgid "Lightly cloudy"
 msgstr "少雲"
 
-#: ../panel-plugin/weather-translate.c:71
+#: ../panel-plugin/weather-translate.c:70
 msgid "Partly cloudy"
 msgstr "部分多雲"
 
-#: ../panel-plugin/weather-translate.c:72
+#: ../panel-plugin/weather-translate.c:71
 msgid "Cloudy"
 msgstr "多雲"
 
@@ -1742,8 +1687,8 @@ msgstr "多雲"
 #. *    precipitation that can vary greatly in intensity over a short
 #. *    amount of time. [...] Precipitation may be locally heavy for
 #. *    short amounts of time."
-#: ../panel-plugin/weather-translate.c:82
-#: ../panel-plugin/weather-translate.c:124
+#: ../panel-plugin/weather-translate.c:81
+#: ../panel-plugin/weather-translate.c:123
 msgid "Rain showers"
 msgstr "驟雨"
 
@@ -1752,22 +1697,22 @@ msgstr "驟雨"
 #. *   "Thunder Showers - Intermittent rain showers with thunder and
 #. lightning, generally
 #. *    short-lived."
-#: ../panel-plugin/weather-translate.c:89
+#: ../panel-plugin/weather-translate.c:88
 msgid "Thunder showers"
 msgstr "雷陣雨"
 
 #. Analogues to "Rain showers"
-#: ../panel-plugin/weather-translate.c:92
+#: ../panel-plugin/weather-translate.c:91
 msgid "Sleet showers"
 msgstr "凍雨"
 
-#: ../panel-plugin/weather-translate.c:93
-#: ../panel-plugin/weather-translate.c:125
+#: ../panel-plugin/weather-translate.c:92
+#: ../panel-plugin/weather-translate.c:124
 msgid "Snow showers"
 msgstr "雨雪"
 
 #. It's raining, usually incessantly, but not heavily.
-#: ../panel-plugin/weather-translate.c:96
+#: ../panel-plugin/weather-translate.c:95
 msgid "Light rain"
 msgstr "小雨"
 
@@ -1776,20 +1721,20 @@ msgstr "小雨"
 #. * rain and rain somewhat better. Symbol names indicate this is the way
 #. met.no did it some
 #. * time ago.
-#: ../panel-plugin/weather-translate.c:101
+#: ../panel-plugin/weather-translate.c:100
 msgid "Rain"
 msgstr "有雨"
 
-#: ../panel-plugin/weather-translate.c:103
+#: ../panel-plugin/weather-translate.c:102
 msgid "Rain with thunder"
 msgstr "雷雨"
 
 #. Sleet is a mixture of rain and snow, but it's not hail.
-#: ../panel-plugin/weather-translate.c:106
+#: ../panel-plugin/weather-translate.c:105
 msgid "Sleet"
 msgstr "落雹"
 
-#: ../panel-plugin/weather-translate.c:108
+#: ../panel-plugin/weather-translate.c:107
 msgid "Snow"
 msgstr "雪"
 
@@ -1801,23 +1746,23 @@ msgstr "雪"
 #. *    rain. It typically falls in regions of strong upward motion within the
 #. cold sector of an
 #. *    extratropical cyclone."
-#: ../panel-plugin/weather-translate.c:117
+#: ../panel-plugin/weather-translate.c:116
 msgid "Thundersnow"
 msgstr "雷雪"
 
 #. Same as symbols 1-15, but with thunder
-#: ../panel-plugin/weather-translate.c:128
+#: ../panel-plugin/weather-translate.c:127
 msgid "Sleet showers with thunder"
 msgstr "凍雨有雷"
 
-#: ../panel-plugin/weather-translate.c:129
+#: ../panel-plugin/weather-translate.c:128
 msgid "Snow showers with thunder"
 msgstr "雨雪有雷"
 
-#: ../panel-plugin/weather-translate.c:130
+#: ../panel-plugin/weather-translate.c:129
 msgid "Light rain with thunder"
 msgstr "小雨有雷"
 
-#: ../panel-plugin/weather-translate.c:131
+#: ../panel-plugin/weather-translate.c:130
 msgid "Sleet with thunder"
 msgstr "落雹有雷"
