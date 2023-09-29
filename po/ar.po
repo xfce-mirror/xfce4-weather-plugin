@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-19 12:52+0200\n"
+"POT-Creation-Date: 2023-09-29 00:51+0200\n"
 "PO-Revision-Date: 2013-07-03 19:29+0000\n"
 "Last-Translator: محمد الحرقان <malham1@gmail.com>, 2012-2013\n"
 "Language-Team: Arabic (http://app.transifex.com/xfce/xfce-panel-plugins/language/ar/)\n"
@@ -411,7 +411,7 @@ msgid "<b>Show scrollbox</b>"
 msgstr ""
 
 #: ../panel-plugin/weather-config.ui.h:90
-#: ../panel-plugin/weather-config.c:1131
+#: ../panel-plugin/weather-config.c:1129
 msgid "Select _font"
 msgstr "اختر خط"
 
@@ -505,44 +505,6 @@ msgstr "R"
 msgid "No Data"
 msgstr "لا توجد بيانات"
 
-#: ../panel-plugin/weather.c:518
-msgid "Error parsing astronomical data!"
-msgstr "حدث خطأ أثناء تحليل البيانات الفلكية!"
-
-#: ../panel-plugin/weather.c:520
-#, c-format
-msgid ""
-"Download of astronomical data failed with HTTP Status Code %d, Reason "
-"phrase: %s"
-msgstr "فشل تحميل البيانات الفلكية مع رمز حالة HTTP %d، رسالة السبب: %s"
-
-#: ../panel-plugin/weather.c:571
-msgid "Error parsing weather data!"
-msgstr "حدث خطأ أثناء تحليل بيانات الطقس!"
-
-#: ../panel-plugin/weather.c:574
-#, c-format
-msgid ""
-"Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
-msgstr "فشل تحميل بيانات الطقس مع رمز حالة HTTP %d، رسالة السبب: %s"
-
-#. start receive thread
-#: ../panel-plugin/weather.c:647 ../panel-plugin/weather.c:668
-#: ../panel-plugin/weather-search.c:169 ../panel-plugin/weather-search.c:437
-#, c-format
-msgid "getting %s"
-msgstr "الحصول على %s"
-
-#: ../panel-plugin/weather.c:1200
-#, c-format
-msgid "Error writing cache file %s!"
-msgstr "خطأ في الكتابة ملف ذاكرة التخزين المؤقتة %s!"
-
-#: ../panel-plugin/weather.c:1660
-#, c-format
-msgid "Unable to open the following url: %s"
-msgstr "غير قادر على فتح المسار التالي: %s"
-
 #: ../panel-plugin/weather.c:1730
 msgid "Short-term forecast data unavailable."
 msgstr "بيانات التنبؤ القصير الأجل غير متوفر."
@@ -610,17 +572,13 @@ msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\
 msgid "Cannot update weather data"
 msgstr "لا يمكن تحميل بيانات الطقس"
 
-#: ../panel-plugin/weather.c:1965
-msgid "No default icon theme? This should not happen, plugin will crash!"
-msgstr "لا توجد سمة الرمز الافتراضية؟ هذا لا ينبغي أن يحدث، ستعطل البرنامج المساعد!"
-
 #. add refresh button to right click menu, for people who missed
 #. the middle mouse click feature
 #: ../panel-plugin/weather.c:2007
 msgid "Re_fresh"
 msgstr "تجديد"
 
-#: ../panel-plugin/weather.c:2219
+#: ../panel-plugin/weather.c:2172
 msgid "Show weather conditions and forecasts"
 msgstr "إظهار أحوال الطقس والتنبؤات"
 
@@ -809,19 +767,19 @@ msgid ""
 "<b>License:</b> %s"
 msgstr "<b>المجلد:</b> %s\n\n<b>المؤلف:</b> %s\n\n<b>الوصف:</b> %s\n\n<b>الرخصة:</b> %s"
 
-#: ../panel-plugin/weather-config.c:985
+#: ../panel-plugin/weather-config.c:983
 msgid ""
 "A more calendar-like view, with the days in columns and the daytimes "
 "(morning, afternoon, evening, night) in rows."
 msgstr "طريقة عرض التقويم، مع عرض توقيت اليوم (صباح، بعد الظهر، المساء، ليلة) في الصفوف والأعمدة."
 
-#: ../panel-plugin/weather-config.c:989
+#: ../panel-plugin/weather-config.c:987
 msgid ""
 "Shows the forecasts in a table with the daytimes (morning, afternoon, "
 "evening, night) in columns and the days in rows."
 msgstr "يبين التوقعات الواردة في جدول مع عرض توقيت اليوم (صباح، بعد الظهر، المساء، ليلة) في الصفوف والأعمدة."
 
-#: ../panel-plugin/weather-config.c:1076
+#: ../panel-plugin/weather-config.c:1074
 #, c-format
 msgid ""
 "Met.no provides forecast data for up to %d days in the future. Choose how "
@@ -831,25 +789,25 @@ msgid ""
 "are unreliable at best ;-)"
 msgstr "يوفر بيانات التوقع حتى %d يوما في المستقبل. اختر عدد الأيام سيظهر في علامة التبويب التوقع في إطار الملخص. على أجهزة الكمبيوتر القديمة, سيساعد عددا أقل من أيام التوقع في فتح النافذة بشكا أسرع. لاحظ أيضاً أن التوقعات لأكثر من ثلاثة أيام في المستقبل في الغالب غير موثوق بها;-)"
 
-#: ../panel-plugin/weather-config.c:1148
+#: ../panel-plugin/weather-config.c:1146
 msgid "Select font"
 msgstr "اختر خط"
 
 #. TRANSLATORS: Fallback value, usually never shown.
-#: ../panel-plugin/weather-config.c:1262
+#: ../panel-plugin/weather-config.c:1260
 msgid ""
 "Choose the value to add to the list below. Values can be added more than "
 "once."
 msgstr "اختر قيمة لإضافتها للقائمة أدناه. يمكن إضافة القيمة أكثر من مرة."
 
-#: ../panel-plugin/weather-config.c:1271
+#: ../panel-plugin/weather-config.c:1269
 msgid ""
 "Air temperature, sometimes referred to as dry-bulb temperature. Measured by "
 "a thermometer that is freely exposed to the air, yet shielded from radiation"
 " and moisture."
 msgstr "درجة حرارة الهواء، يشار إليه أحياناً كدرجة حرارة المصباح الجاف. تقاس بمقياس حرارة بحري معرضة للهواء، لكنه معزول عن الإشعاع والرطوبة."
 
-#: ../panel-plugin/weather-config.c:1277
+#: ../panel-plugin/weather-config.c:1275
 msgid ""
 "The weight of the air that makes up the atmosphere exerts a pressure on the "
 "surface of the Earth, which is known as atmospheric pressure. To make it "
@@ -860,7 +818,7 @@ msgid ""
 "pressures mean deterioration."
 msgstr "وزن الهواء الذي يجعل أعلى الغلاف الجوي يمارس ضغطاً على سطح الأرض، والذي يعرف باسم الضغط الجوي. لجعل مقارنة القيمة بقيم أخرى أسهل للمواقع مع ارتفاعات مختلفة، يتم تعديلها إلى ضغط مستوى سطح البحر يعادل الضغط الجوي ويسمى الضغط الجوي. ارتفاع الضغوط عموما تشير إلى حدوث تحسن في الأحوال الجوية، بينما إنخفاظ الضغط يعني طقس سيئ."
 
-#: ../panel-plugin/weather-config.c:1288
+#: ../panel-plugin/weather-config.c:1286
 msgid ""
 "Nowadays wind speed/velocity is measured using an anemometer (Greek "
 "<i>anemos</i>, meaning <i>wind</i>) in 10 m (33 ft) height. Anemometers "
@@ -868,26 +826,26 @@ msgid ""
 "as they are closely related to and can be deduced from each other."
 msgstr "سرعة الرياح/السرعة في الوقت الحالي وتقاس. باستخدام شدة الريح (اليونانية <i>anemos</i>، وتعني <i>الرياح</i>) بارتفاع 10 متر (33 قدم) مقاييس شدة الريح عادة إما قياس سرعة الرياح أو الضغط، ولكن سوف نقدم كل القيم لأنها ترتبط ارتباطا وثيقا ويمكن استنتاجها من بعضها البعض."
 
-#: ../panel-plugin/weather-config.c:1296
+#: ../panel-plugin/weather-config.c:1294
 msgid ""
 "Invented by Sir Francis Beaufort in 1805, this empirical scale on wind speed"
 " is based on people's observations of specific land or sea conditions, "
 "denoting these conditions with numbers from 0 (calm) to 12 (hurricane)."
 msgstr "اخترعها السير فرانسيس بوفورت في 1805، يستند هذا المقياس التجريبي على ملاحظات الناس لسرعة الرياح في ظروف محددة برا أو بحرا، تدل قيم الأرقام على 0 (الهدوء) 12 (إعصار)."
 
-#: ../panel-plugin/weather-config.c:1302
+#: ../panel-plugin/weather-config.c:1300
 msgid ""
 "This gives the cardinal direction (North, East, South, West) the wind is "
 "coming from."
 msgstr "هذا يعطي الاتجاه الرئيسي (شمال، شرق، جنوب، غرب) لجهة هبوب الريح."
 
-#: ../panel-plugin/weather-config.c:1306
+#: ../panel-plugin/weather-config.c:1304
 msgid ""
 "This gives the direction the wind is coming from in azimuth degrees (North ="
 " 0°, East = 90°, South = 180° and West = 270°)."
 msgstr "هذا يعطي اتجاه الريح قادم بالدرجات (شمال = 0°, شرق = 90°, جنوب = 180° والغرب = 270°)."
 
-#: ../panel-plugin/weather-config.c:1311
+#: ../panel-plugin/weather-config.c:1309
 msgid ""
 "Humidity is defined as the amount of water vapor in the air and increases "
 "the possibility of precipitation, fog and dew. While absolute humidity is "
@@ -896,21 +854,21 @@ msgid ""
 "pressure."
 msgstr "الرطوبة هي كمية بخار الماء في الهواء زيادتاه تزيد من احتمال هطول الأمطار والضباب والندى. الرطوبة المطلقة هي محتوى الهواء من الماء، الرطوبة النسبية تعطي (٪) الرطوبة النسبية الحالية المطلقة بالنسبة للحد الأقصى لدرجة حرارة الهواء والضغط."
 
-#: ../panel-plugin/weather-config.c:1319
+#: ../panel-plugin/weather-config.c:1317
 msgid ""
 "This is the temperature to which air must be cooled to reach 100% relative humidity, given no change in water content. Reaching the dew point halts the cooling process, as condensation occurs which releases heat into the air. A high dew point increases the possibility of rain and severe thunderstorms. The dew point allows the prediction of dew, frost, fog and minimum overnight temperature, and has influence on the comfort level one experiences.\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no."
 msgstr "هذه هي درجة الحرارة التي يجب أن تبرد الهواء للوصول الرطوبة النسبية 100٪، لا يعطي تغيير في المحتوى المائي. وللوصول إلى نقطة الندى توقف عملية التبريد، لاحظ التكثيف الذي يخرج من التنفس في الهواء. نقطة الندى العالية تزيد من احتمال هطول أمطار والعواصف الرعدية شديدة. نقطة الندى تسمح بالتنبؤ بالندى، والصقيع والضباب ودرجة الحرارة الدنيا بين وقت لآخر، ولها تأثير على الاحساس بالراحة لدى الخبراء.\n\n<b>ملاحظة:</b> هذه القيمة المحسوبة لا توفرها met.no."
 
-#: ../panel-plugin/weather-config.c:1331
+#: ../panel-plugin/weather-config.c:1329
 msgid ""
 "Also known as <i>felt temperature</i>, <i>effective temperature</i>, or what some weather providers declare as <i>feels like</i>. Human temperature sensation is not only based on air temperature, but also on heat flow, physical activity and individual condition. While being a highly subjective value, apparent temperature can actually be useful for warning about extreme conditions (cold, heat).\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no. You should use a calculation model appropriate for your local climate and personal preferences on the units page."
 msgstr "يعرف أيضا باسم <i>الاحساس بدرجة الحرارة</i>, <i>درجة الحرارة المحسوسة</i>أو ما يعلنه بعض موفري الطقس كما <i>يشعر كأنه</i>. الإحساس بدرجة الحرارة البشرية لا يقوم فقط على درجة حرارة الهواء، ولكن أيضا على تدفق الحرارة والنشاط البدني والحالة الفردية. وتعطي قيمة ذاتية عالية، يمكن أن تكون درجة حرارة الظاهر مفيدة لتحذير حول الظروف القاسية (البرد، الحرارة).\n\n<b>ملاحظة:</b> هذه قيمة محسوبة لا توفره met.no. يجب عليك استخدام نموذج حساب مناسبة للمناخ المحلي والتفضيلاتك الشخصية على صفحة وحدة."
 
-#: ../panel-plugin/weather-config.c:1345
+#: ../panel-plugin/weather-config.c:1343
 msgid ""
 "This gives the low-level cloud cover in percent. According to WMO "
 "definition, low-level clouds can be found at altitudes below 4,000 m (13,000"
@@ -919,7 +877,7 @@ msgid ""
 "particles and snow, when temperatures are cold enough."
 msgstr "وهذا يعرض الغطاء السحابي ذو المستوى المنخفض بنسبة مئوية. وفقا لتعريف المنظمة العالمية للأرصاد الجوية، يمكن الاطلاع على المستوى المنخفض للسحب على ارتفاعات أدنى من 000 4 متر (13,000 قدم)، أو 5,000 آلاف متر (16,000 قدم) عند خط الاستواء، على الرغم من أن الأساس غالباً ما تكون أقل من 000 2 متر (6,500 قدم). وتتكون من قطرات الماء أو جزيئات الجليد والثلج، وعندما تكون درجات الحرارة الباردة بما يكفي."
 
-#: ../panel-plugin/weather-config.c:1353
+#: ../panel-plugin/weather-config.c:1351
 msgid ""
 "This specifies the mid-level cloud cover in percent. According to WMO "
 "definition, mid-level clouds form in heights of 4,000-8,000 m (13,000-26,000"
@@ -928,7 +886,7 @@ msgid ""
 "temperatures get low enough, ice particles can replace the droplets."
 msgstr "يحدد هذا الغطاء السحابي المستوى المتوسط بنسبة مئوية. ووفقا لتعريف المنظمة العالمية للأرصاد الجوية، تشكل سحب المستوى المتوسط في مرتفعات 4,000-8,000 متر (13,000-26,000)، أو 5,000-10,000 متر (16,000-33,000) عند خط الاستواء. مثل السحب ذات المستوى المنخفض، وتتكون أساسا من قطرات الماء. عند إنخفاض درجات حرارة بما يكفي، يمكن أن تتحول لجزيئات جليد."
 
-#: ../panel-plugin/weather-config.c:1362
+#: ../panel-plugin/weather-config.c:1360
 msgid ""
 "This reports the high-level cloud cover in percent. According to WMO "
 "definition, high-level clouds can be found in altitudes of 8,000 to 15,000 m"
@@ -938,7 +896,7 @@ msgid ""
 "a magnificent array of colors when the sun is low on the horizon."
 msgstr "وتبين الغطاء السحابي رفيع المستوى بنسبة مئوية. وفقا لتعريف المنظمة العالمية للأرصاد الجوية، سحب رفيعة المستوى في ارتفاعات من 8,000 إلى 15,000 (26,000 إلى 49,000 متر)، أو 10,000 متر-18,000 متر (33,000-59,000) عند خط الاستواء، حيث تكون درجات الحرارة منخفضة جداً كافية لتحويلها لبلورات الثلجية. بينما عادة تكون رقيقة وبيضاء المظهر، يمكن أن تظهر في مجموعة رائعة من الألوان عندما تكون الشمس منخفضة على الأفق."
 
-#: ../panel-plugin/weather-config.c:1372
+#: ../panel-plugin/weather-config.c:1370
 msgid ""
 "Cloudiness, or cloud cover, defines the fraction of the sky obscured by "
 "clouds when observed from a given location. Clouds are both carriers of "
@@ -949,7 +907,7 @@ msgid ""
 "that way contribute to the cooling of the planet."
 msgstr "التغييم، أو الغطاء السحابي، يعني الجزء الصغير من السماء المحجوبة بالسحب في موقع معين. السحب هي مصدر هطول الأمطار ومنظم كمية الإشعاع الشمسي اللذي يصل للأرض. في حين أنها تقلل من درجة الحرارة أثناء النهار، لكن في الليل لها تأثير معاكس، حيث يمنع بخار الماء الإشعاع من الخروج إلى الفضاء. وبهذه الطريقة تسهم في تبريد كوكب الأرض."
 
-#: ../panel-plugin/weather-config.c:1384
+#: ../panel-plugin/weather-config.c:1382
 msgid ""
 "Fog is a type of low-lying stratus cloud, with the moisture in it often "
 "generated locally such as from a nearby lake, river, ocean, or simply moist "
@@ -959,7 +917,7 @@ msgid ""
 " visibility to less than 1 km (5/8 statute mile)."
 msgstr "الضباب هو نوع من سحابة ستراتوس المنخفضة، مع الرطوبة وهي غالباً ما تولد محلياً من البحيرات القريبة، أو الأنهر أو المحيط، أو الأرض الرطبة بسهولة، تتشكل عندما يكون الفرق بين درجة الحرارة ونقطة الندى أقل من 2.5 درجة مئوية (4 درجة فهرنهايت)، عادة في رطوبة النسبية 100%. الضباب عادة يسبب هطول الأمطار في شكل رذاذ أو ثلوج خفيفة جداً ويقلل من وضوح الرؤية إلى أقل من 1 كم (5/8 ميل النظام الأساسي)."
 
-#: ../panel-plugin/weather-config.c:1395
+#: ../panel-plugin/weather-config.c:1393
 msgid ""
 "The amount of rain, drizzle, sleet, hail, snow, graupel and other forms of water falling from the sky over a specific period.\n"
 "\n"
@@ -976,7 +934,7 @@ msgid ""
 "<b>Note</b>: While air temperature is an important factor in this calculation, there are other influencing factors that the plugin doesn't know about like the type of snow and ground temperature. Because of that, these rules will only lead to rough estimates and may not represent the real amount of snow."
 msgstr "كمية المطر، ورذاذ ومطر متجمد، حائل، الثلج، graupel وأشكال أخرى من المياه المتساقطة من السماء على مدى فترة زمنية محددة.\n\nالقيم المقدمة من met.no والتي تقدم توقع هطول أمطار أو ثلوج (ولكن ليس الصقيع),وكمية الثلوج سيتم <i>توقعها</i> بضرب القيمة الأصلية بنسبة تعتمد على درجة حرارة الجو:\n\n<tt><small>                   T &lt; -11.1 °م (12 °ف) =&gt; 1:12\n-11.1 °م (12 °F) &lt; T &lt;  -4.4 °C (24 °ف) =&gt; 1:10\n -4.4 °م (24 °F) &lt; T &lt;  -2.2 °C (28° ف) =&gt; 1:7\n -2.2 °م (28 °F) &lt; T &lt;  -0.6 °C (31 °ف) =&gt; 1:5\n -0.6 °م (31 °ف) &lt; T                    =&gt; 1:3\n\n</small></tt>مثال: إذا كانت درجة الحرارة-5 درجة مئوية (12 درجة فهرنهايت)، وكثافة الثلوج منخفضة ومطر ثلجي بنسبة 01:10 فسيتم استخدامها للحساب. و قيمة المطر 5 ملم، ستكون كمية هطول الأمطار 50 ملم.\n\n<b>ملاحظة</b>: لأن درجة حرارة الهواء عامل هام في هذا الحساب، وهناك غيرها من العوامل المؤثرة التي قد لا تكون متاحة مثل نوع ودرجة حرارة الثلج. لذلك، هذه القواعد تقدم فقط تقديرات تقريبية، وقد لا تمثل القيمة الحقيقية للثلوج."
 
-#: ../panel-plugin/weather-config.c:1571
+#: ../panel-plugin/weather-config.c:1569
 msgid "Labels to d_isplay"
 msgstr "تسميات للعرض"
 
@@ -1110,10 +1068,6 @@ msgstr "في"
 msgid "mm"
 msgstr "ملم"
 
-#: ../panel-plugin/weather-icon.c:189
-msgid "No icon theme!"
-msgstr "لا توجد سمة الرمز!"
-
 #: ../panel-plugin/weather-search.c:128 ../panel-plugin/weather-search.c:254
 msgid "Results"
 msgstr "النتائج"
@@ -1166,15 +1120,6 @@ msgstr "منطقة غير معروفة"
 #, c-format
 msgid "\t%s%s%s%s%s\n"
 msgstr "\t%s%s%s%s%s\n"
-
-#: ../panel-plugin/weather-summary.c:248
-#, c-format
-msgid "Error downloading met.no logo image to %s, reason: %s\n"
-msgstr "خطأ في تحميل صورة الشعار met.no إلى %s، والسبب: %s\n"
-
-#: ../panel-plugin/weather-summary.c:250
-msgid "unknown"
-msgstr "غير معروف"
 
 #: ../panel-plugin/weather-summary.c:394
 msgid "Coordinates\n"
@@ -1393,7 +1338,7 @@ msgid ""
 msgstr "\nسحب\n"
 
 #: ../panel-plugin/weather-summary.c:566
-#: ../panel-plugin/weather-translate.c:119
+#: ../panel-plugin/weather-translate.c:118
 msgid "Fog"
 msgstr "ضباب"
 
@@ -1708,26 +1653,26 @@ msgstr "أحدب"
 #. Norwegian descriptions.
 #. Symbols 16-19 are used for polar days (unused beginning with API version
 #. 1.2)
-#: ../panel-plugin/weather-translate.c:69
-#: ../panel-plugin/weather-translate.c:122
+#: ../panel-plugin/weather-translate.c:68
+#: ../panel-plugin/weather-translate.c:121
 msgid "Sunny"
 msgstr "مشمس"
 
-#: ../panel-plugin/weather-translate.c:69
-#: ../panel-plugin/weather-translate.c:122
+#: ../panel-plugin/weather-translate.c:68
+#: ../panel-plugin/weather-translate.c:121
 msgid "Clear"
 msgstr "صافي"
 
-#: ../panel-plugin/weather-translate.c:70
-#: ../panel-plugin/weather-translate.c:123
+#: ../panel-plugin/weather-translate.c:69
+#: ../panel-plugin/weather-translate.c:122
 msgid "Lightly cloudy"
 msgstr "سحب خفيفة"
 
-#: ../panel-plugin/weather-translate.c:71
+#: ../panel-plugin/weather-translate.c:70
 msgid "Partly cloudy"
 msgstr "غائم جزئيا"
 
-#: ../panel-plugin/weather-translate.c:72
+#: ../panel-plugin/weather-translate.c:71
 msgid "Cloudy"
 msgstr "غائم"
 
@@ -1738,8 +1683,8 @@ msgstr "غائم"
 #. *    precipitation that can vary greatly in intensity over a short
 #. *    amount of time. [...] Precipitation may be locally heavy for
 #. *    short amounts of time."
-#: ../panel-plugin/weather-translate.c:82
-#: ../panel-plugin/weather-translate.c:124
+#: ../panel-plugin/weather-translate.c:81
+#: ../panel-plugin/weather-translate.c:123
 msgid "Rain showers"
 msgstr "زخات مطر"
 
@@ -1748,22 +1693,22 @@ msgstr "زخات مطر"
 #. *   "Thunder Showers - Intermittent rain showers with thunder and
 #. lightning, generally
 #. *    short-lived."
-#: ../panel-plugin/weather-translate.c:89
+#: ../panel-plugin/weather-translate.c:88
 msgid "Thunder showers"
 msgstr "مطر مصحوب بالرعد"
 
 #. Analogues to "Rain showers"
-#: ../panel-plugin/weather-translate.c:92
+#: ../panel-plugin/weather-translate.c:91
 msgid "Sleet showers"
 msgstr "مطر متجمد"
 
-#: ../panel-plugin/weather-translate.c:93
-#: ../panel-plugin/weather-translate.c:125
+#: ../panel-plugin/weather-translate.c:92
+#: ../panel-plugin/weather-translate.c:124
 msgid "Snow showers"
 msgstr "وابل ثلجي"
 
 #. It's raining, usually incessantly, but not heavily.
-#: ../panel-plugin/weather-translate.c:96
+#: ../panel-plugin/weather-translate.c:95
 msgid "Light rain"
 msgstr "أمطار خفيفة"
 
@@ -1772,20 +1717,20 @@ msgstr "أمطار خفيفة"
 #. * rain and rain somewhat better. Symbol names indicate this is the way
 #. met.no did it some
 #. * time ago.
-#: ../panel-plugin/weather-translate.c:101
+#: ../panel-plugin/weather-translate.c:100
 msgid "Rain"
 msgstr "مطر"
 
-#: ../panel-plugin/weather-translate.c:103
+#: ../panel-plugin/weather-translate.c:102
 msgid "Rain with thunder"
 msgstr "ممطر مع الرعد"
 
 #. Sleet is a mixture of rain and snow, but it's not hail.
-#: ../panel-plugin/weather-translate.c:106
+#: ../panel-plugin/weather-translate.c:105
 msgid "Sleet"
 msgstr "مطر متجمد"
 
-#: ../panel-plugin/weather-translate.c:108
+#: ../panel-plugin/weather-translate.c:107
 msgid "Snow"
 msgstr "ثلج"
 
@@ -1797,23 +1742,23 @@ msgstr "ثلج"
 #. *    rain. It typically falls in regions of strong upward motion within the
 #. cold sector of an
 #. *    extratropical cyclone."
-#: ../panel-plugin/weather-translate.c:117
+#: ../panel-plugin/weather-translate.c:116
 msgid "Thundersnow"
 msgstr "ثلج مع الرعد"
 
 #. Same as symbols 1-15, but with thunder
-#: ../panel-plugin/weather-translate.c:128
+#: ../panel-plugin/weather-translate.c:127
 msgid "Sleet showers with thunder"
 msgstr "زخات مطر متجمد مع الرعد"
 
-#: ../panel-plugin/weather-translate.c:129
+#: ../panel-plugin/weather-translate.c:128
 msgid "Snow showers with thunder"
 msgstr "زخات الثلج مع الرعد"
 
-#: ../panel-plugin/weather-translate.c:130
+#: ../panel-plugin/weather-translate.c:129
 msgid "Light rain with thunder"
 msgstr "أمطار الخفيفة مع الرعد"
 
-#: ../panel-plugin/weather-translate.c:131
+#: ../panel-plugin/weather-translate.c:130
 msgid "Sleet with thunder"
 msgstr "مطر متجمد مع الرعد"
