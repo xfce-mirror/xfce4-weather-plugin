@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-19 12:52+0200\n"
+"POT-Creation-Date: 2023-09-29 00:51+0200\n"
 "PO-Revision-Date: 2013-07-03 19:29+0000\n"
 "Last-Translator: Jiri Grönroos <jiri.gronroos@iki.fi>, 2019-2021\n"
 "Language-Team: Finnish (http://app.transifex.com/xfce/xfce-panel-plugins/language/fi/)\n"
@@ -412,7 +412,7 @@ msgid "<b>Show scrollbox</b>"
 msgstr ""
 
 #: ../panel-plugin/weather-config.ui.h:90
-#: ../panel-plugin/weather-config.c:1131
+#: ../panel-plugin/weather-config.c:1129
 msgid "Select _font"
 msgstr "Valitse _fontti"
 
@@ -506,44 +506,6 @@ msgstr "SM"
 msgid "No Data"
 msgstr "Aineisto puuttuu"
 
-#: ../panel-plugin/weather.c:518
-msgid "Error parsing astronomical data!"
-msgstr "Virhe tähtitieteellisen aineiston jäsentämisessä!"
-
-#: ../panel-plugin/weather.c:520
-#, c-format
-msgid ""
-"Download of astronomical data failed with HTTP Status Code %d, Reason "
-"phrase: %s"
-msgstr "Tähtitieteellisen aineiston lataus epäonnistui HTTP-tilakoodilla %d. Syylauseke: %s"
-
-#: ../panel-plugin/weather.c:571
-msgid "Error parsing weather data!"
-msgstr "Virhe säätietoja jäsennettäessä!"
-
-#: ../panel-plugin/weather.c:574
-#, c-format
-msgid ""
-"Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
-msgstr "Sääaineiston lataus epäonnistui HTTP-tilakoodilla %d. Syylauseke: %s"
-
-#. start receive thread
-#: ../panel-plugin/weather.c:647 ../panel-plugin/weather.c:668
-#: ../panel-plugin/weather-search.c:169 ../panel-plugin/weather-search.c:437
-#, c-format
-msgid "getting %s"
-msgstr "haetaan %s"
-
-#: ../panel-plugin/weather.c:1200
-#, c-format
-msgid "Error writing cache file %s!"
-msgstr "Virhe välitiedostoa %s kirjoitetttaessa"
-
-#: ../panel-plugin/weather.c:1660
-#, c-format
-msgid "Unable to open the following url: %s"
-msgstr "URL: %s ei avattavissa"
-
 #: ../panel-plugin/weather.c:1730
 msgid "Short-term forecast data unavailable."
 msgstr "Lähiajan sääennusteen tiedot eivät ole saatavilla."
@@ -611,17 +573,13 @@ msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\
 msgid "Cannot update weather data"
 msgstr "Säätietoja ei voi päivittää"
 
-#: ../panel-plugin/weather.c:1965
-msgid "No default icon theme? This should not happen, plugin will crash!"
-msgstr "Ei oletuskuvaketeemaa? Näin ei pitäisi käydä. Lisäosa kaatuu!"
-
 #. add refresh button to right click menu, for people who missed
 #. the middle mouse click feature
 #: ../panel-plugin/weather.c:2007
 msgid "Re_fresh"
 msgstr "_Päivitä"
 
-#: ../panel-plugin/weather.c:2219
+#: ../panel-plugin/weather.c:2172
 msgid "Show weather conditions and forecasts"
 msgstr "Näytä säätila ja -ennuste"
 
@@ -810,19 +768,19 @@ msgid ""
 "<b>License:</b> %s"
 msgstr "<b>Hakemisto</b> %s\n\n<b>Tekijä</b> %s\n<b>Kuvaus</b> %s\n\n<b>Lisenssi</b> %s"
 
-#: ../panel-plugin/weather-config.c:985
+#: ../panel-plugin/weather-config.c:983
 msgid ""
 "A more calendar-like view, with the days in columns and the daytimes "
 "(morning, afternoon, evening, night) in rows."
 msgstr "Kalenteria enemmän muistuttava näkymä, jossa päivät ovat srakkeissa ja vuorokaudenajat (aamu, päivä, ilta, yö) riveillä."
 
-#: ../panel-plugin/weather-config.c:989
+#: ../panel-plugin/weather-config.c:987
 msgid ""
 "Shows the forecasts in a table with the daytimes (morning, afternoon, "
 "evening, night) in columns and the days in rows."
 msgstr "Näyttää ennusteet taulukkona, vuorokaudenajat (aamu, päivä, ilta, yö) sarakkeissa ja päivät riveillä."
 
-#: ../panel-plugin/weather-config.c:1076
+#: ../panel-plugin/weather-config.c:1074
 #, c-format
 msgid ""
 "Met.no provides forecast data for up to %d days in the future. Choose how "
@@ -832,25 +790,25 @@ msgid ""
 "are unreliable at best ;-)"
 msgstr "Met.no tarjoaa säätietoja aina %d päivälle tulevaisuuteen. Valitse kuinka monta päivää näytetään ennustevälilehdellä yhteenvetoikkunassa. Hitaahkoilla koneilla pieni lukumäärä voi vähentää viivettä ikkunaa avattaessa. On syytä huomata yli kolme päivää pitempien ennusteiden olevan parhaimmillaankin epäluotettavia :)"
 
-#: ../panel-plugin/weather-config.c:1148
+#: ../panel-plugin/weather-config.c:1146
 msgid "Select font"
 msgstr "Valitse fontti"
 
 #. TRANSLATORS: Fallback value, usually never shown.
-#: ../panel-plugin/weather-config.c:1262
+#: ../panel-plugin/weather-config.c:1260
 msgid ""
 "Choose the value to add to the list below. Values can be added more than "
 "once."
 msgstr "Valitse alla olevaan luetteloon lisättävä arvo. Arvoja voi lisätä useammin kuin kerran."
 
-#: ../panel-plugin/weather-config.c:1271
+#: ../panel-plugin/weather-config.c:1269
 msgid ""
 "Air temperature, sometimes referred to as dry-bulb temperature. Measured by "
 "a thermometer that is freely exposed to the air, yet shielded from radiation"
 " and moisture."
 msgstr "Ilman lämpötila, joskus ilmaistu dry-bulb -lämpötilana, jonka mittaus tapahtuu väljässä kuivassa ilmassa säteilyltä suojassa."
 
-#: ../panel-plugin/weather-config.c:1277
+#: ../panel-plugin/weather-config.c:1275
 msgid ""
 "The weight of the air that makes up the atmosphere exerts a pressure on the "
 "surface of the Earth, which is known as atmospheric pressure. To make it "
@@ -861,7 +819,7 @@ msgid ""
 "pressures mean deterioration."
 msgstr "Ilmakehän painosta seuraa ilman maapallon pintaan kohdistama paine, jota kutsutaan ilmanpaineeksi. Eri sijaintien arvojen vertailun helpottamiseksi eri korkeuksilla ilmanpaine korjataan vastaamaan painetta merenpinnan tasolla ja sitä kutsutaan barometriseksi ilmanpaineeksi. Kohoava ilmanpaine yleensä ennakoi säätilan kohenemista ja laskeva heikkenevää säätä."
 
-#: ../panel-plugin/weather-config.c:1288
+#: ../panel-plugin/weather-config.c:1286
 msgid ""
 "Nowadays wind speed/velocity is measured using an anemometer (Greek "
 "<i>anemos</i>, meaning <i>wind</i>) in 10 m (33 ft) height. Anemometers "
@@ -869,26 +827,26 @@ msgid ""
 "as they are closely related to and can be deduced from each other."
 msgstr "Nykyään tuulen nopeutta mitataan anemometrillä (kreikaksi  sana <i>anemos</i> tarkoittaa <i>tuulta</i>) 10 m (33 ft) korkeudella. Anemometri mittaa yleensä tuulen nopeutta tai painetta, mutta tarjoaa kummatkin arvot koska ne ovat läheisiä ja ne voidaan laskea toinen toisistaan."
 
-#: ../panel-plugin/weather-config.c:1296
+#: ../panel-plugin/weather-config.c:1294
 msgid ""
 "Invented by Sir Francis Beaufort in 1805, this empirical scale on wind speed"
 " is based on people's observations of specific land or sea conditions, "
 "denoting these conditions with numbers from 0 (calm) to 12 (hurricane)."
 msgstr "Sir Francis Beaufortin vuonna 1805 keksimänä tämä brittiläinen tuulennopeusasteikko perustuu ihmisen havaintoihin maa- ja meriolosuhteissa, osoittaen ne numeroarvoilla 0:sta (tyyntä) 12:aan (hirmumyrsky)."
 
-#: ../panel-plugin/weather-config.c:1302
+#: ../panel-plugin/weather-config.c:1300
 msgid ""
 "This gives the cardinal direction (North, East, South, West) the wind is "
 "coming from."
 msgstr "Tämä kertoo tuulen tulosuunnan pääilmansuunniitai (pohjoinen, itä, etelä, länsi)."
 
-#: ../panel-plugin/weather-config.c:1306
+#: ../panel-plugin/weather-config.c:1304
 msgid ""
 "This gives the direction the wind is coming from in azimuth degrees (North ="
 " 0°, East = 90°, South = 180° and West = 270°)."
 msgstr "Tämä kertoo tuulen tulosuunnan atsimuutti-asteina (pohjoinen=0°, itä=90°, etelä=180° ja länsi=270°)"
 
-#: ../panel-plugin/weather-config.c:1311
+#: ../panel-plugin/weather-config.c:1309
 msgid ""
 "Humidity is defined as the amount of water vapor in the air and increases "
 "the possibility of precipitation, fog and dew. While absolute humidity is "
@@ -897,21 +855,21 @@ msgid ""
 "pressure."
 msgstr "Ilmankosteus määritellään vesihöyryn määränä ilmassa ja sen lisääntyminen lisää sateen, sumun ja kasteen todennäköisyyttä. Absoluuttisen kosteuden ilmaistessa ilman vesipitoisuuden suhteellinen ilmankosteus %:na ilmaistuna kertoo absoluuttisen kosteuden suhteen sen enimmäismäärään ilman lämpötilaan  ja ilmanpaineeseen nähden."
 
-#: ../panel-plugin/weather-config.c:1319
+#: ../panel-plugin/weather-config.c:1317
 msgid ""
 "This is the temperature to which air must be cooled to reach 100% relative humidity, given no change in water content. Reaching the dew point halts the cooling process, as condensation occurs which releases heat into the air. A high dew point increases the possibility of rain and severe thunderstorms. The dew point allows the prediction of dew, frost, fog and minimum overnight temperature, and has influence on the comfort level one experiences.\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no."
 msgstr "Tämä on lämpötila johon ilman on jäähdyttävä saavuttaakseen 100 % suhteellisen ilmankosteuden, vesipitoisuuden pysyessä muuttumattomana. Kastepisteen saavuttaminen pysäyttää jäähtymisen tiivistymisen tapahtuessa ja lämmön lakatessa vapautumisen ilmaan. Korkea kastepiste kohottaa sateen ja voimakkaan ukkosmyrskyn todennäköisyyttä. Kastepiste auttaa ennustamaan kastetta, pakkasta ja yön alimman lämpötilan. Se vaikuttaa myös koettuun sään miellyttävyyteen. \n\n<b>Huomio:</b> Tämä arvo on laskettu eikä met.no:n toimittama tieto."
 
-#: ../panel-plugin/weather-config.c:1331
+#: ../panel-plugin/weather-config.c:1329
 msgid ""
 "Also known as <i>felt temperature</i>, <i>effective temperature</i>, or what some weather providers declare as <i>feels like</i>. Human temperature sensation is not only based on air temperature, but also on heat flow, physical activity and individual condition. While being a highly subjective value, apparent temperature can actually be useful for warning about extreme conditions (cold, heat).\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no. You should use a calculation model appropriate for your local climate and personal preferences on the units page."
 msgstr "Tunnetaan myös <i>koettuna lämpötilana</i>, <ii>efektiivisenä lämpötilana</i> tai joidenkin säätietojen tarjoajien mukaan <i>tuntuu kuin</i> -lämpötilana. Ihmisen lämpötilakokemus ei perustu yksin lämpötilaan vaan myös lämmön kulkeutumiseen, liikuntaan ja yksilölliseen kuntoon. Vaikka koettu lämpötila voi olla hyvin yksilöllistä se voi olla hyödyksi varoitettaessa ääriolosuhteista (kylmä, kuuma).\n\n<b>Huomio</b> Tämä arvo on laskettu eikä met.no:n toimittama tieto. Paikalliseen ilmastoon ja henkilökohtaisiin mieltymyksiin perustuvan mallin valitseminen mittayksiköt-sivulla on suositeltavaa."
 
-#: ../panel-plugin/weather-config.c:1345
+#: ../panel-plugin/weather-config.c:1343
 msgid ""
 "This gives the low-level cloud cover in percent. According to WMO "
 "definition, low-level clouds can be found at altitudes below 4,000 m (13,000"
@@ -920,7 +878,7 @@ msgid ""
 "particles and snow, when temperatures are cold enough."
 msgstr "Tämä ilmaisee alapilvien peittävyyden prosentteina. WMO-määritelmän mukaan alapilviä esiintyy alle 4.000 m (13.000 ft)  tai päiväntasaajalla alle 5.000 m (16.000 ft) korkeudessa, joskin niiden alaosa on usein alle 2.000 m (6.500 ft) korkeudessa. Ne koostuvat pääasiassa vesipisaroista, jäähiukkasista ja lumesta riittävän kylmässä."
 
-#: ../panel-plugin/weather-config.c:1353
+#: ../panel-plugin/weather-config.c:1351
 msgid ""
 "This specifies the mid-level cloud cover in percent. According to WMO "
 "definition, mid-level clouds form in heights of 4,000-8,000 m (13,000-26,000"
@@ -929,7 +887,7 @@ msgid ""
 "temperatures get low enough, ice particles can replace the droplets."
 msgstr "Tämä ilmaisee keskipilvien peittävyyden prosentteina. WMO-määritelmän mukaisesti keskipilvet muodostuvat 4.000-8.000 m (13.000-26.000 ft) korkeudessa tai 5.000-10.000 m (16.000-33.000 ft) korkeudessa päiväntasaajalla. Kuten alapilvet ne koostuvat pääasiassa vesipisaroista. Lämpötilan laskiessa vesipisarat voivat korvautua jäähiukkasilla."
 
-#: ../panel-plugin/weather-config.c:1362
+#: ../panel-plugin/weather-config.c:1360
 msgid ""
 "This reports the high-level cloud cover in percent. According to WMO "
 "definition, high-level clouds can be found in altitudes of 8,000 to 15,000 m"
@@ -939,7 +897,7 @@ msgid ""
 "a magnificent array of colors when the sun is low on the horizon."
 msgstr "Tämä ilmaisee yläpilvien peittävyyden prosentteina. WMO-määritelmän mukaisesti yläpilviä esiintyy 8.000-15.000 m (26.000-49.000 ft) korkeudessa ja päiväntasaajalla 10.000-18.000 m (33.000-59.000 ft) korkeudessa,  jossa ne alhaisen lämpötilan johdosta koostuvat pääasiassa jäähiukkasista. Vaikka ne yleensä ovat ohuen ja valkoisen näköisiä ne voivat autingon ollessa matalalla loistaa mahtavissa väreissä."
 
-#: ../panel-plugin/weather-config.c:1372
+#: ../panel-plugin/weather-config.c:1370
 msgid ""
 "Cloudiness, or cloud cover, defines the fraction of the sky obscured by "
 "clouds when observed from a given location. Clouds are both carriers of "
@@ -950,7 +908,7 @@ msgid ""
 "that way contribute to the cooling of the planet."
 msgstr "Pilvisyys tai pilvipeitto ilmaisee taivaankannen näkymättömissä olevan osuuden tietyssä paikassa. Pilvet sekä kuljettavat sadetta että säätelevät maan pinnalle yltävää säteilyä. Päivällä ne laskevat lämpötilaa ja yölla kohottavat sitä vesihöyryn estäessä pitkäaaltoisen säteilyn karkaamisen avaruuteen. Tämän lisäksi pilvet heijastavat valoa avaruuteen ja siten myötävaikuttavat planeetan jäähtymiseen."
 
-#: ../panel-plugin/weather-config.c:1384
+#: ../panel-plugin/weather-config.c:1382
 msgid ""
 "Fog is a type of low-lying stratus cloud, with the moisture in it often "
 "generated locally such as from a nearby lake, river, ocean, or simply moist "
@@ -960,7 +918,7 @@ msgid ""
 " visibility to less than 1 km (5/8 statute mile)."
 msgstr "Sumu on matalalla esiintyvä stratus-pilvilaji, jonka sisältämä kosteus on peräisin paikallisesta lähteestä kuten joesta, valtamerestä tai vain kosteasta maasta kun lämpötilan ja kastepisteen välinen lämpötilaero on alle 2,5 °C (4 °F), yleensä 100 % suhteellisen ilmankosteuden vallitessa. Sumu tuottaa yleisesti sadetta tihkun tai kevyen lumen muodossa ja laskee näkyvyyden alle 1 km (5/8 säädöksen mukaiseen mailiin)"
 
-#: ../panel-plugin/weather-config.c:1395
+#: ../panel-plugin/weather-config.c:1393
 msgid ""
 "The amount of rain, drizzle, sleet, hail, snow, graupel and other forms of water falling from the sky over a specific period.\n"
 "\n"
@@ -977,7 +935,7 @@ msgid ""
 "<b>Note</b>: While air temperature is an important factor in this calculation, there are other influencing factors that the plugin doesn't know about like the type of snow and ground temperature. Because of that, these rules will only lead to rough estimates and may not represent the real amount of snow."
 msgstr "Taivaalta tulevan sateen, tihkusateen, räntäsateen, rakeiden, lumen, lumirakeiden ja muun sateen määrä tietyllä aikavälillä.\n\nMet.no:n ilmoittamat arvot ovat sademääriä nestemäärinä tai vesisateena - joten jos lunta on odotettavissa (mutta ei räntää) lumen määrä <i>arvataan</i> kertomalla alkuperäinen arvo ilman lämpötilaan sidoksissa olevalla kertoimella.\n\n<tt><small> T &lt; -11,1 °C (12 °F) =&gt; 1:12\n -11,1 °C (12 °F) &lt; T &lt; -4,4 °C (24 °F) =&gt; 1:10\n -4,4 °C (24 °F) &lt; T &lt; -2,2 °C (28° F) =&gt; 1:7\n -2,2 °C (28 °F) &lt; T &lt; -0,6 °C (31 °F) =&gt; 1:5\n -0,6 °C (31 °F) &lt; T =&gt; 1:3\n\n </small></tt> Esimerkiksi lämpötilan ollessa -5 °C (12 °F) on lumen tiheys alhainen ja suhdelukua 1:10 käytetään laskelmassa. Olettaen ilmoitetun arvon olevan 5 mm laskelmallisesti lumen määrä on 50 mm.\n\n<b>Huomio</b> Vaikka ilman lämpötila on tärkeä tekijä tässä laskelmassa muitakin lisäosalle tuntemattomia asiaan vaikuttavia tekijöitä on olemassa, kuten lumen laatu ja maan pinnan lämpötila. Tästä johtuen nämä laskusäännöt johtavat vain karkeisiin arvioihin eivätkä välttämättä kerro todellista lumimäärää."
 
-#: ../panel-plugin/weather-config.c:1571
+#: ../panel-plugin/weather-config.c:1569
 msgid "Labels to d_isplay"
 msgstr "Näytettävät nimikkeet"
 
@@ -1111,10 +1069,6 @@ msgstr "in"
 msgid "mm"
 msgstr "mm"
 
-#: ../panel-plugin/weather-icon.c:189
-msgid "No icon theme!"
-msgstr "Ei kuvaketeemaa!"
-
 #: ../panel-plugin/weather-search.c:128 ../panel-plugin/weather-search.c:254
 msgid "Results"
 msgstr "Tulokset"
@@ -1167,15 +1121,6 @@ msgstr "Nimeämätön paikka"
 #, c-format
 msgid "\t%s%s%s%s%s\n"
 msgstr "%s%s%s%s%s\n"
-
-#: ../panel-plugin/weather-summary.c:248
-#, c-format
-msgid "Error downloading met.no logo image to %s, reason: %s\n"
-msgstr "Vihe ladattaessa met.no-liiketunnusta %s:een, syy: %s\n"
-
-#: ../panel-plugin/weather-summary.c:250
-msgid "unknown"
-msgstr "tuntematon"
 
 #: ../panel-plugin/weather-summary.c:394
 msgid "Coordinates\n"
@@ -1394,7 +1339,7 @@ msgid ""
 msgstr "\nPilviä\n"
 
 #: ../panel-plugin/weather-summary.c:566
-#: ../panel-plugin/weather-translate.c:119
+#: ../panel-plugin/weather-translate.c:118
 msgid "Fog"
 msgstr "Sumua"
 
@@ -1709,26 +1654,26 @@ msgstr "Pienenevä kuunsirppi"
 #. Norwegian descriptions.
 #. Symbols 16-19 are used for polar days (unused beginning with API version
 #. 1.2)
-#: ../panel-plugin/weather-translate.c:69
-#: ../panel-plugin/weather-translate.c:122
+#: ../panel-plugin/weather-translate.c:68
+#: ../panel-plugin/weather-translate.c:121
 msgid "Sunny"
 msgstr "Aurinkoista"
 
-#: ../panel-plugin/weather-translate.c:69
-#: ../panel-plugin/weather-translate.c:122
+#: ../panel-plugin/weather-translate.c:68
+#: ../panel-plugin/weather-translate.c:121
 msgid "Clear"
 msgstr "Selkeää"
 
-#: ../panel-plugin/weather-translate.c:70
-#: ../panel-plugin/weather-translate.c:123
+#: ../panel-plugin/weather-translate.c:69
+#: ../panel-plugin/weather-translate.c:122
 msgid "Lightly cloudy"
 msgstr "Kevyttä pilvisyyttä"
 
-#: ../panel-plugin/weather-translate.c:71
+#: ../panel-plugin/weather-translate.c:70
 msgid "Partly cloudy"
 msgstr "Osittain pilvistä"
 
-#: ../panel-plugin/weather-translate.c:72
+#: ../panel-plugin/weather-translate.c:71
 msgid "Cloudy"
 msgstr "Pilvistä"
 
@@ -1739,8 +1684,8 @@ msgstr "Pilvistä"
 #. *    precipitation that can vary greatly in intensity over a short
 #. *    amount of time. [...] Precipitation may be locally heavy for
 #. *    short amounts of time."
-#: ../panel-plugin/weather-translate.c:82
-#: ../panel-plugin/weather-translate.c:124
+#: ../panel-plugin/weather-translate.c:81
+#: ../panel-plugin/weather-translate.c:123
 msgid "Rain showers"
 msgstr "Sadekuuroja"
 
@@ -1749,22 +1694,22 @@ msgstr "Sadekuuroja"
 #. *   "Thunder Showers - Intermittent rain showers with thunder and
 #. lightning, generally
 #. *    short-lived."
-#: ../panel-plugin/weather-translate.c:89
+#: ../panel-plugin/weather-translate.c:88
 msgid "Thunder showers"
 msgstr "Ukkoskuuroja"
 
 #. Analogues to "Rain showers"
-#: ../panel-plugin/weather-translate.c:92
+#: ../panel-plugin/weather-translate.c:91
 msgid "Sleet showers"
 msgstr "Räntäkuuroja"
 
-#: ../panel-plugin/weather-translate.c:93
-#: ../panel-plugin/weather-translate.c:125
+#: ../panel-plugin/weather-translate.c:92
+#: ../panel-plugin/weather-translate.c:124
 msgid "Snow showers"
 msgstr "Lumikuuroja"
 
 #. It's raining, usually incessantly, but not heavily.
-#: ../panel-plugin/weather-translate.c:96
+#: ../panel-plugin/weather-translate.c:95
 msgid "Light rain"
 msgstr "Kevyttä sadetta"
 
@@ -1773,20 +1718,20 @@ msgstr "Kevyttä sadetta"
 #. * rain and rain somewhat better. Symbol names indicate this is the way
 #. met.no did it some
 #. * time ago.
-#: ../panel-plugin/weather-translate.c:101
+#: ../panel-plugin/weather-translate.c:100
 msgid "Rain"
 msgstr "Sadetta"
 
-#: ../panel-plugin/weather-translate.c:103
+#: ../panel-plugin/weather-translate.c:102
 msgid "Rain with thunder"
 msgstr "Ukkossateita"
 
 #. Sleet is a mixture of rain and snow, but it's not hail.
-#: ../panel-plugin/weather-translate.c:106
+#: ../panel-plugin/weather-translate.c:105
 msgid "Sleet"
 msgstr "Räntäsadetta"
 
-#: ../panel-plugin/weather-translate.c:108
+#: ../panel-plugin/weather-translate.c:107
 msgid "Snow"
 msgstr "Lumisadetta"
 
@@ -1798,23 +1743,23 @@ msgstr "Lumisadetta"
 #. *    rain. It typically falls in regions of strong upward motion within the
 #. cold sector of an
 #. *    extratropical cyclone."
-#: ../panel-plugin/weather-translate.c:117
+#: ../panel-plugin/weather-translate.c:116
 msgid "Thundersnow"
 msgstr "Ukkoslumisadetta"
 
 #. Same as symbols 1-15, but with thunder
-#: ../panel-plugin/weather-translate.c:128
+#: ../panel-plugin/weather-translate.c:127
 msgid "Sleet showers with thunder"
 msgstr "Ukkosräntäkuuroja"
 
-#: ../panel-plugin/weather-translate.c:129
+#: ../panel-plugin/weather-translate.c:128
 msgid "Snow showers with thunder"
 msgstr "Ukkoslumikuuroja"
 
-#: ../panel-plugin/weather-translate.c:130
+#: ../panel-plugin/weather-translate.c:129
 msgid "Light rain with thunder"
 msgstr "Kevyttä ukkossadetta"
 
-#: ../panel-plugin/weather-translate.c:131
+#: ../panel-plugin/weather-translate.c:130
 msgid "Sleet with thunder"
 msgstr "Ukkosräntäsadetta"
