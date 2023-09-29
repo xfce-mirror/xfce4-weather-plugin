@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-19 12:52+0200\n"
+"POT-Creation-Date: 2023-09-29 00:51+0200\n"
 "PO-Revision-Date: 2013-07-03 19:29+0000\n"
 "Last-Translator: Theppitak Karoonboonyanan <theppitak@gmail.com>, 2013,2019,2021\n"
 "Language-Team: Thai (http://app.transifex.com/xfce/xfce-panel-plugins/language/th/)\n"
@@ -411,7 +411,7 @@ msgid "<b>Show scrollbox</b>"
 msgstr "<b>แสดงกล่องเลื่อน</b>"
 
 #: ../panel-plugin/weather-config.ui.h:90
-#: ../panel-plugin/weather-config.c:1131
+#: ../panel-plugin/weather-config.c:1129
 msgid "Select _font"
 msgstr "เลือกแบบอักษ_ร"
 
@@ -505,44 +505,6 @@ msgstr "R"
 msgid "No Data"
 msgstr "ไม่มีข้อมูล"
 
-#: ../panel-plugin/weather.c:518
-msgid "Error parsing astronomical data!"
-msgstr "เกิดข้อผิดพลาดขณะแจงข้อมูลดาราศาสตร์!"
-
-#: ../panel-plugin/weather.c:520
-#, c-format
-msgid ""
-"Download of astronomical data failed with HTTP Status Code %d, Reason "
-"phrase: %s"
-msgstr "ดาวน์โหลดข้อมูลดาราศาสตร์ไม่สำเร็จ โดยรหัสสถานะของ HTTP คือ %d สาเหตุคือ: %s"
-
-#: ../panel-plugin/weather.c:571
-msgid "Error parsing weather data!"
-msgstr "เกิดข้อผิดพลาดขณะแจงข้อมูลสภาพอากาศ!"
-
-#: ../panel-plugin/weather.c:574
-#, c-format
-msgid ""
-"Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
-msgstr "ดาวน์โหลดข้อมูลสภาพอากาศไม่สำเร็จ โดยรหัสสถานะของ HTTP คือ %d สาเหตุคือ: %s"
-
-#. start receive thread
-#: ../panel-plugin/weather.c:647 ../panel-plugin/weather.c:668
-#: ../panel-plugin/weather-search.c:169 ../panel-plugin/weather-search.c:437
-#, c-format
-msgid "getting %s"
-msgstr "กำลังอ่าน %s"
-
-#: ../panel-plugin/weather.c:1200
-#, c-format
-msgid "Error writing cache file %s!"
-msgstr "เกิดข้อผิดพลาดขณะเขียนแฟ้มแคช %s"
-
-#: ../panel-plugin/weather.c:1660
-#, c-format
-msgid "Unable to open the following url: %s"
-msgstr "ไม่สามารถเปิด URL: %s"
-
 #: ../panel-plugin/weather.c:1730
 msgid "Short-term forecast data unavailable."
 msgstr "ไม่มีข้อมูลพยากรณ์อากาศระยะสั้น"
@@ -610,17 +572,13 @@ msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\
 msgid "Cannot update weather data"
 msgstr "ไม่สามารถปรับข้อมูลสภาพอากาศ"
 
-#: ../panel-plugin/weather.c:1965
-msgid "No default icon theme? This should not happen, plugin will crash!"
-msgstr "ไม่มีชุดไอคอนปริยายหรือ? ไม่น่าเป็นไปได้ ปลั๊กอินจะพังได้!"
-
 #. add refresh button to right click menu, for people who missed
 #. the middle mouse click feature
 #: ../panel-plugin/weather.c:2007
 msgid "Re_fresh"
 msgstr "เ_รียกใหม่"
 
-#: ../panel-plugin/weather.c:2219
+#: ../panel-plugin/weather.c:2172
 msgid "Show weather conditions and forecasts"
 msgstr "แสดงสภาพอากาศและการพยากรณ์"
 
@@ -809,19 +767,19 @@ msgid ""
 "<b>License:</b> %s"
 msgstr "<b>ไดเรกทอรี:</b> %s\n\n<b>ผู้สร้าง:</b> %s\n\n<b>คำบรรยาย:</b> %s\n\n<b>สัญญาอนุญาต:</b> %s"
 
-#: ../panel-plugin/weather-config.c:985
+#: ../panel-plugin/weather-config.c:983
 msgid ""
 "A more calendar-like view, with the days in columns and the daytimes "
 "(morning, afternoon, evening, night) in rows."
 msgstr "การแสดงผลที่คล้ายปฏิทิน โดยเรียงวันลงในคอลัมน์ และเรียงเวลา (เช้า, บ่าย, เย็น, ค่ำ) ลงในแถว"
 
-#: ../panel-plugin/weather-config.c:989
+#: ../panel-plugin/weather-config.c:987
 msgid ""
 "Shows the forecasts in a table with the daytimes (morning, afternoon, "
 "evening, night) in columns and the days in rows."
 msgstr "แสดงพยากรณ์อากาศในตารางโดยเรียงเวลา (เช้า, บ่าย, เย็น, ค่ำ) ลงในคอลัมน์ และเรียงวันลงในแถว"
 
-#: ../panel-plugin/weather-config.c:1076
+#: ../panel-plugin/weather-config.c:1074
 #, c-format
 msgid ""
 "Met.no provides forecast data for up to %d days in the future. Choose how "
@@ -831,25 +789,25 @@ msgid ""
 "are unreliable at best ;-)"
 msgstr "Met.no จะให้ข้อมูลพยากรณ์อากาศล่วงหน้าไม่เกิน %d วัน เลือกที่ช่องนี้ว่าต้องการให้แสดงข้อมูลพยากรณ์อากาศกี่วันในแท็บพยากรณ์ของหน้าต่างสรุป ในคอมพิวเตอร์ที่ทำงานช้า การแสดงวันจำนวนน้อยอาจช่วยลดความหน่วงขณะเปิดหน้าต่างได้ อย่างไรก็ดี อย่าลืมว่าโดยปกติการพยากรณ์อากาศล่วงหน้าเกินสามวันจะไม่น่าเชื่อถือแล้ว ;-)"
 
-#: ../panel-plugin/weather-config.c:1148
+#: ../panel-plugin/weather-config.c:1146
 msgid "Select font"
 msgstr "เลือกแบบอักษร"
 
 #. TRANSLATORS: Fallback value, usually never shown.
-#: ../panel-plugin/weather-config.c:1262
+#: ../panel-plugin/weather-config.c:1260
 msgid ""
 "Choose the value to add to the list below. Values can be added more than "
 "once."
 msgstr "เลือกค่าที่จะเพิ่มลงในรายการข้างล่าง ค่าต่างๆ สามารถเพิ่มได้มากกว่าหนึ่งครั้ง"
 
-#: ../panel-plugin/weather-config.c:1271
+#: ../panel-plugin/weather-config.c:1269
 msgid ""
 "Air temperature, sometimes referred to as dry-bulb temperature. Measured by "
 "a thermometer that is freely exposed to the air, yet shielded from radiation"
 " and moisture."
 msgstr "อุณภูมิอากาศ บางครั้งเรียกว่าอุณหภูมิกระเปาะแห้ง วัดโดยใช้เทอร์โมมิเตอร์ซึ่งเปิดให้สัมผัสกับอากาศโดยตรง โดยมีการหุ้มเพื่อป้องกันการแผ่รังสีและความชื้น"
 
-#: ../panel-plugin/weather-config.c:1277
+#: ../panel-plugin/weather-config.c:1275
 msgid ""
 "The weight of the air that makes up the atmosphere exerts a pressure on the "
 "surface of the Earth, which is known as atmospheric pressure. To make it "
@@ -860,7 +818,7 @@ msgid ""
 "pressures mean deterioration."
 msgstr "น้ำหนักของอากาศที่รวมกันเป็นชั้นบรรยากาศจะกดให้เกิดความดันลงบนพื้นโลก ซึ่งเรียกกันว่า atmospheric pressure และเพื่อให้สะดวกต่อการเปรียบเทียบค่ากับบริเวณอื่นที่ระดับความสูงต่างกัน atmospheric pressure จึงถูกปรับให้เป็นค่าที่ระดับน้ำทะเล และเรียกว่า barometric pressure โดยทั่วไปแล้ว ความกดอากาศที่สูงขึ้นจะบ่งบอกถึงสภาพอากาศที่ดี ในขณะที่ความกดอากาศที่ต่ำลงจะหมายถึงสภาพอากาศเลวร้าย"
 
-#: ../panel-plugin/weather-config.c:1288
+#: ../panel-plugin/weather-config.c:1286
 msgid ""
 "Nowadays wind speed/velocity is measured using an anemometer (Greek "
 "<i>anemos</i>, meaning <i>wind</i>) in 10 m (33 ft) height. Anemometers "
@@ -868,26 +826,26 @@ msgid ""
 "as they are closely related to and can be deduced from each other."
 msgstr "ปัจจุบันนี้ อัตราเร็ว/ความเร็วลมจะวัดด้วยมาตรวัดความเร็วลม (anemometer มาจากภาษากรีก <i>anemos</i> หมายถึง <i>ลม</i>) ที่ระดับความสูง 10 เมตร (33 ฟุต) มาตรวัดความเร็วลมมักจะวัดความเร็วลมหรือความกดอากาศอย่างใดอย่างหนึ่ง แต่จะให้ค่าทั้งสองค่า เนื่องจากมีความสัมพันธ์กันและสามารถคำนวณได้จากอีกค่าหนึ่ง"
 
-#: ../panel-plugin/weather-config.c:1296
+#: ../panel-plugin/weather-config.c:1294
 msgid ""
 "Invented by Sir Francis Beaufort in 1805, this empirical scale on wind speed"
 " is based on people's observations of specific land or sea conditions, "
 "denoting these conditions with numbers from 0 (calm) to 12 (hurricane)."
 msgstr "เป็นมาตราวัดความเร็วลมในระบบอังกฤษที่ประดิษฐ์โดย เซอร์ ฟรานซิส โบฟอร์ต (Sir Francis Beaufort) ใน พ.ศ. 2348 โดยอิงการสังเกตของผู้คนเกี่ยวกับสภาพของพื้นดินหรือท้องทะเล โดยแทนระดับของสภาพเหล่านี้ด้วยตัวเลขจาก 0 (สงบ) ถึง 12 (เฮอริเคน)"
 
-#: ../panel-plugin/weather-config.c:1302
+#: ../panel-plugin/weather-config.c:1300
 msgid ""
 "This gives the cardinal direction (North, East, South, West) the wind is "
 "coming from."
 msgstr "ระบุทิศทางคร่าวๆ (เหนือ, ใต้, ตะวันออก, ตะวันตก) ที่ลมพัดมา"
 
-#: ../panel-plugin/weather-config.c:1306
+#: ../panel-plugin/weather-config.c:1304
 msgid ""
 "This gives the direction the wind is coming from in azimuth degrees (North ="
 " 0°, East = 90°, South = 180° and West = 270°)."
 msgstr "ระบุทิศทางที่ลมพัดมาเป็นองศา (ทิศเหนือ = 0°, ทิศตะวันออก = 90°, ทิศใต้ = 180° ทิศตะวันตก = 270°)"
 
-#: ../panel-plugin/weather-config.c:1311
+#: ../panel-plugin/weather-config.c:1309
 msgid ""
 "Humidity is defined as the amount of water vapor in the air and increases "
 "the possibility of precipitation, fog and dew. While absolute humidity is "
@@ -896,21 +854,21 @@ msgid ""
 "pressure."
 msgstr "ความชื้นอากาศกำหนดโดยปริมาณไอน้ำในอากาศ ซึ่งจะเพิ่มโอกาสของการเกิดหยาดน้ำฟ้า หมอก และน้ำค้าง ในขณะที่ความชื้นสัมบูรณ์เป็นปริมาณไอน้ำจริงในอากาศ แต่ความชื้นสัมพัทธ์จะบอกร้อยละของความชื้นสัมบูรณ์ปัจจุบันเทียบกับค่าความชื้นสูงสุดสำหรับอุณหภูมิและความกดอากาศขณะนั้น"
 
-#: ../panel-plugin/weather-config.c:1319
+#: ../panel-plugin/weather-config.c:1317
 msgid ""
 "This is the temperature to which air must be cooled to reach 100% relative humidity, given no change in water content. Reaching the dew point halts the cooling process, as condensation occurs which releases heat into the air. A high dew point increases the possibility of rain and severe thunderstorms. The dew point allows the prediction of dew, frost, fog and minimum overnight temperature, and has influence on the comfort level one experiences.\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no."
 msgstr "นี่คืออุณหภูมิที่เมื่อลดลงถึงค่านี้โดยไม่เปลี่ยนปริมาณไอน้ำในอากาศแล้ว อากาศจะมีความชื้นสัมพัทธ์ 100% การถึงจุดน้ำค้างจะทำให้อากาศหยุดเย็นตัวลง เนื่องจากไอน้ำเกิดการควบแน่นและคายความร้อนแฝงสู่อากาศ จุดน้ำค้างที่สูงจะเพิ่มโอกาสของการเกิดฝนและพายุฟ้าคะนอง จุดน้ำค้างจะช่วยให้สามารถทำนายการเกิดน้ำค้าง น้ำค้างแข็ง หมอก และอุณหภูมิต่ำสุดในเวลากลางคืนได้ และมีผลต่อความรู้สึกสบายตัว\n\n<b>หมายเหตุ:</b> ค่านี้เป็นค่าที่ได้จากการคำนวณ ไม่ใช่ค่าที่ met.no จัดเตรียมให้"
 
-#: ../panel-plugin/weather-config.c:1331
+#: ../panel-plugin/weather-config.c:1329
 msgid ""
 "Also known as <i>felt temperature</i>, <i>effective temperature</i>, or what some weather providers declare as <i>feels like</i>. Human temperature sensation is not only based on air temperature, but also on heat flow, physical activity and individual condition. While being a highly subjective value, apparent temperature can actually be useful for warning about extreme conditions (cold, heat).\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no. You should use a calculation model appropriate for your local climate and personal preferences on the units page."
 msgstr "ในพยากรณ์อากาศต่างประเทศอาจใช้คำว่า <i>felt temperature</i>, <i>effective temperature</i> หรือ <i>feels like</i> การรับรู้อุณหภูมิของมนุษย์ไม่ได้ขึ้นอยู่กับอุณหภูมิของอากาศเท่านั้น แต่ยังขึ้นอยู่กับการไหลเวียนของความร้อน กิจกรรมในร่างกาย และสภาวะส่วนบุคคล แม้ค่านี้จะขึ้นอยู่กับตัวบุคคลค่อนข้างมาก แต่ค่าอุณหภูมิที่รู้สึกได้นี้ก็ยังเป็นประโยชน์ในการเตือนเกี่ยวกับสภาพอากาศที่รุนแรง (ความหนาว, ความร้อน)\n\n<b>หมายเหตุ:</i> ค่านี้เป็นค่าที่ได้จากการคำนวณ ไม่ใช่ค่าที่ met.no จัดเตรียมให้ คุณควรใช้รูปแบบการคำนวณที่เหมาะสมกับสภาพอากาศในพื้นที่ของคุณและความชอบส่วนตัวในหน้าหน่วยวัด"
 
-#: ../panel-plugin/weather-config.c:1345
+#: ../panel-plugin/weather-config.c:1343
 msgid ""
 "This gives the low-level cloud cover in percent. According to WMO "
 "definition, low-level clouds can be found at altitudes below 4,000 m (13,000"
@@ -919,7 +877,7 @@ msgid ""
 "particles and snow, when temperatures are cold enough."
 msgstr "ร้อยละของปริมาณเมฆชั้นต่ำที่ปกคลุมท้องฟ้า ตามนิยามของ WMO แล้ว เมฆชั้นต่ำสามารถพบได้ที่ระดับความสูงต่ำกว่า 4,000 เมตร (13,000 ฟุต) หรือ 5,000 เมตร (16,000 ฟุต) ที่บริเวณศูนย์สูตร โดยฐานของเมฆมักจะอยู่ต่ำกว่า 2,000 เมตร (6,500 ฟุต) เมฆชั้นต่ำประกอบด้วยละอองน้ำเป็นหลัก หรืออนุภาคน้ำแข็งและหิมะเมื่ออุณหภูมิต่ำพอ"
 
-#: ../panel-plugin/weather-config.c:1353
+#: ../panel-plugin/weather-config.c:1351
 msgid ""
 "This specifies the mid-level cloud cover in percent. According to WMO "
 "definition, mid-level clouds form in heights of 4,000-8,000 m (13,000-26,000"
@@ -928,7 +886,7 @@ msgid ""
 "temperatures get low enough, ice particles can replace the droplets."
 msgstr "ร้อยละของปริมาณเมฆชั้นกลางที่ปกคลุมท้องฟ้า ตามนิยามของ WMO แล้ว เมฆชั้นกลางเกิดที่ระดับความสูง 4,000-8,000 เมตร (13,000-26,000 ฟุต) หรือ 5,000-10,000 เมตร (16,000-33,000 ฟุต) ที่บริเวณศูนย์สูตร เมฆชั้นกลางประกอบด้วยละอองน้ำเป็นหลักเช่นเดียวกับเมฆชั้นต่ำ และเมื่ออุณหภูมิต่ำพอก็จะเกิดเป็นอนุภาคน้ำแข็งขึ้นแทน"
 
-#: ../panel-plugin/weather-config.c:1362
+#: ../panel-plugin/weather-config.c:1360
 msgid ""
 "This reports the high-level cloud cover in percent. According to WMO "
 "definition, high-level clouds can be found in altitudes of 8,000 to 15,000 m"
@@ -938,7 +896,7 @@ msgid ""
 "a magnificent array of colors when the sun is low on the horizon."
 msgstr "ร้อยละของปริมาณเมฆชั้นสูงที่ปกคลุมท้องฟ้า ตามนิยามของ WMO แล้ว เมฆชั้นสูงสามารถพบได้ที่ระดับความสูง 8,000-15,000 เมตร (26,000-49,000 ฟุต) หรือ 10,000-18,000 เมตร (33,000-59,000 ฟุต) ที่บริเวณศูนย์สูตร ซึ่งที่ระดับความสูงนี้ อุณหภูมิจะต่ำจนเมฆมีแต่ผลึกน้ำแข็งเป็นหลัก และแม้ผลึกน้ำแข็งเหล่านี้มักจะบางและเป็นสีขาว แต่ก็สามารถมองเห็นเป็นแถบสีสันสวยงามเมื่อดวงอาทิตย์อยู่ต่ำใกล้ขอบฟ้า"
 
-#: ../panel-plugin/weather-config.c:1372
+#: ../panel-plugin/weather-config.c:1370
 msgid ""
 "Cloudiness, or cloud cover, defines the fraction of the sky obscured by "
 "clouds when observed from a given location. Clouds are both carriers of "
@@ -949,7 +907,7 @@ msgid ""
 "that way contribute to the cooling of the planet."
 msgstr "จำนวนเมฆ หรือปริมาณเมฆที่ปกคลุมท้องฟ้า คือสัดส่วนของพื้นที่ท้องฟ้าที่ถูกบดบังด้วยเมฆเมื่อสังเกตจากตำแหน่งที่กำหนด เมฆเป็นทั้งพาหะของหยาดน้ำฟ้าและเป็นทั้งตัวควบคุมปริมาณรังสีจากดวงอาทิตย์ที่จะส่องลงพื้นโลก ในขณะที่ในเวลากลางวันเมฆจะช่วยลดอุณหภูมิ แต่ในเวลากลางคืนกลับให้ผลตรงกันข้าม เนื่องจากไอน้ำจะป้องกันมิให้รังสีคลื่นยาวจากพื้นโลกหลุดออกไปสู่อวกาศ นอกจากนี้ เมฆยังช่วยสะท้อนแสงอาทิตย์กลับออกสู่อวกาศ ซึ่งช่วยให้โลกเย็นลงได้"
 
-#: ../panel-plugin/weather-config.c:1384
+#: ../panel-plugin/weather-config.c:1382
 msgid ""
 "Fog is a type of low-lying stratus cloud, with the moisture in it often "
 "generated locally such as from a nearby lake, river, ocean, or simply moist "
@@ -959,7 +917,7 @@ msgid ""
 " visibility to less than 1 km (5/8 statute mile)."
 msgstr "หมอกคือเมฆสเตรตัสที่ลอยต่ำชนิดหนึ่ง ความชื้นในหมอกมักจะมาจากแหล่งบริเวณนั้น เช่นจากหนอง บึง แม่น้ำ มหาสมุทร หรือแค่พื้นดินที่เปียกชื้น ซึ่งจะก่อตัวเป็นหมอกเมื่อความแตกต่างระหว่างอุณหภูมิกับจุดน้ำค้างต่ำกว่า 2.5 °C (4 °F) และมักจะเกิดขึ้นที่ความชื้นสัมพัทธ์ 100% หมอกมักจะทำให้เกิดหยาดน้ำฟ้าในรูปของฝนละออง (drizzle) หรือหิมะที่เบาบางมากๆ และทำให้ทัศนวิสัยลดลงเหลือต่ำกว่า 1 กม. (5/8 ไมล์บก)"
 
-#: ../panel-plugin/weather-config.c:1395
+#: ../panel-plugin/weather-config.c:1393
 msgid ""
 "The amount of rain, drizzle, sleet, hail, snow, graupel and other forms of water falling from the sky over a specific period.\n"
 "\n"
@@ -976,7 +934,7 @@ msgid ""
 "<b>Note</b>: While air temperature is an important factor in this calculation, there are other influencing factors that the plugin doesn't know about like the type of snow and ground temperature. Because of that, these rules will only lead to rough estimates and may not represent the real amount of snow."
 msgstr "ปริมาณของฝน (rain), ฝนละออง (drizzle), ฝนน้ำแข็ง (sleet), ลูกเห็บ (hail), หิมะ (snow), ลูกปรายหิมะ (graupel) และรูปแบบอื่นๆ ของน้ำที่ตกจากท้องฟ้าในช่วงเวลาหนึ่งๆ\n\nค่าที่รายงานโดย met.no จะเป็นปริมาณหยาดน้ำฟ้าในสถานะของเหลว  - หรือกล่าวอีกนัยหนึ่ง: ปริมาณฝน -, ดังนั้น ถ้าคาดหมายว่าหิมะจะตก (แต่ไม่ใช่ฝนน้ำแข็ง) ปริมาณหิมะก็จะมาจากการ <i>คาดเดา</i> โดยคูณค่าต้นทางด้วยอัตราส่วนที่ขึ้นอยู่กับอุณหภูมิของอากาศ:\n\n<tt><small>                   T &lt; -11.1 °C (12 °F) =&gt; 1:12\n-11.1 °C (12 °F) &lt; T &lt;  -4.4 °C (24 °F) =&gt; 1:10\n -4.4 °C (24 °F) &lt; T &lt;  -2.2 °C (28° F) =&gt; 1:7\n -2.2 °C (28 °F) &lt; T &lt;  -0.6 °C (31 °F) =&gt; 1:5\n -0.6 °C (31 °F) &lt; T                    =&gt; 1:3\n\n</small></tt>ตัวอย่างเช่น: ถ้าอุณหภูมิอากาศคือ -5 °C (12 °F), ความหนาแน่นของหิมะก็จะต่ำ และจะใช้อัตราส่วนของฝนต่อหิมะ 1:10 ในการคำนวณ สมมุติว่าค่าที่รายงานคือ 5 มม. ค่าปริมาณหิมะที่คำนวณจากสูตรก็จะกลายเป็น 50 มม.\n\n<b>หมายเหตุ:</b> แม้อุณหภูมิอากาศจะเป็นปัจจัยที่สำคัญสำหรับการคำนวณนี้ แต่ก็ยังมีปัจจัยอื่นอีกที่มีอิทธิพล ซึ่งปลั๊กอินนี้ไม่สามารถรู้ได้ เช่น ชนิดของหิมะและอุณหภูมิภาคพื้น ด้วยเหตุนี้ กฎนี้จึงให้เพียงการประมาณอย่างคร่าวๆ เท่านั้น และไม่อาจให้ค่าที่แท้จริงของปริมาณหิมะได้"
 
-#: ../panel-plugin/weather-config.c:1571
+#: ../panel-plugin/weather-config.c:1569
 msgid "Labels to d_isplay"
 msgstr "ฉลากที่จะ_แสดง"
 
@@ -1110,10 +1068,6 @@ msgstr "in"
 msgid "mm"
 msgstr "mm"
 
-#: ../panel-plugin/weather-icon.c:189
-msgid "No icon theme!"
-msgstr "ไม่มีชุดไอคอน!"
-
 #: ../panel-plugin/weather-search.c:128 ../panel-plugin/weather-search.c:254
 msgid "Results"
 msgstr "ผลลัพธ์"
@@ -1166,15 +1120,6 @@ msgstr "สถานที่ไม่ทราบชื่อ"
 #, c-format
 msgid "\t%s%s%s%s%s\n"
 msgstr "\t%s%s%s%s%s\n"
-
-#: ../panel-plugin/weather-summary.c:248
-#, c-format
-msgid "Error downloading met.no logo image to %s, reason: %s\n"
-msgstr "เกิดข้อผิดพลาดขณะดาวน์โหลดโลโก้ของ met.no ลงใน %s, สาเหตุ: %s\n"
-
-#: ../panel-plugin/weather-summary.c:250
-msgid "unknown"
-msgstr "ไม่ทราบ"
 
 #: ../panel-plugin/weather-summary.c:394
 msgid "Coordinates\n"
@@ -1393,7 +1338,7 @@ msgid ""
 msgstr "\nเมฆ\n"
 
 #: ../panel-plugin/weather-summary.c:566
-#: ../panel-plugin/weather-translate.c:119
+#: ../panel-plugin/weather-translate.c:118
 msgid "Fog"
 msgstr "หมอก"
 
@@ -1708,26 +1653,26 @@ msgstr "เสี้ยวข้างแรม"
 #. Norwegian descriptions.
 #. Symbols 16-19 are used for polar days (unused beginning with API version
 #. 1.2)
-#: ../panel-plugin/weather-translate.c:69
-#: ../panel-plugin/weather-translate.c:122
+#: ../panel-plugin/weather-translate.c:68
+#: ../panel-plugin/weather-translate.c:121
 msgid "Sunny"
 msgstr "ท้องฟ้าแจ่มใส"
 
-#: ../panel-plugin/weather-translate.c:69
-#: ../panel-plugin/weather-translate.c:122
+#: ../panel-plugin/weather-translate.c:68
+#: ../panel-plugin/weather-translate.c:121
 msgid "Clear"
 msgstr "ท้องฟ้าแจ่มใส"
 
-#: ../panel-plugin/weather-translate.c:70
-#: ../panel-plugin/weather-translate.c:123
+#: ../panel-plugin/weather-translate.c:69
+#: ../panel-plugin/weather-translate.c:122
 msgid "Lightly cloudy"
 msgstr "ท้องฟ้าโปร่ง"
 
-#: ../panel-plugin/weather-translate.c:71
+#: ../panel-plugin/weather-translate.c:70
 msgid "Partly cloudy"
 msgstr "มีเมฆบางส่วน"
 
-#: ../panel-plugin/weather-translate.c:72
+#: ../panel-plugin/weather-translate.c:71
 msgid "Cloudy"
 msgstr "มีเมฆเต็มท้องฟ้า"
 
@@ -1738,8 +1683,8 @@ msgstr "มีเมฆเต็มท้องฟ้า"
 #. *    precipitation that can vary greatly in intensity over a short
 #. *    amount of time. [...] Precipitation may be locally heavy for
 #. *    short amounts of time."
-#: ../panel-plugin/weather-translate.c:82
-#: ../panel-plugin/weather-translate.c:124
+#: ../panel-plugin/weather-translate.c:81
+#: ../panel-plugin/weather-translate.c:123
 msgid "Rain showers"
 msgstr "ฝนซู่"
 
@@ -1748,22 +1693,22 @@ msgstr "ฝนซู่"
 #. *   "Thunder Showers - Intermittent rain showers with thunder and
 #. lightning, generally
 #. *    short-lived."
-#: ../panel-plugin/weather-translate.c:89
+#: ../panel-plugin/weather-translate.c:88
 msgid "Thunder showers"
 msgstr "ฝนซู่ฟ้าคะนอง"
 
 #. Analogues to "Rain showers"
-#: ../panel-plugin/weather-translate.c:92
+#: ../panel-plugin/weather-translate.c:91
 msgid "Sleet showers"
 msgstr "ฝนน้ำแข็งซู่"
 
-#: ../panel-plugin/weather-translate.c:93
-#: ../panel-plugin/weather-translate.c:125
+#: ../panel-plugin/weather-translate.c:92
+#: ../panel-plugin/weather-translate.c:124
 msgid "Snow showers"
 msgstr "หิมะซู่"
 
 #. It's raining, usually incessantly, but not heavily.
-#: ../panel-plugin/weather-translate.c:96
+#: ../panel-plugin/weather-translate.c:95
 msgid "Light rain"
 msgstr "ฝนตกเล็กน้อย"
 
@@ -1772,20 +1717,20 @@ msgstr "ฝนตกเล็กน้อย"
 #. * rain and rain somewhat better. Symbol names indicate this is the way
 #. met.no did it some
 #. * time ago.
-#: ../panel-plugin/weather-translate.c:101
+#: ../panel-plugin/weather-translate.c:100
 msgid "Rain"
 msgstr "ฝนตกหนัก"
 
-#: ../panel-plugin/weather-translate.c:103
+#: ../panel-plugin/weather-translate.c:102
 msgid "Rain with thunder"
 msgstr "ฝนฟ้าคะนอง"
 
 #. Sleet is a mixture of rain and snow, but it's not hail.
-#: ../panel-plugin/weather-translate.c:106
+#: ../panel-plugin/weather-translate.c:105
 msgid "Sleet"
 msgstr "ฝนน้ำแข็ง"
 
-#: ../panel-plugin/weather-translate.c:108
+#: ../panel-plugin/weather-translate.c:107
 msgid "Snow"
 msgstr "หิมะตก"
 
@@ -1797,23 +1742,23 @@ msgstr "หิมะตก"
 #. *    rain. It typically falls in regions of strong upward motion within the
 #. cold sector of an
 #. *    extratropical cyclone."
-#: ../panel-plugin/weather-translate.c:117
+#: ../panel-plugin/weather-translate.c:116
 msgid "Thundersnow"
 msgstr "หิมะฟ้าคะนอง"
 
 #. Same as symbols 1-15, but with thunder
-#: ../panel-plugin/weather-translate.c:128
+#: ../panel-plugin/weather-translate.c:127
 msgid "Sleet showers with thunder"
 msgstr "ฝนน้ำแข็งซู่ฟ้าคะนอง"
 
-#: ../panel-plugin/weather-translate.c:129
+#: ../panel-plugin/weather-translate.c:128
 msgid "Snow showers with thunder"
 msgstr "หิมะซู่ฟ้าคะนอง"
 
-#: ../panel-plugin/weather-translate.c:130
+#: ../panel-plugin/weather-translate.c:129
 msgid "Light rain with thunder"
 msgstr "ฝนตกเล็กน้อยฟ้าคะนอง"
 
-#: ../panel-plugin/weather-translate.c:131
+#: ../panel-plugin/weather-translate.c:130
 msgid "Sleet with thunder"
 msgstr "ฝนน้ำแข็งฟ้าคะนอง"
