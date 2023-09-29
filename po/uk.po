@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-19 12:52+0200\n"
+"POT-Creation-Date: 2023-09-29 00:51+0200\n"
 "PO-Revision-Date: 2013-07-03 19:29+0000\n"
 "Last-Translator: Gordon Freeman, 2023\n"
 "Language-Team: Ukrainian (http://app.transifex.com/xfce/xfce-panel-plugins/language/uk/)\n"
@@ -416,7 +416,7 @@ msgid "<b>Show scrollbox</b>"
 msgstr "<b>Показати поле прокрутки</b>"
 
 #: ../panel-plugin/weather-config.ui.h:90
-#: ../panel-plugin/weather-config.c:1131
+#: ../panel-plugin/weather-config.c:1129
 msgid "Select _font"
 msgstr "Вибрати _шрифт"
 
@@ -510,44 +510,6 @@ msgstr "R"
 msgid "No Data"
 msgstr "Немає даних"
 
-#: ../panel-plugin/weather.c:518
-msgid "Error parsing astronomical data!"
-msgstr "Помилка отримання астрономічних даних!"
-
-#: ../panel-plugin/weather.c:520
-#, c-format
-msgid ""
-"Download of astronomical data failed with HTTP Status Code %d, Reason "
-"phrase: %s"
-msgstr "Отримання астрономічних даних не вдалося з кодом статусу HTTP %d, причина: %s "
-
-#: ../panel-plugin/weather.c:571
-msgid "Error parsing weather data!"
-msgstr "Не вдалось отримати дані про погоду!"
-
-#: ../panel-plugin/weather.c:574
-#, c-format
-msgid ""
-"Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
-msgstr "Звантаження даних про аогоду не вдалося зі статусом HTTP коду %d, Причина: %s"
-
-#. start receive thread
-#: ../panel-plugin/weather.c:647 ../panel-plugin/weather.c:668
-#: ../panel-plugin/weather-search.c:169 ../panel-plugin/weather-search.c:437
-#, c-format
-msgid "getting %s"
-msgstr "отримання %s"
-
-#: ../panel-plugin/weather.c:1200
-#, c-format
-msgid "Error writing cache file %s!"
-msgstr "Помилка запису файлу кешу %s!"
-
-#: ../panel-plugin/weather.c:1660
-#, c-format
-msgid "Unable to open the following url: %s"
-msgstr "Не вдалося відкрити таке посилання: %s"
-
 #: ../panel-plugin/weather.c:1730
 msgid "Short-term forecast data unavailable."
 msgstr "Короткотермінових даних про погоду немає."
@@ -615,17 +577,13 @@ msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\
 msgid "Cannot update weather data"
 msgstr "Не вдалось оновити дані про погоду"
 
-#: ../panel-plugin/weather.c:1965
-msgid "No default icon theme? This should not happen, plugin will crash!"
-msgstr "Немає типової теми іконок? Цього не повинно було статися, додаток перестане працювати!"
-
 #. add refresh button to right click menu, for people who missed
 #. the middle mouse click feature
 #: ../panel-plugin/weather.c:2007
 msgid "Re_fresh"
 msgstr "Оно_вити"
 
-#: ../panel-plugin/weather.c:2219
+#: ../panel-plugin/weather.c:2172
 msgid "Show weather conditions and forecasts"
 msgstr "Показати поточний стан погоди і прогноз"
 
@@ -814,19 +772,19 @@ msgid ""
 "<b>License:</b> %s"
 msgstr "<b>Тека:</b> %s\n\n<b>Автор:</b> %s\n\n<b>Опис:</b> %s\n\n<b>Ліцензія:</b> %s"
 
-#: ../panel-plugin/weather-config.c:985
+#: ../panel-plugin/weather-config.c:983
 msgid ""
 "A more calendar-like view, with the days in columns and the daytimes "
 "(morning, afternoon, evening, night) in rows."
 msgstr "Більше у вигляді календаря, з днями в колонках і пір дня (ранок, обід, вечір, ніч) у рядках."
 
-#: ../panel-plugin/weather-config.c:989
+#: ../panel-plugin/weather-config.c:987
 msgid ""
 "Shows the forecasts in a table with the daytimes (morning, afternoon, "
 "evening, night) in columns and the days in rows."
 msgstr "Показує прогноз погоди в таблиці з порами дня (ранок, обід, вечір, ніч) в стовпчиках і дні в рядках."
 
-#: ../panel-plugin/weather-config.c:1076
+#: ../panel-plugin/weather-config.c:1074
 #, c-format
 msgid ""
 "Met.no provides forecast data for up to %d days in the future. Choose how "
@@ -836,25 +794,25 @@ msgid ""
 "are unreliable at best ;-)"
 msgstr "Met.no пропонує прогноз погоди аж на  %d днів вперед. Виберіть скільки днів буде показуватися в у вікні вкладки погоди. на повільних комп’ютерах бажано вибирати малу кількість днів. Пам’ятайте, що прогноз погоди більше три дні вперед ненадійний в кращому випадку ;-)"
 
-#: ../panel-plugin/weather-config.c:1148
+#: ../panel-plugin/weather-config.c:1146
 msgid "Select font"
 msgstr "Вибрати шрифт"
 
 #. TRANSLATORS: Fallback value, usually never shown.
-#: ../panel-plugin/weather-config.c:1262
+#: ../panel-plugin/weather-config.c:1260
 msgid ""
 "Choose the value to add to the list below. Values can be added more than "
 "once."
 msgstr "Виберіть значення для додавання до списку нижче. Значення можна додавати неодноразово."
 
-#: ../panel-plugin/weather-config.c:1271
+#: ../panel-plugin/weather-config.c:1269
 msgid ""
 "Air temperature, sometimes referred to as dry-bulb temperature. Measured by "
 "a thermometer that is freely exposed to the air, yet shielded from radiation"
 " and moisture."
 msgstr "Температура повітря, яку іноді називають температурою сухої колби. Вимірюється за допомогою термометрів, що вільно піддаються впливу повітря, але захищені від випромінювання та вологи."
 
-#: ../panel-plugin/weather-config.c:1277
+#: ../panel-plugin/weather-config.c:1275
 msgid ""
 "The weight of the air that makes up the atmosphere exerts a pressure on the "
 "surface of the Earth, which is known as atmospheric pressure. To make it "
@@ -865,7 +823,7 @@ msgid ""
 "pressures mean deterioration."
 msgstr "Атмосферний тиск — тиск, з яким атмосфера Землі діє на земну поверхню і всі предмети, що на ній розташовані. Атмосферний тиск падає з висотою, оскільки він створюється лише шаром атмосфери, що знаходиться вище і навпаки, у глибоких шахтах збільшується. На земній поверхні атмосферний тиск змінюється від місця до місця та у часі. Барометричний тиск — те ж саме, що й абсолютний атмосферний тиск. Піднімання барометричного тиску зазвичай свідчить про покращення погодних умов, тоді як падіння тиску означає погіршення."
 
-#: ../panel-plugin/weather-config.c:1288
+#: ../panel-plugin/weather-config.c:1286
 msgid ""
 "Nowadays wind speed/velocity is measured using an anemometer (Greek "
 "<i>anemos</i>, meaning <i>wind</i>) in 10 m (33 ft) height. Anemometers "
@@ -873,26 +831,26 @@ msgid ""
 "as they are closely related to and can be deduced from each other."
 msgstr "Сьогодні швидкість вітру вимірюють анемометром (з грецької <i>анемос</i> означає <i>вітер</i>) на висоті 10 метрів (33 фути). Анемометри зазвичай вимірюють або швидкість вітру або тиск, але зазвичай дають обидва значення, оскільки вони пов’язані між собою, і з одного можна визначити інше."
 
-#: ../panel-plugin/weather-config.c:1296
+#: ../panel-plugin/weather-config.c:1294
 msgid ""
 "Invented by Sir Francis Beaufort in 1805, this empirical scale on wind speed"
 " is based on people's observations of specific land or sea conditions, "
 "denoting these conditions with numbers from 0 (calm) to 12 (hurricane)."
 msgstr "Шкала Бофорта — шкала для наближеної оцінки сили (швидкості) вітру, створена в 1805 британським адміралом і гідрографом Френсісом Бофортом. Сила вітру за шкалою Бофорта визначається за його дією на оточуючі предмети і вимірюється в балах (від 0 до 17 балів). У 1955 році, щоб розрізняти ураганні вітри різної сили, Бюро погоди США розширило шкалу до 17 балів. Нижче наводиться шкала Бофорта (для діапазону 0..12 балів), прийнята за Міжнародною угодою 1946 (швидкість вітру дається для висоти 10 м над поверхнею суші)."
 
-#: ../panel-plugin/weather-config.c:1302
+#: ../panel-plugin/weather-config.c:1300
 msgid ""
 "This gives the cardinal direction (North, East, South, West) the wind is "
 "coming from."
 msgstr "Це дає кардинальний напрямок (Північ, Схід, Південь, Захід), звідки дує вітер."
 
-#: ../panel-plugin/weather-config.c:1306
+#: ../panel-plugin/weather-config.c:1304
 msgid ""
 "This gives the direction the wind is coming from in azimuth degrees (North ="
 " 0°, East = 90°, South = 180° and West = 270°)."
 msgstr "Це дає напрямок, звідки дує вітер, в градусах азимуту (Північ = 0°, Схід = 90°, Південь = 180° і Захід = 270°)."
 
-#: ../panel-plugin/weather-config.c:1311
+#: ../panel-plugin/weather-config.c:1309
 msgid ""
 "Humidity is defined as the amount of water vapor in the air and increases "
 "the possibility of precipitation, fog and dew. While absolute humidity is "
@@ -901,21 +859,21 @@ msgid ""
 "pressure."
 msgstr "Вологість повітря — вміст водяної пари в повітрі, характеризується пружністю водяної пари, відносною вологістю, дефіцитом вологи, точкою роси, — є одним з найважливіших параметрів атмосфери, що визначає погоду, а також те, наскільки комфортно почуває себе людина в цей момент часу.\r\nЄ два способи кількісної оцінки вологості:\r\n    Абсолютна вологість — маса водяної пари, що утримується в одиницях об'єму повітря.\r\n    Відносна вологість — відношення абсолютної вологості до її максимального значення при даній температури. При 100% відносній вологості в повітрі може відбутися конденсація водяних пар з утворенням туману, випаданням води. Температура, при якій це трапляється, називається точкою роси.\r\nОптимальна для людини вологість 40-60%"
 
-#: ../panel-plugin/weather-config.c:1319
+#: ../panel-plugin/weather-config.c:1317
 msgid ""
 "This is the temperature to which air must be cooled to reach 100% relative humidity, given no change in water content. Reaching the dew point halts the cooling process, as condensation occurs which releases heat into the air. A high dew point increases the possibility of rain and severe thunderstorms. The dew point allows the prediction of dew, frost, fog and minimum overnight temperature, and has influence on the comfort level one experiences.\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no."
 msgstr "Це температура, до якої повітря повинно бути охолоджене для досягнення 100% відносної вологості, при відсутності змін у вмісті води. Дійшовши до точки роси процес охолодження зупиняється, оскільки випадає конденсат, який вивільняє тепло в повітря. Висока точка роси збільшує ймовірність дощів та сильних гроз. Точка роси дозволяє пророкування роси, інію, туману і мінімальної температури протягом ночі, і має вплив на рівень відчуття комфорту\n\n<b>Примітка:</b> Ця величина не надається сервісом met.no"
 
-#: ../panel-plugin/weather-config.c:1331
+#: ../panel-plugin/weather-config.c:1329
 msgid ""
 "Also known as <i>felt temperature</i>, <i>effective temperature</i>, or what some weather providers declare as <i>feels like</i>. Human temperature sensation is not only based on air temperature, but also on heat flow, physical activity and individual condition. While being a highly subjective value, apparent temperature can actually be useful for warning about extreme conditions (cold, heat).\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no. You should use a calculation model appropriate for your local climate and personal preferences on the units page."
 msgstr "Також відома як <i>відчувальна температура</i>, <i>ефективна температура</i>, або те, що деякі погодні провайдери заявляють, що <i>відчувається як</i>. Людське відчуття температури не тільки в залежить від температури повітря, але і від теплового потоку, фізичної активності та індивідуального стану. Це дуже суб’єктивне значення, відчувальна температура дійсно може бути корисна для попередження про екстремальні умови (холод, спека) ​​\n\n<b> Примітка:</b> Це значення не надається в сервісі met.no. Ви повинні використовувати розрахункову модель, яка підходить для вашого місцевого клімату і особистих налаштувань на сторінці одиниць."
 
-#: ../panel-plugin/weather-config.c:1345
+#: ../panel-plugin/weather-config.c:1343
 msgid ""
 "This gives the low-level cloud cover in percent. According to WMO "
 "definition, low-level clouds can be found at altitudes below 4,000 m (13,000"
@@ -924,7 +882,7 @@ msgid ""
 "particles and snow, when temperatures are cold enough."
 msgstr "Це дає низько-рівневе хмарне покриття в процентах. Згідно з визначенням Всесвітньої метеорологічної організації, низько-рівневі хмари можна знайти на висоті нижче 4,000 м (13,000 футів), або 5,000 м (16,000 футів) на екваторі, тому  їхня база часто лежить нижче 2,000 м (6,500 футів). Вона в основному складається з крапельок води або часточок льоду і снігу, коли температура є достатньо низькою."
 
-#: ../panel-plugin/weather-config.c:1353
+#: ../panel-plugin/weather-config.c:1351
 msgid ""
 "This specifies the mid-level cloud cover in percent. According to WMO "
 "definition, mid-level clouds form in heights of 4,000-8,000 m (13,000-26,000"
@@ -933,7 +891,7 @@ msgid ""
 "temperatures get low enough, ice particles can replace the droplets."
 msgstr "Це показує середній рівень покриття хмарами в процентах. Згідно з визначенням Світової Метеорологічної Організації, хмари середнього рівня формуються на висоті 4,000-8,000 м (13,000-26,000 футів), або 5,000-10,000 м (16,000-33,000 футів) на екваторі. Так само як і хмари низького рівня, вони в основному складаються з водяних крапельок. Коли температура стає достатньо низькою, льодові часточки заміняють крапельки."
 
-#: ../panel-plugin/weather-config.c:1362
+#: ../panel-plugin/weather-config.c:1360
 msgid ""
 "This reports the high-level cloud cover in percent. According to WMO "
 "definition, high-level clouds can be found in altitudes of 8,000 to 15,000 m"
@@ -943,7 +901,7 @@ msgid ""
 "a magnificent array of colors when the sun is low on the horizon."
 msgstr "Це повідомляє про високий рівень хмарного покриву у відсотках. За даними визначення ВМО, хмари вищого рівня можна знайти на висотах від 8000 до 15000 м (26000 футів до 49 000 футів), або 10.000 м-18, 000 м (33,000-59,000 футів) на екваторі, де температура настільки низька, що вони є в основному складаються з кристалів льоду. Хоча вони зазвичай тонкі і білі на вигляд, їх можна побачити в багатьох кольорах, коли сонце знаходиться низько над горизонтом."
 
-#: ../panel-plugin/weather-config.c:1372
+#: ../panel-plugin/weather-config.c:1370
 msgid ""
 "Cloudiness, or cloud cover, defines the fraction of the sky obscured by "
 "clouds when observed from a given location. Clouds are both carriers of "
@@ -954,7 +912,7 @@ msgid ""
 "that way contribute to the cooling of the planet."
 msgstr "Хмарність — ступінь вкриття неба хмарами в балах від 0 (ясно) до 10 (похмуро).\r\nСучасна 10-бальна шкала хмарності прийнята на першій Морській міжнародній метеорологічній конференції (Брюссель, 1853 г.).\r\nХмарність - один з важливих факторів, що визначають погоду й клімат. Завдяки ефекту екранування, вона перешкоджає як охолодженню поверхні Землі за рахунок власного теплового випромінювання, так і її нагріванню сонячною радіацією, тобто взимку й уночі хмарність перешкоджає зниженню температури земної поверхні й приземного шару повітря, улітку й удень - послабляє нагрівання земної поверхні сонячними променями, зм'якшуючи клімат усередині материків."
 
-#: ../panel-plugin/weather-config.c:1384
+#: ../panel-plugin/weather-config.c:1382
 msgid ""
 "Fog is a type of low-lying stratus cloud, with the moisture in it often "
 "generated locally such as from a nearby lake, river, ocean, or simply moist "
@@ -964,7 +922,7 @@ msgid ""
 " visibility to less than 1 km (5/8 statute mile)."
 msgstr "Туман - атмосферне явище, що полягає в скупченні продуктів конденсації, звішених в повітрі безпосередньо над земною поверхнею. Виникає внаслідок охолодження повітря від земної поверхні чи випаровування з теплої води. Тумани з водяних крапель спостерігаються головним чином при температурах повітря вище -20 °C, але може зустрічатися навіть і при температурах нижче -40 °C. При температурі нижче -20 °C переважають крижані тумани. За способом утворення тумани поділяються на два види: тумани охолодження, що утворюються через конденсацію водяної пари при охолодженні повітря нижче точки роси, та тумани випаровування, що є випарами з теплішої поверхні, що випаровує, у холодне повітря над водоймами й вологими ділянками суші."
 
-#: ../panel-plugin/weather-config.c:1395
+#: ../panel-plugin/weather-config.c:1393
 msgid ""
 "The amount of rain, drizzle, sleet, hail, snow, graupel and other forms of water falling from the sky over a specific period.\n"
 "\n"
@@ -981,7 +939,7 @@ msgid ""
 "<b>Note</b>: While air temperature is an important factor in this calculation, there are other influencing factors that the plugin doesn't know about like the type of snow and ground temperature. Because of that, these rules will only lead to rough estimates and may not represent the real amount of snow."
 msgstr "Кількість дощу, мряки, мокрого снігу, граду, снігу, крупинок та інших форм води, що падає з неба протягом певного періоду\n\nЗначення взяті з met.no є для опадів в рідкому стані.Іншими словами: дощ -, так як очікується сніг (але не мокрий сніг), тоді кількість снігу буде <i>приблизно визначено</i> шляхом множення первісної вартості на коефіцієнт в залежності від температури повітря:\n\n<tt><small>T &lt; -11.1 °C (12 °F) =&gt; 1:12\n-11.1 °C (12 °F) &lt; T &lt;  -4.4 °C (24 °F) =&gt; 1:10\n -4.4 °C (24 °F) &lt; T &lt;  -2.2 °C (28° F) =&gt; 1:7\n -2.2 °C (28 °F) &lt; T &lt;  -0.6 °C (31 °F) =&gt; 1:5\n -0.6 °C (31 °F) &lt; T=&gt; 1:3\n\n</small></tt>Приклад: якщо температура -5 °C (12 °F), тоді густина снігу буде низька, і тоді для підрахунків буде використано відношення дощу до снігу 1:10. Припустимо, що повідомлене значення є 5 мм, тоді вирахуване значення опадів снігу буде 50 мм.\n\n<b>Примітка</b>: Температура є важливим фактором в цих розрахунках, також є інші важливі фактори, про які не знає додаток, наприклад тип снігу, або температура поверхні. Через це ці правила дають тільки грубу оцінку і не можуть показувати справжню кількість снігу."
 
-#: ../panel-plugin/weather-config.c:1571
+#: ../panel-plugin/weather-config.c:1569
 msgid "Labels to d_isplay"
 msgstr "_Мітки для показу"
 
@@ -1115,10 +1073,6 @@ msgstr "\""
 msgid "mm"
 msgstr "мм"
 
-#: ../panel-plugin/weather-icon.c:189
-msgid "No icon theme!"
-msgstr "Немає теми іконок!"
-
 #: ../panel-plugin/weather-search.c:128 ../panel-plugin/weather-search.c:254
 msgid "Results"
 msgstr "Результати"
@@ -1171,15 +1125,6 @@ msgstr "Місце без назви"
 #, c-format
 msgid "\t%s%s%s%s%s\n"
 msgstr "\t%s%s%s%s%s\n"
-
-#: ../panel-plugin/weather-summary.c:248
-#, c-format
-msgid "Error downloading met.no logo image to %s, reason: %s\n"
-msgstr "Помилка отримання малюнка лого met.no до %s, причина: %s\n"
-
-#: ../panel-plugin/weather-summary.c:250
-msgid "unknown"
-msgstr "невідомо"
 
 #: ../panel-plugin/weather-summary.c:394
 msgid "Coordinates\n"
@@ -1398,7 +1343,7 @@ msgid ""
 msgstr "\nХмари\n"
 
 #: ../panel-plugin/weather-summary.c:566
-#: ../panel-plugin/weather-translate.c:119
+#: ../panel-plugin/weather-translate.c:118
 msgid "Fog"
 msgstr "Туман"
 
@@ -1713,26 +1658,26 @@ msgstr "7/8 фази"
 #. Norwegian descriptions.
 #. Symbols 16-19 are used for polar days (unused beginning with API version
 #. 1.2)
-#: ../panel-plugin/weather-translate.c:69
-#: ../panel-plugin/weather-translate.c:122
+#: ../panel-plugin/weather-translate.c:68
+#: ../panel-plugin/weather-translate.c:121
 msgid "Sunny"
 msgstr "Сонячно"
 
-#: ../panel-plugin/weather-translate.c:69
-#: ../panel-plugin/weather-translate.c:122
+#: ../panel-plugin/weather-translate.c:68
+#: ../panel-plugin/weather-translate.c:121
 msgid "Clear"
 msgstr "Ясно"
 
-#: ../panel-plugin/weather-translate.c:70
-#: ../panel-plugin/weather-translate.c:123
+#: ../panel-plugin/weather-translate.c:69
+#: ../panel-plugin/weather-translate.c:122
 msgid "Lightly cloudy"
 msgstr "Легка хмарність"
 
-#: ../panel-plugin/weather-translate.c:71
+#: ../panel-plugin/weather-translate.c:70
 msgid "Partly cloudy"
 msgstr "Часткова хмарність"
 
-#: ../panel-plugin/weather-translate.c:72
+#: ../panel-plugin/weather-translate.c:71
 msgid "Cloudy"
 msgstr "Хмарно"
 
@@ -1743,8 +1688,8 @@ msgstr "Хмарно"
 #. *    precipitation that can vary greatly in intensity over a short
 #. *    amount of time. [...] Precipitation may be locally heavy for
 #. *    short amounts of time."
-#: ../panel-plugin/weather-translate.c:82
-#: ../panel-plugin/weather-translate.c:124
+#: ../panel-plugin/weather-translate.c:81
+#: ../panel-plugin/weather-translate.c:123
 msgid "Rain showers"
 msgstr "Зливи"
 
@@ -1753,22 +1698,22 @@ msgstr "Зливи"
 #. *   "Thunder Showers - Intermittent rain showers with thunder and
 #. lightning, generally
 #. *    short-lived."
-#: ../panel-plugin/weather-translate.c:89
+#: ../panel-plugin/weather-translate.c:88
 msgid "Thunder showers"
 msgstr "Грозові зливи"
 
 #. Analogues to "Rain showers"
-#: ../panel-plugin/weather-translate.c:92
+#: ../panel-plugin/weather-translate.c:91
 msgid "Sleet showers"
 msgstr "Зливи зі снігом"
 
-#: ../panel-plugin/weather-translate.c:93
-#: ../panel-plugin/weather-translate.c:125
+#: ../panel-plugin/weather-translate.c:92
+#: ../panel-plugin/weather-translate.c:124
 msgid "Snow showers"
 msgstr "Снігопади"
 
 #. It's raining, usually incessantly, but not heavily.
-#: ../panel-plugin/weather-translate.c:96
+#: ../panel-plugin/weather-translate.c:95
 msgid "Light rain"
 msgstr "Невеликий дощ"
 
@@ -1777,20 +1722,20 @@ msgstr "Невеликий дощ"
 #. * rain and rain somewhat better. Symbol names indicate this is the way
 #. met.no did it some
 #. * time ago.
-#: ../panel-plugin/weather-translate.c:101
+#: ../panel-plugin/weather-translate.c:100
 msgid "Rain"
 msgstr "Дощ"
 
-#: ../panel-plugin/weather-translate.c:103
+#: ../panel-plugin/weather-translate.c:102
 msgid "Rain with thunder"
 msgstr "Дощ із грозою"
 
 #. Sleet is a mixture of rain and snow, but it's not hail.
-#: ../panel-plugin/weather-translate.c:106
+#: ../panel-plugin/weather-translate.c:105
 msgid "Sleet"
 msgstr "Мокрий сніг"
 
-#: ../panel-plugin/weather-translate.c:108
+#: ../panel-plugin/weather-translate.c:107
 msgid "Snow"
 msgstr "Сніг"
 
@@ -1802,23 +1747,23 @@ msgstr "Сніг"
 #. *    rain. It typically falls in regions of strong upward motion within the
 #. cold sector of an
 #. *    extratropical cyclone."
-#: ../panel-plugin/weather-translate.c:117
+#: ../panel-plugin/weather-translate.c:116
 msgid "Thundersnow"
 msgstr "Сніжна гроза"
 
 #. Same as symbols 1-15, but with thunder
-#: ../panel-plugin/weather-translate.c:128
+#: ../panel-plugin/weather-translate.c:127
 msgid "Sleet showers with thunder"
 msgstr "Зливи зі снігом і з грозами"
 
-#: ../panel-plugin/weather-translate.c:129
+#: ../panel-plugin/weather-translate.c:128
 msgid "Snow showers with thunder"
 msgstr "Снігопади з грозами"
 
-#: ../panel-plugin/weather-translate.c:130
+#: ../panel-plugin/weather-translate.c:129
 msgid "Light rain with thunder"
 msgstr "Невеликий дощ із грозою"
 
-#: ../panel-plugin/weather-translate.c:131
+#: ../panel-plugin/weather-translate.c:130
 msgid "Sleet with thunder"
 msgstr "Злива зі снігом і з грозою"
