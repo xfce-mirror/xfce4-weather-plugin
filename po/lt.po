@@ -11,7 +11,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-19 12:52+0200\n"
+"POT-Creation-Date: 2023-09-29 00:51+0200\n"
 "PO-Revision-Date: 2013-07-03 19:29+0000\n"
 "Last-Translator: Moo, 2023\n"
 "Language-Team: Lithuanian (http://app.transifex.com/xfce/xfce-panel-plugins/language/lt/)\n"
@@ -413,7 +413,7 @@ msgid "<b>Show scrollbox</b>"
 msgstr "<b>Rodyti slankiklį</b>"
 
 #: ../panel-plugin/weather-config.ui.h:90
-#: ../panel-plugin/weather-config.c:1131
+#: ../panel-plugin/weather-config.c:1129
 msgid "Select _font"
 msgstr "Pasirinkti šri_ftą"
 
@@ -507,44 +507,6 @@ msgstr "K"
 msgid "No Data"
 msgstr "Nėra duomenų"
 
-#: ../panel-plugin/weather.c:518
-msgid "Error parsing astronomical data!"
-msgstr "Klaida, analizuojant astronominius duomenis!"
-
-#: ../panel-plugin/weather.c:520
-#, c-format
-msgid ""
-"Download of astronomical data failed with HTTP Status Code %d, Reason "
-"phrase: %s"
-msgstr "Astronominių duomenų atsiuntimas nepavyko su HTTP būsenos kodu %d, Priežasties frazė: %s"
-
-#: ../panel-plugin/weather.c:571
-msgid "Error parsing weather data!"
-msgstr "Klaida, analizuojant orų duomenis!"
-
-#: ../panel-plugin/weather.c:574
-#, c-format
-msgid ""
-"Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
-msgstr "Orų duomenų atsiuntimas nepavyko su HTTP būsenos kodu %d, Priežasties frazė: %s"
-
-#. start receive thread
-#: ../panel-plugin/weather.c:647 ../panel-plugin/weather.c:668
-#: ../panel-plugin/weather-search.c:169 ../panel-plugin/weather-search.c:437
-#, c-format
-msgid "getting %s"
-msgstr "Gaunama %s"
-
-#: ../panel-plugin/weather.c:1200
-#, c-format
-msgid "Error writing cache file %s!"
-msgstr "Klaida, įrašant podėlio failą %s!"
-
-#: ../panel-plugin/weather.c:1660
-#, c-format
-msgid "Unable to open the following url: %s"
-msgstr "Nepavyko atverti šio url: %s"
-
 #: ../panel-plugin/weather.c:1730
 msgid "Short-term forecast data unavailable."
 msgstr "Trumpalaikės orų prognozės duomenys nepasiekiami."
@@ -612,17 +574,13 @@ msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\
 msgid "Cannot update weather data"
 msgstr "Nepavyko atnaujinti duomenų apie orą"
 
-#: ../panel-plugin/weather.c:1965
-msgid "No default icon theme? This should not happen, plugin will crash!"
-msgstr "Nėra numatytosios piktogramų temos? Taip neturėtų nutikti, įskiepis užstrigs!"
-
 #. add refresh button to right click menu, for people who missed
 #. the middle mouse click feature
 #: ../panel-plugin/weather.c:2007
 msgid "Re_fresh"
 msgstr "Įkelti iš _naujo"
 
-#: ../panel-plugin/weather.c:2219
+#: ../panel-plugin/weather.c:2172
 msgid "Show weather conditions and forecasts"
 msgstr "Rodyti orų sąlygas ir prognozes"
 
@@ -811,19 +769,19 @@ msgid ""
 "<b>License:</b> %s"
 msgstr "<b>Katalogas:</b> %s\n\n<b>Autorius:</b> %s\n\n<b>Aprašas:</b> %s\n\n<b>Licencija:</b> %s"
 
-#: ../panel-plugin/weather-config.c:985
+#: ../panel-plugin/weather-config.c:983
 msgid ""
 "A more calendar-like view, with the days in columns and the daytimes "
 "(morning, afternoon, evening, night) in rows."
 msgstr "Labiau kalendorių primenantis rodinys, su dienomis stulpeliuose ir dienos metu (rytas, diena, vakaras, naktis) eilutėse."
 
-#: ../panel-plugin/weather-config.c:989
+#: ../panel-plugin/weather-config.c:987
 msgid ""
 "Shows the forecasts in a table with the daytimes (morning, afternoon, "
 "evening, night) in columns and the days in rows."
 msgstr "Rodo orų prognozę lentelėje, kurioje dienos metas (rytas, diena, vakaras, naktis) yra stulpeliuose, o dienų pavadinimai eilutėse. "
 
-#: ../panel-plugin/weather-config.c:1076
+#: ../panel-plugin/weather-config.c:1074
 #, c-format
 msgid ""
 "Met.no provides forecast data for up to %d days in the future. Choose how "
@@ -833,25 +791,25 @@ msgid ""
 "are unreliable at best ;-)"
 msgstr "Met.no pateikia prognozės duomenis iki %d dienų į priekį. Pasirinkite kiek dienų bus rodoma suvestinės lange, prognozės kortelėje. Lėtesniuose kompiuteriuose, mažesnė reikšmė gali sumažinti delsą, kuri atsiranda, atidarant langą. Tačiau atkreipkite dėmesį, kad net ir geriausiu atveju, didesnė nei trijų dienų prognozė yra nepatikima. ;-)"
 
-#: ../panel-plugin/weather-config.c:1148
+#: ../panel-plugin/weather-config.c:1146
 msgid "Select font"
 msgstr "Pasirinkti šriftą"
 
 #. TRANSLATORS: Fallback value, usually never shown.
-#: ../panel-plugin/weather-config.c:1262
+#: ../panel-plugin/weather-config.c:1260
 msgid ""
 "Choose the value to add to the list below. Values can be added more than "
 "once."
 msgstr "Pasirinkite, į žemiau esantį sąrašą norimas pridėti, reikšmes. Reikšmės gali būti pridedamos daugiau nei vieną kartą."
 
-#: ../panel-plugin/weather-config.c:1271
+#: ../panel-plugin/weather-config.c:1269
 msgid ""
 "Air temperature, sometimes referred to as dry-bulb temperature. Measured by "
 "a thermometer that is freely exposed to the air, yet shielded from radiation"
 " and moisture."
 msgstr "Oro temperatūra, kartais vadinama, sauso termometro temperatūra. Yra matuojama, naudojant termometrą, kuris yra laisvai atskleistas orui, bet užtvertas nuo radiacijos ir drėgmės."
 
-#: ../panel-plugin/weather-config.c:1277
+#: ../panel-plugin/weather-config.c:1275
 msgid ""
 "The weight of the air that makes up the atmosphere exerts a pressure on the "
 "surface of the Earth, which is known as atmospheric pressure. To make it "
@@ -862,7 +820,7 @@ msgid ""
 "pressures mean deterioration."
 msgstr "Atmosferą sudarančio oro svoris, kuris Žemės paviršiui sukuria slėgį, taip pat žinomą kaip atmosferos slėgis. Tam, kad skirtigame aukštyje esančioms vietovėms būtų lengviau palyginti reikšmes, atmosferos slėgis yra suderinamas su atitinkamu jūros lygio slėgiu ir yra vadinamas barometriniu slėgiu. Kylantis barometrinis slėgis, įprastai, nurodo oro sąlygų pagerėjimą, o krentantis - pablogėjimą."
 
-#: ../panel-plugin/weather-config.c:1288
+#: ../panel-plugin/weather-config.c:1286
 msgid ""
 "Nowadays wind speed/velocity is measured using an anemometer (Greek "
 "<i>anemos</i>, meaning <i>wind</i>) in 10 m (33 ft) height. Anemometers "
@@ -870,26 +828,26 @@ msgid ""
 "as they are closely related to and can be deduced from each other."
 msgstr "Mūsų dienomis, vėjo greitis yra matuojamas anemometrais (Graikiškai <i>anemos</i>, reiškia <i>vėją</i>), 10 metrų (33 pėdų) aukštyje. Anemometrai, dažniausiai, matuoja arba vėjo greitį, arba slėgį, tačiau gali pateikti abidvi reikšmes, kadangi jos yra artimai susijusios ir gali būti apskaičiuotos viena pagal kitą."
 
-#: ../panel-plugin/weather-config.c:1296
+#: ../panel-plugin/weather-config.c:1294
 msgid ""
 "Invented by Sir Francis Beaufort in 1805, this empirical scale on wind speed"
 " is based on people's observations of specific land or sea conditions, "
 "denoting these conditions with numbers from 0 (calm) to 12 (hurricane)."
 msgstr "1805 metais sero Frensio Boforto empirinė vėjo greičių skalė yra grindžiama žmonių, tam tikrų žemės ar jūros sąlygų, stebėjimais, priskiriant šioms sąlygoms skaičių nuo 0 (ramu) iki 12 (uraganas)."
 
-#: ../panel-plugin/weather-config.c:1302
+#: ../panel-plugin/weather-config.c:1300
 msgid ""
 "This gives the cardinal direction (North, East, South, West) the wind is "
 "coming from."
 msgstr "Tai parodo pagrindines kryptis (Šiaurė, Rytai, Pietūs, Vakarai), iš kurių ateina vėjas. "
 
-#: ../panel-plugin/weather-config.c:1306
+#: ../panel-plugin/weather-config.c:1304
 msgid ""
 "This gives the direction the wind is coming from in azimuth degrees (North ="
 " 0°, East = 90°, South = 180° and West = 270°)."
 msgstr "Tai parodo kryptį, iš kurios ateina vėjas, azimuto laipsniais (Šiaurė = 0°, Rytai = 90°, Pietūs = 180° ir Vakarai = 270°)."
 
-#: ../panel-plugin/weather-config.c:1311
+#: ../panel-plugin/weather-config.c:1309
 msgid ""
 "Humidity is defined as the amount of water vapor in the air and increases "
 "the possibility of precipitation, fog and dew. While absolute humidity is "
@@ -898,21 +856,21 @@ msgid ""
 "pressure."
 msgstr "Drėgnumas yra apibrėžiamas kaip ore esantis vandens garų kiekis. Jis padidina kritulių, rūko ir rasos tikimybę. Kitaip nei absoliutus drėgnumas, kuris yra ore esantis vandens turinys, santykinis drėgnumas (skaičiuojamas %) yra esamo absoliutaus drėgnumo santykis su maksimaliu, tam tikros temperatūros ir slėgio, absoliučiu drėgnumu."
 
-#: ../panel-plugin/weather-config.c:1319
+#: ../panel-plugin/weather-config.c:1317
 msgid ""
 "This is the temperature to which air must be cooled to reach 100% relative humidity, given no change in water content. Reaching the dew point halts the cooling process, as condensation occurs which releases heat into the air. A high dew point increases the possibility of rain and severe thunderstorms. The dew point allows the prediction of dew, frost, fog and minimum overnight temperature, and has influence on the comfort level one experiences.\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no."
 msgstr "Tai yra temperatūra, iki kurios oras privalo atvėsti, kad pasiektų 100% santykinį drėgnumą, nepasikeitus vandens turiniui. Rasos taško pasiekimas pristabdo ataušimo procesą, kadangi atsiranda kondensacija, kuri į orą išskiria šilumą. Aukštas rasos taškas padidina lietaus ir didelės perkūnijos tikimybę. Rasos taškas leidžia nuspėti rasą, speigą, rūką ir žemiausią nakties temperatūrą, ir veikia žmogaus patiriamą komforto lygmenį.\n\n<b>Pastaba:</b> Ši reikšmė yra apskaičiuojama ir nėra pateikiama met.no."
 
-#: ../panel-plugin/weather-config.c:1331
+#: ../panel-plugin/weather-config.c:1329
 msgid ""
 "Also known as <i>felt temperature</i>, <i>effective temperature</i>, or what some weather providers declare as <i>feels like</i>. Human temperature sensation is not only based on air temperature, but also on heat flow, physical activity and individual condition. While being a highly subjective value, apparent temperature can actually be useful for warning about extreme conditions (cold, heat).\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no. You should use a calculation model appropriate for your local climate and personal preferences on the units page."
 msgstr "Taip pat žinoma kaip <i>juntamoji temperatūra</i>, <i>efektyvioji temperatūra</i>, arba kaip kai kurios orų tarnybos skelbia <i>jaučiama kaip</i>. Žmogaus temperatūros jutimas priklauso ne tik nuo oro temperatūros, bet taip pat ir nuo karščio tėkmės, fizinio aktyvumo ir asmeninės būsenos. Jutiminė temperatūra, nors ir yra labai subjektyvi reikšmė, tačiau yra naudinga įspėti apie ekstremalias sąlygas (šaltį, karštį).\n\n<b>Pastaba:</b> Tai yra apskaičiojama reikšmė, ir ji nėra gaunama iš met.no. Matavimo vienetų puslapyje jūs turėtumėte naudoti apskaičiavimo metodą, kuris tinka jūsų vietiniam klimatui ir asmeninėms nuostatoms."
 
-#: ../panel-plugin/weather-config.c:1345
+#: ../panel-plugin/weather-config.c:1343
 msgid ""
 "This gives the low-level cloud cover in percent. According to WMO "
 "definition, low-level clouds can be found at altitudes below 4,000 m (13,000"
@@ -921,7 +879,7 @@ msgid ""
 "particles and snow, when temperatures are cold enough."
 msgstr "Tai pateikia apatinio lygio debesų padengimą, procentais. Pasak PMO (Pasaulinės Meteorologijos Organizacijos) apibrėžimo, apatinio lygio debesis galima rasti žemesniame nei 4000 m (13000 pėdų), arba pusiaujyje 5000 m (16000 pėdų), aukštyje, nors jų pagrindas, dažnai būna žemiau 2000 m (6500 pėdų) aukštyje. Jie, pagrinde, kai yra gana šalta, yra sudaryti iš vandens lašelių, ledo dalelių ir sniego."
 
-#: ../panel-plugin/weather-config.c:1353
+#: ../panel-plugin/weather-config.c:1351
 msgid ""
 "This specifies the mid-level cloud cover in percent. According to WMO "
 "definition, mid-level clouds form in heights of 4,000-8,000 m (13,000-26,000"
@@ -930,7 +888,7 @@ msgid ""
 "temperatures get low enough, ice particles can replace the droplets."
 msgstr "Tai pateikia vidurinio lygio debesų padengimą, procentais. Pasak PMO (Pasaulinės Meteorologijos Organizacijos) apibrėžimo, vidurinio lygio debesys formuojasi 4000-8000 m (13000-26000 pėdų), arba pusiaujyje 5000-10000 m (16000-33000 pėdų), aukštyje. Panašiai kaip ir jų pusbrolius iš apatinio lygio, šiuos debesis daugiausia sudaro vandens lašai. O kai temperatūra nukrenta gana žemai, vandens lašus gali pakeisti ledo dalelės."
 
-#: ../panel-plugin/weather-config.c:1362
+#: ../panel-plugin/weather-config.c:1360
 msgid ""
 "This reports the high-level cloud cover in percent. According to WMO "
 "definition, high-level clouds can be found in altitudes of 8,000 to 15,000 m"
@@ -940,7 +898,7 @@ msgid ""
 "a magnificent array of colors when the sun is low on the horizon."
 msgstr "Tai praneša apie viršutinio lygio debesų padengimą, procentais. Pasak PMO (Pasaulinės Meteorologijos Organizacijos) apibrėžimo, viršutinio lygio debesis gali rasti nuo 8000 iki 15000 m (nuo 26000 iki 49000 pėdų), arba pusiaujyje 10000-18000 m (33000-59000 pėdų), aukštyje, kur temperatūros yra tiek žemos, kad šie debesys pagrinde yra sudaryti iš ledo kristalų. Nors paprastai iš išvaizdos jie atrodo ploni ir balti, tačiau, saulei nusileidus žemai prie horizonto linijos, debesys gali būti matomi įvairiomis spalvomis."
 
-#: ../panel-plugin/weather-config.c:1372
+#: ../panel-plugin/weather-config.c:1370
 msgid ""
 "Cloudiness, or cloud cover, defines the fraction of the sky obscured by "
 "clouds when observed from a given location. Clouds are both carriers of "
@@ -951,7 +909,7 @@ msgid ""
 "that way contribute to the cooling of the planet."
 msgstr "Debesuotumas arba debesų padengimas apibrėžia dangaus dalį, kuri, žiūrint iš nurodytos vietos, yra uždengta debesimis. Debesys perneša kritulius ir reguliuoja, žemės paviršių pasiekiantį, saulės spinduliavimo kiekį. Nors dieną debesys mažina temperatūrą, naktį jie sukuria atvirkštinį efektą, kadangi vandens garai neleidžia ilgųjų bangų spinduliavimui išeiti į kosmosą. Be to, debesys į kosmosą atspindi šviesą ir tokiu būdu prisideda prie planetos ataušimo."
 
-#: ../panel-plugin/weather-config.c:1384
+#: ../panel-plugin/weather-config.c:1382
 msgid ""
 "Fog is a type of low-lying stratus cloud, with the moisture in it often "
 "generated locally such as from a nearby lake, river, ocean, or simply moist "
@@ -961,7 +919,7 @@ msgid ""
 " visibility to less than 1 km (5/8 statute mile)."
 msgstr "Rūkas yra žemai išsidėsčiusių sluoksninių debesų tipas, kurių drėgmė yra sukaupiama jų būvimo vietoje, kaip, pavyzdžiui, šalia ežero, upės, vandenyno ar, tiesiog, drėgnos žemės. Rūkas susiformuoja kai skirtumas tarp temperatūros ir rasos taško yra žemiau 2,5 °C (4 °F), dažniausiai, esant 100% santykiniam drėgnumui. Rūkas, dažniausiai, sukuria kritulius, dulksnos ar labai silpno sniego formoje ir sumažina matomumą iki mažiau nei 1 km (5/8 statutinės mylios)."
 
-#: ../panel-plugin/weather-config.c:1395
+#: ../panel-plugin/weather-config.c:1393
 msgid ""
 "The amount of rain, drizzle, sleet, hail, snow, graupel and other forms of water falling from the sky over a specific period.\n"
 "\n"
@@ -978,7 +936,7 @@ msgid ""
 "<b>Note</b>: While air temperature is an important factor in this calculation, there are other influencing factors that the plugin doesn't know about like the type of snow and ground temperature. Because of that, these rules will only lead to rough estimates and may not represent the real amount of snow."
 msgstr "Lietaus, dulksnos, šlapdribos, krušos, sniego, ledo kruopų ir kitų, per tam tikrą laikotarpį iš dangaus iškrentančių vandens formų, kiekis.\n\nReikšmėse, kurias pateikia met.no, turimas omenyje skystoje būsenoje esančių kritulių, kiekis - kitaip tariant: lietus -, taigi, jeigu yra tikimasi sniego (bet ne šlapdribos), tuomet sniego kiekis bus <i>spėjamas</i>, dauginant pradinę reikšmę iš santykio, priklausomo nuo oro temperatūros:\n\n<tt><small> T &lt; -11.1 °C (12 °F) =&gt; 1:12\n-11.1 °C (12 °F) &lt; T &lt; -4.4 °C (24 °F) =&gt; 1:10\n-4.4 °C (24 °F) &lt; T &lt; -2.2 °C (28° F) =&gt; 1:7\n-2.2 °C (28 °F) &lt; T &lt; -0.6 °C (31 °F) =&gt; 1:5\n-0.6 °C (31 °F) &lt; T =&gt; 1:3\n\n</small></tt>Pavyzdys: Jeigu temperatūra yra -5 °C (12 °F), tuomet sniego tankis bus žemas ir apskaičiavimui bus naudojamas lietaus ir sniego santykis 1:10. Numanant, kad pranešama reikšmė yra 5 mm, galima teigti, kad apskaičiuotas sniego kritulių kiekis bus 50 mm.\n\n<b>Pastaba</b>: Nors šiame apskaičiavime oro temperatūra yra svarbus faktorius, yra ir kitų faktorių, tokių kaip sniego tipas ir žemės temperatūra, apie kuriuos įskiepis nežino. Dėl to, šios taisyklės nurodys tik apytikslius apskaičiavimus ir gali neatspindėti tikrojo sniego kiekio."
 
-#: ../panel-plugin/weather-config.c:1571
+#: ../panel-plugin/weather-config.c:1569
 msgid "Labels to d_isplay"
 msgstr "Rodom_i duomenys"
 
@@ -1112,10 +1070,6 @@ msgstr "in"
 msgid "mm"
 msgstr "mm"
 
-#: ../panel-plugin/weather-icon.c:189
-msgid "No icon theme!"
-msgstr "Nėra piktogramų temos!"
-
 #: ../panel-plugin/weather-search.c:128 ../panel-plugin/weather-search.c:254
 msgid "Results"
 msgstr "Rezultatai"
@@ -1168,15 +1122,6 @@ msgstr "Vieta be pavadinimo"
 #, c-format
 msgid "\t%s%s%s%s%s\n"
 msgstr "\t%s%s%s%s%s\n"
-
-#: ../panel-plugin/weather-summary.c:248
-#, c-format
-msgid "Error downloading met.no logo image to %s, reason: %s\n"
-msgstr "Klaida, atsiunčiant met.no logotipo paveikslą į %s, priežastis: %s\n"
-
-#: ../panel-plugin/weather-summary.c:250
-msgid "unknown"
-msgstr "nežinoma"
 
 #: ../panel-plugin/weather-summary.c:394
 msgid "Coordinates\n"
@@ -1395,7 +1340,7 @@ msgid ""
 msgstr "\nDebesys\n"
 
 #: ../panel-plugin/weather-summary.c:566
-#: ../panel-plugin/weather-translate.c:119
+#: ../panel-plugin/weather-translate.c:118
 msgid "Fog"
 msgstr "Rūkas"
 
@@ -1710,26 +1655,26 @@ msgstr "Delčia (Dylantis mėnulis)"
 #. Norwegian descriptions.
 #. Symbols 16-19 are used for polar days (unused beginning with API version
 #. 1.2)
-#: ../panel-plugin/weather-translate.c:69
-#: ../panel-plugin/weather-translate.c:122
+#: ../panel-plugin/weather-translate.c:68
+#: ../panel-plugin/weather-translate.c:121
 msgid "Sunny"
 msgstr "Saulėta"
 
-#: ../panel-plugin/weather-translate.c:69
-#: ../panel-plugin/weather-translate.c:122
+#: ../panel-plugin/weather-translate.c:68
+#: ../panel-plugin/weather-translate.c:121
 msgid "Clear"
 msgstr "Nedebesuota"
 
-#: ../panel-plugin/weather-translate.c:70
-#: ../panel-plugin/weather-translate.c:123
+#: ../panel-plugin/weather-translate.c:69
+#: ../panel-plugin/weather-translate.c:122
 msgid "Lightly cloudy"
 msgstr "Mažai debesuota"
 
-#: ../panel-plugin/weather-translate.c:71
+#: ../panel-plugin/weather-translate.c:70
 msgid "Partly cloudy"
 msgstr "Debesuota su pragiedruliais"
 
-#: ../panel-plugin/weather-translate.c:72
+#: ../panel-plugin/weather-translate.c:71
 msgid "Cloudy"
 msgstr "Debesuota"
 
@@ -1740,8 +1685,8 @@ msgstr "Debesuota"
 #. *    precipitation that can vary greatly in intensity over a short
 #. *    amount of time. [...] Precipitation may be locally heavy for
 #. *    short amounts of time."
-#: ../panel-plugin/weather-translate.c:82
-#: ../panel-plugin/weather-translate.c:124
+#: ../panel-plugin/weather-translate.c:81
+#: ../panel-plugin/weather-translate.c:123
 msgid "Rain showers"
 msgstr "Trumpalaikiai lietūs"
 
@@ -1750,22 +1695,22 @@ msgstr "Trumpalaikiai lietūs"
 #. *   "Thunder Showers - Intermittent rain showers with thunder and
 #. lightning, generally
 #. *    short-lived."
-#: ../panel-plugin/weather-translate.c:89
+#: ../panel-plugin/weather-translate.c:88
 msgid "Thunder showers"
 msgstr "Trumpalaikė perkūnija"
 
 #. Analogues to "Rain showers"
-#: ../panel-plugin/weather-translate.c:92
+#: ../panel-plugin/weather-translate.c:91
 msgid "Sleet showers"
 msgstr "Trumpalaikė šlapdriba"
 
-#: ../panel-plugin/weather-translate.c:93
-#: ../panel-plugin/weather-translate.c:125
+#: ../panel-plugin/weather-translate.c:92
+#: ../panel-plugin/weather-translate.c:124
 msgid "Snow showers"
 msgstr "Trumpalaikis sniegas"
 
 #. It's raining, usually incessantly, but not heavily.
-#: ../panel-plugin/weather-translate.c:96
+#: ../panel-plugin/weather-translate.c:95
 msgid "Light rain"
 msgstr "Lengvas lietus"
 
@@ -1774,20 +1719,20 @@ msgstr "Lengvas lietus"
 #. * rain and rain somewhat better. Symbol names indicate this is the way
 #. met.no did it some
 #. * time ago.
-#: ../panel-plugin/weather-translate.c:101
+#: ../panel-plugin/weather-translate.c:100
 msgid "Rain"
 msgstr "Lietus"
 
-#: ../panel-plugin/weather-translate.c:103
+#: ../panel-plugin/weather-translate.c:102
 msgid "Rain with thunder"
 msgstr "Lietus su perkūnija"
 
 #. Sleet is a mixture of rain and snow, but it's not hail.
-#: ../panel-plugin/weather-translate.c:106
+#: ../panel-plugin/weather-translate.c:105
 msgid "Sleet"
 msgstr "Šlapdriba"
 
-#: ../panel-plugin/weather-translate.c:108
+#: ../panel-plugin/weather-translate.c:107
 msgid "Snow"
 msgstr "Sniegas"
 
@@ -1799,23 +1744,23 @@ msgstr "Sniegas"
 #. *    rain. It typically falls in regions of strong upward motion within the
 #. cold sector of an
 #. *    extratropical cyclone."
-#: ../panel-plugin/weather-translate.c:117
+#: ../panel-plugin/weather-translate.c:116
 msgid "Thundersnow"
 msgstr "Sniegas su perkūnija"
 
 #. Same as symbols 1-15, but with thunder
-#: ../panel-plugin/weather-translate.c:128
+#: ../panel-plugin/weather-translate.c:127
 msgid "Sleet showers with thunder"
 msgstr "Trumpalaikė šlapdriba su perkūnija"
 
-#: ../panel-plugin/weather-translate.c:129
+#: ../panel-plugin/weather-translate.c:128
 msgid "Snow showers with thunder"
 msgstr "Trumpalaikis sniegas su perkūnija"
 
-#: ../panel-plugin/weather-translate.c:130
+#: ../panel-plugin/weather-translate.c:129
 msgid "Light rain with thunder"
 msgstr "Lengvas lietus su perkūnija"
 
-#: ../panel-plugin/weather-translate.c:131
+#: ../panel-plugin/weather-translate.c:130
 msgid "Sleet with thunder"
 msgstr "Šlapdriba su perkūnija"
