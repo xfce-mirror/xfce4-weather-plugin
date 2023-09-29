@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-06-19 12:52+0200\n"
+"POT-Creation-Date: 2023-09-29 00:51+0200\n"
 "PO-Revision-Date: 2013-07-03 19:29+0000\n"
 "Last-Translator: Emanuele Petriglia <transifex@emanuelepetriglia.com>, 2020-2021,2023\n"
 "Language-Team: Italian (http://app.transifex.com/xfce/xfce-panel-plugins/language/it/)\n"
@@ -415,7 +415,7 @@ msgid "<b>Show scrollbox</b>"
 msgstr "<b>Mostra riquadro a scorrimento</b>"
 
 #: ../panel-plugin/weather-config.ui.h:90
-#: ../panel-plugin/weather-config.c:1131
+#: ../panel-plugin/weather-config.c:1129
 msgid "Select _font"
 msgstr "_Seleziona carattere"
 
@@ -509,44 +509,6 @@ msgstr "R"
 msgid "No Data"
 msgstr "Nessun dato"
 
-#: ../panel-plugin/weather.c:518
-msgid "Error parsing astronomical data!"
-msgstr "Impossibile elaborare i dati astronomici!"
-
-#: ../panel-plugin/weather.c:520
-#, c-format
-msgid ""
-"Download of astronomical data failed with HTTP Status Code %d, Reason "
-"phrase: %s"
-msgstr "Lo scaricamento dei dati astronomici non è riuscito con il codice di stato HTTP %d, motivo: %s"
-
-#: ../panel-plugin/weather.c:571
-msgid "Error parsing weather data!"
-msgstr "Impossibile elaborare i dati meteorologici!"
-
-#: ../panel-plugin/weather.c:574
-#, c-format
-msgid ""
-"Download of weather data failed with HTTP Status Code %d, Reason phrase: %s"
-msgstr "Lo scaricamento dei dati meteorologici non è riuscito con il codice di stato HTTP %d, motivo: %s"
-
-#. start receive thread
-#: ../panel-plugin/weather.c:647 ../panel-plugin/weather.c:668
-#: ../panel-plugin/weather-search.c:169 ../panel-plugin/weather-search.c:437
-#, c-format
-msgid "getting %s"
-msgstr "Recupero di %s"
-
-#: ../panel-plugin/weather.c:1200
-#, c-format
-msgid "Error writing cache file %s!"
-msgstr "Impossibile scrivere il file di cache %s!"
-
-#: ../panel-plugin/weather.c:1660
-#, c-format
-msgid "Unable to open the following url: %s"
-msgstr "Impossibile aprire il seguente URL: %s"
-
 #: ../panel-plugin/weather.c:1730
 msgid "Short-term forecast data unavailable."
 msgstr "Dati delle previsioni a breve termine non disponibili."
@@ -614,17 +576,13 @@ msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\
 msgid "Cannot update weather data"
 msgstr "Impossibile aggiornare i dati meteorologici"
 
-#: ../panel-plugin/weather.c:1965
-msgid "No default icon theme? This should not happen, plugin will crash!"
-msgstr "Nessun tema predefinito? Questo non dovrebbe accadere, il componente aggiuntivo si arresterà in modo anomalo!"
-
 #. add refresh button to right click menu, for people who missed
 #. the middle mouse click feature
 #: ../panel-plugin/weather.c:2007
 msgid "Re_fresh"
 msgstr "A_ggiorna"
 
-#: ../panel-plugin/weather.c:2219
+#: ../panel-plugin/weather.c:2172
 msgid "Show weather conditions and forecasts"
 msgstr "Mostra le condizioni meteo e le previsioni"
 
@@ -813,19 +771,19 @@ msgid ""
 "<b>License:</b> %s"
 msgstr "<b>Cartella:</b> %s\n\n<b>Autore:</b> %s\n\n<b>Descrizione:</b> %s\n\n<b>Licenza:</b> %s"
 
-#: ../panel-plugin/weather-config.c:985
+#: ../panel-plugin/weather-config.c:983
 msgid ""
 "A more calendar-like view, with the days in columns and the daytimes "
 "(morning, afternoon, evening, night) in rows."
 msgstr "Una vista più simile a un calendario, con i giorni in colonna e le fasi del giorno (mattina, pomeriggio, sera, notte) sulle righe."
 
-#: ../panel-plugin/weather-config.c:989
+#: ../panel-plugin/weather-config.c:987
 msgid ""
 "Shows the forecasts in a table with the daytimes (morning, afternoon, "
 "evening, night) in columns and the days in rows."
 msgstr "Mostra le previsioni in una tabella con le fasi del giorno (mattina, pomeriggio, sera, notte) nelle colonne e in giorni nelle righe."
 
-#: ../panel-plugin/weather-config.c:1076
+#: ../panel-plugin/weather-config.c:1074
 #, c-format
 msgid ""
 "Met.no provides forecast data for up to %d days in the future. Choose how "
@@ -835,25 +793,25 @@ msgid ""
 "are unreliable at best ;-)"
 msgstr "Met.no fornisce le previsioni fino a %d giorni. Selezionare il numero di giorni da mostrare nella scheda delle previsioni nella finestra del sommario. Nei computer più lenti, un numero piccolo più ridurre il lag nell'apertura della finestra; comunque le previsioni per più di tre giorni sono praticamente inaffidabili."
 
-#: ../panel-plugin/weather-config.c:1148
+#: ../panel-plugin/weather-config.c:1146
 msgid "Select font"
 msgstr "Selezione carattere"
 
 #. TRANSLATORS: Fallback value, usually never shown.
-#: ../panel-plugin/weather-config.c:1262
+#: ../panel-plugin/weather-config.c:1260
 msgid ""
 "Choose the value to add to the list below. Values can be added more than "
 "once."
 msgstr "Selezionare il valore da aggiungere all'elenco sottostante; i valori possono essere aggiunti più di una volta."
 
-#: ../panel-plugin/weather-config.c:1271
+#: ../panel-plugin/weather-config.c:1269
 msgid ""
 "Air temperature, sometimes referred to as dry-bulb temperature. Measured by "
 "a thermometer that is freely exposed to the air, yet shielded from radiation"
 " and moisture."
 msgstr "Temperatura dell'aria, spesso identificata come temperatura di bulbo asciutto. Misurata con un termometro esposto all'aria, ma schermato dalle radiazioni e dall'umidità."
 
-#: ../panel-plugin/weather-config.c:1277
+#: ../panel-plugin/weather-config.c:1275
 msgid ""
 "The weight of the air that makes up the atmosphere exerts a pressure on the "
 "surface of the Earth, which is known as atmospheric pressure. To make it "
@@ -864,7 +822,7 @@ msgid ""
 "pressures mean deterioration."
 msgstr "L'aria che compone l'atmosfera esercita una pressione sulla superficie della terra, nota come pressione atmosferica. Per renderne più semplice il confronto con altri valori per località ad altitudine diversa, la pressione atmosferica è corretta al valore equivalente al livello del mare e viene chiamata pressione barometrica. Pressione barometrica in crescita indica in generale un miglioramento delle condizioni atmosferiche, mentre una diminuzione indica un peggioramento."
 
-#: ../panel-plugin/weather-config.c:1288
+#: ../panel-plugin/weather-config.c:1286
 msgid ""
 "Nowadays wind speed/velocity is measured using an anemometer (Greek "
 "<i>anemos</i>, meaning <i>wind</i>) in 10 m (33 ft) height. Anemometers "
@@ -872,26 +830,26 @@ msgid ""
 "as they are closely related to and can be deduced from each other."
 msgstr "Oggigiorno la velocità del vento viene misurata con l'anemometro (dal greco <i>anemos</i> che significa <i>vento</i>) a 10m (33 piedi) di altezza. Gli anemometri generalmente misurano o velocità del vento o pressione del vento, ma forniscono implicitamente entrambi i valori dato che sono correlati e quindi deducibili uno dall'altro."
 
-#: ../panel-plugin/weather-config.c:1296
+#: ../panel-plugin/weather-config.c:1294
 msgid ""
 "Invented by Sir Francis Beaufort in 1805, this empirical scale on wind speed"
 " is based on people's observations of specific land or sea conditions, "
 "denoting these conditions with numbers from 0 (calm) to 12 (hurricane)."
 msgstr "Inventata nel 1805 da Sir Francis Beaufort, questa scala empirica relativa alla velocità del vento è basata sulle osservazioni dirette di specifiche condizioni al suolo o del mare, assegnando ad esse un numero variabile da 0 (calmo) a 12 (uragano)."
 
-#: ../panel-plugin/weather-config.c:1302
+#: ../panel-plugin/weather-config.c:1300
 msgid ""
 "This gives the cardinal direction (North, East, South, West) the wind is "
 "coming from."
 msgstr "Questa etichetta fornisce la direzione cardinale (Nord, Est, Sud, Ovest) da cui proviene il vento."
 
-#: ../panel-plugin/weather-config.c:1306
+#: ../panel-plugin/weather-config.c:1304
 msgid ""
 "This gives the direction the wind is coming from in azimuth degrees (North ="
 " 0°, East = 90°, South = 180° and West = 270°)."
 msgstr "Questa etichetta fornisce l'angolo azimutale (Nord = 0°, Est = 90°, Sud = 180° e Ovest = 270°) della direzione da cui proviene il vento."
 
-#: ../panel-plugin/weather-config.c:1311
+#: ../panel-plugin/weather-config.c:1309
 msgid ""
 "Humidity is defined as the amount of water vapor in the air and increases "
 "the possibility of precipitation, fog and dew. While absolute humidity is "
@@ -900,21 +858,21 @@ msgid ""
 "pressure."
 msgstr "L'umidità è definita come la quantità di vapore d'acqua nell'aria e aumenta la probabilità di precipitazione, nebbia e condensa. Mentre l'umidità rappresenta la quantità d'acqua nell'aria, l'umidità relativa fornisce (in percentuale) l'attuale umidità assoluta rapportata al massimo possibile per quell'aria a quella temperatura e umidità."
 
-#: ../panel-plugin/weather-config.c:1319
+#: ../panel-plugin/weather-config.c:1317
 msgid ""
 "This is the temperature to which air must be cooled to reach 100% relative humidity, given no change in water content. Reaching the dew point halts the cooling process, as condensation occurs which releases heat into the air. A high dew point increases the possibility of rain and severe thunderstorms. The dew point allows the prediction of dew, frost, fog and minimum overnight temperature, and has influence on the comfort level one experiences.\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no."
 msgstr "Questa è la temperatura a cui l'aria deve essere raffreddata per raggiungere l'umidità relativa del 100%, fermo restando il contenuto d'acqua. Al raggiungimento del punto di rugiada il processo di raffreddamento viene interrotto mentre avviene la condensa che rilascia calore nell'aria. Un elevato punto di rugiada aumenta la probabilità di pioggia e di forti temporali. Il punto di rugiada permette di prevedere la rugiada, il gelo, la nebbia e la temperatura minima notturna e influisce sul livello di comfort percepito.\n\n<b>Nota:</b> questo è un valore calcolato e non è fornito da met.no."
 
-#: ../panel-plugin/weather-config.c:1331
+#: ../panel-plugin/weather-config.c:1329
 msgid ""
 "Also known as <i>felt temperature</i>, <i>effective temperature</i>, or what some weather providers declare as <i>feels like</i>. Human temperature sensation is not only based on air temperature, but also on heat flow, physical activity and individual condition. While being a highly subjective value, apparent temperature can actually be useful for warning about extreme conditions (cold, heat).\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no. You should use a calculation model appropriate for your local climate and personal preferences on the units page."
 msgstr "Nota anche come <i>temperatura percepita</i>, <i>temperatura effettiva</i> o come dicono alcuni meteorologi <i>ci si sente come a</i>. La percezione della temperatura nell'uomo non dipende solo dalla temperatura dell'aria, ma anche dal flusso di calore, dall'attività fisica e dalla condizione individuale. Pur essendo un valore molto soggettivo, la temperatura apparente può essere utile per avvisare il verificarsi di condizioni estreme (freddo, caldo).\n\n<b>Nota:</b> questo valore è calcolato e non è fornito da met.no. È possibile selezionare un modello di calcolo più appropriato per la propria zona e per le proprie preferenza nella scheda delle unità."
 
-#: ../panel-plugin/weather-config.c:1345
+#: ../panel-plugin/weather-config.c:1343
 msgid ""
 "This gives the low-level cloud cover in percent. According to WMO "
 "definition, low-level clouds can be found at altitudes below 4,000 m (13,000"
@@ -923,7 +881,7 @@ msgid ""
 "particles and snow, when temperatures are cold enough."
 msgstr "Questo valore indica la copertura percentuale di nuvole basse. Secondo la definizione del WMO, le nuvole basse si trovano ad altitudini inferiori a  4.000 m (13.000 ft), o 5.000 m (16.000 ft) all'equatore, anche se la base spesso si trova al di sotto dei 2.000 m (6.500 ft). Sono composte principalmente da gocce d'acqua o da particelle ghiacciate e neve quando la temperatura è sufficientemente bassa."
 
-#: ../panel-plugin/weather-config.c:1353
+#: ../panel-plugin/weather-config.c:1351
 msgid ""
 "This specifies the mid-level cloud cover in percent. According to WMO "
 "definition, mid-level clouds form in heights of 4,000-8,000 m (13,000-26,000"
@@ -932,7 +890,7 @@ msgid ""
 "temperatures get low enough, ice particles can replace the droplets."
 msgstr "Questo valore indica la copertura percentuale di nuvole medie. Secondo la definizione del WMO, le nuvole medie si formano ad altezze di 4.000-8.000 m (13.000-26.000 ft), o 5.000-10.000 m (16.000-33.000 ft) all'equatore. Come le nuvole basse, sono principalmente composte da gocce d'acqua. Quando la temperatura è sufficientemente bassa, le particelle ghiacciate sostituiscono le gocce."
 
-#: ../panel-plugin/weather-config.c:1362
+#: ../panel-plugin/weather-config.c:1360
 msgid ""
 "This reports the high-level cloud cover in percent. According to WMO "
 "definition, high-level clouds can be found in altitudes of 8,000 to 15,000 m"
@@ -942,7 +900,7 @@ msgid ""
 "a magnificent array of colors when the sun is low on the horizon."
 msgstr "Questo valore indica la copertura percentuale di nuvole alte. Secondo la definizione del WMO, le nuvole alte si trovano ad altitudini tra 8.000 e 15.000 m (da 26.000 a 49.000 ft), o 10.000-18.000 m (33.000-59.000 ft) all'equatore dove le temperature raggiungono valori così bassi che sono principalmente composte di cristalli di ghiaccio. In genere appaiono sottili e bianche ma possono dar vita a una serie di colori spettacolari quando il sole è basso all'orizzonte."
 
-#: ../panel-plugin/weather-config.c:1372
+#: ../panel-plugin/weather-config.c:1370
 msgid ""
 "Cloudiness, or cloud cover, defines the fraction of the sky obscured by "
 "clouds when observed from a given location. Clouds are both carriers of "
@@ -953,7 +911,7 @@ msgid ""
 "that way contribute to the cooling of the planet."
 msgstr "La nuvolosità, o copertura nuvolosa, definisce la frazione del cielo oscurata dalle nuvole quando osservato da una certa posizione. Le nuvolo sono sia portatrici di pioggia che regolatori della quantità di radiazioni solari che raggiungono la superficie: se di giorno fanno diminuire la temperatura, di notte hanno l'effetto opposto, poiché il vapore d'acqua inibisce il ritorno nello spazio delle radiazioni a onda lunga. In aggiunta, le nuvole riflettono la luce nello spazio e in questo modo contribuiscono al raffreddamento del pianeta."
 
-#: ../panel-plugin/weather-config.c:1384
+#: ../panel-plugin/weather-config.c:1382
 msgid ""
 "Fog is a type of low-lying stratus cloud, with the moisture in it often "
 "generated locally such as from a nearby lake, river, ocean, or simply moist "
@@ -963,7 +921,7 @@ msgid ""
 " visibility to less than 1 km (5/8 statute mile)."
 msgstr "La nebbia è una tipo di nuvola stratificata che staziona in basso; l'umidità in essa è spesso generata localmente da un elemento nelle vicinanze come un lago, un fiume l'oceano o la terra umida. La nebbia si forma quando la differenza tra temperatura e punto di rugiada è inferiore a 2,5°C (4°F), generalmente per un valore pari al 100% dell'umidità relativa. La nebbia produce di solito precipitazioni nella forma di pioggerella o neve molto leggera e riduce la visibilità a meno di 1km (5/8 miglio)."
 
-#: ../panel-plugin/weather-config.c:1395
+#: ../panel-plugin/weather-config.c:1393
 msgid ""
 "The amount of rain, drizzle, sleet, hail, snow, graupel and other forms of water falling from the sky over a specific period.\n"
 "\n"
@@ -980,7 +938,7 @@ msgid ""
 "<b>Note</b>: While air temperature is an important factor in this calculation, there are other influencing factors that the plugin doesn't know about like the type of snow and ground temperature. Because of that, these rules will only lead to rough estimates and may not represent the real amount of snow."
 msgstr "La quantità di pioggia, nevischio, grandine, neve e qualsiasi altra forma di acqua che cade dal cielo in un certo periodo.\n\nI valori forniti da met.no sono quelli delle precipitazioni allo stato liquido o, in altre parole, di pioggia; quindi se è attesa la neve (ma non nevischio), allora la quantità di neve verrà <i>stimata</i> moltiplicando il valore originale per una frazione funzione della temperatura dell'aria:\n\n<tt><small> T &lt; -11,1 °C (12 °F) =&gt; 1:12\n-11,1 °C (12 °F) &lt; T &lt;  -4,4 °C (24 °F) =&gt; 1:10\n -4,4 °C (24 °F) &lt; T &lt;  -2,2 °C (28° F) =&gt; 1:7\n -2,2 °C (28 °F) &lt; T &lt;  -0,6 °C (31 °F) =&gt; 1:5\n -0,6 °C (31 °F) &lt; T =&gt; 1:3\n\n</small></tt>Esempio: se la temperatura è di -5°C (12°F), la densità della neve sarà bassa e verrà utilizzato un rapporto di 1:10. Se il valore fornito è di 5mm, allora la quantità di neve calcolata sarà di 50mm.\n\n<b>Nota:</b> anche se la temperatura dell'aria è un importante fattore nel calcolo, vi sono altri parametri che il plugin non valuta quali il tipo di neve e la temperatura al suolo. Ne deriva queste regole forniranno solo una stima e non rappresenteranno l'effettiva quantità di neve."
 
-#: ../panel-plugin/weather-config.c:1571
+#: ../panel-plugin/weather-config.c:1569
 msgid "Labels to d_isplay"
 msgstr "_Grandezze da visualizzare"
 
@@ -1114,10 +1072,6 @@ msgstr "in"
 msgid "mm"
 msgstr "mm"
 
-#: ../panel-plugin/weather-icon.c:189
-msgid "No icon theme!"
-msgstr "Nessun tema delle icone!"
-
 #: ../panel-plugin/weather-search.c:128 ../panel-plugin/weather-search.c:254
 msgid "Results"
 msgstr "Risultati"
@@ -1170,15 +1124,6 @@ msgstr "Luogo sconosciuto"
 #, c-format
 msgid "\t%s%s%s%s%s\n"
 msgstr "\t%s%s%s%s%s\n"
-
-#: ../panel-plugin/weather-summary.c:248
-#, c-format
-msgid "Error downloading met.no logo image to %s, reason: %s\n"
-msgstr "Impossibile scaricare il logo di met.no in %s, motivo: %s\n"
-
-#: ../panel-plugin/weather-summary.c:250
-msgid "unknown"
-msgstr "sconosciuto"
 
 #: ../panel-plugin/weather-summary.c:394
 msgid "Coordinates\n"
@@ -1397,7 +1342,7 @@ msgid ""
 msgstr "\nNuvole\n"
 
 #: ../panel-plugin/weather-summary.c:566
-#: ../panel-plugin/weather-translate.c:119
+#: ../panel-plugin/weather-translate.c:118
 msgid "Fog"
 msgstr "Nebbia"
 
@@ -1712,26 +1657,26 @@ msgstr "Luna calante"
 #. Norwegian descriptions.
 #. Symbols 16-19 are used for polar days (unused beginning with API version
 #. 1.2)
-#: ../panel-plugin/weather-translate.c:69
-#: ../panel-plugin/weather-translate.c:122
+#: ../panel-plugin/weather-translate.c:68
+#: ../panel-plugin/weather-translate.c:121
 msgid "Sunny"
 msgstr "Soleggiato"
 
-#: ../panel-plugin/weather-translate.c:69
-#: ../panel-plugin/weather-translate.c:122
+#: ../panel-plugin/weather-translate.c:68
+#: ../panel-plugin/weather-translate.c:121
 msgid "Clear"
 msgstr "Sereno"
 
-#: ../panel-plugin/weather-translate.c:70
-#: ../panel-plugin/weather-translate.c:123
+#: ../panel-plugin/weather-translate.c:69
+#: ../panel-plugin/weather-translate.c:122
 msgid "Lightly cloudy"
 msgstr "Poco nuvoloso"
 
-#: ../panel-plugin/weather-translate.c:71
+#: ../panel-plugin/weather-translate.c:70
 msgid "Partly cloudy"
 msgstr "Parzialmente nuvoloso"
 
-#: ../panel-plugin/weather-translate.c:72
+#: ../panel-plugin/weather-translate.c:71
 msgid "Cloudy"
 msgstr "Nuvoloso"
 
@@ -1742,8 +1687,8 @@ msgstr "Nuvoloso"
 #. *    precipitation that can vary greatly in intensity over a short
 #. *    amount of time. [...] Precipitation may be locally heavy for
 #. *    short amounts of time."
-#: ../panel-plugin/weather-translate.c:82
-#: ../panel-plugin/weather-translate.c:124
+#: ../panel-plugin/weather-translate.c:81
+#: ../panel-plugin/weather-translate.c:123
 msgid "Rain showers"
 msgstr "Rovesci di pioggia"
 
@@ -1752,22 +1697,22 @@ msgstr "Rovesci di pioggia"
 #. *   "Thunder Showers - Intermittent rain showers with thunder and
 #. lightning, generally
 #. *    short-lived."
-#: ../panel-plugin/weather-translate.c:89
+#: ../panel-plugin/weather-translate.c:88
 msgid "Thunder showers"
 msgstr "Rovesci temporaleschi"
 
 #. Analogues to "Rain showers"
-#: ../panel-plugin/weather-translate.c:92
+#: ../panel-plugin/weather-translate.c:91
 msgid "Sleet showers"
 msgstr "Rovesci nevosi"
 
-#: ../panel-plugin/weather-translate.c:93
-#: ../panel-plugin/weather-translate.c:125
+#: ../panel-plugin/weather-translate.c:92
+#: ../panel-plugin/weather-translate.c:124
 msgid "Snow showers"
 msgstr "Rovesci a carattere nevoso"
 
 #. It's raining, usually incessantly, but not heavily.
-#: ../panel-plugin/weather-translate.c:96
+#: ../panel-plugin/weather-translate.c:95
 msgid "Light rain"
 msgstr "Pioggia leggera"
 
@@ -1776,20 +1721,20 @@ msgstr "Pioggia leggera"
 #. * rain and rain somewhat better. Symbol names indicate this is the way
 #. met.no did it some
 #. * time ago.
-#: ../panel-plugin/weather-translate.c:101
+#: ../panel-plugin/weather-translate.c:100
 msgid "Rain"
 msgstr "Pioggia"
 
-#: ../panel-plugin/weather-translate.c:103
+#: ../panel-plugin/weather-translate.c:102
 msgid "Rain with thunder"
 msgstr "Pioggia e tuoni"
 
 #. Sleet is a mixture of rain and snow, but it's not hail.
-#: ../panel-plugin/weather-translate.c:106
+#: ../panel-plugin/weather-translate.c:105
 msgid "Sleet"
 msgstr "Rovesci"
 
-#: ../panel-plugin/weather-translate.c:108
+#: ../panel-plugin/weather-translate.c:107
 msgid "Snow"
 msgstr "Neve"
 
@@ -1801,23 +1746,23 @@ msgstr "Neve"
 #. *    rain. It typically falls in regions of strong upward motion within the
 #. cold sector of an
 #. *    extratropical cyclone."
-#: ../panel-plugin/weather-translate.c:117
+#: ../panel-plugin/weather-translate.c:116
 msgid "Thundersnow"
 msgstr "Tuoni e neve"
 
 #. Same as symbols 1-15, but with thunder
-#: ../panel-plugin/weather-translate.c:128
+#: ../panel-plugin/weather-translate.c:127
 msgid "Sleet showers with thunder"
 msgstr "Rovesci a carattere nevoso con tuoni"
 
-#: ../panel-plugin/weather-translate.c:129
+#: ../panel-plugin/weather-translate.c:128
 msgid "Snow showers with thunder"
 msgstr "Rovesci nevosi con tuoni"
 
-#: ../panel-plugin/weather-translate.c:130
+#: ../panel-plugin/weather-translate.c:129
 msgid "Light rain with thunder"
 msgstr "Pioggia leggera e tuoni"
 
-#: ../panel-plugin/weather-translate.c:131
+#: ../panel-plugin/weather-translate.c:130
 msgid "Sleet with thunder"
 msgstr "Nevischio e tuoni"
