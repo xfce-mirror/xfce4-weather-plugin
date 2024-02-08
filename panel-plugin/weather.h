@@ -94,6 +94,13 @@ typedef struct {
 } update_info;
 
 typedef struct {
+    guint sun_msg_parsed;
+    guint moon_msg_parsed;
+    gboolean sun_msg_parse_error;
+    gboolean moon_msg_parse_error;
+} parse_info;
+
+typedef struct {
     XfcePanelPlugin *plugin;
     XfconfChannel *channel;
     const gchar *property_base;
@@ -130,6 +137,7 @@ typedef struct {
     update_info *astro_update;
     update_info *weather_update;
     update_info *conditions_update;
+    parse_info *msg_parse;
     time_t next_wakeup;
     gchar *next_wakeup_reason;
     guint update_timer;
