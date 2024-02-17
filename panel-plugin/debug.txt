@@ -1,0 +1,67 @@
+
+
+(gdb) bt
+#0  __pthread_kill_implementation (threadid=<optimized out>, signo=signo@entry=6, no_tid=no_tid@entry=0) at pthread_kill.c:44
+#1  0x00007fd1976938a3 in __pthread_kill_internal (signo=6, threadid=<optimized out>) at pthread_kill.c:78
+#2  0x00007fd1976418ee in __GI_raise (sig=sig@entry=6) at ../sysdeps/posix/raise.c:26
+#3  0x00007fd1976298ff in __GI_abort () at abort.c:79
+#4  0x00007fd19762a7d0 in __libc_message (fmt=fmt@entry=0x7fd1977a756a "%s\n") at ../sysdeps/posix/libc_fatal.c:150
+#5  0x00007fd19769d7a5 in malloc_printerr (str=str@entry=0x7fd1977aa4e0 "free(): double free detected in tcache 2") at malloc.c:5765
+#6  0x00007fd19769fc6f in _int_free (av=0x7fd1977dbac0 <main_arena>, p=p@entry=0x557213b44d60, have_lock=have_lock@entry=0) at malloc.c:4534
+#7  0x00007fd1976a23de in __GI___libc_free (mem=mem@entry=0x557213b44d70) at malloc.c:3391
+#8  0x00007fd197843865 in g_free (mem=0x557213b44d70) at ../glib/gmem.c:238
+#9  0x00007fd1962dab22 in xml_astro_free (astro=0x5572142c25f0) at weather-parsers.c:1299
+#10 0x00007fd1962db399 in parse_astrodata_moon (cur_node=cur_node@entry=0x557213a20a20, astrodata=0x5572136c1e90) at weather-parsers.c:885
+#11 0x00007fd1962d03df in cb_astro_update_moon (session=<optimized out>, msg=<optimized out>, user_data=0x5572136219f0) at weather.c:540
+#12 0x00007fd188bc061e in soup_session_process_queue_item (session=<optimized out>, item=<optimized out>, should_cleanup=<optimized out>, loop=<optimized out>)
+    at ../libsoup/soup-session.c:2047
+#13 0x00007fd188bc0b8e in soup_session_process_queue_item (loop=1, should_cleanup=0x7ffea2fd7404, item=0x5572141e3890, session=0x55721369e990) at ../libsoup/soup-session.c:1974
+#14 async_run_queue (session=0x55721369e990) at ../libsoup/soup-session.c:2087
+#15 0x00007fd188bc0ce2 in idle_run_queue (user_data=user_data@entry=0x55721377d6e0) at ../libsoup/soup-session.c:2114
+#16 0x00007fd19783d78d in g_idle_dispatch (source=0x557214077540, callback=0x7fd188bc0cc0 <idle_run_queue>, user_data=0x55721377d6e0) at ../glib/gmain.c:6282
+#17 0x00007fd197840e5c in g_main_dispatch (context=0x557213581850) at ../glib/gmain.c:3476
+#18 g_main_context_dispatch_unlocked (context=0x557213581850) at ../glib/gmain.c:4284
+#19 0x00007fd19789bf18 in g_main_context_iterate_unlocked.isra.0 (context=0x557213581850, block=block@entry=1, dispatch=dispatch@entry=1, self=<optimized out>)
+    at ../glib/gmain.c:4349
+#20 0x00007fd197842447 in g_main_loop_run (loop=0x5572137786f0) at ../glib/gmain.c:4551
+#21 0x00007fd197e06b65 in gtk_main () at ../gtk/gtkmain.c:1329
+#22 0x0000557211bddeec in main (argc=<optimized out>, argv=<optimized out>) at /usr/src/debug/xfce4-panel-4.18.5-1.fc39.x86_64/wrapper/main.c:435
+
+
+
+Thread 1 "panel-9-weather" received signal SIGABRT, Aborted.
+0x00007fd485a93834 in __pthread_kill_implementation () from /lib64/libc.so.6
+(gdb) bt
+#0  0x00007fd485a93834 in __pthread_kill_implementation () at /lib64/libc.so.6
+#1  0x00007fd485a418ee in raise () at /lib64/libc.so.6
+#2  0x00007fd485a298ff in abort () at /lib64/libc.so.6
+#3  0x00007fd485a2a7d0 in __libc_message.cold () at /lib64/libc.so.6
+#4  0x00007fd485a9d7a5 in malloc_printerr () at /lib64/libc.so.6
+#5  0x00007fd485a9fc6f in _int_free () at /lib64/libc.so.6
+#6  0x00007fd485aa23de in free () at /lib64/libc.so.6
+#7  0x00007fd485c44095 in g_free_sized () at /lib64/libglib-2.0.so.0
+#8  0x00007fd485c6482e in g_slice_free1 () at /lib64/libglib-2.0.so.0
+#9  0x00007fd4846e9389 in parse_astrodata_moon (cur_node=cur_node@entry=0x5582061c2cd0, astrodata=0x558205918030) at weather-parsers.c:885
+#10 0x00007fd4846de3df in cb_astro_update_moon (session=<optimized out>, msg=<optimized out>, user_data=0x55820587b730) at weather.c:540
+#11 0x00007fd476fc061e in soup_session_process_queue_item.part () at /lib64/libsoup-2.4.so.1
+#12 0x00007fd476fc0b8e in async_run_queue () at /lib64/libsoup-2.4.so.1
+#13 0x00007fd476fc0ce2 in idle_run_queue () at /lib64/libsoup-2.4.so.1
+#14 0x00007fd485c3d78d in g_idle_dispatch () at /lib64/libglib-2.0.so.0
+#15 0x00007fd485c40e5c in g_main_context_dispatch_unlocked.lto_priv () at /lib64/libglib-2.0.so.0
+#16 0x00007fd485c9bf18 in g_main_context_iterate_unlocked.isra () at /lib64/libglib-2.0.so.0
+#17 0x00007fd485c42447 in g_main_loop_run () at /lib64/libglib-2.0.so.0
+#18 0x00007fd4861655b6 in gtk_dialog_run () at /lib64/libgtk-3.so.0
+#19 0x00007fd4846db6e4 in xfceweather_create_options (plugin=0x5582058036e0, data=0x55820587b730) at weather.c:1852
+#20 0x00007fd48684e52a in g_closure_invoke () at /lib64/libgobject-2.0.so.0
+#21 0x00007fd48687cfec in signal_emit_unlocked_R.isra.0 () at /lib64/libgobject-2.0.so.0
+#22 0x00007fd48686dd59 in signal_emit_valist_unlocked () at /lib64/libgobject-2.0.so.0
+#23 0x00007fd48686e268 in g_signal_emit_by_name () at /lib64/libgobject-2.0.so.0
+#24 0x00007fd48686de85 in signal_emit_valist_unlocked () at /lib64/libgobject-2.0.so.0
+#25 0x00007fd48686df91 in g_signal_emit_valist () at /lib64/libgobject-2.0.so.0
+#26 0x00007fd48686e053 in g_signal_emit () at /lib64/libgobject-2.0.so.0
+#27 0x00007fd4860df618 in gtk_real_button_released () at /lib64/libgtk-3.so.0
+#28 0x00007fd48686de85 in signal_emit_valist_unlocked () at /lib64/libgobject-2.0.so.0
+#29 0x00007fd48686df91 in g_signal_emit_valist () at /lib64/libgobject-2.0.so.0
+--Type <RET> for more, q to quit, c to continue without paging--q
+Quit
+(gdb) quit

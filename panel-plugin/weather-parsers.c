@@ -550,7 +550,7 @@ parse_astro_time(xmlNode *cur_node)
  * Look at https://api.met.no/weatherapi/sunrise/2.0/schema for information
  * of elements and attributes to expect.
  */
-gboolean
+/* gboolean
 parse_astrodata(xmlNode *cur_node,
                 GArray *astrodata)
 {
@@ -576,7 +576,7 @@ parse_astrodata(xmlNode *cur_node,
         }
     return TRUE;
 }
-
+ */
 
 /*
  * Look at https://docs.api.met.no/doc/formats/SunriseJSON for information
@@ -716,7 +716,7 @@ parse_astrodata_sun(json_object *cur_node,
     else
         astro->sun_never_sets = TRUE;
 
-    merge_astro(astrodata, astro);
+    merge_astro(astrodata, astro, MERGE_ALL);
     xml_astro_free(astro);
 
 /*     g_date_time_unref(dt);
@@ -745,7 +745,12 @@ parse_astrodata_moon(json_object *cur_node,
     GDateTime *dt, *initial_date;
     const gchar *date, *time;
     gboolean moon_rises = FALSE, moon_sets = FALSE;
+    gboolean sun_astrodata_for_day;
 
+/*     astro = g_slice_new0(xml_astro);
+    if (G_UNLIKELY(astro == NULL))
+        return FALSE;
+ */
     g_assert(astrodata != NULL);
     if (G_UNLIKELY(astrodata == NULL))
         return FALSE;
@@ -790,13 +795,15 @@ parse_astrodata_moon(json_object *cur_node,
                                     0, 0, 0); // hour, min, sec
     day = (time_t)g_date_time_to_unix(initial_date);
 */
-    day = day_at_midnight(parse_timestring(date, day_format, FALSE)+ 12*3600,0); //RZ
+    day = day_at_midnight(parse_timestring(date, day_format, FALSE)+ 12 * 3600, 0); //RZ
     /* this data seems weird */
     astro = get_astro(astrodata, day, &index);
     if (G_UNLIKELY(astro == NULL)) {
         weather_debug("no sun astrodata for day=%s\n",
                       format_date(day, day_format,FALSE)); //RZ
-        local_time = localtime(&day);
+        sun_astrodata_for_day = FALSE;
+        return FALSE;
+/*         local_time = localtime(&day);
         previous_day = time_calc_day(*local_time, -1);
         astro = get_astro(astrodata, previous_day, &index);
         if (G_UNLIKELY(astro == NULL)) {
@@ -804,7 +811,7 @@ parse_astrodata_moon(json_object *cur_node,
                           format_date(previous_day, day_format,TRUE));
             return FALSE;
         }
-    }
+ */    }
     astro->day=day;
     weather_debug("moon: astro->day=%s\n", format_date(astro->day,
                                                        day_format,TRUE)); //RZ
@@ -877,8 +884,8 @@ parse_astrodata_moon(json_object *cur_node,
              astro->moon_never_sets = TRUE;
 
 
-    merge_astro(astrodata, astro);
-    // RZ xml_astro_free(astro);
+    merge_astro(astrodata, astro, MERGE_ALL);
+    // xml_astro_free(astro);
 
 /*     g_date_time_unref(dt);
     g_date_time_unref(initial_date);
@@ -1076,6 +1083,59 @@ xml_location_free(xml_location *loc)
     g_slice_free(xml_location, loc);
 }
 
+/*
+ * Deep add sun data or moon data to xml_astro struct.
+ */
+xml_astro *
+xml_astro_add(const xml_astro *src1,
+              const xml_astro *src2,
+              const merge_type merge_types)
+{
+    xml_astro *dst;
+
+    if (G_UNLIKELY(src1 == NULL) || (src2 == NULL))
+        return NULL;
+
+    dst = g_slice_new0(xml_astro);
+    g_assert(dst != NULL);
+    if (G_UNLIKELY(dst == NULL))
+        return NULL;
+
+    dst->day = src1->day;
+    switch (merge_types) {
+        case MERGE_SUN:
+            dst->sunrise = src2->sunrise;
+            dst->sunset = src2->sunset;
+            dst->sun_never_rises = src2->sun_never_rises;
+            dst->sun_never_sets = src2->sun_never_sets;
+            dst->solarnoon_elevation = src2->solarnoon_elevation;
+            dst->solarmidnight_elevation = src2->solarmidnight_elevation;
+
+            dst->moonrise = src1->moonrise;
+            dst->moonset = src1->moonset;
+            dst->moon_never_rises = src1->moon_never_rises;
+            dst->moon_never_sets = src1->moon_never_sets;
+            dst->moon_phase = g_strdup(src1->moon_phase);
+            break;
+
+        case MERGE_MOON:
+            dst->sunrise = src1->sunrise;
+            dst->sunset = src1->sunset;
+            dst->sun_never_rises = src1->sun_never_rises;
+            dst->sun_never_sets = src1->sun_never_sets;
+            dst->solarnoon_elevation = src1->solarnoon_elevation;
+            dst->solarmidnight_elevation = src1->solarmidnight_elevation;
+
+            dst->moonrise = src2->moonrise;
+            dst->moonset = src2->moonset;
+            dst->moon_never_rises = src2->moon_never_rises;
+            dst->moon_never_sets = src2->moon_never_sets;
+            dst->moon_phase = g_strdup(src2->moon_phase);
+            break;
+    }
+
+    return dst;
+}
 
 /*
  * Deep copy xml_astro struct.

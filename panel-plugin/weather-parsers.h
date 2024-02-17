@@ -122,6 +122,11 @@ typedef struct {
     gchar *timezone_id;
 } xml_timezone;
 
+typedef enum {
+    MERGE_ALL = 0,
+    MERGE_SUN,
+    MERGE_MOON
+}merge_type;
 
 xml_weather *make_weather_data(void);
 
@@ -166,6 +171,10 @@ json_object *get_json_tree(SoupMessage *msg);
 
 gpointer parse_xml_document(SoupMessage *msg,
                             XmlParseFunc parse_func);
+
+xml_astro *xml_astro_add(const xml_astro *src1,
+                         const xml_astro *src2,
+                         const merge_type merge_types);
 
 xml_astro *xml_astro_copy(const xml_astro *src);
 

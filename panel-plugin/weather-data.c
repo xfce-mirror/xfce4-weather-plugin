@@ -831,9 +831,10 @@ make_combined_timeslice(xml_weather *wd,
 
 void
 merge_astro(GArray *astrodata,
-            const xml_astro *astro)
+            const xml_astro *astro,
+            const merge_type merge_types)
 {
-    xml_astro *old_astro, *new_astro;
+    xml_astro *old_astro, *new_astro, *merged_astro;
     guint index;
 
     g_assert(astrodata != NULL);
@@ -848,13 +849,38 @@ merge_astro(GArray *astrodata,
     weather_dump(weather_dump_astro, new_astro);
 
     /* check for and replace existing astrodata of the same date */
-    if ((old_astro = get_astro(astrodata, astro->day, &index))) {
-        xml_astro_free(old_astro);
-        g_array_remove_index(astrodata, index);
-        g_array_insert_val(astrodata, index, new_astro);
-        weather_debug("Replaced existing astrodata at %d.", index);
-        weather_dump(weather_dump_astrodata, astrodata);
-        weather_debug("Current astrodata entries: %d", astrodata->len);
+    if ((old_astro = get_astro(astrodata, new_astro->day, &index))) {
+        switch (merge_types) {
+            case MERGE_ALL:
+                xml_astro_free(old_astro);
+                g_array_remove_index(astrodata, index);
+                g_array_insert_val(astrodata, index, new_astro);
+                weather_debug("Replaced existing astrodata at %d.", index);
+                weather_dump(weather_dump_astrodata, astrodata);
+                weather_debug("Current astrodata entries: %d", astrodata->len);
+                break;
+            case MERGE_SUN:
+                merged_astro = xml_astro_add(old_astro, new_astro, MERGE_SUN);
+                xml_astro_free(old_astro);
+                xml_astro_free(new_astro);
+                g_array_remove_index(astrodata, index);
+                g_array_insert_val(astrodata, index, merged_astro);
+                weather_debug("Replaced existing astrodata at %d.", index);
+                weather_dump(weather_dump_astrodata, astrodata);
+                weather_debug("Current astrodata entries: %d", astrodata->len);
+                break;
+            case MERGE_MOON:
+                merged_astro = xml_astro_add(old_astro, new_astro, MERGE_MOON);
+                xml_astro_free(old_astro);
+                xml_astro_free(new_astro);
+                g_array_remove_index(astrodata, index);
+                g_array_insert_val(astrodata, index, merged_astro);
+                weather_debug("Replaced existing astrodata at %d.", index);
+                weather_dump(weather_dump_astrodata, astrodata);
+                weather_debug("Current astrodata entries: %d", astrodata->len);
+                break;
+                
+        }
     } else {
         g_array_append_val(astrodata, new_astro);
         weather_debug("Appended new astrodata to the existing data.");

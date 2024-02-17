@@ -31,6 +31,7 @@
 #define PLUGIN_WEBSITE "https://docs.xfce.org/panel-plugins/xfce4-weather-plugin"
 #define MAX_FORECAST_DAYS 10
 #define DEFAULT_FORECAST_DAYS 5
+#define ASTRO_FORECAST_DAYS (DEFAULT_FORECAST_DAYS + 1)
 #define MAX_SCROLLBOX_LINES 10
 #define FORECAST_API "2.0"
 
@@ -93,11 +94,20 @@ typedef struct {
     guint http_status_code;
 } update_info;
 
+typedef enum {
+/*  ASTRO_DWNLD_START = 0, */
+    ASTRO_DWNLD_SUN = 0,
+//    ASTRO_DWNLD_IDLE,
+    ASTRO_DWNLD_MOON,
+//    ASTRO_DWNLD_END
+}dwnld_state;
+
 typedef struct {
     guint sun_msg_parsed;
     guint moon_msg_parsed;
-    gboolean sun_msg_parse_error;
-    gboolean moon_msg_parse_error;
+    guint sun_msg_parse_error;
+    guint moon_msg_parse_error;
+    dwnld_state astro_dwnld_state;
 } parse_info;
 
 typedef struct {
@@ -203,6 +213,7 @@ gboolean xfceweather_set_mode(XfcePanelPlugin *panel,
                               XfcePanelPluginMode mode,
                               plugin_data *data);
 
+void astro_update_finish(plugin_data *data);
 G_END_DECLS
 
 #endif
