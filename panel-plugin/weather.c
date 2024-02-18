@@ -516,10 +516,15 @@ cb_astro_update(SoupSession *session,
         }
         if (parsing_error)
             g_warning("Error parsing astronomical data!");
-    } else
-        g_warning("Download of astronomical data failed with "
-                    "HTTP Status Code %d, Reason phrase: %s",
+    } else {
+#if GLIB_CHECK_VERSION (2, 64, 0)
+        g_warning_once("Download of astronomical data failed with HTTP Status Code %d, Reason phrase: %s",
+                       msg->status_code, msg->reason_phrase);
+#else
+        g_warning("Download of astronomical data failed with HTTP Status Code %d, Reason phrase: %s",
                   msg->status_code, msg->reason_phrase);
+#endif
+    }
     data->astro_update->next = calc_next_download_time(data->astro_update,
                                                        now_t);
 
@@ -644,7 +649,7 @@ update_handler(gpointer user_data)
                               data->forecast_days);
 
         /* start receive thread */
-        g_message("getting %s", url);
+        weather_debug("getting %s", url);
         weather_http_queue_request(data->session, url,
                                    cb_astro_update, data);
         g_free(url);
@@ -665,7 +670,7 @@ update_handler(gpointer user_data)
                               data->lat, data->lon, data->msl);
 
         /* start receive thread */
-        g_message("getting %s", url);
+        weather_debug("getting %s", url);
         weather_http_queue_request(data->session, url,
                                    cb_weather_update, data);
         g_free(url);
