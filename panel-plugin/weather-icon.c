@@ -207,7 +207,7 @@ get_icon(const icon_theme *theme,
     if (image == NULL) {
         /* remember failure for future lookups */
         if (error) {
-            g_warning ("Failed to load pixbuf: %s", error->message);
+            weather_debug ("Failed to load pixbuf: %s", error->message);
             g_error_free (error);
         }
         if (filename) {
