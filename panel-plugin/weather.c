@@ -575,7 +575,7 @@ cb_weather_update(SoupSession *session,
         if (parsing_error)
             g_warning("Error parsing weather data!");
     } else
-        g_warning
+        weather_debug
             ("Download of weather data failed with HTTP Status Code %d, "
              "Reason phrase: %s", msg->status_code, msg->reason_phrase);
     data->weather_update->next = calc_next_download_time(data->weather_update,
