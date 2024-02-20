@@ -142,8 +142,7 @@ gint xml_time_compare(gconstpointer a,
                       gconstpointer b);
 
 void merge_astro(GArray *astrodata,
-                 const xml_astro *astro,
-                 const merge_type merge_types);
+                 const xml_astro *astro);
 
 void astrodata_clean(GArray *astrodata);
 

@@ -57,30 +57,14 @@ static time_t
 my_timegm(struct tm *tm)
 {
     time_t ret;
- /*    char *tz;
+    GDateTime *initial_date;
 
-    tz = g_strdup(g_getenv("TZ"));
-    g_setenv("TZ", "", 1);
-    tzset();
-    ret = mktime(tm);
-    if (tz) {
-        g_setenv("TZ", tz, 1);
-        g_free(tz);
-    }
-    else
-        g_unsetenv("TZ");
-    tzset();
-    return ret;
- */
-   GDateTime *initial_date;
-
-    initial_date = g_date_time_new_utc( // RZ (G_TIME_TYPE_UNIVERSAL,
-                                    tm->tm_year + 1900,
-                                    tm->tm_mon + 1,
-                                    tm->tm_mday,
-                                    tm->tm_hour,
-                                    tm->tm_min,
-                                    tm->tm_sec);
+    initial_date = g_date_time_new_utc(tm->tm_year + 1900,
+                                       tm->tm_mon + 1,
+                                       tm->tm_mday,
+                                       tm->tm_hour,
+                                       tm->tm_min,
+                                       tm->tm_sec);
     ret = g_date_time_to_unix(initial_date);
     g_date_time_unref(initial_date);
 
@@ -108,13 +92,6 @@ remove_timezone_offset(const gchar *date)
     }
     g_regex_unref(re);
     return res;
-}
-
-
-static gdouble
-extract_double(gchar *str)
-{
-    return g_ascii_strtod (str, NULL);
 }
 
 
@@ -224,26 +201,7 @@ parse_moonposition (gdouble pos_in) {
     else if (pos <= 87.5)
         return "Waning crescent";
     return "New moon";
-/* 
-    if (pos < 0.0 || pos > 360.0)
-        return "Unknown";
-    if (pos == 0.0)
-        return "New moon";
-    else if (pos <= 90.0)
-        return "Waxing crescent";
-    else if (pos <= 135.0)
-        return "First quarter";
-    else if (pos <= 180.0)
-        return "Waxing gibbous";
-    else if (pos == 180.0)
-        return "Full moon";
-    else if (pos <= 270.0)
-        return "Waning gibbous";
-    else if (pos <= 315.0)
-        return "Third quarter";
-    else if (pos <= 360.0)
-        return "Waning crescent";
- */}
+}
 
 
 static void
@@ -458,126 +416,6 @@ parse_weather(xmlNode *cur_node,
 }
 
 
-static xml_astro *
-parse_astro_time(xmlNode *cur_node)
-{
-    xmlNode *child_node;
-    xml_astro *astro;
-    gchar *date, *sunrise, *sunset, *moonrise, *moonset;
-    gboolean sun_rises = FALSE, sun_sets = FALSE;
-    gboolean moon_rises = FALSE, moon_sets = FALSE;
-    gdouble moonposition;
-
-    astro = g_slice_new0(xml_astro);
-    if (G_UNLIKELY(astro == NULL))
-        return NULL;
-
-    date = PROP(cur_node, "date");
-    astro->day = parse_timestring(date, "%Y-%m-%d", TRUE);
-    xmlFree(date);
-
-    for (child_node = cur_node->children; child_node;
-         child_node = child_node->next) {
-        if (child_node->type == XML_ELEMENT_NODE) {
-            if (NODE_IS_TYPE(child_node, "sunrise")) {
-                sunrise = remove_timezone_offset(PROP(child_node, "time"));
-                astro->sunrise = parse_timestring(sunrise, NULL, TRUE);
-                xmlFree(sunrise);
-                sun_rises = TRUE;
-            }
-
-            if (NODE_IS_TYPE(child_node, "moonset")) {
-                moonset = remove_timezone_offset(PROP(child_node, "time"));
-                astro->moonset = parse_timestring(moonset, NULL, TRUE);
-                xmlFree(moonset);
-                moon_sets = TRUE;
-            }
-
-            if (NODE_IS_TYPE(child_node, "sunset")) {
-                sunset = remove_timezone_offset(PROP(child_node, "time"));
-                astro->sunset = parse_timestring(sunset, NULL, TRUE);
-                xmlFree(sunset);
-                sun_sets = TRUE;
-            }
-
-            if (NODE_IS_TYPE(child_node, "moonrise")) {
-                moonrise = remove_timezone_offset(PROP(child_node, "time"));
-                astro->moonrise = parse_timestring(moonrise, NULL, TRUE);
-                xmlFree(moonrise);
-                moon_rises = TRUE;
-            }
-
-            if (NODE_IS_TYPE(child_node, "moonposition")) {
-                moonposition = extract_double(PROP(child_node, "phase"));
-                if (astro->moon_phase) {
-                    g_free (astro->moon_phase);
-                }
-                astro->moon_phase = g_strdup(parse_moonposition(moonposition));
-            }
-
-            if (NODE_IS_TYPE(child_node, "solarnoon")) {
-                astro->solarnoon_elevation = extract_double(PROP(child_node, "elevation"));
-            }
-
-            if (NODE_IS_TYPE(child_node, "solarmidnight")) {
-                astro->solarmidnight_elevation = extract_double(PROP(child_node, "elevation"));
-            }
-        }
-    }
-
-    if (sun_rises)
-        astro->sun_never_rises = FALSE;
-    else
-        astro->sun_never_rises = TRUE;
-    if (sun_sets)
-        astro->sun_never_sets = FALSE;
-    else
-        astro->sun_never_sets = TRUE;
-
-    if (moon_rises)
-        astro->moon_never_rises = FALSE;
-    else
-        astro->moon_never_rises = TRUE;
-    if (moon_sets)
-        astro->moon_never_sets = FALSE;
-    else
-        astro->moon_never_sets = TRUE;
-    return astro;
-}
-
-
-/*
- * Look at https://api.met.no/weatherapi/sunrise/2.0/schema for information
- * of elements and attributes to expect.
- */
-/* gboolean
-parse_astrodata(xmlNode *cur_node,
-                GArray *astrodata)
-{
-    xmlNode *child_node;
-    xml_astro *astro;
-
-    g_assert(astrodata != NULL);
-    if (G_UNLIKELY(astrodata == NULL))
-        return FALSE;
-
-    g_assert(cur_node != NULL);
-    if (G_UNLIKELY(cur_node == NULL ||
-        !NODE_IS_TYPE(cur_node, "location")))
-        return FALSE;
-
-    for (child_node = cur_node->children; child_node;
-         child_node = child_node->next)
-        if (NODE_IS_TYPE(child_node, "time")) {
-            if ((astro = parse_astro_time(child_node))) {
-                merge_astro(astrodata, astro);
-                xml_astro_free(astro);
-            }
-        }
-    return TRUE;
-}
- */
-
 /*
  * Look at https://docs.api.met.no/doc/formats/SunriseJSON for information
  * of elements and attributes to expect.
@@ -591,11 +429,9 @@ parse_astrodata_sun(json_object *cur_node,
            *jsunrise_time, *jsunset,  *jsunset_time,
            *jsolarnoon, *jsolarmidnight,  *jdisc_centre_elevation ;
 
-    const gchar day_format[]="%Y-%m-%dT%H:%M:%SZ"; // RZ
-//    const gchar day_format[]="%Y-%m-%d"; // RZ
+    const gchar day_format[]="%Y-%m-%dT%H:%M:%SZ"; 
     const gchar sun_format[]="%Y-%m-%dT%H:%MZ";
     const gchar *date, *time;
-    GDateTime *dt, *initial_date;
     gboolean sun_rises = FALSE, sun_sets = FALSE;
 
     astro = g_slice_new0(xml_astro);
@@ -621,25 +457,10 @@ parse_astrodata_sun(json_object *cur_node,
     date = json_object_get_string(jdate);
     if (G_UNLIKELY(date == NULL))
         return FALSE;
-    astro->day = day_at_midnight(parse_timestring(date, day_format, FALSE) + 12*3600,0); // RZ
-
-/* 
-    dt = g_date_time_new_from_iso8601(date, NULL);
-    if (G_UNLIKELY(dt == NULL)) {
-        weather_debug("not a valid ISO 8601 formatted string: %s\n", date);
-        return FALSE;
-    }
-    dt = g_date_time_add_hours(dt,12); // use info at center of interval
-//    date = g_date_time_format(dt,"%F"); // %F: equivalent to %Y-%m-%d (the ISO 8601 date format)
-    initial_date = g_date_time_new_utc( // RZ (G_TIME_TYPE_UNIVERSAL,
-                                    g_date_time_get_year(dt),
-                                    g_date_time_get_month(dt),
-                                    g_date_time_get_day_of_month(dt),
-                                    0, 0, 0); // hour, min, sec
-    astro->day = (time_t)g_date_time_to_unix(initial_date); 
-*/
+    /* use time info at center of day interval */
+    astro->day = day_at_midnight(parse_timestring(date, day_format, FALSE) + 12 * 3600, 0); 
     weather_debug("sun: astro->day=%s\n",
-                  format_date(astro->day, day_format,TRUE)); // RZ
+                  format_date(astro->day, day_format,TRUE)); 
 
     jproperties = json_object_object_get(cur_node, "properties");
      if (G_UNLIKELY(jproperties == NULL))
@@ -716,14 +537,12 @@ parse_astrodata_sun(json_object *cur_node,
     else
         astro->sun_never_sets = TRUE;
 
-    merge_astro(astrodata, astro, MERGE_ALL);
+    merge_astro(astrodata, astro);
     xml_astro_free(astro);
-
-/*     g_date_time_unref(dt);
-    g_date_time_unref(initial_date);
- */
     return TRUE;
 }
+
+
 /*
  * Look at https://docs.api.met.no/doc/formats/SunriseJSON for information
  * of elements and attributes to expect.
@@ -736,21 +555,14 @@ parse_astrodata_moon(json_object *cur_node,
     json_object *jwhen, *jinterval, *jproperties, *jdate, *jmoonrise,
            *jmoonrise_time, *jmoonset,  *jmoonset_time,
            *jmoonphase;
-    time_t day, previous_day;
-    struct tm* local_time;
+    time_t day;
     guint index;
 
-    const gchar day_format[]="%Y-%m-%dT%H:%M:%SZ"; // RZ
+    const gchar day_format[]="%Y-%m-%dT%H:%M:%SZ"; 
     const gchar moon_format[]="%Y-%m-%dT%H:%MZ";
-    GDateTime *dt, *initial_date;
     const gchar *date, *time;
     gboolean moon_rises = FALSE, moon_sets = FALSE;
-    gboolean sun_astrodata_for_day;
 
-/*     astro = g_slice_new0(xml_astro);
-    if (G_UNLIKELY(astro == NULL))
-        return FALSE;
- */
     g_assert(astrodata != NULL);
     if (G_UNLIKELY(astrodata == NULL))
         return FALSE;
@@ -780,41 +592,18 @@ parse_astrodata_moon(json_object *cur_node,
         weather_debug("date not found" );
         return FALSE;
     }
-/*    
-    dt = g_date_time_new_from_iso8601(date, NULL);
-    if (G_UNLIKELY(dt == NULL)) {
-        weather_debug("not a valid ISO 8601 formatted string: %s\n", date);
-        return FALSE;
-    }
-    dt = g_date_time_add_hours(dt,12); // use info at center of interval
-//    date = g_date_time_format(dt,"%F"); // %F: equivalent to %Y-%m-%d (the ISO 8601 date format)
-    initial_date = g_date_time_new_utc( // RZ (G_TIME_TYPE_UNIVERSAL,
-                                    g_date_time_get_year(dt),
-                                    g_date_time_get_month(dt),
-                                    g_date_time_get_day_of_month(dt),
-                                    0, 0, 0); // hour, min, sec
-    day = (time_t)g_date_time_to_unix(initial_date);
-*/
-    day = day_at_midnight(parse_timestring(date, day_format, FALSE)+ 12 * 3600, 0); //RZ
+    /* use time info at center of day interval */
+    day = day_at_midnight(parse_timestring(date, day_format, FALSE) + 12 * 3600, 0); 
     /* this data seems weird */
     astro = get_astro(astrodata, day, &index);
     if (G_UNLIKELY(astro == NULL)) {
         weather_debug("no sun astrodata for day=%s\n",
-                      format_date(day, day_format,FALSE)); //RZ
-        sun_astrodata_for_day = FALSE;
+                      format_date(day, day_format,FALSE)); 
         return FALSE;
-/*         local_time = localtime(&day);
-        previous_day = time_calc_day(*local_time, -1);
-        astro = get_astro(astrodata, previous_day, &index);
-        if (G_UNLIKELY(astro == NULL)) {
-            weather_debug("no sun astrodata for previous day=%s\n",
-                          format_date(previous_day, day_format,TRUE));
-            return FALSE;
-        }
- */    }
+    }
     astro->day=day;
     weather_debug("moon: astro->day=%s\n", format_date(astro->day,
-                                                       day_format,TRUE)); //RZ
+                                                       day_format,TRUE)); 
 
     jproperties = json_object_object_get(cur_node, "properties");
      if (G_UNLIKELY(jproperties == NULL)) {
@@ -884,12 +673,7 @@ parse_astrodata_moon(json_object *cur_node,
              astro->moon_never_sets = TRUE;
 
 
-    merge_astro(astrodata, astro, MERGE_ALL);
-    // xml_astro_free(astro);
-
-/*     g_date_time_unref(dt);
-    g_date_time_unref(initial_date);
- */
+    merge_astro(astrodata, astro);
     return TRUE;
 }
 
@@ -1083,59 +867,6 @@ xml_location_free(xml_location *loc)
     g_slice_free(xml_location, loc);
 }
 
-/*
- * Deep add sun data or moon data to xml_astro struct.
- */
-xml_astro *
-xml_astro_add(const xml_astro *src1,
-              const xml_astro *src2,
-              const merge_type merge_types)
-{
-    xml_astro *dst;
-
-    if (G_UNLIKELY(src1 == NULL) || (src2 == NULL))
-        return NULL;
-
-    dst = g_slice_new0(xml_astro);
-    g_assert(dst != NULL);
-    if (G_UNLIKELY(dst == NULL))
-        return NULL;
-
-    dst->day = src1->day;
-    switch (merge_types) {
-        case MERGE_SUN:
-            dst->sunrise = src2->sunrise;
-            dst->sunset = src2->sunset;
-            dst->sun_never_rises = src2->sun_never_rises;
-            dst->sun_never_sets = src2->sun_never_sets;
-            dst->solarnoon_elevation = src2->solarnoon_elevation;
-            dst->solarmidnight_elevation = src2->solarmidnight_elevation;
-
-            dst->moonrise = src1->moonrise;
-            dst->moonset = src1->moonset;
-            dst->moon_never_rises = src1->moon_never_rises;
-            dst->moon_never_sets = src1->moon_never_sets;
-            dst->moon_phase = g_strdup(src1->moon_phase);
-            break;
-
-        case MERGE_MOON:
-            dst->sunrise = src1->sunrise;
-            dst->sunset = src1->sunset;
-            dst->sun_never_rises = src1->sun_never_rises;
-            dst->sun_never_sets = src1->sun_never_sets;
-            dst->solarnoon_elevation = src1->solarnoon_elevation;
-            dst->solarmidnight_elevation = src1->solarmidnight_elevation;
-
-            dst->moonrise = src2->moonrise;
-            dst->moonset = src2->moonset;
-            dst->moon_never_rises = src2->moon_never_rises;
-            dst->moon_never_sets = src2->moon_never_sets;
-            dst->moon_phase = g_strdup(src2->moon_phase);
-            break;
-    }
-
-    return dst;
-}
 
 /*
  * Deep copy xml_astro struct.

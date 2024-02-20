@@ -95,16 +95,13 @@ typedef struct {
 } update_info;
 
 typedef enum {
-/*  ASTRO_DWNLD_START = 0, */
     ASTRO_DWNLD_SUN = 0,
-//    ASTRO_DWNLD_IDLE,
-    ASTRO_DWNLD_MOON,
-//    ASTRO_DWNLD_END
+    ASTRO_DWNLD_MOON
 }dwnld_state;
 
 typedef struct {
-    guint sun_msg_parsed;
-    guint moon_msg_parsed;
+    guint sun_msg_processed;
+    guint moon_msg_processed;
     guint sun_msg_parse_error;
     guint moon_msg_parse_error;
     dwnld_state astro_dwnld_state;
@@ -213,7 +210,6 @@ gboolean xfceweather_set_mode(XfcePanelPlugin *panel,
                               XfcePanelPluginMode mode,
                               plugin_data *data);
 
-void astro_update_finish(plugin_data *data);
 G_END_DECLS
 
 #endif

@@ -493,19 +493,17 @@ cb_astro_update_sun(SoupSession *session,
     json_object *json_tree;
     time_t now_t;
 
-//    data->msg_parse->sun_msg_parse_error = TRUE;
-    data->msg_parse->sun_msg_parsed++;
+    data->msg_parse->sun_msg_processed++;
     data->astro_update->http_status_code = msg->status_code;
     if ((msg->status_code == 200 || msg->status_code == 203)) {
         json_tree = get_json_tree(msg);
         if (G_LIKELY(json_tree)) {
             if (!parse_astrodata_sun(json_tree, data->astrodata))  {
                 data->msg_parse->sun_msg_parse_error++;
-                g_warning(_("Error parsing astronomical data!"));
+                g_warning("Error parsing sun astronomical data!");
                 weather_debug("data->astrodata:%s",
                               weather_dump_astrodata(data->astrodata)); 
             } else { 
-//                data->msg_parse->sun_msg_parse_error = FALSE;
                 weather_dump(weather_dump_astrodata, data->astrodata);
             }
             g_assert(json_object_put(json_tree) ==1);
@@ -514,21 +512,19 @@ cb_astro_update_sun(SoupSession *session,
             weather_debug("No json_tree");
         }
     } else {
-        g_warning(_("Download of sun astronomical data failed with "
-                    "HTTP Status Code %d, Reason phrase: %s"),
+#if GLIB_CHECK_VERSION (2, 64, 0)
+        g_warning_once("Download of sun astronomical data failed with HTTP Status Code %d, Reason phrase: %s",
+                       msg->status_code, msg->reason_phrase);
+#else
+        g_warning("Download of sun astronomical data failed with HTTP Status Code %d, Reason phrase: %s",
                   msg->status_code, msg->reason_phrase);
-// RZ        data->astro_update->next = calc_next_download_time(data->astro_update, now_t);
+#endif
     }
 
-    // astro_update_finish(data);
-
-    if (data->msg_parse->sun_msg_parsed == ASTRO_FORECAST_DAYS) {
+    if (data->msg_parse->sun_msg_processed == ASTRO_FORECAST_DAYS) {
  
         if (G_LIKELY(data->msg_parse->sun_msg_parse_error == 0)) {
             data->msg_parse->astro_dwnld_state = ASTRO_DWNLD_MOON;    
-                // astrodata_clean(data->astrodata);
-                // g_array_sort(data->astrodata, (GCompareFunc) xml_astro_compare);
-                // data->astro_update->attempt = 0;
             time(&now_t);
             /* schedule astro moon data downloads immediately */
             data->astro_update->next = now_t;
@@ -541,15 +537,10 @@ cb_astro_update_sun(SoupSession *session,
             time(&now_t);
             data->astro_update->next = calc_next_download_time(data->astro_update,now_t);
         }
-            // data->astro_update->last = now_t;
-            // data->astro_update->next = calc_next_download_time(data->astro_update,now_t);
-            // update_current_astrodata(data);
-            // /* update icon */
-            // data->night_time = is_night_time(data->current_astro, data->offset);
-            // update_icon(data);
-            // data->astro_update->finished = TRUE;
     }
 }
+
+
 /*
  * Process downloaded moon astro data and schedule next astro update.
  */
@@ -562,7 +553,7 @@ cb_astro_update_moon(SoupSession *session,
     json_object *json_tree;
     time_t now_t;
 
-    data->msg_parse->moon_msg_parsed++;
+    data->msg_parse->moon_msg_processed++;
     data->astro_update->http_status_code = msg->status_code;
     if ((msg->status_code == 200 || msg->status_code == 203)) {
         json_tree = get_json_tree(msg);
@@ -581,14 +572,16 @@ cb_astro_update_moon(SoupSession *session,
             weather_debug("No json_tree");
         }
     } else {
-        g_warning(_("Download of moon astronomical data failed with "
-                    "HTTP Status Code %d, Reason phrase: %s"),
+#if GLIB_CHECK_VERSION (2, 64, 0)
+        g_warning_once("Download of moon astronomical data failed with HTTP Status Code %d, Reason phrase: %s",
+                       msg->status_code, msg->reason_phrase);
+#else
+        g_warning("Download of moon astronomical data failed with HTTP Status Code %d, Reason phrase: %s",
                   msg->status_code, msg->reason_phrase);
-// RZ        data->astro_update->next = calc_next_download_time(data->astro_update, now_t);
+#endif
     }
 
-//    astro_update_finish(data);
-    if (data->msg_parse->sun_msg_parsed == ASTRO_FORECAST_DAYS && data->msg_parse->moon_msg_parsed == ASTRO_FORECAST_DAYS) {
+    if (data->msg_parse->sun_msg_processed == ASTRO_FORECAST_DAYS && data->msg_parse->moon_msg_processed == ASTRO_FORECAST_DAYS) {
         if (G_LIKELY(data->msg_parse->moon_msg_parse_error == 0)) {
             astrodata_clean(data->astrodata);
             g_array_sort(data->astrodata, (GCompareFunc) xml_astro_compare);
@@ -613,86 +606,6 @@ cb_astro_update_moon(SoupSession *session,
         }
     }
 }
-
-// void 
-// astro_update_finish(plugin_data *data)
-// {
-// // RZ
-//     time_t now_t;
-
-//     if (!data->msg_parse->sun_msg_parse_error && !data->msg_parse->moon_msg_parse_error &&
-//         data->msg_parse->sun_msg_parsed == ASTRO_FORECAST_DAYS && data->msg_parse->moon_msg_parsed == ASTRO_FORECAST_DAYS) {
-//             astrodata_clean(data->astrodata);
-//             g_array_sort(data->astrodata, (GCompareFunc) xml_astro_compare);
-//             data->astro_update->attempt = 0;
-//             time(&now_t);
-//             data->astro_update->last = now_t;
-//             data->astro_update->next = calc_next_download_time(data->astro_update,now_t);
-//             update_current_astrodata(data);
-//             /* update icon */
-//             data->night_time = is_night_time(data->current_astro, data->offset);
-//             update_icon(data);
-//             data->astro_update->finished = TRUE;
-//     }
-// }
- 
-/*
- * Process downloaded astro data and schedule next astro update.
- */
-// static void
-// cb_astro_update(SoupSession *session,
-//                 SoupMessage *msg,
-//                 gpointer user_data)
-// {
-//     plugin_data *data = user_data;
-//     xmlDoc *doc;
-//     xmlNode *root_node, *child_node;
-//     time_t now_t;
-//     gboolean parsing_error = TRUE;
-
-//     time(&now_t);
-//     data->astro_update->attempt++;
-//     data->astro_update->http_status_code = msg->status_code;
-//     if ((msg->status_code == 200 || msg->status_code == 203)) {
-//         doc = get_xml_document(msg);
-//         if (G_LIKELY(doc)) {
-//             root_node = xmlDocGetRootElement(doc);
-//             if (G_LIKELY(root_node)) {
-//                 for (child_node = root_node->children; child_node;
-//                      child_node = child_node->next) {
-//                     if (child_node->type == XML_ELEMENT_NODE) {
-//                         if (parse_astrodata(child_node, data->astrodata)) {
-//                             /* schedule next update */
-//                             data->astro_update->attempt = 0;
-//                             data->astro_update->last = now_t;
-//                             parsing_error = FALSE;
-//                         }
-//                     }
-//                 }
-//             }
-//             xmlFreeDoc(doc);
-//         }
-//         if (parsing_error)
-//             g_warning("Error parsing astronomical data!");
-//     } else
-//         g_warning("Download of astronomical data failed with "
-//                     "HTTP Status Code %d, Reason phrase: %s",
-//                   msg->status_code, msg->reason_phrase);
-//     data->astro_update->next = calc_next_download_time(data->astro_update,
-//                                                        now_t);
-
-//     astrodata_clean(data->astrodata);
-//     g_array_sort(data->astrodata, (GCompareFunc) xml_astro_compare);
-//     update_current_astrodata(data);
-//     if (! parsing_error)
-//         weather_dump(weather_dump_astrodata, data->astrodata);
-
-//     /* update icon */
-//     data->night_time = is_night_time(data->current_astro, data->offset);
-//     update_icon(data);
-
-//     data->astro_update->finished = TRUE;
-// }
 
 
 /*
@@ -791,18 +704,14 @@ update_handler(gpointer user_data)
         weather_debug("Fetching astronomical data. State: %s.\n", (int)astro_dwnld_state? "ASTRO_DWNLD_MOON" : "ASTRO_DWNLD_SUN");
         switch (astro_dwnld_state) {
             case ASTRO_DWNLD_SUN:
-//            case ASTRO_DWNLD_START:
                 data->astro_update->next = time_calc_hour(now_tm, 1);
                 data->astro_update->started = TRUE;
                 data->astro_update->attempt++;
-                data->msg_parse->sun_msg_parsed = 0;
-                data->msg_parse->moon_msg_parsed = 0;
+                data->msg_parse->sun_msg_processed = 0;
+                data->msg_parse->moon_msg_processed = 0;
                 data->msg_parse->moon_msg_parse_error = 0;
                 data->msg_parse->sun_msg_parse_error = 0;
                 astro_dwnld_state = ASTRO_DWNLD_SUN;
-//                break;
-//            case ASTRO_DWNLD_SUN:
-                // RZ // while (data->astrodata && astrodata->len <= 4) {
                 /* forecast astronomical data one day in advance */
                 for (day = 0; day < ASTRO_FORECAST_DAYS; day++) {
                     day_t = day_at_midnight(now_t, day);
@@ -821,23 +730,12 @@ update_handler(gpointer user_data)
                                          );
 
                     /* start receive thread */
-                    g_message(_("getting sun data:%s"), url);
+                    weather_debug("getting sun data:%s", url);
                     weather_http_queue_request(data->session, url,
                                                cb_astro_update_sun, data);
                     g_free(url);
                 }
-//                astro_dwnld_state = ASTRO_DWNLD_IDLE;
                 break;
-            // case ASTRO_DWNLD_IDLE:
-                // if (data->msg_parse->sun_msg_parse_error)
-                    // astro_dwnld_state = ASTRO_DWNLD_END;
-                // else if (data->msg_parse->sun_msg_parsed == ASTRO_FORECAST_DAYS)
-                    // astro_dwnld_state = ASTRO_DWNLD_MOON;
-                // else {
-                    // data->astro_update->next = calc_next_download_time(data->astro_update,now_t + 2);
-                    // astro_dwnld_state = ASTRO_DWNLD_IDLE;
-                // }
-                // break;
             case ASTRO_DWNLD_MOON:
                 data->astro_update->next = time_calc_hour(now_tm, 1);
                 for (day = 0; day < ASTRO_FORECAST_DAYS; day++) {
@@ -854,22 +752,13 @@ update_handler(gpointer user_data)
                                       data->offset
                                       );
                     /* start receive thread */
-                    g_message(_("getting moon data: %s"), url);
+                    weather_debug("getting moon data: %s", url);
                     weather_http_queue_request(data->session, url,
                                                cb_astro_update_moon, data);
                     g_free(url);
                 }
-                // astro_dwnld_state = ASTRO_DWNLD_END;
-                // break;
-            // case ASTRO_DWNLD_END:
-                // data->astro_update->next = time_calc_hour(now_tm, 1);
-                // data->astro_update->next = calc_next_download_time(data->astro_update,now_t);
-                // astro_dwnld_state = ASTRO_DWNLD_START;
                 break;
         }
-        // data->msg_parse->astro_dwnld_state = astro_dwnld_state;
-        // return FALSE;
- 
     }
 
     /* fetch weather data */
@@ -1530,9 +1419,9 @@ read_cache_file(plugin_data *data)
             break;
 
         CACHE_READ_STRING(timestring, "day");
-        astro->day = parse_timestring(timestring, "%Y-%m-%d", TRUE); //RZ
+        astro->day = parse_timestring(timestring, "%Y-%m-%d", TRUE); 
                 weather_debug("cached astrodata for day=%s\n",
-                      format_date(astro->day, NULL, TRUE)); //RZ
+                      format_date(astro->day, NULL, TRUE)); 
         g_free(timestring);
         CACHE_READ_STRING(timestring, "sunrise");
         astro->sunrise = parse_timestring(timestring, NULL, TRUE);
@@ -1561,7 +1450,7 @@ read_cache_file(plugin_data *data)
         astro->moon_never_sets =
             g_key_file_get_boolean(keyfile, group, "moon_never_sets", NULL);
 
-        merge_astro(data->astrodata, astro, MERGE_ALL);
+        merge_astro(data->astrodata, astro);
         xml_astro_free(astro);
 
         g_free(group);
@@ -1573,9 +1462,8 @@ read_cache_file(plugin_data *data)
     else {
         weather_debug("Astrodata of the day not in cache. Downloading scheduled in 30s.");
         data->astro_update->attempt = 0;
-// RZ        data->astro_update->next = time_calc(now_tm, 0, 0, 0, 0, 0, 30);
         data->astro_update->next = now_t += 30;
-// RZ        schedule_next_wakeup(data);
+        schedule_next_wakeup(data);
     }
     g_free(group);
     group = NULL;
