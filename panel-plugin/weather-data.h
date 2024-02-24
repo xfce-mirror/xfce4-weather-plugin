@@ -118,7 +118,8 @@ gchar *get_data(const xml_time *timeslice,
 const gchar *get_unit(const units_config *units,
                       data_types type);
 
-gboolean is_night_time(const xml_astro *astro);
+gboolean is_night_time(const xml_astro *astro,
+                       const gchar *offset);
 
 time_t time_calc(struct tm time_tm,
                  gint year,

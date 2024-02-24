@@ -560,39 +560,66 @@ get_unit(const units_config *units,
  *
  * Either use the exact times for sunrise and sunset if
  * available, or fallback to reasonable arbitrary values.
+ * Use timezone offset for proper time of day / night  change.
  */
 gboolean
-is_night_time(const xml_astro *astro)
+is_night_time(const xml_astro *astro, const gchar *offset)
 {
     time_t now_t;
-    struct tm now_tm;
+    GDateTime *dt, *initial_date;
+    GTimeZone *tz;
+    gboolean ret;
 
-    time(&now_t);
+    dt = g_date_time_new_now_local();
+    tz = g_time_zone_new_identifier(offset);
+    initial_date = g_date_time_new( tz,
+                                    g_date_time_get_year(dt),
+                                    g_date_time_get_month(dt),
+                                    g_date_time_get_day_of_month (dt),
+                                    g_date_time_get_hour(dt),
+                                    g_date_time_get_minute(dt),
+                                    0); // sec
+    now_t = (time_t)g_date_time_to_unix(initial_date); 
+    weather_debug("is_night_time ?: time_now(in the proper timezone)=%s\n",
+                  g_date_time_format_iso8601(initial_date)); 
 
     if (G_LIKELY(astro)) {
+        weather_debug("Checking difftime: astro sunrise  now_t %d %d.\n",
+                    astro->sunrise, now_t);
+        weather_debug("Checking difftime: astro sunset  now_t %d %d.\n",
+                      astro->sunset, now_t);
+
         if (astro->sun_never_rises || astro->sun_never_sets){
             /* Polar night */
             if (astro->solarnoon_elevation <= 0)
-                return TRUE;
+                ret = TRUE;
             /* Polar day */
             if (astro->solarmidnight_elevation > 0)
-                return FALSE;
+                ret = FALSE;
         }
 
         /* Sunrise and sunset are known */
-        if (difftime(astro->sunrise, now_t) > 0)
-            return TRUE;
-
-        if (difftime(astro->sunset, now_t) <= 0)
-            return TRUE;
-
-        return FALSE;
+        else if (difftime(astro->sunrise, now_t) > 0) {
+            ret = TRUE;
+        }
+        else if (difftime(astro->sunset, now_t) <= 0) {
+            ret = TRUE;
+        }
+        else {
+        ret = FALSE;
+        }
     }
 
     /* no astrodata available, use fallback values */
-    now_tm = *localtime(&now_t);
-    return (now_tm.tm_hour >= NIGHT_TIME_START ||
-            now_tm.tm_hour < NIGHT_TIME_END);
+    else
+        ret = (g_date_time_get_hour(initial_date) >= NIGHT_TIME_START ||
+               g_date_time_get_hour(initial_date) < NIGHT_TIME_END);
+
+    g_date_time_unref(dt);
+    g_date_time_unref(initial_date);
+    g_time_zone_unref(tz);
+    weather_debug("Night time status: %s\n", ret ? "true" : "false");
+    return ret;
 }
 
 
@@ -803,15 +830,22 @@ merge_astro(GArray *astrodata,
     /* copy astro, as it may be deleted by the calling function */
     new_astro = xml_astro_copy(astro);
 
+    weather_debug("Current astrodata entries: %d", astrodata->len);
+    weather_debug("new_astro->day=%s", format_date(new_astro->day, NULL,TRUE));
+    weather_dump(weather_dump_astro, new_astro);
+
     /* check for and replace existing astrodata of the same date */
-    if ((old_astro = get_astro(astrodata, astro->day, &index))) {
+    if ((old_astro = get_astro(astrodata, new_astro->day, &index))) {
         xml_astro_free(old_astro);
         g_array_remove_index(astrodata, index);
         g_array_insert_val(astrodata, index, new_astro);
         weather_debug("Replaced existing astrodata at %d.", index);
+        weather_dump(weather_dump_astrodata, astrodata);
+        weather_debug("Current astrodata entries: %d", astrodata->len);
     } else {
         g_array_append_val(astrodata, new_astro);
         weather_debug("Appended new astrodata to the existing data.");
+        weather_debug("Current astrodata entries: %d", astrodata->len);
     }
 }
 
@@ -1179,11 +1213,24 @@ get_astro_data_for_day(const GArray *astrodata,
         return NULL;
 
     day_t = day_at_midnight(day_t, day);
+    weather_debug("Checking %d astro entries for data relevant to day %d.",
+                  astrodata->len, day);
 
     for (i = 0; i < astrodata->len; i++) {
         astro = g_array_index(astrodata, xml_astro *, i);
-        if (astro && (difftime(astro->day, day_t) == 0))
+        weather_debug("checking astro %d", i);
+        weather_debug("astro data for day:");
+        weather_debug("%s",weather_dump_astro(astro));
+
+        weather_debug("Checking difftime: astro_day  day_t %d %d.",
+                      astro->day, day_t);
+
+        if (astro && (difftime(astro->day, day_t) == 0)) 
+        {
+            weather_debug("Equal difftime: astro_day  day_t %d %d.",
+                  astro->day, day_t);
             return astro;
+        }
     }
 
     return NULL;
