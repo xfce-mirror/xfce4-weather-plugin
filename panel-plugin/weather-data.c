@@ -563,7 +563,8 @@ get_unit(const units_config *units,
  * Use timezone offset for proper time of day / night  change.
  */
 gboolean
-is_night_time(const xml_astro *astro, const gchar *offset)
+is_night_time(const xml_astro *astro,
+              const gchar *offset)
 {
     time_t now_t;
     GDateTime *dt, *initial_date;
@@ -571,7 +572,12 @@ is_night_time(const xml_astro *astro, const gchar *offset)
     gboolean ret;
 
     dt = g_date_time_new_now_local();
+#if GLIB_CHECK_VERSION (2, 68, 0)
     tz = g_time_zone_new_identifier(offset);
+#else
+    tz = g_time_zone_new(offset);
+#endif
+    g_assert(tz != NULL);
     initial_date = g_date_time_new( tz,
                                     g_date_time_get_year(dt),
                                     g_date_time_get_month(dt),
