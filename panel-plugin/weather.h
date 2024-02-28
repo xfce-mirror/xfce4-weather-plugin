@@ -105,6 +105,7 @@ typedef struct {
     guint sun_msg_parse_error;
     guint moon_msg_parse_error;
     dwnld_state astro_dwnld_state;
+    gboolean http_msg_fail;
 } parse_info;
 
 typedef struct {
