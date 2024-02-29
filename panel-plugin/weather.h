@@ -31,6 +31,7 @@
 #define PLUGIN_WEBSITE "https://docs.xfce.org/panel-plugins/xfce4-weather-plugin"
 #define MAX_FORECAST_DAYS 10
 #define DEFAULT_FORECAST_DAYS 5
+#define ASTRO_FORECAST_DAYS (DEFAULT_FORECAST_DAYS + 1)
 #define MAX_SCROLLBOX_LINES 10
 #define FORECAST_API "2.0"
 
@@ -93,6 +94,20 @@ typedef struct {
     guint http_status_code;
 } update_info;
 
+typedef enum {
+    ASTRO_DWNLD_SUN = 0,
+    ASTRO_DWNLD_MOON
+} dwnld_state;
+
+typedef struct {
+    guint sun_msg_processed;
+    guint moon_msg_processed;
+    guint sun_msg_parse_error;
+    guint moon_msg_parse_error;
+    dwnld_state astro_dwnld_state;
+    gboolean http_msg_fail;
+} parse_info;
+
 typedef struct {
     XfcePanelPlugin *plugin;
     XfconfChannel *channel;
@@ -130,6 +145,7 @@ typedef struct {
     update_info *astro_update;
     update_info *weather_update;
     update_info *conditions_update;
+    parse_info *msg_parse;
     time_t next_wakeup;
     gchar *next_wakeup_reason;
     guint update_timer;
