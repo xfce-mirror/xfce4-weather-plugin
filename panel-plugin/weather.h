@@ -97,7 +97,7 @@ typedef struct {
 typedef enum {
     ASTRO_DWNLD_SUN = 0,
     ASTRO_DWNLD_MOON
-}dwnld_state;
+} dwnld_state;
 
 typedef struct {
     guint sun_msg_processed;

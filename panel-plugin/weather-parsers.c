@@ -72,7 +72,6 @@ my_timegm(struct tm *tm)
 }
 
 
-
 /*
  * Remove offset of timezone, in order to keep previous
  * date format (before the new API, 2.x).
@@ -132,6 +131,7 @@ get_astro(const GArray *astrodata,
     g_assert(astrodata != NULL);
     if (G_UNLIKELY(astrodata == NULL))
         return NULL;
+
     weather_debug("day_t=%s", format_date(day_t, NULL,TRUE));
     for (i = 0; i < astrodata->len; i++) {
         astro = g_array_index(astrodata, xml_astro *, i);
@@ -441,7 +441,7 @@ parse_astrodata_sun(json_object *cur_node,
     if (G_UNLIKELY(astrodata == NULL))
         return FALSE;
 
-   jwhen = json_object_object_get(cur_node, "when");
+    jwhen = json_object_object_get(cur_node, "when");
     if (G_UNLIKELY(jwhen == NULL))
         return FALSE;
 
@@ -458,6 +458,7 @@ parse_astrodata_sun(json_object *cur_node,
     date = json_object_get_string(jdate);
     if (G_UNLIKELY(date == NULL))
         return FALSE;
+
     /* use time info at center of day interval */
     astro->day = day_at_midnight(parse_timestring(date, day_format, FALSE) + 12 * 3600, 0);
     weather_debug("sun: astro->day=%s\n",
@@ -504,7 +505,7 @@ parse_astrodata_sun(json_object *cur_node,
     }
 
     jsolarnoon = json_object_object_get(jproperties, "solarnoon");
-     if (G_UNLIKELY(jsolarnoon == NULL))
+    if (G_UNLIKELY(jsolarnoon == NULL))
         return FALSE;
 
     jdisc_centre_elevation = json_object_object_get(jsolarnoon, "disc_centre_elevation");
@@ -609,14 +610,14 @@ parse_astrodata_moon(json_object *cur_node,
 
     jproperties = json_object_object_get(cur_node, "properties");
     if (G_UNLIKELY(jproperties == NULL)) {
-       weather_debug("properties not found" );
-       return FALSE;
+        weather_debug("properties not found" );
+        return FALSE;
     }
 
     jmoonrise = json_object_object_get(jproperties, "moonrise");
     if (G_UNLIKELY(jmoonrise == NULL)) {
-       weather_debug("moonrise not found" );
-       return FALSE;
+        weather_debug("moonrise not found" );
+        return FALSE;
     }
 
     jmoonrise_time = json_object_object_get(jmoonrise, "time");

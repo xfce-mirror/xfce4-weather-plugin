@@ -29,7 +29,6 @@
 
 #include <libxml/parser.h>
 #include <libxml/tree.h>
-
 #include <json-c/json_tokener.h>
 
 #include "weather-parsers.h"
@@ -477,7 +476,9 @@ calc_next_download_time(const update_info *upi,
         else
             interval = upi->check_interval;
     }
+
     weather_debug("interval=%d", interval);
+
     return time_calc(retry_tm, 0, 0, 0, 0, 0, interval);
 }
 
@@ -572,7 +573,7 @@ cb_astro_update_moon(SoupSession *session,
         }
     } else {
         data->msg_parse->http_msg_fail = TRUE;
-        #if GLIB_CHECK_VERSION (2, 64, 0)
+#if GLIB_CHECK_VERSION (2, 64, 0)
         g_warning_once("Download of moon astronomical data failed with HTTP Status Code %d, Reason phrase: %s",
                        msg->status_code, msg->reason_phrase);
 #else
@@ -700,7 +701,7 @@ update_handler(gpointer user_data)
     if (difftime(data->astro_update->next, now_t) <= 0) {
         /* real next update time will be calculated when update is finished,
            this is to prevent spawning multiple updates in a row */
-        weather_debug("Fetching astronomical data. State: %s.\n", (int)astro_dwnld_state? "ASTRO_DWNLD_MOON" : "ASTRO_DWNLD_SUN");
+        weather_debug("Fetching astronomical data. State: %s.\n", (int)astro_dwnld_state ? "ASTRO_DWNLD_MOON" : "ASTRO_DWNLD_SUN");
         switch (astro_dwnld_state) {
         case ASTRO_DWNLD_SUN:
             data->astro_update->next = time_calc_hour(now_tm, 1);
@@ -741,15 +742,15 @@ update_handler(gpointer user_data)
                 day_t = day_at_midnight(now_t, day);
                 now_tm = *localtime(&day_t);
                 url = g_strdup_printf("https://api.met.no/weatherapi"
-                                  "/sunrise/3.0/moon?lat=%s&lon=%s&"
-                                  "date=%04d-%02d-%02d&"
-                                  "offset=%s",
-                                  data->lat, data->lon,
-                                  now_tm.tm_year + 1900,
-                                  now_tm.tm_mon + 1,
-                                  now_tm.tm_mday,
-                                  data->offset
-                                  );
+                                      "/sunrise/3.0/moon?lat=%s&lon=%s&"
+                                      "date=%04d-%02d-%02d&"
+                                      "offset=%s",
+                                      data->lat, data->lon,
+                                      now_tm.tm_year + 1900,
+                                      now_tm.tm_mon + 1,
+                                      now_tm.tm_mday,
+                                      data->offset
+                                      );
                 /* start receive thread */
                 weather_debug("getting moon data: %s", url);
                 weather_http_queue_request(data->session, url,
@@ -1418,7 +1419,7 @@ read_cache_file(plugin_data *data)
 
         CACHE_READ_STRING(timestring, "day");
         astro->day = parse_timestring(timestring, "%Y-%m-%d", TRUE);
-                weather_debug("cached astrodata for day=%s\n",
+        weather_debug("cached astrodata for day=%s\n",
                       format_date(astro->day, NULL, TRUE));
         g_free(timestring);
         CACHE_READ_STRING(timestring, "sunrise");
@@ -1454,6 +1455,7 @@ read_cache_file(plugin_data *data)
         g_free(group);
         group = g_strdup_printf("astrodata%d", ++i);
     }
+
     /* downloads the astrodata of the day if necessary */
     if (G_LIKELY(get_astro_data_for_day(data->astrodata, DEFAULT_FORECAST_DAYS)))
         weather_debug("Reusing cached astrodata instead of downloading it.");

@@ -122,6 +122,7 @@ typedef struct {
     gchar *timezone_id;
 } xml_timezone;
 
+
 xml_weather *make_weather_data(void);
 
 xml_time *make_timeslice(void);

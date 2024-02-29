@@ -578,20 +578,20 @@ is_night_time(const xml_astro *astro,
     tz = g_time_zone_new(offset);
 #endif
     g_assert(tz != NULL);
-    initial_date = g_date_time_new( tz,
-                                    g_date_time_get_year(dt),
-                                    g_date_time_get_month(dt),
-                                    g_date_time_get_day_of_month (dt),
-                                    g_date_time_get_hour(dt),
-                                    g_date_time_get_minute(dt),
-                                    0); // sec
+    initial_date = g_date_time_new(tz,
+                                   g_date_time_get_year(dt),
+                                   g_date_time_get_month(dt),
+                                   g_date_time_get_day_of_month (dt),
+                                   g_date_time_get_hour(dt),
+                                   g_date_time_get_minute(dt),
+                                   0); // sec
     now_t = (time_t)g_date_time_to_unix(initial_date); 
     weather_debug("is_night_time ?: time_now(in the proper timezone)=%s\n",
                   g_date_time_format_iso8601(initial_date)); 
 
     if (G_LIKELY(astro)) {
         weather_debug("Checking difftime: astro sunrise  now_t %d %d.\n",
-                    astro->sunrise, now_t);
+                      astro->sunrise, now_t);
         weather_debug("Checking difftime: astro sunset  now_t %d %d.\n",
                       astro->sunset, now_t);
 
@@ -612,7 +612,7 @@ is_night_time(const xml_astro *astro,
             ret = TRUE;
         }
         else {
-        ret = FALSE;
+            ret = FALSE;
         }
     }
 
@@ -1227,14 +1227,12 @@ get_astro_data_for_day(const GArray *astrodata,
         weather_debug("checking astro %d", i);
         weather_debug("astro data for day:");
         weather_debug("%s",weather_dump_astro(astro));
-
         weather_debug("Checking difftime: astro_day  day_t %d %d.",
                       astro->day, day_t);
 
-        if (astro && (difftime(astro->day, day_t) == 0)) 
-        {
+        if (astro && (difftime(astro->day, day_t) == 0)) {
             weather_debug("Equal difftime: astro_day  day_t %d %d.",
-                  astro->day, day_t);
+                          astro->day, day_t);
             return astro;
         }
     }
