@@ -430,7 +430,8 @@ parse_astrodata_sun(json_object *cur_node,
                 *jsolarnoon, *jsolarmidnight, *jdisc_centre_elevation;
     const gchar day_format[]="%Y-%m-%dT%H:%M:%SZ";
     const gchar sun_format[]="%Y-%m-%dT%H:%MZ";
-    const gchar *date, *time;
+    const gchar *date;
+    gchar *time;
     gboolean sun_rises = FALSE, sun_sets = FALSE;
 
     astro = g_slice_new0(xml_astro);
@@ -484,6 +485,7 @@ parse_astrodata_sun(json_object *cur_node,
         sun_rises = TRUE;
         weather_debug("astro->sunrise=%s\n",
                       format_date(astro->sunrise, NULL,TRUE));
+        g_free(time);
     }
 
     jsunset = json_object_object_get(jproperties, "sunset");
@@ -502,6 +504,7 @@ parse_astrodata_sun(json_object *cur_node,
         sun_sets = TRUE;
         weather_debug("astro->sunset=%s\n",
                       format_date(astro->sunset, NULL,TRUE));
+        g_free(time);
     }
 
     jsolarnoon = json_object_object_get(jproperties, "solarnoon");
@@ -559,7 +562,8 @@ parse_astrodata_moon(json_object *cur_node,
     guint index;
     const gchar day_format[]="%Y-%m-%dT%H:%M:%SZ";
     const gchar moon_format[]="%Y-%m-%dT%H:%MZ";
-    const gchar *date, *time;
+    const gchar *date;
+    gchar *time;
     gboolean moon_rises = FALSE, moon_sets = FALSE;
 
     g_assert(astrodata != NULL);
@@ -634,6 +638,7 @@ parse_astrodata_moon(json_object *cur_node,
         moon_rises = TRUE;
         weather_debug("astro->moonrise=%s\n",
                       format_date(astro->moonrise, NULL,TRUE));
+        g_free(time);
     }
 
     jmoonset = json_object_object_get(jproperties, "moonset");
@@ -655,6 +660,7 @@ parse_astrodata_moon(json_object *cur_node,
         moon_sets = TRUE;
         weather_debug("astro->moonset=%s\n",
                       format_date(astro->moonset, NULL,TRUE));
+        g_free(time);
     }
 
     jmoonphase = json_object_object_get(jproperties, "moonphase");
