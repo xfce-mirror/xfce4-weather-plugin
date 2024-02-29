@@ -514,13 +514,8 @@ cb_astro_update_sun(SoupSession *session,
         }
     } else {
         data->msg_parse->http_msg_fail = TRUE;
-#if GLIB_CHECK_VERSION (2, 64, 0)
         g_warning_once("Download of sun astronomical data failed with HTTP Status Code %d, Reason phrase: %s",
                        msg->status_code, msg->reason_phrase);
-#else
-        g_warning("Download of sun astronomical data failed with HTTP Status Code %d, Reason phrase: %s",
-                  msg->status_code, msg->reason_phrase);
-#endif
     }
 
     if (data->msg_parse->sun_msg_processed == ASTRO_FORECAST_DAYS) {
@@ -573,13 +568,8 @@ cb_astro_update_moon(SoupSession *session,
         }
     } else {
         data->msg_parse->http_msg_fail = TRUE;
-#if GLIB_CHECK_VERSION (2, 64, 0)
         g_warning_once("Download of moon astronomical data failed with HTTP Status Code %d, Reason phrase: %s",
                        msg->status_code, msg->reason_phrase);
-#else
-        g_warning("Download of moon astronomical data failed with HTTP Status Code %d, Reason phrase: %s",
-                  msg->status_code, msg->reason_phrase);
-#endif
     }
 
     if (data->msg_parse->sun_msg_processed == ASTRO_FORECAST_DAYS && data->msg_parse->moon_msg_processed == ASTRO_FORECAST_DAYS) {

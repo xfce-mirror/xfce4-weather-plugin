@@ -573,7 +573,9 @@ is_night_time(const xml_astro *astro,
 
     dt = g_date_time_new_now_local();
 #if GLIB_CHECK_VERSION (2, 68, 0)
+G_GNUC_BEGIN_IGNORE_DEPRECATIONS
     tz = g_time_zone_new_identifier(offset);
+G_GNUC_END_IGNORE_DEPRECATIONS
 #else
     tz = g_time_zone_new(offset);
 #endif
