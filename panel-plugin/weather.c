@@ -509,7 +509,7 @@ cb_astro_update_sun(SoupSession *session,
             }
             g_assert(json_object_put(json_tree) ==1);
         } else {
-            g_warning(_("Error parsing sun astronomical data!"));
+            g_warning("Error parsing sun astronomical data!");
             weather_debug("No json_tree");
         }
     } else {
@@ -555,7 +555,7 @@ cb_astro_update_moon(SoupSession *session,
         if (G_LIKELY(json_tree)) {
             if (!parse_astrodata_moon(json_tree, data->astrodata))  {
                 data->msg_parse->moon_msg_parse_error++;
-                g_warning(_("Error parsing moon astronomical data"));
+                g_warning("Error parsing moon astronomical data");
                 weather_debug("data->astrodata:%s",
                               weather_dump_astrodata(data->astrodata));
             } else {
@@ -563,7 +563,7 @@ cb_astro_update_moon(SoupSession *session,
             }
             g_assert(json_object_put(json_tree) ==1);
         } else {
-            g_warning(_("Error parsing moon astronomical data"));
+            g_warning("Error parsing moon astronomical data");
             weather_debug("No json_tree");
         }
     } else {
