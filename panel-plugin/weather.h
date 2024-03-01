@@ -184,7 +184,7 @@ extern gboolean debug_mode;
 
 void weather_http_queue_request(SoupSession *session,
                                 const gchar *uri,
-                                SoupSessionCallback callback_func,
+                                GAsyncReadyCallback callback_func,
                                 gpointer user_data);
 
 void scrollbox_set_visible(plugin_data *data);
