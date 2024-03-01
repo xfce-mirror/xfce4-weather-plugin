@@ -791,30 +791,28 @@ parse_timezone(xmlNode *cur_node)
 
 
 xmlDoc *
-get_xml_document(SoupMessage *msg)
+get_xml_document(const gchar *data, gsize len)
 {
-    if (G_LIKELY(msg && msg->response_body && msg->response_body->data)) {
-        if (g_utf8_validate(msg->response_body->data, -1, NULL)) {
+    if (G_LIKELY(data && len)) {
+        if (g_utf8_validate(data, len, NULL)) {
             /* force parsing as UTF-8, the XML encoding header may lie */
-            return xmlReadMemory(msg->response_body->data,
-                                 strlen(msg->response_body->data),
+            return xmlReadMemory(data, len,
                                  NULL, "UTF-8", 0);
         } else {
-            return xmlParseMemory(msg->response_body->data,
-                                  strlen(msg->response_body->data));
+            return xmlParseMemory(data, len);
         }
     }
     return NULL;
 }
 
 json_object *
-get_json_tree(SoupMessage *msg)
+get_json_tree(const gchar *data, gsize len)
 {
     json_object *res=NULL;
     enum json_tokener_error err;
 
-    if (G_LIKELY(msg && msg->response_body && msg->response_body->data)) {
-        res =  json_tokener_parse_verbose(msg->response_body->data, &err);
+    if (G_LIKELY(data && len)) {
+        res =  json_tokener_parse_verbose(data, &err);
         if (err != json_tokener_success)
             g_warning("get_json_tree: error =%d",err);
     }
@@ -822,18 +820,18 @@ get_json_tree(SoupMessage *msg)
 }
 
 gpointer
-parse_xml_document(SoupMessage *msg,
+parse_xml_document(const gchar *data, gsize len,
                    XmlParseFunc parse_func)
 {
     xmlDoc *doc;
     xmlNode *root_node;
     gpointer user_data = NULL;
 
-    g_assert(msg != NULL);
-    if (G_UNLIKELY(msg == NULL))
+    g_assert(data != NULL);
+    if (G_UNLIKELY(data == NULL || len == 0))
         return NULL;
 
-    doc = get_xml_document(msg);
+    doc = get_xml_document(data, len);
     if (G_LIKELY(doc)) {
         root_node = xmlDocGetRootElement(doc);
         if (G_LIKELY(root_node))
