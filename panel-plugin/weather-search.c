@@ -198,15 +198,17 @@ create_search_dialog(GtkWindow *parent,
     dialog->session = session;
 
     dialog->dialog =
-        xfce_titled_dialog_new_with_buttons(_("Search location"),
-                                            parent,
-                                            GTK_DIALOG_MODAL |
-                                            GTK_DIALOG_DESTROY_WITH_PARENT,
-                                            _("Cancel"),
-                                            GTK_RESPONSE_REJECT,
-                                            _("OK"),
-                                            GTK_RESPONSE_ACCEPT,
-                                            NULL);
+        xfce_titled_dialog_new_with_mixed_buttons(_("Search location"),
+                                                  parent,
+                                                  GTK_DIALOG_MODAL |
+                                                  GTK_DIALOG_DESTROY_WITH_PARENT,
+                                                  "",
+                                                  _("Cancel"),
+                                                  GTK_RESPONSE_REJECT,
+                                                  "",
+                                                  _("OK"),
+                                                  GTK_RESPONSE_ACCEPT,
+                                                  NULL);
     gtk_dialog_set_response_sensitive(GTK_DIALOG(dialog->dialog),
                                       GTK_RESPONSE_ACCEPT, FALSE);
     gtk_window_set_icon_name(GTK_WINDOW(dialog->dialog), "edit-find");
