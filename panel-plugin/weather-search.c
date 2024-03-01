@@ -78,8 +78,8 @@ sanitize_str(const gchar *str)
 
 
 static void
-cb_searchdone(SoupSession *session,
-              SoupMessage *msg,
+cb_searchdone(GObject *source,
+              GAsyncResult *result,
               gpointer user_data)
 {
     search_dialog *dialog = (search_dialog *) user_data;
@@ -91,11 +91,14 @@ cb_searchdone(SoupSession *session,
     GtkTreeSelection *selection;
     const gchar *body = NULL;
     gsize len = 0;
+    GError *error = NULL;
+    GBytes *response =
+        soup_session_send_and_read_finish(SOUP_SESSION(source), result, &error);
 
-    if (G_LIKELY(msg->response_body && msg->response_body->data)) {
-        body = msg->response_body->data;
-        len = msg->response_body->length;
-    }
+    if (G_UNLIKELY(error))
+        g_error_free(error);
+    else
+        body = g_bytes_get_data(response, &len);
 
     if (global_dialog == NULL) {
         weather_debug("%s called after dialog was destroyed", G_STRFUNC);
@@ -105,8 +108,10 @@ cb_searchdone(SoupSession *session,
     gtk_widget_set_sensitive(dialog->find_button, TRUE);
 
     doc = get_xml_document(body, len);
-    if (!doc)
+    if (!doc) {
+        g_bytes_unref(response);
         return;
+    }
 
     cur_node = xmlDocGetRootElement(doc);
     if (cur_node) {
@@ -140,6 +145,7 @@ cb_searchdone(SoupSession *session,
         }
 
     gtk_tree_view_column_set_title(dialog->column, _("Results"));
+    g_bytes_unref(response);
 }
 
 
@@ -384,8 +390,8 @@ get_preferred_units(const gchar *country_code)
 
 
 static void
-cb_geolocation(SoupSession *session,
-               SoupMessage *msg,
+cb_geolocation(GObject *source,
+               GAsyncResult *result,
                gpointer user_data)
 {
     geolocation_data *data = (geolocation_data *) user_data;
@@ -394,11 +400,14 @@ cb_geolocation(SoupSession *session,
     units_config *units;
     const gchar *body = NULL;
     gsize len = 0;
+    GError *error = NULL;
+    GBytes *response =
+        soup_session_send_and_read_finish(SOUP_SESSION(source), result, &error);
 
-    if (G_LIKELY(msg->response_body && msg->response_body->data)) {
-        body = msg->response_body->data;
-        len = msg->response_body->length;
-    }
+    if (G_UNLIKELY(error))
+        g_error_free(error);
+    else
+        body = g_bytes_get_data(response, &len);
 
     if (global_dialog == NULL) {
         weather_debug("%s called after dialog was destroyed", G_STRFUNC);
@@ -411,6 +420,7 @@ cb_geolocation(SoupSession *session,
 
     if (!geo) {
         data->cb(NULL, NULL, NULL, NULL, data->user_data);
+        g_bytes_unref(response);
         g_free(data);
         return;
     }
@@ -441,6 +451,7 @@ cb_geolocation(SoupSession *session,
     g_slice_free(units_config, units);
     xml_geolocation_free(geo);
     g_free(full_loc);
+    g_bytes_unref(response);
     g_free(data);
 }
 
