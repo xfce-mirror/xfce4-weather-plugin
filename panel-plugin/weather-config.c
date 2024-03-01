@@ -946,8 +946,8 @@ button_icons_dir_clicked(GtkWidget *button,
     g_mkdir_with_parents(dir, 0755);
     command = g_strdup_printf("exo-open %s", dir);
     g_free(dir);
-    xfce_spawn_command_line_on_screen(gdk_screen_get_default(),
-                                      command, FALSE, TRUE, NULL);
+    xfce_spawn_command_line(gdk_screen_get_default(), command, FALSE,
+                            TRUE, TRUE, NULL);
     g_free(command);
 }
 
