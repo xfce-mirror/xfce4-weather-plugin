@@ -22,7 +22,6 @@
 #include <glib.h>
 #include <gtk/gtk.h>
 #include <libxml/parser.h>
-#include <libsoup/soup.h>
 
 #define DATA_EXPIRY_TIME (24 * 3600)
 
@@ -155,9 +154,9 @@ xml_astro *get_astro(const GArray *astrodata,
                      const time_t day_t,
                      guint *index);
 
-xmlDoc *get_xml_document(SoupMessage *msg);
+xmlDoc *get_xml_document(const gchar *data, gsize len);
 
-gpointer parse_xml_document(SoupMessage *msg,
+gpointer parse_xml_document(const gchar *data, gsize len,
                             XmlParseFunc parse_func);
 
 xml_astro *xml_astro_copy(const xml_astro *src);
