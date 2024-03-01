@@ -245,6 +245,13 @@ cb_lookup_altitude(SoupSession *session,
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     xml_altitude *altitude;
     gdouble alt = 0;
+    const gchar *body = NULL;
+    gsize len = 0;
+
+    if (G_LIKELY(msg->response_body && msg->response_body->data)) {
+        body = msg->response_body->data;
+        len = msg->response_body->length;
+    }
 
     if (global_dialog == NULL) {
         weather_debug("%s called after dialog was destroyed", G_STRFUNC);
@@ -252,7 +259,7 @@ cb_lookup_altitude(SoupSession *session,
     }
 
     altitude = (xml_altitude *)
-        parse_xml_document(msg, (XmlParseFunc) parse_altitude);
+        parse_xml_document(body, len, (XmlParseFunc) parse_altitude);
 
     if (altitude) {
         alt = string_to_double(altitude->altitude, -9999);
@@ -274,6 +281,13 @@ cb_lookup_timezone(SoupSession *session,
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     xml_timezone *xml_tz;
+    const gchar *body = NULL;
+    gsize len = 0;
+
+    if (G_LIKELY(msg->response_body && msg->response_body->data)) {
+        body = msg->response_body->data;
+        len = msg->response_body->length;
+    }
 
     if (global_dialog == NULL) {
         weather_debug("%s called after dialog was destroyed", G_STRFUNC);
@@ -281,7 +295,7 @@ cb_lookup_timezone(SoupSession *session,
     }
 
     xml_tz = (xml_timezone *)
-        parse_xml_document(msg, (XmlParseFunc) parse_timezone);
+        parse_xml_document(body, len, (XmlParseFunc) parse_timezone);
     weather_dump(weather_dump_timezone, xml_tz);
 
     if (xml_tz) {

@@ -489,11 +489,17 @@ cb_astro_update_sun(SoupSession *session,
     json_object *json_tree;
     time_t now_t;
     guint astro_forecast_days;
+    const gchar *body = NULL;
+    gsize len = 0;
 
     data->msg_parse->sun_msg_processed++;
     data->astro_update->http_status_code = msg->status_code;
     if ((msg->status_code == 200 || msg->status_code == 203)) {
-        json_tree = get_json_tree(msg);
+        if (G_LIKELY(msg->response_body && msg->response_body->data)) {
+            body = msg->response_body->data;
+            len = msg->response_body->length;
+        }
+        json_tree = get_json_tree(body, len);
         if (G_LIKELY(json_tree)) {
             if (!parse_astrodata_sun(json_tree, data->astrodata))  {
                 data->msg_parse->sun_msg_parse_error++;
@@ -545,11 +551,17 @@ cb_astro_update_moon(SoupSession *session,
     json_object *json_tree;
     time_t now_t;
     guint astro_forecast_days;
+    const gchar *body = NULL;
+    gsize len = 0;
 
     data->msg_parse->moon_msg_processed++;
     data->astro_update->http_status_code = msg->status_code;
     if ((msg->status_code == 200 || msg->status_code == 203)) {
-        json_tree = get_json_tree(msg);
+        if (G_LIKELY(msg->response_body && msg->response_body->data)) {
+            body = msg->response_body->data;
+            len = msg->response_body->length;
+        }
+        json_tree = get_json_tree(body, len);
         if (G_LIKELY(json_tree)) {
             if (!parse_astrodata_moon(json_tree, data->astrodata))  {
                 data->msg_parse->moon_msg_parse_error++;
@@ -606,17 +618,23 @@ cb_weather_update(SoupSession *session,
                   gpointer user_data)
 {
     plugin_data *data = user_data;
-    xmlDoc *doc;
+    xmlDoc *doc = NULL;
     xmlNode *root_node;
     time_t now_t;
     gboolean parsing_error = TRUE;
+    const gchar *body = NULL;
+    gsize len = 0;
 
     weather_debug("Processing downloaded weather data.");
     time(&now_t);
     data->weather_update->attempt++;
     data->weather_update->http_status_code = msg->status_code;
     if (msg->status_code == 200 || msg->status_code == 203) {
-        doc = get_xml_document(msg);
+        if (G_LIKELY(msg->response_body && msg->response_body->data)) {
+            body = msg->response_body->data;
+            len = msg->response_body->length;
+        }
+        doc = get_xml_document(body, len);
         if (G_LIKELY(doc)) {
             root_node = xmlDocGetRootElement(doc);
             if (G_LIKELY(root_node))

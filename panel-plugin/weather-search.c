@@ -89,6 +89,13 @@ cb_searchdone(SoupSession *session,
     gint found = 0;
     GtkTreeIter iter;
     GtkTreeSelection *selection;
+    const gchar *body = NULL;
+    gsize len = 0;
+
+    if (G_LIKELY(msg->response_body && msg->response_body->data)) {
+        body = msg->response_body->data;
+        len = msg->response_body->length;
+    }
 
     if (global_dialog == NULL) {
         weather_debug("%s called after dialog was destroyed", G_STRFUNC);
@@ -97,7 +104,7 @@ cb_searchdone(SoupSession *session,
 
     gtk_widget_set_sensitive(dialog->find_button, TRUE);
 
-    doc = get_xml_document(msg);
+    doc = get_xml_document(body, len);
     if (!doc)
         return;
 
@@ -385,6 +392,13 @@ cb_geolocation(SoupSession *session,
     xml_geolocation *geo;
     gchar *full_loc;
     units_config *units;
+    const gchar *body = NULL;
+    gsize len = 0;
+
+    if (G_LIKELY(msg->response_body && msg->response_body->data)) {
+        body = msg->response_body->data;
+        len = msg->response_body->length;
+    }
 
     if (global_dialog == NULL) {
         weather_debug("%s called after dialog was destroyed", G_STRFUNC);
@@ -392,7 +406,7 @@ cb_geolocation(SoupSession *session,
     }
 
     geo = (xml_geolocation *)
-        parse_xml_document(msg, (XmlParseFunc) parse_geolocation);
+        parse_xml_document(body, len, (XmlParseFunc) parse_geolocation);
     weather_dump(weather_dump_geolocation, geo);
 
     if (!geo) {
