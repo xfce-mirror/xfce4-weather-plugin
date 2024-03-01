@@ -517,13 +517,8 @@ cb_astro_update(SoupSession *session,
         if (parsing_error)
             g_warning("Error parsing astronomical data!");
     } else {
-#if GLIB_CHECK_VERSION (2, 64, 0)
         g_warning_once("Download of astronomical data failed with HTTP Status Code %d, Reason phrase: %s",
                        msg->status_code, msg->reason_phrase);
-#else
-        g_warning("Download of astronomical data failed with HTTP Status Code %d, Reason phrase: %s",
-                  msg->status_code, msg->reason_phrase);
-#endif
     }
     data->astro_update->next = calc_next_download_time(data->astro_update,
                                                        now_t);
