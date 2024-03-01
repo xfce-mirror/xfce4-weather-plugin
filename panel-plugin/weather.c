@@ -23,6 +23,8 @@
 #include <string.h>
 #include <sys/stat.h>
 
+#include <glib.h>
+
 #include <libxfce4util/libxfce4util.h>
 #include <libxfce4ui/libxfce4ui.h>
 #include <xfconf/xfconf.h>
@@ -105,13 +107,14 @@ static void schedule_next_wakeup(plugin_data *data);
 void
 weather_http_queue_request(SoupSession *session,
                            const gchar *uri,
-                           SoupSessionCallback callback_func,
+                           GAsyncReadyCallback callback_func,
                            gpointer user_data)
 {
     SoupMessage *msg;
 
     msg = soup_message_new("GET", uri);
-    soup_session_queue_message(session, msg, callback_func, user_data);
+    soup_session_send_and_read_async(session, msg, G_PRIORITY_DEFAULT, NULL,
+                                     callback_func, user_data);
 }
 
 
@@ -482,8 +485,8 @@ calc_next_download_time(const update_info *upi,
  * Process downloaded astro data and schedule next astro update.
  */
 static void
-cb_astro_update(SoupSession *session,
-                SoupMessage *msg,
+cb_astro_update(GObject *source,
+                GAsyncResult *result,
                 gpointer user_data)
 {
     plugin_data *data = user_data;
@@ -493,15 +496,17 @@ cb_astro_update(SoupSession *session,
     gboolean parsing_error = TRUE;
     const gchar *body = NULL;
     gsize len = 0;
+    SoupMessage *msg;
+    GError *error = NULL;
+    GBytes *response;
 
     time(&now_t);
+    msg = soup_session_get_async_result_message(SOUP_SESSION(source), result);
     data->astro_update->attempt++;
-    data->astro_update->http_status_code = msg->status_code;
-    if ((msg->status_code == 200 || msg->status_code == 203)) {
-        if (G_LIKELY(msg->response_body && msg->response_body->data)) {
-            body = msg->response_body->data;
-            len = msg->response_body->length;
-        }
+    data->astro_update->http_status_code = soup_message_get_status(msg);
+    response = soup_session_send_and_read_finish(SOUP_SESSION(source),
+                                                 result, &error);
+    if (G_LIKELY(error == NULL)) {
         doc = get_xml_document(body, len);
         if (G_LIKELY(doc)) {
             root_node = xmlDocGetRootElement(doc);
@@ -520,11 +525,13 @@ cb_astro_update(SoupSession *session,
             }
             xmlFreeDoc(doc);
         }
+        g_bytes_unref(response);
         if (parsing_error)
             g_warning("Error parsing astronomical data!");
     } else {
-        g_warning_once("Download of astronomical data failed with HTTP Status Code %d, Reason phrase: %s",
-                       msg->status_code, msg->reason_phrase);
+        g_warning_once("Download of astronomical data failed: %s",
+                       error->message);
+        g_error_free(error);
     }
     data->astro_update->next = calc_next_download_time(data->astro_update,
                                                        now_t);
@@ -547,8 +554,8 @@ cb_astro_update(SoupSession *session,
  * Process downloaded weather data and schedule next weather update.
  */
 static void
-cb_weather_update(SoupSession *session,
-                  SoupMessage *msg,
+cb_weather_update(GObject *source,
+                  GAsyncResult *result,
                   gpointer user_data)
 {
     plugin_data *data = user_data;
@@ -558,16 +565,18 @@ cb_weather_update(SoupSession *session,
     gboolean parsing_error = TRUE;
     const gchar *body = NULL;
     gsize len = 0;
+    SoupMessage *msg;
+    GError *error = NULL;
+    GBytes *response = NULL;
 
     weather_debug("Processing downloaded weather data.");
+    msg = soup_session_get_async_result_message(SOUP_SESSION(source), result);
     time(&now_t);
     data->weather_update->attempt++;
-    data->weather_update->http_status_code = msg->status_code;
-    if (msg->status_code == 200 || msg->status_code == 203) {
-        if (G_LIKELY(msg->response_body && msg->response_body->data)) {
-            body = msg->response_body->data;
-            len = msg->response_body->length;
-        }
+    data->weather_update->http_status_code = soup_message_get_status(msg);
+    response = soup_session_send_and_read_finish(SOUP_SESSION(source),
+                                                 result, &error);
+    if (G_LIKELY(error == NULL)) {
         doc = get_xml_document(body, len);
         if (G_LIKELY(doc)) {
             root_node = xmlDocGetRootElement(doc);
@@ -579,12 +588,13 @@ cb_weather_update(SoupSession *session,
                 }
             xmlFreeDoc(doc);
         }
+        g_bytes_unref(response);
         if (parsing_error)
             g_warning("Error parsing weather data!");
-    } else
-        weather_debug
-            ("Download of weather data failed with HTTP Status Code %d, "
-             "Reason phrase: %s", msg->status_code, msg->reason_phrase);
+    } else {
+        weather_debug("Download of weather data failed: %s", error->message);
+        g_error_free(error);
+    }
     data->weather_update->next = calc_next_download_time(data->weather_update,
                                                          now_t);
 
@@ -1592,32 +1602,6 @@ mi_click(GtkWidget *widget,
     update_weatherdata_with_reset(data);
 }
 
-static void
-proxy_auth(SoupSession *session,
-           SoupMessage *msg,
-           SoupAuth *auth,
-           gboolean retrying,
-           gpointer user_data)
-{
-    SoupURI *soup_proxy_uri;
-    const gchar *proxy_uri;
-
-    if (!retrying) {
-        if (msg->status_code == SOUP_STATUS_PROXY_AUTHENTICATION_REQUIRED) {
-            proxy_uri = g_getenv("HTTP_PROXY");
-            if (!proxy_uri)
-                proxy_uri = g_getenv("http_proxy");
-            if (proxy_uri) {
-                soup_proxy_uri = soup_uri_new(proxy_uri);
-                soup_auth_authenticate(auth,
-                                       soup_uri_get_user(soup_proxy_uri),
-                                       soup_uri_get_password(soup_proxy_uri));
-                soup_uri_free(soup_proxy_uri);
-            }
-        }
-    }
-}
-
 
 #ifdef HAVE_UPOWER_GLIB
 static void
@@ -1904,9 +1888,10 @@ static plugin_data *
 xfceweather_create_control(XfcePanelPlugin *plugin)
 {
     plugin_data *data = g_slice_new0(plugin_data);
-    SoupURI *soup_proxy_uri;
+    GProxyResolver *proxy_resolver;
     const gchar *proxy_uri;
-    const gchar *proxy_user;
+    const gchar *no_proxy;
+    gchar **no_proxy_lst = NULL;
     GtkWidget *refresh;
     cairo_surface_t *icon = NULL;
     data_types lbl;
@@ -1939,29 +1924,26 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
 
     /* Setup session for HTTP connections */
     data->session = soup_session_new();
-    g_object_set(data->session, SOUP_SESSION_USER_AGENT,
-                 PACKAGE_NAME "-" PACKAGE_VERSION, NULL);
-    g_object_set(data->session, SOUP_SESSION_TIMEOUT,
-                 CONN_TIMEOUT, NULL);
+    soup_session_set_user_agent(data->session,
+                                PACKAGE_NAME "-" PACKAGE_VERSION);
+    soup_session_set_timeout(data->session, CONN_TIMEOUT);
 
     /* Set the proxy URI from environment */
     proxy_uri = g_getenv("HTTP_PROXY");
     if (!proxy_uri)
         proxy_uri = g_getenv("http_proxy");
     if (proxy_uri) {
-        soup_proxy_uri = soup_uri_new(proxy_uri);
-        g_object_set(data->session, SOUP_SESSION_PROXY_URI,
-                     soup_proxy_uri, NULL);
-
-        /* check if uri contains authentication info */
-        proxy_user = soup_uri_get_user(soup_proxy_uri);
-        if (proxy_user && strlen(proxy_user) > 0) {
-            g_signal_connect(G_OBJECT(data->session), "authenticate",
-                             G_CALLBACK(proxy_auth), NULL);
-        }
-
-        soup_uri_free(soup_proxy_uri);
+        no_proxy = g_getenv("no_proxy");
+        if (!no_proxy)
+            no_proxy = g_getenv("NO_PROXY");
+        if (no_proxy)
+            no_proxy_lst = g_strsplit(no_proxy, ",", -1);
+        proxy_resolver = g_simple_proxy_resolver_new(proxy_uri, no_proxy_lst);
+        g_strfreev(no_proxy_lst);
+        soup_session_set_proxy_resolver(data->session, proxy_resolver);
+        g_object_unref(proxy_resolver);
     }
+    /* Otherwise, g_proxy_resolver_get_default() will be used */
 
     data->scrollbox = gtk_scrollbox_new();
 
