@@ -31,7 +31,6 @@
 #define PLUGIN_WEBSITE "https://docs.xfce.org/panel-plugins/xfce4-weather-plugin"
 #define MAX_FORECAST_DAYS 10
 #define DEFAULT_FORECAST_DAYS 5
-#define ASTRO_FORECAST_DAYS (DEFAULT_FORECAST_DAYS + 1)
 #define MAX_SCROLLBOX_LINES 10
 #define FORECAST_API "2.0"
 
