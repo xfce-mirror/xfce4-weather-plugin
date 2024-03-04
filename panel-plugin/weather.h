@@ -40,6 +40,7 @@
 #define SETTING_LONGITUDE     "/location/longitude"
 #define SETTING_MSL           "/msl"
 #define SETTING_TIMEZONE      "/timezone"
+#define SETTING_DAYFORMAT     "/dayformat"
 #define SETTING_OFFSET        "/offset"
 #define SETTING_GEONAMES      "/geonames-username"
 #define SETTING_CACHE_MAX_AGE "/cache-max-age"
@@ -165,6 +166,7 @@ typedef struct {
     gchar *lon;
     gint msl;
     gchar *timezone;
+    gchar *dayformat;
     gchar *offset;
     gchar *timezone_initial;
     gint cache_file_max_age;
