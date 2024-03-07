@@ -1832,7 +1832,7 @@ xfceweather_create_options(XfcePanelPlugin *plugin,
         /* due to probable configuration changes schedule astro data downloads */
         if ((previous_forecast_days < data->forecast_days) && !data->astro_update->started) {
             time(&now_t);
-            data->astro_update->next = now_t += 1;
+            data->astro_update->next = now_t + 1;
             weather_debug("due to probable configuration changes: astro data update scheduled! \n");
             schedule_next_wakeup(data);
         }
