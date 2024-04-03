@@ -14,7 +14,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-29 00:51+0200\n"
+"POT-Creation-Date: 2024-04-03 00:55+0200\n"
 "PO-Revision-Date: 2013-07-03 19:29+0000\n"
 "Last-Translator: Faisal Rachmadin <frachmadin@gmail.com>, 2021\n"
 "Language-Team: Indonesian (http://app.transifex.com/xfce/xfce-panel-plugins/language/id/)\n"
@@ -24,522 +24,97 @@ msgstr ""
 "Language: id\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
-#: ../panel-plugin/weather.desktop.in.h:1
-#: ../panel-plugin/weather-config.ui.h:1
-msgid "Weather Update"
-msgstr "Pemutakhiran Cuaca"
-
-#: ../panel-plugin/weather.desktop.in.h:2
-msgid "Show current weather conditions"
-msgstr "Tampilkan kondisi cuaca terkini"
-
-#: ../panel-plugin/weather-config.ui.h:2
-msgid "_Help"
-msgstr "_Bantuan"
-
-#: ../panel-plugin/weather-config.ui.h:3
-#: ../panel-plugin/weather-summary.c:1196
-msgid "_Close"
-msgstr "_Tutup"
-
-#: ../panel-plugin/weather-config.ui.h:4
-msgid "Location _name:"
-msgstr "_Nama lokasi:"
-
-#: ../panel-plugin/weather-config.ui.h:5
-msgid "Latitud_e:"
-msgstr "L_intang:"
-
-#: ../panel-plugin/weather-config.ui.h:6
-msgid "L_ongitude:"
-msgstr "_Bujur:"
-
-#: ../panel-plugin/weather-config.ui.h:7
-msgid "Altitu_de:"
-msgstr "Ke_tinggian:"
-
-#: ../panel-plugin/weather-config.ui.h:8
-msgid "_Timezone:"
-msgstr "Zona Wak_tu:"
-
-#: ../panel-plugin/weather-config.ui.h:9
-msgid ""
-"Latitude specifies the north-south position of a point on the Earth's "
-"surface. If you change this value manually, you need to provide altitude and"
-" timezone manually too."
-msgstr "Garis lintang menentukan posisi utara-selatan suatu tempat di bumi. Jika nilai ini diubah, Anda juga perlu memasukkan data ketinggian serta zona waktunya."
-
-#. TRANSLATORS: The degree sign is used like a unit for
-#. latitude, longitude, wind direction
-#: ../panel-plugin/weather-config.ui.h:10 ../panel-plugin/weather-data.c:537
-msgid "°"
-msgstr "°"
-
-#: ../panel-plugin/weather-config.ui.h:11
-msgid ""
-"Longitude specifies the east-west position of a point on the Earth's "
-"surface. If you change this value manually, you need to provide altitude and"
-" timezone manually too."
-msgstr "Garis bujur menentukan posisi timur-barat suatu tempat di bumi. Jika nilai ini diubah, Anda juga perlu memasukkan data ketinggian serta zona waktunya."
-
-#: ../panel-plugin/weather-config.ui.h:12
-msgid ""
-"For locations outside Norway the elevation model that's used by the met.no webservice is not very good, so it's usually necessary to specify the altitude as an additional parameter, otherwise the reported values will not be correct.\n"
-"\n"
-"The plugin tries to auto-detect the altitude using the GeoNames webservice, but that might not always be correct too, so you can change it here.\n"
-"\n"
-"Altitude is given in meters above sea level, or alternatively in feet by changing the unit on the units page. It should match the real value roughly, but small differences will have no influence on the weather data. Inside Norway, this setting has no effect at all."
-msgstr "Untuk lokasi di luar Norwegia, model elevasi yang dipakai oleh jejaring Met.no masih terdapat kekurangan, sehingga umumnya diperlukan data ketinggian lokasi sebagai parameter tambahan, agar nilai yang dilaporkan lebih akurat. ⏎\n⏎\nPlugin akan mencoba untuk mendeteksi otomatis ketinggian melalui jejaring GeoNames, namun boleh jadi tidak selalu benar, sehingga Anda dapat menyesuaikannya di sini. ⏎\n⏎\nNilai ketinggian diberikan dalam meter di atas permukaan laut atau kaki (tergantung pada satuan yang Anda pilih pada halaman unit). Nilai ini diharapkan sesuai dengan nilai riil kasar, tapi perbedaan kecil tidak akan memiliki pengaruh pada data cuaca. Khusus di Norwegia, pengaturan ini tidak berpengaruh apapun."
-
-#: ../panel-plugin/weather-config.ui.h:17 ../panel-plugin/weather-config.c:398
-msgid "feet"
-msgstr "kaki"
-
-#: ../panel-plugin/weather-config.ui.h:18
-msgid ""
-"If the chosen location is not in your current timezone, then it is necessary to <i>put</i> the plugin into that other timezone for the times to be shown correctly. The proper timezone will be auto-detected via the GeoNames web service, but you might want to correct it if necessary.\n"
-"Leave this field empty to use the timezone set by your system. Invalid entries will cause the use of UTC time, but that may also depend on your system."
-msgstr "Jika lokasi yang dipilih tidak sama dengan zona waktu pada sistem, maka perlu didefinisikan tersendiri agar waktu yang ditampilkan sesuai dengan lokasi tersebut. Data zona waktu akan dicoba untuk didapat secara otomatis via jejaring GeoNames, namun Anda dapat mengubahnya jika diperlukan.⏎\nBiarkan kolom ini kosong untuk menyamakan zona waktu dengan yang tertera pada sistem."
-
-#: ../panel-plugin/weather-config.ui.h:20
-msgid ""
-"Change the name for the location to your liking. It is used for display and "
-"does not affect the location parameters in any way."
-msgstr "Nama yang didefinisikan di sini hanya sebagai tampilan dan tidak mempengaruhi data yang dihasilkan."
-
-#: ../panel-plugin/weather-config.ui.h:21
-msgid "Change..."
-msgstr "Ubah..."
-
-#: ../panel-plugin/weather-config.ui.h:22
-msgid "Search for a new location and auto-detect its parameters."
-msgstr "Cari lokasi baru beserta parameternya."
-
-#: ../panel-plugin/weather-config.ui.h:23
-msgid ""
-"Please change location name to your liking and correct alltitude and "
-"timezone if they are not auto-detected correctly."
-msgstr "Silakan mengubah nama lokasi sesuai kesukaan Anda dan perbaiki ketinggian dan zona waktu jika tidak terdeteksi dengan benar."
-
-#: ../panel-plugin/weather-config.ui.h:24
-msgid "_Location"
-msgstr "_Lokasi"
-
-#: ../panel-plugin/weather-config.ui.h:25
-msgid "_Temperature:"
-msgstr "_Temperatur:"
-
-#: ../panel-plugin/weather-config.ui.h:26
-msgid "Barometric _pressure:"
-msgstr "Te_kanan atmosfer:"
-
-#: ../panel-plugin/weather-config.ui.h:27
-msgid "_Wind speed:"
-msgstr "Kecepatan a_ngin:"
-
-#: ../panel-plugin/weather-config.ui.h:28
-msgid "Prec_ipitations:"
-msgstr "Curah _Hujan:"
-
-#: ../panel-plugin/weather-config.ui.h:29
-msgid "Apparent te_mperature:"
-msgstr "Te_mperature semu:"
-
-#: ../panel-plugin/weather-config.ui.h:30
-msgid "Celsius (°C)"
-msgstr "Celsius (°C)"
-
-#: ../panel-plugin/weather-config.ui.h:31
-msgid "Fahrenheit (°F)"
-msgstr "Fahrenheit (°F)"
-
-#: ../panel-plugin/weather-config.ui.h:32
-msgid "Hectopascals (hPa)"
-msgstr "Hektopaskal (hPa)"
-
-#: ../panel-plugin/weather-config.ui.h:33
-msgid "Inches of mercury (inHg)"
-msgstr "Merkuri dalam inchi (inHg)"
-
-#: ../panel-plugin/weather-config.ui.h:34
-msgid "Pound-force per square inch (psi)"
-msgstr "Pon per inchi kuadrat (psi)"
-
-#: ../panel-plugin/weather-config.ui.h:35
-msgid "Torr (mmHg)"
-msgstr "Torr (mmHg)"
-
-#: ../panel-plugin/weather-config.ui.h:36
-msgid "Kilometers per hour (km/h)"
-msgstr "Kilometer per jam (km/h)"
-
-#: ../panel-plugin/weather-config.ui.h:37
-msgid "Miles per hour (mph)"
-msgstr "Mil per jam (mph)"
-
-#: ../panel-plugin/weather-config.ui.h:38
-msgid "Meters per second (m/s)"
-msgstr "Meter per detik (m/s)"
-
-#: ../panel-plugin/weather-config.ui.h:39
-msgid "Feet per second (ft/s)"
-msgstr "Kaki per detik (ft/s)"
-
-#: ../panel-plugin/weather-config.ui.h:40
-msgid "Knots (kt)"
-msgstr "Knot (kt)"
-
-#: ../panel-plugin/weather-config.ui.h:41
-msgid "Millimeters (mm)"
-msgstr "Millimeter (mm)"
-
-#: ../panel-plugin/weather-config.ui.h:42
-msgid "Inches (in)"
-msgstr "Inchi (in)"
-
-#: ../panel-plugin/weather-config.ui.h:43
-msgid "Meters (m)"
-msgstr "Meter (m)"
-
-#: ../panel-plugin/weather-config.ui.h:44
-msgid "Feet (ft)"
-msgstr "Kaki (ft)"
-
-#: ../panel-plugin/weather-config.ui.h:45
-msgid "Windchill/Heat index"
-msgstr "Indeks kesejukan / panas angin"
-
-#: ../panel-plugin/weather-config.ui.h:46
-msgid "Windchill/Humidex"
-msgstr "Indeks kesejukan angin / kelembaban"
-
-#: ../panel-plugin/weather-config.ui.h:47
-msgid "Steadman"
-msgstr "Steadman"
-
-#: ../panel-plugin/weather-config.ui.h:48
-msgid "Quayle-Steadman"
-msgstr "Quayle-Steadman"
-
-#: ../panel-plugin/weather-config.ui.h:49
-msgid "_Units"
-msgstr "_Satuan"
-
-#: ../panel-plugin/weather-config.ui.h:50
-msgid ""
-"Available icon themes are listed here. You can add icon themes to "
-"$HOME/.config/xfce4/weather/icons (or the equivalent directory on your "
-"system). Information about how to create or use icon themes can be found in "
-"the README file. New icon themes will be detected every time you open this "
-"config dialog."
-msgstr ""
-
-#: ../panel-plugin/weather-config.ui.h:51
-msgid "_Icon theme:"
-msgstr "Tema _ikon:"
-
-#: ../panel-plugin/weather-config.ui.h:52
-msgid ""
-"Open the user icon themes directory in your file manager, creating it if "
-"necessary."
-msgstr "Buka direktori tema ikon pengguna di manajer berkas anda, membuatnya jika diperlukan."
-
-#: ../panel-plugin/weather-config.ui.h:53
-msgid "Use only a single _panel row"
-msgstr "Gunakan satu baris _panel"
-
-#: ../panel-plugin/weather-config.ui.h:54
-msgid ""
-"Check to always use only a single row on a multi-row panel and a small icon "
-"in deskbar mode."
-msgstr "Centang untuk selalu hanya menggunakan baris tunggal di panel multi baris dan sebuah ikon kecil di mode batang desktop."
-
-#: ../panel-plugin/weather-config.ui.h:55
-msgid "_Tooltip style:"
-msgstr "_Tampilan tip:"
-
-#: ../panel-plugin/weather-config.ui.h:56
-msgid ""
-"Choose your preferred tooltip style. Some styles give a lot of useful data, "
-"some are clearer but provide less data on a glance."
-msgstr "Pilih gaya tip alat pilihan anda. Beberapa gaya memberikan banyak data yang berguna, beberapa gaya lebih jelas tapi sekilas memberikan lebih sedikit data."
-
-#: ../panel-plugin/weather-config.ui.h:57
-msgid "Simple"
-msgstr "Sederhana"
-
-#: ../panel-plugin/weather-config.ui.h:58
-msgid "Verbose"
-msgstr "Detil"
-
-#: ../panel-plugin/weather-config.ui.h:59
-msgid "_Forecast layout:"
-msgstr "Tata letak pra_kiraan cuaca:"
-
-#: ../panel-plugin/weather-config.ui.h:60
-msgid "Days in columns"
-msgstr "Jumlah hari dalam kolom"
-
-#: ../panel-plugin/weather-config.ui.h:61
-msgid "Days in rows"
-msgstr "Jumlah hari dalam baris"
-
-#: ../panel-plugin/weather-config.ui.h:62
-msgid "_Number of forecast days:"
-msgstr "Jumlah hari prakiraa_n cuaca:"
-
-#: ../panel-plugin/weather-config.ui.h:63
-msgid "_Round values"
-msgstr "Nilai pem_bulatan"
-
-#: ../panel-plugin/weather-config.ui.h:64
-msgid "_Appearance"
-msgstr "_Tampilan"
-
-#: ../panel-plugin/weather-config.ui.h:65
-msgid "Font and color:"
-msgstr "Fonta dan warna:"
-
-#: ../panel-plugin/weather-config.ui.h:66
-msgid ""
-"These are the values that will be shown in the scrollbox. Select a single "
-"value here and click the appropriate button to remove it or move it up and "
-"down in the list."
-msgstr "Ini adalah nilai yang akan ditampilkan di kotak gulung. Pilih nilai tunggal di sini dan klik tombol yang sesuai untuk menghapusnya atau memindahkan ke atas dan ke bawah di dalam daftar."
-
-#: ../panel-plugin/weather-config.ui.h:67
-msgid "Move the selected value up in the list of labels to display."
-msgstr "Pindah nilai terpilih ke atas daftar label untuk ditampilkan."
-
-#: ../panel-plugin/weather-config.ui.h:68
-msgid "Move the selected value down in the list of labels to display."
-msgstr "Pindah nilai terpilih ke bawah daftar label untuk ditampilkan."
-
-#. * TRANSLATORS: The abbreviations in parentheses will be shown in
-#. * the scrollbox together with the values. Keep them in sync with
-#. * those in make_label() in weather.c. Some of them may be
-#. * standardized internationally, like CL, CM, CH, and you might
-#. * read that up somewhere and decide whether you want to use them
-#. * or not. In general, though, you should just try to choose
-#. * letter(s) that make sense and don't use up too much space.
-#: ../panel-plugin/weather-config.ui.h:69 ../panel-plugin/weather-config.c:96
-msgid "Temperature (T)"
-msgstr "Temperatur (T)"
-
-#: ../panel-plugin/weather-config.ui.h:70 ../panel-plugin/weather-config.c:97
-msgid "Barometric pressure (P)"
-msgstr "Tekanan atmosfer (A)"
-
-#: ../panel-plugin/weather-config.ui.h:71 ../panel-plugin/weather-config.c:98
-msgid "Wind speed (WS)"
-msgstr "Kecepatan angin (KA)"
-
-#: ../panel-plugin/weather-config.ui.h:72 ../panel-plugin/weather-config.c:99
-msgid "Wind speed - Beaufort scale (WB)"
-msgstr "Kecepatan Angin - Skala Beaufort (KA)"
-
-#: ../panel-plugin/weather-config.ui.h:73 ../panel-plugin/weather-config.c:100
-msgid "Wind direction (WD)"
-msgstr "Arah angin (AA)"
-
-#: ../panel-plugin/weather-config.ui.h:74 ../panel-plugin/weather-config.c:101
-msgid "Wind direction in degrees (WD)"
-msgstr "Arah Angin (AA)"
-
-#: ../panel-plugin/weather-config.ui.h:75 ../panel-plugin/weather-config.c:102
-msgid "Humidity (H)"
-msgstr "Kelembaban (K)"
-
-#: ../panel-plugin/weather-config.ui.h:76 ../panel-plugin/weather-config.c:103
-msgid "Dew point (D)"
-msgstr "Titik embun (TE)"
-
-#: ../panel-plugin/weather-config.ui.h:77 ../panel-plugin/weather-config.c:104
-msgid "Apparent temperature (A)"
-msgstr "Temperatur semu (TS)"
-
-#: ../panel-plugin/weather-config.ui.h:78 ../panel-plugin/weather-config.c:105
-msgid "Low clouds (CL)"
-msgstr "Cerah Berawan (CB)"
-
-#: ../panel-plugin/weather-config.ui.h:79 ../panel-plugin/weather-config.c:106
-msgid "Middle clouds (CM)"
-msgstr "Berawan sedang (BS)"
-
-#: ../panel-plugin/weather-config.ui.h:80 ../panel-plugin/weather-config.c:107
-msgid "High clouds (CH)"
-msgstr "Sebagian Besar Berawan (SBB)"
-
-#: ../panel-plugin/weather-config.ui.h:81 ../panel-plugin/weather-config.c:108
-msgid "Cloudiness (C)"
-msgstr "Kecerahan (C)"
-
-#: ../panel-plugin/weather-config.ui.h:82 ../panel-plugin/weather-config.c:109
-msgid "Fog (F)"
-msgstr "Kabut (K)"
-
-#: ../panel-plugin/weather-config.ui.h:83 ../panel-plugin/weather-config.c:110
-msgid "Precipitation (R)"
-msgstr "Curah Hujan (H)"
-
-#: ../panel-plugin/weather-config.ui.h:84
-msgid ""
-"Add the selected value to the labels that should be displayed in the "
-"scrollbox."
-msgstr "Tambah nilai terpilih ke label yang seharusnya ditampilkan di kotak gulung."
-
-#: ../panel-plugin/weather-config.ui.h:85
-msgid ""
-"Select a value in the list of labels to display and click this button to "
-"remove it."
-msgstr "Pilih nilai dalam daftar label untuk ditampilkan dan klik tombol ini untuk menghapusnya."
-
-#: ../panel-plugin/weather-config.ui.h:86
-msgid "Li_nes:"
-msgstr "Ga_ris:"
-
-#: ../panel-plugin/weather-config.ui.h:87
-msgid ""
-"Decide how many values should be shown at once in the scrollbox. You can "
-"choose a smaller font or enlarge the panel to make more lines fit."
-msgstr "Tentukan berapa banyak nilai harus ditampilkan sekaligus di batang gulung. Anda dapat memilih fonta yang lebih kecil atau membesarkan panel agar muat beberapa baris."
-
-#: ../panel-plugin/weather-config.ui.h:88
-msgid ""
-"Hide the scrollbox to save valuable space on the panel. Most interesting "
-"information is also provided in the tooltip - provided you choose an "
-"appropriate tooltip style - that is shown when hovering over the icon."
-msgstr "Sembunyikan batang gulung untuk menyimpan ruang berharga di panel. Informasi paling penting juga tersedia di tip alat - memberikan anda pilihan gaya tip alat yang sesuai - yang ditampilkan ketika melayang di atas ikon."
-
-#: ../panel-plugin/weather-config.ui.h:89
-msgid "<b>Show scrollbox</b>"
-msgstr "<b>Tampilkan batang gulung</b>"
-
-#: ../panel-plugin/weather-config.ui.h:90
-#: ../panel-plugin/weather-config.c:1129
-msgid "Select _font"
-msgstr "Pilih _fonta"
-
-#: ../panel-plugin/weather-config.ui.h:91
-msgid ""
-"Choose a font you like and set it to a smaller or larger size. Middle-click "
-"on the button to unset the font and use your theme's default."
-msgstr "Pilih fonta yang anda suka dan atur ukurannya menjadi lebih kecil atau besar. Klik tengah tombol untuk membatalkan fonta dan menggunakan standar tema anda."
-
-#: ../panel-plugin/weather-config.ui.h:92
-msgid ""
-"There may be problems with some themes that cause the scrollbox text to be "
-"hardly readable. If this is the case or you simply want it to appear in "
-"another color, then you can change it using this button. Middle-click on the"
-" button to unset the scrollbox text color."
-msgstr "Tampaknya ada masalah dengan beberapa tema yang menyebabkan teks kotak gulung sulit terbaca. Jika ini masalahnya anda dapat mengganti warnanya, lalu mengubahnya dengan memakai tombol ini. Klik tengah tombol untuk membatalkan warna teks kotak gulung."
-
-#: ../panel-plugin/weather-config.ui.h:93
-msgid "Animate transitions between labels"
-msgstr "Animasikan transisi antar label"
-
-#: ../panel-plugin/weather-config.ui.h:94
-msgid ""
-"Scroll the current displayed value(s) out and the new value(s) in instead of"
-" simply changing them. Uncheck this option if you find the animation too "
-"distracting."
-msgstr "Gulung nilai(-nilai) keluar dan nilai(-nilai) masuk baru yang ditampilkan saat ini ketimbang menggantinya. Jangan centang opsi ini jika anda merasakan animasi terlalu mengganggu."
-
-#: ../panel-plugin/weather-config.ui.h:95
-msgid "_Scrollbox"
-msgstr "_Batang Gulung"
-
 #. TRANSLATORS: Keep in sync with labeloptions in weather-config.c
-#: ../panel-plugin/weather.c:129
+#: ../panel-plugin/weather.c:130
 msgid "T"
 msgstr "T"
 
-#: ../panel-plugin/weather.c:132
+#: ../panel-plugin/weather.c:133
 msgid "P"
 msgstr "P"
 
-#: ../panel-plugin/weather.c:135
+#: ../panel-plugin/weather.c:136
 msgid "WS"
 msgstr "KA"
 
-#: ../panel-plugin/weather.c:138
+#: ../panel-plugin/weather.c:139
 msgid "WB"
 msgstr "KA"
 
-#: ../panel-plugin/weather.c:141 ../panel-plugin/weather.c:144
+#: ../panel-plugin/weather.c:142 ../panel-plugin/weather.c:145
 msgid "WD"
 msgstr "AA"
 
-#: ../panel-plugin/weather.c:147
+#: ../panel-plugin/weather.c:148
 msgid "H"
 msgstr "K"
 
-#: ../panel-plugin/weather.c:150
+#: ../panel-plugin/weather.c:151
 msgid "D"
 msgstr "D"
 
-#: ../panel-plugin/weather.c:153
+#: ../panel-plugin/weather.c:154
 msgid "A"
 msgstr "A"
 
-#: ../panel-plugin/weather.c:156
+#: ../panel-plugin/weather.c:157
 msgid "CL"
 msgstr "CB"
 
-#: ../panel-plugin/weather.c:159
+#: ../panel-plugin/weather.c:160
 msgid "CM"
 msgstr "BS"
 
-#: ../panel-plugin/weather.c:162
+#: ../panel-plugin/weather.c:163
 msgid "CH"
 msgstr "SBB"
 
-#: ../panel-plugin/weather.c:165
+#: ../panel-plugin/weather.c:166
 msgid "C"
 msgstr "C"
 
-#: ../panel-plugin/weather.c:168
+#: ../panel-plugin/weather.c:169
 msgid "F"
 msgstr "F"
 
-#: ../panel-plugin/weather.c:171
+#: ../panel-plugin/weather.c:172
 msgid "R"
 msgstr "H"
 
-#: ../panel-plugin/weather.c:360 ../panel-plugin/weather.c:362
+#: ../panel-plugin/weather.c:361 ../panel-plugin/weather.c:363
 msgid "No Data"
 msgstr "Tidak Ada Data"
 
-#: ../panel-plugin/weather.c:1730
+#: ../panel-plugin/weather.c:1858
 msgid "Short-term forecast data unavailable."
 msgstr "Data prakiraan jangka pendek tidak tersedia."
 
-#: ../panel-plugin/weather.c:1743
+#: ../panel-plugin/weather.c:1871
 msgid "The sun never sets today."
 msgstr "Matahari tidak tampak terbenam hari ini."
 
-#: ../panel-plugin/weather.c:1745
+#: ../panel-plugin/weather.c:1873
 msgid "The sun never rises today."
 msgstr "Matahari tidak tampak terbit hari ini."
 
-#: ../panel-plugin/weather.c:1751
+#: ../panel-plugin/weather.c:1879
 #, c-format
 msgid "The sun never rises and sets at %s."
 msgstr "Matahari tidak tampak terbit dan terbenam pada %s."
 
-#: ../panel-plugin/weather.c:1758
+#: ../panel-plugin/weather.c:1886
 #, c-format
 msgid "The sun rises at %s and never sets."
 msgstr "Matahari terbit pada %s dan tak akan terbenam."
 
-#: ../panel-plugin/weather.c:1766
+#: ../panel-plugin/weather.c:1894
 #, c-format
 msgid "The sun rises at %s and sets at %s."
 msgstr "Matahari terbit pada %s dan terbenam pada %s."
 
 #. * TRANSLATORS: This is the simple tooltip. For a bigger challenge,
 #. * look at the verbose tooltip style further below ;-)
-#: ../panel-plugin/weather.c:1794
+#: ../panel-plugin/weather.c:1922
 #, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
@@ -558,7 +133,7 @@ msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\
 #. * be changed easily - and try to make it compact and look
 #. * good! The missing space after "%son the ..." is intentional,
 #. * it is included in the %s.
-#: ../panel-plugin/weather.c:1818
+#: ../panel-plugin/weather.c:1946
 #, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
@@ -573,19 +148,86 @@ msgid ""
 "<span size=\"smaller\">%s</span>"
 msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n<b><span size=\"large\">%s</span></b>\n<span size=\"smaller\">dari %s hingga %s, dengan %s presipitasi</span>\n\n<b>Temperatur:</b> %s\t\t<span size=\"smaller\">(values at %s)</span>\n<b>Angin:</b> %s (%sdalam skala Beaufort) dari %s(%s)\n<b>Tekanan:</b> %s    <b>Kelembaban:</b> %s\n<b>Kabut:</b> %s    <b>Awan:</b> %s\n\n<span size=\"smaller\">%s</span>"
 
-#: ../panel-plugin/weather.c:1872
+#: ../panel-plugin/weather.c:2000
 msgid "Cannot update weather data"
 msgstr "Tak dapat memutakhirkan data cuaca"
 
 #. add refresh button to right click menu, for people who missed
 #. the middle mouse click feature
-#: ../panel-plugin/weather.c:2007
+#: ../panel-plugin/weather.c:2140
 msgid "Re_fresh"
 msgstr "Se_garkan"
 
-#: ../panel-plugin/weather.c:2172
+#: ../panel-plugin/weather.c:2305
 msgid "Show weather conditions and forecasts"
 msgstr "Tampilkan kondisi cuaca dan prakiraannya"
+
+#. * TRANSLATORS: The abbreviations in parentheses will be shown in
+#. * the scrollbox together with the values. Keep them in sync with
+#. * those in make_label() in weather.c. Some of them may be
+#. * standardized internationally, like CL, CM, CH, and you might
+#. * read that up somewhere and decide whether you want to use them
+#. * or not. In general, though, you should just try to choose
+#. * letter(s) that make sense and don't use up too much space.
+#: ../panel-plugin/weather-config.c:96
+msgid "Temperature (T)"
+msgstr "Temperatur (T)"
+
+#: ../panel-plugin/weather-config.c:97
+msgid "Barometric pressure (P)"
+msgstr "Tekanan atmosfer (A)"
+
+#: ../panel-plugin/weather-config.c:98
+msgid "Wind speed (WS)"
+msgstr "Kecepatan angin (KA)"
+
+#: ../panel-plugin/weather-config.c:99
+msgid "Wind speed - Beaufort scale (WB)"
+msgstr "Kecepatan Angin - Skala Beaufort (KA)"
+
+#: ../panel-plugin/weather-config.c:100
+msgid "Wind direction (WD)"
+msgstr "Arah angin (AA)"
+
+#: ../panel-plugin/weather-config.c:101
+msgid "Wind direction in degrees (WD)"
+msgstr "Arah Angin (AA)"
+
+#: ../panel-plugin/weather-config.c:102
+msgid "Humidity (H)"
+msgstr "Kelembaban (K)"
+
+#: ../panel-plugin/weather-config.c:103
+msgid "Dew point (D)"
+msgstr "Titik embun (TE)"
+
+#: ../panel-plugin/weather-config.c:104
+msgid "Apparent temperature (A)"
+msgstr "Temperatur semu (TS)"
+
+#: ../panel-plugin/weather-config.c:105
+msgid "Low clouds (CL)"
+msgstr "Cerah Berawan (CB)"
+
+#: ../panel-plugin/weather-config.c:106
+msgid "Middle clouds (CM)"
+msgstr "Berawan sedang (BS)"
+
+#: ../panel-plugin/weather-config.c:107
+msgid "High clouds (CH)"
+msgstr "Sebagian Besar Berawan (SBB)"
+
+#: ../panel-plugin/weather-config.c:108
+msgid "Cloudiness (C)"
+msgstr "Kecerahan (C)"
+
+#: ../panel-plugin/weather-config.c:109
+msgid "Fog (F)"
+msgstr "Kabut (K)"
+
+#: ../panel-plugin/weather-config.c:110
+msgid "Precipitation (R)"
+msgstr "Curah Hujan (H)"
 
 #: ../panel-plugin/weather-config.c:231 ../panel-plugin/weather-config.c:337
 #: ../panel-plugin/weather-config.c:507
@@ -595,6 +237,10 @@ msgstr "Tidak Diatur"
 #: ../panel-plugin/weather-config.c:347
 msgid "Detecting..."
 msgstr "Mendeteksi..."
+
+#: ../panel-plugin/weather-config.c:398
+msgid "feet"
+msgstr "kaki"
 
 #: ../panel-plugin/weather-config.c:408
 msgid "meters"
@@ -793,6 +439,10 @@ msgid ""
 "Note however that usually forecasts for more than three days in the future "
 "are unreliable at best ;-)"
 msgstr "Met.no menyediakan data prakiraan cuaca hingga %d hari ke depan. Silahkan tentukan banyaknya hari yang akan ditampilkan dalam tab prakiraan pada jendela ringkasan. Jumlah prakiraan akan mempengaruhi waktu yang diperlukan untuk membuka jendela. Perlu dicatat, prakiraan lebih dari tiga hari ke depan umumnya kurang akurat."
+
+#: ../panel-plugin/weather-config.c:1129
+msgid "Select _font"
+msgstr "Pilih _fonta"
 
 #: ../panel-plugin/weather-config.c:1146
 msgid "Select font"
@@ -1058,6 +708,12 @@ msgstr "kaki/d"
 #: ../panel-plugin/weather-data.c:529
 msgid "kt"
 msgstr "kt"
+
+#. TRANSLATORS: The degree sign is used like a unit for
+#. latitude, longitude, wind direction
+#: ../panel-plugin/weather-data.c:537
+msgid "°"
+msgstr "°"
 
 #. TRANSLATORS: Percentage sign is used like a unit for
 #. clouds, fog, humidity
@@ -1583,6 +1239,10 @@ msgstr "Malam"
 #: ../panel-plugin/weather-summary.c:1193
 msgid "Weather Report"
 msgstr "Laporan Cuaca"
+
+#: ../panel-plugin/weather-summary.c:1196
+msgid "_Close"
+msgstr "_Tutup"
 
 #: ../panel-plugin/weather-summary.c:1246
 msgid "No location selected."
