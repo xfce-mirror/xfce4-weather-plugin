@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-01 12:52+0100\n"
+"POT-Creation-Date: 2024-04-03 00:55+0200\n"
 "PO-Revision-Date: 2013-07-03 19:29+0000\n"
 "Last-Translator: UTUMI Hirosi <utuhiro78@yahoo.co.jp>, 2020-2021,2024\n"
 "Language-Team: Japanese (http://app.transifex.com/xfce/xfce-panel-plugins/language/ja/)\n"
@@ -19,431 +19,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ja\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-
-#: ../panel-plugin/weather.desktop.in.h:1
-#: ../panel-plugin/weather-config.ui.h:1
-msgid "Weather Update"
-msgstr "最新の天気"
-
-#: ../panel-plugin/weather.desktop.in.h:2
-msgid "Show current weather conditions"
-msgstr "現在の天気状況を表示します。"
-
-#: ../panel-plugin/weather-config.ui.h:2
-msgid "_Help"
-msgstr "ヘルプ(_H)"
-
-#: ../panel-plugin/weather-config.ui.h:3
-#: ../panel-plugin/weather-summary.c:1196
-msgid "_Close"
-msgstr "閉じる(_C)"
-
-#: ../panel-plugin/weather-config.ui.h:4
-msgid "Location _name:"
-msgstr "地域(_N):"
-
-#: ../panel-plugin/weather-config.ui.h:5
-msgid "Latitud_e:"
-msgstr "緯度(_E):"
-
-#: ../panel-plugin/weather-config.ui.h:6
-msgid "L_ongitude:"
-msgstr "経度(_O):"
-
-#: ../panel-plugin/weather-config.ui.h:7
-msgid "Altitu_de:"
-msgstr "海抜(_D):"
-
-#: ../panel-plugin/weather-config.ui.h:8
-msgid "_Timezone:"
-msgstr "タイムゾーン(_T):"
-
-#: ../panel-plugin/weather-config.ui.h:9
-msgid ""
-"Latitude specifies the north-south position of a point on the Earth's "
-"surface. If you change this value manually, you need to provide altitude and"
-" timezone manually too."
-msgstr "緯度には地球上の南北方向の位置を指定します。この値を直接変更した場合、海抜とタイムゾーンにも正しい値を設定してください。"
-
-#. TRANSLATORS: The degree sign is used like a unit for
-#. latitude, longitude, wind direction
-#: ../panel-plugin/weather-config.ui.h:10 ../panel-plugin/weather-data.c:537
-msgid "°"
-msgstr "°"
-
-#: ../panel-plugin/weather-config.ui.h:11
-msgid ""
-"Longitude specifies the east-west position of a point on the Earth's "
-"surface. If you change this value manually, you need to provide altitude and"
-" timezone manually too."
-msgstr "経度には地球上の東西方向の位置を指定します。この値を直接変更した場合、海抜とタイムゾーンにも正しい値を設定してください。"
-
-#: ../panel-plugin/weather-config.ui.h:12
-msgid ""
-"For locations outside Norway the elevation model that's used by the met.no webservice is not very good, so it's usually necessary to specify the altitude as an additional parameter, otherwise the reported values will not be correct.\n"
-"\n"
-"The plugin tries to auto-detect the altitude using the GeoNames webservice, but that might not always be correct too, so you can change it here.\n"
-"\n"
-"Altitude is given in meters above sea level, or alternatively in feet by changing the unit on the units page. It should match the real value roughly, but small differences will have no influence on the weather data. Inside Norway, this setting has no effect at all."
-msgstr "ノルウェー国外の場合、met.no ウェブサービスで使用される標高モデルはあまりよくありません。そのため、通常は追加パラメーターとして海抜を指定する必要があります。指定しないと正しい予報値にならない場合があります。\n\nこのプラグインでは GeoNames ウェブサービスを使用して自動検出を試みますが、それも常に正しいとは限りません。正しくなければここで変更してください。\n\n海抜には平均海面を 0m としたときの高さをメートルまたはフィートで指定します。単位は「単位」タブで指定できます。高さはだいたいの値で十分です (細かい違いは気象データに影響を与えません)。ノルウェー国内の場合この設定は無視されます。"
-
-#: ../panel-plugin/weather-config.ui.h:17 ../panel-plugin/weather-config.c:398
-msgid "feet"
-msgstr "フィート"
-
-#: ../panel-plugin/weather-config.ui.h:18
-msgid ""
-"If the chosen location is not in your current timezone, then it is necessary to <i>put</i> the plugin into that other timezone for the times to be shown correctly. The proper timezone will be auto-detected via the GeoNames web service, but you might want to correct it if necessary.\n"
-"Leave this field empty to use the timezone set by your system. Invalid entries will cause the use of UTC time, but that may also depend on your system."
-msgstr "選択された地域があなたのタイムゾーンと異なる場合、その地域のタイムゾーンの指定が必要です。タイムゾーンの初期値は GeoNames ウェブサービスにより自動検出されますが、必要であればそれを修正してください。\nこの指定を空のままにするとシステムのタイムゾーンが使用されます。不正な値が指定された場合、UTC が使用されます (システムによる)。"
-
-#: ../panel-plugin/weather-config.ui.h:20
-msgid ""
-"Change the name for the location to your liking. It is used for display and "
-"does not affect the location parameters in any way."
-msgstr "予報する地域の名称を変更します。これは表示にのみ使用され、地域パラメーターには作用しません。"
-
-#: ../panel-plugin/weather-config.ui.h:21
-msgid "Change..."
-msgstr "変更…"
-
-#: ../panel-plugin/weather-config.ui.h:22
-msgid "Search for a new location and auto-detect its parameters."
-msgstr "新しい地域を検索し、パラメーターを自動検出します。"
-
-#: ../panel-plugin/weather-config.ui.h:23
-msgid ""
-"Please change location name to your liking and correct alltitude and "
-"timezone if they are not auto-detected correctly."
-msgstr "正しく自動設定されない場合、場所の名前を好みの場所と正しい高度、タイムゾーンに変更して下さい。"
-
-#: ../panel-plugin/weather-config.ui.h:24
-msgid "_Location"
-msgstr "地域(_L):"
-
-#: ../panel-plugin/weather-config.ui.h:25
-msgid "_Temperature:"
-msgstr "温度(_T):"
-
-#: ../panel-plugin/weather-config.ui.h:26
-msgid "Barometric _pressure:"
-msgstr "気圧(_P)"
-
-#: ../panel-plugin/weather-config.ui.h:27
-msgid "_Wind speed:"
-msgstr "風速(_W):"
-
-#: ../panel-plugin/weather-config.ui.h:28
-msgid "Prec_ipitations:"
-msgstr "降水量(_I):"
-
-#: ../panel-plugin/weather-config.ui.h:29
-msgid "Apparent te_mperature:"
-msgstr "体感温度(_M):"
-
-#: ../panel-plugin/weather-config.ui.h:30
-msgid "Celsius (°C)"
-msgstr "摂氏 (℃)"
-
-#: ../panel-plugin/weather-config.ui.h:31
-msgid "Fahrenheit (°F)"
-msgstr "華氏 (℉)"
-
-#: ../panel-plugin/weather-config.ui.h:32
-msgid "Hectopascals (hPa)"
-msgstr "ヘクトパスカル (hPa)"
-
-#: ../panel-plugin/weather-config.ui.h:33
-msgid "Inches of mercury (inHg)"
-msgstr "水銀柱インチ (inHg)"
-
-#: ../panel-plugin/weather-config.ui.h:34
-msgid "Pound-force per square inch (psi)"
-msgstr "重量ポンド毎平方インチ (psi)"
-
-#: ../panel-plugin/weather-config.ui.h:35
-msgid "Torr (mmHg)"
-msgstr "トル (mmHg)"
-
-#: ../panel-plugin/weather-config.ui.h:36
-msgid "Kilometers per hour (km/h)"
-msgstr "キロメートル毎時 (km/h)"
-
-#: ../panel-plugin/weather-config.ui.h:37
-msgid "Miles per hour (mph)"
-msgstr "マイル毎時 (mph)"
-
-#: ../panel-plugin/weather-config.ui.h:38
-msgid "Meters per second (m/s)"
-msgstr "メートル毎秒 (m/s)"
-
-#: ../panel-plugin/weather-config.ui.h:39
-msgid "Feet per second (ft/s)"
-msgstr "フィート毎秒 (ft/s)"
-
-#: ../panel-plugin/weather-config.ui.h:40
-msgid "Knots (kt)"
-msgstr "ノット (kt)"
-
-#: ../panel-plugin/weather-config.ui.h:41
-msgid "Millimeters (mm)"
-msgstr "ミリメートル (mm)"
-
-#: ../panel-plugin/weather-config.ui.h:42
-msgid "Inches (in)"
-msgstr "インチ (in)"
-
-#: ../panel-plugin/weather-config.ui.h:43
-msgid "Meters (m)"
-msgstr "メートル (m)"
-
-#: ../panel-plugin/weather-config.ui.h:44
-msgid "Feet (ft)"
-msgstr "フィート (ft)"
-
-#: ../panel-plugin/weather-config.ui.h:45
-msgid "Windchill/Heat index"
-msgstr "風速冷却/熱指数"
-
-#: ../panel-plugin/weather-config.ui.h:46
-msgid "Windchill/Humidex"
-msgstr "風速冷却/湿潤指数"
-
-#: ../panel-plugin/weather-config.ui.h:47
-msgid "Steadman"
-msgstr "Steadman"
-
-#: ../panel-plugin/weather-config.ui.h:48
-msgid "Quayle-Steadman"
-msgstr "Quayle-Steadman"
-
-#: ../panel-plugin/weather-config.ui.h:49
-msgid "_Units"
-msgstr "単位(_U)"
-
-#: ../panel-plugin/weather-config.ui.h:50
-msgid ""
-"Available icon themes are listed here. You can add icon themes to "
-"$HOME/.config/xfce4/weather/icons (or the equivalent directory on your "
-"system). Information about how to create or use icon themes can be found in "
-"the README file. New icon themes will be detected every time you open this "
-"config dialog."
-msgstr "利用できるアイコンテーマのリストです。アイコンテーマは $HOME/.config/xfce4/weather/icons (またはシステム上の同様のディレクトリ) に追加できます。アイコンテーマの作成および使用方法は README ファイルを参照してください。新しいアイコンテーマはこのダイアログを開くときに検出されます。"
-
-#: ../panel-plugin/weather-config.ui.h:51
-msgid "_Icon theme:"
-msgstr "アイコンテーマ(_I):"
-
-#: ../panel-plugin/weather-config.ui.h:52
-msgid ""
-"Open the user icon themes directory in your file manager, creating it if "
-"necessary."
-msgstr "ファイルマネージャーでアイコンテーマのディレクトリを開きます。存在しない場合は作成します。"
-
-#: ../panel-plugin/weather-config.ui.h:53
-msgid "Use only a single _panel row"
-msgstr "パネルの 1 行分のみ使用する(_P)"
-
-#: ../panel-plugin/weather-config.ui.h:54
-msgid ""
-"Check to always use only a single row on a multi-row panel and a small icon "
-"in deskbar mode."
-msgstr "このオプションを有効にすると、複数行パネルであっても 1 行分のみを、デスクバーモードでは小さいアイコンを使用します。"
-
-#: ../panel-plugin/weather-config.ui.h:55
-msgid "_Tooltip style:"
-msgstr "ツールチップのスタイル(_T):"
-
-#: ../panel-plugin/weather-config.ui.h:56
-msgid ""
-"Choose your preferred tooltip style. Some styles give a lot of useful data, "
-"some are clearer but provide less data on a glance."
-msgstr "ツールチップのスタイルを選択します。"
-
-#: ../panel-plugin/weather-config.ui.h:57
-msgid "Simple"
-msgstr "簡易"
-
-#: ../panel-plugin/weather-config.ui.h:58
-msgid "Verbose"
-msgstr "詳細"
-
-#: ../panel-plugin/weather-config.ui.h:59
-msgid "_Forecast layout:"
-msgstr "予報レイアウト(_F):"
-
-#: ../panel-plugin/weather-config.ui.h:60
-msgid "Days in columns"
-msgstr "日を列に"
-
-#: ../panel-plugin/weather-config.ui.h:61
-msgid "Days in rows"
-msgstr "日を行に"
-
-#: ../panel-plugin/weather-config.ui.h:62
-msgid "_Number of forecast days:"
-msgstr "予報日数(_N):"
-
-#: ../panel-plugin/weather-config.ui.h:63
-msgid "_Round values"
-msgstr "値を丸める(_R)"
-
-#: ../panel-plugin/weather-config.ui.h:64
-msgid "_Appearance"
-msgstr "外観(_A)"
-
-#: ../panel-plugin/weather-config.ui.h:65
-msgid "Font and color:"
-msgstr "フォントと色:"
-
-#: ../panel-plugin/weather-config.ui.h:66
-msgid ""
-"These are the values that will be shown in the scrollbox. Select a single "
-"value here and click the appropriate button to remove it or move it up and "
-"down in the list."
-msgstr "スクロールボックスに表示される値です。値をクリックして右のボタンをクリックすると削除や移動が行えます。"
-
-#: ../panel-plugin/weather-config.ui.h:67
-msgid "Move the selected value up in the list of labels to display."
-msgstr "選択した値を1つ上に移動します。"
-
-#: ../panel-plugin/weather-config.ui.h:68
-msgid "Move the selected value down in the list of labels to display."
-msgstr "選択した値を一つ下に移動します。"
-
-#. * TRANSLATORS: The abbreviations in parentheses will be shown in
-#. * the scrollbox together with the values. Keep them in sync with
-#. * those in make_label() in weather.c. Some of them may be
-#. * standardized internationally, like CL, CM, CH, and you might
-#. * read that up somewhere and decide whether you want to use them
-#. * or not. In general, though, you should just try to choose
-#. * letter(s) that make sense and don't use up too much space.
-#: ../panel-plugin/weather-config.ui.h:69 ../panel-plugin/weather-config.c:96
-msgid "Temperature (T)"
-msgstr "気温 (T)"
-
-#: ../panel-plugin/weather-config.ui.h:70 ../panel-plugin/weather-config.c:97
-msgid "Barometric pressure (P)"
-msgstr "気圧 (P)"
-
-#: ../panel-plugin/weather-config.ui.h:71 ../panel-plugin/weather-config.c:98
-msgid "Wind speed (WS)"
-msgstr "風速 (WS)"
-
-#: ../panel-plugin/weather-config.ui.h:72 ../panel-plugin/weather-config.c:99
-msgid "Wind speed - Beaufort scale (WB)"
-msgstr "風力 (WB)"
-
-#: ../panel-plugin/weather-config.ui.h:73 ../panel-plugin/weather-config.c:100
-msgid "Wind direction (WD)"
-msgstr "風向 (WD)"
-
-#: ../panel-plugin/weather-config.ui.h:74 ../panel-plugin/weather-config.c:101
-msgid "Wind direction in degrees (WD)"
-msgstr "風向・角度 (WD)"
-
-#: ../panel-plugin/weather-config.ui.h:75 ../panel-plugin/weather-config.c:102
-msgid "Humidity (H)"
-msgstr "湿度 (H)"
-
-#: ../panel-plugin/weather-config.ui.h:76 ../panel-plugin/weather-config.c:103
-msgid "Dew point (D)"
-msgstr "露点温度 (D)"
-
-#: ../panel-plugin/weather-config.ui.h:77 ../panel-plugin/weather-config.c:104
-msgid "Apparent temperature (A)"
-msgstr "体感温度 (A)"
-
-#: ../panel-plugin/weather-config.ui.h:78 ../panel-plugin/weather-config.c:105
-msgid "Low clouds (CL)"
-msgstr "下層雲量 (CL)"
-
-#: ../panel-plugin/weather-config.ui.h:79 ../panel-plugin/weather-config.c:106
-msgid "Middle clouds (CM)"
-msgstr "中層雲量 (CM)"
-
-#: ../panel-plugin/weather-config.ui.h:80 ../panel-plugin/weather-config.c:107
-msgid "High clouds (CH)"
-msgstr "上層雲量 (CH)"
-
-#: ../panel-plugin/weather-config.ui.h:81 ../panel-plugin/weather-config.c:108
-msgid "Cloudiness (C)"
-msgstr "全雲量 (C)"
-
-#: ../panel-plugin/weather-config.ui.h:82 ../panel-plugin/weather-config.c:109
-msgid "Fog (F)"
-msgstr "霧 (F)"
-
-#: ../panel-plugin/weather-config.ui.h:83 ../panel-plugin/weather-config.c:110
-msgid "Precipitation (R)"
-msgstr "降水量 (R)"
-
-#: ../panel-plugin/weather-config.ui.h:84
-msgid ""
-"Add the selected value to the labels that should be displayed in the "
-"scrollbox."
-msgstr "選択した値を表示するラベルに追加します。"
-
-#: ../panel-plugin/weather-config.ui.h:85
-msgid ""
-"Select a value in the list of labels to display and click this button to "
-"remove it."
-msgstr "選択した値を表示するラベルから削除します。"
-
-#: ../panel-plugin/weather-config.ui.h:86
-msgid "Li_nes:"
-msgstr "行数(_N):"
-
-#: ../panel-plugin/weather-config.ui.h:87
-msgid ""
-"Decide how many values should be shown at once in the scrollbox. You can "
-"choose a smaller font or enlarge the panel to make more lines fit."
-msgstr "スクロールボックスに表示する行数を指定します。"
-
-#: ../panel-plugin/weather-config.ui.h:88
-msgid ""
-"Hide the scrollbox to save valuable space on the panel. Most interesting "
-"information is also provided in the tooltip - provided you choose an "
-"appropriate tooltip style - that is shown when hovering over the icon."
-msgstr "パネルにスクロールボックスを表示しません。主な天候情報はツールチップにも表示されます。"
-
-#: ../panel-plugin/weather-config.ui.h:89
-msgid "<b>Show scrollbox</b>"
-msgstr "<b>スクロールボックスを表示</b>"
-
-#: ../panel-plugin/weather-config.ui.h:90
-#: ../panel-plugin/weather-config.c:1129
-msgid "Select _font"
-msgstr "フォントの選択(_F)"
-
-#: ../panel-plugin/weather-config.ui.h:91
-msgid ""
-"Choose a font you like and set it to a smaller or larger size. Middle-click "
-"on the button to unset the font and use your theme's default."
-msgstr "スクロールボックスに使用するフォントの種類とサイズを指定します。マウスの中央クリックでフォントの設定を解除し、テーマのデフォルトに戻します。"
-
-#: ../panel-plugin/weather-config.ui.h:92
-msgid ""
-"There may be problems with some themes that cause the scrollbox text to be "
-"hardly readable. If this is the case or you simply want it to appear in "
-"another color, then you can change it using this button. Middle-click on the"
-" button to unset the scrollbox text color."
-msgstr "テーマによってはスクロールボックスに表示された文字が読みにくくなってしまうかもしれません。その場合のフォント色を直接指定してください。マウスの中央クリックでテーマのデフォルト色に戻します。"
-
-#: ../panel-plugin/weather-config.ui.h:93
-msgid "Animate transitions between labels"
-msgstr "ラベル間の変化をアニメーション化する"
-
-#: ../panel-plugin/weather-config.ui.h:94
-msgid ""
-"Scroll the current displayed value(s) out and the new value(s) in instead of"
-" simply changing them. Uncheck this option if you find the animation too "
-"distracting."
-msgstr "スクロールボックスに表示する値をアニメーションで切り替えます。"
-
-#: ../panel-plugin/weather-config.ui.h:95
-msgid "_Scrollbox"
-msgstr "スクロールボックス(_S)"
 
 #. TRANSLATORS: Keep in sync with labeloptions in weather-config.c
 #: ../panel-plugin/weather.c:130
@@ -506,36 +81,36 @@ msgstr "降水量"
 msgid "No Data"
 msgstr "データなし"
 
-#: ../panel-plugin/weather.c:1841
+#: ../panel-plugin/weather.c:1858
 msgid "Short-term forecast data unavailable."
 msgstr "利用可能な短期予報データがありません。"
 
-#: ../panel-plugin/weather.c:1854
+#: ../panel-plugin/weather.c:1871
 msgid "The sun never sets today."
 msgstr "本日太陽は沈みません。"
 
-#: ../panel-plugin/weather.c:1856
+#: ../panel-plugin/weather.c:1873
 msgid "The sun never rises today."
 msgstr "本日太陽は昇りません。"
 
-#: ../panel-plugin/weather.c:1862
+#: ../panel-plugin/weather.c:1879
 #, c-format
 msgid "The sun never rises and sets at %s."
 msgstr "太陽は昇ることはなく、%s に沈みます。"
 
-#: ../panel-plugin/weather.c:1869
+#: ../panel-plugin/weather.c:1886
 #, c-format
 msgid "The sun rises at %s and never sets."
 msgstr "太陽は %s に昇り、沈むことはありません。"
 
-#: ../panel-plugin/weather.c:1877
+#: ../panel-plugin/weather.c:1894
 #, c-format
 msgid "The sun rises at %s and sets at %s."
 msgstr "日の出は %s、日の入りは %s です。"
 
 #. * TRANSLATORS: This is the simple tooltip. For a bigger challenge,
 #. * look at the verbose tooltip style further below ;-)
-#: ../panel-plugin/weather.c:1905
+#: ../panel-plugin/weather.c:1922
 #, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
@@ -554,7 +129,7 @@ msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\
 #. * be changed easily - and try to make it compact and look
 #. * good! The missing space after "%son the ..." is intentional,
 #. * it is included in the %s.
-#: ../panel-plugin/weather.c:1929
+#: ../panel-plugin/weather.c:1946
 #, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
@@ -569,19 +144,86 @@ msgid ""
 "<span size=\"smaller\">%s</span>"
 msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n<b><span size=\"large\">%s</span></b>\n<span size=\"smaller\">%s から %s までの降水量 %s</span>\n\n<b>気温:</b> %s\t\t<span size=\"smaller\">(%s 時の値)</span>\n<b>風速:</b> %s (風力 %s) <b>風向:</b> %s(%s)\n<b>気圧:</b> %s    <b>湿度:</b> %s\n<b>霧:</b> %s    <b>雲量:</b> %s\n\n<span size=\"smaller\">%s</span>"
 
-#: ../panel-plugin/weather.c:1983
+#: ../panel-plugin/weather.c:2000
 msgid "Cannot update weather data"
 msgstr "気象データを更新できません"
 
 #. add refresh button to right click menu, for people who missed
 #. the middle mouse click feature
-#: ../panel-plugin/weather.c:2123
+#: ../panel-plugin/weather.c:2140
 msgid "Re_fresh"
 msgstr "更新(_F)"
 
-#: ../panel-plugin/weather.c:2288
+#: ../panel-plugin/weather.c:2305
 msgid "Show weather conditions and forecasts"
 msgstr "天気状況と予報を表示します。"
+
+#. * TRANSLATORS: The abbreviations in parentheses will be shown in
+#. * the scrollbox together with the values. Keep them in sync with
+#. * those in make_label() in weather.c. Some of them may be
+#. * standardized internationally, like CL, CM, CH, and you might
+#. * read that up somewhere and decide whether you want to use them
+#. * or not. In general, though, you should just try to choose
+#. * letter(s) that make sense and don't use up too much space.
+#: ../panel-plugin/weather-config.c:96
+msgid "Temperature (T)"
+msgstr "気温 (T)"
+
+#: ../panel-plugin/weather-config.c:97
+msgid "Barometric pressure (P)"
+msgstr "気圧 (P)"
+
+#: ../panel-plugin/weather-config.c:98
+msgid "Wind speed (WS)"
+msgstr "風速 (WS)"
+
+#: ../panel-plugin/weather-config.c:99
+msgid "Wind speed - Beaufort scale (WB)"
+msgstr "風力 (WB)"
+
+#: ../panel-plugin/weather-config.c:100
+msgid "Wind direction (WD)"
+msgstr "風向 (WD)"
+
+#: ../panel-plugin/weather-config.c:101
+msgid "Wind direction in degrees (WD)"
+msgstr "風向・角度 (WD)"
+
+#: ../panel-plugin/weather-config.c:102
+msgid "Humidity (H)"
+msgstr "湿度 (H)"
+
+#: ../panel-plugin/weather-config.c:103
+msgid "Dew point (D)"
+msgstr "露点温度 (D)"
+
+#: ../panel-plugin/weather-config.c:104
+msgid "Apparent temperature (A)"
+msgstr "体感温度 (A)"
+
+#: ../panel-plugin/weather-config.c:105
+msgid "Low clouds (CL)"
+msgstr "下層雲量 (CL)"
+
+#: ../panel-plugin/weather-config.c:106
+msgid "Middle clouds (CM)"
+msgstr "中層雲量 (CM)"
+
+#: ../panel-plugin/weather-config.c:107
+msgid "High clouds (CH)"
+msgstr "上層雲量 (CH)"
+
+#: ../panel-plugin/weather-config.c:108
+msgid "Cloudiness (C)"
+msgstr "全雲量 (C)"
+
+#: ../panel-plugin/weather-config.c:109
+msgid "Fog (F)"
+msgstr "霧 (F)"
+
+#: ../panel-plugin/weather-config.c:110
+msgid "Precipitation (R)"
+msgstr "降水量 (R)"
 
 #: ../panel-plugin/weather-config.c:231 ../panel-plugin/weather-config.c:337
 #: ../panel-plugin/weather-config.c:507
@@ -591,6 +233,10 @@ msgstr "解除"
 #: ../panel-plugin/weather-config.c:347
 msgid "Detecting..."
 msgstr "検出しています..."
+
+#: ../panel-plugin/weather-config.c:398
+msgid "feet"
+msgstr "フィート"
 
 #: ../panel-plugin/weather-config.c:408
 msgid "meters"
@@ -789,6 +435,10 @@ msgid ""
 "Note however that usually forecasts for more than three days in the future "
 "are unreliable at best ;-)"
 msgstr "サマリウィンドウの「予報」タブで表示する予報日数を指定します。met.no は %d 日先までの予報データを提供しています。低速のコンピューターではこの値を大きくするとウィンドウ表示に時間がかかるかもしれません。ただし、予報が信用できるのはせいぜい 3 日先がいいところでしょう ;-)"
+
+#: ../panel-plugin/weather-config.c:1129
+msgid "Select _font"
+msgstr "フォントの選択(_F)"
 
 #: ../panel-plugin/weather-config.c:1146
 msgid "Select font"
@@ -1054,6 +704,12 @@ msgstr "ft/s"
 #: ../panel-plugin/weather-data.c:529
 msgid "kt"
 msgstr "kt"
+
+#. TRANSLATORS: The degree sign is used like a unit for
+#. latitude, longitude, wind direction
+#: ../panel-plugin/weather-data.c:537
+msgid "°"
+msgstr "°"
 
 #. TRANSLATORS: Percentage sign is used like a unit for
 #. clouds, fog, humidity
@@ -1579,6 +1235,10 @@ msgstr "夜"
 #: ../panel-plugin/weather-summary.c:1193
 msgid "Weather Report"
 msgstr "天気情報"
+
+#: ../panel-plugin/weather-summary.c:1196
+msgid "_Close"
+msgstr "閉じる(_C)"
 
 #: ../panel-plugin/weather-summary.c:1246
 msgid "No location selected."
