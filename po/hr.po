@@ -12,7 +12,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2023-09-29 00:51+0200\n"
+"POT-Creation-Date: 2024-04-03 00:55+0200\n"
 "PO-Revision-Date: 2013-07-03 19:29+0000\n"
 "Last-Translator: Edin Veskovic <edin.lockedin@gmail.com>, 2018,2020\n"
 "Language-Team: Croatian (http://app.transifex.com/xfce/xfce-panel-plugins/language/hr/)\n"
@@ -22,522 +22,97 @@ msgstr ""
 "Language: hr\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
 
-#: ../panel-plugin/weather.desktop.in.h:1
-#: ../panel-plugin/weather-config.ui.h:1
-msgid "Weather Update"
-msgstr "Dopune vremena"
-
-#: ../panel-plugin/weather.desktop.in.h:2
-msgid "Show current weather conditions"
-msgstr "Prikaži trenutne vremenske uvjete"
-
-#: ../panel-plugin/weather-config.ui.h:2
-msgid "_Help"
-msgstr "_Pomoć"
-
-#: ../panel-plugin/weather-config.ui.h:3
-#: ../panel-plugin/weather-summary.c:1196
-msgid "_Close"
-msgstr "_Zatvori"
-
-#: ../panel-plugin/weather-config.ui.h:4
-msgid "Location _name:"
-msgstr "Ime _lokacije:"
-
-#: ../panel-plugin/weather-config.ui.h:5
-msgid "Latitud_e:"
-msgstr "Širin_a:"
-
-#: ../panel-plugin/weather-config.ui.h:6
-msgid "L_ongitude:"
-msgstr "D_užina:"
-
-#: ../panel-plugin/weather-config.ui.h:7
-msgid "Altitu_de:"
-msgstr "Visi_na:"
-
-#: ../panel-plugin/weather-config.ui.h:8
-msgid "_Timezone:"
-msgstr "_Vremenska zona:"
-
-#: ../panel-plugin/weather-config.ui.h:9
-msgid ""
-"Latitude specifies the north-south position of a point on the Earth's "
-"surface. If you change this value manually, you need to provide altitude and"
-" timezone manually too."
-msgstr "Širina određuje poziciju sjever-jug na površini Zemlje. Ako ručno mijenjate ovu vrijednost isto ćete morati učiniti i za nadmorsku visinu te vremensku zonu."
-
-#. TRANSLATORS: The degree sign is used like a unit for
-#. latitude, longitude, wind direction
-#: ../panel-plugin/weather-config.ui.h:10 ../panel-plugin/weather-data.c:537
-msgid "°"
-msgstr "°"
-
-#: ../panel-plugin/weather-config.ui.h:11
-msgid ""
-"Longitude specifies the east-west position of a point on the Earth's "
-"surface. If you change this value manually, you need to provide altitude and"
-" timezone manually too."
-msgstr "Dužina određuje poziciju istok-zapad na površini Zemlje. Ako ručno mijenjate ovu vrijednost isto ćete morati učiniti i za nadmorsku visinu te vremensku zonu."
-
-#: ../panel-plugin/weather-config.ui.h:12
-msgid ""
-"For locations outside Norway the elevation model that's used by the met.no webservice is not very good, so it's usually necessary to specify the altitude as an additional parameter, otherwise the reported values will not be correct.\n"
-"\n"
-"The plugin tries to auto-detect the altitude using the GeoNames webservice, but that might not always be correct too, so you can change it here.\n"
-"\n"
-"Altitude is given in meters above sea level, or alternatively in feet by changing the unit on the units page. It should match the real value roughly, but small differences will have no influence on the weather data. Inside Norway, this setting has no effect at all."
-msgstr "Za lokacije izvan Norveške model elevacije koji koristi met.no webservis nije u potpunosti točan, zato je uglavnom potrebno ručno odrediti nadmorsku visinu kao dodatni parametar, inače prijavljene vrijednosti neće biti točne.\n\nDodatak pokušava sam otkriti nadmorsku visinu koristeći GeoNames webservis, ali ni to nije uvijek točno stoga ju možete promijeniti ovdje.\n\nNadmorska visina se mjeri u metrima od površine mora ili u stopama ako promijenite mjerne jedinice u opcijama. Ugrubo bi trebala odgovarati stvarnoj vrijednosti, ali mala odstupanja neće imati utjecaj na podatke o vremenu. Unutar Norveške ova postavka nema nikakvog utjecaja."
-
-#: ../panel-plugin/weather-config.ui.h:17 ../panel-plugin/weather-config.c:398
-msgid "feet"
-msgstr "stope"
-
-#: ../panel-plugin/weather-config.ui.h:18
-msgid ""
-"If the chosen location is not in your current timezone, then it is necessary to <i>put</i> the plugin into that other timezone for the times to be shown correctly. The proper timezone will be auto-detected via the GeoNames web service, but you might want to correct it if necessary.\n"
-"Leave this field empty to use the timezone set by your system. Invalid entries will cause the use of UTC time, but that may also depend on your system."
-msgstr "Ako izabran lokacija nije u vašoj trenutnoj vremenskoj zoni, tada je neophodno <i>staviti</i> priključak u tu drugu vremensku zonu da bi vremena bila točno prikazana. Ispravna vremenska zona biti će pronađena pomoću GeoNames wweb usluge, ali možda je želite ispraviti ako je to neophodno.\nOstavite ovo polje prazno da bi koristiki vremensku zonu koju je postavio vaš sustav.Neispravni unosi mogu uzrokovati korištenje UTC vremena, ali to također može ovisiti o vašem sustavu."
-
-#: ../panel-plugin/weather-config.ui.h:20
-msgid ""
-"Change the name for the location to your liking. It is used for display and "
-"does not affect the location parameters in any way."
-msgstr "Promjeni ime lokacije u ono koje ti se sviđa. Koristi se samo za prikaz i ne utječe na parametre lokacije."
-
-#: ../panel-plugin/weather-config.ui.h:21
-msgid "Change..."
-msgstr "Promijeni..."
-
-#: ../panel-plugin/weather-config.ui.h:22
-msgid "Search for a new location and auto-detect its parameters."
-msgstr "Traži novu lokaciju i automatski odredi njene parametre."
-
-#: ../panel-plugin/weather-config.ui.h:23
-msgid ""
-"Please change location name to your liking and correct alltitude and "
-"timezone if they are not auto-detected correctly."
-msgstr "Molimo promijenite ime lokacije po vašoj želji i ispravite vremensku zonu i nadmorsku visinu ako nisu ispravno otkrivene."
-
-#: ../panel-plugin/weather-config.ui.h:24
-msgid "_Location"
-msgstr "_Lokacija"
-
-#: ../panel-plugin/weather-config.ui.h:25
-msgid "_Temperature:"
-msgstr "_Temperatura:"
-
-#: ../panel-plugin/weather-config.ui.h:26
-msgid "Barometric _pressure:"
-msgstr "Barometarski _tlak:"
-
-#: ../panel-plugin/weather-config.ui.h:27
-msgid "_Wind speed:"
-msgstr "_Brzina vjetra:"
-
-#: ../panel-plugin/weather-config.ui.h:28
-msgid "Prec_ipitations:"
-msgstr "Obo_rine"
-
-#: ../panel-plugin/weather-config.ui.h:29
-msgid "Apparent te_mperature:"
-msgstr "Prividna te_mperatura:"
-
-#: ../panel-plugin/weather-config.ui.h:30
-msgid "Celsius (°C)"
-msgstr "Celzijus (°C)"
-
-#: ../panel-plugin/weather-config.ui.h:31
-msgid "Fahrenheit (°F)"
-msgstr "Fahrenheit (°F)"
-
-#: ../panel-plugin/weather-config.ui.h:32
-msgid "Hectopascals (hPa)"
-msgstr "Hektopaskali (hPa)"
-
-#: ../panel-plugin/weather-config.ui.h:33
-msgid "Inches of mercury (inHg)"
-msgstr "Inči žive (inHg)"
-
-#: ../panel-plugin/weather-config.ui.h:34
-msgid "Pound-force per square inch (psi)"
-msgstr "Funta po kvadratnom palcu (psi)"
-
-#: ../panel-plugin/weather-config.ui.h:35
-msgid "Torr (mmHg)"
-msgstr "Milimetara žive (mmHg)"
-
-#: ../panel-plugin/weather-config.ui.h:36
-msgid "Kilometers per hour (km/h)"
-msgstr "Kilometra na sat (km/h)"
-
-#: ../panel-plugin/weather-config.ui.h:37
-msgid "Miles per hour (mph)"
-msgstr "Milja na sat (mph)"
-
-#: ../panel-plugin/weather-config.ui.h:38
-msgid "Meters per second (m/s)"
-msgstr "Metara u sekundi (m/s)"
-
-#: ../panel-plugin/weather-config.ui.h:39
-msgid "Feet per second (ft/s)"
-msgstr "Stopa u sekundi (ft/s)"
-
-#: ../panel-plugin/weather-config.ui.h:40
-msgid "Knots (kt)"
-msgstr "Čvorovi (kt)"
-
-#: ../panel-plugin/weather-config.ui.h:41
-msgid "Millimeters (mm)"
-msgstr "Milimetri (mm)"
-
-#: ../panel-plugin/weather-config.ui.h:42
-msgid "Inches (in)"
-msgstr "Inči (in)"
-
-#: ../panel-plugin/weather-config.ui.h:43
-msgid "Meters (m)"
-msgstr "Metri (m)"
-
-#: ../panel-plugin/weather-config.ui.h:44
-msgid "Feet (ft)"
-msgstr "Stopa (ft)"
-
-#: ../panel-plugin/weather-config.ui.h:45
-msgid "Windchill/Heat index"
-msgstr "Subjektivni osjećaj/Index topline"
-
-#: ../panel-plugin/weather-config.ui.h:46
-msgid "Windchill/Humidex"
-msgstr "Subjektivni osjećaj/Index vlage"
-
-#: ../panel-plugin/weather-config.ui.h:47
-msgid "Steadman"
-msgstr "Steadman"
-
-#: ../panel-plugin/weather-config.ui.h:48
-msgid "Quayle-Steadman"
-msgstr "Quayle-Steadman"
-
-#: ../panel-plugin/weather-config.ui.h:49
-msgid "_Units"
-msgstr "_Jedinice"
-
-#: ../panel-plugin/weather-config.ui.h:50
-msgid ""
-"Available icon themes are listed here. You can add icon themes to "
-"$HOME/.config/xfce4/weather/icons (or the equivalent directory on your "
-"system). Information about how to create or use icon themes can be found in "
-"the README file. New icon themes will be detected every time you open this "
-"config dialog."
-msgstr ""
-
-#: ../panel-plugin/weather-config.ui.h:51
-msgid "_Icon theme:"
-msgstr "_Tema ikone:"
-
-#: ../panel-plugin/weather-config.ui.h:52
-msgid ""
-"Open the user icon themes directory in your file manager, creating it if "
-"necessary."
-msgstr "Otvorite direktorij s ikonama korisnika u upravitelju datotekama, stvarajući direktorij ukoliko je potrebno."
-
-#: ../panel-plugin/weather-config.ui.h:53
-msgid "Use only a single _panel row"
-msgstr "Koristi samo jedan redak na _ploči"
-
-#: ../panel-plugin/weather-config.ui.h:54
-msgid ""
-"Check to always use only a single row on a multi-row panel and a small icon "
-"in deskbar mode."
-msgstr "Odaberite kako bi se uvijek prikazivao samo jedan redak na ploči s više redaka te male ikone u deskbar načinu."
-
-#: ../panel-plugin/weather-config.ui.h:55
-msgid "_Tooltip style:"
-msgstr "S_til oblačića:"
-
-#: ../panel-plugin/weather-config.ui.h:56
-msgid ""
-"Choose your preferred tooltip style. Some styles give a lot of useful data, "
-"some are clearer but provide less data on a glance."
-msgstr "Odaberite preferirani stil oblačića. Neki stilovi nude puno informacija dok su drugi jednostavniji i s manje podataka."
-
-#: ../panel-plugin/weather-config.ui.h:57
-msgid "Simple"
-msgstr "Jednostavno"
-
-#: ../panel-plugin/weather-config.ui.h:58
-msgid "Verbose"
-msgstr "Opširno"
-
-#: ../panel-plugin/weather-config.ui.h:59
-msgid "_Forecast layout:"
-msgstr "_Raspored prognoze:"
-
-#: ../panel-plugin/weather-config.ui.h:60
-msgid "Days in columns"
-msgstr "Dani u stupcima"
-
-#: ../panel-plugin/weather-config.ui.h:61
-msgid "Days in rows"
-msgstr "Dani u redovima"
-
-#: ../panel-plugin/weather-config.ui.h:62
-msgid "_Number of forecast days:"
-msgstr "_Broj dana prognoze:"
-
-#: ../panel-plugin/weather-config.ui.h:63
-msgid "_Round values"
-msgstr "Zaokruži vrijednosti"
-
-#: ../panel-plugin/weather-config.ui.h:64
-msgid "_Appearance"
-msgstr "_Izgled"
-
-#: ../panel-plugin/weather-config.ui.h:65
-msgid "Font and color:"
-msgstr "Font i boja:"
-
-#: ../panel-plugin/weather-config.ui.h:66
-msgid ""
-"These are the values that will be shown in the scrollbox. Select a single "
-"value here and click the appropriate button to remove it or move it up and "
-"down in the list."
-msgstr "Ovo su vrijednosti koje će se pokazivati u okviru. Odaberite liniju i koristite gumbove kako bi ju maknuli ili pomaknuli gore ili dole na listi."
-
-#: ../panel-plugin/weather-config.ui.h:67
-msgid "Move the selected value up in the list of labels to display."
-msgstr "Pomakni odabranu vrijednost gore na listi natpisa za prikaz."
-
-#: ../panel-plugin/weather-config.ui.h:68
-msgid "Move the selected value down in the list of labels to display."
-msgstr "Pomakni odabranu vrijednost na listi prema dole."
-
-#. * TRANSLATORS: The abbreviations in parentheses will be shown in
-#. * the scrollbox together with the values. Keep them in sync with
-#. * those in make_label() in weather.c. Some of them may be
-#. * standardized internationally, like CL, CM, CH, and you might
-#. * read that up somewhere and decide whether you want to use them
-#. * or not. In general, though, you should just try to choose
-#. * letter(s) that make sense and don't use up too much space.
-#: ../panel-plugin/weather-config.ui.h:69 ../panel-plugin/weather-config.c:96
-msgid "Temperature (T)"
-msgstr "Temperatura (T)"
-
-#: ../panel-plugin/weather-config.ui.h:70 ../panel-plugin/weather-config.c:97
-msgid "Barometric pressure (P)"
-msgstr "Barometarski tlak (P)"
-
-#: ../panel-plugin/weather-config.ui.h:71 ../panel-plugin/weather-config.c:98
-msgid "Wind speed (WS)"
-msgstr "Brzina vjetra (WS)"
-
-#: ../panel-plugin/weather-config.ui.h:72 ../panel-plugin/weather-config.c:99
-msgid "Wind speed - Beaufort scale (WB)"
-msgstr "Brzina vjetra - Beaufort-ova skala (WB) "
-
-#: ../panel-plugin/weather-config.ui.h:73 ../panel-plugin/weather-config.c:100
-msgid "Wind direction (WD)"
-msgstr "Smjer vjetra (WD)"
-
-#: ../panel-plugin/weather-config.ui.h:74 ../panel-plugin/weather-config.c:101
-msgid "Wind direction in degrees (WD)"
-msgstr "Smjer vjetra u supnjevima (WD)"
-
-#: ../panel-plugin/weather-config.ui.h:75 ../panel-plugin/weather-config.c:102
-msgid "Humidity (H)"
-msgstr "Vlažnost (H)"
-
-#: ../panel-plugin/weather-config.ui.h:76 ../panel-plugin/weather-config.c:103
-msgid "Dew point (D)"
-msgstr "Rosište (DP)"
-
-#: ../panel-plugin/weather-config.ui.h:77 ../panel-plugin/weather-config.c:104
-msgid "Apparent temperature (A)"
-msgstr "Prividna temperatura (A)"
-
-#: ../panel-plugin/weather-config.ui.h:78 ../panel-plugin/weather-config.c:105
-msgid "Low clouds (CL)"
-msgstr "NIski oblaci (CL)"
-
-#: ../panel-plugin/weather-config.ui.h:79 ../panel-plugin/weather-config.c:106
-msgid "Middle clouds (CM)"
-msgstr "Srednji oblaci (CM)"
-
-#: ../panel-plugin/weather-config.ui.h:80 ../panel-plugin/weather-config.c:107
-msgid "High clouds (CH)"
-msgstr "Visoki oblaci (CH)"
-
-#: ../panel-plugin/weather-config.ui.h:81 ../panel-plugin/weather-config.c:108
-msgid "Cloudiness (C)"
-msgstr "Naoblaka (C)"
-
-#: ../panel-plugin/weather-config.ui.h:82 ../panel-plugin/weather-config.c:109
-msgid "Fog (F)"
-msgstr "Magla (F)"
-
-#: ../panel-plugin/weather-config.ui.h:83 ../panel-plugin/weather-config.c:110
-msgid "Precipitation (R)"
-msgstr "Oborine (R)"
-
-#: ../panel-plugin/weather-config.ui.h:84
-msgid ""
-"Add the selected value to the labels that should be displayed in the "
-"scrollbox."
-msgstr "Dodajte izabranu vrijednost listi za prikaz u oviru."
-
-#: ../panel-plugin/weather-config.ui.h:85
-msgid ""
-"Select a value in the list of labels to display and click this button to "
-"remove it."
-msgstr "Odaberite vrijednost na listi i kliknite na gumb kako bi ju maknuli."
-
-#: ../panel-plugin/weather-config.ui.h:86
-msgid "Li_nes:"
-msgstr "Re_ci:"
-
-#: ../panel-plugin/weather-config.ui.h:87
-msgid ""
-"Decide how many values should be shown at once in the scrollbox. You can "
-"choose a smaller font or enlarge the panel to make more lines fit."
-msgstr "Odlučite koliko informacije se odjednom pokazuje u okviru. Možete izabrati manju veličinu teksta ili povećati ploču kako bi sve linije stale."
-
-#: ../panel-plugin/weather-config.ui.h:88
-msgid ""
-"Hide the scrollbox to save valuable space on the panel. Most interesting "
-"information is also provided in the tooltip - provided you choose an "
-"appropriate tooltip style - that is shown when hovering over the icon."
-msgstr "Sakrijte klizni okvir kako bi uštedjeli dragocijen prostor na ploči. Najinteresantnije informacije se također pružaju i u oblačiću u slučaju da tako izaberete. Oblačić se pokazuje prelaženjem s pokazivačem preko ikone."
-
-#: ../panel-plugin/weather-config.ui.h:89
-msgid "<b>Show scrollbox</b>"
-msgstr ""
-
-#: ../panel-plugin/weather-config.ui.h:90
-#: ../panel-plugin/weather-config.c:1129
-msgid "Select _font"
-msgstr "Odaberi _font"
-
-#: ../panel-plugin/weather-config.ui.h:91
-msgid ""
-"Choose a font you like and set it to a smaller or larger size. Middle-click "
-"on the button to unset the font and use your theme's default."
-msgstr "Izaberite font koji vam se sviđa te izaberite veličinu. Srednja tipka miša vraća font na zadanu vrijednost teme."
-
-#: ../panel-plugin/weather-config.ui.h:92
-msgid ""
-"There may be problems with some themes that cause the scrollbox text to be "
-"hardly readable. If this is the case or you simply want it to appear in "
-"another color, then you can change it using this button. Middle-click on the"
-" button to unset the scrollbox text color."
-msgstr "S nekim temama mogu postojati problemi koji čine tekst u okviru jedva čitljivim. Ako je to slučaj ili jednostavno želite promijeniti boju teksta onda to možete učiniti ovim gumbom. Srednjom tipkom miša vraćate vrijednosti na zadane."
-
-#: ../panel-plugin/weather-config.ui.h:93
-msgid "Animate transitions between labels"
-msgstr ""
-
-#: ../panel-plugin/weather-config.ui.h:94
-msgid ""
-"Scroll the current displayed value(s) out and the new value(s) in instead of"
-" simply changing them. Uncheck this option if you find the animation too "
-"distracting."
-msgstr "Animiraj prijelaz prikazanih(e) vrijednosti umjesto jednostavnog izmjenjivanja. Maknite kvačicu ako vas animacija ometa."
-
-#: ../panel-plugin/weather-config.ui.h:95
-msgid "_Scrollbox"
-msgstr "_Okvir"
-
 #. TRANSLATORS: Keep in sync with labeloptions in weather-config.c
-#: ../panel-plugin/weather.c:129
+#: ../panel-plugin/weather.c:130
 msgid "T"
 msgstr "T"
 
-#: ../panel-plugin/weather.c:132
+#: ../panel-plugin/weather.c:133
 msgid "P"
 msgstr "P"
 
-#: ../panel-plugin/weather.c:135
+#: ../panel-plugin/weather.c:136
 msgid "WS"
 msgstr "BV"
 
-#: ../panel-plugin/weather.c:138
+#: ../panel-plugin/weather.c:139
 msgid "WB"
 msgstr "VBS"
 
-#: ../panel-plugin/weather.c:141 ../panel-plugin/weather.c:144
+#: ../panel-plugin/weather.c:142 ../panel-plugin/weather.c:145
 msgid "WD"
 msgstr "SV"
 
-#: ../panel-plugin/weather.c:147
+#: ../panel-plugin/weather.c:148
 msgid "H"
 msgstr "V"
 
-#: ../panel-plugin/weather.c:150
+#: ../panel-plugin/weather.c:151
 msgid "D"
 msgstr "R"
 
-#: ../panel-plugin/weather.c:153
+#: ../panel-plugin/weather.c:154
 msgid "A"
 msgstr "S"
 
-#: ../panel-plugin/weather.c:156
+#: ../panel-plugin/weather.c:157
 msgid "CL"
 msgstr "NO"
 
-#: ../panel-plugin/weather.c:159
+#: ../panel-plugin/weather.c:160
 msgid "CM"
 msgstr "SO"
 
-#: ../panel-plugin/weather.c:162
+#: ../panel-plugin/weather.c:163
 msgid "CH"
 msgstr "VO"
 
-#: ../panel-plugin/weather.c:165
+#: ../panel-plugin/weather.c:166
 msgid "C"
 msgstr "N"
 
-#: ../panel-plugin/weather.c:168
+#: ../panel-plugin/weather.c:169
 msgid "F"
 msgstr "M"
 
-#: ../panel-plugin/weather.c:171
+#: ../panel-plugin/weather.c:172
 msgid "R"
 msgstr "K"
 
-#: ../panel-plugin/weather.c:360 ../panel-plugin/weather.c:362
+#: ../panel-plugin/weather.c:361 ../panel-plugin/weather.c:363
 msgid "No Data"
 msgstr "Nema podataka"
 
-#: ../panel-plugin/weather.c:1730
+#: ../panel-plugin/weather.c:1858
 msgid "Short-term forecast data unavailable."
 msgstr "Kratkoročni podaci o prognozi nisu dostupni."
 
-#: ../panel-plugin/weather.c:1743
+#: ../panel-plugin/weather.c:1871
 msgid "The sun never sets today."
 msgstr "Danas sunce ne zalazi."
 
-#: ../panel-plugin/weather.c:1745
+#: ../panel-plugin/weather.c:1873
 msgid "The sun never rises today."
 msgstr "Danas sunce ne izlazi."
 
-#: ../panel-plugin/weather.c:1751
+#: ../panel-plugin/weather.c:1879
 #, c-format
 msgid "The sun never rises and sets at %s."
 msgstr ""
 
-#: ../panel-plugin/weather.c:1758
+#: ../panel-plugin/weather.c:1886
 #, c-format
 msgid "The sun rises at %s and never sets."
 msgstr ""
 
-#: ../panel-plugin/weather.c:1766
+#: ../panel-plugin/weather.c:1894
 #, c-format
 msgid "The sun rises at %s and sets at %s."
 msgstr "Sunce izlazi u %s i zalazi u %s."
 
 #. * TRANSLATORS: This is the simple tooltip. For a bigger challenge,
 #. * look at the verbose tooltip style further below ;-)
-#: ../panel-plugin/weather.c:1794
+#: ../panel-plugin/weather.c:1922
 #, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
@@ -556,7 +131,7 @@ msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\
 #. * be changed easily - and try to make it compact and look
 #. * good! The missing space after "%son the ..." is intentional,
 #. * it is included in the %s.
-#: ../panel-plugin/weather.c:1818
+#: ../panel-plugin/weather.c:1946
 #, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
@@ -571,19 +146,86 @@ msgid ""
 "<span size=\"smaller\">%s</span>"
 msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n<b><span size=\"large\">%s</span></b>\n<span size=\"smaller\">od %s do %s, s %s padalina</span>\n\n<b>Temperatura:</b> %s\t\t<span size=\"smaller\">(vrijednost u %s)</span>\n<b>Vjetar:</b> %s (%s po Beaufort skali) sa %s(%s)\n<b>Tlak:</b> %s    <b>Vlažnost:</b> %s\n<b>Magla:</b> %s    <b>Naoblaka:</b> %s\n\n<span size=\"smaller\">%s</span>"
 
-#: ../panel-plugin/weather.c:1872
+#: ../panel-plugin/weather.c:2000
 msgid "Cannot update weather data"
 msgstr "Ne mogu ažurirati podatke o vremenu"
 
 #. add refresh button to right click menu, for people who missed
 #. the middle mouse click feature
-#: ../panel-plugin/weather.c:2007
+#: ../panel-plugin/weather.c:2140
 msgid "Re_fresh"
 msgstr "Os_vježi"
 
-#: ../panel-plugin/weather.c:2172
+#: ../panel-plugin/weather.c:2305
 msgid "Show weather conditions and forecasts"
 msgstr "Prikaži vremenske uvjete i prognoze"
+
+#. * TRANSLATORS: The abbreviations in parentheses will be shown in
+#. * the scrollbox together with the values. Keep them in sync with
+#. * those in make_label() in weather.c. Some of them may be
+#. * standardized internationally, like CL, CM, CH, and you might
+#. * read that up somewhere and decide whether you want to use them
+#. * or not. In general, though, you should just try to choose
+#. * letter(s) that make sense and don't use up too much space.
+#: ../panel-plugin/weather-config.c:96
+msgid "Temperature (T)"
+msgstr "Temperatura (T)"
+
+#: ../panel-plugin/weather-config.c:97
+msgid "Barometric pressure (P)"
+msgstr "Barometarski tlak (P)"
+
+#: ../panel-plugin/weather-config.c:98
+msgid "Wind speed (WS)"
+msgstr "Brzina vjetra (WS)"
+
+#: ../panel-plugin/weather-config.c:99
+msgid "Wind speed - Beaufort scale (WB)"
+msgstr "Brzina vjetra - Beaufort-ova skala (WB) "
+
+#: ../panel-plugin/weather-config.c:100
+msgid "Wind direction (WD)"
+msgstr "Smjer vjetra (WD)"
+
+#: ../panel-plugin/weather-config.c:101
+msgid "Wind direction in degrees (WD)"
+msgstr "Smjer vjetra u supnjevima (WD)"
+
+#: ../panel-plugin/weather-config.c:102
+msgid "Humidity (H)"
+msgstr "Vlažnost (H)"
+
+#: ../panel-plugin/weather-config.c:103
+msgid "Dew point (D)"
+msgstr "Rosište (DP)"
+
+#: ../panel-plugin/weather-config.c:104
+msgid "Apparent temperature (A)"
+msgstr "Prividna temperatura (A)"
+
+#: ../panel-plugin/weather-config.c:105
+msgid "Low clouds (CL)"
+msgstr "NIski oblaci (CL)"
+
+#: ../panel-plugin/weather-config.c:106
+msgid "Middle clouds (CM)"
+msgstr "Srednji oblaci (CM)"
+
+#: ../panel-plugin/weather-config.c:107
+msgid "High clouds (CH)"
+msgstr "Visoki oblaci (CH)"
+
+#: ../panel-plugin/weather-config.c:108
+msgid "Cloudiness (C)"
+msgstr "Naoblaka (C)"
+
+#: ../panel-plugin/weather-config.c:109
+msgid "Fog (F)"
+msgstr "Magla (F)"
+
+#: ../panel-plugin/weather-config.c:110
+msgid "Precipitation (R)"
+msgstr "Oborine (R)"
 
 #: ../panel-plugin/weather-config.c:231 ../panel-plugin/weather-config.c:337
 #: ../panel-plugin/weather-config.c:507
@@ -593,6 +235,10 @@ msgstr "Nepostavljeno"
 #: ../panel-plugin/weather-config.c:347
 msgid "Detecting..."
 msgstr "Otkrivanje ..."
+
+#: ../panel-plugin/weather-config.c:398
+msgid "feet"
+msgstr "stope"
 
 #: ../panel-plugin/weather-config.c:408
 msgid "meters"
@@ -791,6 +437,10 @@ msgid ""
 "Note however that usually forecasts for more than three days in the future "
 "are unreliable at best ;-)"
 msgstr "Met.no pruža podatke o prognozi do %d dana u budućnost. Izaberite koliko dana želite prikazivati u kartici pregleda. Na sporijim računalima, manji broj može pomoći u bržem otvaranju prozora. Uzmite u obzir da su prognoze za tri dana u budućnost i dulje, manje pouzdane."
+
+#: ../panel-plugin/weather-config.c:1129
+msgid "Select _font"
+msgstr "Odaberi _font"
 
 #: ../panel-plugin/weather-config.c:1146
 msgid "Select font"
@@ -1056,6 +706,12 @@ msgstr "ft/s"
 #: ../panel-plugin/weather-data.c:529
 msgid "kt"
 msgstr "kt"
+
+#. TRANSLATORS: The degree sign is used like a unit for
+#. latitude, longitude, wind direction
+#: ../panel-plugin/weather-data.c:537
+msgid "°"
+msgstr "°"
 
 #. TRANSLATORS: Percentage sign is used like a unit for
 #. clouds, fog, humidity
@@ -1581,6 +1237,10 @@ msgstr "Noć"
 #: ../panel-plugin/weather-summary.c:1193
 msgid "Weather Report"
 msgstr "Vremenski izvještaj "
+
+#: ../panel-plugin/weather-summary.c:1196
+msgid "_Close"
+msgstr "_Zatvori"
 
 #: ../panel-plugin/weather-summary.c:1246
 msgid "No location selected."
