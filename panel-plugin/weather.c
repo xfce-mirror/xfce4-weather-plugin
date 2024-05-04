@@ -1783,6 +1783,9 @@ xfceweather_dialog_response(GtkWidget *dlg,
             icon_theme_free(theme);
         }
         g_array_free(dialog->icon_themes, FALSE);
+        if (dialog->timer_id != 0) {
+            g_source_remove(dialog->timer_id);
+        }
         g_slice_free(xfceweather_dialog, dialog);
 
         xfce_panel_plugin_unblock_menu(data->plugin);
