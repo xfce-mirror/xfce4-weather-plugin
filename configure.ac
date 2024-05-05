@@ -8,12 +8,7 @@ dnl
 dnl ***************************
 dnl *** Version information ***
 dnl ***************************
-m4_define([weather_version_major], [0])
-m4_define([weather_version_minor], [11])
-m4_define([weather_version_micro], [2])
-m4_define([weather_version_build], [@REVISION@])
-m4_define([weather_version_tag], [git])
-m4_define([weather_version], [weather_version_major().weather_version_minor().weather_version_micro()ifelse(weather_version_tag(), [git], [weather_version_tag()-weather_version_build()], [weather_version_tag()])])
+XDT_VERSION_INIT([0.11.2], [git])
 
 dnl *******************************************
 dnl *** Debugging support for git snapshots ***
@@ -25,7 +20,8 @@ dnl *** Initialize autoconf ***
 dnl ***************************
 AC_COPYRIGHT([Copyright (c) 2004-2024
         The Xfce development team. All rights reserved.])
-AC_INIT([xfce4-weather-plugin], [weather_version], [https://gitlab.xfce.org/panel-plugins/xfce4-weather-plugin], [xfce4-weather-plugin])
+AC_INIT([xfce4-weather-plugin], [xdt_version], [https://gitlab.xfce.org/panel-plugins/xfce4-weather-plugin], [xfce4-weather-plugin])
+AC_REVISION([xdt_version_build])
 AC_PREREQ([2.69])
 AC_CONFIG_MACRO_DIRS([m4])
 
@@ -93,7 +89,7 @@ AS_IF([test "x$GEONAMES_USERNAME" = x], [GEONAMES_USERNAME="xfce4weatherplugin"]
 dnl ***********************************
 dnl *** Check for debugging support ***
 dnl ***********************************
-XDT_FEATURE_DEBUG([weather_debug_default])
+XDT_FEATURE_DEBUG([xdt_debug_default])
 
 AC_CONFIG_FILES([
 Makefile
