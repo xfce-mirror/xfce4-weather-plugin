@@ -28,6 +28,7 @@
 
 #include "weather-icon.h"
 #include "weather-debug.h"
+#include "weather-translate.h"
 
 #define DEFAULT_W_THEME "liquid"
 #define THEME_INFO_FILE "theme.info"
@@ -66,7 +67,13 @@ static const gchar *symbol_names[] = {
 
 const gchar *get_symbol_name(gint idx)
 {
-    return symbol_names[idx];
+    if (idx >= SYMBOL_COUNT)
+        idx = replace_symbol_id(idx);
+
+    if (idx < SYMBOL_COUNT)
+        return symbol_names[idx];
+
+    return "NODATA";
 }
 
 

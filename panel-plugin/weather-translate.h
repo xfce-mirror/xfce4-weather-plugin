@@ -34,6 +34,8 @@ const gchar *translate_moon_phase(const gchar *moon_phase);
 /* these return a newly allocated string, that should be freed */
 gchar *translate_day(gint weekday);
 
+gint replace_symbol_id(gint id);
+
 G_END_DECLS
 
 #endif

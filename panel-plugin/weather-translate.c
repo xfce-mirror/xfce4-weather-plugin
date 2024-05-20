@@ -142,7 +142,7 @@ static const symbol_desc symbol_to_desc[] = {
  * for a list of symbols. For a list of symbols with descriptions,
  * see http://om.yr.no/forklaring/symbol.
  */
-static gint
+gint
 replace_symbol_id(gint id)
 {
     /* Symbol ids greater than 100 are used for indicating polar
