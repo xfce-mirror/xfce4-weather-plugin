@@ -1315,7 +1315,7 @@ read_cache_file(plugin_data *data)
     xml_time *timeslice = NULL;
     xml_location *loc = NULL;
     xml_astro *astro = NULL;
-    time_t now_t = time(NULL), cache_date_t;
+    time_t cache_date_t;
     gchar *file, *locname = NULL, *lat = NULL, *lon = NULL, *group = NULL, *offset = NULL;
     gchar *timestring;
     gint msl, num_timeslices = 0, i, j;
@@ -1375,7 +1375,7 @@ read_cache_file(plugin_data *data)
     CACHE_READ_STRING(timestring, "cache_date");
     cache_date_t = parse_timestring(timestring, NULL, FALSE);
     g_free(timestring);
-    if (difftime(now_t, cache_date_t) > data->cache_file_max_age) {
+    if (difftime(time(NULL), cache_date_t) > data->cache_file_max_age) {
         weather_debug("Cache file is too old and will not be used.");
         CACHE_FREE_VARS();
         return;
@@ -1451,7 +1451,7 @@ read_cache_file(plugin_data *data)
     else {
         weather_debug("Astrodata of the day not in cache. Downloading scheduled in 30s.");
         data->astro_update->attempt = 0;
-        data->astro_update->next = now_t += 30;
+        data->astro_update->next += 30;
         schedule_next_wakeup(data);
     }
     g_free(group);
