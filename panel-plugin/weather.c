@@ -198,12 +198,7 @@ make_label(const plugin_data *data,
 static update_info *
 make_update_info(const guint check_interval)
 {
-    update_info *upi;
-
-    upi = g_slice_new0(update_info);
-    if (G_UNLIKELY(upi == NULL))
-        return NULL;
-
+    update_info *upi = g_slice_new0(update_info);
     memset(&upi->last, 0, sizeof(upi->last));
     upi->next = time(NULL);
     upi->check_interval = check_interval;
