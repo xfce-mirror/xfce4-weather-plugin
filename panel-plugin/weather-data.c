@@ -569,7 +569,7 @@ is_night_time(const xml_astro *astro,
     time_t now_t;
     GDateTime *dt, *initial_date;
     GTimeZone *tz;
-    gboolean ret;
+    gboolean ret = FALSE;
 
     dt = g_date_time_new_now_local();
 #if GLIB_CHECK_VERSION (2, 68, 0)

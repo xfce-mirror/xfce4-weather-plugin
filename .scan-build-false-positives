@@ -1,0 +1,4 @@
+# we go through init_update_infos() at least once before dereferencing, and it's the only
+# place where we assign astro_update and weather_update, so I think these are false positives
+weather.c:[0-9]+:[0-9]+: warning: Access to field 'next' results in a dereference of a null pointer \(loaded from field 'weather_update'\) \[core.NullDereference\]
+weather.c:[0-9]+:[0-9]+: warning: Access to field 'attempt' results in a dereference of a null pointer \(loaded from field 'astro_update'\) \[core.NullDereference\]
