@@ -234,22 +234,29 @@ get_logo_path(void)
 
 
 static void
-logo_fetched(SoupSession *session,
-             SoupMessage *msg,
+logo_fetched(GObject *source,
+             GAsyncResult *result,
              gpointer user_data)
 {
-    if (msg && msg->response_body && msg->response_body->length > 0) {
+    GError *error = NULL;
+    GBytes *response =
+        soup_session_send_and_read_finish(SOUP_SESSION(source), result, &error);
+
+    if (G_LIKELY(error == NULL)) {
+        gsize len = 0;
+        const gchar *body = g_bytes_get_data(response, &len);
         gchar *path = get_logo_path();
-        GError *error = NULL;
         GdkPixbuf *pixbuf = NULL;
         gint scale_factor;
-        if (!g_file_set_contents(path, msg->response_body->data,
-                                 msg->response_body->length, &error)) {
+        g_file_set_contents(path, body, len, &error);
+        g_bytes_unref(response);
+        if (error) {
             g_warning("Error downloading met.no logo image to %s, "
                       "reason: %s\n", path,
                       error ? error->message : "unknown");
             g_error_free(error);
             g_free(path);
+            g_bytes_unref(response);
             return;
         }
         scale_factor = gtk_widget_get_scale_factor(user_data);
@@ -261,7 +268,9 @@ logo_fetched(SoupSession *session,
             cairo_surface_destroy(surface);
             g_object_unref(pixbuf);
         }
-    }
+        g_bytes_unref(response);
+    } else
+        g_error_free(error);
 }
 
 
