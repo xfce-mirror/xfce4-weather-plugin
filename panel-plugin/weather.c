@@ -1772,6 +1772,7 @@ xfceweather_dialog_response(GtkWidget *dlg,
     } else {
         /* free stuff used in config dialog */
         gtk_widget_destroy(dlg);
+        g_object_unref(dialog->builder);
         gtk_list_store_clear(dialog->model_datatypes);
         for (i = 0; i < dialog->icon_themes->len; i++) {
             theme = g_array_index(dialog->icon_themes, icon_theme *, i);
