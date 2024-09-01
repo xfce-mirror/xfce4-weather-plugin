@@ -34,6 +34,8 @@
 #define BORDER 8
 
 
+static search_dialog *global_dialog = NULL;
+
 typedef struct {
     void (*cb) (const gchar *loc_name,
                 const gchar *lat,
@@ -87,6 +89,11 @@ cb_searchdone(SoupSession *session,
     gint found = 0;
     GtkTreeIter iter;
     GtkTreeSelection *selection;
+
+    if (global_dialog == NULL) {
+        weather_debug("%s called after dialog was destroyed", G_STRFUNC);
+        return;
+    }
 
     gtk_widget_set_sensitive(dialog->find_button, TRUE);
 
@@ -190,7 +197,7 @@ create_search_dialog(GtkWindow *parent,
     GtkWidget *dialog_vbox, *vbox, *hbox, *scroll, *frame, *image;
     GtkCellRenderer *renderer = gtk_cell_renderer_text_new();
 
-    dialog = g_slice_new0(search_dialog);
+    global_dialog = dialog = g_slice_new0(search_dialog);
 
     if (!dialog)
         return NULL;
@@ -210,6 +217,7 @@ create_search_dialog(GtkWindow *parent,
     gtk_dialog_set_response_sensitive(GTK_DIALOG(dialog->dialog),
                                       GTK_RESPONSE_ACCEPT, FALSE);
     gtk_window_set_icon_name(GTK_WINDOW(dialog->dialog), "edit-find");
+    g_object_add_weak_pointer(G_OBJECT(dialog->dialog), (gpointer *)&global_dialog);
 
     dialog_vbox = gtk_dialog_get_content_area(GTK_DIALOG(dialog->dialog));
 
@@ -375,6 +383,11 @@ cb_geolocation(SoupSession *session,
     xml_geolocation *geo;
     gchar *full_loc;
     units_config *units;
+
+    if (global_dialog == NULL) {
+        weather_debug("%s called after dialog was destroyed", G_STRFUNC);
+        return;
+    }
 
     geo = (xml_geolocation *)
         parse_xml_document(msg, (XmlParseFunc) parse_geolocation);

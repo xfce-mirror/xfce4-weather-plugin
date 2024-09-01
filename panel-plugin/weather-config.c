@@ -110,6 +110,8 @@ static const labeloption labeloptions[OPTIONS_N] = {
     {N_("Precipitation (R)"), PRECIPITATION},
 };
 
+static xfceweather_dialog *global_dialog = NULL;
+
 static void
 spin_alt_value_changed(const GtkWidget *spin,
                        gpointer user_data);
@@ -244,6 +246,11 @@ cb_lookup_altitude(SoupSession *session,
     xml_altitude *altitude;
     gdouble alt = 0;
 
+    if (global_dialog == NULL) {
+        weather_debug("%s called after dialog was destroyed", G_STRFUNC);
+        return;
+    }
+
     altitude = (xml_altitude *)
         parse_xml_document(msg, (XmlParseFunc) parse_altitude);
 
@@ -267,6 +274,11 @@ cb_lookup_timezone(SoupSession *session,
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     xml_timezone *xml_tz;
+
+    if (global_dialog == NULL) {
+        weather_debug("%s called after dialog was destroyed", G_STRFUNC);
+        return;
+    }
 
     xml_tz = (xml_timezone *)
         parse_xml_document(msg, (XmlParseFunc) parse_timezone);
@@ -1723,10 +1735,11 @@ create_config_dialog(plugin_data *data,
 {
     xfceweather_dialog *dialog;
 
-    dialog = g_slice_new0(xfceweather_dialog);
+    global_dialog = dialog = g_slice_new0(xfceweather_dialog);
     dialog->pd = (plugin_data *) data;
     dialog->dialog = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (builder), "dialog"));
     dialog->builder = builder;
+    g_object_add_weak_pointer(G_OBJECT(dialog->dialog), (gpointer *)&global_dialog);
 
     dialog->notebook = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (builder), "notebook"));
     create_location_page(dialog);
