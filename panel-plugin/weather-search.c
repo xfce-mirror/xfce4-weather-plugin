@@ -78,8 +78,8 @@ sanitize_str(const gchar *str)
 
 
 static void
-cb_searchdone(SoupSession *session,
-              SoupMessage *msg,
+cb_searchdone(GObject *source,
+              GAsyncResult *result,
               gpointer user_data)
 {
     search_dialog *dialog = (search_dialog *) user_data;
@@ -89,6 +89,16 @@ cb_searchdone(SoupSession *session,
     gint found = 0;
     GtkTreeIter iter;
     GtkTreeSelection *selection;
+    const gchar *body = NULL;
+    gsize len = 0;
+    GError *error = NULL;
+    GBytes *response =
+        soup_session_send_and_read_finish(SOUP_SESSION(source), result, &error);
+
+    if (G_UNLIKELY(error))
+        g_error_free(error);
+    else
+        body = g_bytes_get_data(response, &len);
 
     if (global_dialog == NULL) {
         weather_debug("%s called after dialog was destroyed", G_STRFUNC);
@@ -97,9 +107,11 @@ cb_searchdone(SoupSession *session,
 
     gtk_widget_set_sensitive(dialog->find_button, TRUE);
 
-    doc = get_xml_document(msg);
-    if (!doc)
+    doc = get_xml_document(body, len);
+    if (!doc) {
+        g_bytes_unref(response);
         return;
+    }
 
     cur_node = xmlDocGetRootElement(doc);
     if (cur_node) {
@@ -133,6 +145,7 @@ cb_searchdone(SoupSession *session,
         }
 
     gtk_tree_view_column_set_title(dialog->column, _("Results"));
+    g_bytes_unref(response);
 }
 
 
@@ -205,15 +218,17 @@ create_search_dialog(GtkWindow *parent,
     dialog->session = session;
 
     dialog->dialog =
-        xfce_titled_dialog_new_with_buttons(_("Search location"),
-                                            parent,
-                                            GTK_DIALOG_MODAL |
-                                            GTK_DIALOG_DESTROY_WITH_PARENT,
-                                            _("Cancel"),
-                                            GTK_RESPONSE_REJECT,
-                                            _("OK"),
-                                            GTK_RESPONSE_ACCEPT,
-                                            NULL);
+        xfce_titled_dialog_new_with_mixed_buttons(_("Search location"),
+                                                  parent,
+                                                  GTK_DIALOG_MODAL |
+                                                  GTK_DIALOG_DESTROY_WITH_PARENT,
+                                                  "",
+                                                  _("Cancel"),
+                                                  GTK_RESPONSE_REJECT,
+                                                  "",
+                                                  _("OK"),
+                                                  GTK_RESPONSE_ACCEPT,
+                                                  NULL);
     gtk_dialog_set_response_sensitive(GTK_DIALOG(dialog->dialog),
                                       GTK_RESPONSE_ACCEPT, FALSE);
     gtk_window_set_icon_name(GTK_WINDOW(dialog->dialog), "edit-find");
@@ -375,14 +390,24 @@ get_preferred_units(const gchar *country_code)
 
 
 static void
-cb_geolocation(SoupSession *session,
-               SoupMessage *msg,
+cb_geolocation(GObject *source,
+               GAsyncResult *result,
                gpointer user_data)
 {
     geolocation_data *data = (geolocation_data *) user_data;
     xml_geolocation *geo;
     gchar *full_loc;
     units_config *units;
+    const gchar *body = NULL;
+    gsize len = 0;
+    GError *error = NULL;
+    GBytes *response =
+        soup_session_send_and_read_finish(SOUP_SESSION(source), result, &error);
+
+    if (G_UNLIKELY(error))
+        g_error_free(error);
+    else
+        body = g_bytes_get_data(response, &len);
 
     if (global_dialog == NULL) {
         weather_debug("%s called after dialog was destroyed", G_STRFUNC);
@@ -390,11 +415,12 @@ cb_geolocation(SoupSession *session,
     }
 
     geo = (xml_geolocation *)
-        parse_xml_document(msg, (XmlParseFunc) parse_geolocation);
+        parse_xml_document(body, len, (XmlParseFunc) parse_geolocation);
     weather_dump(weather_dump_geolocation, geo);
 
     if (!geo) {
         data->cb(NULL, NULL, NULL, NULL, data->user_data);
+        g_bytes_unref(response);
         g_free(data);
         return;
     }
@@ -425,6 +451,7 @@ cb_geolocation(SoupSession *session,
     g_slice_free(units_config, units);
     xml_geolocation_free(geo);
     g_free(full_loc);
+    g_bytes_unref(response);
     g_free(data);
 }
 
