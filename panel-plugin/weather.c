@@ -706,7 +706,7 @@ update_handler(gpointer user_data)
                 day_t = day_at_midnight(now_t, day);
                 now_tm = *localtime(&day_t);
                 /* build url */
-                url = g_strdup_printf("https://api.met.no/weatherapi"
+                url = g_strdup_printf("https://aa062reffgwvo1efa.api.met.no/weatherapi"
                                       "/sunrise/3.0/sun?lat=%s&lon=%s&"
                                       "date=%04d-%02d-%02d&"
                                       "offset=%s",
@@ -730,7 +730,7 @@ update_handler(gpointer user_data)
             for (day = 0; day < astro_forecast_days; day++) {
                 day_t = day_at_midnight(now_t, day);
                 now_tm = *localtime(&day_t);
-                url = g_strdup_printf("https://api.met.no/weatherapi"
+                url = g_strdup_printf("https://aa062reffgwvo1efa.api.met.no/weatherapi"
                                       "/sunrise/3.0/moon?lat=%s&lon=%s&"
                                       "date=%04d-%02d-%02d&"
                                       "offset=%s",
@@ -758,7 +758,7 @@ update_handler(gpointer user_data)
         data->weather_update->started = TRUE;
 
         /* build url */
-        url = g_strdup_printf("https://api.met.no"
+        url = g_strdup_printf("https://aa062reffgwvo1efa.api.met.no"
                               "/weatherapi/locationforecast/%s/"
                               "classic?lat=%s&lon=%s&altitude=%d",
                               api_version,
