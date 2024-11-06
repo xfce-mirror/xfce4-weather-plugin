@@ -1161,6 +1161,9 @@ check_scrollbox_show_toggled(GtkSwitch *button,
     dialog->pd->show_scrollbox = state;
     gtk_switch_set_state (button, state);
     scrollbox_set_visible(dialog->pd);
+    xfceweather_set_mode(dialog->pd->plugin,
+                         xfce_panel_plugin_get_mode(dialog->pd->plugin),
+                         dialog->pd);
 }
 
 
