@@ -8,7 +8,7 @@ dnl
 dnl ***************************
 dnl *** Version information ***
 dnl ***************************
-XDT_VERSION_INIT([0.11.2], [git])
+XDT_VERSION_INIT([0.11.3])
 
 dnl *******************************************
 dnl *** Debugging support for git snapshots ***
