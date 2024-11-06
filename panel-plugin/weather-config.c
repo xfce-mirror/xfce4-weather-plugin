@@ -238,13 +238,23 @@ sanitize_location_name(const gchar *location_name)
 
 
 static void
-cb_lookup_altitude(SoupSession *session,
-                   SoupMessage *msg,
+cb_lookup_altitude(GObject *source,
+                   GAsyncResult *result,
                    gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     xml_altitude *altitude;
     gdouble alt = 0;
+    const gchar *body = NULL;
+    gsize len = 0;
+    GError *error = NULL;
+    GBytes *response =
+        soup_session_send_and_read_finish(SOUP_SESSION(source), result, &error);
+
+    if (G_UNLIKELY(error))
+        g_error_free(error);
+    else
+        body = g_bytes_get_data(response, &len);
 
     if (global_dialog == NULL) {
         weather_debug("%s called after dialog was destroyed", G_STRFUNC);
@@ -252,7 +262,7 @@ cb_lookup_altitude(SoupSession *session,
     }
 
     altitude = (xml_altitude *)
-        parse_xml_document(msg, (XmlParseFunc) parse_altitude);
+        parse_xml_document(body, len, (XmlParseFunc) parse_altitude);
 
     if (altitude) {
         alt = string_to_double(altitude->altitude, -9999);
@@ -264,16 +274,27 @@ cb_lookup_altitude(SoupSession *session,
     else if (dialog->pd->units->altitude == FEET)
         alt /= 0.3048;
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_alt), alt);
+    g_bytes_unref(response);
 }
 
 
 static void
-cb_lookup_timezone(SoupSession *session,
-                   SoupMessage *msg,
+cb_lookup_timezone(GObject *source,
+                   GAsyncResult *result,
                    gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     xml_timezone *xml_tz;
+    const gchar *body = NULL;
+    gsize len = 0;
+    GError *error = NULL;
+    GBytes *response =
+        soup_session_send_and_read_finish(SOUP_SESSION(source), result, &error);
+
+    if (G_UNLIKELY(error))
+        g_error_free(error);
+    else
+        body = g_bytes_get_data(response, &len);
 
     if (global_dialog == NULL) {
         weather_debug("%s called after dialog was destroyed", G_STRFUNC);
@@ -281,7 +302,7 @@ cb_lookup_timezone(SoupSession *session,
     }
 
     xml_tz = (xml_timezone *)
-        parse_xml_document(msg, (XmlParseFunc) parse_timezone);
+        parse_xml_document(body, len, (XmlParseFunc) parse_timezone);
     weather_dump(weather_dump_timezone, xml_tz);
 
     if (xml_tz) {
@@ -290,6 +311,7 @@ cb_lookup_timezone(SoupSession *session,
         xml_timezone_free(xml_tz);
     } else
         gtk_entry_set_text(GTK_ENTRY(dialog->text_timezone), "");
+    g_bytes_unref(response);
 }
 
 
@@ -958,8 +980,8 @@ button_icons_dir_clicked(GtkWidget *button,
     g_mkdir_with_parents(dir, 0755);
     command = g_strdup_printf("exo-open %s", dir);
     g_free(dir);
-    xfce_spawn_command_line_on_screen(gdk_screen_get_default(),
-                                      command, FALSE, TRUE, NULL);
+    xfce_spawn_command_line(gdk_screen_get_default(), command, FALSE,
+                            TRUE, TRUE, NULL);
     g_free(command);
 }
 
