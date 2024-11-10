@@ -2246,15 +2246,19 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
 
     /* create alignment box that can be easily adapted to the panel
        orientation */
+    gtk_widget_set_valign (GTK_WIDGET (plugin), GTK_ALIGN_CENTER);
+    gtk_widget_set_halign (GTK_WIDGET (plugin), GTK_ALIGN_CENTER);
     data->alignbox = gtk_box_new (GTK_ORIENTATION_HORIZONTAL, 0);
     gtk_container_add(GTK_CONTAINER(data->button), data->alignbox);
+    gtk_widget_set_valign (GTK_WIDGET (data->alignbox), GTK_ALIGN_CENTER);
+    gtk_widget_set_halign (GTK_WIDGET (data->alignbox), GTK_ALIGN_CENTER);
 
     /* add widgets to alignment box */
     data->vbox_center_scrollbox = gtk_box_new(GTK_ORIENTATION_VERTICAL, 0);
-    gtk_widget_set_halign (GTK_WIDGET (data->iconimage), 1);
-    gtk_widget_set_valign (GTK_WIDGET (data->iconimage), 0.5);
+    gtk_widget_set_halign (GTK_WIDGET (data->iconimage), GTK_ALIGN_CENTER);
+    gtk_widget_set_valign (GTK_WIDGET (data->iconimage), GTK_ALIGN_CENTER);
     gtk_box_pack_start(GTK_BOX(data->alignbox),
-                       data->iconimage, TRUE, FALSE, 0);
+                       data->iconimage, FALSE, FALSE, 0);
     gtk_box_pack_start(GTK_BOX(data->vbox_center_scrollbox),
                        data->scrollbox, TRUE, TRUE, 0);
     gtk_box_pack_start(GTK_BOX(data->alignbox),
@@ -2363,8 +2367,17 @@ xfceweather_set_size(XfcePanelPlugin *panel,
     gint icon_size;
 
     data->panel_rows = xfce_panel_plugin_get_nrows(panel);
-    if (data->single_row)
-        size /= data->panel_rows;
+    if (data->single_row && !data->show_scrollbox) {
+      size /= data->panel_rows;
+      xfce_panel_plugin_set_small(panel, TRUE);
+      gtk_widget_set_size_request (GTK_WIDGET (data->button), size, size);
+    } else {
+      xfce_panel_plugin_set_small(panel, FALSE);
+      if (xfce_panel_plugin_get_mode (panel) == XFCE_PANEL_PLUGIN_MODE_HORIZONTAL)
+        gtk_widget_set_size_request (GTK_WIDGET (data->button), -1, size);
+      else
+        gtk_widget_set_size_request (GTK_WIDGET (data->button), size, -1);
+    }
     data->panel_size = size;
 
     icon_size = xfce_panel_plugin_get_icon_size (panel);
@@ -2387,24 +2400,13 @@ xfceweather_set_mode(XfcePanelPlugin *panel,
 {
     data->panel_orientation = xfce_panel_plugin_get_mode(panel);
 
-    if (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_HORIZONTAL ||
-        (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_DESKBAR &&
-         data->single_row)) {
+    if (data->panel_orientation == XFCE_PANEL_PLUGIN_MODE_HORIZONTAL) {
         gtk_orientable_set_orientation(GTK_ORIENTABLE(data->alignbox),
                                    GTK_ORIENTATION_HORIZONTAL);
-        gtk_widget_set_halign (GTK_WIDGET (data->iconimage), 1);
-        gtk_widget_set_valign (GTK_WIDGET (data->iconimage), 0.5);
     } else {
         gtk_orientable_set_orientation(GTK_ORIENTABLE(data->alignbox),
                                    GTK_ORIENTATION_VERTICAL);
-        gtk_widget_set_halign (GTK_WIDGET (data->iconimage), 0.5);
-        gtk_widget_set_valign (GTK_WIDGET (data->iconimage), 1);
     }
-
-    if (mode == XFCE_PANEL_PLUGIN_MODE_DESKBAR)
-        xfce_panel_plugin_set_small(panel, FALSE);
-    else
-        xfce_panel_plugin_set_small(panel, data->single_row);
 
     gtk_scrollbox_set_orientation(GTK_SCROLLBOX(data->scrollbox),
                                   (mode != XFCE_PANEL_PLUGIN_MODE_VERTICAL)
