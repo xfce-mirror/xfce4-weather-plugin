@@ -120,3 +120,4 @@ echo
 echo "Build Configuration:"
 echo
 echo "* Debug Support:             $enable_debug"
+echo "* UPower Glib Support:       ${UPOWER_GLIB_FOUND:-no}"
