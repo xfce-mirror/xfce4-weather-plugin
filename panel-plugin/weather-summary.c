@@ -234,10 +234,16 @@ get_logo_path(void)
 
 
 static void
+#if SOUP_CHECK_VERSION(3, 0, 0)
 logo_fetched(GObject *source,
              GAsyncResult *result,
+#else
+logo_fetched(SoupSession *session,
+             SoupMessage *msg,
+#endif
              gpointer user_data)
 {
+#if SOUP_CHECK_VERSION(3, 0, 0)
     GError *error = NULL;
     GBytes *response =
         soup_session_send_and_read_finish(SOUP_SESSION(source), result, &error);
@@ -251,12 +257,23 @@ logo_fetched(GObject *source,
         g_file_set_contents(path, body, len, &error);
         g_bytes_unref(response);
         if (error) {
+#else
+    if (msg && msg->response_body && msg->response_body->length > 0) {
+         gchar *path = get_logo_path();
+         GError *error = NULL;
+         GdkPixbuf *pixbuf = NULL;
+         gint scale_factor;
+         if (!g_file_set_contents(path, msg->response_body->data,
+                                  msg->response_body->length, &error)) {
+#endif
             g_warning("Error downloading met.no logo image to %s, "
                       "reason: %s\n", path,
                       error ? error->message : "unknown");
             g_error_free(error);
             g_free(path);
+#if SOUP_CHECK_VERSION(3, 0, 0)
             g_bytes_unref(response);
+#endif
             return;
         }
         scale_factor = gtk_widget_get_scale_factor(user_data);
@@ -268,9 +285,13 @@ logo_fetched(GObject *source,
             cairo_surface_destroy(surface);
             g_object_unref(pixbuf);
         }
+#if SOUP_CHECK_VERSION(3, 0, 0)
         g_bytes_unref(response);
     } else
         g_error_free(error);
+#else
+    }
+#endif
 }
 
 

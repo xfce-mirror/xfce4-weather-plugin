@@ -70,7 +70,9 @@ XDT_CHECK_PACKAGE([LIBXFCE4UI], [libxfce4ui-2], [4.16.0])
 XDT_CHECK_PACKAGE([LIBXFCE4PANEL], [libxfce4panel-2.0], [4.14.0])
 XDT_CHECK_PACKAGE([XFCONF], [libxfconf-0], [4.12.0])
 XDT_CHECK_PACKAGE([LIBXML], [libxml-2.0], [2.4.0])
-XDT_CHECK_PACKAGE([SOUP], [libsoup-3.0], [3.0.0])
+dnl XDT_CHECK_PACKAGE([SOUP], [libsoup-3.0], [3.0.0])
+XDT_CHECK_PACKAGE([SOUP], [libsoup-3.0], [3.0.0], [],
+                          [XDT_CHECK_PACKAGE([SOUP], [libsoup-2.4], [2.42.0])])
 XDT_CHECK_PACKAGE([JSON], [json-c], [0.13.1])
 XDT_CHECK_OPTIONAL_PACKAGE([UPOWER_GLIB], [upower-glib], [0.9.0], [upower],
                            [upower for adapting update interval to power state])
@@ -121,3 +123,4 @@ echo "Build Configuration:"
 echo
 echo "* Debug Support:             $enable_debug"
 echo "* UPower Glib Support:       ${UPOWER_GLIB_FOUND:-no}"
+echo "* Soup Version:              ${SOUP_VERSION:-no}"

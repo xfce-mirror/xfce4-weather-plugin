@@ -78,8 +78,13 @@ sanitize_str(const gchar *str)
 
 
 static void
+#if SOUP_CHECK_VERSION(3, 0, 0)
 cb_searchdone(GObject *source,
               GAsyncResult *result,
+#else
+cb_searchdone(SoupSession *session,
+              SoupMessage *msg,
+#endif
               gpointer user_data)
 {
     search_dialog *dialog = (search_dialog *) user_data;
@@ -91,6 +96,7 @@ cb_searchdone(GObject *source,
     GtkTreeSelection *selection;
     const gchar *body = NULL;
     gsize len = 0;
+#if SOUP_CHECK_VERSION(3, 0, 0)
     GError *error = NULL;
     GBytes *response =
         soup_session_send_and_read_finish(SOUP_SESSION(source), result, &error);
@@ -99,6 +105,12 @@ cb_searchdone(GObject *source,
         g_error_free(error);
     else
         body = g_bytes_get_data(response, &len);
+#else
+    if (G_LIKELY(msg->response_body && msg->response_body->data)) {
+        body = msg->response_body->data;
+        len = msg->response_body->length;
+    }
+#endif
 
     if (global_dialog == NULL) {
         weather_debug("%s called after dialog was destroyed", G_STRFUNC);
@@ -109,7 +121,9 @@ cb_searchdone(GObject *source,
 
     doc = get_xml_document(body, len);
     if (!doc) {
+#if SOUP_CHECK_VERSION(3, 0, 0)
         g_bytes_unref(response);
+#endif
         return;
     }
 
@@ -145,7 +159,9 @@ cb_searchdone(GObject *source,
         }
 
     gtk_tree_view_column_set_title(dialog->column, _("Results"));
+#if SOUP_CHECK_VERSION(3, 0, 0)
     g_bytes_unref(response);
+#endif
 }
 
 
@@ -390,8 +406,13 @@ get_preferred_units(const gchar *country_code)
 
 
 static void
+#if SOUP_CHECK_VERSION(3, 0, 0)
 cb_geolocation(GObject *source,
                GAsyncResult *result,
+#else
+cb_geolocation(SoupSession *session,
+               SoupMessage *msg,
+#endif
                gpointer user_data)
 {
     geolocation_data *data = (geolocation_data *) user_data;
@@ -400,6 +421,7 @@ cb_geolocation(GObject *source,
     units_config *units;
     const gchar *body = NULL;
     gsize len = 0;
+#if SOUP_CHECK_VERSION(3, 0, 0)
     GError *error = NULL;
     GBytes *response =
         soup_session_send_and_read_finish(SOUP_SESSION(source), result, &error);
@@ -408,6 +430,12 @@ cb_geolocation(GObject *source,
         g_error_free(error);
     else
         body = g_bytes_get_data(response, &len);
+#else
+    if (G_LIKELY(msg->response_body && msg->response_body->data)) {
+        body = msg->response_body->data;
+        len = msg->response_body->length;
+    }
+#endif
 
     if (global_dialog == NULL) {
         weather_debug("%s called after dialog was destroyed", G_STRFUNC);
@@ -420,7 +448,9 @@ cb_geolocation(GObject *source,
 
     if (!geo) {
         data->cb(NULL, NULL, NULL, NULL, data->user_data);
+#if SOUP_CHECK_VERSION(3, 0, 0)
         g_bytes_unref(response);
+#endif
         g_free(data);
         return;
     }
@@ -451,7 +481,9 @@ cb_geolocation(GObject *source,
     g_slice_free(units_config, units);
     xml_geolocation_free(geo);
     g_free(full_loc);
+#if SOUP_CHECK_VERSION(3, 0, 0)
     g_bytes_unref(response);
+#endif
     g_free(data);
 }
 

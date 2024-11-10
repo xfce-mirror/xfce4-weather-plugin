@@ -183,7 +183,11 @@ extern gboolean debug_mode;
 
 void weather_http_queue_request(SoupSession *session,
                                 const gchar *uri,
+#if SOUP_CHECK_VERSION(3, 0, 0)
                                 GAsyncReadyCallback callback_func,
+#else
+                                SoupSessionCallback callback_func,
+#endif
                                 gpointer user_data);
 
 void scrollbox_set_visible(plugin_data *data);

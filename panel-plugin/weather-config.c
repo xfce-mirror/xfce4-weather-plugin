@@ -238,8 +238,13 @@ sanitize_location_name(const gchar *location_name)
 
 
 static void
+#if SOUP_CHECK_VERSION(3, 0, 0)
 cb_lookup_altitude(GObject *source,
                    GAsyncResult *result,
+#else
+cb_lookup_altitude(SoupSession *session,
+                   SoupMessage *msg,
+#endif
                    gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
@@ -247,6 +252,7 @@ cb_lookup_altitude(GObject *source,
     gdouble alt = 0;
     const gchar *body = NULL;
     gsize len = 0;
+#if SOUP_CHECK_VERSION(3, 0, 0)
     GError *error = NULL;
     GBytes *response =
         soup_session_send_and_read_finish(SOUP_SESSION(source), result, &error);
@@ -255,6 +261,12 @@ cb_lookup_altitude(GObject *source,
         g_error_free(error);
     else
         body = g_bytes_get_data(response, &len);
+#else
+    if (G_LIKELY(msg->response_body && msg->response_body->data)) {
+        body = msg->response_body->data;
+        len = msg->response_body->length;
+    }
+#endif
 
     if (global_dialog == NULL) {
         weather_debug("%s called after dialog was destroyed", G_STRFUNC);
@@ -274,19 +286,27 @@ cb_lookup_altitude(GObject *source,
     else if (dialog->pd->units->altitude == FEET)
         alt /= 0.3048;
     gtk_spin_button_set_value(GTK_SPIN_BUTTON(dialog->spin_alt), alt);
+#if SOUP_CHECK_VERSION(3, 0, 0)
     g_bytes_unref(response);
+#endif
 }
 
 
 static void
+#if SOUP_CHECK_VERSION(3, 0, 0)
 cb_lookup_timezone(GObject *source,
                    GAsyncResult *result,
+#else
+cb_lookup_timezone(SoupSession *session,
+                   SoupMessage *msg,
+#endif
                    gpointer user_data)
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
     xml_timezone *xml_tz;
     const gchar *body = NULL;
     gsize len = 0;
+#if SOUP_CHECK_VERSION(3, 0, 0)
     GError *error = NULL;
     GBytes *response =
         soup_session_send_and_read_finish(SOUP_SESSION(source), result, &error);
@@ -295,6 +315,12 @@ cb_lookup_timezone(GObject *source,
         g_error_free(error);
     else
         body = g_bytes_get_data(response, &len);
+#else
+    if (G_LIKELY(msg->response_body && msg->response_body->data)) {
+        body = msg->response_body->data;
+        len = msg->response_body->length;
+    }
+#endif
 
     if (global_dialog == NULL) {
         weather_debug("%s called after dialog was destroyed", G_STRFUNC);
@@ -311,7 +337,9 @@ cb_lookup_timezone(GObject *source,
         xml_timezone_free(xml_tz);
     } else
         gtk_entry_set_text(GTK_ENTRY(dialog->text_timezone), "");
+#if SOUP_CHECK_VERSION(3, 0, 0)
     g_bytes_unref(response);
+#endif
 }
 
 
