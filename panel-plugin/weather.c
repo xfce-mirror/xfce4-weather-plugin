@@ -1871,38 +1871,27 @@ xfceweather_dialog_response(GtkWidget *dlg,
 {
     plugin_data *data = (plugin_data *) dialog->pd;
     icon_theme *theme;
-    gboolean result;
     guint i;
 
-    if (response == GTK_RESPONSE_HELP) {
-        /* show help */
-        result = g_spawn_command_line_async("exo-open --launch WebBrowser "
-                                            PLUGIN_WEBSITE, NULL);
-
-        if (G_UNLIKELY(result == FALSE))
-            g_warning("Unable to open the following url: %s",
-                      PLUGIN_WEBSITE);
-    } else {
-        /* free stuff used in config dialog */
-        gtk_widget_destroy(dlg);
-        g_object_unref(dialog->builder);
-        gtk_list_store_clear(dialog->model_datatypes);
-        for (i = 0; i < dialog->icon_themes->len; i++) {
-            theme = g_array_index(dialog->icon_themes, icon_theme *, i);
-            icon_theme_free(theme);
-        }
-        g_array_free(dialog->icon_themes, FALSE);
-        if (dialog->timer_id != 0) {
-            g_source_remove(dialog->timer_id);
-        }
-        g_slice_free(xfceweather_dialog, dialog);
-
-        xfce_panel_plugin_unblock_menu(data->plugin);
-
-        weather_debug("Write configuration");
-        xfceweather_write_config(data->plugin, data);
-        weather_dump(weather_dump_plugindata, data);
+    /* free stuff used in config dialog */
+    gtk_widget_destroy(dlg);
+    g_object_unref(dialog->builder);
+    gtk_list_store_clear(dialog->model_datatypes);
+    for (i = 0; i < dialog->icon_themes->len; i++) {
+        theme = g_array_index(dialog->icon_themes, icon_theme *, i);
+        icon_theme_free(theme);
     }
+    g_array_free(dialog->icon_themes, FALSE);
+    if (dialog->timer_id != 0) {
+        g_source_remove(dialog->timer_id);
+    }
+    g_slice_free(xfceweather_dialog, dialog);
+
+    xfce_panel_plugin_unblock_menu(data->plugin);
+
+    weather_debug("Write configuration");
+    xfceweather_write_config(data->plugin, data);
+    weather_dump(weather_dump_plugindata, data);
 }
 
 
