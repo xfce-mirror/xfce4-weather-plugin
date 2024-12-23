@@ -1832,14 +1832,9 @@ proxy_auth(SoupSession *session,
 
 #ifdef HAVE_UPOWER_GLIB
 static void
-#if UP_CHECK_VERSION(0, 99, 0)
 upower_changed_cb(UpClient *client,
                   GParamSpec *pspec,
                   plugin_data *data)
-#else /* UP_CHECK_VERSION < 0.99 */
-upower_changed_cb(UpClient *client,
-                  plugin_data *data)
-#endif /* UP_CHECK_VERSION */
 {
     gboolean on_battery;
 
@@ -2513,13 +2508,8 @@ weather_construct(XfcePanelPlugin *plugin)
 
 #ifdef HAVE_UPOWER_GLIB
     if (data->upower) {
-#if UP_CHECK_VERSION(0, 99, 0)
         g_signal_connect (data->upower, "notify",
                           G_CALLBACK(upower_changed_cb), data);
-#else /* UP_CHECK_VERSION < 0.99 */
-        g_signal_connect (data->upower, "changed",
-                          G_CALLBACK(upower_changed_cb), data);
-#endif /* UP_CHECK_VERSION */
     }
 #endif /* HAVE_UPOWER_GLIB */
 
