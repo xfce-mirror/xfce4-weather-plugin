@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
 "Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
-"POT-Creation-Date: 2024-04-03 12:57+0200\n"
+"POT-Creation-Date: 2024-12-29 12:52+0100\n"
 "PO-Revision-Date: 2013-07-03 19:29+0000\n"
 "Last-Translator: Remus-Gabriel Chelu <remusgabriel.chelu@disroot.org>, 2024\n"
 "Language-Team: Romanian (http://app.transifex.com/xfce/xfce-panel-plugins/language/ro/)\n"
@@ -32,7 +32,7 @@ msgstr "Afișează condițiile meteorologice actuale"
 msgid "_Help"
 msgstr "_Ajutor"
 
-#: panel-plugin/weather-config.ui:112 panel-plugin/weather-summary.c:1196
+#: panel-plugin/weather-config.ui:112 panel-plugin/weather-summary.c:1226
 msgid "_Close"
 msgstr "În_chide"
 
@@ -86,7 +86,7 @@ msgid ""
 "Altitude is given in meters above sea level, or alternatively in feet by changing the unit on the units page. It should match the real value roughly, but small differences will have no influence on the weather data. Inside Norway, this setting has no effect at all."
 msgstr "Pentru locațiile din afara Norvegiei, modelul de altitudine utilizat de serviciul web met.no nu este foarte bun, astfel încât este de obicei necesar să specificați altitudinea ca parametru suplimentar, altfel valorile raportate nu vor fi corecte.\n\nModulul încearcă să detecteze automat altitudinea utilizând serviciul web GeoNames, dar este posibil ca și acest lucru să nu fie întotdeauna corect, așa că îl puteți modifica aici.\n\nAltitudinea este dată în metri deasupra nivelului mării sau, alternativ, în picioare prin schimbarea unității pe pagina de unități. Ar trebui să corespundă aproximativ valorii reale, dar diferențele mici nu vor avea nicio influență asupra datelor meteorologice. În interiorul Norvegiei, această ajustare nu are niciun efect."
 
-#: panel-plugin/weather-config.ui:318 panel-plugin/weather-config.c:398
+#: panel-plugin/weather-config.ui:318 panel-plugin/weather-config.c:462
 msgid "feet"
 msgstr "picioare"
 
@@ -112,9 +112,9 @@ msgstr "Caută o locație nouă și detectează automat parametrii acesteia."
 
 #: panel-plugin/weather-config.ui:434
 msgid ""
-"Please change location name to your liking and correct alltitude and "
-"timezone if they are not auto-detected correctly."
-msgstr "Vă rugăm să modificați numele locației după bunul plac și să corectați altitudinea și fusul orar dacă acestea nu sunt detectate automat corect."
+"Please change location name to your liking and correct altitude and timezone"
+" if they are not auto-detected correctly."
+msgstr "Modificați numele locației după bunul plac și corectați altitudinea și fusul orar dacă acestea nu sunt detectate automat corect."
 
 #: panel-plugin/weather-config.ui:464
 msgid "_Location"
@@ -410,7 +410,7 @@ msgstr "Ascundeți caseta de derulare pentru a economisi spațiu valoros pe pano
 msgid "<b>Show scrollbox</b>"
 msgstr "<b> Afișează caseta de derulare</b>"
 
-#: panel-plugin/weather-config.ui:1173 panel-plugin/weather-config.c:1129
+#: panel-plugin/weather-config.ui:1173 panel-plugin/weather-config.c:1196
 msgid "Select _font"
 msgstr "Selectați _fontul"
 
@@ -444,96 +444,96 @@ msgid "_Scrollbox"
 msgstr "Ca_setă de derulare"
 
 #. TRANSLATORS: Keep in sync with labeloptions in weather-config.c
-#: panel-plugin/weather.c:130
+#: panel-plugin/weather.c:141
 msgid "T"
 msgstr "T"
 
-#: panel-plugin/weather.c:133
+#: panel-plugin/weather.c:144
 msgid "P"
 msgstr "P"
 
-#: panel-plugin/weather.c:136
+#: panel-plugin/weather.c:147
 msgid "WS"
 msgstr "VV"
 
-#: panel-plugin/weather.c:139
+#: panel-plugin/weather.c:150
 msgid "WB"
 msgstr "VB"
 
-#: panel-plugin/weather.c:142 panel-plugin/weather.c:145
+#: panel-plugin/weather.c:153 panel-plugin/weather.c:156
 msgid "WD"
 msgstr "DV"
 
-#: panel-plugin/weather.c:148
+#: panel-plugin/weather.c:159
 msgid "H"
 msgstr "U"
 
-#: panel-plugin/weather.c:151
+#: panel-plugin/weather.c:162
 msgid "D"
 msgstr "R"
 
-#: panel-plugin/weather.c:154
+#: panel-plugin/weather.c:165
 msgid "A"
 msgstr "A"
 
-#: panel-plugin/weather.c:157
+#: panel-plugin/weather.c:168
 msgid "CL"
 msgstr "NJ"
 
-#: panel-plugin/weather.c:160
+#: panel-plugin/weather.c:171
 msgid "CM"
 msgstr "NM"
 
-#: panel-plugin/weather.c:163
+#: panel-plugin/weather.c:174
 msgid "CH"
 msgstr "NÎ"
 
-#: panel-plugin/weather.c:166
+#: panel-plugin/weather.c:177
 msgid "C"
 msgstr "Î"
 
-#: panel-plugin/weather.c:169
+#: panel-plugin/weather.c:180
 msgid "F"
 msgstr "C"
 
-#: panel-plugin/weather.c:172
+#: panel-plugin/weather.c:183
 msgid "R"
 msgstr "R"
 
-#: panel-plugin/weather.c:361 panel-plugin/weather.c:363
+#: panel-plugin/weather.c:367 panel-plugin/weather.c:369
 msgid "No Data"
 msgstr "Nu există date"
 
-#: panel-plugin/weather.c:1858
+#: panel-plugin/weather.c:1965
 msgid "Short-term forecast data unavailable."
 msgstr "Datele de prognoză pe termen scurt nu sunt disponibile."
 
-#: panel-plugin/weather.c:1871
+#: panel-plugin/weather.c:1978
 msgid "The sun never sets today."
 msgstr "Soarele nu apune astăzi."
 
-#: panel-plugin/weather.c:1873
+#: panel-plugin/weather.c:1980
 msgid "The sun never rises today."
 msgstr "Soarele nu răsare astăzi."
 
-#: panel-plugin/weather.c:1879
+#: panel-plugin/weather.c:1986
 #, c-format
 msgid "The sun never rises and sets at %s."
 msgstr "Soarele nu răsare și apune la %s."
 
-#: panel-plugin/weather.c:1886
+#: panel-plugin/weather.c:1993
 #, c-format
 msgid "The sun rises at %s and never sets."
 msgstr "Soarele răsare la %s și nu apune."
 
-#: panel-plugin/weather.c:1894
+#: panel-plugin/weather.c:2001
 #, c-format
 msgid "The sun rises at %s and sets at %s."
 msgstr "Soarele răsare la %s și apune la %s."
 
 #. * TRANSLATORS: This is the simple tooltip. For a bigger challenge,
 #. * look at the verbose tooltip style further below ;-)
-#: panel-plugin/weather.c:1922
+#: panel-plugin/weather.c:2029
 #, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
@@ -552,7 +552,7 @@ msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\
 #. * be changed easily - and try to make it compact and look
 #. * good! The missing space after "%son the ..." is intentional,
 #. * it is included in the %s.
-#: panel-plugin/weather.c:1946
+#: panel-plugin/weather.c:2053
 #, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
@@ -567,46 +567,46 @@ msgid ""
 "<span size=\"smaller\">%s</span>"
 msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n<b><span size=\"large\">%s</span></b>\n<span size=\"smaller\">de la %s la %s, cu %s de precipitații</span>\n\n<b>Temperatură:</b> %s\t\t<span size=\"smaller\">(valori la %s)</span>\n<b>Vânt:</b> %s (%spe scara Beaufort) din %s(%s)\n<b>Presiune:</b> %s    <b>Umiditate:</b> %s\n<b>Ceață:</b> %s    <b>Nebulozitate:</b> %s\n\n<span size=\"smaller\">%s</span>"
 
-#: panel-plugin/weather.c:2000
+#: panel-plugin/weather.c:2107
 msgid "Cannot update weather data"
 msgstr "Nu se pot actualiza datele meteorologice"
 
 #. add refresh button to right click menu, for people who missed
 #. the middle mouse click feature
-#: panel-plugin/weather.c:2140
+#: panel-plugin/weather.c:2277
 msgid "Re_fresh"
 msgstr "_Actualizare"
 
-#: panel-plugin/weather.c:2305
+#: panel-plugin/weather.c:2440
 msgid "Show weather conditions and forecasts"
 msgstr "Afișează condițiile și prognozele meteo"
 
-#: panel-plugin/weather-config.c:231 panel-plugin/weather-config.c:337
-#: panel-plugin/weather-config.c:507
+#: panel-plugin/weather-config.c:235 panel-plugin/weather-config.c:401
+#: panel-plugin/weather-config.c:571
 msgid "Unset"
 msgstr "Nedefinit"
 
-#: panel-plugin/weather-config.c:347
+#: panel-plugin/weather-config.c:411
 msgid "Detecting..."
 msgstr "Se detectează..."
 
-#: panel-plugin/weather-config.c:408
+#: panel-plugin/weather-config.c:472
 msgid "meters"
 msgstr "metri"
 
-#: panel-plugin/weather-config.c:548
+#: panel-plugin/weather-config.c:612
 msgid ""
 "Named after the astronomer Anders Celsius who invented the original scale in 1742, the Celsius scale is an international standard unit and nowadays defined using the Kelvin scale. 0 °C is equivalent to 273.15 K and 1 °C difference in temperature is exactly the same difference as 1 K. It is defined with the melting point of water being roughly at 0 °C and its boiling point at 100 °C at one standard atmosphere (1 atm = 1013.5 hPa). Until 1948, the unit was known as <i>centigrade</i> - from Latin <i>centum</i> (100) and <i>gradus</i> (steps).\n"
 "In meteorology and everyday life the Celsius scale is very convenient for expressing temperatures because its numbers can be an easy indicator for the formation of black ice and snow."
 msgstr "Numită după astronomul Anders Celsius care a inventat scara originală în 1742, scara Celsius este o unitate standard internațională și este definită în prezent folosind scara Kelvin. 0 °C este echivalent cu 273,15 K, iar o diferență de temperatură de 1 °C este exact aceeași diferență ca 1 K. Se definește prin faptul că punctul de topire al apei este aproximativ la 0 °C, iar punctul de fierbere la 100 °C la o atmosferă standard (1 atm = 1013,5 hPa). Până în 1948, unitatea era cunoscută ca <i>centigrad</i> - din latină <i>centum</i> (100) și <i>gradus</i> (trepte).\nÎn meteorologie și în viața de zi cu zi, scara Celsius este foarte convenabilă pentru exprimarea temperaturilor, deoarece numerele sale pot fi un indicator ușor pentru formarea de gheață neagră și zăpadă."
 
-#: panel-plugin/weather-config.c:564
+#: panel-plugin/weather-config.c:628
 msgid ""
 "The current Fahrenheit temperature scale is based on one proposed in 1724 by the physicist Daniel Gabriel Fahrenheit. 0 °F was the freezing point of brine on the original scale at standard atmospheric pressure, which was the lowest temperature achievable with this mixture of ice, salt and ammonium chloride. The melting point of water is at 32 °F and its boiling point at 212 °F. The Fahrenheit and Celsius scales intersect at -40 degrees. Even in cold winters, the temperatures usually do not fall into negative ranges on the Fahrenheit scale.\n"
 "With its inventor being a member of the Royal Society in London and having a high reputation, the Fahrenheit scale enjoyed great popularity in many English-speaking countries, but was replaced by the Celsius scale in most of these countries during the metrification process in the mid to late 20th century."
 msgstr "Actuala scară de temperatură Fahrenheit se bazează pe cea propusă în 1724 de către fizicianul Daniel Gabriel Fahrenheit. 0 °F era punctul de îngheț al saramurii pe scara originală la presiunea atmosferică standard, care era cea mai scăzută temperatură care se putea atinge cu acest amestec de gheață, sare și clorură de amoniu. Punctul de topire al apei este de 32 °F, iar punctul său de fierbere este de 212 °F. Scalele Fahrenheit și Celsius se intersectează la -40 de grade. Chiar și în iernile friguroase, temperaturile nu se încadrează de obicei în intervale negative pe scara Fahrenheit.\nInventatorul său fiind membru al Societății Regale din Londra și având o reputație înaltă, scara Fahrenheit s-a bucurat de o mare popularitate în multe țări anglofone, dar a fost înlocuită de scara Celsius în majoritatea acestor țări în timpul procesului de conversie la sistemul metric de la mijlocul până la sfârșitul secolului XX."
 
-#: panel-plugin/weather-config.c:607
+#: panel-plugin/weather-config.c:671
 msgid ""
 "The pascal, named after mathematician, physicist and philosopher Blaise "
 "Pascal, is a SI derived unit and a measure of force per unit area, defined "
@@ -614,7 +614,7 @@ msgid ""
 "hPa."
 msgstr "Pascalul, numit după matematicianul, fizicianul și filosoful Blaise Pascal, este o unitate derivată SI și o măsură a forței pe unitatea de suprafață, definită ca un newton pe metru pătrat. O atmosferă standard (atm) este 1013,25 hPa."
 
-#: panel-plugin/weather-config.c:614
+#: panel-plugin/weather-config.c:678
 msgid ""
 "Inches of mercury is still widely used for barometric pressure in weather "
 "reports, refrigeration and aviation in the United States, but seldom used "
@@ -623,7 +623,7 @@ msgid ""
 " of gravity."
 msgstr "Inch de mercur este încă utilizat pe scară largă pentru presiunea barometrică în rapoartele meteorologice, refrigerare și aviație în Statele Unite, dar rar utilizat în alte părți. Această unitate de măsură este definită ca presiunea exercitată de o coloană circulară de mercur de 1 inch cu o înălțime de 1 inch la 32 °F (0 °C) la accelerația standard a gravitației."
 
-#: panel-plugin/weather-config.c:622
+#: panel-plugin/weather-config.c:686
 msgid ""
 "The pound per square inch is a unit of pressure based on avoirdupois units "
 "(a system of weights based on a pound of 16 ounces) and defined as the "
@@ -633,7 +633,7 @@ msgid ""
 "Colonies."
 msgstr "Livra pe inch pătrat este o unitate de presiune bazată pe unități „avoirdupois” (un sistem de greutăți bazat pe o livră de 16 uncii) și definită ca presiunea rezultată din aplicarea unei forțe de o livră-forță la o suprafață de un inch pătrat. Este utilizată în Statele Unite și, în diferite grade, în viața de zi cu zi în Canada, Regatul Unit și poate în unele foste colonii britanice."
 
-#: panel-plugin/weather-config.c:631
+#: panel-plugin/weather-config.c:695
 msgid ""
 "The torr unit was named after the physicist and mathematician Evangelista "
 "Torricelli who discovered the principle of the barometer in 1644 and "
@@ -642,29 +642,29 @@ msgid ""
 "standard atmosphere (atm) equals 760 Torr."
 msgstr "Unitatea torr a fost denumită după fizicianul și matematicianul Evangelista Torricelli, care a descoperit principiul barometrului în 1644 și a prezentat publicului larg primul barometru cu mercur. O presiune de 1 torr este aproximativ egală cu un milimetru de mercur, iar o atmosferă standard (atm) este egală cu 760 Torr."
 
-#: panel-plugin/weather-config.c:665
+#: panel-plugin/weather-config.c:729
 msgid "Wind speeds in TV or in the news are often provided in km/h."
 msgstr "Viteza vântului la televizor sau în știri este adesea exprimată în km/h."
 
-#: panel-plugin/weather-config.c:669
+#: panel-plugin/weather-config.c:733
 msgid ""
 "Miles per hour is an imperial unit of speed expressing the number of statute"
 " miles covered in one hour."
 msgstr "Mile pe oră este o unitate imperială de viteză care exprimă numărul de mile terestre parcurse într-o oră."
 
-#: panel-plugin/weather-config.c:673
+#: panel-plugin/weather-config.c:737
 msgid ""
 "Meter per second is <i>the</i> unit typically used by meteorologists to "
 "denote wind speeds."
 msgstr "Metri pe secundă este <i>unitatea</i> utilizată de obicei de meteorologi pentru a indica viteza vântului."
 
-#: panel-plugin/weather-config.c:677
+#: panel-plugin/weather-config.c:741
 msgid ""
 "The foot per second (pl. feet per second) in the imperial unit system is the"
 " counterpart to the meter per second in the International System of Units."
 msgstr "Piciorul pe secundă (la pl. picioare pe secundă) în sistemul imperial de unități este omologul metrului pe secundă în Sistemul internațional de unități."
 
-#: panel-plugin/weather-config.c:682
+#: panel-plugin/weather-config.c:746
 msgid ""
 "The knot is a unit of speed equal to one international nautical mile (1.852 "
 "km) per hour, or approximately 1.151 mph, and sees worldwide use in "
@@ -672,13 +672,13 @@ msgid ""
 "knot along a meridian travels one minute of geographic latitude in one hour."
 msgstr "Nodul este o unitate de viteză egală cu o milă nautică internațională (1,852 km) pe oră, sau aproximativ 1,151 mph, și este utilizat la nivel mondial în meteorologie și în navigația maritimă și aeriană. O navă care se deplasează cu 1 nod de-a lungul unui meridian parcurge un minut de latitudine geografică într-o oră."
 
-#: panel-plugin/weather-config.c:715
+#: panel-plugin/weather-config.c:779
 msgid ""
 "1 millimeter is one thousandth of a meter - the fundamental unit of length "
 "in the International System of Units -, or approximately 0.04 inches."
 msgstr "1 milimetru este o miime dintr-un metru - unitatea fundamentală de lungime în Sistemul internațional de unități - sau aproximativ 0,04 inci."
 
-#: panel-plugin/weather-config.c:720
+#: panel-plugin/weather-config.c:784
 msgid ""
 "The English word <i>inch</i> comes from Latin <i>uncia</i> meaning <i>one-"
 "twelfth part</i> (in this case, one twelfth of a foot). In the past, there "
@@ -687,7 +687,7 @@ msgid ""
 "millimeters."
 msgstr "Cuvântul englezesc <i>inch</i> provine din latinescul <i>uncia</i> care înseamnă <i>a douăsprezecea parte</i> (în acest caz, a douăsprezecea parte dintr-un picior). În trecut, au existat mai multe standarde diferite ale inch-ului, cu dimensiuni diferite, dar valoarea actuală acceptată la nivel internațional este de exact 25,4 milimetri."
 
-#: panel-plugin/weather-config.c:753
+#: panel-plugin/weather-config.c:817
 msgid ""
 "The meter is the fundamental unit of length in the International System of "
 "Units. Originally intended to be one ten-millionth of the distance from the "
@@ -696,7 +696,7 @@ msgid ""
 "of measurement)."
 msgstr "Metrul este unitatea fundamentală de lungime în Sistemul internațional de unități. Concepută inițial ca fiind a zecea milionime din distanța de la ecuatorul Pământului la Polul Nord la nivelul mării, definiția sa a fost rafinată periodic pentru a reflecta cunoștințele din ce în ce mai aprofundate de metrologie (știința măsurării)."
 
-#: panel-plugin/weather-config.c:761
+#: panel-plugin/weather-config.c:825
 msgid ""
 "A foot (plural feet) is a unit of length defined as being 0.3048 m exactly "
 "and used in the imperial system of units and United States customary units. "
@@ -708,7 +708,7 @@ msgstr "Un picior (la plural, picioare) este o unitate de lungime definită ca a
 #. * TRANSLATORS: The Summer Simmer Index is similar to the heat
 #. * index, but usually used at night because of its better accuracy
 #. * at that time.
-#: panel-plugin/weather-config.c:800
+#: panel-plugin/weather-config.c:864
 msgid ""
 "Used in North America, wind chill will be reported for low temperatures and "
 "heat index for higher ones. At night, heat index will be replaced by the "
@@ -719,7 +719,7 @@ msgid ""
 "met, the air temperature will be shown."
 msgstr "Utilizată în America de Nord, temperatura resimțită va fi raportată pentru temperaturile scăzute, iar indicele de căldură pentru cele ridicate. Noaptea, indicele de căldură va fi înlocuit cu indicele Summer Simmer (indicele de căldură de vară). Pentru temperatura resimțită, viteza vântului trebuie să fie mai mare de 3,0 mph (4,828 km/h) și temperatura aerului mai mică de 50,0 °F (10,0 °C). Pentru indicele de căldură, temperatura aerului trebuie să fie de peste 26,7 °C (80 °F) - sau de peste 22 °C (71,6 °F) noaptea - și umiditatea relativă de cel puțin 40 %. Dacă aceste condiții nu sunt îndeplinite, va fi afișată temperatura aerului."
 
-#: panel-plugin/weather-config.c:811
+#: panel-plugin/weather-config.c:875
 msgid ""
 "The Canadian counterpart to the US windchill/heat index, with the wind chill"
 " being similar to the previous model but with slightly different "
@@ -731,7 +731,7 @@ msgid ""
 " be shown."
 msgstr "Echivalentul canadian al temperaturii resimțite/indicelui de căldură din SUA, temperatura resimțită fiind similară cu modelul anterior, dar cu constrângeri ușor diferite. În locul indicelui de căldură se va utiliza indicele de umiditate <i>humidex</i> Pentru ca temperatura resimțită să devină efectivă, viteza vântului trebuie să fie mai mare de 2,0 km/h (1,24 mph) și temperatura aerului mai mică sau egală cu 0 °C (32 °F). Pentru humidex, temperatura aerului trebuie să fie de cel puțin 20,0 °C (68 °F), cu un punct de rouă mai mare de 0 °C (32 °F). Dacă aceste condiții nu sunt îndeplinite, va fi afișată temperatura aerului."
 
-#: panel-plugin/weather-config.c:823
+#: panel-plugin/weather-config.c:887
 msgid ""
 "This is the model used by the Australian Bureau of Meteorology, especially "
 "adapted for the climate of this continent. Possibly used in Central Europe "
@@ -742,7 +742,7 @@ msgid ""
 "temperatures alike."
 msgstr "Acesta este modelul utilizat de Biroul australian de meteorologie, adaptat special pentru clima de pe acest continent. Este posibil să fie utilizat și în Europa Centrală și în unele părți ale altor continente, dar temperatura resimțită și valorile similare nu au dobândit niciodată acolo o popularitate atât de mare ca în SUA sau Canada, astfel încât informațiile despre utilizarea sa sunt rare sau incerte. Depinde de temperatura aerului, de viteza vântului și de umiditate și poate fi utilizat atât pentru temperaturi scăzute, cât și pentru temperaturi ridicate."
 
-#: panel-plugin/weather-config.c:834
+#: panel-plugin/weather-config.c:898
 msgid ""
 "Improvements by Robert G. Quayle and Robert G. Steadman applied in 1998 to "
 "earlier experiments/developments by Steadman. This model only depends on "
@@ -750,11 +750,11 @@ msgid ""
 "both heat and cold stress."
 msgstr "Îmbunătățiri aduse de Robert G. Quayle și Robert G. Steadman aplicate în 1998 experimentelor/dezvoltărilor anterioare ale lui Steadman. Acest model depinde doar de viteza vântului și de temperatură, nu și de umiditatea relativă și poate fi utilizat atât pentru stresul termic de căldură, cât și pentru stresul termic de frig."
 
-#: panel-plugin/weather-config.c:895
+#: panel-plugin/weather-config.c:959
 msgid "Choose an icon theme."
 msgstr "Alegeți o temă de pictograme."
 
-#: panel-plugin/weather-config.c:900
+#: panel-plugin/weather-config.c:964
 #, c-format
 msgid ""
 "<b>Directory:</b> %s\n"
@@ -766,19 +766,19 @@ msgid ""
 "<b>License:</b> %s"
 msgstr "<b>Director:</b> %s\n\n<b>Autor:</b> %s\n\n<b>Descriere:</b> %s\n\n<b>Licență:</b> %s"
 
-#: panel-plugin/weather-config.c:983
+#: panel-plugin/weather-config.c:1047
 msgid ""
 "A more calendar-like view, with the days in columns and the daytimes "
 "(morning, afternoon, evening, night) in rows."
 msgstr "O vizualizare mai asemănătoare cu cea a unui calendar, cu zilele în coloane și orele zilei (dimineața, după-amiaza, seara, noaptea) în rânduri."
 
-#: panel-plugin/weather-config.c:987
+#: panel-plugin/weather-config.c:1051
 msgid ""
 "Shows the forecasts in a table with the daytimes (morning, afternoon, "
 "evening, night) in columns and the days in rows."
 msgstr "Afișează prognozele într-un tabel cu orele zilei (dimineața, după-amiaza, seara, noaptea) în coloane și zilele în rânduri."
 
-#: panel-plugin/weather-config.c:1074
+#: panel-plugin/weather-config.c:1138
 #, c-format
 msgid ""
 "Met.no provides forecast data for up to %d days in the future. Choose how "
@@ -788,25 +788,25 @@ msgid ""
 "are unreliable at best ;-)"
 msgstr "Met.no oferă date de prognoză pentru până la %d zile în viitor. Alegeți câte zile vor fi afișate în fila de prognoză din fereastra de rezumat. Pe calculatoarele mai lente, un număr mai mic poate ajuta la evitarea întârzierilor la deschiderea ferestrei. Rețineți totuși că, de obicei, previziunile pentru mai mult de trei zile în viitor nu sunt fiabile în cel mai bun caz ;-)"
 
-#: panel-plugin/weather-config.c:1146
+#: panel-plugin/weather-config.c:1213
 msgid "Select font"
 msgstr "Selectați fontul"
 
 #. TRANSLATORS: Fallback value, usually never shown.
-#: panel-plugin/weather-config.c:1260
+#: panel-plugin/weather-config.c:1327
 msgid ""
 "Choose the value to add to the list below. Values can be added more than "
 "once."
 msgstr "Alegeți valoarea pe care doriți să o adăugați la lista de mai jos. Valorile pot fi adăugate de mai multe ori."
 
-#: panel-plugin/weather-config.c:1269
+#: panel-plugin/weather-config.c:1336
 msgid ""
 "Air temperature, sometimes referred to as dry-bulb temperature. Measured by "
 "a thermometer that is freely exposed to the air, yet shielded from radiation"
 " and moisture."
 msgstr "Temperatura aerului, denumită uneori temperatura uscată a bulbului. Măsurată de un termometru care este expus liber la aer, dar ferit de radiații și umiditate."
 
-#: panel-plugin/weather-config.c:1275
+#: panel-plugin/weather-config.c:1342
 msgid ""
 "The weight of the air that makes up the atmosphere exerts a pressure on the "
 "surface of the Earth, which is known as atmospheric pressure. To make it "
@@ -817,7 +817,7 @@ msgid ""
 "pressures mean deterioration."
 msgstr "Greutatea aerului care compune atmosfera exercită o presiune asupra suprafeței Pământului, cunoscută sub numele de presiune atmosferică. Pentru a facilita compararea valorii cu alte valori pentru locații cu altitudini diferite, presiunea atmosferică este ajustată la presiunea echivalentă la nivelul mării și se numește presiune barometrică. Creșterea presiunii barometrice indică, în general, o îmbunătățire a condițiilor meteorologice, în timp ce scăderea presiunii înseamnă o deteriorare."
 
-#: panel-plugin/weather-config.c:1286
+#: panel-plugin/weather-config.c:1353
 msgid ""
 "Nowadays wind speed/velocity is measured using an anemometer (Greek "
 "<i>anemos</i>, meaning <i>wind</i>) in 10 m (33 ft) height. Anemometers "
@@ -825,26 +825,26 @@ msgid ""
 "as they are closely related to and can be deduced from each other."
 msgstr "În zilele noastre, viteza vântului este măsurată folosind un anemometru (greacă <i>anemos</i>, adică <i>vânt</i>) la 10 m (33 ft) înălțime. Anemometrele măsoară, de obicei, fie viteza vântului, fie presiunea, dar vor furniza ambele valori, deoarece sunt strâns legate una de alta și pot fi deduse una din cealaltă."
 
-#: panel-plugin/weather-config.c:1294
+#: panel-plugin/weather-config.c:1361
 msgid ""
 "Invented by Sir Francis Beaufort in 1805, this empirical scale on wind speed"
 " is based on people's observations of specific land or sea conditions, "
 "denoting these conditions with numbers from 0 (calm) to 12 (hurricane)."
 msgstr "Inventată de Sir Francis Beaufort în 1805, această scară empirică a vitezei vântului se bazează pe observațiile oamenilor asupra condițiilor specifice de uscat sau de mare, indicând aceste condiții cu numere de la 0 (calm) la 12 (uragan)."
 
-#: panel-plugin/weather-config.c:1300
+#: panel-plugin/weather-config.c:1367
 msgid ""
 "This gives the cardinal direction (North, East, South, West) the wind is "
 "coming from."
 msgstr "Aceasta indică direcția cardinală (nord, est, sud, vest) din care vine vântul."
 
-#: panel-plugin/weather-config.c:1304
+#: panel-plugin/weather-config.c:1371
 msgid ""
 "This gives the direction the wind is coming from in azimuth degrees (North ="
 " 0°, East = 90°, South = 180° and West = 270°)."
 msgstr "Aceasta indică direcția din care vine vântul în grade azimut (nord = 0°, est = 90°, sud = 180° și vest = 270°)."
 
-#: panel-plugin/weather-config.c:1309
+#: panel-plugin/weather-config.c:1376
 msgid ""
 "Humidity is defined as the amount of water vapor in the air and increases "
 "the possibility of precipitation, fog and dew. While absolute humidity is "
@@ -853,21 +853,21 @@ msgid ""
 "pressure."
 msgstr "Umiditatea este definită ca fiind cantitatea de vapori de apă din aer și crește posibilitatea apariției precipitațiilor, a ceții și a rouă. În timp ce umiditatea absolută este conținutul de apă din aer, umiditatea relativă indică (în %) umiditatea absolută actuală în raport cu umiditatea maximă pentru temperatura și presiunea aerului date."
 
-#: panel-plugin/weather-config.c:1317
+#: panel-plugin/weather-config.c:1384
 msgid ""
 "This is the temperature to which air must be cooled to reach 100% relative humidity, given no change in water content. Reaching the dew point halts the cooling process, as condensation occurs which releases heat into the air. A high dew point increases the possibility of rain and severe thunderstorms. The dew point allows the prediction of dew, frost, fog and minimum overnight temperature, and has influence on the comfort level one experiences.\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no."
 msgstr "Aceasta este temperatura la care aerul trebuie răcit pentru a ajunge la o umiditate relativă de 100%, dacă nu se modifică conținutul de apă. Atingerea punctului de rouă oprește procesul de răcire, deoarece are loc condensarea care eliberează căldură în aer. Un punct de rouă ridicat crește posibilitatea de ploaie și furtuni puternice. Punctul de rouă permite prezicerea rouăi, înghețului, ceții și a temperaturii minime peste noapte și influențează nivelul de confort pe care îl experimentăm.\n\n<b>Notă:</b> Aceasta este o valoare calculată care nu este furnizată de met.no."
 
-#: panel-plugin/weather-config.c:1329
+#: panel-plugin/weather-config.c:1396
 msgid ""
 "Also known as <i>felt temperature</i>, <i>effective temperature</i>, or what some weather providers declare as <i>feels like</i>. Human temperature sensation is not only based on air temperature, but also on heat flow, physical activity and individual condition. While being a highly subjective value, apparent temperature can actually be useful for warning about extreme conditions (cold, heat).\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no. You should use a calculation model appropriate for your local climate and personal preferences on the units page."
 msgstr "Cunoscută și sub denumirea de <i>temperatura resimțită</i>, <i>temperatura efectivă</i> sau ceea ce anumiți furnizori de vreme declară ca <i>se simte</i>. Senzația de temperatură umană nu se bazează doar pe temperatura aerului, ci și pe fluxul de căldură, activitatea fizică și condiția individuală. Deși este o valoare extrem de subiectivă, temperatura aparentă poate fi de fapt utilă pentru a avertiza despre condiții extreme (frig, căldură).\n\n<b>Notă:</b> aceasta este o valoare calculată care nu este furnizată de met.no. Ar trebui să utilizați un model de calcul adecvat pentru clima locală și preferințele personale pe pagina de unități."
 
-#: panel-plugin/weather-config.c:1343
+#: panel-plugin/weather-config.c:1410
 msgid ""
 "This gives the low-level cloud cover in percent. According to WMO "
 "definition, low-level clouds can be found at altitudes below 4,000 m (13,000"
@@ -876,7 +876,7 @@ msgid ""
 "particles and snow, when temperatures are cold enough."
 msgstr "Se obține astfel acoperirea de nori de joasă altitudine în procente. Conform definiției OMM (organizației mondiale de meteorologie), norii joși pot fi găsiți la altitudini mai mici de 4 000 m (13 000 ft) sau 5 000 m (16 000 ft) la ecuator, deși baza lor se află adesea sub 2 000 m (6 500 ft). Aceștia sunt compuși în principal din picături de apă sau particule de gheață și zăpadă, atunci când temperaturile sunt suficient de scăzute."
 
-#: panel-plugin/weather-config.c:1351
+#: panel-plugin/weather-config.c:1418
 msgid ""
 "This specifies the mid-level cloud cover in percent. According to WMO "
 "definition, mid-level clouds form in heights of 4,000-8,000 m (13,000-26,000"
@@ -885,7 +885,7 @@ msgid ""
 "temperatures get low enough, ice particles can replace the droplets."
 msgstr "Aceasta specifică acoperirea de nori la nivel mediu în procente. Conform definiției OMM (organizației mondiale de meteorologie), norii de nivel mediu se formează la înălțimi de 4 000-8 000 m (13 000-26 000 ft) sau 5 000-10 000 m (16 000-33 000 ft) la ecuator. Ca și verii lor de la joasă altitudine, aceștia sunt compuși în principal din picături de apă. Atunci când temperaturile sunt suficient de scăzute, particulele de gheață pot înlocui picăturile."
 
-#: panel-plugin/weather-config.c:1360
+#: panel-plugin/weather-config.c:1427
 msgid ""
 "This reports the high-level cloud cover in percent. According to WMO "
 "definition, high-level clouds can be found in altitudes of 8,000 to 15,000 m"
@@ -895,7 +895,7 @@ msgid ""
 "a magnificent array of colors when the sun is low on the horizon."
 msgstr "Aceasta raportează acoperirea de nori de nivel înalt în procente. Conform definiției OMM (organizației mondiale de meteorologie), norii de nivel înalt pot fi găsiți la altitudini cuprinse între 8 000 și 15 000 m (26 000 și 49 000 ft) sau între 10 000 și 18 000 m (33 000-59 000 ft) la ecuator, unde temperaturile sunt atât de scăzute încât sunt compuși în principal din cristale de gheață. Deși sunt de obicei subțiri și albi, aceștia pot fi văzuți într-o gamă magnifică de culori atunci când soarele este jos la orizont."
 
-#: panel-plugin/weather-config.c:1370
+#: panel-plugin/weather-config.c:1437
 msgid ""
 "Cloudiness, or cloud cover, defines the fraction of the sky obscured by "
 "clouds when observed from a given location. Clouds are both carriers of "
@@ -906,7 +906,7 @@ msgid ""
 "that way contribute to the cooling of the planet."
 msgstr "Nebulozitatea, sau acoperirea noroasă, definește fracțiunea de cer acoperită de nori atunci când este observată dintr-un anumit loc. Norii sunt atât purtători de precipitații, cât și regulatori ai cantității de radiații solare care ajunge la suprafață. În timp ce în timpul zilei reduc temperatura, noaptea au efectul opus, deoarece vaporii de apă împiedică radiația cu undă lungă să scape în spațiu. În afară de aceasta, norii reflectă lumina în spațiu și, în acest fel, contribuie la răcirea planetei."
 
-#: panel-plugin/weather-config.c:1382
+#: panel-plugin/weather-config.c:1449
 msgid ""
 "Fog is a type of low-lying stratus cloud, with the moisture in it often "
 "generated locally such as from a nearby lake, river, ocean, or simply moist "
@@ -916,7 +916,7 @@ msgid ""
 " visibility to less than 1 km (5/8 statute mile)."
 msgstr "Ceața este un tip de nor stratus de joasă altitudine, a cărui umiditate este adesea generată local, cum ar fi de un lac, râu, ocean sau pur și simplu de un sol umed din apropiere, care se formează atunci când diferența dintre temperatură și punctul de rouă este sub 2,5 °C (4 °F), de obicei la o umiditate relativă de 100%. Ceața produce de obicei precipitații sub formă de burniță sau zăpadă foarte ușoară și reduce vizibilitatea la mai puțin de 1 km (5/8 mile terestre)."
 
-#: panel-plugin/weather-config.c:1393
+#: panel-plugin/weather-config.c:1460
 msgid ""
 "The amount of rain, drizzle, sleet, hail, snow, graupel and other forms of water falling from the sky over a specific period.\n"
 "\n"
@@ -933,7 +933,7 @@ msgid ""
 "<b>Note</b>: While air temperature is an important factor in this calculation, there are other influencing factors that the plugin doesn't know about like the type of snow and ground temperature. Because of that, these rules will only lead to rough estimates and may not represent the real amount of snow."
 msgstr "Cantitatea de ploaie, burniță, lapoviță, grindină, zăpadă, polei și alte forme de apă care cad din cer pe o anumită perioadă.\n\nValorile raportate de met.no sunt cele ale precipitațiilor în stare lichidă - sau cu alte cuvinte: ale ploii -, astfel încât, dacă se așteaptă zăpadă (dar nu și lapoviță), atunci cantitatea de zăpadă va fi <i>estimată</i> prin înmulțirea valorii inițiale cu un raport dependent de temperatura aerului:\n\n<tt><small>                   T &lt; -11.1 °C (12 °F) =&gt; 1:12\n-11.1 °C (12 °F) &lt; T &lt;  -4.4 °C (24 °F) =&gt; 1:10\n -4.4 °C (24 °F) &lt; T &lt;  -2.2 °C (28° F) =&gt; 1:7\n -2.2 °C (28 °F) &lt; T &lt;  -0.6 °C (31 °F) =&gt; 1:5\n -0.6 °C (31 °F) &lt; T                    =&gt; 1:3\n\n</small></tt>Exemplu: Dacă temperatura este de -5 °C (12 °F), atunci densitatea zăpezii va fi scăzută și se va utiliza pentru calcul un raport ploaie/zăpadă de 1:10. Presupunând că valoarea raportată este de 5 mm, atunci cantitatea calculată de precipitații sub formă de zăpadă este de 50 mm.\n\n<b>Notă</b>: În timp ce temperatura aerului este un factor important în acest calcul, există alți factori de influență despre care modulul nu știe, cum ar fi tipul de zăpadă și temperatura solului. Din acest motiv, aceste reguli vor duce doar la estimări aproximative și pot să nu reprezinte cantitatea reală de zăpadă."
 
-#: panel-plugin/weather-config.c:1569
+#: panel-plugin/weather-config.c:1636
 msgid "Labels to d_isplay"
 msgstr "Etichete pentru af_ișare"
 
@@ -1067,38 +1067,38 @@ msgstr "in"
 msgid "mm"
 msgstr "mm"
 
-#: panel-plugin/weather-search.c:128 panel-plugin/weather-search.c:254
+#: panel-plugin/weather-search.c:161 panel-plugin/weather-search.c:293
 msgid "Results"
 msgstr "Rezulatate"
 
-#: panel-plugin/weather-search.c:168
+#: panel-plugin/weather-search.c:204
 msgid "Searching..."
 msgstr "Se caută..."
 
-#: panel-plugin/weather-search.c:201
+#: panel-plugin/weather-search.c:237
 msgid "Search location"
 msgstr "Locația de căutare"
 
-#: panel-plugin/weather-search.c:205
+#: panel-plugin/weather-search.c:242
 msgid "Cancel"
 msgstr "Anulează"
 
-#: panel-plugin/weather-search.c:207
+#: panel-plugin/weather-search.c:245
 msgid "OK"
 msgstr "Ok"
 
-#: panel-plugin/weather-search.c:222
+#: panel-plugin/weather-search.c:261
 msgid "Enter a city name or address"
 msgstr "Introduceți numele unui oraș sau o adresă"
 
-#: panel-plugin/weather-search.c:233
+#: panel-plugin/weather-search.c:272
 msgid "Search"
 msgstr "Căutare"
 
 #. * TRANSLATORS: Latitude and longitude are known from the
 #. * search results, but not the location name. The user shall
 #. * give the place a name.
-#: panel-plugin/weather-search.c:405
+#: panel-plugin/weather-search.c:474
 msgid "Unnamed place"
 msgstr "Loc fără nume"
 
@@ -1120,31 +1120,31 @@ msgstr "Loc fără nume"
 msgid "\t%s%s%s%s%s\n"
 msgstr "\t%s%s%s%s%s\n"
 
-#: panel-plugin/weather-summary.c:394
+#: panel-plugin/weather-summary.c:424
 msgid "Coordinates\n"
 msgstr "Coordonate\n"
 
-#: panel-plugin/weather-summary.c:395
+#: panel-plugin/weather-summary.c:425
 msgid "Altitude"
 msgstr "Altitudine"
 
-#: panel-plugin/weather-summary.c:396
+#: panel-plugin/weather-summary.c:426
 msgid "Latitude"
 msgstr "Latitudine"
 
-#: panel-plugin/weather-summary.c:397
+#: panel-plugin/weather-summary.c:427
 msgid "Longitude"
 msgstr "Longitudine"
 
 #. TRANSLATORS: Please use as many \t as appropriate to align the
 #. date/time values as in the original.
-#: panel-plugin/weather-summary.c:401
+#: panel-plugin/weather-summary.c:431
 msgid ""
 "\n"
 "Downloads\n"
 msgstr "\nDescărcări\n"
 
-#: panel-plugin/weather-summary.c:404
+#: panel-plugin/weather-summary.c:434
 #, c-format
 msgid ""
 "\tWeather data:\n"
@@ -1154,7 +1154,7 @@ msgid ""
 "\n"
 msgstr "\tDatele meteorologice:\n\tUltima:\t\t%s\n\tUrmătoarea:\t%s\n\tÎncercări curente eșuate: %d\n\n"
 
-#: panel-plugin/weather-summary.c:418
+#: panel-plugin/weather-summary.c:448
 msgid ""
 "\tMet.no Locationforecast API states that this version\n"
 "\tof the webservice is deprecated, and the plugin needs to be\n"
@@ -1165,7 +1165,7 @@ msgid ""
 "\n"
 msgstr "\tMet.no Locationforecast API afirmă că această versiune\n\ta serviciului web este depreciată, iar modulul trebuie adaptat\n\tpentru a utiliza o versiune mai nouă, altfel nu va mai funcționa\n\tîn câteva luni.\n\tVă rugăm să depuneți un raport de eroare la\n\thttps://gitlab.xfce.org/panel-plugins/xfce4-weather-plugin/ dacă\n\tnimeni altcineva nu a făcut-o încă.\n\n"
 
-#: panel-plugin/weather-summary.c:427
+#: panel-plugin/weather-summary.c:457
 #, c-format
 msgid ""
 "\tAstronomical data:\n"
@@ -1174,7 +1174,7 @@ msgid ""
 "\tCurrent failed attempts: %d\n"
 msgstr "\tDatele astronomice:\n\tUltima:\t\t%s\n\tUrmătoarea:\t%s\n\tÎncercări curente eșuate: %d\n"
 
-#: panel-plugin/weather-summary.c:441
+#: panel-plugin/weather-summary.c:471
 msgid ""
 "\n"
 "\tMet.no sunrise API states that this version of the webservice\n"
@@ -1186,20 +1186,20 @@ msgid ""
 msgstr "\n\tMet.no sunrise API afirmă că această versiune a serviciului web\n\teste depreciată, iar modulul trebuie adaptat pentru a utiliza\n\to versiune mai nouă, sau nu va mai funcționa în câteva luni.\n\tVă rugăm să depuneți un raport de eroare la\n\thttps://gitlab.xfce.org/panel-plugins/xfce4-weather-plugin/ dacă\n\tnimeni altcineva nu a făcut-o încă.\n\n"
 
 #. calculation times
-#: panel-plugin/weather-summary.c:448
+#: panel-plugin/weather-summary.c:478
 msgid ""
 "\n"
 "Times Used for Calculations\n"
 msgstr "\nOrele utilizate pentru calcule\n"
 
-#: panel-plugin/weather-summary.c:451
+#: panel-plugin/weather-summary.c:481
 #, c-format
 msgid ""
 "\tTemperatures, wind, atmosphere and cloud data calculated\n"
 "\tfor:\t\t%s\n"
 msgstr "\tTemperaturi, vânt, atmosferă și date despre nori calculate\n\tpentru:\t\t%s\n"
 
-#: panel-plugin/weather-summary.c:460
+#: panel-plugin/weather-summary.c:490
 #, c-format
 msgid ""
 "\n"
@@ -1210,195 +1210,195 @@ msgid ""
 msgstr "\n\tPrecipitațiile și simbolul meteorologic au fost calculate\n\tfolosind următorul interval de timp:\n\tInițial: \t\t%s\n\tFinal:  \t\t%s\n"
 
 #. sun and moon
-#: panel-plugin/weather-summary.c:471
+#: panel-plugin/weather-summary.c:501
 msgid ""
 "\n"
 "Astronomical Data\n"
 msgstr "\nDate astronomice\n"
 
-#: panel-plugin/weather-summary.c:474
+#: panel-plugin/weather-summary.c:504
 msgid "\tSunrise:\t\tThe sun never rises today.\n"
 msgstr "\tRăsărit de soare:  Soarele nu răsare astăzi.\n"
 
-#: panel-plugin/weather-summary.c:477
+#: panel-plugin/weather-summary.c:507
 msgid "\tSunset:\t\tThe sun never sets today.\n"
 msgstr "\tApus de soare:     Soarele nu apune astăzi.\n"
 
-#: panel-plugin/weather-summary.c:481
+#: panel-plugin/weather-summary.c:511
 #, c-format
 msgid "\tSunrise:\t\t%s\n"
 msgstr "\tRăsărit de soare:  %s\n"
 
-#: panel-plugin/weather-summary.c:486
+#: panel-plugin/weather-summary.c:516
 #, c-format
 msgid ""
 "\tSunset:\t\t%s\n"
 "\n"
 msgstr "\tApus de soare:     %s\n\n"
 
-#: panel-plugin/weather-summary.c:492
+#: panel-plugin/weather-summary.c:522
 #, c-format
 msgid "\tMoon phase:\t%s\n"
 msgstr "\tFaza lunii:             %s\n"
 
-#: panel-plugin/weather-summary.c:496
+#: panel-plugin/weather-summary.c:526
 msgid "\tMoon phase:\tUnknown\n"
 msgstr "\tFaza lunii:             Necunoscută\n"
 
-#: panel-plugin/weather-summary.c:501
+#: panel-plugin/weather-summary.c:531
 msgid "\tMoonrise:\tThe moon never rises today.\n"
 msgstr "\tRăsărit de lună:    Luna nu răsare astăzi.\n"
 
-#: panel-plugin/weather-summary.c:505
+#: panel-plugin/weather-summary.c:535
 msgid "\tMoonset:\tThe moon never sets today.\n"
 msgstr "\tApus de lună:       Luna nu apune astăzi.\n"
 
-#: panel-plugin/weather-summary.c:509
+#: panel-plugin/weather-summary.c:539
 #, c-format
 msgid "\tMoonrise:\t%s\n"
 msgstr "\tRăsărit de lună:    %s\n"
 
-#: panel-plugin/weather-summary.c:514
+#: panel-plugin/weather-summary.c:544
 #, c-format
 msgid "\tMoonset:\t%s\n"
 msgstr "\tApus de lună:       %s\n"
 
-#: panel-plugin/weather-summary.c:519
+#: panel-plugin/weather-summary.c:549
 msgid "\tData not available, will use sane default values for night and day.\n"
 msgstr "\t\tDatele nu sunt disponibile, se vor utiliza valorile implicite rezonabile pentru noapte și zi.\n"
 
 #. temperatures
-#: panel-plugin/weather-summary.c:525
+#: panel-plugin/weather-summary.c:555
 msgid ""
 "\n"
 "Temperatures\n"
 msgstr "\nTemperaturi\n"
 
-#: panel-plugin/weather-summary.c:526
+#: panel-plugin/weather-summary.c:556
 msgid "Temperature"
 msgstr "Temperatura"
 
-#: panel-plugin/weather-summary.c:527
+#: panel-plugin/weather-summary.c:557
 msgid "Dew point"
 msgstr "Punct de rouă"
 
-#: panel-plugin/weather-summary.c:528
+#: panel-plugin/weather-summary.c:558
 msgid "Apparent temperature"
 msgstr "Temperatura aparentă"
 
 #. wind
-#: panel-plugin/weather-summary.c:531
+#: panel-plugin/weather-summary.c:561
 msgid ""
 "\n"
 "Wind\n"
 msgstr "\nVântul\n"
 
-#: panel-plugin/weather-summary.c:536
+#: panel-plugin/weather-summary.c:566
 #, c-format
 msgid "\tSpeed: %s %s (%s on the Beaufort scale)\n"
 msgstr "\tViteză: %s %s (%s pe scara Beaufort)\n"
 
-#: panel-plugin/weather-summary.c:548
+#: panel-plugin/weather-summary.c:578
 #, c-format
 msgid "\tDirection: %s (%s%s)\n"
 msgstr "\tDirecție: %s (%s%s)\n"
 
 #. precipitation
-#: panel-plugin/weather-summary.c:556
+#: panel-plugin/weather-summary.c:586
 msgid ""
 "\n"
 "Precipitation\n"
 msgstr "\nPrecipitații\n"
 
-#: panel-plugin/weather-summary.c:557
+#: panel-plugin/weather-summary.c:587
 msgid "Precipitation amount"
 msgstr "Cantitatea de precipitații"
 
 #. atmosphere
-#: panel-plugin/weather-summary.c:560
+#: panel-plugin/weather-summary.c:590
 msgid ""
 "\n"
 "Atmosphere\n"
 msgstr "\nAtmosfera\n"
 
-#: panel-plugin/weather-summary.c:561
+#: panel-plugin/weather-summary.c:591
 msgid "Barometric pressure"
 msgstr "Presiunea barometrică"
 
-#: panel-plugin/weather-summary.c:562
+#: panel-plugin/weather-summary.c:592
 msgid "Relative humidity"
 msgstr "Umiditate relativă"
 
 #. clouds
-#: panel-plugin/weather-summary.c:565
+#: panel-plugin/weather-summary.c:595
 msgid ""
 "\n"
 "Clouds\n"
 msgstr "\nNori\n"
 
-#: panel-plugin/weather-summary.c:566 panel-plugin/weather-translate.c:118
+#: panel-plugin/weather-summary.c:596 panel-plugin/weather-translate.c:118
 msgid "Fog"
 msgstr "Ceață"
 
-#: panel-plugin/weather-summary.c:567
+#: panel-plugin/weather-summary.c:597
 msgid "Low clouds"
 msgstr "Nori joși"
 
-#: panel-plugin/weather-summary.c:568
+#: panel-plugin/weather-summary.c:598
 msgid "Middle clouds"
 msgstr "Nori medii"
 
-#: panel-plugin/weather-summary.c:569
+#: panel-plugin/weather-summary.c:599
 msgid "High clouds"
 msgstr "Nori înalți"
 
-#: panel-plugin/weather-summary.c:570
+#: panel-plugin/weather-summary.c:600
 msgid "Cloudiness"
 msgstr "Nebulozitate"
 
-#: panel-plugin/weather-summary.c:583
+#: panel-plugin/weather-summary.c:613
 msgid ""
 "\n"
 "Credits\n"
 msgstr "\nMulțumiri către\n"
 
-#: panel-plugin/weather-summary.c:584
+#: panel-plugin/weather-summary.c:614
 msgid ""
 "\tEncyclopedic information partly taken from\n"
 "\t\t"
 msgstr "\tInformații enciclopedice preluate parțial din\n\t\t"
 
-#: panel-plugin/weather-summary.c:585
+#: panel-plugin/weather-summary.c:615
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#: panel-plugin/weather-summary.c:586
+#: panel-plugin/weather-summary.c:616
 msgid ""
 "\n"
 "\tElevation and timezone data provided by\n"
 "\t\t"
 msgstr "\n\tDate privind altitudinea și fusul orar furnizate de\n\t\t"
 
-#: panel-plugin/weather-summary.c:587
+#: panel-plugin/weather-summary.c:617
 msgid "GeoNames"
 msgstr "GeoNames"
 
-#: panel-plugin/weather-summary.c:589
+#: panel-plugin/weather-summary.c:619
 msgid ""
 "\n"
 "\tWeather and astronomical data from\n"
 "\t\t"
 msgstr "\n\tDate meteorologice și astronomice de la\n\t\t"
 
-#: panel-plugin/weather-summary.c:590
+#: panel-plugin/weather-summary.c:620
 msgid "The Norwegian Meteorological Institute"
 msgstr "Institutul meteorologic norvegian"
 
-#: panel-plugin/weather-summary.c:640
+#: panel-plugin/weather-summary.c:670
 msgid "Today"
 msgstr "Azi"
 
-#: panel-plugin/weather-summary.c:642
+#: panel-plugin/weather-summary.c:672
 msgid "Tomorrow"
 msgstr "Mâine"
 
@@ -1406,196 +1406,196 @@ msgstr "Mâine"
 #. align the values; Monospace font is enforced with <tt> tags for
 #. alignment, and the text is enclosed in <small> tags because
 #. that looks much better and saves space.
-#: panel-plugin/weather-summary.c:662
+#: panel-plugin/weather-summary.c:692
 msgid "<b>Times used for calculations</b>\n"
 msgstr "<b>Orele utilizate pentru calcule</b>\n"
 
-#: panel-plugin/weather-summary.c:664
+#: panel-plugin/weather-summary.c:694
 #, c-format
 msgid "<tt><small>Interval start:       %s</small></tt>\n"
 msgstr "<tt><small>Începutul intervalului:  %s</small></tt>\n"
 
-#: panel-plugin/weather-summary.c:670
+#: panel-plugin/weather-summary.c:700
 #, c-format
 msgid "<tt><small>Interval end:         %s</small></tt>\n"
 msgstr "<tt><small>Sfârșitul intervalului:  %s</small></tt>\n"
 
-#: panel-plugin/weather-summary.c:676
+#: panel-plugin/weather-summary.c:706
 #, c-format
 msgid ""
 "<tt><small>Data calculated for:  %s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Date calculate pentru:   %s</small></tt>\n\n"
 
-#: panel-plugin/weather-summary.c:682
+#: panel-plugin/weather-summary.c:712
 msgid "<b>Temperatures</b>\n"
 msgstr "<b>Temperaturi</b>\n"
 
-#: panel-plugin/weather-summary.c:683
+#: panel-plugin/weather-summary.c:713
 #, c-format
 msgid "<tt><small>Dew point:            %s%s%s</small></tt>\n"
 msgstr "<tt><small>Punct de rouă:           %s%s%s</small></tt>\n"
 
-#: panel-plugin/weather-summary.c:687
+#: panel-plugin/weather-summary.c:717
 #, c-format
 msgid ""
 "<tt><small>Apparent temperature: %s%s%s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Temperatura aparentă:    %s%s%s</small></tt>\n\n"
 
-#: panel-plugin/weather-summary.c:692
+#: panel-plugin/weather-summary.c:722
 msgid "<b>Atmosphere</b>\n"
 msgstr "<b>Atmosfera</b>\n"
 
-#: panel-plugin/weather-summary.c:693
+#: panel-plugin/weather-summary.c:723
 #, c-format
 msgid "<tt><small>Barometric pressure:  %s%s%s</small></tt>\n"
 msgstr "<tt><small>Presiunea barometrică:   %s%s%s</small></tt>\n"
 
-#: panel-plugin/weather-summary.c:697
+#: panel-plugin/weather-summary.c:727
 #, c-format
 msgid ""
 "<tt><small>Relative humidity:    %s%s%s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Umiditatea relativă:     %s%s%s</small></tt>\n\n"
 
-#: panel-plugin/weather-summary.c:702
+#: panel-plugin/weather-summary.c:732
 msgid "<b>Precipitation</b>\n"
 msgstr "<b>Precipitații</b>\n"
 
-#: panel-plugin/weather-summary.c:703
+#: panel-plugin/weather-summary.c:733
 #, c-format
 msgid ""
 "<tt><small>Amount:        %s%s%s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Cantitatea:              %s%s%s</small></tt>\n\n"
 
-#: panel-plugin/weather-summary.c:708
+#: panel-plugin/weather-summary.c:738
 msgid "<b>Clouds</b>\n"
 msgstr "<b>Nori</b>\n"
 
 #. TRANSLATORS: Clouds percentages are aligned to the right in the
 #. tooltip, the %5s are needed for that and are used both for
 #. rounded and unrounded values.
-#: panel-plugin/weather-summary.c:712
+#: panel-plugin/weather-summary.c:742
 #, c-format
 msgid "<tt><small>Fog:           %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Ceață:                   %5s%s%s</small></tt>\n"
 
-#: panel-plugin/weather-summary.c:715
+#: panel-plugin/weather-summary.c:745
 #, c-format
 msgid "<tt><small>Low clouds:    %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Nori joși:               %5s%s%s</small></tt>\n"
 
-#: panel-plugin/weather-summary.c:718
+#: panel-plugin/weather-summary.c:748
 #, c-format
 msgid "<tt><small>Middle clouds: %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Nori medii:              %5s%s%s</small></tt>\n"
 
-#: panel-plugin/weather-summary.c:721
+#: panel-plugin/weather-summary.c:751
 #, c-format
 msgid "<tt><small>High clouds:   %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Nori înalți:             %5s%s%s</small></tt>\n"
 
-#: panel-plugin/weather-summary.c:724
+#: panel-plugin/weather-summary.c:754
 #, c-format
 msgid "<tt><small>Cloudiness:    %5s%s%s</small></tt>"
 msgstr "<tt><smallNebulozitatea:               %5s%s%s</small></tt>"
 
-#: panel-plugin/weather-summary.c:750
+#: panel-plugin/weather-summary.c:780
 #, c-format
 msgid "<b>%s</b>\n"
 msgstr "<b>%s</b>\n"
 
-#: panel-plugin/weather-summary.c:754
+#: panel-plugin/weather-summary.c:784
 msgid "<tt><small>Sunrise: The sun never rises this day.</small></tt>\n"
 msgstr "<tt><small>Răsărit de soare: Soarele nu răsare niciodată în această zi.</small></tt>\n"
 
-#: panel-plugin/weather-summary.c:758
+#: panel-plugin/weather-summary.c:788
 msgid "<tt><small>Sunset: The sun never sets this day.</small></tt>\n"
 msgstr "<tt><small>Apus de soare:    Soarele nu apune niciodată în această zi.</small></tt>\n"
 
-#: panel-plugin/weather-summary.c:763
+#: panel-plugin/weather-summary.c:793
 #, c-format
 msgid "<tt><small>Sunrise: %s</small></tt>\n"
 msgstr "<tt><small>Răsărit de soare: %s</small></tt>\n"
 
-#: panel-plugin/weather-summary.c:769
+#: panel-plugin/weather-summary.c:799
 #, c-format
 msgid ""
 "<tt><small>Sunset:  %s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Apus de soare:    %s</small></tt>\n\n"
 
-#: panel-plugin/weather-summary.c:776
+#: panel-plugin/weather-summary.c:806
 #, c-format
 msgid "<tt><small>Moon phase: %s</small></tt>\n"
 msgstr "<tt><small>Faza lunii:       %s</small></tt>\n"
 
-#: panel-plugin/weather-summary.c:781
+#: panel-plugin/weather-summary.c:811
 msgid "<tt><small>Moon phase: Unknown</small></tt>\n"
 msgstr "<tt><small>Faza lunii:       Necunoscută</small></tt>\n"
 
-#: panel-plugin/weather-summary.c:786
+#: panel-plugin/weather-summary.c:816
 msgid "<tt><small>Moonrise: The moon never rises this day.</small></tt>\n"
 msgstr "<tt><small>Răsărit de lună:  Luna nu răsare niciodată în această zi.</small></tt>\n"
 
-#: panel-plugin/weather-summary.c:791
+#: panel-plugin/weather-summary.c:821
 msgid "<tt><small>Moonset: The moon never sets this day.</small></tt>\n"
 msgstr "<tt><small>Apus de lună:     Luna nu apune niciodată în această zi.</small></tt>\n"
 
-#: panel-plugin/weather-summary.c:796
+#: panel-plugin/weather-summary.c:826
 #, c-format
 msgid "<tt><small>Moonrise: %s</small></tt>\n"
 msgstr "<tt><small>Răsărit de lună:  %s</small></tt>\n"
 
-#: panel-plugin/weather-summary.c:802
+#: panel-plugin/weather-summary.c:832
 #, c-format
 msgid "<tt><small>Moonset:  %s</small></tt>"
 msgstr "<tt><small>Apus de lună:     %s</small></tt>"
 
 #. daytime headers
-#: panel-plugin/weather-summary.c:981
+#: panel-plugin/weather-summary.c:1011
 msgid "Morning"
 msgstr "Dimineața"
 
-#: panel-plugin/weather-summary.c:982
+#: panel-plugin/weather-summary.c:1012
 msgid "Afternoon"
 msgstr "După-masă"
 
-#: panel-plugin/weather-summary.c:983
+#: panel-plugin/weather-summary.c:1013
 msgid "Evening"
 msgstr "Seara"
 
-#: panel-plugin/weather-summary.c:984
+#: panel-plugin/weather-summary.c:1014
 msgid "Night"
 msgstr "Noaptea"
 
-#: panel-plugin/weather-summary.c:1193
+#: panel-plugin/weather-summary.c:1223
 msgid "Weather Report"
 msgstr "Raport meteorologic"
 
-#: panel-plugin/weather-summary.c:1246
+#: panel-plugin/weather-summary.c:1276
 msgid "No location selected."
 msgstr "Nu a fost selectată nicio locație."
 
-#: panel-plugin/weather-summary.c:1246
+#: panel-plugin/weather-summary.c:1276
 msgid "Please set a location in the plugin settings."
 msgstr "Vă rugăm să definiți o locație în configurația modulului."
 
-#: panel-plugin/weather-summary.c:1248
+#: panel-plugin/weather-summary.c:1278
 msgid "Currently no data available."
 msgstr "În prezent nu există date disponibile."
 
-#: panel-plugin/weather-summary.c:1255
+#: panel-plugin/weather-summary.c:1285
 msgid "Plugin settings..."
 msgstr "Configurări modul..."
 
-#: panel-plugin/weather-summary.c:1269
+#: panel-plugin/weather-summary.c:1299
 msgid "_Forecast"
 msgstr "_Prognoza meteo"
 
-#: panel-plugin/weather-summary.c:1272
+#: panel-plugin/weather-summary.c:1302
 msgid "_Details"
 msgstr "_Detalii"
 
