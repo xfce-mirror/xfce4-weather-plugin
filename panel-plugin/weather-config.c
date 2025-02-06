@@ -1782,6 +1782,15 @@ setup_notebook_signals(xfceweather_dialog *dialog)
 }
 
 
+static void
+help_button_clicked(GtkButton *button,
+                    gpointer user_data)
+{
+    if (G_UNLIKELY(!g_spawn_command_line_async("exo-open --launch WebBrowser " PLUGIN_WEBSITE, NULL)))
+        g_warning("Unable to open the following url: %s", PLUGIN_WEBSITE);
+}
+
+
 xfceweather_dialog *
 create_config_dialog(plugin_data *data,
                      GtkBuilder  *builder)
@@ -1801,6 +1810,9 @@ create_config_dialog(plugin_data *data,
     create_scrollbox_page(dialog);
 
     setup_notebook_signals(dialog);
+
+    g_signal_connect(gtk_builder_get_object (GTK_BUILDER (builder), "help_button"),
+                     "clicked", G_CALLBACK (help_button_clicked), NULL);
 
     /* automatically detect current location if it is yet unknown */
     if (!(dialog->pd->lat && dialog->pd->lon))
