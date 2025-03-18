@@ -135,7 +135,11 @@ lnk_clicked(GtkTextTag *tag,
 
     if (event->type == GDK_BUTTON_RELEASE) {
         url = g_object_get_data(G_OBJECT(tag), "url");
+#if LIBXFCE4UI_CHECK_VERSION(4, 21, 0)
+        str = g_strdup_printf("xfce-open --launch WebBrowser %s", url);
+#else
         str = g_strdup_printf("exo-open --launch WebBrowser %s", url);
+#endif
         g_spawn_command_line_async(str, NULL);
         g_free(str);
     } else if (event->type == GDK_LEAVE_NOTIFY)

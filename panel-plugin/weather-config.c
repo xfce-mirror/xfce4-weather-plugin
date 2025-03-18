@@ -1006,7 +1006,11 @@ button_icons_dir_clicked(GtkWidget *button,
 
     dir = get_user_icons_dir();
     g_mkdir_with_parents(dir, 0755);
+#if LIBXFCE4UI_CHECK_VERSION(4, 21, 0)
+    command = g_strdup_printf("xfce-open %s", dir);
+#else
     command = g_strdup_printf("exo-open %s", dir);
+#endif
     g_free(dir);
     xfce_spawn_command_line(gdk_screen_get_default(), command, FALSE,
                             TRUE, TRUE, NULL);
@@ -1786,7 +1790,11 @@ static void
 help_button_clicked(GtkButton *button,
                     gpointer user_data)
 {
+#if LIBXFCE4UI_CHECK_VERSION(4, 21, 0)
+    if (G_UNLIKELY(!g_spawn_command_line_async("xfce-open --launch WebBrowser " PLUGIN_WEBSITE, NULL)))
+#else
     if (G_UNLIKELY(!g_spawn_command_line_async("exo-open --launch WebBrowser " PLUGIN_WEBSITE, NULL)))
+#endif
         g_warning("Unable to open the following url: %s", PLUGIN_WEBSITE);
 }
 
