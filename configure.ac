@@ -76,6 +76,7 @@ XDT_CHECK_PACKAGE([SOUP], [libsoup-3.0], [3.0.0], [],
 XDT_CHECK_PACKAGE([JSON], [json-c], [0.13.1])
 XDT_CHECK_OPTIONAL_PACKAGE([UPOWER_GLIB], [upower-glib], [0.99.0], [upower],
                            [upower for adapting update interval to power state])
+XDT_CHECK_PACKAGE_BINARY([GLIB_COMPILE_RESOURCES], [gio-2.0], [glib_compile_resources], [glib-compile-resources])
 
 
 dnl ************************************

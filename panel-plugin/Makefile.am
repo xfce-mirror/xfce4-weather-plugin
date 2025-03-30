@@ -9,13 +9,17 @@ plugin_LTLIBRARIES = libweather.la
 
 plugindir = $(libdir)/xfce4/panel/plugins
 
-libweather_la_SOURCES =						\
+libweather_built_sources =						\
+	weather-config-resources.c					\
+	$(NULL)
+
+libweather_la_SOURCES =							\
+	$(libweather_built_sources)					\
 	weather.c							\
 	weather.h							\
 	weather-config.c						\
 	weather-config.h						\
 	weather-config.ui						\
-	weather-config_ui.h						\
 	weather-data.c							\
 	weather-data.h							\
 	weather-debug.c							\
@@ -67,15 +71,13 @@ libweather_la_LDFLAGS = \
 	$(PLATFORM_LDFLAGS) \
 	$(UPOWER_GLIB_LIBS)
 
-if MAINTAINER_MODE
+weather_config_glade_files = $(shell $(GLIB_COMPILE_RESOURCES) --generate-dependencies --sourcedir $(srcdir) $(srcdir)/weather-config.gresource.xml)
+
+weather-config-resources.c: $(srcdir)/weather-config.gresource.xml $(weather_config_glade_files) Makefile
+	$(AM_V_GEN) $(GLIB_COMPILE_RESOURCES) --target=$@ --sourcedir=$(srcdir) --generate-source $<
 
 BUILT_SOURCES = \
-	weather-config_ui.h
-
-weather-config_ui.h: weather-config.ui
-	xdt-csource --static --strip-comments --strip-content --name=weather_config_ui $< >$@
-
-endif
+	$(libweather_built_sources)
 
 desktopdir = $(datadir)/xfce4/panel/plugins
 desktop_in_files = weather.desktop.in
@@ -84,8 +86,14 @@ desktop_DATA = $(desktop_in_files:.desktop.in=.desktop)
 $(desktop_DATA): $(desktop_in_files)
 	$(AM_V_GEN)$(MSGFMT) --desktop --template $< -d $(top_srcdir)/po -o $@
 
-EXTRA_DIST = $(desktop_in_files)
+EXTRA_DIST = \
+	$(desktop_in_files) \
+	weather-config.gresource.xml \
+	$(NULL)
 
-CLEANFILES = $(desktop_DATA)
+DISTCLEANFILES = \
+	$(desktop_DATA)	\
+	$(libweather_built_sources) \
+	$(NULL)
 
 # vi:set ts=8 sw=8 noet ai nocindent syntax=automake:

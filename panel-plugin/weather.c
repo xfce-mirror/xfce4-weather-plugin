@@ -44,8 +44,6 @@
 #include "weather-scrollbox.h"
 #include "weather-debug.h"
 
-#include "weather-config_ui.h"
-
 #define XFCEWEATHER_ROOT "weather"
 #define CACHE_FILE_MAX_AGE (48 * 3600)
 #define BORDER (8)
@@ -1908,8 +1906,9 @@ xfceweather_create_options(XfcePanelPlugin *plugin,
         return;
 
     builder = gtk_builder_new ();
-    if (gtk_builder_add_from_string (builder, weather_config_ui,
-                                     weather_config_ui_length, &error) != 0)
+    if (gtk_builder_add_from_resource (builder,
+                                       "/org/xfce/weather-plugin/weather-config.ui",
+                                       &error) != 0)
     {
         dlg = GTK_WIDGET (gtk_builder_get_object (builder, "dialog"));
         gtk_window_set_transient_for (GTK_WINDOW (dlg),
