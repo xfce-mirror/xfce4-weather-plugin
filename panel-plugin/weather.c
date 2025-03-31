@@ -19,6 +19,9 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+#ifdef HAVE_XFCE_REVISION_H
+#include "xfce-revision.h"
+#endif
 
 #include <string.h>
 #include <sys/stat.h>
@@ -2166,11 +2169,11 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     data->session = soup_session_new();
 #if SOUP_CHECK_VERSION(3, 0, 0)
     soup_session_set_user_agent(data->session,
-                                PACKAGE_NAME "-" PACKAGE_VERSION);
+                                PACKAGE_NAME "-" VERSION_FULL);
     soup_session_set_timeout(data->session, CONN_TIMEOUT);
 #else
     g_object_set(data->session, SOUP_SESSION_USER_AGENT,
-                 PACKAGE_NAME "-" PACKAGE_VERSION, NULL);
+                 PACKAGE_NAME "-" VERSION_FULL, NULL);
     g_object_set(data->session, SOUP_SESSION_TIMEOUT,
                  CONN_TIMEOUT, NULL);
 #endif
@@ -2423,7 +2426,7 @@ xfceweather_show_about(XfcePanelPlugin *plugin,
         (NULL,
          "logo-icon-name", "org.xfce.panel.weather",
          "license", xfce_get_license_text(XFCE_LICENSE_TEXT_GPL),
-         "version", PACKAGE_VERSION,
+         "version", VERSION_FULL,
          "program-name", PACKAGE_NAME,
          "comments", _("Show weather conditions and forecasts"),
          "website", PLUGIN_WEBSITE,
@@ -2444,7 +2447,7 @@ weather_construct(XfcePanelPlugin *plugin)
     if (panel_debug_env && strstr(panel_debug_env, G_LOG_DOMAIN))
         debug_mode = TRUE;
     weather_debug_init(G_LOG_DOMAIN, debug_mode);
-    weather_debug("weather plugin version " VERSION " starting up");
+    weather_debug("weather plugin version " VERSION_FULL " starting up");
 
     xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
     data = xfceweather_create_control(plugin);

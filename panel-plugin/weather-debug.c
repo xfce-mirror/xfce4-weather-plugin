@@ -20,10 +20,7 @@
 #include <config.h>
 #endif
 
-#ifdef HAVE_STRING_H
 #include <string.h>
-#endif
-
 #include <glib.h>
 #include <stdarg.h>
 
