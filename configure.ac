@@ -8,6 +8,7 @@ dnl
 dnl ***************************
 dnl *** Version information ***
 dnl ***************************
+m4_define([copyright_year], [2025])
 XDT_VERSION_INIT([0.11.3], [git])
 
 dnl *******************************************
@@ -18,13 +19,16 @@ m4_define([weather_debug_default], [ifelse(weather_version_tag(), [git], [yes], 
 dnl ***************************
 dnl *** Initialize autoconf ***
 dnl ***************************
-AC_COPYRIGHT([Copyright (c) 2004-2024
+AC_COPYRIGHT([Copyright (c) 2004-copyright_year()
         The Xfce development team. All rights reserved.])
 AC_INIT([xfce4-weather-plugin], [xdt_version], [https://gitlab.xfce.org/panel-plugins/xfce4-weather-plugin], [xfce4-weather-plugin])
 AC_REVISION([xdt_version_build])
 AC_PREREQ([2.69])
 AC_CONFIG_MACRO_DIRS([m4])
 AC_DEFINE([VERSION_FULL], [PACKAGE_VERSION], [Alias for VERSION and PACKAGE_VERSION for meson compatibility])
+COPYRIGHT_YEAR=copyright_year()
+AC_DEFINE_UNQUOTED([COPYRIGHT_YEAR], ["$COPYRIGHT_YEAR"], [Copyright year])
+AC_SUBST([COPYRIGHT_YEAR])
 
 dnl ***************************
 dnl *** Initialize automake ***
