@@ -1,0 +1,17 @@
+option(
+  'upower-glib',
+  type: 'feature',
+  value: 'auto',
+  description: 'upower for adapting update interval to power state',
+)
+
+option(
+  'geonames-username',
+  type: 'string',
+  value: 'xfce4weatherplugin',
+  description: '''
+    Username for the GeoNames webservice. Please register your own if
+    you're going to distribute the package, as requests are limited
+    per hour and day. See README for further information.
+  ''',
+)

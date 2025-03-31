@@ -19,6 +19,9 @@
 #ifdef HAVE_CONFIG_H
 #include <config.h>
 #endif
+#ifdef HAVE_XFCE_REVISION_H
+#include "xfce-revision.h"
+#endif
 
 #include <string.h>
 #include <sys/stat.h>
@@ -43,8 +46,6 @@
 #include "weather-icon.h"
 #include "weather-scrollbox.h"
 #include "weather-debug.h"
-
-#include "weather-config_ui.h"
 
 #define XFCEWEATHER_ROOT "weather"
 #define CACHE_FILE_MAX_AGE (48 * 3600)
@@ -1908,8 +1909,9 @@ xfceweather_create_options(XfcePanelPlugin *plugin,
         return;
 
     builder = gtk_builder_new ();
-    if (gtk_builder_add_from_string (builder, weather_config_ui,
-                                     weather_config_ui_length, &error) != 0)
+    if (gtk_builder_add_from_resource (builder,
+                                       "/org/xfce/weather-plugin/weather-config.ui",
+                                       &error) != 0)
     {
         dlg = GTK_WIDGET (gtk_builder_get_object (builder, "dialog"));
         gtk_window_set_transient_for (GTK_WINDOW (dlg),
@@ -2167,11 +2169,11 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     data->session = soup_session_new();
 #if SOUP_CHECK_VERSION(3, 0, 0)
     soup_session_set_user_agent(data->session,
-                                PACKAGE_NAME "-" PACKAGE_VERSION);
+                                PACKAGE_NAME "-" VERSION_FULL);
     soup_session_set_timeout(data->session, CONN_TIMEOUT);
 #else
     g_object_set(data->session, SOUP_SESSION_USER_AGENT,
-                 PACKAGE_NAME "-" PACKAGE_VERSION, NULL);
+                 PACKAGE_NAME "-" VERSION_FULL, NULL);
     g_object_set(data->session, SOUP_SESSION_TIMEOUT,
                  CONN_TIMEOUT, NULL);
 #endif
@@ -2424,11 +2426,11 @@ xfceweather_show_about(XfcePanelPlugin *plugin,
         (NULL,
          "logo-icon-name", "org.xfce.panel.weather",
          "license", xfce_get_license_text(XFCE_LICENSE_TEXT_GPL),
-         "version", PACKAGE_VERSION,
+         "version", VERSION_FULL,
          "program-name", PACKAGE_NAME,
          "comments", _("Show weather conditions and forecasts"),
          "website", PLUGIN_WEBSITE,
-         "copyright", "Copyright \302\251 2004-2024 The Xfce development team",
+         "copyright", "Copyright \302\251 2004-" COPYRIGHT_YEAR " The Xfce development team",
          "authors", auth,
          NULL);
 }
@@ -2445,7 +2447,7 @@ weather_construct(XfcePanelPlugin *plugin)
     if (panel_debug_env && strstr(panel_debug_env, G_LOG_DOMAIN))
         debug_mode = TRUE;
     weather_debug_init(G_LOG_DOMAIN, debug_mode);
-    weather_debug("weather plugin version " VERSION " starting up");
+    weather_debug("weather plugin version " VERSION_FULL " starting up");
 
     xfce_textdomain(GETTEXT_PACKAGE, PACKAGE_LOCALE_DIR, "UTF-8");
     data = xfceweather_create_control(plugin);
