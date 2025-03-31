@@ -88,6 +88,7 @@ $(desktop_DATA): $(desktop_in_files)
 
 EXTRA_DIST = \
 	$(desktop_in_files) \
+	meson.build \
 	weather-config.gresource.xml \
 	$(NULL)
 
