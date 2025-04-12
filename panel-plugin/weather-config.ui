@@ -212,6 +212,23 @@
                     <property name="top_attach">5</property>
                   </packing>
                 </child>
+                
+                <child>
+                  <object class="GtkLabel" id="label555">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="label" translatable="yes">_Dayformat:</property>
+                    <property name="use_underline">True</property>
+                    <property name="mnemonic_widget">text_dayformat</property>
+                    <property name="xalign">0</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">0</property>
+                    <property name="top_attach">6</property>
+                  </packing>
+                </child>
+                
+                
                 <child>
                   <object class="GtkBox" id="box2">
                     <property name="visible">True</property>
@@ -339,6 +356,17 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                   <packing>
                     <property name="left_attach">1</property>
                     <property name="top_attach">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkEntry" id="text_dayformat">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="tooltip_markup" translatable="yes">Format date for days in the summary view. Use C string format, for example %d %b, %a. More help about date format you can find in the help for the clock plugin.</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="top_attach">6</property>
                   </packing>
                 </child>
                 <child>
@@ -895,6 +923,8 @@ Leave this field empty to use the timezone set by your system. Invalid entries w
                     <property name="width">2</property>
                   </packing>
                 </child>
+                
+                
               </object>
               <packing>
                 <property name="position">2</property>
