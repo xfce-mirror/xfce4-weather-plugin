@@ -159,7 +159,7 @@ met in addition to those of XFCE-4.16:
 * >=upower-0.9.0 (optional)
 
 You might also need developer libraries necessary for building other
-parts of XFCE. Usually autogen.sh / configure will tell you, otherwise
+parts of XFCE. Usually meson setup will tell you, otherwise
 look at the XFCE build instructions https://docs.xfce.org/xfce/building
 and the release information https://wiki.xfce.org/releng/4.14/roadmap.
 
@@ -181,18 +181,13 @@ requirement. When you're using the panel provided by the package
 management system of your distribution, then the prefix is in most
 cases /usr, otherwise the default prefix is /usr/local.
 
-If you want to install the current version from git, execute the
-following command in the weather plugin project directory (make sure
-you have GNU automake installed!):
+If you want to install the current version from git or a tarball
+downloaded from https://archive.xfce.org/, execute the
+following command in the weather plugin project directory:
 
-1a) ./autogen.sh --prefix=/usr
+1) meson setup build
 
-Otherwise, if you've downloaded the tarball from e.g.
-https://archive.xfce.org/, issue the following command:
-
-1b) ./configure --prefix=/usr
-
-If 1a) or 1b) fail, you should receive an error message telling you
+If this fails, you should receive an error message telling you
 the cause for the failure (e.g. missings libraries). If you're missing
 a dependency you need to install it using the package management
 system of your distribution. Distributions commonly have two versions
@@ -204,21 +199,21 @@ usually installed, the former often is not, so better check this.
 Note: To solve distribution-specific problems the most efficient way
 is to ask at a forum for your distribution, not on a general forum.
 
-Then for both cases:
-2) make
+Then run:
+2) meson compile -C build
 
 If this fails, file a bug on
 https://gitlab.xfce.org/panel-plugins/xfce4-weather-plugin, or
 send a mail to the xfce mailing list and provide make output.
 
 Finally, and usually as root:
-3) make install
+3) meson install -C build
 
 Note: Depending on your prefix, this might overwrite an existing
 version of the plugin.
 
 You can later uninstall the plugin (as root) with
-4) make uninstall
+4) meson uninstall
 
 The panel should then recognize the new plugin, if it doesn't try to
 restart it using xfce4-panel -r. If it still doesn't work after that
@@ -253,25 +248,6 @@ literally. On the contrary, it is recommended that you use your own
 words and phrases to get the best results. The author believes this
 will make translation much easier and more fun, without denying it can
 be quite tedious sometimes.
-
-If your po file is out of date and doesn't contain all strings that
-appear in the plugin source code, you can use the build system to
-update it for you. See the previous section EASY BUILD INSTRUCTIONS
-for setting up the build system and perform step 1a to clone the
-repository and generate the make files using automake. If this
-succeeds, simply change to the po subdirectory and execute the command
-"make update-po". This will regenerate all po files in the po
-directory and mark changed strings as fuzzy or obsolete, and add new
-strings as untranslated. You can then work on it as usual.
-
-However, if you need to start with a translation completely from
-scratch (the po file doesn't exist and isn't listed in transifex),
-then please write a mail to xfce@xfce.org or xfce-i18n@xfce.org or use
-the bug tracker and ask for such a file being added to the project.
-Currently, only the package maintainer or developer of the plugin can
-add this new file and include it in the automake files in the git
-repository so that it is integrated into the build process and
-packaged properly.
 
 Korean translator Seong-ho Cho also recommended the following command
 - to be executed in the project's root directory - for creating a
