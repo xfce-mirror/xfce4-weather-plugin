@@ -1880,8 +1880,6 @@ xfceweather_dialog_response(GtkWidget *dlg,
     }
     g_slice_free(xfceweather_dialog, dialog);
 
-    xfce_panel_plugin_unblock_menu(data->plugin);
-
     weather_debug("Write configuration");
     xfceweather_write_config(data->plugin, data);
     weather_dump(weather_dump_plugindata, data);
@@ -1896,11 +1894,13 @@ xfceweather_create_options(XfcePanelPlugin *plugin,
     GtkBuilder *builder;
     xfceweather_dialog *dialog;
     GError *error = NULL;
-    gint response;
     time_t now_t;
     guint previous_forecast_days;
 
-    xfce_panel_plugin_block_menu(plugin);
+    if (data->settings_dialog != NULL) {
+        gtk_window_present(GTK_WINDOW(data->settings_dialog));
+        return;
+    }
 
     if (xfce_titled_dialog_get_type () == 0)
         return;
@@ -1910,7 +1910,8 @@ xfceweather_create_options(XfcePanelPlugin *plugin,
                                        "/org/xfce/weather-plugin/weather-config.ui",
                                        &error) != 0)
     {
-        dlg = GTK_WIDGET (gtk_builder_get_object (builder, "dialog"));
+        data->settings_dialog = dlg = GTK_WIDGET (gtk_builder_get_object (builder, "dialog"));
+        g_object_add_weak_pointer(G_OBJECT(data->settings_dialog), (gpointer *)&data->settings_dialog);
         gtk_window_set_transient_for (GTK_WINDOW (dlg),
                                       GTK_WINDOW (gtk_widget_get_toplevel
                                        (GTK_WIDGET(plugin))));
@@ -1918,9 +1919,8 @@ xfceweather_create_options(XfcePanelPlugin *plugin,
         dialog = create_config_dialog(data, builder);
         previous_forecast_days = data->forecast_days;
 
+        g_signal_connect(dlg, "response", G_CALLBACK(xfceweather_dialog_response), dialog);
         gtk_widget_show_all (GTK_WIDGET (dlg));
-        response = gtk_dialog_run(GTK_DIALOG (dlg));
-        xfceweather_dialog_response(dlg, response, dialog);
 
         weather_debug("forecast_days configuration changes? previous %d ---> current %d\n",
                       previous_forecast_days, data->forecast_days);
