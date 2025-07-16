@@ -16,10 +16,6 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 /*
  * The following two defines fix compile warnings and need to be
  * before time.h and libxfce4panel.h (which includes glib.h).

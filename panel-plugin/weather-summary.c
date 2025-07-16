@@ -16,10 +16,6 @@
  * Boston, MA 02110-1301, USA.
  */
 
-#ifdef HAVE_CONFIG_H
-#include <config.h>
-#endif
-
 #include <libxfce4ui/libxfce4ui.h>
 
 #include "weather-parsers.h"

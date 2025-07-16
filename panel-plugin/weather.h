@@ -109,6 +109,7 @@ typedef struct {
 
 typedef struct {
     XfcePanelPlugin *plugin;
+    GtkWidget *settings_dialog;
     XfconfChannel *channel;
     const gchar *property_base;
 
