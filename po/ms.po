@@ -1,14 +1,14 @@
 # SOME DESCRIPTIVE TITLE.
-# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
-# This file is distributed under the same license as the PACKAGE package.
+# Copyright (C) YEAR Xfce
+# This file is distributed under the same license as the xfce-panel-plugins.xfce4-weather-plugin package.
 # 
 # Translators:
 # abuyop <abuyop@gmail.com>, 2014,2018,2021-2022
 msgid ""
 msgstr ""
 "Project-Id-Version: Xfce Panel Plugins\n"
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2025-07-17 12:57+0200\n"
+"Report-Msgid-Bugs-To: https://gitlab.xfce.org/\n"
+"POT-Creation-Date: 2025-07-18 11:08+0200\n"
 "PO-Revision-Date: 2013-07-03 19:29+0000\n"
 "Last-Translator: abuyop <abuyop@gmail.com>, 2014,2018,2021-2022\n"
 "Language-Team: Malay (http://app.transifex.com/xfce/xfce-panel-plugins/language/ms/)\n"
@@ -18,97 +18,520 @@ msgstr ""
 "Language: ms\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 
+#: panel-plugin/weather.desktop.in:4 panel-plugin/weather-config.ui:79
+msgid "Weather Update"
+msgstr "Kemaskini Cuaca"
+
+#: panel-plugin/weather.desktop.in:5
+msgid "Show current weather conditions"
+msgstr "Tunjuk keadaan cuaca semasa"
+
+#: panel-plugin/weather-config.ui:96
+msgid "_Help"
+msgstr "_Bantuan"
+
+#: panel-plugin/weather-config.ui:112 panel-plugin/weather-summary.c:1226
+msgid "_Close"
+msgstr "_Tutup"
+
+#: panel-plugin/weather-config.ui:149
+msgid "Location _name:"
+msgstr "_Nama lokasi:"
+
+#: panel-plugin/weather-config.ui:163
+msgid "Latitud_e:"
+msgstr "La_titud:"
+
+#: panel-plugin/weather-config.ui:177
+msgid "L_ongitude:"
+msgstr "L_ongitud:"
+
+#: panel-plugin/weather-config.ui:191 panel-plugin/weather-config.ui:539
+msgid "Altitu_de:"
+msgstr "Altitu_d:"
+
+#: panel-plugin/weather-config.ui:205
+msgid "_Timezone:"
+msgstr "_Zon waktu:"
+
+#: panel-plugin/weather-config.ui:224
+msgid ""
+"Latitude specifies the north-south position of a point on the Earth's "
+"surface. If you change this value manually, you need to provide altitude and"
+" timezone manually too."
+msgstr "Latitud menyatakan kedudukan utara-selatan bagi lokasi pada permukaan Bumi. Jika anda ubah nilai ini secara manual, anda perlu juga sediakan altitud dan zon waktu secara manual."
+
+#. TRANSLATORS: The degree sign is used like a unit for
+#. latitude, longitude, wind direction
+#: panel-plugin/weather-config.ui:239 panel-plugin/weather-config.ui:277
+#: panel-plugin/weather-data.c:533
+msgid "°"
+msgstr "°"
+
+#: panel-plugin/weather-config.ui:262
+msgid ""
+"Longitude specifies the east-west position of a point on the Earth's "
+"surface. If you change this value manually, you need to provide altitude and"
+" timezone manually too."
+msgstr "Longitud menyatakan kedudukan timur-barat bagi lokasi pada permukaan Bumi. Jika anda ubah nilai ini secara manual, anda perlu juga sediakan altitud dan zon waktu secara manual."
+
+#: panel-plugin/weather-config.ui:300
+msgid ""
+"For locations outside Norway the elevation model that's used by the met.no webservice is not very good, so it's usually necessary to specify the altitude as an additional parameter, otherwise the reported values will not be correct.\n"
+"\n"
+"The plugin tries to auto-detect the altitude using the GeoNames webservice, but that might not always be correct too, so you can change it here.\n"
+"\n"
+"Altitude is given in meters above sea level, or alternatively in feet by changing the unit on the units page. It should match the real value roughly, but small differences will have no influence on the weather data. Inside Norway, this setting has no effect at all."
+msgstr "Bagi lokasi diluar Norway model ketinggian yang diguna oleh met.no webservice adalah tidak berapa baik, oleh itu biasanya perlu nyatakan altitud sebagai parameter tambahan, jika tidak nilai yang dilaporkan tidak akan tepat.\n\nPemalam cuba kesan-sendiri altitud menggunakan GeoNames webservice, tetapi ia mungkin tidak selalunya tepat, maka anda perlu ubah ia di sini.\n\nAltitud diberikan dalam meter atas aras laut, atau kaki mengikut perubahan unit pada halaman unit. Ia seharusnya memadani nilai sebenar secara kasar, akan tetapi perbezaan kecil tidak memberi kesan pada data cuaca. Sebaliknya dalam Norway, tetapan ini tidak memberi kesan langsung."
+
+#: panel-plugin/weather-config.ui:318 panel-plugin/weather-config.c:458
+msgid "feet"
+msgstr "kaki"
+
+#: panel-plugin/weather-config.ui:336
+msgid ""
+"If the chosen location is not in your current timezone, then it is necessary to <i>put</i> the plugin into that other timezone for the times to be shown correctly. The proper timezone will be auto-detected via the GeoNames web service, but you might want to correct it if necessary.\n"
+"Leave this field empty to use the timezone set by your system. Invalid entries will cause the use of UTC time, but that may also depend on your system."
+msgstr "Jiks lokasi pilihan tidak berada dalam zon waktu anda, maka adalah perlu <i>letak</i> pemalam ke dalam zon waktu lain supaya masa yang dipapar adalah betul. Zon waktu yang sesuai akan dikesan-sendiri melalui perkhidmatan sesawang GeoNames, tetapi anda mungkin mahu betulkannya jika perlu.\nTinggalkan medan ini kosong untuk guna zon waktu yang ditetapkan oleh sistem anda. Masukan tidak sah akan menyebabkan penggunaan masa UTC, sebaliknya ia juga bergantung pada sistem anda."
+
+#: panel-plugin/weather-config.ui:354
+msgid ""
+"Change the name for the location to your liking. It is used for display and "
+"does not affect the location parameters in any way."
+msgstr "Ubah nama bagi lokasi mengikut kesukaan anda. Ia digunakan untuk papar dan tidak mempengaruhi parameter lokasi dalam apa jua cara."
+
+#: panel-plugin/weather-config.ui:365
+msgid "Change..."
+msgstr "Ubah..."
+
+#: panel-plugin/weather-config.ui:369
+msgid "Search for a new location and auto-detect its parameters."
+msgstr "Gelintar lokasi baharu dan kesan-sendiri parameternya."
+
+#: panel-plugin/weather-config.ui:434
+msgid ""
+"Please change location name to your liking and correct altitude and timezone"
+" if they are not auto-detected correctly."
+msgstr ""
+
+#: panel-plugin/weather-config.ui:464
+msgid "_Location"
+msgstr "_Lokasi"
+
+#: panel-plugin/weather-config.ui:483
+msgid "_Temperature:"
+msgstr "_Suhu:"
+
+#: panel-plugin/weather-config.ui:497
+msgid "Barometric _pressure:"
+msgstr "Teka_nan Barometrik:"
+
+#: panel-plugin/weather-config.ui:511
+msgid "_Wind speed:"
+msgstr "Kelajuan an_gin:"
+
+#: panel-plugin/weather-config.ui:525
+msgid "Prec_ipitations:"
+msgstr "Pe_mendakan:"
+
+#: panel-plugin/weather-config.ui:566
+msgid "Apparent te_mperature:"
+msgstr "S_uhu ketara:"
+
+#: panel-plugin/weather-config.ui:581
+msgid "Celsius (°C)"
+msgstr "Selsius (°C)"
+
+#: panel-plugin/weather-config.ui:582
+msgid "Fahrenheit (°F)"
+msgstr "Farenhait (°F)"
+
+#: panel-plugin/weather-config.ui:595
+msgid "Hectopascals (hPa)"
+msgstr "Hektopascal (hPa)"
+
+#: panel-plugin/weather-config.ui:596
+msgid "Inches of mercury (inHg)"
+msgstr "Inchi raksa (inHg)"
+
+#: panel-plugin/weather-config.ui:597
+msgid "Pound-force per square inch (psi)"
+msgstr "Daya-paun per inci persegi (psi)"
+
+#: panel-plugin/weather-config.ui:598
+msgid "Torr (mmHg)"
+msgstr "Torr (mmHg)"
+
+#: panel-plugin/weather-config.ui:611
+msgid "Kilometers per hour (km/h)"
+msgstr "Kilometer se jam (km/j)"
+
+#: panel-plugin/weather-config.ui:612
+msgid "Miles per hour (mph)"
+msgstr "Batu sejam (bsj)"
+
+#: panel-plugin/weather-config.ui:613
+msgid "Meters per second (m/s)"
+msgstr "Meter sesaat (m/s)"
+
+#: panel-plugin/weather-config.ui:614
+msgid "Feet per second (ft/s)"
+msgstr "Kaki sesaat (k/s)"
+
+#: panel-plugin/weather-config.ui:615
+msgid "Knots (kt)"
+msgstr "Knot (kt)"
+
+#: panel-plugin/weather-config.ui:628
+msgid "Millimeters (mm)"
+msgstr "Milimeter (mm)"
+
+#: panel-plugin/weather-config.ui:629
+msgid "Inches (in)"
+msgstr "Inci (in)"
+
+#: panel-plugin/weather-config.ui:642
+msgid "Meters (m)"
+msgstr "Meter (m)"
+
+#: panel-plugin/weather-config.ui:643
+msgid "Feet (ft)"
+msgstr "Kaki (k)"
+
+#: panel-plugin/weather-config.ui:656
+msgid "Windchill/Heat index"
+msgstr "Indeks Windchill/Haba"
+
+#: panel-plugin/weather-config.ui:657
+msgid "Windchill/Humidex"
+msgstr "Windchill/Humidex"
+
+#: panel-plugin/weather-config.ui:658
+msgid "Steadman"
+msgstr "Steadman"
+
+#: panel-plugin/weather-config.ui:659
+msgid "Quayle-Steadman"
+msgstr "Quayle-Steadman"
+
+#: panel-plugin/weather-config.ui:676
+msgid "_Units"
+msgstr "_Unit"
+
+#: panel-plugin/weather-config.ui:695
+msgid ""
+"Available icon themes are listed here. You can add icon themes to "
+"$HOME/.config/xfce4/weather/icons (or the equivalent directory on your "
+"system). Information about how to create or use icon themes can be found in "
+"the README file. New icon themes will be detected every time you open this "
+"config dialog."
+msgstr ""
+
+#: panel-plugin/weather-config.ui:696
+msgid "_Icon theme:"
+msgstr "Tema _ikon:"
+
+#: panel-plugin/weather-config.ui:728
+msgid ""
+"Open the user icon themes directory in your file manager, creating it if "
+"necessary."
+msgstr "Buka direktori tema ikon pengguna dalam pengurus fail anda, cipta ia jika perlu."
+
+#: panel-plugin/weather-config.ui:745
+msgid "Use only a single _panel row"
+msgstr "Hanya guna satu baris _panel tunggal"
+
+#: panel-plugin/weather-config.ui:749
+msgid ""
+"Check to always use only a single row on a multi-row panel and a small icon "
+"in deskbar mode."
+msgstr "Tanda untuk sentiasa guna baris tunggal dalam panel berbilang-baris dan ikon kecil dalam mod palang meja."
+
+#: panel-plugin/weather-config.ui:776
+msgid "_Tooltip style:"
+msgstr "Gaya _tip alat:"
+
+#: panel-plugin/weather-config.ui:790
+msgid ""
+"Choose your preferred tooltip style. Some styles give a lot of useful data, "
+"some are clearer but provide less data on a glance."
+msgstr "Pilih gaya tip alat yang digemari. Sesetengah gaya memberikan banyak data yang berguna, sesetengahnya lebih jelas tetapi sediakan kurang data untuk paparan seketika."
+
+#: panel-plugin/weather-config.ui:792
+msgid "Simple"
+msgstr "Ringkas"
+
+#: panel-plugin/weather-config.ui:793
+msgid "Verbose"
+msgstr "Berjela"
+
+#: panel-plugin/weather-config.ui:818
+msgid "_Forecast layout:"
+msgstr "Bentangan _ramalan:"
+
+#: panel-plugin/weather-config.ui:833
+msgid "Days in columns"
+msgstr "Hari dalam lajur"
+
+#: panel-plugin/weather-config.ui:834
+msgid "Days in rows"
+msgstr "Hari dalam baris"
+
+#: panel-plugin/weather-config.ui:846
+msgid "_Number of forecast days:"
+msgstr "_Bilangan hari ramalan:"
+
+#: panel-plugin/weather-config.ui:885
+msgid "_Round values"
+msgstr "Nilai b_undar"
+
+#: panel-plugin/weather-config.ui:907
+msgid "_Appearance"
+msgstr "P_enampilan"
+
+#: panel-plugin/weather-config.ui:927
+msgid "Font and color:"
+msgstr "Fon dan warna:"
+
+#: panel-plugin/weather-config.ui:971
+msgid ""
+"These are the values that will be shown in the scrollbox. Select a single "
+"value here and click the appropriate button to remove it or move it up and "
+"down in the list."
+msgstr "Terdapat nilai yang akan ditunjukkan dalam kotak tatal. Pilih satu nilai di sini dan klik pada butang yang sesuai untuk buang ia atau alih ia keatas atau kebawah di dalam senarai."
+
+#: panel-plugin/weather-config.ui:997
+msgid "Move the selected value up in the list of labels to display."
+msgstr "Alih nilai terpilih naik dalam senarai label untuk paparan."
+
+#: panel-plugin/weather-config.ui:1012
+msgid "Move the selected value down in the list of labels to display."
+msgstr "Alih nilai terpilih turun dalam senarai label untuk paparan."
+
+#. * TRANSLATORS: The abbreviations in parentheses will be shown in
+#. * the scrollbox together with the values. Keep them in sync with
+#. * those in make_label() in weather.c. Some of them may be
+#. * standardized internationally, like CL, CM, CH, and you might
+#. * read that up somewhere and decide whether you want to use them
+#. * or not. In general, though, you should just try to choose
+#. * letter(s) that make sense and don't use up too much space.
+#: panel-plugin/weather-config.ui:1042 panel-plugin/weather-config.c:92
+msgid "Temperature (T)"
+msgstr "Suhu (T)"
+
+#: panel-plugin/weather-config.ui:1043 panel-plugin/weather-config.c:93
+msgid "Barometric pressure (P)"
+msgstr "Tekanan Barometrik (P)"
+
+#: panel-plugin/weather-config.ui:1044 panel-plugin/weather-config.c:94
+msgid "Wind speed (WS)"
+msgstr "Kelajuan Angin (WS)"
+
+#: panel-plugin/weather-config.ui:1045 panel-plugin/weather-config.c:95
+msgid "Wind speed - Beaufort scale (WB)"
+msgstr "Kelajuan angin - Skala Beaufort (WB)"
+
+#: panel-plugin/weather-config.ui:1046 panel-plugin/weather-config.c:96
+msgid "Wind direction (WD)"
+msgstr "Arah angin (WD)"
+
+#: panel-plugin/weather-config.ui:1047 panel-plugin/weather-config.c:97
+msgid "Wind direction in degrees (WD)"
+msgstr "Arah angin dalam darjah (WD)"
+
+#: panel-plugin/weather-config.ui:1048 panel-plugin/weather-config.c:98
+msgid "Humidity (H)"
+msgstr "Kelembapan (H)"
+
+#: panel-plugin/weather-config.ui:1049 panel-plugin/weather-config.c:99
+msgid "Dew point (D)"
+msgstr "Takat embun (D)"
+
+#: panel-plugin/weather-config.ui:1050 panel-plugin/weather-config.c:100
+msgid "Apparent temperature (A)"
+msgstr "Suhu ketara (A)"
+
+#: panel-plugin/weather-config.ui:1051 panel-plugin/weather-config.c:101
+msgid "Low clouds (CL)"
+msgstr "Awan rendah (CL)"
+
+#: panel-plugin/weather-config.ui:1052 panel-plugin/weather-config.c:102
+msgid "Middle clouds (CM)"
+msgstr "Awan pertengahan (CM)"
+
+#: panel-plugin/weather-config.ui:1053 panel-plugin/weather-config.c:103
+msgid "High clouds (CH)"
+msgstr "Awan tinggi (CH)"
+
+#: panel-plugin/weather-config.ui:1054 panel-plugin/weather-config.c:104
+msgid "Cloudiness (C)"
+msgstr "Kekaburan (C)"
+
+#: panel-plugin/weather-config.ui:1055 panel-plugin/weather-config.c:105
+msgid "Fog (F)"
+msgstr "Kabus (F)"
+
+#: panel-plugin/weather-config.ui:1056 panel-plugin/weather-config.c:106
+msgid "Precipitation (R)"
+msgstr "Kerpasan (R)"
+
+#: panel-plugin/weather-config.ui:1070
+msgid ""
+"Add the selected value to the labels that should be displayed in the "
+"scrollbox."
+msgstr "Tambah nilai pilihan ke label yang patut dipaparkan dalam kotak tatal."
+
+#: panel-plugin/weather-config.ui:1085
+msgid ""
+"Select a value in the list of labels to display and click this button to "
+"remove it."
+msgstr "Pilih satu nilai dalam senarai label untuk papar dan klik butang ini untuk membuangnya."
+
+#: panel-plugin/weather-config.ui:1115
+msgid "Li_nes:"
+msgstr "_Baris:"
+
+#: panel-plugin/weather-config.ui:1128
+msgid ""
+"Decide how many values should be shown at once in the scrollbox. You can "
+"choose a smaller font or enlarge the panel to make more lines fit."
+msgstr "Tentukan berapa banyak nilai yang patut ditunjukkan sekali dalam kotak tatal. Anda boleh pilih fon lebih kecil atau besarkan panel untuk menjadikan lebih baris dimuatkan."
+
+#: panel-plugin/weather-config.ui:1143
+msgid ""
+"Hide the scrollbox to save valuable space on the panel. Most interesting "
+"information is also provided in the tooltip - provided you choose an "
+"appropriate tooltip style - that is shown when hovering over the icon."
+msgstr "Sembunyikan kotak tatal untuk menjimatkan ruang bernilai pada panel. Kebanyqakan maklumat penting juga disediakan di dalam tip alat - mengikut gaya tip alat yang sesuai - yang ditunjukkan bila penuding terapung diatas ikon."
+
+#: panel-plugin/weather-config.ui:1156
+msgid "<b>Show scrollbox</b>"
+msgstr "<b>Tunjuk kotak tatal</b>"
+
+#: panel-plugin/weather-config.ui:1173 panel-plugin/weather-config.c:1196
+msgid "Select _font"
+msgstr "Pilih _fon"
+
+#: panel-plugin/weather-config.ui:1177
+msgid ""
+"Choose a font you like and set it to a smaller or larger size. Middle-click "
+"on the button to unset the font and use your theme's default."
+msgstr "Pilih fon yang anda suka dan tetapkan ia menjadi saiz lebih kecil atau lebih besar. Klik-kanan pada butang untuk nyah-tetapkan fon dan guna tema lalai anda."
+
+#: panel-plugin/weather-config.ui:1193
+msgid ""
+"There may be problems with some themes that cause the scrollbox text to be "
+"hardly readable. If this is the case or you simply want it to appear in "
+"another color, then you can change it using this button. Middle-click on the"
+" button to unset the scrollbox text color."
+msgstr "Mungkin terdapat masalah dengan beberapa tema yang menyebabkan teks kotak tatal menjadi sukar dibaca. Jika ia berlaku atau anda mahu ia muncul dalam warna lain, maka anda boleh ubah ia menggunakan butang ini. Klik-tengah pada butang untuk menyah-tetap warna teks kotak tatal."
+
+#: panel-plugin/weather-config.ui:1214
+msgid "Animate transitions between labels"
+msgstr "Animasikan peralihan antara label"
+
+#: panel-plugin/weather-config.ui:1226
+msgid ""
+"Scroll the current displayed value(s) out and the new value(s) in instead of"
+" simply changing them. Uncheck this option if you find the animation too "
+"distracting."
+msgstr "Tatal nilai(s) dipapar semasa keluar dan nilai(s) baharu masuk selain dari hanya mengubahnya. Nyahtanda pilihan ini jika anda dapati animasi mengganggu."
+
+#: panel-plugin/weather-config.ui:1244
+msgid "_Scrollbox"
+msgstr "Kotak _Tatal"
+
 #. TRANSLATORS: Keep in sync with labeloptions in weather-config.c
-#: ../panel-plugin/weather.c:139
+#: panel-plugin/weather.c:139
 msgid "T"
 msgstr "T"
 
-#: ../panel-plugin/weather.c:142
+#: panel-plugin/weather.c:142
 msgid "P"
 msgstr "P"
 
-#: ../panel-plugin/weather.c:145
+#: panel-plugin/weather.c:145
 msgid "WS"
 msgstr "WS"
 
-#: ../panel-plugin/weather.c:148
+#: panel-plugin/weather.c:148
 msgid "WB"
 msgstr "WB"
 
-#: ../panel-plugin/weather.c:151 ../panel-plugin/weather.c:154
+#: panel-plugin/weather.c:151 panel-plugin/weather.c:154
 msgid "WD"
 msgstr "WD"
 
-#: ../panel-plugin/weather.c:157
+#: panel-plugin/weather.c:157
 msgid "H"
 msgstr "H"
 
-#: ../panel-plugin/weather.c:160
+#: panel-plugin/weather.c:160
 msgid "D"
 msgstr "D"
 
-#: ../panel-plugin/weather.c:163
+#: panel-plugin/weather.c:163
 msgid "A"
 msgstr "A"
 
-#: ../panel-plugin/weather.c:166
+#: panel-plugin/weather.c:166
 msgid "CL"
 msgstr "CL"
 
-#: ../panel-plugin/weather.c:169
+#: panel-plugin/weather.c:169
 msgid "CM"
 msgstr "CM"
 
-#: ../panel-plugin/weather.c:172
+#: panel-plugin/weather.c:172
 msgid "CH"
 msgstr "CH"
 
-#: ../panel-plugin/weather.c:175
+#: panel-plugin/weather.c:175
 msgid "C"
 msgstr "S"
 
-#: ../panel-plugin/weather.c:178
+#: panel-plugin/weather.c:178
 msgid "F"
 msgstr "F"
 
-#: ../panel-plugin/weather.c:181
+#: panel-plugin/weather.c:181
 msgid "R"
 msgstr "R"
 
-#: ../panel-plugin/weather.c:365 ../panel-plugin/weather.c:367
+#: panel-plugin/weather.c:365 panel-plugin/weather.c:367
 msgid "No Data"
 msgstr "Tiada Data"
 
-#: ../panel-plugin/weather.c:1953
+#: panel-plugin/weather.c:1953
 msgid "Short-term forecast data unavailable."
 msgstr "Data ramalan jangka-pendek tidak tersedia."
 
-#: ../panel-plugin/weather.c:1966
+#: panel-plugin/weather.c:1966
 msgid "The sun never sets today."
 msgstr "Matahari tidak langsung terbenam hari ini."
 
-#: ../panel-plugin/weather.c:1968
+#: panel-plugin/weather.c:1968
 msgid "The sun never rises today."
 msgstr "Matahari tidak langsung terbit hari ini."
 
-#: ../panel-plugin/weather.c:1974
+#: panel-plugin/weather.c:1974
 #, c-format
 msgid "The sun never rises and sets at %s."
 msgstr "Matahari tidak sesekali terbit dan terbenam pada %s."
 
-#: ../panel-plugin/weather.c:1981
+#: panel-plugin/weather.c:1981
 #, c-format
 msgid "The sun rises at %s and never sets."
 msgstr "Matahari terbit pada %s dan tidak pernah terbenam."
 
-#: ../panel-plugin/weather.c:1989
+#: panel-plugin/weather.c:1989
 #, c-format
 msgid "The sun rises at %s and sets at %s."
 msgstr "Matahari terbit pada %s dan terbenam pada %s."
 
 #. * TRANSLATORS: This is the simple tooltip. For a bigger challenge,
 #. * look at the verbose tooltip style further below ;-)
-#: ../panel-plugin/weather.c:2017
+#: panel-plugin/weather.c:2017
 #, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
@@ -127,7 +550,7 @@ msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\
 #. * be changed easily - and try to make it compact and look
 #. * good! The missing space after "%son the ..." is intentional,
 #. * it is included in the %s.
-#: ../panel-plugin/weather.c:2041
+#: panel-plugin/weather.c:2041
 #, c-format
 msgid ""
 "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n"
@@ -142,117 +565,46 @@ msgid ""
 "<span size=\"smaller\">%s</span>"
 msgstr "<b><span size=\"large\">%s</span></b> <span size=\"medium\">(%s)</span>\n<b><span size=\"large\">%s</span></b>\n<span size=\"smaller\">dari %s ke %s, dengan %s kerpasan</span>\n\n<b>Suhu:</b> %s⇥⇥<span size=\"smaller\">(nilai pada %s)</span>\n<b>Angin:</b> %s (%s pada skala Beaufort) dari %s(%s)\n<b>Tekanan:</b> %s <b>Kelembapan:</b> %s\n<b>Kabus:</b> %s <b>Keredupan:</b> %s\n\n<span size=\"smaller\">%s</span>"
 
-#: ../panel-plugin/weather.c:2095
+#: panel-plugin/weather.c:2095
 msgid "Cannot update weather data"
 msgstr "Tidak dapat kemaskini data cuaca"
 
 #. add refresh button to right click menu, for people who missed
 #. the middle mouse click feature
-#: ../panel-plugin/weather.c:2265
+#: panel-plugin/weather.c:2265
 msgid "Re_fresh"
 msgstr "Se_gar Semula"
 
-#: ../panel-plugin/weather.c:2428
+#: panel-plugin/weather.c:2428
 msgid "Show weather conditions and forecasts"
 msgstr "Tunjuk keadaan dan ramalan cuaca"
 
-#. * TRANSLATORS: The abbreviations in parentheses will be shown in
-#. * the scrollbox together with the values. Keep them in sync with
-#. * those in make_label() in weather.c. Some of them may be
-#. * standardized internationally, like CL, CM, CH, and you might
-#. * read that up somewhere and decide whether you want to use them
-#. * or not. In general, though, you should just try to choose
-#. * letter(s) that make sense and don't use up too much space.
-#: ../panel-plugin/weather-config.c:92
-msgid "Temperature (T)"
-msgstr "Suhu (T)"
-
-#: ../panel-plugin/weather-config.c:93
-msgid "Barometric pressure (P)"
-msgstr "Tekanan Barometrik (P)"
-
-#: ../panel-plugin/weather-config.c:94
-msgid "Wind speed (WS)"
-msgstr "Kelajuan Angin (WS)"
-
-#: ../panel-plugin/weather-config.c:95
-msgid "Wind speed - Beaufort scale (WB)"
-msgstr "Kelajuan angin - Skala Beaufort (WB)"
-
-#: ../panel-plugin/weather-config.c:96
-msgid "Wind direction (WD)"
-msgstr "Arah angin (WD)"
-
-#: ../panel-plugin/weather-config.c:97
-msgid "Wind direction in degrees (WD)"
-msgstr "Arah angin dalam darjah (WD)"
-
-#: ../panel-plugin/weather-config.c:98
-msgid "Humidity (H)"
-msgstr "Kelembapan (H)"
-
-#: ../panel-plugin/weather-config.c:99
-msgid "Dew point (D)"
-msgstr "Takat embun (D)"
-
-#: ../panel-plugin/weather-config.c:100
-msgid "Apparent temperature (A)"
-msgstr "Suhu ketara (A)"
-
-#: ../panel-plugin/weather-config.c:101
-msgid "Low clouds (CL)"
-msgstr "Awan rendah (CL)"
-
-#: ../panel-plugin/weather-config.c:102
-msgid "Middle clouds (CM)"
-msgstr "Awan pertengahan (CM)"
-
-#: ../panel-plugin/weather-config.c:103
-msgid "High clouds (CH)"
-msgstr "Awan tinggi (CH)"
-
-#: ../panel-plugin/weather-config.c:104
-msgid "Cloudiness (C)"
-msgstr "Kekaburan (C)"
-
-#: ../panel-plugin/weather-config.c:105
-msgid "Fog (F)"
-msgstr "Kabus (F)"
-
-#: ../panel-plugin/weather-config.c:106
-msgid "Precipitation (R)"
-msgstr "Kerpasan (R)"
-
-#: ../panel-plugin/weather-config.c:231 ../panel-plugin/weather-config.c:397
-#: ../panel-plugin/weather-config.c:567
+#: panel-plugin/weather-config.c:231 panel-plugin/weather-config.c:397
+#: panel-plugin/weather-config.c:567
 msgid "Unset"
 msgstr "Nyahtetap"
 
-#: ../panel-plugin/weather-config.c:407
+#: panel-plugin/weather-config.c:407
 msgid "Detecting..."
 msgstr "Mengesan..."
 
-#: ../panel-plugin/weather-config.c:458
-msgid "feet"
-msgstr "kaki"
-
-#: ../panel-plugin/weather-config.c:468
+#: panel-plugin/weather-config.c:468
 msgid "meters"
 msgstr "meter"
 
-#: ../panel-plugin/weather-config.c:608
+#: panel-plugin/weather-config.c:608
 msgid ""
 "Named after the astronomer Anders Celsius who invented the original scale in 1742, the Celsius scale is an international standard unit and nowadays defined using the Kelvin scale. 0 °C is equivalent to 273.15 K and 1 °C difference in temperature is exactly the same difference as 1 K. It is defined with the melting point of water being roughly at 0 °C and its boiling point at 100 °C at one standard atmosphere (1 atm = 1013.5 hPa). Until 1948, the unit was known as <i>centigrade</i> - from Latin <i>centum</i> (100) and <i>gradus</i> (steps).\n"
 "In meteorology and everyday life the Celsius scale is very convenient for expressing temperatures because its numbers can be an easy indicator for the formation of black ice and snow."
 msgstr "Dinamakan mengikut nama astronomer Anders Celsius yang mencipta skala asal pada tahun 1742, skala Celsius merupakan unit piawaian antarabangsa dan kini ditakrif menggunakan skala Kelvin. 0 °C menyamai 273.15 K dan perbezaan 1 °C dalam suhu adalah sama perbezaan dalam 1 K. Ia ditakrif berdasarkan takat lebur air iaitu pada 0 °C dan taka didh air pada 100 °C dalam atmosfera piawai (1 atm = 1013.5 hPa). sehingga 1948, unit ini dikenali sebagai <i>centigrade</i> - iaitu dari bahasa Latin <i>centum</i> (100) dan <i>gradus</i> (langkah).\nDalam bidang meteorologi kehidupan seharian skala Celsius memainkan peranan penting dalam mengungkap suhu kerana nombornya boleh menjadi penunjuk mudah untuk pembentukan ais hitam dan salji."
 
-#: ../panel-plugin/weather-config.c:624
+#: panel-plugin/weather-config.c:624
 msgid ""
 "The current Fahrenheit temperature scale is based on one proposed in 1724 by the physicist Daniel Gabriel Fahrenheit. 0 °F was the freezing point of brine on the original scale at standard atmospheric pressure, which was the lowest temperature achievable with this mixture of ice, salt and ammonium chloride. The melting point of water is at 32 °F and its boiling point at 212 °F. The Fahrenheit and Celsius scales intersect at -40 degrees. Even in cold winters, the temperatures usually do not fall into negative ranges on the Fahrenheit scale.\n"
 "With its inventor being a member of the Royal Society in London and having a high reputation, the Fahrenheit scale enjoyed great popularity in many English-speaking countries, but was replaced by the Celsius scale in most of these countries during the metrification process in the mid to late 20th century."
 msgstr "Skala suhu Fahrenheit berasal dari cadangan pada 1724 oleh ahli fizik Daniel Gabriel Fahrenheit. 0 °F merupakan takat beku air garam pada skala asal dalam tekanan atmosfera piawai, yang merupakan suhu terendah yang boleh diperoleh apabila dicampurkan ais, garam dan ammonium klorida. Takat lebur air adalah 32 °F dan takat didih pada 212 °F. Skala Fahrenheit dan Celsius akan bersilang pada suhu -40 darkah. Walaupun dalam musim sejuk, suhu biasanya tidak akan mencapai julat negatif dalam skala Fahrenheit.\nOleh kerana penciptanya merupakan ahli Persatuan Diraja London dan mempunyai reputasi yang terkenal, skala Fahrenheit menjadi terkenal dalam kebanyakan negara berasaskan Bahasa-Inggeris, sebaliknya skala Celsius diguna pakai dalam kebanyakan negara ini ketika proses metrifikasi pada akhir abad ke-20."
 
-#: ../panel-plugin/weather-config.c:667
+#: panel-plugin/weather-config.c:667
 msgid ""
 "The pascal, named after mathematician, physicist and philosopher Blaise "
 "Pascal, is a SI derived unit and a measure of force per unit area, defined "
@@ -260,7 +612,7 @@ msgid ""
 "hPa."
 msgstr "Pascal, dinamakan selepas nama ahli matematik, fizik dan falsafah Blaise Pascal, merupakan unit terbitan SI dan diukur daya per luas unit, ditakrif sebagai satu newton per meter persegi. Satu atmosfera piawai (atm) adalah 1013.25 hPa."
 
-#: ../panel-plugin/weather-config.c:674
+#: panel-plugin/weather-config.c:674
 msgid ""
 "Inches of mercury is still widely used for barometric pressure in weather "
 "reports, refrigeration and aviation in the United States, but seldom used "
@@ -269,7 +621,7 @@ msgid ""
 " of gravity."
 msgstr "Inic raksa kerap digunakan dalam tekanan barometrik iaitu pada laporan cuaca, penyejukan dan penerbangan di Amerika Syarikat, tetapi ia jarang digunakan ditempat lain. Ia ditakrif sebagai tekanan yang dikenakan oleh 1 inci lajur membulat raksa dari 1 inci tinggi pada suhu 32 °F (0 °C) dan pecutan piawai graviti."
 
-#: ../panel-plugin/weather-config.c:682
+#: panel-plugin/weather-config.c:682
 msgid ""
 "The pound per square inch is a unit of pressure based on avoirdupois units "
 "(a system of weights based on a pound of 16 ounces) and defined as the "
@@ -279,7 +631,7 @@ msgid ""
 "Colonies."
 msgstr "Paun per inci persegi adalah unit tekanan berasaskan pada unit avoirdupois  (sistem berat berdasarkan paun 16 auns) dan ditakrif sebagai tekanan yang terhasil dari daya satu paun-daya dikenakan pada luas satu inci persegi. Ia digunapakai di Amerika Syarikat dan sedikit perbezaan di Kanada, United Kingdom dan mungkin beberapa bekas jajahan British."
 
-#: ../panel-plugin/weather-config.c:691
+#: panel-plugin/weather-config.c:691
 msgid ""
 "The torr unit was named after the physicist and mathematician Evangelista "
 "Torricelli who discovered the principle of the barometer in 1644 and "
@@ -288,29 +640,29 @@ msgid ""
 "standard atmosphere (atm) equals 760 Torr."
 msgstr "Unit torr dinamakan berdasarkan nama ahli fizik dan matematik Evangelista Torricelli yang menemui prinsip barometer pada tahun 1644 dan memperkenalkan barometer raksa pertama pada khalayak ramai. Tekanan 1 torr menyamai satu milimeter raksa, dan pada atmosfera piawai (atm) menyamai 760 Torr."
 
-#: ../panel-plugin/weather-config.c:725
+#: panel-plugin/weather-config.c:725
 msgid "Wind speeds in TV or in the news are often provided in km/h."
 msgstr "Kelajuan angin dalam TV atau di dalam berita biasanya di tunjukkan dalam format km/j."
 
-#: ../panel-plugin/weather-config.c:729
+#: panel-plugin/weather-config.c:729
 msgid ""
 "Miles per hour is an imperial unit of speed expressing the number of statute"
 " miles covered in one hour."
 msgstr "Batu sejam adalah unit imperial kelajuan yang mengungkap bilangan batu yang dilalui dalam tempoh sejam."
 
-#: ../panel-plugin/weather-config.c:733
+#: panel-plugin/weather-config.c:733
 msgid ""
 "Meter per second is <i>the</i> unit typically used by meteorologists to "
 "denote wind speeds."
 msgstr "Meter sesaat adalah unit biasanya digunakan oleh ahli meteorologi untuk menganggar kelajuan angin."
 
-#: ../panel-plugin/weather-config.c:737
+#: panel-plugin/weather-config.c:737
 msgid ""
 "The foot per second (pl. feet per second) in the imperial unit system is the"
 " counterpart to the meter per second in the International System of Units."
 msgstr "Kaki sesaat (kaki per saat) dalam sistem unit imperial adalah menyamai dengan meter sesaat di dalam Unit System International."
 
-#: ../panel-plugin/weather-config.c:742
+#: panel-plugin/weather-config.c:742
 msgid ""
 "The knot is a unit of speed equal to one international nautical mile (1.852 "
 "km) per hour, or approximately 1.151 mph, and sees worldwide use in "
@@ -318,13 +670,13 @@ msgid ""
 "knot along a meridian travels one minute of geographic latitude in one hour."
 msgstr "Knot adalah unit kelajuan yang menyamai satu batu nautikal antarabangsa (1.852 km) sejam, atau kira-kira 1.151 bsj, dan penggunaannya meluas dalam bidang meteorologi dan navigasi maritime dan udara. Kapal yang bergerak pada kelajuan 1 knot melalui meridian dalam satu minit latitud geografi dalam sejam."
 
-#: ../panel-plugin/weather-config.c:775
+#: panel-plugin/weather-config.c:775
 msgid ""
 "1 millimeter is one thousandth of a meter - the fundamental unit of length "
 "in the International System of Units -, or approximately 0.04 inches."
 msgstr "1 millimeter adalah satu per seribu dalam meter - unit asas panjang dalam International System of Units -, atau kira-kira 0.04 inci."
 
-#: ../panel-plugin/weather-config.c:780
+#: panel-plugin/weather-config.c:780
 msgid ""
 "The English word <i>inch</i> comes from Latin <i>uncia</i> meaning <i>one-"
 "twelfth part</i> (in this case, one twelfth of a foot). In the past, there "
@@ -333,7 +685,7 @@ msgid ""
 "millimeters."
 msgstr "Perkataan Inggeris <i>inch</i> berasal dari bahasa Latin <i>uncia</i> yang bermaksud <i>per dua belas bahagian</i> (dalam situasi ini, per-dua-belas dalam satu kaki). Pada zaman dahulu, terdapat banyak piawaian yang berlainan untuk inci, tetapi kini nilai yang diterima peringkat antarabangsa adalah 25.4 milimeter."
 
-#: ../panel-plugin/weather-config.c:813
+#: panel-plugin/weather-config.c:813
 msgid ""
 "The meter is the fundamental unit of length in the International System of "
 "Units. Originally intended to be one ten-millionth of the distance from the "
@@ -342,7 +694,7 @@ msgid ""
 "of measurement)."
 msgstr "Meter adalah unit asas panjang dalam International System of Units. Asalnya digunakan untuk satu sepuluh-per-sejuta jarak dari khatulistiwa Bumi ke Kutub Utara pada aras laut, takrifannya telah berulang-kali diperbaiki kerana penggunaannya dalam metrologi (sains pengukuran)."
 
-#: ../panel-plugin/weather-config.c:821
+#: panel-plugin/weather-config.c:821
 msgid ""
 "A foot (plural feet) is a unit of length defined as being 0.3048 m exactly "
 "and used in the imperial system of units and United States customary units. "
@@ -354,7 +706,7 @@ msgstr "Satu kaki (jamak feet) adalah unit panjang yang ditakrif sebanyak 0.3048
 #. * TRANSLATORS: The Summer Simmer Index is similar to the heat
 #. * index, but usually used at night because of its better accuracy
 #. * at that time.
-#: ../panel-plugin/weather-config.c:860
+#: panel-plugin/weather-config.c:860
 msgid ""
 "Used in North America, wind chill will be reported for low temperatures and "
 "heat index for higher ones. At night, heat index will be replaced by the "
@@ -365,7 +717,7 @@ msgid ""
 "met, the air temperature will be shown."
 msgstr "Digunakan di Amerika Utara, wind chill akan dilapor untuk suhu rendah dan indeks haba jika suhu lebih tinggi. Pada waktu malam, indeks haba diganti dengan Summer Simmer Index. Bagi wind chill, kelajuan angin perlu diatas 3.0 bsj (4.828 km/j) dan suhu udara dibawah 50.0 °F (10.0 °C). Manakala indeks haba, suhu udara perlu berada diatas 80 °F (26.7 °C) - atau diatas 71.6 °F (22 °C) pada waktu malam - dan kelembapan relatif sekurang-kurangnya 40%. Jika syarat ini tidak dipatuhi, suhu udara akan ditunjukkan."
 
-#: ../panel-plugin/weather-config.c:871
+#: panel-plugin/weather-config.c:871
 msgid ""
 "The Canadian counterpart to the US windchill/heat index, with the wind chill"
 " being similar to the previous model but with slightly different "
@@ -377,7 +729,7 @@ msgid ""
 " be shown."
 msgstr "Model indeks windchill Kanada adalah serupa dengan indeks windchill AS, tetapi terdapat sedikit perbezaan. Selain itu indeks haba <i>humidex</i> akan digunakan. Supaya wind chill menjadi lebih efektif, kelajuan angin perlu berada diatas 2.0 km/h (1.24 bsj) dan suhu udara dibawah atau menyamai 0 °C (32 °F). Bagi humidex, suhu udara perlu sekurang-kurangnya 20.0 °C (68 °F), dengan takat embun lebih besar dari 0 °C (32 °F). Jika syarat ini tidak dipenuhi, suhu udara akan ditunjukkan."
 
-#: ../panel-plugin/weather-config.c:883
+#: panel-plugin/weather-config.c:883
 msgid ""
 "This is the model used by the Australian Bureau of Meteorology, especially "
 "adapted for the climate of this continent. Possibly used in Central Europe "
@@ -388,7 +740,7 @@ msgid ""
 "temperatures alike."
 msgstr "Ini merupakan model yang digunapakai oleh Australian Bureau of Meteorology, terutamanya dalam cuaca. Mungkin digunakan di Eropah Tengah dan lain-lain benua juga. tetapi windchill dan nilai serupa dengannya tidak menjadi popular selain dari AS dan Kanada, oleh itu maklumat penggunaan tidak banyak dan sukar didapati. Ia bergantung pada suhu udara, kelajuan angin dan kelembapan dan juga digunakan untuk suhu lebih rendah dan lebih tinggi."
 
-#: ../panel-plugin/weather-config.c:894
+#: panel-plugin/weather-config.c:894
 msgid ""
 "Improvements by Robert G. Quayle and Robert G. Steadman applied in 1998 to "
 "earlier experiments/developments by Steadman. This model only depends on "
@@ -396,11 +748,11 @@ msgid ""
 "both heat and cold stress."
 msgstr "Penambahbaikan oleh Robert G. Quayle dan Robert G. Steadman pada tahun 1998 berdasarkan eksperimen/pembangunan awal oleh Steadman. Model hanya bergantung pada kelajuan angin dan suhu, tidak bergantung pada kelembapan relatif dan boleh digunakan untuk kedua-dua tekanan panas dan sejuk."
 
-#: ../panel-plugin/weather-config.c:955
+#: panel-plugin/weather-config.c:955
 msgid "Choose an icon theme."
 msgstr "Pilih satu tema ikon."
 
-#: ../panel-plugin/weather-config.c:960
+#: panel-plugin/weather-config.c:960
 #, c-format
 msgid ""
 "<b>Directory:</b> %s\n"
@@ -412,19 +764,19 @@ msgid ""
 "<b>License:</b> %s"
 msgstr "<b>Direktori:</b> %s\n\n<b>Pengarang:</b> %s\n\n<b>Keterangan:</b> %s\n\n<b>Lesen:</b> %s"
 
-#: ../panel-plugin/weather-config.c:1047
+#: panel-plugin/weather-config.c:1047
 msgid ""
 "A more calendar-like view, with the days in columns and the daytimes "
 "(morning, afternoon, evening, night) in rows."
 msgstr "Paparan seakan-kalendar, dengan hari dalam lajur dan waktu (pagi, tengahari, petang, malam) dalam baris."
 
-#: ../panel-plugin/weather-config.c:1051
+#: panel-plugin/weather-config.c:1051
 msgid ""
 "Shows the forecasts in a table with the daytimes (morning, afternoon, "
 "evening, night) in columns and the days in rows."
 msgstr "Tunjuk ramalan dalam jadual dengan waktu (pagi, tengahari, petang, malam) dalam lajur dan hari pula dalam baris."
 
-#: ../panel-plugin/weather-config.c:1138
+#: panel-plugin/weather-config.c:1138
 #, c-format
 msgid ""
 "Met.no provides forecast data for up to %d days in the future. Choose how "
@@ -434,29 +786,25 @@ msgid ""
 "are unreliable at best ;-)"
 msgstr "Met.no menyediakan data ramalan sehingga %d hari ke hadapan. Pilih berapa harikah akan dipapar dalam tab ramalan pada tetingkap ringkasan. Pada komputer lama nombor dapat membantu terhadap kelembapan jika membuka tetingkap. Perhatian ramalan biasanya untuk tiga ke atas adalah tidak semestinya boleh diharap ;-)"
 
-#: ../panel-plugin/weather-config.c:1196
-msgid "Select _font"
-msgstr "Pilih _fon"
-
-#: ../panel-plugin/weather-config.c:1213
+#: panel-plugin/weather-config.c:1213
 msgid "Select font"
 msgstr "Pilih fon"
 
 #. TRANSLATORS: Fallback value, usually never shown.
-#: ../panel-plugin/weather-config.c:1327
+#: panel-plugin/weather-config.c:1327
 msgid ""
 "Choose the value to add to the list below. Values can be added more than "
 "once."
 msgstr "Pilih nilai yang ditambah ke dalam senarai dibawah. Nilai boleh ditambah lagi lebih dari sekali."
 
-#: ../panel-plugin/weather-config.c:1336
+#: panel-plugin/weather-config.c:1336
 msgid ""
 "Air temperature, sometimes referred to as dry-bulb temperature. Measured by "
 "a thermometer that is freely exposed to the air, yet shielded from radiation"
 " and moisture."
 msgstr "Suhu udara, kadangkala dirujuk sebagai suhu bebuli kering. Diukur dengan termometer yang didedahkan ke udara secara terus, tetapi terlindung dari radiasi dan kelembapan."
 
-#: ../panel-plugin/weather-config.c:1342
+#: panel-plugin/weather-config.c:1342
 msgid ""
 "The weight of the air that makes up the atmosphere exerts a pressure on the "
 "surface of the Earth, which is known as atmospheric pressure. To make it "
@@ -467,7 +815,7 @@ msgid ""
 "pressures mean deterioration."
 msgstr "Berat udara yang membentuk atmosfera adalah tekanan yang dikenakan pada permukaan Bumi, yang dikenali sebagai tekanan atmosfera. Untuk menjadikannya mudah membandingkan satu nilai ke nilai yang lain untuk lokasi berbeza dengan altitud berlainan, tekanan atmosfera dilaras berdasarkan tekanan aras-laut yang dikenali sebagai tekanan barometrik. Tekanan barometrik meningkat menunjukkan keadaan cuaca yang baik, manakala penurunan adalah sebaliknya."
 
-#: ../panel-plugin/weather-config.c:1353
+#: panel-plugin/weather-config.c:1353
 msgid ""
 "Nowadays wind speed/velocity is measured using an anemometer (Greek "
 "<i>anemos</i>, meaning <i>wind</i>) in 10 m (33 ft) height. Anemometers "
@@ -475,26 +823,26 @@ msgid ""
 "as they are closely related to and can be deduced from each other."
 msgstr "Kini kelajuan/halaju diukur menggunakan anemometer (Yunani <i>anemos</i>, bermaksud tinggi <i>angin</i>) dalam 10 m (33 kaki). Anemometer biasanya mengukur sama ada kelajuan angin atau tekanan, tetapi akan sediakan kedua-dua nilai kerana ia sangat berkaitan dan boleh berkurangan diantara satu sama lain."
 
-#: ../panel-plugin/weather-config.c:1361
+#: panel-plugin/weather-config.c:1361
 msgid ""
 "Invented by Sir Francis Beaufort in 1805, this empirical scale on wind speed"
 " is based on people's observations of specific land or sea conditions, "
 "denoting these conditions with numbers from 0 (calm) to 12 (hurricane)."
 msgstr "Direka oleh Sir Francis Beaufort pada 1805, skala empirik ini mengukur kelajuan angin berdasarkan pemerhatian pada keadaan daratan atau lautan tertentu, mengikut syarat ini dengan nombor bermula dari 0 (tenang) hingga 12 (taufan)."
 
-#: ../panel-plugin/weather-config.c:1367
+#: panel-plugin/weather-config.c:1367
 msgid ""
 "This gives the cardinal direction (North, East, South, West) the wind is "
 "coming from."
 msgstr "Ini memberikan arah kardinal (Utara, Timur, Selatan, Barat) dimana angin datang."
 
-#: ../panel-plugin/weather-config.c:1371
+#: panel-plugin/weather-config.c:1371
 msgid ""
 "This gives the direction the wind is coming from in azimuth degrees (North ="
 " 0°, East = 90°, South = 180° and West = 270°)."
 msgstr "ini memberikan arah angin yang datang dalam darjah azimut (Utara = 0°, Timur = 90°, Selatan = 180° dan Barat = 270°)."
 
-#: ../panel-plugin/weather-config.c:1376
+#: panel-plugin/weather-config.c:1376
 msgid ""
 "Humidity is defined as the amount of water vapor in the air and increases "
 "the possibility of precipitation, fog and dew. While absolute humidity is "
@@ -503,21 +851,21 @@ msgid ""
 "pressure."
 msgstr "Kelembapan ditakrif sebagai amaun wap air di dalam udara dan tingkatkan kemungkinan kerpasan, kabus dan embun. Manakala kelembapan mutlak adalah kandungan air di dalam udara, kelembapan relatif berikan (dalam %) the kelembapan relatif mutlak semasa sehingga maksimum bagi suhu dan tekanan udara."
 
-#: ../panel-plugin/weather-config.c:1384
+#: panel-plugin/weather-config.c:1384
 msgid ""
 "This is the temperature to which air must be cooled to reach 100% relative humidity, given no change in water content. Reaching the dew point halts the cooling process, as condensation occurs which releases heat into the air. A high dew point increases the possibility of rain and severe thunderstorms. The dew point allows the prediction of dew, frost, fog and minimum overnight temperature, and has influence on the comfort level one experiences.\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no."
 msgstr "Merupakan suhu yang mana udara mesti disejukkan untuk mencapai kelembapan relatif 100%, dengan syarattiada perubahan di dalam kandungan air. Jika takat embun dicapai proses penyejukan akan tertangguh, kkerana pemeluwapan berlaku bila haba terbebas ke udara. Takat embun yang tinggi meningkatkan kebarangkalian berlakunya hujan dan ribut petir. Takat embun membolehkan ramalan embun, fros, kabus dan suhu tengah malam yang minimum, dan juga mempengaruhi aras keselesaan yang dialami.\n\n<b>Perhatian:</b> Ini merupakan nilai kiraan yang tidak disedia oleh met.no."
 
-#: ../panel-plugin/weather-config.c:1396
+#: panel-plugin/weather-config.c:1396
 msgid ""
 "Also known as <i>felt temperature</i>, <i>effective temperature</i>, or what some weather providers declare as <i>feels like</i>. Human temperature sensation is not only based on air temperature, but also on heat flow, physical activity and individual condition. While being a highly subjective value, apparent temperature can actually be useful for warning about extreme conditions (cold, heat).\n"
 "\n"
 "<b>Note:</b> This is a calculated value not provided by met.no. You should use a calculation model appropriate for your local climate and personal preferences on the units page."
 msgstr "Juga dikenali sebagai <i>suhu dirasai</i>, <i>suhu efektif</i>, atau sesetengah penyedia cuaca mengisytihar sebagai <i>feels like</i>. Suhu sensasi manusia bukan sahaja berdasarkan suhu udara, tetapi juga aliran haba, aktiviti fizikal dan keadaan individu. Walaupun nilainya sangat subjektif, suhu ketara biasanya berguna sebagai amaran keadaan ekstrem (panas atau sejuk).\n\n<b>Perhatian:</b> Nilai dikira ini tidak disediakan oleh met.no. Anda seharusnya gunakan mode pengiraan yang sesuai untuk cuaca tempatan anda dan keutamaan peribadi anda dalam halaman unit."
 
-#: ../panel-plugin/weather-config.c:1410
+#: panel-plugin/weather-config.c:1410
 msgid ""
 "This gives the low-level cloud cover in percent. According to WMO "
 "definition, low-level clouds can be found at altitudes below 4,000 m (13,000"
@@ -526,7 +874,7 @@ msgid ""
 "particles and snow, when temperatures are cold enough."
 msgstr "Ia melaporkan awan aras-rendah meliputi dalam bentuk peratus. Berdasarkan pada takrifan WMO, awan aras-rendah boleh ditemui pada altitud dibawah 4,000 m (13,000 kaki), atau 5,000 m (16,000 kaki) pada zon khatulistiwa, kebiasaannya awan ini berada dibawah 2,000 m (6,500 kaki). Awan aras-rendah mengandungi titisan air atau menjadi zarah ais dan salji, bila suhu benar-benar sejuk."
 
-#: ../panel-plugin/weather-config.c:1418
+#: panel-plugin/weather-config.c:1418
 msgid ""
 "This specifies the mid-level cloud cover in percent. According to WMO "
 "definition, mid-level clouds form in heights of 4,000-8,000 m (13,000-26,000"
@@ -535,7 +883,7 @@ msgid ""
 "temperatures get low enough, ice particles can replace the droplets."
 msgstr "Awan aras-pertengahan meliputi dalam peratus. Berdasarkan pada takrifan WMO, awan aras-pertengahan terbentuk pada ketinggian 4,000-8,000 m (13,000-26,000 kaki), atau 5,000-10,000 m (16,000-33,000 kaki) pada khatulistiwa. Seperti awan aras-rendah, ia pada prinsipnya terdiri dari titisan-titisan kecil air. Bila suhu sudah cukup rendah, zarah-zarah ais menggantikan titisan-titisan air."
 
-#: ../panel-plugin/weather-config.c:1427
+#: panel-plugin/weather-config.c:1427
 msgid ""
 "This reports the high-level cloud cover in percent. According to WMO "
 "definition, high-level clouds can be found in altitudes of 8,000 to 15,000 m"
@@ -545,7 +893,7 @@ msgid ""
 "a magnificent array of colors when the sun is low on the horizon."
 msgstr "Ia melaporkan awan aras-tinggi meliputi dalam bentuk peratus. Berdasarkan pada takrifan WMO, awan aras-tinggi boleh ditemui pada altitud 8,000 hingga 15,000 m (26,000 hingga 49,000 kaki), atau 10,000 m-18,000 m (33,000-59,000 kaki) pada zon khatulistiwa, yang mana suhunya sangat rendah kerana ia mengandungi kristal ais. Kebiasaanya kelihatan nipis dan berwarna putih, awan ini boleh didapati dalam susunan warna yang cantik apabila kedudukan matahari rendah diufuk."
 
-#: ../panel-plugin/weather-config.c:1437
+#: panel-plugin/weather-config.c:1437
 msgid ""
 "Cloudiness, or cloud cover, defines the fraction of the sky obscured by "
 "clouds when observed from a given location. Clouds are both carriers of "
@@ -556,7 +904,7 @@ msgid ""
 "that way contribute to the cooling of the planet."
 msgstr "Keredupan awan, atau kelitupan awan, ditakrif sebagai sebahagian langit yang dilindungi awan bila dicerap dari lokasi yang diberi. Awan membawa kerpasan dan pengatur amaun sinaran suria yang mencapai permukaan bumi. Ketika hari siang awan mengurangkan suhu, pada waktu malam perkara sebaliknya berlaku, kerana wap air menghalang sinaran gelombang-panjang dari terlepas ke ruang angkasa. Selain itu, awan memantulkan cahaya ke ruang angkasa dan dengan cara ini awam menyumbang ke arah penyejukan planet."
 
-#: ../panel-plugin/weather-config.c:1449
+#: panel-plugin/weather-config.c:1449
 msgid ""
 "Fog is a type of low-lying stratus cloud, with the moisture in it often "
 "generated locally such as from a nearby lake, river, ocean, or simply moist "
@@ -566,7 +914,7 @@ msgid ""
 " visibility to less than 1 km (5/8 statute mile)."
 msgstr "Kabus adalah jenis awan stratus rendah, dengan kelembapan di dalamnya biasanya ia terbentuk dari tasik, sungai, laut berhampiran ataupun juga dari tanah lembab, yang terbentuk apabila terdapat perbezaan suhu dan takat embun dibawah 2.5 °C (4 °F), dengan kelembapan relatif 100%. Kabus umumnya membentuk kerpasan dalam bentuk hujan renyai atau salji ringan dan ia mengurangkan penglihatan kurang dari 1 km (5/8 batu)."
 
-#: ../panel-plugin/weather-config.c:1460
+#: panel-plugin/weather-config.c:1460
 msgid ""
 "The amount of rain, drizzle, sleet, hail, snow, graupel and other forms of water falling from the sky over a specific period.\n"
 "\n"
@@ -583,178 +931,172 @@ msgid ""
 "<b>Note</b>: While air temperature is an important factor in this calculation, there are other influencing factors that the plugin doesn't know about like the type of snow and ground temperature. Because of that, these rules will only lead to rough estimates and may not represent the real amount of snow."
 msgstr "Amaun hujan, hujan renyai, hujan batu, graupel, awan dan lain-lain bentuk air yang turun dari langit pada tempoh tertentu.\n\nNilai yang dilapor oleh met.no adalah kerpasan dalam bentuk cecair - atau: hujan -, jika salji dijangka, kemudian amaun salji akan <i>diramal</i> dengan menggandakan nilai asal mengikut nisbah kebergantungan pada suhu udara:\n\n<tt><small>                   T &lt; -11.1 °C (12 °F) =&gt; 1:12\n-11.1 °C (12 °F) &lt; T &lt;  -4.4 °C (24 °F) =&gt; 1:10\n -4.4 °C (24 °F) &lt; T &lt;  -2.2 °C (28° F) =&gt; 1:7\n -2.2 °C (28 °F) &lt; T &lt;  -0.6 °C (31 °F) =&gt; 1:5\n -0.6 °C (31 °F) &lt; T                    =&gt; 1:3\n\n</small></tt>Contohnya: Jika suhu adalah -5 °C (12 °F), maka ketumpatan salji akan menjadi rendah dan nisbah hujan ke salji menjadi 1:10 akan digunakan untuk pengiraan. Dianggap nilai dilaporkan adalah 5 mm, maka amaun kerpasan salji yang adalah 50 mm.\n\n<b>Perhatian</b>: Walaupun suhu udara adalah faktor penting dalam pengiraan ini, terdapat juga faktor lain mempengaruhi di mana pemalam tidak tahu seperti apakah jenis salji dan suhu tanah. Oleh sebab itu, peraturan ini hanya membuat anggaran kasar dan tidak mewakili amaun sebenar salji yang terbentuk."
 
-#: ../panel-plugin/weather-config.c:1636
+#: panel-plugin/weather-config.c:1636
 msgid "Labels to d_isplay"
 msgstr "Label untuk papa_ran"
 
-#: ../panel-plugin/weather-data.c:298
+#: panel-plugin/weather-data.c:298
 msgid "North"
 msgstr "Utara"
 
-#: ../panel-plugin/weather-data.c:298
+#: panel-plugin/weather-data.c:298
 msgid "N"
 msgstr "U"
 
-#: ../panel-plugin/weather-data.c:301
+#: panel-plugin/weather-data.c:301
 msgid "North-East"
 msgstr "Timur-Laut"
 
-#: ../panel-plugin/weather-data.c:301
+#: panel-plugin/weather-data.c:301
 msgid "NE"
 msgstr "TL"
 
-#: ../panel-plugin/weather-data.c:304
+#: panel-plugin/weather-data.c:304
 msgid "East"
 msgstr "Timur"
 
-#: ../panel-plugin/weather-data.c:304
+#: panel-plugin/weather-data.c:304
 msgid "E"
 msgstr "T"
 
-#: ../panel-plugin/weather-data.c:307
+#: panel-plugin/weather-data.c:307
 msgid "South-East"
 msgstr "Tenggara"
 
-#: ../panel-plugin/weather-data.c:307
+#: panel-plugin/weather-data.c:307
 msgid "SE"
 msgstr "TE"
 
-#: ../panel-plugin/weather-data.c:310
+#: panel-plugin/weather-data.c:310
 msgid "South"
 msgstr "Selatan"
 
-#: ../panel-plugin/weather-data.c:310
+#: panel-plugin/weather-data.c:310
 msgid "S"
 msgstr "S"
 
-#: ../panel-plugin/weather-data.c:313
+#: panel-plugin/weather-data.c:313
 msgid "South-West"
 msgstr "Barat-Daya"
 
-#: ../panel-plugin/weather-data.c:313
+#: panel-plugin/weather-data.c:313
 msgid "SW"
 msgstr "BD"
 
-#: ../panel-plugin/weather-data.c:316
+#: panel-plugin/weather-data.c:316
 msgid "West"
 msgstr "Barat"
 
-#: ../panel-plugin/weather-data.c:316
+#: panel-plugin/weather-data.c:316
 msgid "W"
 msgstr "B"
 
-#: ../panel-plugin/weather-data.c:319
+#: panel-plugin/weather-data.c:319
 msgid "North-West"
 msgstr "Barat-Laut"
 
-#: ../panel-plugin/weather-data.c:319
+#: panel-plugin/weather-data.c:319
 msgid "NW"
 msgstr "BL"
 
-#: ../panel-plugin/weather-data.c:497
+#: panel-plugin/weather-data.c:497
 msgid "ft"
 msgstr "ft"
 
-#: ../panel-plugin/weather-data.c:497
+#: panel-plugin/weather-data.c:497
 msgid "m"
 msgstr "m"
 
-#: ../panel-plugin/weather-data.c:501
+#: panel-plugin/weather-data.c:501
 msgid "°F"
 msgstr "°F"
 
-#: ../panel-plugin/weather-data.c:501
+#: panel-plugin/weather-data.c:501
 msgid "°C"
 msgstr "°C"
 
-#: ../panel-plugin/weather-data.c:505
+#: panel-plugin/weather-data.c:505
 msgid "hPa"
 msgstr "hPa"
 
-#: ../panel-plugin/weather-data.c:507
+#: panel-plugin/weather-data.c:507
 msgid "inHg"
 msgstr "inHg"
 
-#: ../panel-plugin/weather-data.c:509
+#: panel-plugin/weather-data.c:509
 msgid "psi"
 msgstr "psi"
 
-#: ../panel-plugin/weather-data.c:511
+#: panel-plugin/weather-data.c:511
 msgid "mmHg"
 msgstr "mmHg"
 
-#: ../panel-plugin/weather-data.c:517
+#: panel-plugin/weather-data.c:517
 msgid "km/h"
 msgstr "km/j"
 
-#: ../panel-plugin/weather-data.c:519
+#: panel-plugin/weather-data.c:519
 msgid "mph"
 msgstr "bsj"
 
-#: ../panel-plugin/weather-data.c:521
+#: panel-plugin/weather-data.c:521
 msgid "m/s"
 msgstr "m/s"
 
-#: ../panel-plugin/weather-data.c:523
+#: panel-plugin/weather-data.c:523
 msgid "ft/s"
 msgstr "kaki/s"
 
-#: ../panel-plugin/weather-data.c:525
+#: panel-plugin/weather-data.c:525
 msgid "kt"
 msgstr "kt"
 
-#. TRANSLATORS: The degree sign is used like a unit for
-#. latitude, longitude, wind direction
-#: ../panel-plugin/weather-data.c:533
-msgid "°"
-msgstr "°"
-
 #. TRANSLATORS: Percentage sign is used like a unit for
 #. clouds, fog, humidity
-#: ../panel-plugin/weather-data.c:542
+#: panel-plugin/weather-data.c:542
 msgid "%"
 msgstr "%"
 
-#: ../panel-plugin/weather-data.c:544
+#: panel-plugin/weather-data.c:544
 msgid "in"
 msgstr "in"
 
-#: ../panel-plugin/weather-data.c:544
+#: panel-plugin/weather-data.c:544
 msgid "mm"
 msgstr "mm"
 
-#: ../panel-plugin/weather-search.c:157 ../panel-plugin/weather-search.c:289
+#: panel-plugin/weather-search.c:157 panel-plugin/weather-search.c:289
 msgid "Results"
 msgstr "Keputusan"
 
-#: ../panel-plugin/weather-search.c:200
+#: panel-plugin/weather-search.c:200
 msgid "Searching..."
 msgstr "Menggelintar"
 
-#: ../panel-plugin/weather-search.c:233
+#: panel-plugin/weather-search.c:233
 msgid "Search location"
 msgstr "Gelintar lokasi"
 
-#: ../panel-plugin/weather-search.c:238
+#: panel-plugin/weather-search.c:238
 msgid "Cancel"
 msgstr "Batal"
 
-#: ../panel-plugin/weather-search.c:241
+#: panel-plugin/weather-search.c:241
 msgid "OK"
 msgstr "OK"
 
-#: ../panel-plugin/weather-search.c:257
+#: panel-plugin/weather-search.c:257
 msgid "Enter a city name or address"
 msgstr "Masukkan nama bandar atau alamat"
 
-#: ../panel-plugin/weather-search.c:268
+#: panel-plugin/weather-search.c:268
 msgid "Search"
 msgstr "Gelintar"
 
 #. * TRANSLATORS: Latitude and longitude are known from the
 #. * search results, but not the location name. The user shall
 #. * give the place a name.
-#: ../panel-plugin/weather-search.c:470
+#: panel-plugin/weather-search.c:470
 msgid "Unnamed place"
 msgstr "Tempat tidak bernama"
 
@@ -771,36 +1113,36 @@ msgstr "Tempat tidak bernama"
 #. * RTL TRANSLATORS: In case you did not translate the measurement
 #. * unit, use LRM (left-to-right mark) etc. to align it properly with
 #. * its numeric value.
-#: ../panel-plugin/weather-summary.c:66
+#: panel-plugin/weather-summary.c:66
 #, c-format
 msgid "\t%s%s%s%s%s\n"
 msgstr "\t%s%s%s%s%s\n"
 
-#: ../panel-plugin/weather-summary.c:424
+#: panel-plugin/weather-summary.c:424
 msgid "Coordinates\n"
 msgstr "Koordinat\n"
 
-#: ../panel-plugin/weather-summary.c:425
+#: panel-plugin/weather-summary.c:425
 msgid "Altitude"
 msgstr "Altitud"
 
-#: ../panel-plugin/weather-summary.c:426
+#: panel-plugin/weather-summary.c:426
 msgid "Latitude"
 msgstr "Latitud"
 
-#: ../panel-plugin/weather-summary.c:427
+#: panel-plugin/weather-summary.c:427
 msgid "Longitude"
 msgstr "Longitud"
 
 #. TRANSLATORS: Please use as many \t as appropriate to align the
 #. date/time values as in the original.
-#: ../panel-plugin/weather-summary.c:431
+#: panel-plugin/weather-summary.c:431
 msgid ""
 "\n"
 "Downloads\n"
 msgstr "\nMuat Turun\n"
 
-#: ../panel-plugin/weather-summary.c:434
+#: panel-plugin/weather-summary.c:434
 #, c-format
 msgid ""
 "\tWeather data:\n"
@@ -810,7 +1152,7 @@ msgid ""
 "\n"
 msgstr "\tData cuaca:\n\tTerakhir:\t%s\n\tBerikutnya:\t%s\n\tPercubaan gagal semasa: %d\n\n"
 
-#: ../panel-plugin/weather-summary.c:448
+#: panel-plugin/weather-summary.c:448
 msgid ""
 "\tMet.no Locationforecast API states that this version\n"
 "\tof the webservice is deprecated, and the plugin needs to be\n"
@@ -821,7 +1163,7 @@ msgid ""
 "\n"
 msgstr "\tAPI Met.no Locationforecast menyatakan versi perkhidmatan\n\tsesawang ini telah lapuk, dan pemalam perlu disuaikan dengan\n\tversi yang lebih baharu, atau ia akan berhenti berfungsi dalam\n\ttempoh beberapa bulan.\n\tSila failkan pepijat di https://gitlab.xfce.org/panel-plugins/xfce4-weather-plugin/\n \tjika tiada siapa yang memohonnya lagi.\n\n"
 
-#: ../panel-plugin/weather-summary.c:457
+#: panel-plugin/weather-summary.c:457
 #, c-format
 msgid ""
 "\tAstronomical data:\n"
@@ -830,7 +1172,7 @@ msgid ""
 "\tCurrent failed attempts: %d\n"
 msgstr "\tData astronomi:\n\tTerakhir:\t%s\n\tBerikutnya:\t%s\n\tPercubaan gagal semasa: %d\n"
 
-#: ../panel-plugin/weather-summary.c:471
+#: panel-plugin/weather-summary.c:471
 msgid ""
 "\n"
 "\tMet.no sunrise API states that this version of the webservice\n"
@@ -842,20 +1184,20 @@ msgid ""
 msgstr "\n\tAPI Met.no sunrise menyatakan versi perkhidmatan\n\tsesawang ini telah lapuk, dan pemalam perlu disuaikan dengan\n\tversi yang lebih baharu, atau ia akan berhenti berfungsi dalam\n\ttempoh beberapa bulan.\n\tSila failkan pepijat di https://gitlab.xfce.org/panel-plugins/xfce4-weather-plugin/\n\tjika tiada siapa yang memohonnya lagi.\n"
 
 #. calculation times
-#: ../panel-plugin/weather-summary.c:478
+#: panel-plugin/weather-summary.c:478
 msgid ""
 "\n"
 "Times Used for Calculations\n"
 msgstr "\nBerapa Kali Digunakan untuk Pengiraan\n"
 
-#: ../panel-plugin/weather-summary.c:481
+#: panel-plugin/weather-summary.c:481
 #, c-format
 msgid ""
 "\tTemperatures, wind, atmosphere and cloud data calculated\n"
 "\tfor:\t\t%s\n"
 msgstr "\tData suhu, angin, atmosfera dan awan yang dikira\n\tuntuk:\t\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:490
+#: panel-plugin/weather-summary.c:490
 #, c-format
 msgid ""
 "\n"
@@ -866,198 +1208,195 @@ msgid ""
 msgstr "\n\tSimbol kerpasan dan cuaca telah dikira menggunakan\n\tsela masa berikut:\n\tMula:\t%s\n\tAkhir:\t%s\n"
 
 #. sun and moon
-#: ../panel-plugin/weather-summary.c:501
+#: panel-plugin/weather-summary.c:501
 msgid ""
 "\n"
 "Astronomical Data\n"
 msgstr "\nData Astronomi\n"
 
-#: ../panel-plugin/weather-summary.c:504
+#: panel-plugin/weather-summary.c:504
 msgid "\tSunrise:\t\tThe sun never rises today.\n"
 msgstr "\tMatahari Terbit:\t\tMatahari tidak akan terbit hari ini.\n"
 
-#: ../panel-plugin/weather-summary.c:507
+#: panel-plugin/weather-summary.c:507
 msgid "\tSunset:\t\tThe sun never sets today.\n"
 msgstr "\tMatahari Terbenam:\t\tMatahari tidak akan terbenam hari ini.\n"
 
-#: ../panel-plugin/weather-summary.c:511
+#: panel-plugin/weather-summary.c:511
 #, c-format
 msgid "\tSunrise:\t\t%s\n"
 msgstr "\tMatahari Terbit:\t\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:516
+#: panel-plugin/weather-summary.c:516
 #, c-format
 msgid ""
 "\tSunset:\t\t%s\n"
 "\n"
 msgstr "\tMatahari Terbenam:\t\t%s\n\n"
 
-#: ../panel-plugin/weather-summary.c:522
+#: panel-plugin/weather-summary.c:522
 #, c-format
 msgid "\tMoon phase:\t%s\n"
 msgstr "\tFasa bulan:\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:526
+#: panel-plugin/weather-summary.c:526
 msgid "\tMoon phase:\tUnknown\n"
 msgstr "\tFasa bulan:\tTidak diketahui\n"
 
-#: ../panel-plugin/weather-summary.c:531
+#: panel-plugin/weather-summary.c:531
 msgid "\tMoonrise:\tThe moon never rises today.\n"
 msgstr "\tBulan Terbit:\tBulan tidak akan terbit hari ini.\n"
 
-#: ../panel-plugin/weather-summary.c:535
+#: panel-plugin/weather-summary.c:535
 msgid "\tMoonset:\tThe moon never sets today.\n"
 msgstr "\tBulan Terbenam:\tBulan tidak akan terbenam hari ini.\n"
 
-#: ../panel-plugin/weather-summary.c:539
+#: panel-plugin/weather-summary.c:539
 #, c-format
 msgid "\tMoonrise:\t%s\n"
 msgstr "\tBulan Terbit:\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:544
+#: panel-plugin/weather-summary.c:544
 #, c-format
 msgid "\tMoonset:\t%s\n"
 msgstr "\tBulan Terbenam:\t%s\n"
 
-#: ../panel-plugin/weather-summary.c:549
+#: panel-plugin/weather-summary.c:549
 msgid "\tData not available, will use sane default values for night and day.\n"
 msgstr "\tData tidak tersedia, akan guna nilai lalai munasabah untuk malam dan siang.\n"
 
 #. temperatures
-#: ../panel-plugin/weather-summary.c:555
+#: panel-plugin/weather-summary.c:555
 msgid ""
 "\n"
 "Temperatures\n"
 msgstr "\nSuhu\n"
 
-#: ../panel-plugin/weather-summary.c:556
+#: panel-plugin/weather-summary.c:556
 msgid "Temperature"
 msgstr "Suhu"
 
-#: ../panel-plugin/weather-summary.c:557
+#: panel-plugin/weather-summary.c:557
 msgid "Dew point"
 msgstr "Titik embun"
 
-#: ../panel-plugin/weather-summary.c:558
+#: panel-plugin/weather-summary.c:558
 msgid "Apparent temperature"
 msgstr "Suhu ketara"
 
 #. wind
-#: ../panel-plugin/weather-summary.c:561
+#: panel-plugin/weather-summary.c:561
 msgid ""
 "\n"
 "Wind\n"
 msgstr "\nAngin\n"
 
-#: ../panel-plugin/weather-summary.c:566
+#: panel-plugin/weather-summary.c:566
 #, c-format
 msgid "\tSpeed: %s %s (%s on the Beaufort scale)\n"
 msgstr "\tKelajuan: %s %s (%s dalam skala Beaufort)\n"
 
-#: ../panel-plugin/weather-summary.c:578
+#: panel-plugin/weather-summary.c:578
 #, c-format
 msgid "\tDirection: %s (%s%s)\n"
 msgstr "\tArah: %s (%s%s)\n"
 
 #. precipitation
-#: ../panel-plugin/weather-summary.c:586
+#: panel-plugin/weather-summary.c:586
 msgid ""
 "\n"
 "Precipitation\n"
 msgstr "\nKerpasan\n"
 
-#: ../panel-plugin/weather-summary.c:587
+#: panel-plugin/weather-summary.c:587
 msgid "Precipitation amount"
 msgstr "Amaun kerpasan"
 
 #. atmosphere
-#: ../panel-plugin/weather-summary.c:590
+#: panel-plugin/weather-summary.c:590
 msgid ""
 "\n"
 "Atmosphere\n"
 msgstr "\nAtmosfera\n"
 
-#: ../panel-plugin/weather-summary.c:591
+#: panel-plugin/weather-summary.c:591
 msgid "Barometric pressure"
 msgstr "Tekanan Barometrik"
 
-#: ../panel-plugin/weather-summary.c:592
+#: panel-plugin/weather-summary.c:592
 msgid "Relative humidity"
 msgstr "Kelembapan relatif"
 
 #. clouds
-#: ../panel-plugin/weather-summary.c:595
+#: panel-plugin/weather-summary.c:595
 msgid ""
 "\n"
 "Clouds\n"
 msgstr "\nAwan\n"
 
-#: ../panel-plugin/weather-summary.c:596
-#: ../panel-plugin/weather-translate.c:114
+#: panel-plugin/weather-summary.c:596 panel-plugin/weather-translate.c:114
 msgid "Fog"
 msgstr "Kabus"
 
-#: ../panel-plugin/weather-summary.c:597
+#: panel-plugin/weather-summary.c:597
 msgid "Low clouds"
 msgstr "Awan rendah"
 
-#: ../panel-plugin/weather-summary.c:598
+#: panel-plugin/weather-summary.c:598
 msgid "Middle clouds"
 msgstr "Awan pertengahan"
 
-#: ../panel-plugin/weather-summary.c:599
+#: panel-plugin/weather-summary.c:599
 msgid "High clouds"
 msgstr "Awan tinggi"
 
-#: ../panel-plugin/weather-summary.c:600
+#: panel-plugin/weather-summary.c:600
 msgid "Cloudiness"
 msgstr "Kekaburan"
 
-#: ../panel-plugin/weather-summary.c:613
+#: panel-plugin/weather-summary.c:613
 msgid ""
 "\n"
 "Credits\n"
 msgstr "\nPenghargaan\n"
 
-#: ../panel-plugin/weather-summary.c:614
+#: panel-plugin/weather-summary.c:614
 msgid ""
 "\tEncyclopedic information partly taken from\n"
 "\t\t"
 msgstr "\tMaklumat sebahagiannya diambil dari\n\t\t"
 
-#: ../panel-plugin/weather-summary.c:615
+#: panel-plugin/weather-summary.c:615
 msgid "Wikipedia"
 msgstr "Wikipedia"
 
-#: ../panel-plugin/weather-summary.c:616
+#: panel-plugin/weather-summary.c:616
 msgid ""
 "\n"
 "\tElevation and timezone data provided by\n"
 "\t\t"
 msgstr "\n\tData ketinggian dan zon waktu disediakan oleh\n\t\t"
 
-#: ../panel-plugin/weather-summary.c:617
+#: panel-plugin/weather-summary.c:617
 msgid "GeoNames"
 msgstr "NamaGeo"
 
-#: ../panel-plugin/weather-summary.c:619
+#: panel-plugin/weather-summary.c:619
 msgid ""
 "\n"
 "\tWeather and astronomical data from\n"
 "\t\t"
 msgstr "\n\tData cuaca dan astronomi daripada\n\t\t"
 
-#: ../panel-plugin/weather-summary.c:620
+#: panel-plugin/weather-summary.c:620
 msgid "The Norwegian Meteorological Institute"
 msgstr "Institut Meteorologikal Norway"
 
-#: ../panel-plugin/weather-summary.c:670
-#, c-format
+#: panel-plugin/weather-summary.c:670
 msgid "Today"
 msgstr "Hari Ini"
 
-#: ../panel-plugin/weather-summary.c:672
-#, c-format
+#: panel-plugin/weather-summary.c:672
 msgid "Tomorrow"
 msgstr "Esok"
 
@@ -1065,233 +1404,229 @@ msgstr "Esok"
 #. align the values; Monospace font is enforced with <tt> tags for
 #. alignment, and the text is enclosed in <small> tags because
 #. that looks much better and saves space.
-#: ../panel-plugin/weather-summary.c:692
+#: panel-plugin/weather-summary.c:692
 msgid "<b>Times used for calculations</b>\n"
 msgstr "<b>Masa diguna untuk pengiraan</b>\n"
 
-#: ../panel-plugin/weather-summary.c:694
+#: panel-plugin/weather-summary.c:694
 #, c-format
 msgid "<tt><small>Interval start:       %s</small></tt>\n"
 msgstr "<tt><small>Mula sela:       %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:700
+#: panel-plugin/weather-summary.c:700
 #, c-format
 msgid "<tt><small>Interval end:         %s</small></tt>\n"
 msgstr "<tt><small>Akhir sela:         %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:706
+#: panel-plugin/weather-summary.c:706
 #, c-format
 msgid ""
 "<tt><small>Data calculated for:  %s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Data dikira untuk:  %s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:712
+#: panel-plugin/weather-summary.c:712
 msgid "<b>Temperatures</b>\n"
 msgstr "<b>Suhu</b>\n"
 
-#: ../panel-plugin/weather-summary.c:713
+#: panel-plugin/weather-summary.c:713
 #, c-format
 msgid "<tt><small>Dew point:            %s%s%s</small></tt>\n"
 msgstr "<tt><small>Takat embun:            %s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:717
+#: panel-plugin/weather-summary.c:717
 #, c-format
 msgid ""
 "<tt><small>Apparent temperature: %s%s%s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Suhu ketara: %s%s%s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:722
+#: panel-plugin/weather-summary.c:722
 msgid "<b>Atmosphere</b>\n"
 msgstr "<b>Atmosfera</b>\n"
 
-#: ../panel-plugin/weather-summary.c:723
+#: panel-plugin/weather-summary.c:723
 #, c-format
 msgid "<tt><small>Barometric pressure:  %s%s%s</small></tt>\n"
 msgstr "<tt><small>Tekanan Barometrik:  %s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:727
+#: panel-plugin/weather-summary.c:727
 #, c-format
 msgid ""
 "<tt><small>Relative humidity:    %s%s%s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Kelembapan relatif:    %s%s%s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:732
+#: panel-plugin/weather-summary.c:732
 msgid "<b>Precipitation</b>\n"
 msgstr "<b>Kerpasan</b>\n"
 
-#: ../panel-plugin/weather-summary.c:733
+#: panel-plugin/weather-summary.c:733
 #, c-format
 msgid ""
 "<tt><small>Amount:        %s%s%s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Amaun:        %s%s%s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:738
+#: panel-plugin/weather-summary.c:738
 msgid "<b>Clouds</b>\n"
 msgstr "<b>Awan</b>\n"
 
 #. TRANSLATORS: Clouds percentages are aligned to the right in the
 #. tooltip, the %5s are needed for that and are used both for
 #. rounded and unrounded values.
-#: ../panel-plugin/weather-summary.c:742
+#: panel-plugin/weather-summary.c:742
 #, c-format
 msgid "<tt><small>Fog:           %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Kabus:           %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:745
+#: panel-plugin/weather-summary.c:745
 #, c-format
 msgid "<tt><small>Low clouds:    %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Awan rendah:    %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:748
+#: panel-plugin/weather-summary.c:748
 #, c-format
 msgid "<tt><small>Middle clouds: %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Awan pertengahan: %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:751
+#: panel-plugin/weather-summary.c:751
 #, c-format
 msgid "<tt><small>High clouds:   %5s%s%s</small></tt>\n"
 msgstr "<tt><small>Awan tinggi:   %5s%s%s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:754
+#: panel-plugin/weather-summary.c:754
 #, c-format
 msgid "<tt><small>Cloudiness:    %5s%s%s</small></tt>"
 msgstr "<tt><small>Kekabutan:    %5s%s%s</small></tt>"
 
-#: ../panel-plugin/weather-summary.c:780
+#: panel-plugin/weather-summary.c:780
 #, c-format
 msgid "<b>%s</b>\n"
 msgstr "<b>%s</b>\n"
 
-#: ../panel-plugin/weather-summary.c:784
+#: panel-plugin/weather-summary.c:784
 msgid "<tt><small>Sunrise: The sun never rises this day.</small></tt>\n"
 msgstr "<tt><small>Matahari Terbit: Matahari tidak akan terbit hari ini.</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:788
+#: panel-plugin/weather-summary.c:788
 msgid "<tt><small>Sunset: The sun never sets this day.</small></tt>\n"
 msgstr "<tt><small>Matahari Terbenam: Matahari tidak akan terbenam hari ini.</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:793
+#: panel-plugin/weather-summary.c:793
 #, c-format
 msgid "<tt><small>Sunrise: %s</small></tt>\n"
 msgstr "<tt><small>Matahari Terbit: %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:799
+#: panel-plugin/weather-summary.c:799
 #, c-format
 msgid ""
 "<tt><small>Sunset:  %s</small></tt>\n"
 "\n"
 msgstr "<tt><small>Matahari Terbenam:  %s</small></tt>\n\n"
 
-#: ../panel-plugin/weather-summary.c:806
+#: panel-plugin/weather-summary.c:806
 #, c-format
 msgid "<tt><small>Moon phase: %s</small></tt>\n"
 msgstr "<tt><small>Fasa bulan: %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:811
+#: panel-plugin/weather-summary.c:811
 msgid "<tt><small>Moon phase: Unknown</small></tt>\n"
 msgstr "<tt><small>Fasa bulan: Tidak diketahui</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:816
+#: panel-plugin/weather-summary.c:816
 msgid "<tt><small>Moonrise: The moon never rises this day.</small></tt>\n"
 msgstr "<tt><small>Bulan Terbit: Bulan tidak akan terbit hari ini.</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:821
+#: panel-plugin/weather-summary.c:821
 msgid "<tt><small>Moonset: The moon never sets this day.</small></tt>\n"
 msgstr "<tt><small>Bulan Terbenam: Bulan tidak akan terbenam hari ini.</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:826
+#: panel-plugin/weather-summary.c:826
 #, c-format
 msgid "<tt><small>Moonrise: %s</small></tt>\n"
 msgstr "<tt><small>Bulan Terbit: %s</small></tt>\n"
 
-#: ../panel-plugin/weather-summary.c:832
+#: panel-plugin/weather-summary.c:832
 #, c-format
 msgid "<tt><small>Moonset:  %s</small></tt>"
 msgstr "<tt><small>Bulan Terbenam:  %s</small></tt>"
 
 #. daytime headers
-#: ../panel-plugin/weather-summary.c:1011
+#: panel-plugin/weather-summary.c:1011
 msgid "Morning"
 msgstr "Pagi"
 
-#: ../panel-plugin/weather-summary.c:1012
+#: panel-plugin/weather-summary.c:1012
 msgid "Afternoon"
 msgstr "Tengah Hari"
 
-#: ../panel-plugin/weather-summary.c:1013
+#: panel-plugin/weather-summary.c:1013
 msgid "Evening"
 msgstr "Petang"
 
-#: ../panel-plugin/weather-summary.c:1014
+#: panel-plugin/weather-summary.c:1014
 msgid "Night"
 msgstr "Malam"
 
-#: ../panel-plugin/weather-summary.c:1223
+#: panel-plugin/weather-summary.c:1223
 msgid "Weather Report"
 msgstr "Laporan Cuaca"
 
-#: ../panel-plugin/weather-summary.c:1226
-msgid "_Close"
-msgstr "_Tutup"
-
-#: ../panel-plugin/weather-summary.c:1276
+#: panel-plugin/weather-summary.c:1276
 msgid "No location selected."
 msgstr "Tiada lokasi dipilih."
 
-#: ../panel-plugin/weather-summary.c:1276
+#: panel-plugin/weather-summary.c:1276
 msgid "Please set a location in the plugin settings."
 msgstr "Sila masukkan lokasi di dalam tetapan pemalam."
 
-#: ../panel-plugin/weather-summary.c:1278
+#: panel-plugin/weather-summary.c:1278
 msgid "Currently no data available."
 msgstr "Buat masa ini tiada data tersedia."
 
-#: ../panel-plugin/weather-summary.c:1285
+#: panel-plugin/weather-summary.c:1285
 msgid "Plugin settings..."
 msgstr "Tetapan pemalam..."
 
-#: ../panel-plugin/weather-summary.c:1299
+#: panel-plugin/weather-summary.c:1299
 msgid "_Forecast"
 msgstr "_Ramalan"
 
-#: ../panel-plugin/weather-summary.c:1302
+#: panel-plugin/weather-summary.c:1302
 msgid "_Details"
 msgstr "_Perincian"
 
 #. TRANSLATORS: Moon phases
-#: ../panel-plugin/weather-translate.c:33
+#: panel-plugin/weather-translate.c:33
 msgid "New moon"
 msgstr "Bulan baharu"
 
-#: ../panel-plugin/weather-translate.c:34
+#: panel-plugin/weather-translate.c:34
 msgid "Waxing crescent"
 msgstr "Sabit membesar"
 
-#: ../panel-plugin/weather-translate.c:35
+#: panel-plugin/weather-translate.c:35
 msgid "First quarter"
 msgstr "Suku pertama"
 
-#: ../panel-plugin/weather-translate.c:36
+#: panel-plugin/weather-translate.c:36
 msgid "Waxing gibbous"
 msgstr "Hampir purnama membesar"
 
-#: ../panel-plugin/weather-translate.c:37
+#: panel-plugin/weather-translate.c:37
 msgid "Full moon"
 msgstr "Bulan penuh"
 
-#: ../panel-plugin/weather-translate.c:38
+#: panel-plugin/weather-translate.c:38
 msgid "Waning gibbous"
 msgstr "Hampir purnama memalap"
 
-#: ../panel-plugin/weather-translate.c:39
+#: panel-plugin/weather-translate.c:39
 msgid "Third quarter"
 msgstr "Sukur ketiga"
 
-#: ../panel-plugin/weather-translate.c:40
+#: panel-plugin/weather-translate.c:40
 msgid "Waning crescent"
 msgstr "Sabit memalap"
 
@@ -1312,26 +1647,23 @@ msgstr "Sabit memalap"
 #. Norwegian descriptions.
 #. Symbols 16-19 are used for polar days (unused beginning with API version
 #. 1.2)
-#: ../panel-plugin/weather-translate.c:64
-#: ../panel-plugin/weather-translate.c:117
+#: panel-plugin/weather-translate.c:64 panel-plugin/weather-translate.c:117
 msgid "Sunny"
 msgstr "Cerah"
 
-#: ../panel-plugin/weather-translate.c:64
-#: ../panel-plugin/weather-translate.c:117
+#: panel-plugin/weather-translate.c:64 panel-plugin/weather-translate.c:117
 msgid "Clear"
 msgstr "Tiada Awan"
 
-#: ../panel-plugin/weather-translate.c:65
-#: ../panel-plugin/weather-translate.c:118
+#: panel-plugin/weather-translate.c:65 panel-plugin/weather-translate.c:118
 msgid "Lightly cloudy"
 msgstr "Sedikit mendung"
 
-#: ../panel-plugin/weather-translate.c:66
+#: panel-plugin/weather-translate.c:66
 msgid "Partly cloudy"
 msgstr "Sebahagian mendung"
 
-#: ../panel-plugin/weather-translate.c:67
+#: panel-plugin/weather-translate.c:67
 msgid "Cloudy"
 msgstr "Mendung"
 
@@ -1342,8 +1674,7 @@ msgstr "Mendung"
 #. *    precipitation that can vary greatly in intensity over a short
 #. *    amount of time. [...] Precipitation may be locally heavy for
 #. *    short amounts of time."
-#: ../panel-plugin/weather-translate.c:77
-#: ../panel-plugin/weather-translate.c:119
+#: panel-plugin/weather-translate.c:77 panel-plugin/weather-translate.c:119
 msgid "Rain showers"
 msgstr "Hujan renyai"
 
@@ -1352,22 +1683,21 @@ msgstr "Hujan renyai"
 #. *   "Thunder Showers - Intermittent rain showers with thunder and
 #. lightning, generally
 #. *    short-lived."
-#: ../panel-plugin/weather-translate.c:84
+#: panel-plugin/weather-translate.c:84
 msgid "Thunder showers"
 msgstr "Hujan renyai kilat"
 
 #. Analogues to "Rain showers"
-#: ../panel-plugin/weather-translate.c:87
+#: panel-plugin/weather-translate.c:87
 msgid "Sleet showers"
 msgstr "Hujan beku renyai"
 
-#: ../panel-plugin/weather-translate.c:88
-#: ../panel-plugin/weather-translate.c:120
+#: panel-plugin/weather-translate.c:88 panel-plugin/weather-translate.c:120
 msgid "Snow showers"
 msgstr "Salji renyai"
 
 #. It's raining, usually incessantly, but not heavily.
-#: ../panel-plugin/weather-translate.c:91
+#: panel-plugin/weather-translate.c:91
 msgid "Light rain"
 msgstr "Hujan renyai"
 
@@ -1376,20 +1706,20 @@ msgstr "Hujan renyai"
 #. * rain and rain somewhat better. Symbol names indicate this is the way
 #. met.no did it some
 #. * time ago.
-#: ../panel-plugin/weather-translate.c:96
+#: panel-plugin/weather-translate.c:96
 msgid "Rain"
 msgstr "Hujan"
 
-#: ../panel-plugin/weather-translate.c:98
+#: panel-plugin/weather-translate.c:98
 msgid "Rain with thunder"
 msgstr "Hujan dengan kilat"
 
 #. Sleet is a mixture of rain and snow, but it's not hail.
-#: ../panel-plugin/weather-translate.c:101
+#: panel-plugin/weather-translate.c:101
 msgid "Sleet"
 msgstr "Hujan beku"
 
-#: ../panel-plugin/weather-translate.c:103
+#: panel-plugin/weather-translate.c:103
 msgid "Snow"
 msgstr "Salji"
 
@@ -1401,23 +1731,23 @@ msgstr "Salji"
 #. *    rain. It typically falls in regions of strong upward motion within the
 #. cold sector of an
 #. *    extratropical cyclone."
-#: ../panel-plugin/weather-translate.c:112
+#: panel-plugin/weather-translate.c:112
 msgid "Thundersnow"
 msgstr "Salji Kilat"
 
 #. Same as symbols 1-15, but with thunder
-#: ../panel-plugin/weather-translate.c:123
+#: panel-plugin/weather-translate.c:123
 msgid "Sleet showers with thunder"
 msgstr "Hujan beku renyai dengan kilat"
 
-#: ../panel-plugin/weather-translate.c:124
+#: panel-plugin/weather-translate.c:124
 msgid "Snow showers with thunder"
 msgstr "Salji renyai dengan kilat"
 
-#: ../panel-plugin/weather-translate.c:125
+#: panel-plugin/weather-translate.c:125
 msgid "Light rain with thunder"
 msgstr "Hujan renyai dengan kilat"
 
-#: ../panel-plugin/weather-translate.c:126
+#: panel-plugin/weather-translate.c:126
 msgid "Sleet with thunder"
 msgstr "Hujan beku dengan kilat"
