@@ -656,15 +656,22 @@ create_summary_tab(plugin_data *data)
 
 
 static gchar *
-get_dayname(gint day)
+get_dayname(gint day, gchar * dayformat)
 {
     struct tm fcday_tm;
     time_t now_t = time(NULL), fcday_t;
     gint weekday;
+    gchar *value;
 
     fcday_tm = *localtime(&now_t);
     fcday_t = time_calc_day(fcday_tm, day);
     weekday = localtime(&fcday_t)->tm_wday;
+    //value = format_date(fcday_t, "%d %b, %a", TRUE);
+    if (dayformat==NULL) {dayformat = "%d %b, %a";}
+    value = format_date(fcday_t, dayformat, TRUE);
+    
+    return value;
+    
     switch (day) {
     case 0:
         return g_strdup_printf(_("Today"));
@@ -1015,7 +1022,7 @@ make_forecast(plugin_data *data)
 
     for (i = 0; i < data->forecast_days; i++) {
         /* forecast day headers */
-        dayname = get_dayname(i);
+        dayname = get_dayname(i,data->dayformat);
         if (data->forecast_layout == FC_LAYOUT_CALENDAR)
             ebox = add_forecast_header(dayname, 0.0, "darkbg");
         else

@@ -545,6 +545,19 @@ text_timezone_changed(const GtkWidget *entry,
     schedule_delayed_data_update(dialog);
 }
 
+static void
+text_dayformat_changed(const GtkWidget *entry,
+                      gpointer user_data)
+{
+    xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
+
+    if (dialog->pd->dayformat)
+        g_free(dialog->pd->dayformat);
+    dialog->pd->dayformat = g_strdup(gtk_entry_get_text(GTK_ENTRY(entry)));
+    schedule_delayed_data_update(dialog);
+}
+
+
 
 static void
 create_location_page(xfceweather_dialog *dialog)
@@ -591,6 +604,19 @@ create_location_page(xfceweather_dialog *dialog)
                            dialog->pd->timezone);
     else
         gtk_entry_set_text(GTK_ENTRY(dialog->text_timezone), "");
+        
+        
+        /* dayformat */
+    dialog->text_dayformat = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "text_dayformat"));
+    gtk_entry_set_max_length(GTK_ENTRY(dialog->text_dayformat),
+                             LOC_NAME_MAX_LEN);
+    if (dialog->pd->dayformat)
+        gtk_entry_set_text(GTK_ENTRY(dialog->text_dayformat),
+                           dialog->pd->dayformat);
+    else
+        gtk_entry_set_text(GTK_ENTRY(dialog->text_dayformat), "");
+        
+        
 
     /* set up the altitude spin box and unit label (meters/feet) */
     setup_altitude(dialog);
@@ -1149,6 +1175,11 @@ create_appearance_page(xfceweather_dialog *dialog)
     dialog->check_round_values = GTK_WIDGET (gtk_builder_get_object (GTK_BUILDER (dialog->builder), "check_round_values"));
     gtk_toggle_button_set_active(GTK_TOGGLE_BUTTON(dialog->check_round_values),
                                  dialog->pd->round);
+                                 
+
+
+
+
 }
 
 
@@ -1717,6 +1748,10 @@ setup_notebook_signals(xfceweather_dialog *dialog)
                      G_CALLBACK(spin_alt_value_changed), dialog);
     g_signal_connect(GTK_EDITABLE(dialog->text_timezone), "changed",
                      G_CALLBACK(text_timezone_changed), dialog);
+	
+	g_signal_connect(GTK_EDITABLE(dialog->text_dayformat), "changed",
+                     G_CALLBACK(text_dayformat_changed), dialog);
+
 
     /* units page */
     g_signal_connect(dialog->combo_unit_temperature, "changed",
@@ -1748,7 +1783,11 @@ setup_notebook_signals(xfceweather_dialog *dialog)
                      G_CALLBACK(spin_forecast_days_value_changed), dialog);
     g_signal_connect(dialog->check_round_values, "toggled",
                      G_CALLBACK(check_round_values_toggled), dialog);
-
+                     
+    g_signal_connect(GTK_EDITABLE(dialog->text_dayformat), "changed",
+                     G_CALLBACK(text_dayformat_changed), dialog);
+                     
+    
     /* scrollbox page */
     g_signal_connect(dialog->check_scrollbox_show, "state-set",
                      G_CALLBACK(check_scrollbox_show_toggled), dialog);
