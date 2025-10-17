@@ -916,10 +916,11 @@ add_forecast_cell(plugin_data *data,
     /* temperature */
     rawvalue = get_data(fcdata, data->units, TEMPERATURE,
                         data->round, data->night_time);
-    value = g_strdup_printf("%s %s", rawvalue,
+    value = g_strdup_printf("<span weight=\"bold\" foreground=\"black\" size=\"x-large\">%s</span><span foreground=\"black\" size=\"x-large\"> %s</span>", rawvalue,
                             get_unit(data->units, TEMPERATURE));
     g_free(rawvalue);
     label = gtk_label_new(value);
+    gtk_label_set_markup (GTK_LABEL (label), value);
     gtk_box_pack_start(GTK_BOX(box), GTK_WIDGET(label), TRUE, TRUE, 0);
     g_free(value);
 
@@ -1069,8 +1070,8 @@ create_forecast_tab(plugin_data *data)
 
     /* calculate needed space using a good arbitrary value */
     if (data->forecast_layout == FC_LAYOUT_CALENDAR) {
-        w_need = ((data->forecast_days < 8) ? data->forecast_days : 7) * 142;
-        h_need = 500;
+        w_need = ((data->forecast_days < 10) ? data->forecast_days : 11) * 150;
+        h_need = 550;
     } else {
         w_need = (rect.width <= 720) ? 650 : 700;
         h_need = data->forecast_days * 110;
