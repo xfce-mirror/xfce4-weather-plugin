@@ -41,6 +41,7 @@ typedef struct {
     GtkWidget *label_alt_unit;
     GtkWidget *text_timezone;
     GtkWidget *update_spinner;
+    GtkWidget *text_dayformat;
 
     /* units page */
     GtkWidget *combo_unit_temperature;
@@ -59,6 +60,7 @@ typedef struct {
     GtkWidget *spin_forecast_days;
     GtkWidget *check_round_values;
     GtkWidget *check_single_row;
+
 
     /* scrollbox page */
     GtkWidget *check_scrollbox_show;

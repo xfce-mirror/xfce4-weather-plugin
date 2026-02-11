@@ -656,15 +656,22 @@ create_summary_tab(plugin_data *data)
 
 
 static gchar *
-get_dayname(gint day)
+get_dayname(gint day, gchar * dayformat)
 {
     struct tm fcday_tm;
     time_t now_t = time(NULL), fcday_t;
     gint weekday;
+    gchar *value;
 
     fcday_tm = *localtime(&now_t);
     fcday_t = time_calc_day(fcday_tm, day);
     weekday = localtime(&fcday_t)->tm_wday;
+    //value = format_date(fcday_t, "%d %b, %a", TRUE);
+    if (dayformat==NULL) {dayformat = "%d %b, %a";}
+    value = format_date(fcday_t, dayformat, TRUE);
+    
+    return value;
+    
     switch (day) {
     case 0:
         return g_strdup_printf(_("Today"));
@@ -939,10 +946,11 @@ add_forecast_cell(plugin_data *data,
     /* temperature */
     rawvalue = get_data(fcdata, data->units, TEMPERATURE,
                         data->round, data->night_time);
-    value = g_strdup_printf("%s %s", rawvalue,
+    value = g_strdup_printf("<span weight=\"bold\" foreground=\"black\" size=\"x-large\">%s</span><span foreground=\"black\" size=\"x-large\"> %s</span>", rawvalue,
                             get_unit(data->units, TEMPERATURE));
     g_free(rawvalue);
     label = gtk_label_new(value);
+    gtk_label_set_markup (GTK_LABEL (label), value);
     gtk_box_pack_start(GTK_BOX(box), GTK_WIDGET(label), TRUE, TRUE, 0);
     g_free(value);
 
@@ -1015,7 +1023,7 @@ make_forecast(plugin_data *data)
 
     for (i = 0; i < data->forecast_days; i++) {
         /* forecast day headers */
-        dayname = get_dayname(i);
+        dayname = get_dayname(i,data->dayformat);
         if (data->forecast_layout == FC_LAYOUT_CALENDAR)
             ebox = add_forecast_header(dayname, 0.0, "darkbg");
         else
@@ -1092,8 +1100,8 @@ create_forecast_tab(plugin_data *data)
 
     /* calculate needed space using a good arbitrary value */
     if (data->forecast_layout == FC_LAYOUT_CALENDAR) {
-        w_need = ((data->forecast_days < 8) ? data->forecast_days : 7) * 142;
-        h_need = 500;
+        w_need = ((data->forecast_days < 10) ? data->forecast_days : 11) * 150;
+        h_need = 550;
     } else {
         w_need = (rect.width <= 720) ? 650 : 700;
         h_need = data->forecast_days * 110;
