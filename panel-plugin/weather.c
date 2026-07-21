@@ -1253,7 +1253,7 @@ xfceweather_write_config (XfcePanelPlugin *plugin,
     g_free (property);
 
     for (i = 0; i < data->labels->len; i++) {
-        g_snprintf(label, 10, "/label%d", i);
+        g_snprintf(label, 10, "/label%u", i);
         property = g_strconcat (data->property_base, SETTING_LABELS, label, NULL);
         xfconf_channel_set_int (data->channel, property,
                                 (gint) g_array_index(data->labels, data_types, i));
@@ -1331,7 +1331,7 @@ write_cache_file(plugin_data *data)
             value = format_date(astro->day, "%Y-%m-%d", TRUE);
             start = format_date(astro->sunrise, date_format, TRUE);
             end = format_date(astro->sunset, date_format, TRUE);
-            g_string_append_printf(out, "[astrodata%d]\n", i);
+            g_string_append_printf(out, "[astrodata%u]\n", i);
             CACHE_APPEND("day=%s\n", value);
             CACHE_APPEND("sunrise=%s\n", start);
             CACHE_APPEND("sunset=%s\n", end);
@@ -1370,7 +1370,7 @@ write_cache_file(plugin_data *data)
         start = format_date(timeslice->start, date_format, FALSE);
         end = format_date(timeslice->end, date_format, FALSE);
         point = format_date(timeslice->point, date_format, FALSE);
-        g_string_append_printf(out, "[timeslice%d]\n", i);
+        g_string_append_printf(out, "[timeslice%u]\n", i);
         CACHE_APPEND("start=%s\n", start);
         CACHE_APPEND("end=%s\n", end);
         CACHE_APPEND("point=%s\n", point);
@@ -1392,7 +1392,7 @@ write_cache_file(plugin_data *data)
         g_free(point);
         for (j = 0; j < CLOUDS_PERC_NUM; j++)
             if (loc->clouds_percent[j])
-                g_string_append_printf(out, "clouds_percent_%d=%s\n", j,
+                g_string_append_printf(out, "clouds_percent_%u=%s\n", j,
                                        loc->clouds_percent[j]);
         CACHE_APPEND("fog_percent=%s\n", loc->fog_percent);
         CACHE_APPEND("precipitation_value=%s\n", loc->precipitation_value);

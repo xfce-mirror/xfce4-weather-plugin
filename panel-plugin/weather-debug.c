@@ -356,7 +356,7 @@ weather_dump_weatherdata(const xml_weather *wd)
     for (i = 0; i < wd->timeslices->len; i++) {
         timeslice = g_array_index(wd->timeslices, xml_time *, i);
         tmp = weather_dump_timeslice(timeslice);
-        g_string_append_printf(out, "  #%3d: %s", i + 1, tmp);
+        g_string_append_printf(out, "  #%3u: %s", i + 1, tmp);
         g_free(tmp);
     }
 
@@ -394,7 +394,7 @@ weather_dump_plugindata(const plugin_data *data)
     g_string_append_printf(out,
                            "  --------------------------------------------\n"
                            "  panel size: %d px\n"
-                           "  panel rows: %d px\n"
+                           "  panel rows: %u px\n"
                            "  single row: %s\n"
                            "  panel orientation: %d\n"
                            "  --------------------------------------------\n"
@@ -405,10 +405,10 @@ weather_dump_plugindata(const plugin_data *data)
                            "  --------------------------------------------\n"
                            "  last astro update: %s\n"
                            "  next astro update: %s\n"
-                           "  astro download attempts: %d\n"
+                           "  astro download attempts: %u\n"
                            "  last weather update: %s\n"
                            "  next weather update: %s\n"
-                           "  weather download attempts: %d\n"
+                           "  weather download attempts: %u\n"
                            "  last conditions update: %s\n"
                            "  next conditions update: %s\n"
                            "  next scheduled wakeup: %s\n"
@@ -427,11 +427,11 @@ weather_dump_plugindata(const plugin_data *data)
                            "  icon theme dir: %s\n"
                            "  tooltip style: %d\n"
                            "  forecast layout: %d\n"
-                           "  forecast days: %d\n"
+                           "  forecast days: %u\n"
                            "  round values: %s\n"
                            "  --------------------------------------------\n"
                            "  show scrollbox: %s\n"
-                           "  scrollbox lines: %d\n"
+                           "  scrollbox lines: %u\n"
                            "  scrollbox font: %s\n"
                            "  scrollbox color: %s\n"
                            "  scrollbox use color: %s\n"
