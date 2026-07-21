@@ -102,7 +102,7 @@ gchar *
 double_to_string(const gdouble val,
                  const gchar *format)
 {
-    gchar buf[20];
+    gchar buf[20] = { 0 };
     return g_strdup(g_ascii_formatd(buf, 20,
                                     format ? format : "%.1f",
                                     val));
