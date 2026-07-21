@@ -972,7 +972,7 @@ schedule_next_wakeup(plugin_data *data)
     date = format_date(now_t, "%Y-%m-%d %H:%M:%S", TRUE);
     data->update_timer =
         g_timeout_add_seconds((guint) diff, update_handler, data);
-    if (!strcmp(data->next_wakeup_reason, "regular check"))
+    if (strcmp(data->next_wakeup_reason, "regular check") == 0)
         weather_debug("[%s]: Running regular check for updates, "
                       "interval %d secs.", date, UPDATE_INTERVAL);
     else {
@@ -1470,8 +1470,8 @@ read_cache_file(plugin_data *data)
     if (!err)
         num_timeslices = g_key_file_get_integer(keyfile, group,
                                                 "timeslices", &err);
-    if (err || strcmp(lat, data->lat) || strcmp(lon, data->lon) ||
-        strcmp(offset, data->offset) || msl != data->msl ||
+    if (err || strcmp(lat, data->lat) != 0 || strcmp(lon, data->lon) != 0 ||
+        strcmp(offset, data->offset) != 0 || msl != data->msl ||
         num_timeslices < 1) {
         CACHE_FREE_VARS();
         weather_debug("The required values are not present in the cache file "

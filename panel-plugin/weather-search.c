@@ -364,11 +364,11 @@ get_preferred_units(const gchar *country_code)
         return NULL;
 
     /* List gathered from http://www.maxmind.com/app/iso3166 */
-    if (!strcmp(country_code, "US") ||        /* United States */
-        !strcmp(country_code, "GB") ||        /* United Kingdom */
-        !strcmp(country_code, "JM") ||        /* Jamaica */
-        !strcmp(country_code, "LR") ||        /* Liberia */
-        !strcmp(country_code, "MM")) {        /* Myanmar(Burma) */
+    if (strcmp(country_code, "US") == 0 ||        /* United States */
+        strcmp(country_code, "GB") == 0 ||        /* United Kingdom */
+        strcmp(country_code, "JM") == 0 ||        /* Jamaica */
+        strcmp(country_code, "LR") == 0 ||        /* Liberia */
+        strcmp(country_code, "MM") == 0) {        /* Myanmar(Burma) */
         units->pressure = PSI;
         units->windspeed = MPH;
         units->precipitation = INCHES;
@@ -380,21 +380,21 @@ get_preferred_units(const gchar *country_code)
         units->altitude = METERS;
     }
 
-    if (!strcmp(country_code, "US") ||        /* United States */
-        !strcmp(country_code, "JM")) {        /* Jamaica */
+    if (strcmp(country_code, "US") == 0 ||        /* United States */
+        strcmp(country_code, "JM") == 0) {        /* Jamaica */
         units->temperature = FAHRENHEIT;
     } else {
         units->temperature = CELSIUS;
     }
 
-    if (!strcmp(country_code, "RU"))          /* Russian Federation */
+    if (strcmp(country_code, "RU") == 0)          /* Russian Federation */
         units->pressure = TORR;
 
-    if (!strcmp(country_code, "US"))          /* United States */
+    if (strcmp(country_code, "US") == 0)          /* United States */
         units->apparent_temperature = WINDCHILL_HEATINDEX;
-    else if (!strcmp(country_code, "CA"))     /* Canada */
+    else if (strcmp(country_code, "CA") == 0)     /* Canada */
         units->apparent_temperature = WINDCHILL_HUMIDEX;
-    else if (!strcmp(country_code, "AU"))     /* Australia */
+    else if (strcmp(country_code, "AU") == 0)     /* Australia */
         units->apparent_temperature = STEADMAN;
 
     return units;

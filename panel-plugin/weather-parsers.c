@@ -283,7 +283,7 @@ parse_location(xmlNode *cur_node,
     /* Convert Fahrenheit to Celsius if necessary, so that we don't
        have to do it later. met.no usually provides values in Celsius. */
     if (loc->temperature_value && loc->temperature_unit &&
-        !strcmp(loc->temperature_unit, "fahrenheit")) {
+        strcmp(loc->temperature_unit, "fahrenheit") == 0) {
         gdouble val = string_to_double(loc->temperature_value, 0);
         val = (val - 32.0) * 5.0 / 9.0;
         g_free(loc->temperature_value);

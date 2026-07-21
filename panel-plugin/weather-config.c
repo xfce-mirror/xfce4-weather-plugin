@@ -1108,7 +1108,7 @@ create_appearance_page(xfceweather_dialog *dialog)
         ADD_COMBO_VALUE(dialog->combo_icon_theme, theme->name);
         /* set selection to current theme */
         if (G_LIKELY(dialog->pd->icon_theme) &&
-            !strcmp(theme->dir, dialog->pd->icon_theme->dir)) {
+            strcmp(theme->dir, dialog->pd->icon_theme->dir) == 0) {
             SET_COMBO_VALUE(dialog->combo_icon_theme, i);
             combo_icon_theme_set_tooltip(dialog->combo_icon_theme, dialog);
         }
