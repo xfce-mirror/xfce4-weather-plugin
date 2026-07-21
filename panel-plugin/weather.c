@@ -765,12 +765,11 @@ update_handler(gpointer user_data)
     time_t now_t, day_t;
     struct tm now_tm;
     guint day;
-    dwnld_state astro_dwnld_state = data->msg_parse->astro_dwnld_state;
     guint astro_forecast_days;
 
-    g_assert(data != NULL);
-    if (G_UNLIKELY(data == NULL))
-        return FALSE;
+    g_return_val_if_fail (data != NULL, FALSE);
+
+    dwnld_state astro_dwnld_state = data->msg_parse->astro_dwnld_state;
 
     /* plugin has not been configured yet, so simply update icon and
        scrollbox and return */

@@ -131,11 +131,13 @@ get_astro(const GArray *astrodata,
     weather_debug("day_t=%s", format_date(day_t, NULL,TRUE));
     for (i = 0; i < astrodata->len; i++) {
         astro = g_array_index(astrodata, xml_astro *, i);
-        weather_debug("astro->day=%s", format_date(astro->day, NULL,TRUE));
-        if (astro && astro->day == day_t) {
-            if (index != NULL)
-                *index = i;
-            return astro;
+        if (astro) {
+            weather_debug("astro->day=%s", format_date(astro->day, NULL,TRUE));
+            if (astro->day == day_t) {
+                if (index != NULL)
+                    *index = i;
+                return astro;
+            }
         }
     }
     return NULL;

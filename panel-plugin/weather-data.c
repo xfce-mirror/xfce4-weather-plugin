@@ -1225,13 +1225,15 @@ get_astro_data_for_day(const GArray *astrodata,
         weather_debug("checking astro %d", i);
         weather_debug("astro data for day:");
         weather_debug("%s",weather_dump_astro(astro));
-        weather_debug("Checking difftime: astro_day  day_t %d %d.",
-                      astro->day, day_t);
 
-        if (astro && (difftime(astro->day, day_t) == 0)) {
-            weather_debug("Equal difftime: astro_day  day_t %d %d.",
+        if (astro) {
+            weather_debug("Checking difftime: astro_day  day_t %d %d.",
                           astro->day, day_t);
-            return astro;
+            if (difftime(astro->day, day_t) == 0) {
+                weather_debug("Equal difftime: astro_day  day_t %d %d.",
+                              astro->day, day_t);
+                return astro;
+            }
         }
     }
 
