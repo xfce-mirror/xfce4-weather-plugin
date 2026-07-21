@@ -59,7 +59,7 @@ static gchar *
 sanitize_str(const gchar *str)
 {
     GString *retstr = g_string_sized_new(strlen(str));
-    gchar *realstr, c = '\0';
+    gchar *realstr, c;
 
     while ((c = *str++)) {
         if(g_ascii_isspace(c))
