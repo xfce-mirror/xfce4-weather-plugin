@@ -21,21 +21,8 @@
 
 G_BEGIN_DECLS
 
-GType gtk_scrollbox_get_type(void);
-
-#define GTK_TYPE_SCROLLBOX \
-    (gtk_scrollbox_get_type())
-#define GTK_SCROLLBOX(obj) \
-    (G_TYPE_CHECK_INSTANCE_CAST((obj), GTK_TYPE_SCROLLBOX, GtkScrollbox))
-#define GTK_SCROLLBOX_CLASS(klass) \
-    (G_TYPE_CHECK_CLASS_CAST((klass), GTK_TYPE_SCROLLBOX, GtkScrollboxClass))
-#define GTK_IS_SCROLLBOX(obj) \
-    (G_TYPE_CHECK_INSTANCE_TYPE((obj), GTK_TYPE_SCROLLBOX))
-#define GTK_IS_SCROLLBOX_CLASS(klass) \
-    (G_TYPE_CHECK_CLASS_TYPE((klass), GTK_TYPE_SCROLLBOX))
-#define GTK_SCROLLBOX_GET_CLASS(obj) \
-    (G_TYPE_INSTANCE_GET_CLASS((obj), GTK_TYPE_SCROLLBOX, GtkScrollboxClass))
-
+#define GTK_TYPE_SCROLLBOX (gtk_scrollbox_get_type())
+G_DECLARE_FINAL_TYPE (GtkScrollbox, gtk_scrollbox, GTK, SCROLLBOX, GtkDrawingArea)
 
 typedef enum {
     FADE_IN,
@@ -43,30 +30,6 @@ typedef enum {
     FADE_NONE,
     FADE_SLEEP
 } fade_states;
-
-typedef struct _GtkScrollbox GtkScrollbox;
-typedef struct _GtkScrollboxClass GtkScrollboxClass;
-
-struct _GtkScrollbox {
-    GtkDrawingArea __parent__;
-
-    GList *labels;
-    GList *labels_new;
-    GList *active;
-    guint labels_len;
-    guint timeout_id;
-    gint offset;
-    gboolean animate;
-    gboolean visible;
-    fade_states fade;
-    GtkOrientation orientation;
-    gchar *fontname;
-    PangoAttrList *pattr_list;
-};
-
-struct _GtkScrollboxClass {
-    GtkDrawingAreaClass __parent__;
-};
 
 
 void gtk_scrollbox_add_label(GtkScrollbox *self,

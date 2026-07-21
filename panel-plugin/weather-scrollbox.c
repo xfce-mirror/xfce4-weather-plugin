@@ -45,6 +45,23 @@ static gboolean gtk_scrollbox_draw_event(GtkWidget *widget,
 
 static gboolean gtk_scrollbox_control_loop(gpointer user_data);
 
+struct _GtkScrollbox {
+    GtkDrawingArea __parent__;
+
+    GList *labels;
+    GList *labels_new;
+    GList *active;
+    guint labels_len;
+    guint timeout_id;
+    gint offset;
+    gboolean animate;
+    gboolean visible;
+    fade_states fade;
+    GtkOrientation orientation;
+    gchar *fontname;
+    PangoAttrList *pattr_list;
+};
+
 G_DEFINE_TYPE(GtkScrollbox, gtk_scrollbox, GTK_TYPE_DRAWING_AREA)
 
 
