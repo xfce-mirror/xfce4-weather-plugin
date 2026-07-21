@@ -335,12 +335,12 @@ update_scrollbox(plugin_data *data,
     GString *out;
     gchar *label = NULL;
     data_types type;
-    guint i = 0, j = 0;
 
     gtk_scrollbox_clear_new(GTK_SCROLLBOX(data->scrollbox));
     if (data->weatherdata && data->weatherdata->current_conditions) {
+        guint i = 0;
         while (i < data->labels->len) {
-            j = 0;
+            guint j = 0;
             out = g_string_sized_new(128);
             while ((i + j) < data->labels->len && j < data->scrollbox_lines) {
                 type = g_array_index(data->labels, data_types, i + j);

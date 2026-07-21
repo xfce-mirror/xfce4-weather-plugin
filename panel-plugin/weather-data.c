@@ -1150,7 +1150,7 @@ make_current_conditions(xml_weather *wd,
     point_data_results *found = NULL;
     xml_time *interval = NULL, *incomplete;
     struct tm point_tm = *localtime(&now_t);
-    time_t point_t = now_t;
+    time_t point_t;
     gint i = 0;
 
     g_assert(wd != NULL);
