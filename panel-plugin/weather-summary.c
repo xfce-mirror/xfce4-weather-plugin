@@ -267,8 +267,7 @@ logo_fetched(SoupSession *session,
                                   msg->response_body->length, &error)) {
 #endif
             g_warning("Error downloading met.no logo image to %s, "
-                      "reason: %s\n", path,
-                      error ? error->message : "unknown");
+                      "reason: %s\n", path, error->message);
             g_error_free(error);
             g_free(path);
 #if SOUP_CHECK_VERSION(3, 0, 0)

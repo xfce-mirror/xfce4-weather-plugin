@@ -320,8 +320,7 @@ weather_dump_timeslice(const xml_time *timeslice)
     start = format_date(timeslice->start, "%c", TRUE);
     end = format_date(timeslice->end, "%c", TRUE);
     is_interval = (gboolean) strcmp(start, end);
-    loc = weather_dump_location((timeslice) ? timeslice->location : NULL,
-                                is_interval);
+    loc = weather_dump_location(timeslice->location, is_interval);
     g_string_append_printf(out, "[%s %s %s] %s\n", start,
                            is_interval ? "-" : "=", end, loc);
     g_free(start);

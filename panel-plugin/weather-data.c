@@ -297,7 +297,7 @@ wind_dir_name_by_deg(gchar *degrees, gboolean long_name)
     if (deg >= 360 - 22.5 || deg < 45 - 22.5)
         return (long_name) ? _("North") : _("N");
 
-    if (deg >= 45 - 22.5 && deg < 45 + 22.5)
+    if (deg < 45 + 22.5)
         return (long_name) ? _("North-East") : _("NE");
 
     if (deg >= 90 - 22.5 && deg < 90 + 22.5)
@@ -315,7 +315,7 @@ wind_dir_name_by_deg(gchar *degrees, gboolean long_name)
     if (deg >= 270 - 22.5 && deg < 270 + 22.5)
         return (long_name) ? _("West") : _("W");
 
-    if (deg >= 315 - 22.5 && deg < 315 + 22.5)
+    if (deg >= 315 - 22.5)
         return (long_name) ? _("North-West") : _("NW");
 
     return "";
