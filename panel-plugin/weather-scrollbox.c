@@ -301,8 +301,7 @@ gtk_scrollbox_swap_labels(GtkScrollbox *self)
 
     /* clear the existing labels */
     gtk_scrollbox_labels_free(self);
-    self->labels = self->labels_new;
-    self->labels_new = NULL;
+    self->labels = g_steal_pointer(&self->labels_new);
 
     gtk_widget_queue_resize(GTK_WIDGET(self));
 }
