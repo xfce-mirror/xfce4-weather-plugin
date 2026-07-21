@@ -1441,6 +1441,7 @@ read_cache_file(plugin_data *data)
     keyfile = g_key_file_new();
     if (!g_key_file_load_from_file(keyfile, file, G_KEY_FILE_NONE, NULL)) {
         weather_debug("Could not read cache file %s.", file);
+        g_key_file_free(keyfile);
         g_free(file);
         return;
     }
