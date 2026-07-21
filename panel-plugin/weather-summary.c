@@ -270,9 +270,6 @@ logo_fetched(SoupSession *session,
                       "reason: %s\n", path, error->message);
             g_error_free(error);
             g_free(path);
-#if SOUP_CHECK_VERSION(3, 0, 0)
-            g_bytes_unref(response);
-#endif
             return;
         }
         scale_factor = gtk_widget_get_scale_factor(user_data);
@@ -285,7 +282,6 @@ logo_fetched(SoupSession *session,
             g_object_unref(pixbuf);
         }
 #if SOUP_CHECK_VERSION(3, 0, 0)
-        g_bytes_unref(response);
     } else
         g_error_free(error);
 #else
