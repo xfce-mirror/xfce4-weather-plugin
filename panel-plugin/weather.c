@@ -1930,6 +1930,7 @@ xfceweather_create_options(XfcePanelPlugin *plugin,
         }
     } else {
         g_warning ("Failed to load dialog: %s", error->message);
+        g_error_free(error);
     }
 }
 
