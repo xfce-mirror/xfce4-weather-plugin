@@ -87,7 +87,7 @@ icon_missing(const icon_theme *theme,
         missing = g_array_index(theme->missing_icons, gchar *, i);
         if (G_UNLIKELY(missing == NULL))
             continue;
-        if (!strcmp(missing, icon)) {
+        if (strcmp(missing, icon) == 0) {
             g_free(icon);
             return TRUE;
         }
@@ -216,11 +216,10 @@ get_icon(const icon_theme *theme,
         if (filename) {
             weather_debug("Unable to open image: %s", filename);
             remember_missing_icon(theme, sizedir, symbol_name, suffix);
-            g_free(filename);
-            filename = NULL;
+            g_clear_pointer(&filename, g_free);
         }
 
-        if (strcmp(symbol_name, symbol_names[SYMBOL_NODATA]))
+        if (strcmp(symbol_name, symbol_names[SYMBOL_NODATA]) != 0)
             if (night)
                 /* maybe there is no night icon, so fallback to using day icon... */
                 return get_icon(theme, symbol_name, _size, scale, FALSE);
@@ -283,8 +282,7 @@ icon_theme_load_info(const gchar *dir)
 
     if (g_file_test(filename, G_FILE_TEST_EXISTS)) {
         rc = xfce_rc_simple_open(filename, TRUE);
-        g_free(filename);
-        filename = NULL;
+        g_clear_pointer(&filename, g_free);
 
         if (!rc)
             return NULL;
@@ -302,13 +300,12 @@ icon_theme_load_info(const gchar *dir)
         else {
             /* Use directory name as fallback */
             filename = g_path_get_dirname(dir);
-            if (G_LIKELY(strcmp(filename, "."))) {
+            if (G_LIKELY(strcmp(filename, ".") != 0)) {
                 theme->dir = g_strdup(dir);
                 theme->name = g_strdup(filename);
                 weather_debug("No Name found in theme info file, "
                               "using directory name %s as fallback.", dir);
-                g_free(filename);
-                filename = NULL;
+                g_clear_pointer(&filename, g_free);
             } else { /* some weird error, not safe to proceed */
                 weather_debug("Some weird error, not safe to proceed. "
                               "Abort loading icon theme from %s.", dir);

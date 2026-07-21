@@ -203,7 +203,7 @@ translate_desc(const gchar *desc,
     guint i;
 
     for (i = 0; i < NUM_SYMBOLS; i++) {
-        if (!strcmp(desc, symbol_to_desc[i].symbol)) {
+        if (strcmp(desc, symbol_to_desc[i].symbol) == 0) {
             if (nighttime)
                 return _(symbol_to_desc[i].night_desc);
             else
@@ -220,7 +220,7 @@ translate_moon_phase(const gchar *moon_phase)
     guint i;
 
     for (i = 0; i < NUM_MOON_PHASES; i++) {
-        if (!strcmp(moon_phase, moon_phases[i])) {
+        if (strcmp(moon_phase, moon_phases[i]) == 0) {
             return _(moon_phases[i]);
         }
     }

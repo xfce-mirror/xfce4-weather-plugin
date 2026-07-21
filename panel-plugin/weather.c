@@ -279,8 +279,7 @@ update_offset(plugin_data *data)
     GDateTime *dt;
 
     dt = g_date_time_new_now_local();
-    if (G_LIKELY(data->offset))
-        g_free(data->offset);
+    g_free(data->offset);
 
     data->offset = g_date_time_format(dt, "%:z");
     g_date_time_unref(dt);
@@ -336,12 +335,12 @@ update_scrollbox(plugin_data *data,
     GString *out;
     gchar *label = NULL;
     data_types type;
-    guint i = 0, j = 0;
 
     gtk_scrollbox_clear_new(GTK_SCROLLBOX(data->scrollbox));
     if (data->weatherdata && data->weatherdata->current_conditions) {
+        guint i = 0;
         while (i < data->labels->len) {
-            j = 0;
+            guint j = 0;
             out = g_string_sized_new(128);
             while ((i + j) < data->labels->len && j < data->scrollbox_lines) {
                 type = g_array_index(data->labels, data_types, i + j);
@@ -423,10 +422,8 @@ update_current_conditions(plugin_data *data,
         return;
     }
 
-    if (data->weatherdata->current_conditions) {
-        xml_time_free(data->weatherdata->current_conditions);
-        data->weatherdata->current_conditions = NULL;
-    }
+    g_clear_pointer(&data->weatherdata->current_conditions, xml_time_free);
+
     /* use exact 5 minute intervals for calculation */
     time(&data->conditions_update->last);
     now_tm = *localtime(&data->conditions_update->last);
@@ -768,12 +765,11 @@ update_handler(gpointer user_data)
     time_t now_t, day_t;
     struct tm now_tm;
     guint day;
-    dwnld_state astro_dwnld_state = data->msg_parse->astro_dwnld_state;
     guint astro_forecast_days;
 
-    g_assert(data != NULL);
-    if (G_UNLIKELY(data == NULL))
-        return FALSE;
+    g_return_val_if_fail (data != NULL, FALSE);
+
+    dwnld_state astro_dwnld_state = data->msg_parse->astro_dwnld_state;
 
     /* plugin has not been configured yet, so simply update icon and
        scrollbox and return */
@@ -974,7 +970,7 @@ schedule_next_wakeup(plugin_data *data)
     date = format_date(now_t, "%Y-%m-%d %H:%M:%S", TRUE);
     data->update_timer =
         g_timeout_add_seconds((guint) diff, update_handler, data);
-    if (!strcmp(data->next_wakeup_reason, "regular check"))
+    if (strcmp(data->next_wakeup_reason, "regular check") == 0)
         weather_debug("[%s]: Running regular check for updates, "
                       "interval %d secs.", date, UPDATE_INTERVAL);
     else {
@@ -1256,7 +1252,7 @@ xfceweather_write_config (XfcePanelPlugin *plugin,
     g_free (property);
 
     for (i = 0; i < data->labels->len; i++) {
-        g_snprintf(label, 10, "/label%d", i);
+        g_snprintf(label, 10, "/label%u", i);
         property = g_strconcat (data->property_base, SETTING_LABELS, label, NULL);
         xfconf_channel_set_int (data->channel, property,
                                 (gint) g_array_index(data->labels, data_types, i));
@@ -1334,7 +1330,7 @@ write_cache_file(plugin_data *data)
             value = format_date(astro->day, "%Y-%m-%d", TRUE);
             start = format_date(astro->sunrise, date_format, TRUE);
             end = format_date(astro->sunset, date_format, TRUE);
-            g_string_append_printf(out, "[astrodata%d]\n", i);
+            g_string_append_printf(out, "[astrodata%u]\n", i);
             CACHE_APPEND("day=%s\n", value);
             CACHE_APPEND("sunrise=%s\n", start);
             CACHE_APPEND("sunset=%s\n", end);
@@ -1373,7 +1369,7 @@ write_cache_file(plugin_data *data)
         start = format_date(timeslice->start, date_format, FALSE);
         end = format_date(timeslice->end, date_format, FALSE);
         point = format_date(timeslice->point, date_format, FALSE);
-        g_string_append_printf(out, "[timeslice%d]\n", i);
+        g_string_append_printf(out, "[timeslice%u]\n", i);
         CACHE_APPEND("start=%s\n", start);
         CACHE_APPEND("end=%s\n", end);
         CACHE_APPEND("point=%s\n", point);
@@ -1395,7 +1391,7 @@ write_cache_file(plugin_data *data)
         g_free(point);
         for (j = 0; j < CLOUDS_PERC_NUM; j++)
             if (loc->clouds_percent[j])
-                g_string_append_printf(out, "clouds_percent_%d=%s\n", j,
+                g_string_append_printf(out, "clouds_percent_%u=%s\n", j,
                                        loc->clouds_percent[j]);
         CACHE_APPEND("fog_percent=%s\n", loc->fog_percent);
         CACHE_APPEND("precipitation_value=%s\n", loc->precipitation_value);
@@ -1445,6 +1441,7 @@ read_cache_file(plugin_data *data)
     keyfile = g_key_file_new();
     if (!g_key_file_load_from_file(keyfile, file, G_KEY_FILE_NONE, NULL)) {
         weather_debug("Could not read cache file %s.", file);
+        g_key_file_free(keyfile);
         g_free(file);
         return;
     }
@@ -1472,8 +1469,8 @@ read_cache_file(plugin_data *data)
     if (!err)
         num_timeslices = g_key_file_get_integer(keyfile, group,
                                                 "timeslices", &err);
-    if (err || strcmp(lat, data->lat) || strcmp(lon, data->lon) ||
-        strcmp(offset, data->offset) || msl != data->msl ||
+    if (err || strcmp(lat, data->lat) != 0 || strcmp(lon, data->lon) != 0 ||
+        strcmp(offset, data->offset) != 0 || msl != data->msl ||
         num_timeslices < 1) {
         CACHE_FREE_VARS();
         weather_debug("The required values are not present in the cache file "
@@ -1564,8 +1561,7 @@ read_cache_file(plugin_data *data)
         data->astro_update->next += 30;
         schedule_next_wakeup(data);
     }
-    g_free(group);
-    group = NULL;
+    g_clear_pointer(&group, g_free);
 
     /* parse available timeslices */
     for (i = 0; i < num_timeslices; i++) {
@@ -1933,6 +1929,7 @@ xfceweather_create_options(XfcePanelPlugin *plugin,
         }
     } else {
         g_warning ("Failed to load dialog: %s", error->message);
+        g_error_free(error);
     }
 }
 
@@ -2299,10 +2296,7 @@ xfceweather_free(XfcePanelPlugin *plugin,
     }
 
 #ifdef HAVE_UPOWER_GLIB
-    if (data->upower) {
-        g_object_unref(data->upower);
-        data->upower = NULL;
-    }
+    g_clear_object(&data->upower);
 #endif
 
     if (data->weatherdata)

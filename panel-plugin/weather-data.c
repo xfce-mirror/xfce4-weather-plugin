@@ -102,7 +102,7 @@ gchar *
 double_to_string(const gdouble val,
                  const gchar *format)
 {
-    gchar buf[20];
+    gchar buf[20] = { 0 };
     return g_strdup(g_ascii_formatd(buf, 20,
                                     format ? format : "%.1f",
                                     val));
@@ -297,7 +297,7 @@ wind_dir_name_by_deg(gchar *degrees, gboolean long_name)
     if (deg >= 360 - 22.5 || deg < 45 - 22.5)
         return (long_name) ? _("North") : _("N");
 
-    if (deg >= 45 - 22.5 && deg < 45 + 22.5)
+    if (deg < 45 + 22.5)
         return (long_name) ? _("North-East") : _("NE");
 
     if (deg >= 90 - 22.5 && deg < 90 + 22.5)
@@ -315,7 +315,7 @@ wind_dir_name_by_deg(gchar *degrees, gboolean long_name)
     if (deg >= 270 - 22.5 && deg < 270 + 22.5)
         return (long_name) ? _("West") : _("W");
 
-    if (deg >= 315 - 22.5 && deg < 315 + 22.5)
+    if (deg >= 315 - 22.5)
         return (long_name) ? _("North-West") : _("NW");
 
     return "";
@@ -1150,7 +1150,7 @@ make_current_conditions(xml_weather *wd,
     point_data_results *found = NULL;
     xml_time *interval = NULL, *incomplete;
     struct tm point_tm = *localtime(&now_t);
-    time_t point_t = now_t;
+    time_t point_t;
     gint i = 0;
 
     g_assert(wd != NULL);
@@ -1225,13 +1225,15 @@ get_astro_data_for_day(const GArray *astrodata,
         weather_debug("checking astro %d", i);
         weather_debug("astro data for day:");
         weather_debug("%s",weather_dump_astro(astro));
-        weather_debug("Checking difftime: astro_day  day_t %d %d.",
-                      astro->day, day_t);
 
-        if (astro && (difftime(astro->day, day_t) == 0)) {
-            weather_debug("Equal difftime: astro_day  day_t %d %d.",
+        if (astro) {
+            weather_debug("Checking difftime: astro_day  day_t %d %d.",
                           astro->day, day_t);
-            return astro;
+            if (difftime(astro->day, day_t) == 0) {
+                weather_debug("Equal difftime: astro_day  day_t %d %d.",
+                              astro->day, day_t);
+                return astro;
+            }
         }
     }
 

@@ -254,9 +254,9 @@ logo_fetched(SoupSession *session,
         gchar *path = get_logo_path();
         GdkPixbuf *pixbuf = NULL;
         gint scale_factor;
-        g_file_set_contents(path, body, len, &error);
+        gboolean success = g_file_set_contents(path, body, len, &error);
         g_bytes_unref(response);
-        if (error) {
+        if (!success) {
 #else
     if (msg && msg->response_body && msg->response_body->length > 0) {
          gchar *path = get_logo_path();
@@ -267,13 +267,9 @@ logo_fetched(SoupSession *session,
                                   msg->response_body->length, &error)) {
 #endif
             g_warning("Error downloading met.no logo image to %s, "
-                      "reason: %s\n", path,
-                      error ? error->message : "unknown");
+                      "reason: %s\n", path, error->message);
             g_error_free(error);
             g_free(path);
-#if SOUP_CHECK_VERSION(3, 0, 0)
-            g_bytes_unref(response);
-#endif
             return;
         }
         scale_factor = gtk_widget_get_scale_factor(user_data);
@@ -286,7 +282,6 @@ logo_fetched(SoupSession *session,
             g_object_unref(pixbuf);
         }
 #if SOUP_CHECK_VERSION(3, 0, 0)
-        g_bytes_unref(response);
     } else
         g_error_free(error);
 #else
@@ -1175,10 +1170,7 @@ update_summary_subtitle(plugin_data *data)
     guint update_interval;
     gint64 now_ms;
 
-    if (data->summary_update_timer) {
-        g_source_remove(data->summary_update_timer);
-        data->summary_update_timer = 0;
-    }
+    g_clear_handle_id(&data->summary_update_timer, g_source_remove);
 
     if (G_UNLIKELY(data->location_name == NULL) ||
         G_UNLIKELY(data->summary_window == NULL))

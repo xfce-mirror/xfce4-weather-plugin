@@ -539,8 +539,7 @@ text_timezone_changed(const GtkWidget *entry,
 {
     xfceweather_dialog *dialog = (xfceweather_dialog *) user_data;
 
-    if (dialog->pd->timezone)
-        g_free(dialog->pd->timezone);
+    g_free(dialog->pd->timezone);
     dialog->pd->timezone = g_strdup(gtk_entry_get_text(GTK_ENTRY(entry)));
     schedule_delayed_data_update(dialog);
 }
@@ -1108,7 +1107,7 @@ create_appearance_page(xfceweather_dialog *dialog)
         ADD_COMBO_VALUE(dialog->combo_icon_theme, theme->name);
         /* set selection to current theme */
         if (G_LIKELY(dialog->pd->icon_theme) &&
-            !strcmp(theme->dir, dialog->pd->icon_theme->dir)) {
+            strcmp(theme->dir, dialog->pd->icon_theme->dir) == 0) {
             SET_COMBO_VALUE(dialog->combo_icon_theme, i);
             combo_icon_theme_set_tooltip(dialog->combo_icon_theme, dialog);
         }
@@ -1189,8 +1188,7 @@ button_scrollbox_font_pressed(GtkWidget *button,
         return FALSE;
 
     if (event->button == 2) {
-        g_free(dialog->pd->scrollbox_font);
-        dialog->pd->scrollbox_font = NULL;
+        g_clear_pointer(&dialog->pd->scrollbox_font, g_free);
         gtk_scrollbox_set_fontname(GTK_SCROLLBOX(dialog->pd->scrollbox),
                                    NULL);
         gtk_button_set_label(GTK_BUTTON(button), _("Select _font"));
@@ -1277,7 +1275,7 @@ update_scrollbox_labels(xfceweather_dialog *dialog)
         gtk_tree_model_get_iter_first(GTK_TREE_MODEL
                                       (dialog->model_datatypes),
                                       &iter);
-    while (hasiter == TRUE) {
+    while (hasiter) {
         gtk_tree_model_get_value(GTK_TREE_MODEL(dialog->model_datatypes),
                                  &iter, 1, &value);
         option = g_value_get_int(&value);
@@ -1757,7 +1755,7 @@ setup_notebook_signals(xfceweather_dialog *dialog)
                      G_CALLBACK(spin_scrollbox_lines_value_changed),
                      dialog);
     g_signal_connect(G_OBJECT(dialog->button_scrollbox_font),
-                     "button_press_event",
+                     "button-press-event",
                      G_CALLBACK(button_scrollbox_font_pressed),
                      dialog);
     g_signal_connect(dialog->button_scrollbox_font, "clicked",

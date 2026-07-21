@@ -131,11 +131,13 @@ get_astro(const GArray *astrodata,
     weather_debug("day_t=%s", format_date(day_t, NULL,TRUE));
     for (i = 0; i < astrodata->len; i++) {
         astro = g_array_index(astrodata, xml_astro *, i);
-        weather_debug("astro->day=%s", format_date(astro->day, NULL,TRUE));
-        if (astro && astro->day == day_t) {
-            if (index != NULL)
-                *index = i;
-            return astro;
+        if (astro) {
+            weather_debug("astro->day=%s", format_date(astro->day, NULL,TRUE));
+            if (astro->day == day_t) {
+                if (index != NULL)
+                    *index = i;
+                return astro;
+            }
         }
     }
     return NULL;
@@ -283,7 +285,7 @@ parse_location(xmlNode *cur_node,
     /* Convert Fahrenheit to Celsius if necessary, so that we don't
        have to do it later. met.no usually provides values in Celsius. */
     if (loc->temperature_value && loc->temperature_unit &&
-        !strcmp(loc->temperature_unit, "fahrenheit")) {
+        strcmp(loc->temperature_unit, "fahrenheit") == 0) {
         gdouble val = string_to_double(loc->temperature_value, 0);
         val = (val - 32.0) * 5.0 / 9.0;
         g_free(loc->temperature_value);
