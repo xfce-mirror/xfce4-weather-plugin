@@ -1756,7 +1756,7 @@ setup_notebook_signals(xfceweather_dialog *dialog)
                      G_CALLBACK(spin_scrollbox_lines_value_changed),
                      dialog);
     g_signal_connect(G_OBJECT(dialog->button_scrollbox_font),
-                     "button_press_event",
+                     "button-press-event",
                      G_CALLBACK(button_scrollbox_font_pressed),
                      dialog);
     g_signal_connect(dialog->button_scrollbox_font, "clicked",
