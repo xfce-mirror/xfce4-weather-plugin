@@ -279,8 +279,7 @@ update_offset(plugin_data *data)
     GDateTime *dt;
 
     dt = g_date_time_new_now_local();
-    if (G_LIKELY(data->offset))
-        g_free(data->offset);
+    g_free(data->offset);
 
     data->offset = g_date_time_format(dt, "%:z");
     g_date_time_unref(dt);
