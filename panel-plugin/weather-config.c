@@ -1277,7 +1277,7 @@ update_scrollbox_labels(xfceweather_dialog *dialog)
         gtk_tree_model_get_iter_first(GTK_TREE_MODEL
                                       (dialog->model_datatypes),
                                       &iter);
-    while (hasiter == TRUE) {
+    while (hasiter) {
         gtk_tree_model_get_value(GTK_TREE_MODEL(dialog->model_datatypes),
                                  &iter, 1, &value);
         option = g_value_get_int(&value);
