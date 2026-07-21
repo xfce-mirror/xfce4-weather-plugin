@@ -1175,10 +1175,7 @@ update_summary_subtitle(plugin_data *data)
     guint update_interval;
     gint64 now_ms;
 
-    if (data->summary_update_timer) {
-        g_source_remove(data->summary_update_timer);
-        data->summary_update_timer = 0;
-    }
+    g_clear_handle_id(&data->summary_update_timer, g_source_remove);
 
     if (G_UNLIKELY(data->location_name == NULL) ||
         G_UNLIKELY(data->summary_window == NULL))

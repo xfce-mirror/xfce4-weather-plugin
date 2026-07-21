@@ -88,8 +88,7 @@ static void
 gtk_scrollbox_labels_free(GtkScrollbox *self)
 {
     /* free all the labels */
-    g_list_free_full(self->labels, g_object_unref);
-    self->labels = NULL;
+    g_clear_list(&self->labels, g_object_unref);
 }
 
 
@@ -367,10 +366,7 @@ gtk_scrollbox_control_loop(gpointer user_data)
     GtkScrollbox *self = GTK_SCROLLBOX(user_data);
     GtkAllocation allocation;
 
-    if (self->timeout_id != 0) {
-        g_source_remove(self->timeout_id);
-        self->timeout_id = 0;
-    }
+    g_clear_handle_id(&self->timeout_id, g_source_remove);
 
     /* determine what to do next */
     switch(self->fade) {
@@ -467,8 +463,7 @@ gtk_scrollbox_clear_new(GtkScrollbox *self)
     g_return_if_fail(GTK_IS_SCROLLBOX(self));
 
     /* free all the new labels */
-    g_list_free_full(self->labels_new, g_object_unref);
-    self->labels_new = NULL;
+    g_clear_list(&self->labels_new, g_object_unref);
 }
 
 
@@ -477,10 +472,7 @@ gtk_scrollbox_reset(GtkScrollbox *self)
 {
     g_return_if_fail(GTK_IS_SCROLLBOX(self));
 
-    if (self->timeout_id != 0) {
-        g_source_remove(self->timeout_id);
-        self->timeout_id = 0;
-    }
+    g_clear_handle_id(&self->timeout_id, g_source_remove);
     self->fade = FADE_OUT;
     gtk_scrollbox_prev_label(self);
     (void) gtk_scrollbox_control_loop(self);
@@ -516,10 +508,7 @@ gtk_scrollbox_set_visible(GtkScrollbox *self,
                 (void) gtk_scrollbox_control_loop(self);
         }
     } else
-        if (self->timeout_id != 0) {
-            g_source_remove(self->timeout_id);
-            self->timeout_id = 0;
-        }
+        g_clear_handle_id(&self->timeout_id, g_source_remove);
 }
 
 

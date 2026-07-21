@@ -1189,8 +1189,7 @@ button_scrollbox_font_pressed(GtkWidget *button,
         return FALSE;
 
     if (event->button == 2) {
-        g_free(dialog->pd->scrollbox_font);
-        dialog->pd->scrollbox_font = NULL;
+        g_clear_pointer(&dialog->pd->scrollbox_font, g_free);
         gtk_scrollbox_set_fontname(GTK_SCROLLBOX(dialog->pd->scrollbox),
                                    NULL);
         gtk_button_set_label(GTK_BUTTON(button), _("Select _font"));

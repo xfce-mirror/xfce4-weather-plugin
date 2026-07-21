@@ -216,8 +216,7 @@ get_icon(const icon_theme *theme,
         if (filename) {
             weather_debug("Unable to open image: %s", filename);
             remember_missing_icon(theme, sizedir, symbol_name, suffix);
-            g_free(filename);
-            filename = NULL;
+            g_clear_pointer(&filename, g_free);
         }
 
         if (strcmp(symbol_name, symbol_names[SYMBOL_NODATA]))
@@ -283,8 +282,7 @@ icon_theme_load_info(const gchar *dir)
 
     if (g_file_test(filename, G_FILE_TEST_EXISTS)) {
         rc = xfce_rc_simple_open(filename, TRUE);
-        g_free(filename);
-        filename = NULL;
+        g_clear_pointer(&filename, g_free);
 
         if (!rc)
             return NULL;
@@ -307,8 +305,7 @@ icon_theme_load_info(const gchar *dir)
                 theme->name = g_strdup(filename);
                 weather_debug("No Name found in theme info file, "
                               "using directory name %s as fallback.", dir);
-                g_free(filename);
-                filename = NULL;
+                g_clear_pointer(&filename, g_free);
             } else { /* some weird error, not safe to proceed */
                 weather_debug("Some weird error, not safe to proceed. "
                               "Abort loading icon theme from %s.", dir);

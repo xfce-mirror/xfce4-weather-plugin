@@ -423,10 +423,8 @@ update_current_conditions(plugin_data *data,
         return;
     }
 
-    if (data->weatherdata->current_conditions) {
-        xml_time_free(data->weatherdata->current_conditions);
-        data->weatherdata->current_conditions = NULL;
-    }
+    g_clear_pointer(&data->weatherdata->current_conditions, xml_time_free);
+
     /* use exact 5 minute intervals for calculation */
     time(&data->conditions_update->last);
     now_tm = *localtime(&data->conditions_update->last);
@@ -1564,8 +1562,7 @@ read_cache_file(plugin_data *data)
         data->astro_update->next += 30;
         schedule_next_wakeup(data);
     }
-    g_free(group);
-    group = NULL;
+    g_clear_pointer(&group, g_free);
 
     /* parse available timeslices */
     for (i = 0; i < num_timeslices; i++) {
@@ -2299,10 +2296,7 @@ xfceweather_free(XfcePanelPlugin *plugin,
     }
 
 #ifdef HAVE_UPOWER_GLIB
-    if (data->upower) {
-        g_object_unref(data->upower);
-        data->upower = NULL;
-    }
+    g_clear_object(&data->upower);
 #endif
 
     if (data->weatherdata)
