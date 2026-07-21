@@ -254,9 +254,9 @@ logo_fetched(SoupSession *session,
         gchar *path = get_logo_path();
         GdkPixbuf *pixbuf = NULL;
         gint scale_factor;
-        g_file_set_contents(path, body, len, &error);
+        gboolean success = g_file_set_contents(path, body, len, &error);
         g_bytes_unref(response);
-        if (error) {
+        if (!success) {
 #else
     if (msg && msg->response_body && msg->response_body->length > 0) {
          gchar *path = get_logo_path();
