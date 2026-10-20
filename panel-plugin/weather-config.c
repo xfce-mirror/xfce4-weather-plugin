@@ -327,7 +327,7 @@ cb_lookup_timezone(SoupSession *session,
         parse_xml_document(body, len, (XmlParseFunc) parse_timezone);
     weather_dump(weather_dump_timezone, xml_tz);
 
-    if (xml_tz) {
+    if (xml_tz != NULL && xml_tz->timezone_id != NULL) {
         gtk_entry_set_text(GTK_ENTRY(dialog->text_timezone),
                            xml_tz->timezone_id);
         xml_timezone_free(xml_tz);
