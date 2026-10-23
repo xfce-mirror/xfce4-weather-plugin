@@ -61,7 +61,7 @@ gboolean update_loc(plugin_data *data);
 
 
 typedef struct {
-   void (*cb_show_phones)(GtkMenuItem *menu_item, gpointer user_data);
+   gboolean (*cb_show_phones)(GtkWidget *parent_menu, GdkEventButton *event, gpointer user_data);
 } adb_t;
 
 extern const adb_t adb;

@@ -2130,7 +2130,6 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     cairo_surface_t *icon = NULL;
     data_types lbl;
     gint scale_factor;
-    GtkWidget *update_loc_menu;
 
     /* Initialize with sane default values */
     data->plugin = plugin;
@@ -2224,6 +2223,17 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     /* create panel toggle button which will contain all other widgets */
     data->button = xfce_panel_create_toggle_button();
     gtk_container_add(GTK_CONTAINER(plugin), data->button);
+
+    /* Connect the ADB right-click handler *before* registering the button
+     * as an action widget. add_action_widget() installs the panel's own
+     * button-press-event handler which returns TRUE for right-clicks and
+     * would otherwise stop emission before our handler runs. By connecting
+     * first, our handler runs first, updates the "Update location from
+     * phone:" menu item visibility, returns FALSE, and lets the panel
+     * handler pop up the menu afterwards. */
+    g_signal_connect(G_OBJECT(data->button), "button-press-event",
+                 G_CALLBACK(adb.cb_show_phones), data);
+
     xfce_panel_plugin_add_action_widget(plugin, data->button);
     gtk_widget_show(data->button);
 
@@ -2268,10 +2278,16 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
                      G_CALLBACK(mi_click), data);
     xfce_panel_plugin_menu_insert_item(plugin, GTK_MENU_ITEM(refresh));
 
-    update_loc_menu = gtk_menu_item_new_with_label(_("Update location from phone:"));
-    g_signal_connect(update_loc_menu, "select", G_CALLBACK(adb.cb_show_phones), NULL);
-    gtk_widget_show(update_loc_menu);
-    xfce_panel_plugin_menu_insert_item(plugin, GTK_MENU_ITEM(update_loc_menu));
+    /* Create and insert the ADB menu item once. It is kept in plugin_data
+     * so the right-click handler can toggle its visibility based on the
+     * number of connected devices without having to traverse the panel
+     * menu. Ownership of the item is transferred to the panel via
+     * xfce_panel_plugin_menu_insert_item(); do not destroy it manually. */
+    if (data->update_loc_menu == NULL) {
+        data->update_loc_menu = gtk_menu_item_new_with_label(_("Update location from phone:"));
+        gtk_widget_show(data->update_loc_menu);
+        xfce_panel_plugin_menu_insert_item(plugin, GTK_MENU_ITEM(data->update_loc_menu));
+    }
 
     /* assign to tempval because g_array_append_val() is using & operator */
     lbl = TEMPERATURE;
