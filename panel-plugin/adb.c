@@ -301,16 +301,46 @@ update_loc(plugin_data *data) {
  *
  * Returns FALSE so the panel's own handler still runs and shows the menu.
  */
-static gboolean cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event, gpointer user_data) {
+static gboolean cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
+                               gpointer user_data) {
     weather_debug("loc: 'Update location from phone:' menu is activated");
     (void) parent_menu;
-    plugin_data *data = (plugin_data *) user_data;
+    plugin_data *data = user_data;
+    gsize num_devices;
+    device *ds;
+    GtkWidget *submenu, *sub_item;
+    GtkMenuItem *update_loc_menu_item = GTK_MENU_ITEM(data->update_loc_widget);
 
-    if (event->button == 3 && data->update_loc_menu) {
+    if (event->button == 3 && data->update_loc_widget) {
         weather_debug("loc: Right-click detected before menu popup!");
-        gsize devices;
-        get_devices(&devices);
-        gtk_widget_set_visible(data->update_loc_menu, devices > 0);
+        ds = get_devices(&num_devices);
+        weather_debug("loc: %d device(s) found", num_devices);
+
+        if (num_devices > 1) {
+            gtk_menu_item_set_label(update_loc_menu_item, _("Update location from phone:"));
+            submenu = gtk_menu_new();
+
+            for (gsize i = 0; i < num_devices; i++) {
+                device d = ds[i];
+                weather_debug("loc: model='%s', serial='%s'", d.model,
+                              d.serial);
+
+                sub_item = gtk_menu_item_new_with_label(d.model);
+                gtk_menu_shell_append(GTK_MENU_SHELL(submenu), sub_item);
+            }
+
+            gtk_menu_item_set_submenu(update_loc_menu_item, submenu);
+            gtk_widget_show_all(submenu);
+        } else if (num_devices == 1) {
+            gtk_menu_item_set_submenu(update_loc_menu_item, NULL);
+            gtk_menu_item_set_label(update_loc_menu_item,
+                                    g_strdup_printf(
+                                        _("Update location from %s"),
+                                        ds->model));
+        }
+
+        free(ds);
+        gtk_widget_set_visible(data->update_loc_widget, num_devices > 0);
     }
 
     return FALSE;

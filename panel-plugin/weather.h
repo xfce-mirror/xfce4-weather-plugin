@@ -137,7 +137,7 @@ typedef struct {
      * right-click menu. Kept here so adb.cb_show_phones() can toggle its
      * visibility each time the menu is about to be shown. Owned by the
      * panel once inserted; cleared (not destroyed) in xfceweather_free(). */
-    GtkWidget *update_loc_menu;
+    GtkWidget *update_loc_widget;
 
     gint panel_size;
     gint icon_size;
