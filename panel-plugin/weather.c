@@ -2283,10 +2283,10 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
      * number of connected devices without having to traverse the panel
      * menu. Ownership of the item is transferred to the panel via
      * xfce_panel_plugin_menu_insert_item(); do not destroy it manually. */
-    if (data->update_loc_menu == NULL) {
-        data->update_loc_menu = gtk_menu_item_new_with_label(_("Update location from phone:"));
-        gtk_widget_show(data->update_loc_menu);
-        xfce_panel_plugin_menu_insert_item(plugin, GTK_MENU_ITEM(data->update_loc_menu));
+    if (data->update_loc_widget == NULL) {
+        data->update_loc_widget = gtk_menu_item_new_with_label(_("Update location from phone:"));
+        gtk_widget_show(data->update_loc_widget);
+        xfce_panel_plugin_menu_insert_item(plugin, GTK_MENU_ITEM(data->update_loc_widget));
     }
 
     /* assign to tempval because g_array_append_val() is using & operator */
@@ -2357,9 +2357,9 @@ xfceweather_free(XfcePanelPlugin *plugin,
     icon_theme_free(data->icon_theme);
 
     /* free update location menu */
-    if (data->update_loc_menu) {
-        gtk_widget_destroy(data->update_loc_menu);
-         data->update_loc_menu = NULL;
+    if (data->update_loc_widget) {
+        gtk_widget_destroy(data->update_loc_widget);
+         data->update_loc_widget = NULL;
     }
 
     g_slice_free(plugin_data, data);
