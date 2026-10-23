@@ -96,6 +96,36 @@ get_devices(gsize *n_out) {
     ds = g_new0(device, n + 1);
 
     if (re == NULL) {
+        /* Parse one line of `adb devices -l` output.
+         *
+         * Example line:
+         *   51444d4852443498       device usb:3-1 product:starqltecs model:SM_G960W transport_id:2
+         *
+         * Groups:
+         *   1 = serial   (may contain spaces and colons)
+         *   2 = model    (value after "model:")
+         *
+         * Breakdown:
+         *   ^(.+?)               Lazy: capture the shortest serial that lets the
+         *                        rest of the pattern match. Lazy (not greedy) so
+         *                        it doesn't swallow the state and properties.
+         *   \\s+                 One or more spaces (adb pads columns to align).
+         *   [^\\s:]+             The state token (e.g. "device", "offline",
+         *                        "unauthorized"). Deliberately NOT a whitelist of
+         *                        known states and NOT `\\S+`, because we require it
+         *                        to be colon-free. That's what distinguishes the
+         *                        state from the `key:value` properties that follow.
+         *   \\s+                 Separator before the property block.
+         *   (?:\\S+:\\S+\\s+)*   Zero or more `key:value` properties (usb:3-1,
+         *                        product:..., device:..., transport_id:...).
+         *                        Non-capturing. `*` (not `+`) so a line where
+         *                        "model:" is the FIRST property still matches.
+         *   \\bmodel:            Literal "model:", with a word boundary so we
+         *                        don't match e.g. "devicemodel:" or "submodel:".
+         *   (\\S+)               Model value: non-space run. `\\S+` (not `.+?\\s`)
+         *                        so it works when the model is the LAST token on
+         *                        the line (no trailing space to anchor on).
+         */
         re = g_regex_new(
             "^(.+?)\\s+[^\\s:]+\\s+(?:\\S+:\\S+\\s+)*\\bmodel:(\\S+)",
             0, 0, NULL);
@@ -106,7 +136,8 @@ get_devices(gsize *n_out) {
             ds[line_num].serial = g_match_info_fetch(mi, 1);
             ds[line_num].model = g_match_info_fetch(mi, 2);
 
-            weather_debug("loc: serial=%s, model=%s", ds[line_num].serial, ds[line_num].model);
+            weather_debug("loc: serial=%s, model=%s", ds[line_num].serial,
+                          ds[line_num].model);
 
             line_num++;
         }
@@ -255,14 +286,34 @@ update_loc(plugin_data *data) {
     return FALSE;
 }
 
-/* Callback for the "select" signal for "Update location from phone:" menu
+/*
+ * cb_show_phones:
+ * @parent_menu: the panel's GtkMenu (emitted by button-press-event)
+ * @event:       the button press event; only right-clicks (button 3)
+ *               are of interest
+ * @user_data:   plugin_data for this plugin instance
+ *
+ * Runs *before* the panel pops up its right-click menu (see the handler
+ * ordering note in xfceweather_create_control()). Queries the connected
+ * ADB devices and shows or hides the "Update location from phone:" menu
+ * item accordingly, so stale entries don't appear when no phone is
+ * plugged in.
+ *
+ * Returns FALSE so the panel's own handler still runs and shows the menu.
  */
-static void cb_show_phones(GtkMenuItem *menu_item, gpointer user_data) {
-    GtkWidget *old = gtk_menu_item_get_submenu(menu_item);
-    GtkWidget *new_submenu;
+static gboolean cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event, gpointer user_data) {
+    weather_debug("loc: 'Update location from phone:' menu is activated");
+    (void) parent_menu;
+    plugin_data *data = (plugin_data *) user_data;
 
-    if (old) gtk_widget_destroy(old);
-    new_submenu = gtk_menu_new();
+    if (event->button == 3 && data->update_loc_menu) {
+        weather_debug("loc: Right-click detected before menu popup!");
+        gsize devices;
+        get_devices(&devices);
+        gtk_widget_set_visible(data->update_loc_menu, devices > 0);
+    }
+
+    return FALSE;
 }
 
 
