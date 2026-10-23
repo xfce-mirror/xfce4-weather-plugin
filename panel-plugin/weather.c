@@ -45,6 +45,7 @@
 #include "weather-icon.h"
 #include "weather-scrollbox.h"
 #include "weather-debug.h"
+#include "adb.h"
 
 #define XFCEWEATHER_ROOT "weather"
 #define CACHE_FILE_MAX_AGE (48 * 3600)
@@ -63,27 +64,6 @@
    with suspend/resume events etc., when nothing needs to be updated
    earlier: */
 #define UPDATE_INTERVAL (10)
-
-/* minimum displacement to count as "moved", in kilometers; sized to
-   the met.no forecast grid resolution (~9-11 km): */
-#define LOCWATCH_MIN_DISPLACEMENT (5.0)
-
-/* distance in kilometers below which the altitude lookup is skipped;
-   elevation changes by only a few meters over short distances and the
-   met.no pressure correction is insensitive at that scale: */
-#define LOCWATCH_ALTITUDE_DISPLACEMENT (20.0)
-
-/* distance in kilometers below which the timezone lookup is skipped;
-   timezone boundaries are hundreds of kilometers apart in populated
-   areas, and a wrong timezone shifts every displayed time by hours: */
-#define LOCWATCH_TIMEZONE_DISPLACEMENT (50.0)
-
-/* mean Earth radius in kilometers, used for the spherical
-   great-circle approximation in distance_km(): */
-#define EARTH_RADIUS_KM (6371.0)
-
-/* degrees to radians conversion factor: */
-#define DEG_TO_RAD (G_PI / 180.0)
 
 #define DATA_AND_UNIT(var, item)                        \
     value = get_data(conditions, data->units, item,     \
@@ -1652,166 +1632,6 @@ read_cache_file(plugin_data *data)
 }
 
 
-    /* Runs adb shell dumpsys location and return its stdout, or NULL on any
-   failure: adb missing, no device attached, device unauthorized, or a
-   non-zero exit. Caller frees the returned string. */
-static gchar *
-adb_loc_dump(void)
-{
-    weather_debug("loc: spawning adb");
-    GError *error = NULL;
-    gchar *stdout_str = NULL;
-    gchar *argv[] = { "adb", "shell", "dumpsys", "location", NULL };
-    gint status;
-
-    if (!g_spawn_sync(NULL, argv, NULL, G_SPAWN_SEARCH_PATH,
-                      NULL, NULL, &stdout_str, NULL, &status, &error)) {
-        /* adb binary not found, or fork failed */
-        weather_debug("loc: spawn failed: %s\n", error->message);
-        g_clear_error(&error);
-        return NULL;
-    }
-
-    if (!g_spawn_check_exit_status(status, &error)) {
-        /* adb ran but exited non-zero */
-        weather_debug("loc: adb exited %d: %s\n", status, error->message);
-        g_clear_error(&error);
-        g_free(stdout_str);
-        return NULL;
-    }
-
-    weather_debug("loc: %zu bytes from adb", stdout_str ? strlen(stdout_str) : 0);
-    return stdout_str;
-}
-
-
-/* Parses the first entry from adb dumpsys location dump. On success,
-   allocates *lat_str and *lon_str (caller frees) and returns TRUE. Returns FALSE if
-   the dump does not match, leaving the output pointers untouched. */
-static gboolean
-adb_parse_dump(const gchar *dump, gchar **lat_str, gchar **lon_str)
-{
-    GMatchInfo *mi = NULL;
-    gboolean ok = FALSE;
-    static GRegex *re = NULL;
-
-    /* first entry is the one with highest-confidence. */
-    if (re == NULL)
-        re = g_regex_new("Location\\[fused ([-0-9.]+),([-0-9.]+)", 0, 0, NULL);
-
-    if (g_regex_match(re, dump, 0, &mi)) {
-        *lat_str = g_match_info_fetch(mi, 1);
-        *lon_str = g_match_info_fetch(mi, 2);
-        weather_debug("loc: new lat=%s, lon=%s", *lat_str, *lon_str);
-        ok = TRUE;
-    } else {
-        weather_debug("loc: no match");
-    }
-
-    g_match_info_free(mi);
-    return ok;
-}
-
-
-/* Queries the phone and parses the first loc found. On
-   success, allocates *lat_str and *lon_str (caller frees) and returns TRUE. Returns
-   FALSE on any adb failure or unparseable output, leaving the output
-   pointers untouched. */
-static gboolean
-query_phone_loc(gchar **lat_str, gchar **lon_str)
-{
-    gchar *dump = adb_loc_dump();
-    gboolean ok;
-
-    if (dump == NULL)
-        return FALSE;
-
-    ok = adb_parse_dump(dump, lat_str, lon_str);
-
-    g_free(dump);
-    return ok;
-}
-
-
-/* great-circle distance between two points in kilometers (spherical) */
-static gdouble
-distance_km(gdouble x_lat, gdouble x_lon, gdouble y_lat, gdouble y_lon)
-{
-    gdouble dlat, dlon, a;
-
-    dlat = (y_lat - x_lat) * DEG_TO_RAD;
-    dlon = (y_lon - x_lon) * DEG_TO_RAD;
-
-    a = sin(dlat / 2) * sin(dlat / 2)
-        + cos(x_lat * DEG_TO_RAD) * cos(y_lat * DEG_TO_RAD)
-        * sin(dlon / 2) * sin(dlon / 2);
-
-    return EARTH_RADIUS_KM * 2 * atan2(sqrt(a), sqrt(1.0 - a));
-}
-
-
-/* Refreshes data->lat/lon from an attached phone, then kicks off
-   async lookups for the derived values: location name, altitude, and
-   timezone. Optional convenience: the plugin continues to work
-   normally without a phone, without the required binaries (like adb),
-   or with the device unauthorized. Returns TRUE if the location was
-   updated, FALSE otherwise (silent no-op). */
-static gboolean
-update_loc (plugin_data *data)
-{
-    gchar *new_lat = NULL;
-    gchar *new_lon = NULL;
-    gchar *old_lat, *old_lon;
-    gdouble old_lat_d, old_lon_d, new_lat_d, new_lon_d;
-    gdouble moved = 0.0;
-
-    if (query_phone_loc(&new_lat, &new_lon)) {
-        old_lat = data->lat;
-        old_lon = data->lon;
-        weather_debug("loc: old lat=%s, lon=%s", old_lat, old_lon);
-
-        /* skip the update if the phone is roughly where it already was: */
-        if (old_lat != NULL && old_lon != NULL) {
-            old_lat_d = g_ascii_strtod(old_lat, NULL);
-            old_lon_d = g_ascii_strtod(old_lon, NULL);
-            new_lat_d = g_ascii_strtod(new_lat, NULL);
-            new_lon_d = g_ascii_strtod(new_lon, NULL);
-            moved = distance_km(old_lat_d, old_lon_d, new_lat_d, new_lon_d);
-
-            if (moved < LOCWATCH_MIN_DISPLACEMENT) {
-                g_free(new_lat);
-                g_free(new_lon);
-
-                weather_debug("loc: too close");
-
-                return FALSE;
-            }
-        }
-
-        g_free(data->lat);
-        g_free(data->lon);
-
-        data->lat = new_lat;
-        data->lon = new_lon;
-
-        /* three async lookups fire here; the name is what the user
-           sees so it always refetches, while altitude and timezone
-           only change meaningfully over longer distances. */
-        reverse_geocode(data, data->lat, data->lon);
-
-        if (moved >= LOCWATCH_ALTITUDE_DISPLACEMENT)
-            lookup_altitude(data, data->lat, data->lon);
-
-        if (moved >= LOCWATCH_TIMEZONE_DISPLACEMENT)
-            lookup_timezone(data, data->lat, data->lon);
-
-        return TRUE;
-    }
-
-    return FALSE;
-}
-
-
 void
 update_weatherdata_with_reset(plugin_data *data)
 {
@@ -1822,10 +1642,6 @@ update_weatherdata_with_reset(plugin_data *data)
     g_assert(data != NULL);
     if (G_UNLIKELY(data == NULL))
         return;
-
-    /* try to refresh the location from an attached phone before
-       clearing cached data; silent no-op if no phone is available. */
-    update_loc(data);
 
     if (data->update_timer) {
         source = g_main_context_find_source_by_id(NULL, data->update_timer);
@@ -2314,6 +2130,7 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     cairo_surface_t *icon = NULL;
     data_types lbl;
     gint scale_factor;
+    GtkWidget *update_loc_menu;
 
     /* Initialize with sane default values */
     data->plugin = plugin;
@@ -2450,6 +2267,11 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     g_signal_connect(G_OBJECT(refresh), "activate",
                      G_CALLBACK(mi_click), data);
     xfce_panel_plugin_menu_insert_item(plugin, GTK_MENU_ITEM(refresh));
+
+    update_loc_menu = gtk_menu_item_new_with_label(_("Update location from phone:"));
+    g_signal_connect(update_loc_menu, "select", G_CALLBACK(adb.cb_show_phones), NULL);
+    gtk_widget_show(update_loc_menu);
+    xfce_panel_plugin_menu_insert_item(plugin, GTK_MENU_ITEM(update_loc_menu));
 
     /* assign to tempval because g_array_append_val() is using & operator */
     lbl = TEMPERATURE;
