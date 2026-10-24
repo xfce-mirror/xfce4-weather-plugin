@@ -46,22 +46,27 @@ device *get_devices(gsize *n_out);
 gchar *call_adb(gchar **argv);
 
 
-gchar *loc_dump(void);
+gchar *loc_dump(gchar *serial);
 
 
 gboolean parse_dump(const gchar *dump, gchar **lat_str, gchar **lon_str);
 
 
-gboolean get_loc(gchar **lat_str, gchar **lon_str);
+gboolean get_loc(gchar *serial, gchar **lat_str, gchar **lon_str);
 
 
 gdouble distance_km(gdouble x_lat, gdouble x_lon, gdouble y_lat, gdouble y_lon);
 
-gboolean update_loc(plugin_data *data);
+
+void update_loc(GtkMenuItem *item, gpointer user_data);
+
+
+void free_devices(device *ds);
 
 
 typedef struct {
-   gboolean (*cb_show_phones)(GtkWidget *parent_menu, GdkEventButton *event, gpointer user_data);
+    gboolean (*cb_show_phones)(GtkWidget *parent_menu, GdkEventButton *event,
+                               gpointer user_data);
 } adb_t;
 
 extern const adb_t adb;

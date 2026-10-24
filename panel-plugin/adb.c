@@ -28,15 +28,16 @@ call_adb(gchar **argv) {
     if (!g_spawn_sync(NULL, cmd, NULL, G_SPAWN_SEARCH_PATH,
                       NULL, NULL, &stdout_str, NULL, &status, &error)) {
         /* adb binary not found, or fork failed */
-        weather_debug("loc: spawn failed: %s\n", error->message);
+        weather_debug("loc: spawn failed: %s", error->message);
         g_clear_error(&error);
+        g_free(stdout_str);
         free(cmd);
         return NULL;
     }
 
     if (!g_spawn_check_exit_status(status, &error)) {
         /* adb ran but exited non-zero */
-        weather_debug("loc: adb exited %d: %s\n", status, error->message);
+        weather_debug("loc: adb exited %d: %s", status, error->message);
         g_clear_error(&error);
         g_free(stdout_str);
         free(cmd);
@@ -66,9 +67,10 @@ get_devices(gsize *n_out) {
     GMatchInfo *mi = NULL;
     static GRegex *re = NULL;
 
-    if (out == NULL) {
+    if (n_out)
+        *n_out = 0;
+    if (out == NULL)
         return NULL;
-    }
 
     while (*out) {
         line_start = out;
@@ -140,13 +142,13 @@ get_devices(gsize *n_out) {
                           ds[line_num].model);
 
             line_num++;
+            g_match_info_free(mi);
+            mi = NULL;
         }
     }
 
     /* free the ORIGINAL pointer */
     g_free(raw);
-    g_match_info_free(mi);
-    g_regex_unref(re);
 
     if (n_out)
         *n_out = line_num;
@@ -155,10 +157,10 @@ get_devices(gsize *n_out) {
 }
 
 
-/* Runs `adb shell dumpsys location` */
+/* Runs `adb -s @serial shell dumpsys location` */
 gchar *
-loc_dump(void) {
-    gchar *command[] = {"shell", "dumpsys", "location", NULL};
+loc_dump(gchar *serial) {
+    gchar *command[] = {"-s", serial, "shell", "dumpsys", "location", NULL};
     return call_adb(command);
 }
 
@@ -186,18 +188,44 @@ parse_dump(const gchar *dump, gchar **lat_str, gchar **lon_str) {
     }
 
     g_match_info_free(mi);
-    g_regex_unref(re);
     return ok;
 }
 
 
-/* Queries the phone and parses the first loc found. On
-   success, allocates *lat_str and *lon_str (caller frees) and returns TRUE. Returns
-   FALSE on any adb failure or unparseable output, leaving the output
-   pointers untouched. */
+/*
+ * get_loc:
+ * @serial:    serial of the ADB device to query. Must be non-NULL and
+ *             NUL-terminated; the string is borrowed, not owned, and is
+ *             passed straight through to `adb -s <serial>`.
+ * @lat_str:   (out) (optional): on success, receives a newly-allocated
+ *             string containing the latitude parsed from the dump. The
+ *             caller owns it and must g_free() it. Left untouched on
+ *             failure.
+ * @lon_str:   (out) (optional): on success, receives a newly-allocated
+ *             string containing the longitude parsed from the dump. The
+ *             caller owns it and must g_free() it. Left untouched on
+ *             failure.
+ *
+ * Convenience wrapper around loc_dump() + parse_dump(). Runs
+ * `adb -s <serial> shell dumpsys location`, then extracts the first
+ * `Location[fused lat,lon` entry from the output.
+ *
+ * Returns FALSE immediately if @serial is NULL, if loc_dump() returns
+ * NULL (adb missing, no such device, unauthorized, non-zero exit), or
+ * if parse_dump() finds no match. In every failure case @lat_str and
+ * @lon_str are left untouched, so the caller can distinguish "not
+ * updated" from "updated to empty" by initializing them to NULL and
+ * checking the return value.
+ *
+ * On success both @lat_str and @lon_str are set to freshly-allocated
+ * strings and TRUE is returned.
+ */
 gboolean
-get_loc(gchar **lat_str, gchar **lon_str) {
-    gchar *dump = loc_dump();
+get_loc(gchar *serial, gchar **lat_str, gchar **lon_str) {
+    if (serial == NULL)
+        return FALSE;
+
+    gchar *dump = loc_dump(serial);
     gboolean ok;
 
     if (dump == NULL)
@@ -226,21 +254,52 @@ distance_km(gdouble x_lat, gdouble x_lon, gdouble y_lat, gdouble y_lon) {
 }
 
 
-/* Refreshes data->lat/lon from an attached phone, then kicks off
-   async lookups for the derived values: location name, altitude, and
-   timezone. Optional convenience: the plugin continues to work
-   normally without a phone, without the required binaries (like adb),
-   or with the device unauthorized. Returns TRUE if the location was
-   updated, FALSE otherwise (silent no-op). */
-gboolean
-update_loc(plugin_data *data) {
+/*
+ * update_loc:
+ * @item:      the GtkMenuItem that was activated. For the single-device
+ *             case this is data->update_loc_widget itself; for the
+ *             multi-device case it is one of the per-device submenu
+ *             items. Either way, its "serial" user data identifies the
+ *             phone to query.
+ * @user_data: plugin_data for this plugin instance
+ *
+ * "Update location from phone" activation handler. Queries the phone
+ * named by the "serial" user data on @item via get_loc(), and, if a
+ * position is returned:
+ *
+ *   - Converts the old and new coordinates to doubles and computes the
+ *     great-circle displacement. If it is below MIN_DISPLACEMENT the
+ *     update is skipped entirely (the fresh strings are freed and the
+ *     function returns early), so GPS jitter does not cause needless
+ *     refetches.
+ *   - Otherwise replaces data->lat / data->lon with the new strings
+ *     (freeing the old ones) and fires the derived lookups:
+ *       * reverse_geocode()      always — the name is what the user sees
+ *       * lookup_altitude()      if moved >= ALTITUDE_DISPLACEMENT
+ *       * lookup_timezone()      if moved >= TIMEZONE_DISPLACEMENT
+ *     and then calls update_weatherdata_with_reset().
+ *
+ * These lookups are asynchronous; this function does not wait for them.
+ *
+ * "serial" is borrowed, not owned: it is read from @item and never
+ * freed here. If get_loc() fails (adb missing, no device, unauthorized,
+ * unparseable dump) the function does nothing and leaves
+ * data->lat / data->lon untouched.
+ *
+ * Returns: void (GTK activate handler signature).
+ */
+void
+update_loc(GtkMenuItem *item, gpointer user_data) {
+    plugin_data *data = user_data;
     gchar *new_lat = NULL;
     gchar *new_lon = NULL;
     gchar *old_lat, *old_lon;
     gdouble old_lat_d, old_lon_d, new_lat_d, new_lon_d;
     gdouble moved = 0.0;
+    gchar *serial = g_object_get_data(G_OBJECT(item), "serial");
+    weather_debug("loc: getting loc from %s", serial);
 
-    if (get_loc(&new_lat, &new_lon)) {
+    if (get_loc(serial, &new_lat, &new_lon)) {
         old_lat = data->lat;
         old_lon = data->lon;
         weather_debug("loc: old lat=%s, lon=%s", old_lat, old_lon);
@@ -258,8 +317,7 @@ update_loc(plugin_data *data) {
                 g_free(new_lon);
 
                 weather_debug("loc: too close");
-
-                return FALSE;
+                return;
             }
         }
 
@@ -280,10 +338,18 @@ update_loc(plugin_data *data) {
         if (moved >= TIMEZONE_DISPLACEMENT)
             lookup_timezone(data, data->lat, data->lon);
 
-        return TRUE;
+        update_weatherdata_with_reset(data);
     }
+}
 
-    return FALSE;
+void free_devices(device *ds) {
+    if (!ds)
+        return;
+    for (device *p = ds; p->model != NULL; p++) {
+        g_free(p->serial);
+        g_free(p->model);
+    }
+    g_free(ds);
 }
 
 /*
@@ -295,9 +361,23 @@ update_loc(plugin_data *data) {
  *
  * Runs *before* the panel pops up its right-click menu (see the handler
  * ordering note in xfceweather_create_control()). Queries the connected
- * ADB devices and shows or hides the "Update location from phone:" menu
- * item accordingly, so stale entries don't appear when no phone is
- * plugged in.
+ * ADB devices via `adb devices -l` and reshapes
+ * data->update_loc_widget to match the current device count:
+ *
+ *   - 0 devices: the menu item is hidden and any top-level "activate"
+ *     handler is disconnected, so a stale entry never appears when no
+ *     phone is plugged in.
+ *   - 1 device:  the item is relabeled "Update location from <model>",
+ *     any submenu is removed, and a single "activate" handler is
+ *     connected (exactly once, guarded by the "activate-connected"
+ *     user-data flag). The device serial is stored on the item so
+ *     update_loc() knows which phone to query.
+ *   - >1 device: the item gets a submenu with one entry per device,
+ *     each labeled with its model and carrying its own serial. The
+ *     top-level "activate" handler and serial are removed so the
+ *     parent item cannot fire update_loc() with a stale serial.
+ *
+ * The item is shown only when at least one device is attached.
  *
  * Returns FALSE so the panel's own handler still runs and shows the menu.
  */
@@ -306,18 +386,20 @@ static gboolean cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
     weather_debug("loc: 'Update location from phone:' menu is activated");
     (void) parent_menu;
     plugin_data *data = user_data;
-    gsize num_devices;
+    gsize num_devices = 0;
     device *ds;
     GtkWidget *submenu, *sub_item;
     GtkMenuItem *update_loc_menu_item = GTK_MENU_ITEM(data->update_loc_widget);
+    gchar *new_label;
 
     if (event->button == 3 && data->update_loc_widget) {
         weather_debug("loc: Right-click detected before menu popup!");
         ds = get_devices(&num_devices);
-        weather_debug("loc: %d device(s) found", num_devices);
+        weather_debug("loc: %zu device(s) found", num_devices);
 
         if (num_devices > 1) {
-            gtk_menu_item_set_label(update_loc_menu_item, _("Update location from phone:"));
+            gtk_menu_item_set_label(update_loc_menu_item,
+                                    _("Update location from phone:"));
             submenu = gtk_menu_new();
 
             for (gsize i = 0; i < num_devices; i++) {
@@ -326,6 +408,13 @@ static gboolean cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
                               d.serial);
 
                 sub_item = gtk_menu_item_new_with_label(d.model);
+
+                // associate serial with menu item
+                g_object_set_data_full(G_OBJECT(sub_item), "serial",
+                                       g_strdup(d.serial), g_free);
+                g_signal_connect(sub_item, "activate",
+                                 G_CALLBACK(update_loc), data);
+
                 gtk_menu_shell_append(GTK_MENU_SHELL(submenu), sub_item);
             }
 
@@ -333,13 +422,29 @@ static gboolean cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
             gtk_widget_show_all(submenu);
         } else if (num_devices == 1) {
             gtk_menu_item_set_submenu(update_loc_menu_item, NULL);
-            gtk_menu_item_set_label(update_loc_menu_item,
-                                    g_strdup_printf(
-                                        _("Update location from %s"),
-                                        ds->model));
+            new_label =
+                    g_strdup_printf(_("Update location from %s"), ds->model);
+            gtk_menu_item_set_label(update_loc_menu_item, new_label);
+            g_free(new_label);
+            // associate serial with menu item
+            g_object_set_data_full(G_OBJECT(update_loc_menu_item), "serial",
+                                   g_strdup(ds[0].serial), g_free);
+
+            /* (re)connect exactly once */
+            if (!g_object_get_data(
+                G_OBJECT(update_loc_menu_item), "activate-connected")) {
+                g_signal_connect(update_loc_menu_item, "activate",
+                                 G_CALLBACK(update_loc), data);
+                g_object_set_data(G_OBJECT(update_loc_menu_item),
+                                  "activate-connected", GINT_TO_POINTER(1));
+            }
+        } else {
+            g_signal_handlers_disconnect_by_func(update_loc_menu_item,
+                                                 G_CALLBACK(update_loc), data);
+            gtk_menu_item_set_submenu(update_loc_menu_item, NULL);
         }
 
-        free(ds);
+        free_devices(ds);
         gtk_widget_set_visible(data->update_loc_widget, num_devices > 0);
     }
 
