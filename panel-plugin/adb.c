@@ -430,7 +430,7 @@ static gboolean cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
             g_object_set_data_full(G_OBJECT(update_loc_menu_item), "serial",
                                    g_strdup(ds[0].serial), g_free);
 
-            /* (re)connect exactly once */
+            /* (re)connect signal exactly once */
             if (!g_object_get_data(
                 G_OBJECT(update_loc_menu_item), "activate-connected")) {
                 g_signal_connect(update_loc_menu_item, "activate",
@@ -441,6 +441,8 @@ static gboolean cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
         } else {
             g_signal_handlers_disconnect_by_func(update_loc_menu_item,
                                                  G_CALLBACK(update_loc), data);
+            g_object_set_data(G_OBJECT(update_loc_menu_item),
+                                  "activate-connected", NULL);
             gtk_menu_item_set_submenu(update_loc_menu_item, NULL);
         }
 
