@@ -1,3 +1,21 @@
+/*  Copyright (c) 2003-2014 Xfce Development Team
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation; either version 2 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin Street, Fifth Floor,
+ * Boston, MA 02110-1301, USA.
+ */
+
 #include "adb.h"
 
 /* runs a generic adb command. return stdout, or NULL on any
@@ -442,7 +460,7 @@ static gboolean cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
             g_signal_handlers_disconnect_by_func(update_loc_menu_item,
                                                  G_CALLBACK(update_loc), data);
             g_object_set_data(G_OBJECT(update_loc_menu_item),
-                                  "activate-connected", NULL);
+                              "activate-connected", NULL);
             gtk_menu_item_set_submenu(update_loc_menu_item, NULL);
         }
 
