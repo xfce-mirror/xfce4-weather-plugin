@@ -208,6 +208,10 @@ parse_dump(const gchar *dump, gchar **lat_str, gchar **lon_str) {
         weather_debug("loc: new lat=%s, lon=%s", *lat_str, *lon_str);
         ok = TRUE;
     } else {
+        /* sometimes there is no match if the phone can not find satellites (roaming or no sim),
+         * in which case it may locate itself using wifi (grep 'passive provider:').
+         * in which case there is no point in grabbing the location from the phone, grab it from IP instead.
+         */
         weather_debug("loc: no match");
     }
 
@@ -413,7 +417,8 @@ static gboolean cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
     weather_debug("loc: 'Update location from phone:' menu is activated");
 
     if (event->button == 3 && data->update_loc_widget != NULL) {
-        GtkMenuItem *update_loc_menu_item = GTK_MENU_ITEM(data->update_loc_widget);
+        GtkMenuItem *update_loc_menu_item = GTK_MENU_ITEM(
+            data->update_loc_widget);
         gsize num_devices = 0;
         device *ds = get_devices(&num_devices);
 
