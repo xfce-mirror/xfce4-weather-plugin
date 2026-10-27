@@ -20,7 +20,6 @@
 #include "xfce-revision.h"
 #endif
 
-#include <math.h>
 #include <string.h>
 #include <sys/stat.h>
 
