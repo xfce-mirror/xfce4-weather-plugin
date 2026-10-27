@@ -562,7 +562,7 @@ cb_reverse_done(GObject *source,
 {
     plugin_data *data = (plugin_data *) user_data;
     xmlDoc *doc = NULL;
-    xmlNode *root, *node, *child;
+    xmlNode *root;
     xmlChar *content;
     gchar *value;
     gchar *name;
@@ -570,7 +570,6 @@ cb_reverse_done(GObject *source,
     const gchar *body = NULL;
     gsize len = 0;
     gint nparts = 0;
-    gint i, j;
     static const gchar *priority[] = {
         "hamlet", "village", "town", "suburb", "neighbourhood",
         "city", "municipality", "county", "state", "country", NULL
@@ -600,7 +599,7 @@ cb_reverse_done(GObject *source,
 
     root = xmlDocGetRootElement(doc);
     if (root) {
-        for (node = root->children; node; node = node->next) {
+        for (xmlNode *node = root->children; node; node = node->next) {
             if (node->type != XML_ELEMENT_NODE ||
                 xmlStrcasecmp(node->name, BAD_CAST "addressparts") != 0)
                 continue;
@@ -608,8 +607,10 @@ cb_reverse_done(GObject *source,
             /* the priority list is also the accept list: anything not
                on it (postcode, country_code, road, house_number,
                amenity, ISO codes) is ignored. */
-            for (i = 0; priority[i] && nparts < 4; i++) {
-                for (child = node->children; child; child = child->next) {
+            for (gint i = 0; priority[i] && nparts < 4; i++) {
+                for (xmlNode *child = node->children; child; child = child->next) {
+                    gint j;
+
                     if (child->type != XML_ELEMENT_NODE ||
                         xmlStrcasecmp(child->name,
                                       BAD_CAST priority[i]) != 0)
@@ -646,7 +647,7 @@ cb_reverse_done(GObject *source,
         data->location_name = name;
     }
 
-    for (i = 0; i < nparts; i++)
+    for (gint i = 0; i < nparts; i++)
         g_free(parts[i]);
 
 out:
@@ -688,8 +689,7 @@ cb_altitude_done(GObject *source, GAsyncResult *result,
 {
     plugin_data *data = (plugin_data *) user_data;
     xmlDoc *doc = NULL;
-    xmlNode *root, *node;
-    xmlChar *content;
+    xmlNode *root;
     gboolean found = FALSE;
     const gchar *body = NULL;
     gsize len = 0;
@@ -718,9 +718,9 @@ cb_altitude_done(GObject *source, GAsyncResult *result,
 
     root = xmlDocGetRootElement(doc);
     if (root) {
-        for (node = root->children; node; node = node->next) {
+        for (xmlNode *node = root->children; node; node = node->next) {
             if (node->type == XML_ELEMENT_NODE && xmlStrcasecmp(node->name, BAD_CAST "srtm3") == 0) {
-                content = xmlNodeGetContent(node);
+                xmlChar *content = xmlNodeGetContent(node);
                 if (content) {
                     found = TRUE;
                     data->msl = (gint) g_ascii_strtoll((const gchar *) content, NULL, 10);
@@ -774,14 +774,13 @@ cb_timezone_done(GObject *source, GAsyncResult *result,
 {
     plugin_data *data = (plugin_data *) user_data;
     xmlDoc *doc = NULL;
-    xmlNode *root, *node, *child;
-    xmlChar *content;
+    xmlNode *root;
     gboolean found = FALSE;
     const gchar *body = NULL;
     gsize len = 0;
 #if SOUP_CHECK_VERSION(3, 0, 0)
     GError *error = NULL;
-    GBytes *response =
+    GBytes *response =  
         soup_session_send_and_read_finish(SOUP_SESSION(source), result, &error);
 
     if (G_UNLIKELY(error))
@@ -804,11 +803,11 @@ cb_timezone_done(GObject *source, GAsyncResult *result,
 
     root = xmlDocGetRootElement(doc);
     if (root) {
-        for (node = root->children; node && !found; node = node->next) {
+        for (xmlNode *node = root->children; node && !found; node = node->next) {
             if (node->type == XML_ELEMENT_NODE && xmlStrcasecmp(node->name, BAD_CAST "timezone") == 0) {
-                for (child = node->children; child; child = child->next) {
+                for (xmlNode *child = node->children; child; child = child->next) {
                     if (child->type == XML_ELEMENT_NODE && xmlStrcasecmp(child->name, BAD_CAST "timezoneId") == 0) {
-                        content = xmlNodeGetContent(child);
+                        xmlChar *content = xmlNodeGetContent(child);
                         if (content) {
                             found = TRUE;
                             g_free(data->timezone);
