@@ -31,6 +31,8 @@
 
 #include "weather.h"
 
+G_BEGIN_DECLS
+
 /* minimum displacement to count as "moved", in kilometers; sized to
    the met.no forecast grid resolution (~9-11 km): */
 #define MIN_DISPLACEMENT (5.0)
@@ -84,9 +86,12 @@ void free_devices(device *ds);
 
 typedef struct {
     gboolean (*cb_show_phones)(GtkWidget *parent_menu, GdkEventButton *event,
-                               gpointer user_data);
+
+    gpointer user_data);
 } adb_t;
 
 extern const adb_t adb;
+
+G_END_DECLS
 
 #endif //XFCE4_WEATHER_PLUGIN_ADB_H
