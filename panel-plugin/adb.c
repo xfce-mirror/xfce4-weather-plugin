@@ -32,7 +32,7 @@ call_adb(gchar **argv) {
     gint argc = 0;
     gchar **cmd;
     gint i;
-    
+
     weather_debug("loc: spawning adb");
 
     while (argv[argc] != NULL) argc++;
@@ -409,31 +409,28 @@ void free_devices(device *ds) {
  */
 static gboolean cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
                                gpointer user_data) {
-    weather_debug("loc: 'Update location from phone:' menu is activated");
-    (void) parent_menu;
     plugin_data *data = user_data;
-    gsize num_devices = 0;
-    device *ds;
-    GtkWidget *submenu, *sub_item;
-    GtkMenuItem *update_loc_menu_item = GTK_MENU_ITEM(data->update_loc_widget);
-    gchar *new_label;
+    weather_debug("loc: 'Update location from phone:' menu is activated");
 
     if (event->button == 3 && data->update_loc_widget != NULL) {
+        GtkMenuItem *update_loc_menu_item = GTK_MENU_ITEM(data->update_loc_widget);
+        gsize num_devices = 0;
+        device *ds = get_devices(&num_devices);
+
         weather_debug("loc: Right-click detected before menu popup!");
-        ds = get_devices(&num_devices);
         weather_debug("loc: %zu device(s) found", num_devices);
 
         if (num_devices > 1) {
+            GtkWidget *submenu = gtk_menu_new();
+
             gtk_menu_item_set_label(update_loc_menu_item,
                                     _("Update location from phone:"));
-            submenu = gtk_menu_new();
 
             for (gsize i = 0; i < num_devices; i++) {
                 device d = ds[i];
+                GtkWidget *sub_item = gtk_menu_item_new_with_label(d.model);
                 weather_debug("loc: model='%s', serial='%s'", d.model,
                               d.serial);
-
-                sub_item = gtk_menu_item_new_with_label(d.model);
 
                 // associate serial with menu item
                 g_object_set_data_full(G_OBJECT(sub_item), "serial",
@@ -447,9 +444,10 @@ static gboolean cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
             gtk_menu_item_set_submenu(update_loc_menu_item, submenu);
             gtk_widget_show_all(submenu);
         } else if (num_devices == 1) {
-            gtk_menu_item_set_submenu(update_loc_menu_item, NULL);
-            new_label =
+            gchar *new_label =
                     g_strdup_printf(_("Update location from %s"), ds->model);
+
+            gtk_menu_item_set_submenu(update_loc_menu_item, NULL);
             gtk_menu_item_set_label(update_loc_menu_item, new_label);
             g_free(new_label);
             // associate serial with menu item
