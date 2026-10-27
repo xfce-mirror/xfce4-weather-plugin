@@ -523,7 +523,7 @@ lookup(gpointer data,
        const gchar *lon,
        const gchar *url_format,
        gboolean with_username,
-#if SOUP_CHECK_VERSION(3, 0, 0)
+#if SOUP_CHECK_VERSION(3, 0, 0) == 1
        GAsyncReadyCallback callback)
 #else
        SoupSessionCallback callback)
@@ -554,8 +554,7 @@ lookup(gpointer data,
 static void
 cb_reverse_done(GObject *source,
                 GAsyncResult *result,
-#if SOUP_CHECK_VERSION(3, 0, 0)
-#else
+#if SOUP_CHECK_VERSION(3, 0, 0) == 0
                 SoupMessage *msg,
 #endif
                 gpointer user_data)
@@ -563,9 +562,6 @@ cb_reverse_done(GObject *source,
     plugin_data *data = (plugin_data *) user_data;
     xmlDoc *doc = NULL;
     xmlNode *root;
-    xmlChar *content;
-    gchar *value;
-    gchar *name;
     gchar *parts[LOCWATCH_MAX_PARTS + 1] = { NULL };
     const gchar *body = NULL;
     gsize len = 0;
@@ -574,17 +570,17 @@ cb_reverse_done(GObject *source,
         "hamlet", "village", "town", "suburb", "neighbourhood",
         "city", "municipality", "county", "state", "country", NULL
     };
-#if SOUP_CHECK_VERSION(3, 0, 0)
+#if SOUP_CHECK_VERSION(3, 0, 0) == 1
     GError *error = NULL;
     GBytes *response =
         soup_session_send_and_read_finish(SOUP_SESSION(source), result, &error);
 
-    if (G_UNLIKELY(error))
+    if (G_UNLIKELY(error) != NULL)
         g_error_free(error);
     else
         body = g_bytes_get_data(response, &len);
 #else
-    if (G_LIKELY(msg->response_body && msg->response_body->data)) {
+    if (G_LIKELY(msg->response_body && msg->response_body->data) != NULL) {
         body = msg->response_body->data;
         len = msg->response_body->length;
     }
@@ -594,11 +590,11 @@ cb_reverse_done(GObject *source,
         goto out;
 
     doc = get_xml_document(body, len);
-    if (!doc)
+    if (doc == NULL)
         goto out;
 
     root = xmlDocGetRootElement(doc);
-    if (root) {
+    if (root != NULL) {
         for (xmlNode *node = root->children; node; node = node->next) {
             if (node->type != XML_ELEMENT_NODE ||
                 xmlStrcasecmp(node->name, BAD_CAST "addressparts") != 0)
@@ -610,6 +606,8 @@ cb_reverse_done(GObject *source,
             for (gint i = 0; priority[i] && nparts < 4; i++) {
                 for (xmlNode *child = node->children; child; child = child->next) {
                     gint j;
+                    xmlChar * content;
+                    gchar *value;
 
                     if (child->type != XML_ELEMENT_NODE ||
                         xmlStrcasecmp(child->name,
@@ -617,7 +615,7 @@ cb_reverse_done(GObject *source,
                         continue;
 
                     content = xmlNodeGetContent(child);
-                    if (!content || !*content) {
+                    if (content == NULL || *content == '\0') {
                         xmlFree(content);
                         continue;
                     }
@@ -641,7 +639,7 @@ cb_reverse_done(GObject *source,
     }
 
     if (nparts > 0) {
-        name = g_strjoinv(", ", parts);
+        gchar *name = g_strjoinv(", ", parts);
         weather_debug("loc: reverse geocode: %s", name);
         g_free(data->location_name);
         data->location_name = name;
@@ -651,10 +649,10 @@ cb_reverse_done(GObject *source,
         g_free(parts[i]);
 
 out:
-    if (doc)
+    if (doc != NULL)
         xmlFreeDoc(doc);
-#if SOUP_CHECK_VERSION(3, 0, 0)
-    if (response)
+#if SOUP_CHECK_VERSION(3, 0, 0) == 1
+    if (response != NULL)
         g_bytes_unref(response);
 #endif
 }
@@ -682,7 +680,7 @@ reverse_geocode(gpointer data,
    SRTM3's 60°N to 56°S coverage. */
 static void
 cb_altitude_done(GObject *source, GAsyncResult *result,
-#if !SOUP_CHECK_VERSION(3, 0, 0)
+#if SOUP_CHECK_VERSION(3, 0, 0) == 0
                 SoupMessage *msg,
 #endif
                 gpointer user_data)
@@ -693,17 +691,17 @@ cb_altitude_done(GObject *source, GAsyncResult *result,
     gboolean found = FALSE;
     const gchar *body = NULL;
     gsize len = 0;
-#if SOUP_CHECK_VERSION(3, 0, 0)
+#if SOUP_CHECK_VERSION(3, 0, 0) == 1
     GError *error = NULL;
     GBytes *response =
         soup_session_send_and_read_finish(SOUP_SESSION(source), result, &error);
 
-    if (G_UNLIKELY(error))
+    if (G_UNLIKELY(error) != NULL)
         g_error_free(error);
     else
         body = g_bytes_get_data(response, &len);
 #else
-    if (G_LIKELY(msg->response_body && msg->response_body->data)) {
+    if (G_LIKELY(msg->response_body && msg->response_body->data) != NULL) {
         body = msg->response_body->data;
         len = msg->response_body->length;
     }
@@ -713,15 +711,15 @@ cb_altitude_done(GObject *source, GAsyncResult *result,
         goto out;
 
     doc = get_xml_document(body, len);
-    if (!doc)
+    if (doc == NULL)
         goto out;
 
     root = xmlDocGetRootElement(doc);
-    if (root) {
+    if (root != NULL) {
         for (xmlNode *node = root->children; node; node = node->next) {
             if (node->type == XML_ELEMENT_NODE && xmlStrcasecmp(node->name, BAD_CAST "srtm3") == 0) {
-                xmlChar *content = xmlNodeGetContent(node);
-                if (content) {
+                xmlChar *content;
+                if ((content = xmlNodeGetContent(node)) != NULL) {
                     found = TRUE;
                     data->msl = (gint) g_ascii_strtoll((const gchar *) content, NULL, 10);
                     xmlFree(content);
@@ -737,10 +735,10 @@ cb_altitude_done(GObject *source, GAsyncResult *result,
         weather_debug("loc: no srtm3 data in response");
 
 out:
-    if (doc)
+    if (doc != NULL)
         xmlFreeDoc(doc);
-#if SOUP_CHECK_VERSION(3, 0, 0)
-    if (response)
+#if SOUP_CHECK_VERSION(3, 0, 0) == 1
+    if (response != NULL)
         g_bytes_unref(response);
 #endif
 }
@@ -767,7 +765,7 @@ lookup_altitude(gpointer data,
 
 static void
 cb_timezone_done(GObject *source, GAsyncResult *result,
-#if !SOUP_CHECK_VERSION(3, 0, 0)
+#if SOUP_CHECK_VERSION(3, 0, 0) == 0
                 SoupMessage *msg,
 #endif
                 gpointer user_data)
@@ -778,17 +776,17 @@ cb_timezone_done(GObject *source, GAsyncResult *result,
     gboolean found = FALSE;
     const gchar *body = NULL;
     gsize len = 0;
-#if SOUP_CHECK_VERSION(3, 0, 0)
+#if SOUP_CHECK_VERSION(3, 0, 0) == 1
     GError *error = NULL;
-    GBytes *response =  
+    GBytes *response =
         soup_session_send_and_read_finish(SOUP_SESSION(source), result, &error);
 
-    if (G_UNLIKELY(error))
+    if (G_UNLIKELY(error) != NULL)
         g_error_free(error);
     else
         body = g_bytes_get_data(response, &len);
 #else
-    if (G_LIKELY(msg->response_body && msg->response_body->data)) {
+    if (G_LIKELY(msg->response_body && msg->response_body->data) != NULL) {
         body = msg->response_body->data;
         len = msg->response_body->length;
     }
@@ -798,17 +796,16 @@ cb_timezone_done(GObject *source, GAsyncResult *result,
         goto out;
 
     doc = get_xml_document(body, len);
-    if (!doc)
+    if (doc == NULL)
         goto out;
 
-    root = xmlDocGetRootElement(doc);
-    if (root) {
+    if ((root = xmlDocGetRootElement(doc)) != NULL) {
         for (xmlNode *node = root->children; node && !found; node = node->next) {
             if (node->type == XML_ELEMENT_NODE && xmlStrcasecmp(node->name, BAD_CAST "timezone") == 0) {
                 for (xmlNode *child = node->children; child; child = child->next) {
                     if (child->type == XML_ELEMENT_NODE && xmlStrcasecmp(child->name, BAD_CAST "timezoneId") == 0) {
-                        xmlChar *content = xmlNodeGetContent(child);
-                        if (content) {
+                        xmlChar *content;
+                        if ((content = xmlNodeGetContent(child)) != NULL) {
                             found = TRUE;
                             g_free(data->timezone);
                             data->timezone = g_strdup((const gchar *) content);
@@ -827,10 +824,10 @@ cb_timezone_done(GObject *source, GAsyncResult *result,
         weather_debug("loc: no timezone in response");
 
 out:
-    if (doc)
+    if (doc != NULL)
         xmlFreeDoc(doc);
-#if SOUP_CHECK_VERSION(3, 0, 0)
-    if (response)
+#if SOUP_CHECK_VERSION(3, 0, 0) == 1
+    if (response != NULL)
         g_bytes_unref(response);
 #endif
 }
