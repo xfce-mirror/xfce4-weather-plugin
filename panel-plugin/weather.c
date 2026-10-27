@@ -97,6 +97,7 @@
         data->next_wakeup_reason = reason;          \
     }
 
+
 gboolean debug_mode = FALSE;
 
 
