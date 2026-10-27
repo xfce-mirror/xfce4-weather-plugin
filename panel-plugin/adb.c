@@ -82,7 +82,6 @@ get_devices(gsize *n_out) {
     gchar *out = call_adb(command);
     /* keep original for g_free() */
     gchar *raw = out;
-    gchar *line_start, *line_end;
     gsize n = 0, line_num = 0;
     device *ds;
     gchar *line;
@@ -97,8 +96,8 @@ get_devices(gsize *n_out) {
 
     /* skip until after "List of devices attached" */
     while (*out != '\0') {
-        line_start = out;
-        line_end = strchr(out, '\n');
+        gchar *line_start = out;
+        gchar *line_end = strchr(out, '\n');
 
         if (line_end != NULL) {
             *line_end = '\0';
@@ -271,12 +270,10 @@ get_loc(gchar *serial, gchar **lat_str, gchar **lon_str) {
 /* great-circle distance between two points in kilometers (spherical) */
 gdouble
 distance_km(gdouble x_lat, gdouble x_lon, gdouble y_lat, gdouble y_lon) {
-    gdouble dlat, dlon, a;
+    gdouble dlat = (y_lat - x_lat) * DEG_TO_RAD;
+    gdouble dlon = (y_lon - x_lon) * DEG_TO_RAD;
 
-    dlat = (y_lat - x_lat) * DEG_TO_RAD;
-    dlon = (y_lon - x_lon) * DEG_TO_RAD;
-
-    a = sin(dlat / 2) * sin(dlat / 2)
+    gdouble a = sin(dlat / 2) * sin(dlat / 2)
         + cos(x_lat * DEG_TO_RAD) * cos(y_lat * DEG_TO_RAD)
         * sin(dlon / 2) * sin(dlon / 2);
 
@@ -323,23 +320,21 @@ update_loc(GtkMenuItem *item, gpointer user_data) {
     plugin_data *data = user_data;
     gchar *new_lat = NULL;
     gchar *new_lon = NULL;
-    gchar *old_lat, *old_lon;
-    gdouble old_lat_d, old_lon_d, new_lat_d, new_lon_d;
-    gdouble moved = 0.0;
     gchar *serial = g_object_get_data(G_OBJECT(item), "serial");
     weather_debug("loc: getting loc from %s", serial);
 
     if (get_loc(serial, &new_lat, &new_lon)) {
-        old_lat = data->lat;
-        old_lon = data->lon;
+        gchar *old_lat = data->lat;
+        gchar *old_lon = data->lon;
+        gdouble moved = 0.0;
         weather_debug("loc: old lat=%s, lon=%s", old_lat, old_lon);
 
         /* skip the update if the phone is roughly where it already was: */
         if (old_lat != NULL && old_lon != NULL) {
-            old_lat_d = g_ascii_strtod(old_lat, NULL);
-            old_lon_d = g_ascii_strtod(old_lon, NULL);
-            new_lat_d = g_ascii_strtod(new_lat, NULL);
-            new_lon_d = g_ascii_strtod(new_lon, NULL);
+            gdouble old_lat_d = g_ascii_strtod(old_lat, NULL);
+            gdouble old_lon_d = g_ascii_strtod(old_lon, NULL);
+            gdouble new_lat_d = g_ascii_strtod(new_lat, NULL);
+            gdouble new_lon_d = g_ascii_strtod(new_lon, NULL);
             moved = distance_km(old_lat_d, old_lon_d, new_lat_d, new_lon_d);
 
             if (moved < MIN_DISPLACEMENT) {
