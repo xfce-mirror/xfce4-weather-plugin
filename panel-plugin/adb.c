@@ -34,7 +34,7 @@ call_adb(gchar **argv) {
     gchar **cmd;
 
     while (argv[argc]) argc++;
-    cmd = malloc((argc + 2) * sizeof *cmd);
+    cmd = g_new(gchar*, argc+2);
     cmd[0] = "adb";
 
     if (argc > 0) {
@@ -49,7 +49,7 @@ call_adb(gchar **argv) {
         weather_debug("loc: spawn failed: %s", error->message);
         g_clear_error(&error);
         g_free(stdout_str);
-        free(cmd);
+        g_free(cmd);
         return NULL;
     }
 
@@ -58,13 +58,13 @@ call_adb(gchar **argv) {
         weather_debug("loc: adb exited %d: %s", status, error->message);
         g_clear_error(&error);
         g_free(stdout_str);
-        free(cmd);
+        g_free(cmd);
         return NULL;
     }
 
     weather_debug("loc: %zu bytes from adb",
                   stdout_str ? strlen(stdout_str) : 0);
-    free(cmd);
+    g_free(cmd);
     return stdout_str;
 }
 
