@@ -2358,10 +2358,7 @@ xfceweather_free(XfcePanelPlugin *plugin,
     icon_theme_free(data->icon_theme);
 
     /* free update location menu */
-    if (data->update_loc_widget) {
-        gtk_widget_destroy(data->update_loc_widget);
-         data->update_loc_widget = NULL;
-    }
+    g_clear_pointer(&data->update_loc_widget, gtk_widget_destroy);
 
     g_slice_free(plugin_data, data);
     xfconf_shutdown ();
