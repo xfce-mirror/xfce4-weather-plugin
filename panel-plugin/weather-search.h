@@ -58,6 +58,12 @@ void weather_search_by_ip(SoupSession *session,
 
 void free_search_dialog(search_dialog *dialog);
 
+void reverse_geocode(gpointer data, const gchar *lat, const gchar *lon);
+
+void lookup_altitude(gpointer data, const gchar *lat, const gchar *lon);
+
+void lookup_timezone(gpointer data, const gchar *lat, const gchar *lon);
+
 G_END_DECLS
 
 #endif
