@@ -76,7 +76,7 @@ device *
 get_devices(gsize *n_out) {
     gchar *command[] = {"devices", "-l", NULL};
     gchar *out = call_adb(command);
-    /* keep original for free() */
+    /* keep original for g_free() */
     gchar *raw = out;
     gchar *line_start, *line_end;
     gsize n = 0, line_num = 0;
@@ -165,7 +165,7 @@ get_devices(gsize *n_out) {
         }
     }
 
-    /* free the ORIGINAL pointer */
+    /* g_free the ORIGINAL pointer */
     g_free(raw);
 
     if (n_out != NULL)
