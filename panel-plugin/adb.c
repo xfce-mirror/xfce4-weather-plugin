@@ -90,6 +90,7 @@ get_devices(gsize *n_out) {
     if (out == NULL)
         return NULL;
 
+    /* skip until after "List of devices attached" */
     while (*out != '\0') {
         line_start = out;
         line_end = strchr(out, '\n');
@@ -101,7 +102,7 @@ get_devices(gsize *n_out) {
             out = line_start + strlen(line_start);
         }
 
-        if (strncmp(line_start, "List of devices attached", 24) == 0) {
+        if (g_str_has_prefix(line_start, "List of devices attached")) {
             break;
         }
     }
