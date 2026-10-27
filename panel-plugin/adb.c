@@ -372,7 +372,8 @@ update_loc(GtkMenuItem *item, gpointer user_data) {
     }
 }
 
-void free_devices(device *ds) {
+void
+free_devices(device *ds) {
     if (ds == NULL)
         return;
     for (device *p = ds; p->model != NULL; p++) {
@@ -411,7 +412,8 @@ void free_devices(device *ds) {
  *
  * Returns FALSE so the panel's own handler still runs and shows the menu.
  */
-static gboolean cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
+static gboolean
+cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
                                gpointer user_data) {
     plugin_data *data = user_data;
     weather_debug("loc: 'Update location from phone:' menu is activated");
@@ -430,6 +432,17 @@ static gboolean cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
 
             gtk_menu_item_set_label(update_loc_menu_item,
                                     _("Update location from phone:"));
+
+            /* disconnect any instance of update_loc from this menu item because
+             * it no longer belongs to a specific phone.
+             * it will be called from a submenu instead
+             */
+
+            g_signal_handlers_disconnect_by_func(update_loc_menu_item,
+                                     G_CALLBACK(update_loc), data);
+            g_object_set_data(G_OBJECT(update_loc_menu_item),
+                              "activate-connected", NULL);
+            g_object_set_data(G_OBJECT(update_loc_menu_item), "serial", NULL);
 
             for (gsize i = 0; i < num_devices; i++) {
                 device d = ds[i];
@@ -460,8 +473,7 @@ static gboolean cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
                                    g_strdup(ds[0].serial), g_free);
 
             /* (re)connect signal exactly once */
-            if (g_object_get_data(
-                    G_OBJECT(update_loc_menu_item),
+            if (g_object_get_data(G_OBJECT(update_loc_menu_item),
                     "activate-connected") == NULL) {
                 g_signal_connect(update_loc_menu_item, "activate",
                                  G_CALLBACK(update_loc), data);
@@ -473,6 +485,8 @@ static gboolean cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
                                                  G_CALLBACK(update_loc), data);
             g_object_set_data(G_OBJECT(update_loc_menu_item),
                               "activate-connected", NULL);
+            /* clear stale "serial" belonging to disconnected phone */
+            g_object_set_data(G_OBJECT(update_loc_menu_item), "serial", NULL);
             gtk_menu_item_set_submenu(update_loc_menu_item, NULL);
         }
 
