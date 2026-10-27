@@ -24,7 +24,6 @@
  */
 gchar *
 call_adb(gchar **argv) {
-    weather_debug("loc: spawning adb");
     GError *error = NULL;
     gchar *stdout_str = NULL;
     gint status;
@@ -33,13 +32,15 @@ call_adb(gchar **argv) {
     gint argc = 0;
     gchar **cmd;
     gint i;
+    
+    weather_debug("loc: spawning adb");
 
     while (argv[argc] != NULL) argc++;
-    cmd = g_new(gchar*, argc+2);
+    cmd = g_new(gchar*, argc + 2);
     cmd[0] = "adb";
 
-    for (i = 1; i <= argc; i++) {
-        cmd[i] = g_strdup(argv[i - 1]);
+    for (i = 0; i < argc; i++) {
+        cmd[i + 1] = argv[i];
     }
 
     cmd[argc + 1] = NULL;
@@ -65,7 +66,9 @@ call_adb(gchar **argv) {
 
     weather_debug("loc: %zu bytes from adb",
                   stdout_str ? strlen(stdout_str) : 0);
+
     g_free(cmd);
+
     return stdout_str;
 }
 
