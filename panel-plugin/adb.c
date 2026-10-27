@@ -33,12 +33,12 @@ call_adb(gchar **argv) {
     gint argc = 0;
     gchar **cmd;
 
-    while (argv[argc]) argc++;
+    while (argv[argc] != NULL) argc++;
     cmd = g_new(gchar*, argc+2);
     cmd[0] = "adb";
 
     for (gint i = 1; i <= argc; i++) {
-        cmd[i] = g_strdup (argv[i - 1]);
+        cmd[i] = g_strdup(argv[i - 1]);
     }
 
     cmd[argc + 1] = NULL;
@@ -85,12 +85,12 @@ get_devices(gsize *n_out) {
     GMatchInfo *mi = NULL;
     static GRegex *re = NULL;
 
-    if (n_out)
+    if (n_out != NULL)
         *n_out = 0;
     if (out == NULL)
         return NULL;
 
-    while (*out) {
+    while (*out != '\0') {
         line_start = out;
         line_end = strchr(out, '\n');
 
@@ -101,7 +101,7 @@ get_devices(gsize *n_out) {
             out = line_start + strlen(line_start);
         }
 
-        if (!strncmp(line_start, "List of devices attached", 24)) {
+        if (strncmp(line_start, "List of devices attached", 24) == 0) {
             break;
         }
     }
@@ -168,7 +168,7 @@ get_devices(gsize *n_out) {
     /* free the ORIGINAL pointer */
     g_free(raw);
 
-    if (n_out)
+    if (n_out != NULL)
         *n_out = line_num;
 
     return ds;
@@ -361,7 +361,7 @@ update_loc(GtkMenuItem *item, gpointer user_data) {
 }
 
 void free_devices(device *ds) {
-    if (!ds)
+    if (ds == NULL)
         return;
     for (device *p = ds; p->model != NULL; p++) {
         g_free(p->serial);
@@ -410,7 +410,7 @@ static gboolean cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
     GtkMenuItem *update_loc_menu_item = GTK_MENU_ITEM(data->update_loc_widget);
     gchar *new_label;
 
-    if (event->button == 3 && data->update_loc_widget) {
+    if (event->button == 3 && data->update_loc_widget != NULL) {
         weather_debug("loc: Right-click detected before menu popup!");
         ds = get_devices(&num_devices);
         weather_debug("loc: %zu device(s) found", num_devices);
@@ -449,8 +449,9 @@ static gboolean cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
                                    g_strdup(ds[0].serial), g_free);
 
             /* (re)connect signal exactly once */
-            if (!g_object_get_data(
-                G_OBJECT(update_loc_menu_item), "activate-connected")) {
+            if (g_object_get_data(
+                    G_OBJECT(update_loc_menu_item),
+                    "activate-connected") == NULL) {
                 g_signal_connect(update_loc_menu_item, "activate",
                                  G_CALLBACK(update_loc), data);
                 g_object_set_data(G_OBJECT(update_loc_menu_item),
