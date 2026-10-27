@@ -30,15 +30,15 @@ call_adb(gchar **argv) {
     gint status;
 
     /* build command */
-    size_t argc = 0;
+    gint argc = 0;
     gchar **cmd;
 
     while (argv[argc]) argc++;
     cmd = g_new(gchar*, argc+2);
     cmd[0] = "adb";
 
-    if (argc > 0) {
-        memcpy(cmd + 1, argv, argc * sizeof *cmd);
+    for (gint i = 1; i <= argc; i++) {
+        cmd[i] = g_strdup (argv[i - 1]);
     }
 
     cmd[argc + 1] = NULL;
