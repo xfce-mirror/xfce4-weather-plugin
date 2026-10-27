@@ -32,12 +32,13 @@ call_adb(gchar **argv) {
     /* build command */
     gint argc = 0;
     gchar **cmd;
+    gint i;
 
     while (argv[argc] != NULL) argc++;
     cmd = g_new(gchar*, argc+2);
     cmd[0] = "adb";
 
-    for (gint i = 1; i <= argc; i++) {
+    for (i = 1; i <= argc; i++) {
         cmd[i] = g_strdup(argv[i - 1]);
     }
 
@@ -84,6 +85,7 @@ get_devices(gsize *n_out) {
     gchar *line;
     GMatchInfo *mi = NULL;
     static GRegex *re = NULL;
+    gchar *c;
 
     if (n_out != NULL)
         *n_out = 0;
@@ -108,7 +110,7 @@ get_devices(gsize *n_out) {
     }
 
     /* count non-empty lines remaining */
-    for (gchar *c = out; *c; c++) {
+    for (c = out; *c; c++) {
         if (*c != '\n' && (c == out || c[-1] == '\n'))
             n++;
     }
@@ -241,11 +243,13 @@ parse_dump(const gchar *dump, gchar **lat_str, gchar **lon_str) {
  */
 gboolean
 get_loc(gchar *serial, gchar **lat_str, gchar **lon_str) {
+    gchar *dump;
+    gboolean ok;
+
     if (serial == NULL)
         return FALSE;
 
-    gchar *dump = loc_dump(serial);
-    gboolean ok;
+    dump = loc_dump(serial);
 
     if (dump == NULL)
         return FALSE;
