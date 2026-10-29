@@ -104,7 +104,8 @@ get_devices(gsize *n_out) {
     }
 
     if (i == g_strv_length(lines)) {
-        weather_debug("loc: 'List of devices attached' not found in output of 'adb devices -l'");
+        weather_debug(
+            "loc: 'List of devices attached' not found in output of 'adb devices -l'");
         g_strfreev(lines);
         g_free(raw);
         return NULL;
@@ -174,8 +175,7 @@ get_devices(gsize *n_out) {
                           devices[line_num].model);
 
             line_num++;
-            g_match_info_free(mi);
-            mi = NULL;
+            g_clear_pointer(&mi, g_match_info_free);
         }
     }
 
@@ -223,7 +223,7 @@ parse_dump(const gchar *dump, gchar **lat_str, gchar **lon_str) {
         weather_debug("loc: no match");
     }
 
-    g_match_info_free(mi);
+    g_clear_pointer(&mi, g_match_info_free);
     return ok;
 }
 
@@ -283,8 +283,8 @@ distance_km(gdouble x_lat, gdouble x_lon, gdouble y_lat, gdouble y_lon) {
     gdouble dlon = (y_lon - x_lon) * DEG_TO_RAD;
 
     gdouble a = sin(dlat / 2) * sin(dlat / 2)
-        + cos(x_lat * DEG_TO_RAD) * cos(y_lat * DEG_TO_RAD)
-        * sin(dlon / 2) * sin(dlon / 2);
+                + cos(x_lat * DEG_TO_RAD) * cos(y_lat * DEG_TO_RAD)
+                * sin(dlon / 2) * sin(dlon / 2);
 
     return EARTH_RADIUS_KM * 2 * atan2(sqrt(a), sqrt(1.0 - a));
 }
@@ -418,7 +418,7 @@ free_devices(device *ds) {
  */
 static gboolean
 cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
-                               gpointer user_data) {
+               gpointer user_data) {
     plugin_data *data = user_data;
     weather_debug("loc: 'Update location from phone:' menu is activated");
 
@@ -443,7 +443,7 @@ cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
              */
 
             g_signal_handlers_disconnect_by_func(update_loc_menu_item,
-                                     G_CALLBACK(update_loc), data);
+                                                 G_CALLBACK(update_loc), data);
             g_object_set_data(G_OBJECT(update_loc_menu_item),
                               "activate-connected", NULL);
             g_object_set_data(G_OBJECT(update_loc_menu_item), "serial", NULL);
@@ -478,7 +478,7 @@ cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
 
             /* (re)connect signal exactly once */
             if (g_object_get_data(G_OBJECT(update_loc_menu_item),
-                    "activate-connected") == NULL) {
+                                  "activate-connected") == NULL) {
                 g_signal_connect(update_loc_menu_item, "activate",
                                  G_CALLBACK(update_loc), data);
                 g_object_set_data(G_OBJECT(update_loc_menu_item),
