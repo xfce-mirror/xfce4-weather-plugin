@@ -432,40 +432,15 @@ cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
         weather_debug("loc: Right-click detected before menu popup!");
         weather_debug("loc: %zu device(s) found", num_devices);
 
-        if (num_devices > 1) {
-            GtkWidget *submenu = gtk_menu_new();
-
-            gtk_menu_item_set_label(update_loc_menu_item,
-                                    _("Update location from phone:"));
-
-            /* disconnect any instance of update_loc from this menu item because
-             * it no longer belongs to a specific phone.
-             * it will be called from a submenu instead
-             */
-
+        if (num_devices == 0) {
             g_signal_handlers_disconnect_by_func(update_loc_menu_item,
                                                  G_CALLBACK(update_loc), data);
             g_object_set_data(G_OBJECT(update_loc_menu_item),
                               "activate-connected", NULL);
-            g_object_set_data_full(G_OBJECT(update_loc_menu_item), "serial", NULL, g_free);
-
-            for (gsize i = 0; i < num_devices; i++) {
-                device d = ds[i];
-                GtkWidget *sub_item = gtk_menu_item_new_with_label(d.model);
-                weather_debug("loc: model='%s', serial='%s'", d.model,
-                              d.serial);
-
-                // associate serial with menu item
-                g_object_set_data_full(G_OBJECT(sub_item), "serial",
-                                       g_strdup(d.serial), g_free);
-                g_signal_connect(sub_item, "activate",
-                                 G_CALLBACK(update_loc), data);
-
-                gtk_menu_shell_append(GTK_MENU_SHELL(submenu), sub_item);
-            }
-
-            gtk_menu_item_set_submenu(update_loc_menu_item, submenu);
-            gtk_widget_show_all(submenu);
+            /* clear stale "serial" belonging to disconnected phone */
+            g_object_set_data_full(
+                G_OBJECT(update_loc_menu_item), "serial", NULL, g_free);
+            gtk_menu_item_set_submenu(update_loc_menu_item, NULL);
         } else if (num_devices == 1) {
             gchar *new_label =
                     g_strdup_printf(_("Update location from %s"), ds->model);
@@ -486,13 +461,40 @@ cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
                                   "activate-connected", GINT_TO_POINTER(1));
             }
         } else {
+            GtkWidget *submenu = gtk_menu_new();
+
+            gtk_menu_item_set_label(update_loc_menu_item,
+                                    _("Update location from phone:"));
+
+            /* disconnect any instance of update_loc from this menu item because
+             * it no longer belongs to a specific phone.
+             * it will be called from a submenu instead
+             */
+
             g_signal_handlers_disconnect_by_func(update_loc_menu_item,
                                                  G_CALLBACK(update_loc), data);
             g_object_set_data(G_OBJECT(update_loc_menu_item),
                               "activate-connected", NULL);
-            /* clear stale "serial" belonging to disconnected phone */
-            g_object_set_data_full(G_OBJECT(update_loc_menu_item), "serial", NULL, g_free);
-            gtk_menu_item_set_submenu(update_loc_menu_item, NULL);
+            g_object_set_data_full(
+                G_OBJECT(update_loc_menu_item), "serial", NULL, g_free);
+
+            for (gsize i = 0; i < num_devices; i++) {
+                device d = ds[i];
+                GtkWidget *sub_item = gtk_menu_item_new_with_label(d.model);
+                weather_debug("loc: model='%s', serial='%s'", d.model,
+                              d.serial);
+
+                // associate serial with menu item
+                g_object_set_data_full(G_OBJECT(sub_item), "serial",
+                                       g_strdup(d.serial), g_free);
+                g_signal_connect(sub_item, "activate",
+                                 G_CALLBACK(update_loc), data);
+
+                gtk_menu_shell_append(GTK_MENU_SHELL(submenu), sub_item);
+            }
+
+            gtk_menu_item_set_submenu(update_loc_menu_item, submenu);
+            gtk_widget_show_all(submenu);
         }
 
         free_devices(ds);
