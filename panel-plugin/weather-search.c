@@ -571,13 +571,10 @@ cb_reverse_done(GObject *source,
         "city", "municipality", "county", "state", "country", NULL
     };
 #if SOUP_CHECK_VERSION(3, 0, 0)
-    GError *error = NULL;
     GBytes *response =
-        soup_session_send_and_read_finish(SOUP_SESSION(source), result, &error);
+        soup_session_send_and_read_finish(SOUP_SESSION(source), result, NULL);
 
-    if (G_UNLIKELY(error) != NULL)
-        g_error_free(error);
-    else
+    if (G_LIKELY(response != NULL))
         body = g_bytes_get_data(response, &len);
 #else
     if (G_LIKELY(msg->response_body && msg->response_body->data) != NULL) {
@@ -692,13 +689,10 @@ cb_altitude_done(GObject *source, GAsyncResult *result,
     const gchar *body = NULL;
     gsize len = 0;
 #if SOUP_CHECK_VERSION(3, 0, 0)
-    GError *error = NULL;
     GBytes *response =
-        soup_session_send_and_read_finish(SOUP_SESSION(source), result, &error);
+        soup_session_send_and_read_finish(SOUP_SESSION(source), result, NULL);
 
-    if (G_UNLIKELY(error) != NULL)
-        g_error_free(error);
-    else
+    if (G_LIKELY(response != NULL))
         body = g_bytes_get_data(response, &len);
 #else
     if (G_LIKELY(msg->response_body && msg->response_body->data) != NULL) {
@@ -777,13 +771,10 @@ cb_timezone_done(GObject *source, GAsyncResult *result,
     const gchar *body = NULL;
     gsize len = 0;
 #if SOUP_CHECK_VERSION(3, 0, 0)
-    GError *error = NULL;
     GBytes *response =
-        soup_session_send_and_read_finish(SOUP_SESSION(source), result, &error);
+        soup_session_send_and_read_finish(SOUP_SESSION(source), result, NULL);
 
-    if (G_UNLIKELY(error) != NULL)
-        g_error_free(error);
-    else
+    if (G_LIKELY(response != NULL))
         body = g_bytes_get_data(response, &len);
 #else
     if (G_LIKELY(msg->response_body && msg->response_body->data) != NULL) {
