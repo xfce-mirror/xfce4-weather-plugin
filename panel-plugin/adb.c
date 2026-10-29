@@ -447,7 +447,7 @@ cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
                                                  G_CALLBACK(update_loc), data);
             g_object_set_data(G_OBJECT(update_loc_menu_item),
                               "activate-connected", NULL);
-            g_object_set_data(G_OBJECT(update_loc_menu_item), "serial", NULL);
+            g_object_set_data_full(G_OBJECT(update_loc_menu_item), "serial", NULL, g_free);
 
             for (gsize i = 0; i < num_devices; i++) {
                 device d = ds[i];
@@ -491,7 +491,7 @@ cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
             g_object_set_data(G_OBJECT(update_loc_menu_item),
                               "activate-connected", NULL);
             /* clear stale "serial" belonging to disconnected phone */
-            g_object_set_data(G_OBJECT(update_loc_menu_item), "serial", NULL);
+            g_object_set_data_full(G_OBJECT(update_loc_menu_item), "serial", NULL, g_free);
             gtk_menu_item_set_submenu(update_loc_menu_item, NULL);
         }
 
