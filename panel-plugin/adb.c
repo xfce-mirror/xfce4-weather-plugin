@@ -62,7 +62,7 @@ call_adb(gchar **argv) {
     }
 
     weather_debug("loc: %zu bytes from adb",
-                  stdout_str ? strlen(stdout_str) : 0);
+                  stdout_str != NULL ? strlen(stdout_str) : 0);
 
     g_free(cmd);
 
