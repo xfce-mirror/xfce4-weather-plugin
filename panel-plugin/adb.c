@@ -80,42 +80,54 @@ get_devices(gsize *n_out) {
     /* keep original for g_free() */
     gchar *raw = out;
     gsize n = 0, line_num = 0;
-    device *ds;
+    device *devices;
+    gchar **lines;
     gchar *line;
-    GMatchInfo *mi = NULL;
+    guint i;
     static GRegex *re = NULL;
-    gchar *c;
+    GMatchInfo *mi = NULL;
 
     if (n_out != NULL)
         *n_out = 0;
+
     if (out == NULL)
         return NULL;
 
+    /* split into lines */
+    lines = g_strsplit(out, "\n", 0);
+
     /* skip until after "List of devices attached" */
-    while (*out != '\0') {
-        gchar *line_start = out;
-        gchar *line_end = strchr(out, '\n');
-
-        if (line_end != NULL) {
-            *line_end = '\0';
-            out = line_end + 1;
-        } else {
-            out = line_start + strlen(line_start);
-        }
-
-        if (g_str_has_prefix(line_start, "List of devices attached")) {
+    for (i = 0; lines[i] != NULL; i++) {
+        if (g_str_has_prefix(lines[i], "List of devices attached")) {
             break;
         }
     }
 
-    /* count non-empty lines remaining */
-    for (c = out; *c; c++) {
-        if (*c != '\n' && (c == out || c[-1] == '\n'))
-            n++;
+    if (i == g_strv_length(lines)) {
+        weather_debug("loc: 'List of devices attached' not found in output of 'adb devices -l'");
+        g_strfreev(lines);
+        g_free(raw);
+        return NULL;
+    }
+
+    /* count non-empty lines following the header */
+    for (guint j = i + 1; lines[j] != NULL; j++) {
+        if (xfce_str_is_empty(lines[j])) {
+            break;
+        }
+
+        n++;
+    }
+
+    if (n == 0) {
+        weather_debug("loc: No devices found");
+        g_strfreev(lines);
+        g_free(raw);
+        return NULL;
     }
 
     /* +1 for trailing NULL */
-    ds = g_new0(device, n + 1);
+    devices = g_new0(device, n + 1);
 
     if (re == NULL) {
         /* Parse one line of `adb devices -l` output.
@@ -155,11 +167,11 @@ get_devices(gsize *n_out) {
 
     while ((line = strsep(&out, "\n")) != NULL) {
         if (g_regex_match(re, line, 0, &mi)) {
-            ds[line_num].serial = g_match_info_fetch(mi, 1);
-            ds[line_num].model = g_match_info_fetch(mi, 2);
+            devices[line_num].serial = g_match_info_fetch(mi, 1);
+            devices[line_num].model = g_match_info_fetch(mi, 2);
 
-            weather_debug("loc: serial=%s, model=%s", ds[line_num].serial,
-                          ds[line_num].model);
+            weather_debug("loc: serial=%s, model=%s", devices[line_num].serial,
+                          devices[line_num].model);
 
             line_num++;
             g_match_info_free(mi);
@@ -173,7 +185,7 @@ get_devices(gsize *n_out) {
     if (n_out != NULL)
         *n_out = line_num;
 
-    return ds;
+    return devices;
 }
 
 
