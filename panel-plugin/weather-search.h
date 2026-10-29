@@ -1,4 +1,4 @@
-/*  Copyright (c) 2003-2014 Xfce Development Team
+/*  Copyright (c) 2026 Xfce Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -57,6 +57,12 @@ void weather_search_by_ip(SoupSession *session,
                           gpointer user_data);
 
 void free_search_dialog(search_dialog *dialog);
+
+void reverse_geocode(gpointer data, const gchar *lat, const gchar *lon);
+
+void lookup_altitude(gpointer data, const gchar *lat, const gchar *lon);
+
+void lookup_timezone(gpointer data, const gchar *lat, const gchar *lon);
 
 G_END_DECLS
 

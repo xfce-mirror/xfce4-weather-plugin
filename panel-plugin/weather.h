@@ -1,4 +1,4 @@
-/*  Copyright (c) 2003-2014 Xfce Development Team
+/*  Copyright (c) 2026 Xfce Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -132,6 +132,12 @@ typedef struct {
     summary_details *summary_details;
     guint config_remember_tab;
     guint summary_remember_tab;
+
+    /* "Update location from phone:" menu item inserted into the panel's
+     * right-click menu. Kept here so adb.cb_show_phones() can toggle its
+     * visibility each time the menu is about to be shown. Owned by the
+     * panel once inserted; cleared (not destroyed) in xfceweather_free(). */
+    GtkWidget *update_loc_widget;
 
     gint panel_size;
     gint icon_size;
