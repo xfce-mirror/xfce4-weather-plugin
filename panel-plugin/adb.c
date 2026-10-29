@@ -175,8 +175,9 @@ get_devices(gsize *n_out) {
                           devices[line_num].model);
 
             line_num++;
-            g_clear_pointer(&mi, g_match_info_free);
         }
+
+        g_clear_pointer(&mi, g_match_info_free);
     }
 
     /* g_free the ORIGINAL pointer */
