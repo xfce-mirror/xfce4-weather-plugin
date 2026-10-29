@@ -36,14 +36,12 @@ call_adb(gchar **argv) {
     weather_debug("loc: spawning adb");
 
     while (argv[argc] != NULL) argc++;
-    cmd = g_new(gchar*, argc + 2);
+    cmd = g_new0(gchar*, argc + 2);
     cmd[0] = "adb";
 
     for (i = 0; i < argc; i++) {
         cmd[i + 1] = argv[i];
     }
-
-    cmd[argc + 1] = NULL;
 
     if (!g_spawn_sync(NULL, cmd, NULL, G_SPAWN_SEARCH_PATH,
                       NULL, NULL, &stdout_str, NULL, &status, &error)) {
