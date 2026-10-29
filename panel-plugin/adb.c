@@ -31,7 +31,6 @@ call_adb(gchar **argv) {
     /* build command */
     gint argc = 0;
     gchar **cmd;
-    gint i;
 
     weather_debug("loc: spawning adb");
 
@@ -39,7 +38,7 @@ call_adb(gchar **argv) {
     cmd = g_new0(gchar*, argc + 2);
     cmd[0] = "adb";
 
-    for (i = 0; i < argc; i++) {
+    for (gint i = 0; i < argc; i++) {
         cmd[i + 1] = argv[i];
     }
 
