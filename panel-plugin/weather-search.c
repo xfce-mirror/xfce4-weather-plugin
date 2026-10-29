@@ -523,7 +523,7 @@ lookup(gpointer data,
        const gchar *lon,
        const gchar *url_format,
        gboolean with_username,
-#if SOUP_CHECK_VERSION(3, 0, 0) == 1
+#if SOUP_CHECK_VERSION(3, 0, 0)
        GAsyncReadyCallback callback)
 #else
        SoupSessionCallback callback)
@@ -554,7 +554,7 @@ lookup(gpointer data,
 static void
 cb_reverse_done(GObject *source,
                 GAsyncResult *result,
-#if SOUP_CHECK_VERSION(3, 0, 0) == 0
+#if !SOUP_CHECK_VERSION(3, 0, 0)
                 SoupMessage *msg,
 #endif
                 gpointer user_data)
@@ -570,7 +570,7 @@ cb_reverse_done(GObject *source,
         "hamlet", "village", "town", "suburb", "neighbourhood",
         "city", "municipality", "county", "state", "country", NULL
     };
-#if SOUP_CHECK_VERSION(3, 0, 0) == 1
+#if SOUP_CHECK_VERSION(3, 0, 0)
     GError *error = NULL;
     GBytes *response =
         soup_session_send_and_read_finish(SOUP_SESSION(source), result, &error);
@@ -651,7 +651,7 @@ cb_reverse_done(GObject *source,
 out:
     if (doc != NULL)
         xmlFreeDoc(doc);
-#if SOUP_CHECK_VERSION(3, 0, 0) == 1
+#if SOUP_CHECK_VERSION(3, 0, 0)
     if (response != NULL)
         g_bytes_unref(response);
 #endif
@@ -680,7 +680,7 @@ reverse_geocode(gpointer data,
    SRTM3's 60°N to 56°S coverage. */
 static void
 cb_altitude_done(GObject *source, GAsyncResult *result,
-#if SOUP_CHECK_VERSION(3, 0, 0) == 0
+#if !SOUP_CHECK_VERSION(3, 0, 0)
                 SoupMessage *msg,
 #endif
                 gpointer user_data)
@@ -691,7 +691,7 @@ cb_altitude_done(GObject *source, GAsyncResult *result,
     gboolean found = FALSE;
     const gchar *body = NULL;
     gsize len = 0;
-#if SOUP_CHECK_VERSION(3, 0, 0) == 1
+#if SOUP_CHECK_VERSION(3, 0, 0)
     GError *error = NULL;
     GBytes *response =
         soup_session_send_and_read_finish(SOUP_SESSION(source), result, &error);
@@ -737,7 +737,7 @@ cb_altitude_done(GObject *source, GAsyncResult *result,
 out:
     if (doc != NULL)
         xmlFreeDoc(doc);
-#if SOUP_CHECK_VERSION(3, 0, 0) == 1
+#if SOUP_CHECK_VERSION(3, 0, 0)
     if (response != NULL)
         g_bytes_unref(response);
 #endif
@@ -765,7 +765,7 @@ lookup_altitude(gpointer data,
 
 static void
 cb_timezone_done(GObject *source, GAsyncResult *result,
-#if SOUP_CHECK_VERSION(3, 0, 0) == 0
+#if !SOUP_CHECK_VERSION(3, 0, 0)
                 SoupMessage *msg,
 #endif
                 gpointer user_data)
@@ -776,7 +776,7 @@ cb_timezone_done(GObject *source, GAsyncResult *result,
     gboolean found = FALSE;
     const gchar *body = NULL;
     gsize len = 0;
-#if SOUP_CHECK_VERSION(3, 0, 0) == 1
+#if SOUP_CHECK_VERSION(3, 0, 0)
     GError *error = NULL;
     GBytes *response =
         soup_session_send_and_read_finish(SOUP_SESSION(source), result, &error);
@@ -826,7 +826,7 @@ cb_timezone_done(GObject *source, GAsyncResult *result,
 out:
     if (doc != NULL)
         xmlFreeDoc(doc);
-#if SOUP_CHECK_VERSION(3, 0, 0) == 1
+#if SOUP_CHECK_VERSION(3, 0, 0)
     if (response != NULL)
         g_bytes_unref(response);
 #endif
