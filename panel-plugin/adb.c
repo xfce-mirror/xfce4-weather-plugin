@@ -77,12 +77,9 @@ device *
 get_devices(gsize *n_out) {
     gchar *command[] = {"devices", "-l", NULL};
     gchar *out = call_adb(command);
-    /* keep original for g_free() */
-    gchar *raw = out;
     gsize n = 0, line_num = 0;
     device *devices;
     gchar **lines;
-    gchar *line;
     guint i;
     static GRegex *re = NULL;
     GMatchInfo *mi = NULL;
@@ -95,6 +92,7 @@ get_devices(gsize *n_out) {
 
     /* split into lines */
     lines = g_strsplit(out, "\n", 0);
+    g_free(out);
 
     /* skip until after "List of devices attached" */
     for (i = 0; lines[i] != NULL; i++) {
@@ -107,7 +105,6 @@ get_devices(gsize *n_out) {
         weather_debug(
             "loc: 'List of devices attached' not found in output of 'adb devices -l'");
         g_strfreev(lines);
-        g_free(raw);
         return NULL;
     }
 
@@ -123,7 +120,6 @@ get_devices(gsize *n_out) {
     if (n == 0) {
         weather_debug("loc: No devices found");
         g_strfreev(lines);
-        g_free(raw);
         return NULL;
     }
 
@@ -166,7 +162,8 @@ get_devices(gsize *n_out) {
             0, 0, NULL);
     }
 
-    while ((line = strsep(&out, "\n")) != NULL) {
+    for (guint j = i + 1; j < i + 1 + n; j++) {
+        gchar *line = lines[j];
         if (g_regex_match(re, line, 0, &mi)) {
             devices[line_num].serial = g_match_info_fetch(mi, 1);
             devices[line_num].model = g_match_info_fetch(mi, 2);
@@ -180,8 +177,8 @@ get_devices(gsize *n_out) {
         g_clear_pointer(&mi, g_match_info_free);
     }
 
-    /* g_free the ORIGINAL pointer */
-    g_free(raw);
+
+    g_strfreev(lines);
 
     if (n_out != NULL)
         *n_out = line_num;
@@ -193,7 +190,9 @@ get_devices(gsize *n_out) {
 /* Runs `adb -s @serial shell dumpsys location` */
 gchar *
 loc_dump(gchar *serial) {
-    gchar *command[] = {"-s", serial, "shell", "dumpsys", "location", NULL};
+    gchar *command[] = {
+        "-s", serial, "shell", "dumpsys", "location", NULL
+    };
     return call_adb(command);
 }
 
@@ -209,12 +208,14 @@ parse_dump(const gchar *dump, gchar **lat_str, gchar **lon_str) {
 
     /* first entry is the one with highest-confidence. */
     if (re == NULL)
-        re = g_regex_new("Location\\[fused ([-0-9.]+),([-0-9.]+)", 0, 0, NULL);
+        re = g_regex_new("Location\\[fused ([-0-9.]+),([-0-9.]+)",
+                         0, 0, NULL);
 
     if (g_regex_match(re, dump, 0, &mi)) {
         *lat_str = g_match_info_fetch(mi, 1);
         *lon_str = g_match_info_fetch(mi, 2);
-        weather_debug("loc: new lat=%s, lon=%s", *lat_str, *lon_str);
+        weather_debug("loc: new lat=%s, lon=%s", *lat_str,
+                      *lon_str);
         ok = TRUE;
     } else {
         /* sometimes there is no match if the phone can not find satellites (roaming or no sim),
@@ -279,7 +280,8 @@ get_loc(gchar *serial, gchar **lat_str, gchar **lon_str) {
 
 /* great-circle distance between two points in kilometers (spherical) */
 gdouble
-distance_km(gdouble x_lat, gdouble x_lon, gdouble y_lat, gdouble y_lon) {
+distance_km(gdouble x_lat, gdouble x_lon, gdouble y_lat,
+            gdouble y_lon) {
     gdouble dlat = (y_lat - x_lat) * DEG_TO_RAD;
     gdouble dlon = (y_lon - x_lon) * DEG_TO_RAD;
 
@@ -345,7 +347,8 @@ update_loc(GtkMenuItem *item, gpointer user_data) {
             gdouble old_lon_d = g_ascii_strtod(old_lon, NULL);
             gdouble new_lat_d = g_ascii_strtod(new_lat, NULL);
             gdouble new_lon_d = g_ascii_strtod(new_lon, NULL);
-            moved = distance_km(old_lat_d, old_lon_d, new_lat_d, new_lon_d);
+            moved = distance_km(old_lat_d, old_lon_d, new_lat_d,
+                                new_lon_d);
 
             if (moved < MIN_DISPLACEMENT) {
                 g_free(new_lat);
@@ -421,7 +424,8 @@ static gboolean
 cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
                gpointer user_data) {
     plugin_data *data = user_data;
-    weather_debug("loc: 'Update location from phone:' menu is activated");
+    weather_debug(
+        "loc: 'Update location from phone:' menu is activated");
 
     if (event->button == 3 && data->update_loc_widget != NULL) {
         GtkMenuItem *update_loc_menu_item = GTK_MENU_ITEM(
@@ -429,28 +433,34 @@ cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
         gsize num_devices = 0;
         device *ds = get_devices(&num_devices);
 
-        weather_debug("loc: Right-click detected before menu popup!");
+        weather_debug(
+            "loc: Right-click detected before menu popup!");
         weather_debug("loc: %zu device(s) found", num_devices);
 
         if (num_devices == 0) {
-            g_signal_handlers_disconnect_by_func(update_loc_menu_item,
-                                                 G_CALLBACK(update_loc), data);
+            g_signal_handlers_disconnect_by_func(
+                update_loc_menu_item,
+                G_CALLBACK(update_loc), data);
             g_object_set_data(G_OBJECT(update_loc_menu_item),
                               "activate-connected", NULL);
             /* clear stale "serial" belonging to disconnected phone */
             g_object_set_data_full(
-                G_OBJECT(update_loc_menu_item), "serial", NULL, g_free);
+                G_OBJECT(update_loc_menu_item), "serial", NULL,
+                g_free);
             gtk_menu_item_set_submenu(update_loc_menu_item, NULL);
         } else if (num_devices == 1) {
             gchar *new_label =
-                    g_strdup_printf(_("Update location from %s"), ds->model);
+                    g_strdup_printf(
+                        _("Update location from %s"), ds->model);
 
             gtk_menu_item_set_submenu(update_loc_menu_item, NULL);
-            gtk_menu_item_set_label(update_loc_menu_item, new_label);
+            gtk_menu_item_set_label(update_loc_menu_item,
+                                    new_label);
             g_free(new_label);
             // associate serial with menu item
-            g_object_set_data_full(G_OBJECT(update_loc_menu_item), "serial",
-                                   g_strdup(ds[0].serial), g_free);
+            g_object_set_data_full(
+                G_OBJECT(update_loc_menu_item), "serial",
+                g_strdup(ds[0].serial), g_free);
 
             /* (re)connect signal exactly once */
             if (g_object_get_data(G_OBJECT(update_loc_menu_item),
@@ -458,30 +468,36 @@ cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
                 g_signal_connect(update_loc_menu_item, "activate",
                                  G_CALLBACK(update_loc), data);
                 g_object_set_data(G_OBJECT(update_loc_menu_item),
-                                  "activate-connected", GINT_TO_POINTER(1));
+                                  "activate-connected",
+                                  GINT_TO_POINTER(1));
             }
         } else {
             GtkWidget *submenu = gtk_menu_new();
 
             gtk_menu_item_set_label(update_loc_menu_item,
-                                    _("Update location from phone:"));
+                                    _(
+                                        "Update location from phone:"));
 
             /* disconnect any instance of update_loc from this menu item because
              * it no longer belongs to a specific phone.
              * it will be called from a submenu instead
              */
 
-            g_signal_handlers_disconnect_by_func(update_loc_menu_item,
-                                                 G_CALLBACK(update_loc), data);
+            g_signal_handlers_disconnect_by_func(
+                update_loc_menu_item,
+                G_CALLBACK(update_loc), data);
             g_object_set_data(G_OBJECT(update_loc_menu_item),
                               "activate-connected", NULL);
             g_object_set_data_full(
-                G_OBJECT(update_loc_menu_item), "serial", NULL, g_free);
+                G_OBJECT(update_loc_menu_item), "serial", NULL,
+                g_free);
 
             for (gsize i = 0; i < num_devices; i++) {
                 device d = ds[i];
-                GtkWidget *sub_item = gtk_menu_item_new_with_label(d.model);
-                weather_debug("loc: model='%s', serial='%s'", d.model,
+                GtkWidget *sub_item = gtk_menu_item_new_with_label(
+                    d.model);
+                weather_debug("loc: model='%s', serial='%s'",
+                              d.model,
                               d.serial);
 
                 // associate serial with menu item
@@ -490,15 +506,18 @@ cb_show_phones(GtkWidget *parent_menu, GdkEventButton *event,
                 g_signal_connect(sub_item, "activate",
                                  G_CALLBACK(update_loc), data);
 
-                gtk_menu_shell_append(GTK_MENU_SHELL(submenu), sub_item);
+                gtk_menu_shell_append(
+                    GTK_MENU_SHELL(submenu), sub_item);
             }
 
-            gtk_menu_item_set_submenu(update_loc_menu_item, submenu);
+            gtk_menu_item_set_submenu(
+                update_loc_menu_item, submenu);
             gtk_widget_show_all(submenu);
         }
 
         free_devices(ds);
-        gtk_widget_set_visible(data->update_loc_widget, num_devices > 0);
+        gtk_widget_set_visible(data->update_loc_widget,
+                               num_devices > 0);
     }
 
     return FALSE;
