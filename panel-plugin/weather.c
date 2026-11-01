@@ -2156,7 +2156,7 @@ xfceweather_create_control(XfcePanelPlugin *plugin)
     if (data->msg_parse)
         g_slice_free(parse_info, data->msg_parse);
     data->msg_parse = g_slice_new0(parse_info);
-
+ 
     /* Setup update infos */
     init_update_infos(data);
     data->next_wakeup = time(NULL);
