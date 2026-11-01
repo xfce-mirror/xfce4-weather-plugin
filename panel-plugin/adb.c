@@ -177,7 +177,6 @@ get_devices(gsize *n_out) {
         g_clear_pointer(&mi, g_match_info_free);
     }
 
-
     g_strfreev(lines);
 
     if (n_out != NULL)
