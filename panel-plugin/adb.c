@@ -82,7 +82,6 @@ get_devices(gsize *n_out) {
     gchar **lines;
     guint i;
     static GRegex *re = NULL;
-    GMatchInfo *mi = NULL;
 
     if (n_out != NULL)
         *n_out = 0;
@@ -164,6 +163,8 @@ get_devices(gsize *n_out) {
 
     for (guint j = i + 1; j < i + 1 + n; j++) {
         gchar *line = lines[j];
+        GMatchInfo *mi = NULL;
+
         if (g_regex_match(re, line, 0, &mi)) {
             devices[line_num].serial = g_match_info_fetch(mi, 1);
             devices[line_num].model = g_match_info_fetch(mi, 2);
