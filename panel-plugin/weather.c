@@ -2464,7 +2464,6 @@ weather_construct(XfcePanelPlugin *plugin)
     panel_debug_env = g_getenv("PANEL_DEBUG");
     if (panel_debug_env && strstr(panel_debug_env, G_LOG_DOMAIN))
         debug_mode = TRUE;
-
     weather_debug_init(G_LOG_DOMAIN, debug_mode);
     weather_debug("weather plugin version " VERSION_FULL " starting up");
 
