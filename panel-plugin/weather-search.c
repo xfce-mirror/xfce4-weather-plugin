@@ -1,4 +1,4 @@
-/*  Copyright (c) 2026 Xfce Development Team
+/*  Copyright (c) 2003-2014 Xfce Development Team
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
@@ -534,7 +534,7 @@ lookup(gpointer data,
 
     if (with_username)
         url = g_strdup_printf(url_format, lat, lon,
-                              plugin->geonames_username
+                              plugin->geonames_username != NULL
                               ? plugin->geonames_username : GEONAMES_USERNAME);
     else
         url = g_strdup_printf(url_format, lat, lon);
@@ -612,7 +612,7 @@ cb_reverse_done(GObject *source,
                         continue;
 
                     content = xmlNodeGetContent(child);
-                    if (content == NULL || *content == '\0') {
+                    if (xfce_str_is_empty(content)) {
                         xmlFree(content);
                         continue;
                     }

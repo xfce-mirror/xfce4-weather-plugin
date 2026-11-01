@@ -1,6 +1,6 @@
 plugin_sources = [
-  'adb.h',
   'adb.c',
+  'adb.h',
   'weather-config.c',
   'weather-config.h',
   'weather-data.c',
