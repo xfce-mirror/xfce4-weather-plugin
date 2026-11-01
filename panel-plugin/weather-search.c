@@ -29,6 +29,10 @@
 
 #define BORDER 8
 
+/* maximum number of place-name components in a reverse-geocoded
+   location label; four fits neighbourhood, city, state and country
+   without crowding the panel or summary window. */
+#define LOCWATCH_MAX_PARTS (4)
 
 static search_dialog *global_dialog = NULL;
 
@@ -505,4 +509,329 @@ void weather_search_by_ip(SoupSession *session,
 
     weather_debug("getting %s", url);
     weather_http_queue_request(session, url, cb_geolocation, data);
+}
+
+
+/* Fires an async HTTP request for a location-derived value. If
+   with_username is TRUE, the URL format takes three arguments in
+   order: latitude, longitude, username. Otherwise it takes two:
+   latitude, longitude. The response is handled by callback, which
+   receives the plugin_data as user_data. */
+static void
+lookup(gpointer data,
+       const gchar *lat,
+       const gchar *lon,
+       const gchar *url_format,
+       gboolean with_username,
+#if SOUP_CHECK_VERSION(3, 0, 0)
+       GAsyncReadyCallback callback)
+#else
+       SoupSessionCallback callback)
+#endif
+{
+    plugin_data *plugin = (plugin_data *) data;
+    gchar *url;
+
+    if (with_username)
+        url = g_strdup_printf(url_format, lat, lon,
+                              plugin->geonames_username != NULL
+                              ? plugin->geonames_username : GEONAMES_USERNAME);
+    else
+        url = g_strdup_printf(url_format, lat, lon);
+
+    weather_debug("getting %s", url);
+    weather_http_queue_request(plugin->session, url, callback, plugin);
+    g_free(url);
+}
+
+
+/* Handles the Nominatim reverse lookup response for reverse_geocode().
+   Builds a display name from up to four distinct place-name tags in
+   <addressparts>, ordered from most to least specific, and assigns it
+   to data->location_name, freeing the previous value. Silent no-op if
+   the request failed, the body is empty, or the XML has no
+   <addressparts>. */
+static void
+cb_reverse_done(GObject *source,
+                GAsyncResult *result,
+#if !SOUP_CHECK_VERSION(3, 0, 0)
+                SoupMessage *msg,
+#endif
+                gpointer user_data)
+{
+    plugin_data *data = (plugin_data *) user_data;
+    xmlDoc *doc = NULL;
+    xmlNode *root;
+    gchar *parts[LOCWATCH_MAX_PARTS + 1] = { NULL };
+    const gchar *body = NULL;
+    gsize len = 0;
+    gint nparts = 0;
+    static const gchar *priority[] = {
+        "hamlet", "village", "town", "suburb", "neighbourhood",
+        "city", "municipality", "county", "state", "country", NULL
+    };
+#if SOUP_CHECK_VERSION(3, 0, 0)
+    GBytes *response =
+        soup_session_send_and_read_finish(SOUP_SESSION(source), result, NULL);
+
+    if (G_LIKELY(response != NULL))
+        body = g_bytes_get_data(response, &len);
+#else
+    if (G_LIKELY(msg->response_body && msg->response_body->data) != NULL) {
+        body = msg->response_body->data;
+        len = msg->response_body->length;
+    }
+#endif
+
+    if (body == NULL)
+        goto out;
+
+    doc = get_xml_document(body, len);
+    if (doc == NULL)
+        goto out;
+
+    root = xmlDocGetRootElement(doc);
+    if (root != NULL) {
+        for (xmlNode *node = root->children; node; node = node->next) {
+            if (node->type != XML_ELEMENT_NODE ||
+                xmlStrcasecmp(node->name, BAD_CAST "addressparts") != 0)
+                continue;
+
+            /* the priority list is also the accept list: anything not
+               on it (postcode, country_code, road, house_number,
+               amenity, ISO codes) is ignored. */
+            for (gint i = 0; priority[i] && nparts < 4; i++) {
+                for (xmlNode *child = node->children; child; child = child->next) {
+                    gint j;
+                    xmlChar * content;
+                    gchar *value;
+
+                    if (child->type != XML_ELEMENT_NODE ||
+                        xmlStrcasecmp(child->name,
+                                      BAD_CAST priority[i]) != 0)
+                        continue;
+
+                    content = xmlNodeGetContent(child);
+                    if (xfce_str_is_empty(content)) {
+                        xmlFree(content);
+                        continue;
+                    }
+                    value = g_strdup((const gchar *) content);
+                    xmlFree(content);
+
+                    for (j = 0; j < nparts; j++)
+                        if (g_strcmp0(parts[j], value) == 0)
+                            break;
+                    if (j < nparts) {
+                        g_free(value);
+                        continue;
+                    }
+
+                    parts[nparts++] = value;
+                    break;
+                }
+            }
+            break;
+        }
+    }
+
+    if (nparts > 0) {
+        gchar *name = g_strjoinv(", ", parts);
+        weather_debug("loc: reverse geocode: %s", name);
+        g_free(data->location_name);
+        data->location_name = name;
+    }
+
+    for (gint i = 0; i < nparts; i++)
+        g_free(parts[i]);
+
+out:
+    if (doc != NULL)
+        xmlFreeDoc(doc);
+#if SOUP_CHECK_VERSION(3, 0, 0)
+    if (response != NULL)
+        g_bytes_unref(response);
+#endif
+}
+
+
+/* Nominatim reverse lookup from coordinates, writing the result to
+   data->location_name asynchronously. Silent on failure. */
+void
+reverse_geocode(gpointer data,
+                const gchar *lat,
+                const gchar *lon)
+{
+    lookup(data, lat, lon,
+           "https://nominatim.openstreetmap.org/"
+           "reverse?lat=%s&lon=%s&format=xml",
+           FALSE,
+           cb_reverse_done);
+}
+
+
+/* Handles the GeoNames srtm3 response for lookup_altitude(). Extracts
+   the <srtm3> element's text and assigns it to data->msl as an integer
+   number of meters. Silent no-op if the request failed, the body is
+   empty, the XML has no <srtm3>, or the coordinates fall outside
+   SRTM3's 60°N to 56°S coverage. */
+static void
+cb_altitude_done(GObject *source, GAsyncResult *result,
+#if !SOUP_CHECK_VERSION(3, 0, 0)
+                SoupMessage *msg,
+#endif
+                gpointer user_data)
+{
+    plugin_data *data = (plugin_data *) user_data;
+    xmlDoc *doc = NULL;
+    xmlNode *root;
+    gboolean found = FALSE;
+    const gchar *body = NULL;
+    gsize len = 0;
+#if SOUP_CHECK_VERSION(3, 0, 0)
+    GBytes *response =
+        soup_session_send_and_read_finish(SOUP_SESSION(source), result, NULL);
+
+    if (G_LIKELY(response != NULL))
+        body = g_bytes_get_data(response, &len);
+#else
+    if (G_LIKELY(msg->response_body && msg->response_body->data) != NULL) {
+        body = msg->response_body->data;
+        len = msg->response_body->length;
+    }
+#endif
+
+    if (body == NULL)
+        goto out;
+
+    doc = get_xml_document(body, len);
+    if (doc == NULL)
+        goto out;
+
+    root = xmlDocGetRootElement(doc);
+    if (root != NULL) {
+        for (xmlNode *node = root->children; node; node = node->next) {
+            if (node->type == XML_ELEMENT_NODE && xmlStrcasecmp(node->name, BAD_CAST "srtm3") == 0) {
+                xmlChar *content;
+                if ((content = xmlNodeGetContent(node)) != NULL) {
+                    found = TRUE;
+                    data->msl = (gint) g_ascii_strtoll((const gchar *) content, NULL, 10);
+                    xmlFree(content);
+                    break;
+                }
+            }
+        }
+    }
+
+    if (found)
+        weather_debug("loc: altitude: %dm", data->msl);
+    else
+        weather_debug("loc: no srtm3 data in response");
+
+out:
+    if (doc != NULL)
+        xmlFreeDoc(doc);
+#if SOUP_CHECK_VERSION(3, 0, 0)
+    if (response != NULL)
+        g_bytes_unref(response);
+#endif
+}
+
+/* GeoNames srtm3 lookup for altitude at the given coordinates.
+   Async — cb_altitude_done writes the result to data->msl.
+
+   Note: SRTM3 only covers land between 60°N and 56°S [citation:3][citation:5].
+   Outside this range — most of Alaska, northern Canada, Scandinavia,
+   and all of Antarctica — the service returns no data or a fill
+   value, leaving data->msl unchanged. */
+void
+lookup_altitude(gpointer data,
+                const gchar *lat,
+                const gchar *lon)
+{
+    lookup(data, lat, lon,
+           "https://secure.geonames.org/"
+           "srtm3XML?lat=%s&lng=%s&username=%s",
+           TRUE,
+           cb_altitude_done);
+}
+
+
+static void
+cb_timezone_done(GObject *source, GAsyncResult *result,
+#if !SOUP_CHECK_VERSION(3, 0, 0)
+                SoupMessage *msg,
+#endif
+                gpointer user_data)
+{
+    plugin_data *data = (plugin_data *) user_data;
+    xmlDoc *doc = NULL;
+    xmlNode *root;
+    gboolean found = FALSE;
+    const gchar *body = NULL;
+    gsize len = 0;
+#if SOUP_CHECK_VERSION(3, 0, 0)
+    GBytes *response =
+        soup_session_send_and_read_finish(SOUP_SESSION(source), result, NULL);
+
+    if (G_LIKELY(response != NULL))
+        body = g_bytes_get_data(response, &len);
+#else
+    if (G_LIKELY(msg->response_body && msg->response_body->data) != NULL) {
+        body = msg->response_body->data;
+        len = msg->response_body->length;
+    }
+#endif
+
+    if (body == NULL)
+        goto out;
+
+    doc = get_xml_document(body, len);
+    if (doc == NULL)
+        goto out;
+
+    if ((root = xmlDocGetRootElement(doc)) != NULL) {
+        for (xmlNode *node = root->children; node && !found; node = node->next) {
+            if (node->type == XML_ELEMENT_NODE && xmlStrcasecmp(node->name, BAD_CAST "timezone") == 0) {
+                for (xmlNode *child = node->children; child; child = child->next) {
+                    if (child->type == XML_ELEMENT_NODE && xmlStrcasecmp(child->name, BAD_CAST "timezoneId") == 0) {
+                        xmlChar *content;
+                        if ((content = xmlNodeGetContent(child)) != NULL) {
+                            found = TRUE;
+                            g_free(data->timezone);
+                            data->timezone = g_strdup((const gchar *) content);
+                            xmlFree(content);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    if (found)
+        weather_debug("loc: timezone=%s", data->timezone);
+    else
+        weather_debug("loc: no timezone in response");
+
+out:
+    if (doc != NULL)
+        xmlFreeDoc(doc);
+#if SOUP_CHECK_VERSION(3, 0, 0)
+    if (response != NULL)
+        g_bytes_unref(response);
+#endif
+}
+
+
+void
+lookup_timezone(gpointer data,
+                const gchar *lat,
+                const gchar *lon)
+{
+    lookup(data, lat, lon,
+           "https://secure.geonames.org/"
+           "timezone?lat=%s&lng=%s&username=%s",
+           TRUE,
+           cb_timezone_done);
 }
